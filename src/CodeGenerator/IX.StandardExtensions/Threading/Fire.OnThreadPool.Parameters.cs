@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 using IX.StandardExtensions.Contracts;
 
-using JetBrains.Annotations;
-
 namespace IX.StandardExtensions.Threading
 {
     /// <summary>
@@ -37,9 +35,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1>, Tuple<TParam1>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1>, Tuple<TParam1>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Action<TParam1>, Tuple<TParam1>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -56,9 +58,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1>(
             Action<TParam1, CancellationToken> action,
             TParam1 param1,
@@ -68,9 +67,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, CancellationToken>, Tuple<TParam1>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, CancellationToken>, Tuple<TParam1>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, CancellationToken> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Action<TParam1, CancellationToken>, Tuple<TParam1>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -87,9 +90,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1>(
             Func<TParam1, Task> action,
             TParam1 param1,
@@ -99,9 +99,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, Task>, Tuple<TParam1>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, Task>, Tuple<TParam1>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, Task> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, Task>, Tuple<TParam1>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -118,9 +122,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1>(
             Func<TParam1, CancellationToken, Task> action,
             TParam1 param1,
@@ -130,9 +131,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, CancellationToken, Task>, Tuple<TParam1>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, CancellationToken, Task>, Tuple<TParam1>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, CancellationToken, Task> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, CancellationToken, Task>, Tuple<TParam1>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -150,9 +155,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TResult>(
             Func<TParam1, TResult> action,
             TParam1 param1,
@@ -162,9 +164,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TResult>, Tuple<TParam1>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TResult>, Tuple<TParam1>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TResult> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, TResult>, Tuple<TParam1>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -182,9 +188,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TResult>(
             Func<TParam1, CancellationToken, TResult> action,
             TParam1 param1,
@@ -194,9 +197,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, CancellationToken, TResult>, Tuple<TParam1>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, CancellationToken, TResult>, Tuple<TParam1>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, CancellationToken, TResult> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, CancellationToken, TResult>, Tuple<TParam1>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -214,9 +221,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TResult>(
             Func<TParam1, Task<TResult>> action,
             TParam1 param1,
@@ -226,9 +230,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, Task<TResult>>, Tuple<TParam1>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, Task<TResult>>, Tuple<TParam1>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, Task<TResult>> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, Task<TResult>>, Tuple<TParam1>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -246,9 +254,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TResult>(
             Func<TParam1, CancellationToken, Task<TResult>> action,
             TParam1 param1,
@@ -258,9 +263,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, CancellationToken, Task<TResult>>, Tuple<TParam1>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, CancellationToken, Task<TResult>>, Tuple<TParam1>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, CancellationToken, Task<TResult>>, Tuple<TParam1>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -289,9 +298,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -310,9 +323,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2>(
             Action<TParam1, TParam2, CancellationToken> action,
             TParam1 param1, TParam2 param2,
@@ -322,9 +332,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, CancellationToken>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2, CancellationToken>, Tuple<TParam1, TParam2>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2, CancellationToken> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Action<TParam1, TParam2, CancellationToken>, Tuple<TParam1, TParam2>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -343,9 +357,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2>(
             Func<TParam1, TParam2, Task> action,
             TParam1 param1, TParam2 param2,
@@ -355,9 +366,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, Task>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, Task>, Tuple<TParam1, TParam2>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, Task> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, Task>, Tuple<TParam1, TParam2>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -376,9 +391,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2>(
             Func<TParam1, TParam2, CancellationToken, Task> action,
             TParam1 param1, TParam2 param2,
@@ -388,9 +400,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, CancellationToken, Task>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, CancellationToken, Task>, Tuple<TParam1, TParam2>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, CancellationToken, Task>, Tuple<TParam1, TParam2>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -410,9 +426,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TResult>(
             Func<TParam1, TParam2, TResult> action,
             TParam1 param1, TParam2 param2,
@@ -422,9 +435,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TResult>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TResult>, Tuple<TParam1, TParam2>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TResult> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TResult>, Tuple<TParam1, TParam2>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -444,9 +461,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TResult>(
             Func<TParam1, TParam2, CancellationToken, TResult> action,
             TParam1 param1, TParam2 param2,
@@ -456,9 +470,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, CancellationToken, TResult>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, CancellationToken, TResult>, Tuple<TParam1, TParam2>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, CancellationToken, TResult>, Tuple<TParam1, TParam2>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -478,9 +496,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TResult>(
             Func<TParam1, TParam2, Task<TResult>> action,
             TParam1 param1, TParam2 param2,
@@ -490,9 +505,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, Task<TResult>>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, Task<TResult>>, Tuple<TParam1, TParam2>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, Task<TResult>> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, Task<TResult>>, Tuple<TParam1, TParam2>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -512,9 +531,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TResult>(
             Func<TParam1, TParam2, CancellationToken, Task<TResult>> action,
             TParam1 param1, TParam2 param2,
@@ -524,9 +540,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -557,9 +577,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2, TParam3> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -580,9 +604,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3>(
             Action<TParam1, TParam2, TParam3, CancellationToken> action,
             TParam1 param1, TParam2 param2, TParam3 param3,
@@ -592,9 +613,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, CancellationToken>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2, TParam3, CancellationToken>, Tuple<TParam1, TParam2, TParam3>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2, TParam3, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, CancellationToken>, Tuple<TParam1, TParam2, TParam3>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -615,9 +640,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3>(
             Func<TParam1, TParam2, TParam3, Task> action,
             TParam1 param1, TParam2 param2, TParam3 param3,
@@ -627,9 +649,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, Task>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, Task>, Tuple<TParam1, TParam2, TParam3>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, Task> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, Task>, Tuple<TParam1, TParam2, TParam3>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -650,9 +676,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3>(
             Func<TParam1, TParam2, TParam3, CancellationToken, Task> action,
             TParam1 param1, TParam2 param2, TParam3 param3,
@@ -662,9 +685,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -686,9 +713,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TResult>(
             Func<TParam1, TParam2, TParam3, TResult> action,
             TParam1 param1, TParam2 param2, TParam3 param3,
@@ -698,9 +722,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TResult>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TResult>, Tuple<TParam1, TParam2, TParam3>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TResult> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TResult>, Tuple<TParam1, TParam2, TParam3>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -722,9 +750,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TResult>(
             Func<TParam1, TParam2, TParam3, CancellationToken, TResult> action,
             TParam1 param1, TParam2 param2, TParam3 param3,
@@ -734,9 +759,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -758,9 +787,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TResult>(
             Func<TParam1, TParam2, TParam3, Task<TResult>> action,
             TParam1 param1, TParam2 param2, TParam3 param3,
@@ -770,9 +796,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -794,9 +824,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TResult>(
             Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>> action,
             TParam1 param1, TParam2 param2, TParam3 param3,
@@ -806,9 +833,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -841,9 +872,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2, TParam3, TParam4> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -866,9 +901,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4>(
             Action<TParam1, TParam2, TParam3, TParam4, CancellationToken> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
@@ -878,9 +910,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2, TParam3, TParam4, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -903,9 +939,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4>(
             Func<TParam1, TParam2, TParam3, TParam4, Task> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
@@ -915,9 +948,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -940,9 +977,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4>(
             Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
@@ -952,9 +986,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -978,9 +1016,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TResult> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
@@ -990,9 +1025,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1016,9 +1055,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
@@ -1028,9 +1064,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1054,9 +1094,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
@@ -1066,9 +1103,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1092,9 +1133,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
@@ -1104,9 +1142,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1141,9 +1183,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1168,9 +1214,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5>(
             Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
@@ -1180,9 +1223,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1207,9 +1254,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
@@ -1219,9 +1263,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1246,9 +1294,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
@@ -1258,9 +1303,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1286,9 +1335,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
@@ -1298,9 +1344,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1326,9 +1376,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
@@ -1338,9 +1385,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1366,9 +1417,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
@@ -1378,9 +1426,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1406,9 +1458,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
@@ -1418,9 +1467,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1457,9 +1510,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1486,9 +1543,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
@@ -1498,9 +1552,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1527,9 +1585,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
@@ -1539,9 +1594,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1568,9 +1627,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
@@ -1580,9 +1636,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1610,9 +1670,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
@@ -1622,9 +1679,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1652,9 +1713,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
@@ -1664,9 +1722,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1694,9 +1756,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
@@ -1706,9 +1765,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1736,9 +1799,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
@@ -1748,9 +1808,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1789,9 +1853,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1820,9 +1888,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
@@ -1832,9 +1897,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1863,9 +1932,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
@@ -1875,9 +1941,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1906,9 +1976,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
@@ -1918,9 +1985,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1950,9 +2021,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
@@ -1962,9 +2030,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1994,9 +2066,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
@@ -2006,9 +2075,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2038,9 +2111,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
@@ -2050,9 +2120,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2082,9 +2156,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
@@ -2094,9 +2165,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2137,9 +2212,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2170,9 +2249,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
@@ -2182,9 +2258,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2215,9 +2295,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
@@ -2227,9 +2304,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2260,9 +2341,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
@@ -2272,9 +2350,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2306,9 +2388,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
@@ -2318,9 +2397,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2352,9 +2435,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
@@ -2364,9 +2444,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2398,9 +2482,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
@@ -2410,9 +2491,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2444,9 +2529,6 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
-#if NETSTANDARD1_2
-        /// <remarks><para>Due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
-#endif
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>(
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>> action,
             TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
@@ -2456,9 +2538,13 @@ namespace IX.StandardExtensions.Threading
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
+#if NET452
                     var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
+#else
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+#endif
 
                     ct.ThrowIfCancellationRequested();
 

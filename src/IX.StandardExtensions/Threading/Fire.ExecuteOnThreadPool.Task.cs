@@ -186,67 +186,36 @@ namespace IX.StandardExtensions.Threading
                 return taskCompletionSource.Task;
             }
 
-#if NETSTANDARD1_2
-            var outerState =
-                new Tuple<Func<object, CancellationToken, TResult>, TaskCompletionSource<TResult>,
-                    object, CancellationToken>(
-#else
             var outerState =
                 new Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
                     TaskCompletionSource<TResult>, object, CancellationToken>(
-#endif
 #pragma warning disable SA1114 // Parameter list should follow declaration
                     action,
 #pragma warning restore SA1114 // Parameter list should follow declaration
-#if !NETSTANDARD1_2
                     CultureInfo.CurrentCulture,
                     CultureInfo.CurrentUICulture,
-#endif
                     taskCompletionSource,
                     state,
                     cancellationToken);
 
-#if NETSTANDARD1_2
-            Task.Factory.StartNew(
-#pragma warning disable HAA0603 // Delegate allocation from a method group - This is expected, and also acceptable
-                WorkItem,
-#pragma warning restore HAA0603 // Delegate allocation from a method group
-                outerState,
-                TaskCreationOptions.HideScheduler | TaskCreationOptions.LongRunning);
-#else
             ThreadPool.QueueUserWorkItem(
 #pragma warning disable HAA0603 // Delegate allocation from a method group - This is expected, and also acceptable
                 WorkItem,
 #pragma warning restore HAA0603 // Delegate allocation from a method group
                 outerState);
-#endif
 
-            void WorkItem(object rawState)
+            static void WorkItem(object rawState)
             {
                 Contract.RequiresNotNullPrivate(
                     in rawState,
                     nameof(rawState));
-#if NETSTANDARD1_2
-                Contract.RequiresArgumentOfTypePrivate<Tuple<Func<object, CancellationToken, TResult>, TaskCompletionSource<TResult>, object, CancellationToken>>(
-                    rawState,
-                    nameof(rawState));
-#else
                 Contract
                     .RequiresArgumentOfTypePrivate<
                         Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
                             TaskCompletionSource<TResult>, object, CancellationToken>>(
                         rawState,
                         nameof(rawState));
-#endif
 
-#if NETSTANDARD1_2
-                var innerState =
-                    (Tuple<Func<object, CancellationToken, TResult>, TaskCompletionSource<TResult>, object, CancellationToken>)rawState;
-
-                var tcs = innerState.Item2;
-                var payload = innerState.Item3;
-                var ct = innerState.Item4;
-#else
                 var innerState =
                     (Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
                         TaskCompletionSource<TResult>, object, CancellationToken>)rawState;
@@ -254,7 +223,6 @@ namespace IX.StandardExtensions.Threading
                 TaskCompletionSource<TResult> tcs = innerState.Item4;
                 object payload = innerState.Item5;
                 CancellationToken ct = innerState.Item6;
-#endif
 
                 if (ct.IsCancellationRequested)
                 {
@@ -262,14 +230,14 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if FRAMEWORK_GT_451 || STANDARD_GT_12
-                CultureInfo.CurrentCulture = innerState.Item2;
-                CultureInfo.CurrentUICulture = innerState.Item3;
-#elif FRAMEWORK
+#if NET452
 #pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
                 Thread.CurrentThread.CurrentCulture = innerState.Item2;
                 Thread.CurrentThread.CurrentUICulture = innerState.Item3;
 #pragma warning restore DE0008 // API is deprecated
+#else
+                CultureInfo.CurrentCulture = innerState.Item2;
+                CultureInfo.CurrentUICulture = innerState.Item3;
 #endif
 
                 if (ct.IsCancellationRequested)

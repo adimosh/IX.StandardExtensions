@@ -137,7 +137,6 @@ namespace IX.StandardExtensions.Threading
                                                       ? TaskCreationOptions.LongRunning
                                                       : TaskCreationOptions.PreferFairness);
 
-#if !NETSTANDARD1_2
             return taskFactory.StartNew(
                 StartAction,
                 new Tuple<Action<object>, CultureInfo, CultureInfo, object>(
@@ -147,17 +146,8 @@ namespace IX.StandardExtensions.Threading
                     state), cancellationToken,
                 creationOptions,
                 TaskScheduler.Default);
-#else
-            return taskFactory.StartNew(
-                action,
-                state,
-                cancellationToken,
-                creationOptions,
-                TaskScheduler.Default);
-#endif
 
-#if !NETSTANDARD1_2
-            void StartAction(object rawState)
+            static void StartAction(object rawState)
             {
                 Contract.RequiresNotNullPrivate(
                     in rawState,
@@ -178,7 +168,6 @@ namespace IX.StandardExtensions.Threading
 
                 innerState.Item1(innerState.Item4);
             }
-#endif
         }
 
         internal static Task<TResult> StartWithStateOnDefaultTaskScheduler<TResult>(
@@ -200,7 +189,6 @@ namespace IX.StandardExtensions.Threading
                                                       ? TaskCreationOptions.LongRunning
                                                       : TaskCreationOptions.PreferFairness);
 
-#if !NETSTANDARD1_2
             return taskFactory.StartNew(
                 StartAction,
                 new Tuple<Func<object, TResult>, CultureInfo, CultureInfo, object>(
@@ -210,17 +198,8 @@ namespace IX.StandardExtensions.Threading
                     state), cancellationToken,
                 creationOptions,
                 TaskScheduler.Default);
-#else
-            return taskFactory.StartNew(
-                action,
-                state,
-                cancellationToken,
-                creationOptions,
-                TaskScheduler.Default);
-#endif
 
-#if !NETSTANDARD1_2
-            TResult StartAction(object rawState)
+            static TResult StartAction(object rawState)
             {
                 Contract.RequiresNotNullPrivate(
                     in rawState,
@@ -241,7 +220,6 @@ namespace IX.StandardExtensions.Threading
 
                 return innerState.Item1(innerState.Item4);
             }
-#endif
         }
 #pragma warning restore DE0008 // API is deprecated
 #pragma warning restore HAA0603 // Delegate allocation from a method group
