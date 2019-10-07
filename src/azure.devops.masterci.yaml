@@ -42,7 +42,7 @@ jobs:
   steps:
   - template: ../opt/job-master-build.yml
     parameters:
-      solutionName: 'IX.Abstractions'
+      solutionName: 'IX.StandardExtensions'
 - job:
   timeoutInMinutes: 5
   pool:
@@ -51,7 +51,7 @@ jobs:
   steps:
   - template: ../opt/job-master-build.yml
     parameters:
-      solutionName: 'IX.Abstractions'
+      solutionName: 'IX.StandardExtensions'
 - job:
   timeoutInMinutes: 5
   pool:
@@ -60,4 +60,4 @@ jobs:
   steps:
   - template: ../opt/job-master-build.yml
     parameters:
-      solutionName: 'IX.Abstractions'
+      solutionName: 'IX.StandardExtensions'
