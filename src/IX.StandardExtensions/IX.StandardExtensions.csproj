@@ -1,11 +1,17 @@
-﻿<!--EXTERNAL_PROPERTIES: TargetFrameworkIsFramework-->
+<!--EXTERNAL_PROPERTIES: TargetFrameworkIsFramework-->
 <!--EXTERNAL_PROPERTIES: TargetFrameworkIsStandard-->
 <!--EXTERNAL_PROPERTIES: TargetFramework-->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <!-- Build configuration -->
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
     <TargetFrameworks>net452;net461;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+    <TargetFrameworks>netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <FailObsoleteTargetFrameworks>true</FailObsoleteTargetFrameworks>
   </PropertyGroup>
 
