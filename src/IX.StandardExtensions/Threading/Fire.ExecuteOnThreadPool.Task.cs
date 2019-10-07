@@ -3,7 +3,7 @@
 // </copyright>
 
 using System;
-using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
@@ -59,45 +59,57 @@ namespace IX.StandardExtensions.Threading
                 }, action,
                 cancellationToken);
 
+        [SuppressMessage("Performance", "HAA0603:Delegate allocation from a method group", Justification = "This is unavoidable in this case.")]
         private static Task<TResult> ExecuteOnThreadPool<TResult>(
             Func<TResult> action,
-            CancellationToken cancellationToken = default) =>
-            ExecuteOnThreadPool(
-                (
+            CancellationToken cancellationToken = default)
+        {
+            static TResult Action(
+                object st,
+                CancellationToken ct)
+            {
+                Contract.RequiresNotNullPrivate(
+                    in st,
+                    nameof(st));
+                Contract.RequiresArgumentOfTypePrivate<Func<TResult>>(
                     st,
-                    ct) =>
-                {
-                    Contract.RequiresNotNullPrivate(
-                        in st,
-                        nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Func<TResult>>(
-                        st,
-                        nameof(st));
+                    nameof(st));
 
-                    ct.ThrowIfCancellationRequested();
+                ct.ThrowIfCancellationRequested();
 
-                    return ((Func<TResult>)st)();
-                }, action,
+                return ((Func<TResult>)st)();
+            }
+
+            return ExecuteOnThreadPool(
+                Action,
+                action,
                 cancellationToken);
+        }
 
+        [SuppressMessage("Performance", "HAA0603:Delegate allocation from a method group", Justification = "This is unavoidable in this case.")]
         private static Task<TResult> ExecuteOnThreadPool<TResult>(
             Func<CancellationToken, TResult> action,
-            CancellationToken cancellationToken = default) =>
-            ExecuteOnThreadPool(
-                (
+            CancellationToken cancellationToken = default)
+        {
+            static TResult Action(
+                object st,
+                CancellationToken ct)
+            {
+                Contract.RequiresNotNullPrivate(
+                    in st,
+                    nameof(st));
+                Contract.RequiresArgumentOfTypePrivate<Func<CancellationToken, TResult>>(
                     st,
-                    ct) =>
-                {
-                    Contract.RequiresNotNullPrivate(
-                        in st,
-                        nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Func<CancellationToken, TResult>>(
-                        st,
-                        nameof(st));
+                    nameof(st));
 
-                    return ((Func<CancellationToken, TResult>)st)(ct);
-                }, action,
+                return ((Func<CancellationToken, TResult>)st)(ct);
+            }
+
+            return ExecuteOnThreadPool(
+                Action,
+                action,
                 cancellationToken);
+        }
 
         private static Task ExecuteOnThreadPool(
             Action<object> action,
@@ -145,13 +157,15 @@ namespace IX.StandardExtensions.Threading
                 action,
                 state), cancellationToken);
 
+        [SuppressMessage("Performance", "HAA0603:Delegate allocation from a method group", Justification = "This is unavoidable in this case.")]
         private static Task<TResult> ExecuteOnThreadPool<TResult>(
             Func<object, TResult> action,
             object state,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
-            (
-                st,
-                ct) =>
+            CancellationToken cancellationToken = default)
+        {
+            static TResult Action(
+                object st,
+                CancellationToken ct)
             {
                 Contract.RequiresNotNullPrivate(
                     in st,
@@ -165,103 +179,13 @@ namespace IX.StandardExtensions.Threading
                 var innerState = (Tuple<Func<object, TResult>, object>)st;
 
                 return innerState.Item1(innerState.Item2);
-            }, new Tuple<Func<object, TResult>, object>(
-                action,
-                state), cancellationToken);
-
-        private static Task<TResult> ExecuteOnThreadPool<TResult>(
-            Func<object, CancellationToken, TResult> action,
-            object state,
-            CancellationToken cancellationToken = default)
-        {
-            Contract.RequiresNotNullPrivate(
-                in action,
-                nameof(action));
-
-            var taskCompletionSource = new TaskCompletionSource<TResult>();
-
-            if (cancellationToken.IsCancellationRequested)
-            {
-                taskCompletionSource.TrySetCanceled();
-                return taskCompletionSource.Task;
             }
 
-            var outerState =
-                new Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
-                    TaskCompletionSource<TResult>, object, CancellationToken>(
-#pragma warning disable SA1114 // Parameter list should follow declaration
+            return ExecuteOnThreadPool(
+                Action,
+                new Tuple<Func<object, TResult>, object>(
                     action,
-#pragma warning restore SA1114 // Parameter list should follow declaration
-                    CultureInfo.CurrentCulture,
-                    CultureInfo.CurrentUICulture,
-                    taskCompletionSource,
-                    state,
-                    cancellationToken);
-
-            ThreadPool.QueueUserWorkItem(
-#pragma warning disable HAA0603 // Delegate allocation from a method group - This is expected, and also acceptable
-                WorkItem,
-#pragma warning restore HAA0603 // Delegate allocation from a method group
-                outerState);
-
-            static void WorkItem(object rawState)
-            {
-                Contract.RequiresNotNullPrivate(
-                    in rawState,
-                    nameof(rawState));
-                Contract
-                    .RequiresArgumentOfTypePrivate<
-                        Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
-                            TaskCompletionSource<TResult>, object, CancellationToken>>(
-                        rawState,
-                        nameof(rawState));
-
-                var innerState =
-                    (Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
-                        TaskCompletionSource<TResult>, object, CancellationToken>)rawState;
-
-                TaskCompletionSource<TResult> tcs = innerState.Item4;
-                object payload = innerState.Item5;
-                CancellationToken ct = innerState.Item6;
-
-                if (ct.IsCancellationRequested)
-                {
-                    tcs.TrySetCanceled();
-                    return;
-                }
-
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = innerState.Item2;
-                Thread.CurrentThread.CurrentUICulture = innerState.Item3;
-#pragma warning restore DE0008 // API is deprecated
-#else
-                CultureInfo.CurrentCulture = innerState.Item2;
-                CultureInfo.CurrentUICulture = innerState.Item3;
-#endif
-
-                if (ct.IsCancellationRequested)
-                {
-                    tcs.TrySetCanceled();
-                    return;
-                }
-
-                try
-                {
-                    TResult innerResult = innerState.Item1(
-                        payload,
-                        ct);
-
-                    tcs.TrySetResult(innerResult);
-                }
-                catch (OperationCanceledException)
-                {
-                    tcs.TrySetCanceled();
-                }
-            }
-
-            return taskCompletionSource.Task;
+                    state), cancellationToken);
         }
-#pragma warning restore HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance
     }
 }

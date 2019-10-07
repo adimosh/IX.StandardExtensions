@@ -84,13 +84,7 @@ for (int i = 1; i <= 8; i++)
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
-#if NET452
-                    var innerState = (Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>)st;
-                    var actionL1 = innerState.Item1;
-                    var unpackedParameters = innerState.Item2;
-#else
                     (Action<<#= paramTypes #>> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>)st;
-#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -130,13 +124,7 @@ for (int i = 1; i <= 8; i++)
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Action<<#= paramTypes #>, CancellationToken>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
-#if NET452
-                    var innerState = (Tuple<Action<<#= paramTypes #>, CancellationToken>, Tuple<<#= paramTypes #>>>)st;
-                    var actionL1 = innerState.Item1;
-                    var unpackedParameters = innerState.Item2;
-#else
                     (Action<<#= paramTypes #>, CancellationToken> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Action<<#= paramTypes #>, CancellationToken>, Tuple<<#= paramTypes #>>>)st;
-#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -176,13 +164,7 @@ for (int i = 1; i <= 8; i++)
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, Task>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
-#if NET452
-                    var innerState = (Tuple<Func<<#= paramTypes #>, Task>, Tuple<<#= paramTypes #>>>)st;
-                    var actionL1 = innerState.Item1;
-                    var unpackedParameters = innerState.Item2;
-#else
                     (Func<<#= paramTypes #>, Task> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Func<<#= paramTypes #>, Task>, Tuple<<#= paramTypes #>>>)st;
-#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -222,13 +204,7 @@ for (int i = 1; i <= 8; i++)
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, CancellationToken, Task>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
-#if NET452
-                    var innerState = (Tuple<Func<<#= paramTypes #>, CancellationToken, Task>, Tuple<<#= paramTypes #>>>)st;
-                    var actionL1 = innerState.Item1;
-                    var unpackedParameters = innerState.Item2;
-#else
                     (Func<<#= paramTypes #>, CancellationToken, Task> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Func<<#= paramTypes #>, CancellationToken, Task>, Tuple<<#= paramTypes #>>>)st;
-#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -269,13 +245,7 @@ for (int i = 1; i <= 8; i++)
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, TResult>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
-#if NET452
-                    var innerState = (Tuple<Func<<#= paramTypes #>, TResult>, Tuple<<#= paramTypes #>>>)st;
-                    var actionL1 = innerState.Item1;
-                    var unpackedParameters = innerState.Item2;
-#else
                     (Func<<#= paramTypes #>, TResult> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Func<<#= paramTypes #>, TResult>, Tuple<<#= paramTypes #>>>)st;
-#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -316,13 +286,7 @@ for (int i = 1; i <= 8; i++)
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, CancellationToken, TResult>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
-#if NET452
-                    var innerState = (Tuple<Func<<#= paramTypes #>, CancellationToken, TResult>, Tuple<<#= paramTypes #>>>)st;
-                    var actionL1 = innerState.Item1;
-                    var unpackedParameters = innerState.Item2;
-#else
                     (Func<<#= paramTypes #>, CancellationToken, TResult> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Func<<#= paramTypes #>, CancellationToken, TResult>, Tuple<<#= paramTypes #>>>)st;
-#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -363,13 +327,7 @@ for (int i = 1; i <= 8; i++)
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, Task<TResult>>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
-#if NET452
-                    var innerState = (Tuple<Func<<#= paramTypes #>, Task<TResult>>, Tuple<<#= paramTypes #>>>)st;
-                    var actionL1 = innerState.Item1;
-                    var unpackedParameters = innerState.Item2;
-#else
                     (Func<<#= paramTypes #>, Task<TResult>> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Func<<#= paramTypes #>, Task<TResult>>, Tuple<<#= paramTypes #>>>)st;
-#endif
 
                     ct.ThrowIfCancellationRequested();
 
@@ -410,13 +368,7 @@ for (int i = 1; i <= 8; i++)
                     Contract.RequiresNotNullPrivate(in st, nameof(st));
                     Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, CancellationToken, Task<TResult>>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
-#if NET452
-                    var innerState = (Tuple<Func<<#= paramTypes #>, CancellationToken, Task<TResult>>, Tuple<<#= paramTypes #>>>)st;
-                    var actionL1 = innerState.Item1;
-                    var unpackedParameters = innerState.Item2;
-#else
                     (Func<<#= paramTypes #>, CancellationToken, Task<TResult>> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Func<<#= paramTypes #>, CancellationToken, Task<TResult>>, Tuple<<#= paramTypes #>>>)st;
-#endif
 
                     ct.ThrowIfCancellationRequested();
 
