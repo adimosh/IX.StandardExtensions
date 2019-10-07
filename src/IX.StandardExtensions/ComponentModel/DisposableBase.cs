@@ -78,7 +78,7 @@ namespace IX.StandardExtensions.ComponentModel
         {
             this.ThrowIfCurrentObjectDisposed();
 
-            (action ?? throw new ArgumentNullException()).Invoke();
+            (action ?? throw new ArgumentNullException(nameof(action))).Invoke();
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace IX.StandardExtensions.ComponentModel
         {
             this.ThrowIfCurrentObjectDisposed();
 
-            return (action ?? throw new ArgumentNullException()).Invoke();
+            return (action ?? throw new ArgumentNullException(nameof(action))).Invoke();
         }
 
         /// <summary>

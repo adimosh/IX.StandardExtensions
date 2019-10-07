@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace IX.StandardExtensions.Threading
     /// </summary>
     public partial class Fire
     {
+        [SuppressMessage("Performance", "HAA0603:Delegate allocation from a method group", Justification = "This is unavoidable in this case.")]
         private static Task<TResult> ExecuteOnThreadPool<TResult>(
             Func<object, CancellationToken, Task<TResult>> action,
             object state,
@@ -64,7 +66,7 @@ namespace IX.StandardExtensions.Threading
                         rawState,
                         nameof(rawState));
 
-                var (func, currentCulture, currentUICulture, tcs, payload, ct) = (Tuple<Func<object, CancellationToken, Task<TResult>>, CultureInfo, CultureInfo,
+                (Func<object, CancellationToken, Task<TResult>> func, CultureInfo currentCulture, CultureInfo currentUICulture, TaskCompletionSource<TResult> tcs, object payload, CancellationToken ct) = (Tuple<Func<object, CancellationToken, Task<TResult>>, CultureInfo, CultureInfo,
                     TaskCompletionSource<TResult>, object, CancellationToken>)rawState;
 #else
             void WorkItem(Tuple<Func<object, CancellationToken, Task<TResult>>, CultureInfo, CultureInfo,
@@ -128,6 +130,10 @@ namespace IX.StandardExtensions.Threading
             return taskCompletionSource.Task;
         }
 
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is unavoidable in this case.")]
         private static Task<TResult> ExecuteOnThreadPool<TResult>(
             Func<object, CancellationToken, TResult> action,
             object state,
@@ -176,12 +182,15 @@ namespace IX.StandardExtensions.Threading
                         rawState,
                         nameof(rawState));
                 Contract.RequiresNotNullPrivate(
-                        in rawState,
-                        nameof(rawState));
+                    in rawState,
+                    nameof(rawState));
 
-                var (func, currentCulture, currentUICulture, tcs, payload, ct) =
+                (Func<object, CancellationToken, TResult> func, CultureInfo currentCulture,
+                        CultureInfo currentUICulture, TaskCompletionSource<TResult> tcs, object payload,
+                        CancellationToken ct) =
                     (Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
-                        TaskCompletionSource<TResult>, object, CancellationToken>)rawState;
+                        TaskCompletionSource<TResult>
+                        , object, CancellationToken>)rawState;
 #else
             static void WorkItem(Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
                 TaskCompletionSource<TResult>, object, CancellationToken> rawState)

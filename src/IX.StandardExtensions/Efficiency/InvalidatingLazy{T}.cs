@@ -16,8 +16,8 @@ namespace IX.StandardExtensions.Efficiency
     [PublicAPI]
     public class InvalidatingLazy<T>
     {
+        private readonly Func<Lazy<T>> lazyCreator;
         private Lazy<T> internalLazy;
-        private Func<Lazy<T>> lazyCreator;
 
 #pragma warning disable HAA0302 // Display class allocation to capture closure - we need to form a closure
 #pragma warning disable HAA0301 // Closure Allocation Source

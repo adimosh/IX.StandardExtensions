@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using IX.StandardExtensions.ComponentModel;
 using IX.StandardExtensions.Threading;
 using JetBrains.Annotations;
 
@@ -16,7 +17,7 @@ namespace IX.StandardExtensions.Efficiency
     /// </summary>
     /// <typeparam name="T">The type of object in the pool queue.</typeparam>
     [PublicAPI]
-    public class ObjectPoolQueue<T>
+    public class ObjectPoolQueue<T> : INotifyThreadException
     {
         private readonly CancellationToken cancellationToken;
         private readonly Queue<T> objects;
@@ -53,6 +54,11 @@ namespace IX.StandardExtensions.Efficiency
         }
 
         /// <summary>
+        ///     Triggered when an exception has occurred on a different thread.
+        /// </summary>
+        public event EventHandler<ExceptionOccurredEventArgs> ExceptionOccurredOnSeparateThread;
+
+        /// <summary>
         ///     Gets or sets the object limit.
         /// </summary>
         /// <value>The object limit.</value>
@@ -64,9 +70,14 @@ namespace IX.StandardExtensions.Efficiency
         /// <param name="object">The object to enqueue.</param>
         public void Enqueue(T @object) => this.objects.Enqueue(@object);
 
-#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation
-#pragma warning disable HAA0603 // Delegate allocation from a method group - This is acceptable at this point
-#pragma warning disable ERP022 // Unobserved exception in generic exception handler
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "We don't really know what boxing occurs here.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Not really avoidable.")]
         private void Run(Task originalTask)
         {
 #if FRAMEWORK
@@ -91,6 +102,7 @@ namespace IX.StandardExtensions.Efficiency
 
                 async Task ProcessObjects()
                 {
+                    // Do not change this line (see below)
                     this.cancellationToken.ThrowIfCancellationRequested();
 
                     var objectLimit = this.ObjectLimit;
@@ -108,6 +120,7 @@ namespace IX.StandardExtensions.Efficiency
 
                     while (shouldRetry)
                     {
+                        // Do not change this line. The OperationCancelledException must propagate further down and stop the cycle.
                         this.cancellationToken.ThrowIfCancellationRequested();
 
                         try
@@ -120,17 +133,13 @@ namespace IX.StandardExtensions.Efficiency
                         {
                             shouldRetry = false;
                         }
-
-                        // ReSharper disable once EmptyGeneralCatchClause
-                        catch
+                        catch (Exception ex)
                         {
+                            this.ExceptionOccurredOnSeparateThread?.Invoke(this, new ExceptionOccurredEventArgs(ex));
                         }
                     }
                 }
             }
         }
-#pragma warning restore ERP022 // Unobserved exception in generic exception handler
-#pragma warning restore HAA0603 // Delegate allocation from a method group
-#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
     }
 }

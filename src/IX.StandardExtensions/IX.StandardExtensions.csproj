@@ -1,4 +1,4 @@
-<!--EXTERNAL_PROPERTIES: TargetFrameworkIsFramework-->
+﻿<!--EXTERNAL_PROPERTIES: TargetFrameworkIsFramework-->
 <!--EXTERNAL_PROPERTIES: TargetFrameworkIsStandard-->
 <!--EXTERNAL_PROPERTIES: TargetFramework-->
 <Project Sdk="Microsoft.NET.Sdk">
@@ -13,6 +13,7 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
 
   <!-- Code imports -->

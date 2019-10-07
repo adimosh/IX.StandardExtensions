@@ -8,6 +8,7 @@ using System.Threading;
 using IX.StandardExtensions.ComponentModel;
 using JetBrains.Annotations;
 
+// ReSharper disable once CheckNamespace - We need this here
 namespace IX.Guaranteed
 {
     /// <summary>
