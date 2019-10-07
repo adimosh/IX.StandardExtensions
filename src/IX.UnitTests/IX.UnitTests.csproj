@@ -1,10 +1,17 @@
-﻿<!--EXTERNAL_PROPERTIES: IxDevOpsBuild-->
+<!--EXTERNAL_PROPERTIES: IxDevOpsBuild-->
 <!--EXTERNAL_PROPERTIES: TargetFramework-->
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
     <TargetFrameworks Condition="'$(IxDevOpsBuild)'=='true'">net452;net46;net461;net462;net47;net471;net472;net48;netcoreapp2.1;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(IxDevOpsBuild)'!='true'">net48;netcoreapp3.0</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+    <TargetFrameworks Condition="'$(IxDevOpsBuild)'=='true'">netcoreapp2.1;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IxDevOpsBuild)'!='true'">netcoreapp3.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
