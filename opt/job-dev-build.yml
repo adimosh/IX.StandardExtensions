@@ -12,3 +12,5 @@ steps:
   parameters:
     solutionName: ${{ parameters.solutionName }}
 - template: test-solution.yml
+  parameters:
+    solutionName: ${{ parameters.solutionName }}

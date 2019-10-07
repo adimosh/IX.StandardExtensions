@@ -12,6 +12,8 @@ steps:
   parameters:
     solutionName: ${{ parameters.solutionName }}
 - template: test-solution.yml
+  parameters:
+    solutionName: ${{ parameters.solutionName }}
 - template: clean-solution.yml
   parameters:
     solutionName: ${{ parameters.solutionName }}
@@ -20,3 +22,6 @@ steps:
     solutionName: ${{ parameters.solutionName }}
     configurationName: 'Release'
 - template: test-solution.yml
+  parameters:
+    solutionName: ${{ parameters.solutionName }}
+    configurationName: 'Release'

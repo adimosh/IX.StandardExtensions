@@ -35,7 +35,7 @@ variables:
 
 jobs:
 - job:
-  timeoutInMinutes: 5
+  timeoutInMinutes: 10
   pool:
     name: Azure Pipelines
     vmImage: windows-latest
@@ -44,20 +44,20 @@ jobs:
     parameters:
       solutionName: 'IX.StandardExtensions'
 - job:
-  timeoutInMinutes: 5
+  timeoutInMinutes: 10
   pool:
     name: Azure Pipelines
     vmImage: ubuntu-latest
   steps:
-  - template: ../opt/job-dev-build-notest.yml
+  - template: ../opt/job-dev-build.yml
     parameters:
       solutionName: 'IX.StandardExtensions'
 - job:
-  timeoutInMinutes: 5
+  timeoutInMinutes: 10
   pool:
     name: Azure Pipelines
     vmImage: macOS-latest
   steps:
-  - template: ../opt/job-dev-build-notest.yml
+  - template: ../opt/job-dev-build.yml
     parameters:
       solutionName: 'IX.StandardExtensions'

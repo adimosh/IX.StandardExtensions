@@ -189,8 +189,7 @@ namespace IX.StandardExtensions.Threading
                         CultureInfo currentUICulture, TaskCompletionSource<TResult> tcs, object payload,
                         CancellationToken ct) =
                     (Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
-                        TaskCompletionSource<TResult>
-                        , object, CancellationToken>)rawState;
+                        TaskCompletionSource<TResult>, object, CancellationToken>)rawState;
 #else
             static void WorkItem(Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
                 TaskCompletionSource<TResult>, object, CancellationToken> rawState)

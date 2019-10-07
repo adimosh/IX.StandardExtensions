@@ -1,8 +1,13 @@
 # The standard test process
 
+parameters:
+  solutionName: ''
+  configurationName: 'Debug'
+
 steps:
-- task: VSTest@2
-  displayName: 'Unit tests'
+- task: DotNetCoreCLI@2
+  displayName: 'Unit tests in ${{ parameters.configurationName }}'
   inputs:
-    codeCoverageEnabled: true
-    diagnosticsEnabled: True
+    command: 'test'
+    projects: 'src/${{ parameters.solutionName }}.UnitTests/${{ parameters.solutionName }}.UnitTests.csproj'
+    arguments: '--no-restore -c ${{ parameters.configurationName }}'
