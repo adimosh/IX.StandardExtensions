@@ -38,8 +38,8 @@ beforehand and tries their best to abide by them.
 
 | Build | Status |
 |:-----:|:------:|
-| Master branch | [![Build Status](https://dev.azure.com/adimosh/IX.Framework/_apis/build/status/Master%20CI%20for%20IX.Abstractions?branchName=master)](https://dev.azure.com/adimosh/IX.Framework/_build/latest?definitionId=8&branchName=master) |
-| Continuous integration | [![Build Status](https://dev.azure.com/adimosh/IX.Framework/_apis/build/status/Dev%20CI%20for%20IX.Abstractions?branchName=master)](https://dev.azure.com/adimosh/IX.Framework/_build/latest?definitionId=7&branchName=master) |
+| Master branch | [![Build Status](https://dev.azure.com/adimosh/IX.Framework/_apis/build/status/Master%20CI%20for%20IX.StandardExtensions?branchName=master)](https://dev.azure.com/adimosh/IX.Framework/_build/latest?definitionId=10&branchName=master) |
+| Continuous integration | [![Build Status](https://dev.azure.com/adimosh/IX.Framework/_apis/build/status/Dev%20CI%20for%20IX.StandardExtensions?branchName=master)](https://dev.azure.com/adimosh/IX.Framework/_build/latest?definitionId=12&branchName=master) |
 
 ## Licenses and structure
 
