@@ -49,7 +49,7 @@ jobs:
     name: Azure Pipelines
     vmImage: ubuntu-latest
   steps:
-  - template: ../opt/job-dev-build.yml
+  - template: ../opt/job-dev-build-notest.yml
     parameters:
       solutionName: 'IX.StandardExtensions'
 - job:
@@ -58,6 +58,6 @@ jobs:
     name: Azure Pipelines
     vmImage: macOS-latest
   steps:
-  - template: ../opt/job-dev-build.yml
+  - template: ../opt/job-dev-build-notest.yml
     parameters:
       solutionName: 'IX.StandardExtensions'
