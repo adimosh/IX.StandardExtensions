@@ -212,7 +212,7 @@ namespace IX.StandardExtensions.Threading
 #if NET452
 #pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
                 Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUICulture;
+                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
 #pragma warning restore DE0008 // API is deprecated
 #else
                 CultureInfo.CurrentCulture = currentCulture;
