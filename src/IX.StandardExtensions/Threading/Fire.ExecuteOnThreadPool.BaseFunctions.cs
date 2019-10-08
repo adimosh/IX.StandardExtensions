@@ -66,13 +66,15 @@ namespace IX.StandardExtensions.Threading
                         rawState,
                         nameof(rawState));
 
-                (Func<object, CancellationToken, Task<TResult>> func, CultureInfo currentCulture, CultureInfo currentUICulture, TaskCompletionSource<TResult> tcs, object payload, CancellationToken ct) = (Tuple<Func<object, CancellationToken, Task<TResult>>, CultureInfo, CultureInfo,
+                var (func, currentCulture, currentUiCulture, tcs, payload, ct) = (Tuple<Func<object, CancellationToken, Task<TResult>>, CultureInfo, CultureInfo,
                     TaskCompletionSource<TResult>, object, CancellationToken>)rawState;
 #else
             void WorkItem(Tuple<Func<object, CancellationToken, Task<TResult>>, CultureInfo, CultureInfo,
                 TaskCompletionSource<TResult>, object, CancellationToken> rawState)
             {
-                var (func, currentCulture, currentUICulture, tcs, payload, ct) = rawState;
+                (Func<object, CancellationToken, Task<TResult>> func, CultureInfo currentCulture,
+                    CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs, object payload,
+                    CancellationToken ct) = rawState;
 #endif
 
                 Contract.RequiresNotNullPrivate(
@@ -88,11 +90,11 @@ namespace IX.StandardExtensions.Threading
 #if NET452
 #pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
                 Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUICulture;
+                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
 #pragma warning restore DE0008 // API is deprecated
 #else
                 CultureInfo.CurrentCulture = currentCulture;
-                CultureInfo.CurrentUICulture = currentUICulture;
+                CultureInfo.CurrentUICulture = currentUiCulture;
 #endif
 
                 try
@@ -185,9 +187,7 @@ namespace IX.StandardExtensions.Threading
                     in rawState,
                     nameof(rawState));
 
-                (Func<object, CancellationToken, TResult> func, CultureInfo currentCulture,
-                        CultureInfo currentUICulture, TaskCompletionSource<TResult> tcs, object payload,
-                        CancellationToken ct) =
+                var (func, currentCulture, currentUiCulture, tcs, payload, ct) =
                     (Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
                         TaskCompletionSource<TResult>, object, CancellationToken>)rawState;
 #else
@@ -198,7 +198,9 @@ namespace IX.StandardExtensions.Threading
                     in rawState,
                     nameof(rawState));
 
-                var (func, currentCulture, currentUICulture, tcs, payload, ct) = rawState;
+                (Func<object, CancellationToken, TResult> func, CultureInfo currentCulture,
+                    CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs, object payload,
+                    CancellationToken ct) = rawState;
 #endif
 
                 if (ct.IsCancellationRequested)
@@ -214,7 +216,7 @@ namespace IX.StandardExtensions.Threading
 #pragma warning restore DE0008 // API is deprecated
 #else
                 CultureInfo.CurrentCulture = currentCulture;
-                CultureInfo.CurrentUICulture = currentUICulture;
+                CultureInfo.CurrentUICulture = currentUiCulture;
 #endif
 
                 if (ct.IsCancellationRequested)
