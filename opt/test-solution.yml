@@ -1,7 +1,6 @@
 # The standard test process
 
 parameters:
-  solutionName: ''
   configurationName: 'Debug'
 
 steps:
@@ -9,5 +8,5 @@ steps:
   displayName: 'Unit tests in ${{ parameters.configurationName }}'
   inputs:
     command: 'test'
-    projects: 'src/${{ parameters.solutionName }}.UnitTests/${{ parameters.solutionName }}.UnitTests.csproj'
+    projects: 'src/IX.UnitTests/IX.UnitTests.csproj'
     arguments: '--no-restore -c ${{ parameters.configurationName }}'
