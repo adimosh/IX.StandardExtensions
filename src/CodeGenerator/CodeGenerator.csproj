@@ -91,19 +91,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="IX.StandardExtensions\Threading\ReaderWriterSynchronizedBase.ActionsAndFuncs.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ReaderWriterSynchronizedBase.ActionsAndFuncs.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="IX.StandardExtensions\Threading\ReaderWriterSynchronizedBase.ActionsAndFuncs.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ReaderWriterSynchronizedBase.ActionsAndFuncs.tt</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="IX.StandardExtensions\Efficiency\InDelegates.WithParameters.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>InDelegates.WithParameters.cs</LastGenOutput>
