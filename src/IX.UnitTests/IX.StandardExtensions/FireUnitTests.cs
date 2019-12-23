@@ -10,7 +10,6 @@ using IX.StandardExtensions.TestUtils;
 using IX.StandardExtensions.Threading;
 using Xunit;
 using Xunit.Abstractions;
-using ManualResetEventSlim = IX.System.Threading.ManualResetEventSlim;
 
 namespace IX.UnitTests.IX.StandardExtensions
 {
@@ -59,7 +58,7 @@ namespace IX.UnitTests.IX.StandardExtensions
                         ev.Set();
                     }, mre);
 
-                result = mre.WaitOne(MaxWaitTime);
+                result = mre.Wait(MaxWaitTime);
             }
 
             // ASSERT
@@ -103,7 +102,7 @@ namespace IX.UnitTests.IX.StandardExtensions
                         ev.Set();
                     }, mre);
 
-                result = mre.WaitOne(MaxWaitTime);
+                result = mre.Wait(MaxWaitTime);
             }
 
             // ASSERT
@@ -167,7 +166,7 @@ namespace IX.UnitTests.IX.StandardExtensions
                         mre.Set();
                     });
 
-                result = mre.WaitOne(MaxWaitTime);
+                result = mre.Wait(MaxWaitTime);
 #if DEBUG
                 this.output.WriteLine($"Outer method unlocked after {(DateTime.UtcNow - dt).TotalMilliseconds} ms.");
 #endif
