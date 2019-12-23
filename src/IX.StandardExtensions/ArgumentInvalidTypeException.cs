@@ -90,7 +90,7 @@ namespace IX.StandardExtensions
             string argumentName,
             Exception internalException)
             : base(
-                message,
+                string.Format(message, argumentName),
                 internalException)
         {
         }

@@ -14,10 +14,12 @@ using System.Threading.Tasks;
 
 using IX.StandardExtensions.Contracts;
 
+using JetBrains.Annotations;
+
 namespace IX.StandardExtensions.Threading
 {
     /// <summary>
-    /// A class containing extension methods for <see cref="TaskFactory"/>, mostly intended for use with <see cref="Task.Factory"/>.
+    ///     A class containing extension methods for <see cref="TaskFactory"/>, mostly intended for use with <see cref="Task.Factory"/>.
     /// </summary>
     public static partial class TaskFactoryExtensions
     {
@@ -40,12 +42,12 @@ for (int i = 1; i <= 8; i++)
 
     string paramTypes = string.Join(", ", types);
     string paramNames = string.Join(", ", names);
-    string paramNameTypes = string.Join(", ", nameTypes);
+    string paramNameTypes = string.Join($",{Environment.NewLine}            ", nameTypes);
     string paramParameters = string.Join(", ", parameters);
 #>
 
         /// <summary>
-        /// Starts a task on a new thread.
+        ///     Starts a task on a new thread.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -67,7 +69,12 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> that represents the started task.</returns>
-        public static Task StartOnDefaultTaskScheduler<<#= paramTypes #>>(this TaskFactory taskFactory, Action<<#= paramTypes #>> action, <#= paramNameTypes #>, CancellationToken cancellationToken = default)
+        [NotNull]
+        public static Task StartOnDefaultTaskScheduler<<#= paramTypes #>>(
+            [NotNull] this TaskFactory taskFactory,
+            [NotNull] Action<<#= paramTypes #>> action,
+            <#= paramNameTypes #>,
+            CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(in action, nameof(action));
 
@@ -103,7 +110,7 @@ for (int i = 1; i <= 8; i++)
         }
 
         /// <summary>
-        /// Starts a long-running task on a new thread.
+        ///     Starts a long-running task on a new thread.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -125,7 +132,12 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> that represents the started task.</returns>
-        public static Task StartLongRunningOnDefaultTaskScheduler<<#= paramTypes #>>(this TaskFactory taskFactory, Action<<#= paramTypes #>> action, <#= paramNameTypes #>, CancellationToken cancellationToken = default)
+        [NotNull]
+        public static Task StartLongRunningOnDefaultTaskScheduler<<#= paramTypes #>>(
+            [NotNull] this TaskFactory taskFactory,
+            [NotNull] Action<<#= paramTypes #>> action,
+            <#= paramNameTypes #>,
+            CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(in action, nameof(action));
 
@@ -161,7 +173,7 @@ for (int i = 1; i <= 8; i++)
         }
 
         /// <summary>
-        /// Starts a task on a new thread.
+        ///     Starts a task on a new thread.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -184,7 +196,12 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> that represents the started task.</returns>
-        public static Task<TResult> StartOnDefaultTaskScheduler<<#= paramTypes #>, TResult>(this TaskFactory taskFactory, Func<<#= paramTypes #>, TResult> action, <#= paramNameTypes #>, CancellationToken cancellationToken = default)
+        [NotNull]
+        public static Task<TResult> StartOnDefaultTaskScheduler<<#= paramTypes #>, TResult>(
+            [NotNull] this TaskFactory taskFactory,
+            [NotNull] Func<<#= paramTypes #>, TResult> action,
+            <#= paramNameTypes #>,
+            CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(in action, nameof(action));
 
@@ -220,7 +237,7 @@ for (int i = 1; i <= 8; i++)
         }
 
         /// <summary>
-        /// Starts a long-running task on a new thread.
+        ///     Starts a long-running task on a new thread.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -243,7 +260,11 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> that represents the started task.</returns>
-        public static Task<TResult> StartLongRunningOnDefaultTaskScheduler<<#= paramTypes #>, TResult>(this TaskFactory taskFactory, Func<<#= paramTypes #>, TResult> action, <#= paramNameTypes #>, CancellationToken cancellationToken = default)
+        public static Task<TResult> StartLongRunningOnDefaultTaskScheduler<<#= paramTypes #>, TResult>(
+            [NotNull] this TaskFactory taskFactory,
+            [NotNull] Func<<#= paramTypes #>, TResult> action,
+            <#= paramNameTypes #>,
+            CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(in action, nameof(action));
 

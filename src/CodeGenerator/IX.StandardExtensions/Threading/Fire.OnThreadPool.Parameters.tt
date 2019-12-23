@@ -14,10 +14,12 @@ using System.Threading.Tasks;
 
 using IX.StandardExtensions.Contracts;
 
+using JetBrains.Annotations;
+
 namespace IX.StandardExtensions.Threading
 {
     /// <summary>
-    /// A class that provides methods and extensions to fire events.
+    ///     A class that provides methods and extensions to fire events.
     /// </summary>
     public static partial class Fire
     {
@@ -48,12 +50,12 @@ for (int i = 1; i <= 8; i++)
 
     string paramTypes = string.Join(", ", types);
     string paramNames = string.Join(", ", names);
-    string paramNameTypes = string.Join($", ", nameTypes);
+    string paramNameTypes = string.Join($",{Environment.NewLine}            ", nameTypes);
     string paramParameters = string.Join(", ", parameters);
 #>
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -75,8 +77,9 @@ for (int i = 1; i <= 8; i++)
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
+        [NotNull]
         public static Task OnThreadPool<<#= paramTypes #>>(
-            Action<<#= paramTypes #>> action,
+            [NotNull] Action<<#= paramTypes #>> action,
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -94,7 +97,7 @@ for (int i = 1; i <= 8; i++)
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -115,8 +118,9 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<<#= paramTypes #>>(
-            Action<<#= paramTypes #>, CancellationToken> action,
+            [NotNull] Action<<#= paramTypes #>, CancellationToken> action,
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -134,7 +138,7 @@ for (int i = 1; i <= 8; i++)
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -155,8 +159,9 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<<#= paramTypes #>>(
-            Func<<#= paramTypes #>, Task> action,
+            [NotNull] Func<<#= paramTypes #>, Task> action,
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -174,7 +179,7 @@ for (int i = 1; i <= 8; i++)
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -195,8 +200,9 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<<#= paramTypes #>>(
-            Func<<#= paramTypes #>, CancellationToken, Task> action,
+            [NotNull] Func<<#= paramTypes #>, CancellationToken, Task> action,
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -214,7 +220,7 @@ for (int i = 1; i <= 8; i++)
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -236,8 +242,9 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<<#= paramTypes #>, TResult>(
-            Func<<#= paramTypes #>, TResult> action,
+            [NotNull] Func<<#= paramTypes #>, TResult> action,
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -255,7 +262,7 @@ for (int i = 1; i <= 8; i++)
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -277,8 +284,9 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<<#= paramTypes #>, TResult>(
-            Func<<#= paramTypes #>, CancellationToken, TResult> action,
+            [NotNull] Func<<#= paramTypes #>, CancellationToken, TResult> action,
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -296,7 +304,7 @@ for (int i = 1; i <= 8; i++)
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -318,8 +326,9 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<<#= paramTypes #>, TResult>(
-            Func<<#= paramTypes #>, Task<TResult>> action,
+            [NotNull] Func<<#= paramTypes #>, Task<TResult>> action,
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -337,7 +346,7 @@ for (int i = 1; i <= 8; i++)
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -359,8 +368,9 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<<#= paramTypes #>, TResult>(
-            Func<<#= paramTypes #>, CancellationToken, Task<TResult>> action,
+            [NotNull] Func<<#= paramTypes #>, CancellationToken, Task<TResult>> action,
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
