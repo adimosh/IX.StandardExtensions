@@ -5,6 +5,7 @@
 using System;
 using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Threading
 {
@@ -19,8 +20,9 @@ namespace IX.StandardExtensions.Threading
         /// <param name="tickerDelegate">The ticker delegate.</param>
         /// <param name="milliseconds">The milliseconds.</param>
         /// <returns>An interruptible handle for external control of the ticker.</returns>
+        [NotNull]
         public static IInterruptible Periodically(
-            FirePeriodicallyTicker tickerDelegate,
+            [NotNull] FirePeriodicallyTicker tickerDelegate,
             int milliseconds) => new FirePeriodicallyContext(
             tickerDelegate,
             null,
@@ -32,8 +34,9 @@ namespace IX.StandardExtensions.Threading
         /// <param name="tickerDelegate">The ticker delegate.</param>
         /// <param name="timeSpan">The time span.</param>
         /// <returns>An interruptible handle for external control of the ticker.</returns>
+        [NotNull]
         public static IInterruptible Periodically(
-            FirePeriodicallyTicker tickerDelegate,
+            [NotNull] FirePeriodicallyTicker tickerDelegate,
             TimeSpan timeSpan) => new FirePeriodicallyContext(
             tickerDelegate,
             null,
@@ -46,8 +49,9 @@ namespace IX.StandardExtensions.Threading
         /// <param name="initialDelay">The initial delay.</param>
         /// <param name="timeSpan">The time span.</param>
         /// <returns>An interruptible handle for external control of the ticker.</returns>
+        [NotNull]
         public static IInterruptible Periodically(
-            FirePeriodicallyTicker tickerDelegate,
+            [NotNull] FirePeriodicallyTicker tickerDelegate,
             TimeSpan initialDelay,
             TimeSpan timeSpan) => new FirePeriodicallyContext(
             tickerDelegate,
@@ -62,9 +66,10 @@ namespace IX.StandardExtensions.Threading
         /// <param name="payload">The payload.</param>
         /// <param name="milliseconds">The milliseconds.</param>
         /// <returns>An interruptible handle for external control of the ticker.</returns>
+        [NotNull]
         public static IInterruptible Periodically(
-            FirePeriodicallyTicker tickerDelegate,
-            object payload,
+            [NotNull] FirePeriodicallyTicker tickerDelegate,
+            [NotNull] object payload,
             int milliseconds) => new FirePeriodicallyContext(
             tickerDelegate,
             payload,
@@ -77,9 +82,10 @@ namespace IX.StandardExtensions.Threading
         /// <param name="payload">The payload.</param>
         /// <param name="timeSpan">The time span.</param>
         /// <returns>An interruptible handle for external control of the ticker.</returns>
+        [NotNull]
         public static IInterruptible Periodically(
-            FirePeriodicallyTicker tickerDelegate,
-            object payload,
+            [NotNull] FirePeriodicallyTicker tickerDelegate,
+            [NotNull] object payload,
             TimeSpan timeSpan) => new FirePeriodicallyContext(
             tickerDelegate,
             payload,
@@ -93,9 +99,10 @@ namespace IX.StandardExtensions.Threading
         /// <param name="initialDelay">The initial delay.</param>
         /// <param name="timeSpan">The time span.</param>
         /// <returns>An interruptible handle for external control of the ticker.</returns>
+        [NotNull]
         public static IInterruptible Periodically(
-            FirePeriodicallyTicker tickerDelegate,
-            object payload,
+            [NotNull] FirePeriodicallyTicker tickerDelegate,
+            [NotNull] object payload,
             TimeSpan initialDelay,
             TimeSpan timeSpan) => new FirePeriodicallyContext(
             tickerDelegate,
@@ -104,8 +111,8 @@ namespace IX.StandardExtensions.Threading
             timeSpan);
 
         private static void StandardContinuation(
-            Task task,
-            object innerState)
+            [NotNull] Task task,
+            [NotNull] object innerState)
         {
             Contract.RequiresNotNullPrivate(
                 in task,

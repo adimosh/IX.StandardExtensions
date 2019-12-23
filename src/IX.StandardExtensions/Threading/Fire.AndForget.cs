@@ -25,7 +25,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         public static void AndForget(
-            [CanBeNull] Action action,
+            [NotNull] Action action,
             CancellationToken cancellationToken = default) => AndForget(
             action,
             EnvironmentSettings.DefaultFireAndForgetUnhandledExceptionHandler,
@@ -39,8 +39,8 @@ namespace IX.StandardExtensions.Threading
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         public static void AndForget(
-            [CanBeNull] Action action,
-            [CanBeNull] Action<Exception> exceptionHandler,
+            [NotNull] Action action,
+            [CanBeNull] Action<Exception>? exceptionHandler,
             CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(
@@ -70,7 +70,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         public static void AndForget(
-            [CanBeNull] Action<CancellationToken> action,
+            [NotNull] Action<CancellationToken> action,
             CancellationToken cancellationToken = default) => AndForget(
             action,
             EnvironmentSettings.DefaultFireAndForgetUnhandledExceptionHandler,
@@ -84,8 +84,8 @@ namespace IX.StandardExtensions.Threading
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         public static void AndForget(
-            [CanBeNull] Action<CancellationToken> action,
-            [CanBeNull] Action<Exception> exceptionHandler,
+            [NotNull] Action<CancellationToken> action,
+            [CanBeNull] Action<Exception>? exceptionHandler,
             CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(
@@ -115,7 +115,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         public static void AndForget(
-            [CanBeNull] Func<Task> action,
+            [NotNull] Func<Task> action,
             CancellationToken cancellationToken = default) => AndForget(
             action,
             EnvironmentSettings.DefaultFireAndForgetUnhandledExceptionHandler,
@@ -129,8 +129,8 @@ namespace IX.StandardExtensions.Threading
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         public static void AndForget(
-            [CanBeNull] Func<Task> action,
-            [CanBeNull] Action<Exception> exceptionHandler,
+            [NotNull] Func<Task> action,
+            [CanBeNull] Action<Exception>? exceptionHandler,
             CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(
@@ -163,7 +163,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         public static void AndForget(
-            [CanBeNull] Func<CancellationToken, Task> action,
+            [NotNull] Func<CancellationToken, Task> action,
             CancellationToken cancellationToken = default) => AndForget(
             action,
             EnvironmentSettings.DefaultFireAndForgetUnhandledExceptionHandler,
@@ -177,8 +177,8 @@ namespace IX.StandardExtensions.Threading
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         public static void AndForget(
-            [CanBeNull] Func<CancellationToken, Task> action,
-            [CanBeNull] Action<Exception> exceptionHandler,
+            [NotNull] Func<CancellationToken, Task> action,
+            [CanBeNull] Action<Exception>? exceptionHandler,
             CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(

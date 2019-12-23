@@ -5,6 +5,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Threading
 {
@@ -25,8 +26,9 @@ namespace IX.StandardExtensions.Threading
         ///         on a separate thread.
         ///     </para>
         /// </remarks>
+        [NotNull]
         public static Task OnThreadPool(
-            Action action,
+            [NotNull] Action action,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
             action,
             cancellationToken);
@@ -43,8 +45,9 @@ namespace IX.StandardExtensions.Threading
         ///         on a separate thread.
         ///     </para>
         /// </remarks>
+        [NotNull]
         public static Task OnThreadPool(
-            Action<CancellationToken> action,
+            [NotNull] Action<CancellationToken> action,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
             action,
             cancellationToken);
@@ -62,8 +65,9 @@ namespace IX.StandardExtensions.Threading
         ///         on a separate thread.
         ///     </para>
         /// </remarks>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TResult>(
-            Func<TResult> action,
+            [NotNull] Func<TResult> action,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
             action,
             cancellationToken);
@@ -81,8 +85,9 @@ namespace IX.StandardExtensions.Threading
         ///         on a separate thread.
         ///     </para>
         /// </remarks>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TResult>(
-            Func<CancellationToken, TResult> action,
+            [NotNull] Func<CancellationToken, TResult> action,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
             action,
             cancellationToken);
