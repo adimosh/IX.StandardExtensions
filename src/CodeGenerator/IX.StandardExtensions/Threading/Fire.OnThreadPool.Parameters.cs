@@ -8,17 +8,19 @@ using System.Threading.Tasks;
 
 using IX.StandardExtensions.Contracts;
 
+using JetBrains.Annotations;
+
 namespace IX.StandardExtensions.Threading
 {
     /// <summary>
-    /// A class that provides methods and extensions to fire events.
+    ///     A class that provides methods and extensions to fire events.
     /// </summary>
     public static partial class Fire
     {
 #pragma warning disable SA1117 // Parameters should be on same line or separate lines - This is auto-generated code, so we don't really care
 #pragma warning disable HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance - The lambdas themselves rely on generics
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <param name="action">The action to execute.</param>
@@ -26,8 +28,9 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
+        [NotNull]
         public static Task OnThreadPool<TParam1>(
-            Action<TParam1> action,
+            [NotNull] Action<TParam1> action,
             TParam1 param1,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -45,15 +48,16 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <param name="action">The action to execute.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1>(
-            Action<TParam1, CancellationToken> action,
+            [NotNull] Action<TParam1, CancellationToken> action,
             TParam1 param1,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -71,15 +75,16 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <param name="action">The action to execute.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1>(
-            Func<TParam1, Task> action,
+            [NotNull] Func<TParam1, Task> action,
             TParam1 param1,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -97,15 +102,16 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <param name="action">The action to execute.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1>(
-            Func<TParam1, CancellationToken, Task> action,
+            [NotNull] Func<TParam1, CancellationToken, Task> action,
             TParam1 param1,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -123,7 +129,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TResult">The expected result type.</typeparam>
@@ -131,8 +137,9 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TResult>(
-            Func<TParam1, TResult> action,
+            [NotNull] Func<TParam1, TResult> action,
             TParam1 param1,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -150,7 +157,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TResult">The expected result type.</typeparam>
@@ -158,8 +165,9 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TResult>(
-            Func<TParam1, CancellationToken, TResult> action,
+            [NotNull] Func<TParam1, CancellationToken, TResult> action,
             TParam1 param1,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -177,7 +185,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TResult">The expected result type.</typeparam>
@@ -185,8 +193,9 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TResult>(
-            Func<TParam1, Task<TResult>> action,
+            [NotNull] Func<TParam1, Task<TResult>> action,
             TParam1 param1,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -204,7 +213,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TResult">The expected result type.</typeparam>
@@ -212,8 +221,9 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TResult>(
-            Func<TParam1, CancellationToken, Task<TResult>> action,
+            [NotNull] Func<TParam1, CancellationToken, Task<TResult>> action,
             TParam1 param1,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
@@ -231,7 +241,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -241,9 +251,11 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2>(
-            Action<TParam1, TParam2> action,
-            TParam1 param1, TParam2 param2,
+            [NotNull] Action<TParam1, TParam2> action,
+            TParam1 param1,
+            TParam2 param2,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -260,7 +272,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -269,9 +281,11 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2>(
-            Action<TParam1, TParam2, CancellationToken> action,
-            TParam1 param1, TParam2 param2,
+            [NotNull] Action<TParam1, TParam2, CancellationToken> action,
+            TParam1 param1,
+            TParam2 param2,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -288,7 +302,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -297,9 +311,11 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2>(
-            Func<TParam1, TParam2, Task> action,
-            TParam1 param1, TParam2 param2,
+            [NotNull] Func<TParam1, TParam2, Task> action,
+            TParam1 param1,
+            TParam2 param2,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -316,7 +332,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -325,9 +341,11 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2>(
-            Func<TParam1, TParam2, CancellationToken, Task> action,
-            TParam1 param1, TParam2 param2,
+            [NotNull] Func<TParam1, TParam2, CancellationToken, Task> action,
+            TParam1 param1,
+            TParam2 param2,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -344,7 +362,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -354,9 +372,11 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TResult>(
-            Func<TParam1, TParam2, TResult> action,
-            TParam1 param1, TParam2 param2,
+            [NotNull] Func<TParam1, TParam2, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -373,7 +393,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -383,9 +403,11 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TResult>(
-            Func<TParam1, TParam2, CancellationToken, TResult> action,
-            TParam1 param1, TParam2 param2,
+            [NotNull] Func<TParam1, TParam2, CancellationToken, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -402,7 +424,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -412,9 +434,11 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TResult>(
-            Func<TParam1, TParam2, Task<TResult>> action,
-            TParam1 param1, TParam2 param2,
+            [NotNull] Func<TParam1, TParam2, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -431,7 +455,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -441,9 +465,11 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TResult>(
-            Func<TParam1, TParam2, CancellationToken, Task<TResult>> action,
-            TParam1 param1, TParam2 param2,
+            [NotNull] Func<TParam1, TParam2, CancellationToken, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -460,7 +486,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -472,9 +498,12 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3>(
-            Action<TParam1, TParam2, TParam3> action,
-            TParam1 param1, TParam2 param2, TParam3 param3,
+            [NotNull] Action<TParam1, TParam2, TParam3> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -491,7 +520,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -502,9 +531,12 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3>(
-            Action<TParam1, TParam2, TParam3, CancellationToken> action,
-            TParam1 param1, TParam2 param2, TParam3 param3,
+            [NotNull] Action<TParam1, TParam2, TParam3, CancellationToken> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -521,7 +553,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -532,9 +564,12 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3>(
-            Func<TParam1, TParam2, TParam3, Task> action,
-            TParam1 param1, TParam2 param2, TParam3 param3,
+            [NotNull] Func<TParam1, TParam2, TParam3, Task> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -551,7 +586,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -562,9 +597,12 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3>(
-            Func<TParam1, TParam2, TParam3, CancellationToken, Task> action,
-            TParam1 param1, TParam2 param2, TParam3 param3,
+            [NotNull] Func<TParam1, TParam2, TParam3, CancellationToken, Task> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -581,7 +619,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -593,9 +631,12 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TResult>(
-            Func<TParam1, TParam2, TParam3, TResult> action,
-            TParam1 param1, TParam2 param2, TParam3 param3,
+            [NotNull] Func<TParam1, TParam2, TParam3, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -612,7 +653,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -624,9 +665,12 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TResult>(
-            Func<TParam1, TParam2, TParam3, CancellationToken, TResult> action,
-            TParam1 param1, TParam2 param2, TParam3 param3,
+            [NotNull] Func<TParam1, TParam2, TParam3, CancellationToken, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -643,7 +687,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -655,9 +699,12 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TResult>(
-            Func<TParam1, TParam2, TParam3, Task<TResult>> action,
-            TParam1 param1, TParam2 param2, TParam3 param3,
+            [NotNull] Func<TParam1, TParam2, TParam3, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -674,7 +721,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -686,9 +733,12 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TResult>(
-            Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>> action,
-            TParam1 param1, TParam2 param2, TParam3 param3,
+            [NotNull] Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -705,7 +755,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -719,9 +769,13 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4>(
-            Action<TParam1, TParam2, TParam3, TParam4> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
+            [NotNull] Action<TParam1, TParam2, TParam3, TParam4> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -738,7 +792,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -751,9 +805,13 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4>(
-            Action<TParam1, TParam2, TParam3, TParam4, CancellationToken> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
+            [NotNull] Action<TParam1, TParam2, TParam3, TParam4, CancellationToken> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -770,7 +828,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -783,9 +841,13 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4>(
-            Func<TParam1, TParam2, TParam3, TParam4, Task> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, Task> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -802,7 +864,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -815,9 +877,13 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4>(
-            Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -834,7 +900,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -848,9 +914,13 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TResult> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -867,7 +937,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -881,9 +951,13 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -900,7 +974,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -914,9 +988,13 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -933,7 +1011,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -947,9 +1025,13 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -966,7 +1048,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -982,9 +1064,14 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5>(
-            Action<TParam1, TParam2, TParam3, TParam4, TParam5> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
+            [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1001,7 +1088,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1016,9 +1103,14 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5>(
-            Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
+            [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1035,7 +1127,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1050,9 +1142,14 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1069,7 +1166,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1084,9 +1181,14 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1103,7 +1205,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1119,9 +1221,14 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1138,7 +1245,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1154,9 +1261,14 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1173,7 +1285,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1189,9 +1301,14 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1208,7 +1325,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1224,9 +1341,14 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1243,7 +1365,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1261,9 +1383,15 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
-            Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
+            [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1280,7 +1408,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1297,9 +1425,15 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
-            Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
+            [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1316,7 +1450,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1333,9 +1467,15 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1352,7 +1492,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1369,9 +1509,15 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1388,7 +1534,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1406,9 +1552,15 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1425,7 +1577,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1443,9 +1595,15 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1462,7 +1620,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1480,9 +1638,15 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1499,7 +1663,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1517,9 +1681,15 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1536,7 +1706,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1556,9 +1726,16 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
-            Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
+            [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1575,7 +1752,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1594,9 +1771,16 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
-            Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
+            [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1613,7 +1797,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1632,9 +1816,16 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1651,7 +1842,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1670,9 +1861,16 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1689,7 +1887,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1709,9 +1907,16 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1728,7 +1933,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1748,9 +1953,16 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1767,7 +1979,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1787,9 +1999,16 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1806,7 +2025,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1826,9 +2045,16 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1845,7 +2071,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1867,9 +2093,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
-            Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
+            [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
+            TParam8 param8,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1886,7 +2120,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1907,9 +2141,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
-            Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
+            [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
+            TParam8 param8,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1926,7 +2168,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1947,9 +2189,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
+            TParam8 param8,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -1966,7 +2216,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -1987,9 +2237,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
+            TParam8 param8,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -2006,7 +2264,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -2028,9 +2286,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
+            TParam8 param8,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -2047,7 +2313,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -2069,9 +2335,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
+            TParam8 param8,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -2088,7 +2362,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -2110,9 +2384,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
+            TParam8 param8,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
@@ -2129,7 +2411,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
 
         /// <summary>
-        /// Starts an action on a thread in the thread pool.
+        ///     Starts an action on a thread in the thread pool.
         /// </summary>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked method at index 1.</typeparam>
@@ -2151,9 +2433,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
+        [NotNull]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>(
-            Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>> action,
-            TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8,
+            [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>> action,
+            TParam1 param1,
+            TParam2 param2,
+            TParam3 param3,
+            TParam4 param4,
+            TParam5 param5,
+            TParam6 param6,
+            TParam7 param7,
+            TParam8 param8,
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
