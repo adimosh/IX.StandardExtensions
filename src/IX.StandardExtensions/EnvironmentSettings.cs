@@ -17,6 +17,6 @@ namespace IX.StandardExtensions
         ///     Gets or sets a default unhandled exception handler for fire-and-forget scenarios.
         /// </summary>
         /// <value>The default unhandled exception handler.</value>
-        public static Action<Exception> DefaultFireAndForgetUnhandledExceptionHandler { get; set; }
+        public static Action<Exception>? DefaultFireAndForgetUnhandledExceptionHandler { get; set; }
     }
 }

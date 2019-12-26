@@ -3,10 +3,10 @@
 // </copyright>
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Threading
 {
@@ -15,8 +15,9 @@ namespace IX.StandardExtensions.Threading
     /// </summary>
     public partial class Fire
     {
+        [NotNull]
         private static Task ExecuteOnThreadPool(
-            Action action,
+            [NotNull] Action action,
             CancellationToken cancellationToken = default) =>
             ExecuteOnThreadPool(
                 (
@@ -38,8 +39,9 @@ namespace IX.StandardExtensions.Threading
                 }, action,
                 cancellationToken);
 
+        [NotNull]
         private static Task ExecuteOnThreadPool(
-            Action<CancellationToken> action,
+            [NotNull] Action<CancellationToken> action,
             CancellationToken cancellationToken = default) =>
             ExecuteOnThreadPool(
                 (
@@ -59,9 +61,13 @@ namespace IX.StandardExtensions.Threading
                 }, action,
                 cancellationToken);
 
-        [SuppressMessage("Performance", "HAA0603:Delegate allocation from a method group", Justification = "This is unavoidable in this case.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is unavoidable in this case.")]
+        [NotNull]
         private static Task<TResult> ExecuteOnThreadPool<TResult>(
-            Func<TResult> action,
+            [NotNull] Func<TResult> action,
             CancellationToken cancellationToken = default)
         {
             static TResult Action(
@@ -86,9 +92,13 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
         }
 
-        [SuppressMessage("Performance", "HAA0603:Delegate allocation from a method group", Justification = "This is unavoidable in this case.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is unavoidable in this case.")]
+        [NotNull]
         private static Task<TResult> ExecuteOnThreadPool<TResult>(
-            Func<CancellationToken, TResult> action,
+            [NotNull] Func<CancellationToken, TResult> action,
             CancellationToken cancellationToken = default)
         {
             static TResult Action(
@@ -111,28 +121,7 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
         }
 
-        private static Task ExecuteOnThreadPool(
-            Action<object> action,
-            object state,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
-            (
-                st,
-                ct) =>
-            {
-                Contract.RequiresNotNullPrivate(
-                    in st,
-                    nameof(st));
-                Contract.RequiresArgumentOfTypePrivate<Tuple<Action<object>, object>>(
-                    st,
-                    nameof(st));
-
-                var innerState = (Tuple<Action<object>, object>)st;
-                innerState.Item1(innerState.Item2);
-                return 0;
-            }, new Tuple<Action<object>, object>(
-                action,
-                state), cancellationToken);
-
+        [NotNull]
         private static Task ExecuteOnThreadPool(
             Action<object, CancellationToken> action,
             object state,
@@ -156,36 +145,5 @@ namespace IX.StandardExtensions.Threading
             }, new Tuple<Action<object, CancellationToken>, object>(
                 action,
                 state), cancellationToken);
-
-        [SuppressMessage("Performance", "HAA0603:Delegate allocation from a method group", Justification = "This is unavoidable in this case.")]
-        private static Task<TResult> ExecuteOnThreadPool<TResult>(
-            Func<object, TResult> action,
-            object state,
-            CancellationToken cancellationToken = default)
-        {
-            static TResult Action(
-                object st,
-                CancellationToken ct)
-            {
-                Contract.RequiresNotNullPrivate(
-                    in st,
-                    nameof(st));
-                Contract.RequiresArgumentOfTypePrivate<Tuple<Func<object, TResult>, object>>(
-                    st,
-                    nameof(st));
-
-                ct.ThrowIfCancellationRequested();
-
-                var innerState = (Tuple<Func<object, TResult>, object>)st;
-
-                return innerState.Item1(innerState.Item2);
-            }
-
-            return ExecuteOnThreadPool(
-                Action,
-                new Tuple<Func<object, TResult>, object>(
-                    action,
-                    state), cancellationToken);
-        }
     }
 }

@@ -24,16 +24,7 @@ namespace IX.StandardExtensions
         /// Initializes a new instance of the <see cref="NotImplementedByDesignException"/> class.
         /// </summary>
         public NotImplementedByDesignException()
-            : this(Resources.ErrorNotImplementedByDesign, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NotImplementedByDesignException"/> class.
-        /// </summary>
-        /// <param name="message">The error message that explains the reason for the exception.</param>
-        public NotImplementedByDesignException(string message)
-            : this(message, null)
+            : this(Resources.ErrorNotImplementedByDesign)
         {
         }
 
@@ -42,7 +33,7 @@ namespace IX.StandardExtensions
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="inner">The exception that is the cause of the current exception. If the <paramref name="inner" /> parameter is not null, the current exception is raised in a catch block that handles the inner exception.</param>
-        public NotImplementedByDesignException(string message, Exception inner)
+        public NotImplementedByDesignException(string message, Exception? inner = null)
             : base(message, inner)
         {
         }

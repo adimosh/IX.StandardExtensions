@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using IX.StandardExtensions.ComponentModel;
 using JetBrains.Annotations;
 
@@ -21,7 +20,7 @@ namespace IX.Guaranteed
     [PublicAPI]
     public abstract class OperationTransaction : DisposableBase
     {
-        private List<Tuple<Action<object>, object>> revertSteps;
+        private readonly List<Tuple<Action<object>, object>> revertSteps;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationTransaction"/> class.
@@ -50,7 +49,7 @@ namespace IX.Guaranteed
         protected void AddRevertStep(Action<object> action, object state)
             => this.revertSteps.Add(
                 new Tuple<Action<object>, object>(
-                    action ?? throw new ArgumentNullException(nameof(action)),
+                    action,
                     state));
 
         /// <summary>
@@ -77,7 +76,7 @@ namespace IX.Guaranteed
                 }
             }
 
-            Interlocked.Exchange(ref this.revertSteps, null)?.Clear();
+            this.revertSteps.Clear();
         }
     }
 }
