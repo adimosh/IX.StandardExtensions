@@ -25,9 +25,10 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action to start on a new thread.</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task" /> that represents the started task.</returns>
+        [NotNull]
         public static Task StartOnDefaultTaskScheduler(
-            this TaskFactory taskFactory,
-            Action action,
+            [NotNull] this TaskFactory taskFactory,
+            [NotNull] Action action,
             CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(
@@ -49,9 +50,10 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action to start on a new thread.</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task" /> that represents the started long-running task.</returns>
+        [NotNull]
         public static Task StartLongRunningOnDefaultTaskScheduler(
-            this TaskFactory taskFactory,
-            Action action,
+            [NotNull] this TaskFactory taskFactory,
+            [NotNull] Action action,
             CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(
@@ -74,9 +76,10 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action to start on a new thread.</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task" /> that represents the started task.</returns>
+        [NotNull]
         public static Task<TResult> StartOnDefaultTaskScheduler<TResult>(
-            this TaskFactory taskFactory,
-            Func<TResult> action,
+            [NotNull] this TaskFactory taskFactory,
+            [NotNull] Func<TResult> action,
             CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(
@@ -99,9 +102,10 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action to start on a new thread.</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task" /> that represents the started long-running task.</returns>
+        [NotNull]
         public static Task<TResult> StartLongRunningOnDefaultTaskScheduler<TResult>(
-            this TaskFactory taskFactory,
-            Func<TResult> action,
+            [NotNull] this TaskFactory taskFactory,
+            [NotNull] Func<TResult> action,
             CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(
@@ -118,9 +122,10 @@ namespace IX.StandardExtensions.Threading
 
 #pragma warning disable HAA0603 // Delegate allocation from a method group - This is expected
 #pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
+        [NotNull]
         internal static Task StartWithStateOnDefaultTaskScheduler(
-            TaskFactory taskFactory,
-            Action<object> action,
+            [NotNull] TaskFactory taskFactory,
+            [NotNull] Action<object> action,
             object state,
             bool longRunning,
             CancellationToken cancellationToken = default)
@@ -170,6 +175,7 @@ namespace IX.StandardExtensions.Threading
             }
         }
 
+        [NotNull]
         internal static Task<TResult> StartWithStateOnDefaultTaskScheduler<TResult>(
             TaskFactory taskFactory,
             Func<object, TResult> action,
