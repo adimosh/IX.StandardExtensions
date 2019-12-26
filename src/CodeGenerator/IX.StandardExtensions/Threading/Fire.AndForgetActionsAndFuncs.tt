@@ -19,7 +19,7 @@ using JetBrains.Annotations;
 namespace IX.StandardExtensions.Threading
 {
     /// <summary>
-    /// A class that provides methods and extensions to fire events.
+    ///     A class that provides methods and extensions to fire events.
     /// </summary>
     public static partial class Fire
     {
@@ -49,12 +49,12 @@ for (int i = 1; i <= 8; i++)
 
     string paramTypes = string.Join(", ", types);
     string paramNames = string.Join(", ", names);
-    string paramNameTypes = string.Join(", ", nameTypes);
+    string paramNameTypes = string.Join($",{Environment.NewLine}            ", nameTypes);
     string paramParameters = string.Join(", ", parameters);
 #>
 
         /// <summary>
-        /// Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
+        ///     Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -74,11 +74,14 @@ for (int i = 1; i <= 8; i++)
     }
 #>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public static void AndForget<<#= paramTypes #>>([CanBeNull] Action<<#= paramTypes #>> action, <#= paramNameTypes #>, CancellationToken cancellationToken = default)
+        public static void AndForget<<#= paramTypes #>>(
+            [NotNull] Action<<#= paramTypes #>> action,
+            <#= paramNameTypes #>,
+            CancellationToken cancellationToken = default)
             => AndForget(action, <#= paramNames #>, EnvironmentSettings.DefaultFireAndForgetUnhandledExceptionHandler, cancellationToken);
 
         /// <summary>
-        /// Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
+        ///     Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -99,7 +102,11 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public static void AndForget<<#= paramTypes #>>([CanBeNull] Action<<#= paramTypes #>> action, <#= paramNameTypes #>, [CanBeNull] Action<Exception> exceptionHandler, CancellationToken cancellationToken = default)
+        public static void AndForget<<#= paramTypes #>>(
+            [NotNull] Action<<#= paramTypes #>> action,
+            <#= paramNameTypes #>,
+            [CanBeNull] Action<Exception>? exceptionHandler,
+            CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(in action, nameof(action));
 
@@ -140,7 +147,7 @@ for (int i = 1; i <= 8; i++)
         }
 
         /// <summary>
-        /// Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
+        ///     Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -160,11 +167,14 @@ for (int i = 1; i <= 8; i++)
     }
 #>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public static void AndForget<<#= paramTypes #>>([CanBeNull] Action<<#= paramTypes #>, CancellationToken> action, <#= paramNameTypes #>, CancellationToken cancellationToken = default)
+        public static void AndForget<<#= paramTypes #>>(
+            [NotNull] Action<<#= paramTypes #>, CancellationToken> action,
+            <#= paramNameTypes #>,
+            CancellationToken cancellationToken = default)
             => AndForget(action, <#= paramNames #>, EnvironmentSettings.DefaultFireAndForgetUnhandledExceptionHandler, cancellationToken);
 
         /// <summary>
-        /// Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
+        ///     Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -185,7 +195,11 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public static void AndForget<<#= paramTypes #>>([CanBeNull] Action<<#= paramTypes #>, CancellationToken> action, <#= paramNameTypes #>, [CanBeNull] Action<Exception> exceptionHandler, CancellationToken cancellationToken = default)
+        public static void AndForget<<#= paramTypes #>>(
+            [NotNull] Action<<#= paramTypes #>, CancellationToken> action,
+            <#= paramNameTypes #>,
+            [CanBeNull] Action<Exception>? exceptionHandler,
+            CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(in action, nameof(action));
 
@@ -224,7 +238,7 @@ for (int i = 1; i <= 8; i++)
         }
 
         /// <summary>
-        /// Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
+        ///     Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -244,11 +258,14 @@ for (int i = 1; i <= 8; i++)
     }
 #>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public static void AndForget<<#= paramTypes #>>([CanBeNull] Func<<#= paramTypes #>, Task> action, <#= paramNameTypes #>, CancellationToken cancellationToken = default)
+        public static void AndForget<<#= paramTypes #>>(
+            [NotNull] Func<<#= paramTypes #>, Task> action,
+            <#= paramNameTypes #>,
+            CancellationToken cancellationToken = default)
             => AndForget(action, <#= paramNames #>, EnvironmentSettings.DefaultFireAndForgetUnhandledExceptionHandler, cancellationToken);
 
         /// <summary>
-        /// Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
+        ///     Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -269,7 +286,11 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public static void AndForget<<#= paramTypes #>>([CanBeNull] Func<<#= paramTypes #>, Task> action, <#= paramNameTypes #>, [CanBeNull] Action<Exception> exceptionHandler, CancellationToken cancellationToken = default)
+        public static void AndForget<<#= paramTypes #>>(
+            [NotNull] Func<<#= paramTypes #>, Task> action,
+            <#= paramNameTypes #>,
+            [CanBeNull] Action<Exception>? exceptionHandler,
+            CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(in action, nameof(action));
 
@@ -308,7 +329,7 @@ for (int i = 1; i <= 8; i++)
         }
 
         /// <summary>
-        /// Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
+        ///     Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -328,11 +349,14 @@ for (int i = 1; i <= 8; i++)
     }
 #>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public static void AndForget<<#= paramTypes #>>([CanBeNull] Func<<#= paramTypes #>, CancellationToken, Task> action, <#= paramNameTypes #>, CancellationToken cancellationToken = default)
+        public static void AndForget<<#= paramTypes #>>(
+            [NotNull] Func<<#= paramTypes #>, CancellationToken, Task> action,
+            <#= paramNameTypes #>,
+            CancellationToken cancellationToken = default)
             => AndForget(action, <#= paramNames #>, EnvironmentSettings.DefaultFireAndForgetUnhandledExceptionHandler, cancellationToken);
 
         /// <summary>
-        /// Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
+        ///     Fires a method on a separate thread, and forgets about it completely, only invoking a continuation if there was an exception.
         /// </summary>
 <#
     for (int j = 1; j <= i; j++)
@@ -353,7 +377,11 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        public static void AndForget<<#= paramTypes #>>([CanBeNull] Func<<#= paramTypes #>, CancellationToken, Task> action, <#= paramNameTypes #>, [CanBeNull] Action<Exception> exceptionHandler, CancellationToken cancellationToken = default)
+        public static void AndForget<<#= paramTypes #>>(
+            [NotNull] Func<<#= paramTypes #>, CancellationToken, Task> action,
+            <#= paramNameTypes #>,
+            [CanBeNull] Action<Exception>? exceptionHandler,
+            CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNull(in action, nameof(action));
 

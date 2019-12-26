@@ -21,25 +21,29 @@ namespace IX.StandardExtensions.Threading
     [PublicAPI]
     public delegate void FirePeriodicallyTicker(
         int tick,
-        IInterruptible interruptor,
-        object state);
+        [NotNull] IInterruptible interruptor,
+        [CanBeNull] object? state);
 
     internal sealed class FirePeriodicallyContext : DisposableBase, IInterruptible
     {
-        private readonly object state;
+        private readonly object? state;
         private readonly TimeSpan timeSpan;
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "IDisposableAnalyzers.Correctness",
+            "IDISP002:Dispose member.",
+            Justification = "It is disposed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "IDisposableAnalyzers.Correctness",
+            "IDISP006:Implement IDisposable.",
+            Justification = "It is implemented, the analyzer cannot figure it out automatically.")]
+        private readonly Timer timer;
 
         private int iteration;
 
-#pragma warning disable IDISP002 // Dispose member.
-#pragma warning disable IDISP006 // Implement IDisposable.
-        private Timer timer;
-#pragma warning restore IDISP006 // Implement IDisposable.
-#pragma warning restore IDISP002 // Dispose member.
-
         internal FirePeriodicallyContext(
-            FirePeriodicallyTicker tickerDelegate,
-            object state,
+            [NotNull] FirePeriodicallyTicker tickerDelegate,
+            [CanBeNull] object? state,
             int milliseconds)
             : this(
                 tickerDelegate,
@@ -49,8 +53,8 @@ namespace IX.StandardExtensions.Threading
         }
 
         internal FirePeriodicallyContext(
-            FirePeriodicallyTicker tickerDelegate,
-            object state,
+            [NotNull] FirePeriodicallyTicker tickerDelegate,
+            [CanBeNull] object? state,
             TimeSpan timeSpan)
             : this(
                 tickerDelegate,
@@ -61,8 +65,8 @@ namespace IX.StandardExtensions.Threading
         }
 
         internal FirePeriodicallyContext(
-            FirePeriodicallyTicker tickerDelegate,
-            object state,
+            [NotNull] FirePeriodicallyTicker tickerDelegate,
+            [CanBeNull] object? state,
             TimeSpan initialDelay,
             TimeSpan timeSpan)
         {
@@ -89,13 +93,14 @@ namespace IX.StandardExtensions.Threading
             TimeSpan.Zero,
             this.timeSpan);
 
+        /// <summary>
+        ///     Disposes in the general (managed and unmanaged) context.
+        /// </summary>
         protected override void DisposeGeneralContext()
         {
             base.DisposeGeneralContext();
 
-            Interlocked.Exchange(
-                ref this.timer,
-                null)?.Dispose();
+            this.timer.Dispose();
         }
 
         private void TimerTick(object stateObject)

@@ -19,6 +19,10 @@ namespace IX.StandardExtensions
         /// </summary>
         /// <param name="context">The shallow cloning context.</param>
         /// <returns>A shallow clone.</returns>
-        TResult ShallowClone(TContext context);
+        [NotNull]
+#if NETSTANDARD2_1
+        [return: System.Diagnostics.CodeAnalysis.NotNull]
+#endif
+        TResult ShallowClone([NotNull] TContext context);
     }
 }

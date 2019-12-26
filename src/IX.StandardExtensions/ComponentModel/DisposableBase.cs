@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using System.Threading;
 using JetBrains.Annotations;
@@ -15,6 +16,7 @@ namespace IX.StandardExtensions.ComponentModel
     /// <seealso cref="System.IDisposable" />
     [DataContract]
     [PublicAPI]
+    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP025:Class with no virtual dispose method should be sealed.", Justification = "The pattern is not followed here, because, instead of overriding Dispose, one can and should override the two (managed and general) methods.")]
     public abstract partial class DisposableBase
     {
         /// <summary>
@@ -69,33 +71,44 @@ namespace IX.StandardExtensions.ComponentModel
         /// <summary>
         ///     Invokes an action if the current instance is not disposed.
         /// </summary>
-        /// <param name="action">The action.</param>
+        /// <param name="action">The action to invoke.</param>
         /// <exception cref="ArgumentNullException">
         ///     <paramref name="action" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
-        protected void InvokeIfNotDisposed([NotNull] Action action)
+        protected void InvokeIfNotDisposed([JetBrains.Annotations.NotNull]
+#if NETSTANDARD2_1
+            [DisallowNull]
+#endif
+            Action action)
         {
             this.ThrowIfCurrentObjectDisposed();
 
-            (action ?? throw new ArgumentNullException(nameof(action))).Invoke();
+            action.Invoke();
         }
 
         /// <summary>
         ///     Invokes an action if the current instance is not disposed.
         /// </summary>
         /// <typeparam name="TReturn">The return type.</typeparam>
-        /// <param name="action">The action.</param>
+        /// <param name="func">The function to invoke.</param>
         /// <returns>The object returned by the action.</returns>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="action" /> is <see langword="null" /> (
+        ///     <paramref name="func" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
-        protected TReturn InvokeIfNotDisposed<TReturn>(Func<TReturn> action)
+#if NETSTANDARD2_1
+        [return: MaybeNull]
+#endif
+        protected TReturn InvokeIfNotDisposed<TReturn>([JetBrains.Annotations.NotNull]
+#if NETSTANDARD2_1
+            [DisallowNull]
+#endif
+            Func<TReturn> func)
         {
             this.ThrowIfCurrentObjectDisposed();
 
-            return (action ?? throw new ArgumentNullException(nameof(action))).Invoke();
+            return func();
         }
 
         /// <summary>
@@ -121,6 +134,9 @@ namespace IX.StandardExtensions.ComponentModel
         /// </param>
         private void Dispose(bool disposing)
         {
+            // Development comment:
+            // This method appears to not be thread-safe. It is made thread-safe by the fact that it is only called from tne destructor and from a
+            // thread-safe Dispose method.
             if (this.Disposed)
             {
                 return;
