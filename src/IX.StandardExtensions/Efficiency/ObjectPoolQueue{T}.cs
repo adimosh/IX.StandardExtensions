@@ -56,7 +56,7 @@ namespace IX.StandardExtensions.Efficiency
         /// <summary>
         ///     Triggered when an exception has occurred on a different thread.
         /// </summary>
-        public event EventHandler<ExceptionOccurredEventArgs> ExceptionOccurredOnSeparateThread;
+        public event EventHandler<ExceptionOccurredEventArgs>? ExceptionOccurredOnSeparateThread;
 
         /// <summary>
         ///     Gets or sets the object limit.
@@ -78,9 +78,9 @@ namespace IX.StandardExtensions.Efficiency
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Not really avoidable.")]
-        private void Run(Task originalTask)
+        private void Run(Task? originalTask)
         {
-#if FRAMEWORK
+#if !STANDARD
             Thread.CurrentThread.Name = $"Object pool queue {Thread.CurrentThread.ManagedThreadId}";
 #endif
 
