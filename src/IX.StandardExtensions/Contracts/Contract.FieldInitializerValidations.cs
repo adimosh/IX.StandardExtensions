@@ -137,7 +137,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyCollectionException(argumentName);
             }
 
-            field = argument;
+            field = argument!;
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyBinaryException(argumentName);
             }
 
-            field = argument;
+            field = argument!;
         }
 
         /// <summary>

@@ -35,7 +35,7 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void RequiresNotNull<T>(
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
-            in T argument,
+            in T? argument,
             [NotNull] string argumentName)
             where T : class
         {
@@ -64,7 +64,7 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void RequiresNotNullPrivate<T>(
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
-            in T argument,
+            in T? argument,
             [NotNull] string argumentName)
             where T : class
         {
@@ -91,7 +91,7 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void RequiresNotNullOrEmpty(
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
-            string argument,
+            string? argument,
             [NotNull] string argumentName)
         {
             if (string.IsNullOrEmpty(argument))
@@ -119,7 +119,7 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void RequiresNotNullOrEmptyPrivate(
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
-            string argument,
+            string? argument,
             [NotNull] string argumentName)
         {
             if (string.IsNullOrEmpty(argument))
@@ -145,7 +145,7 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void RequiresNotNullOrWhitespace(
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
-            string argument,
+            string? argument,
             [NotNull] string argumentName)
         {
             if (string.IsNullOrWhiteSpace(argument))
@@ -173,7 +173,7 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void RequiresNotNullOrWhitespacePrivate(
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
-            string argument,
+            string? argument,
             [NotNull] string argumentName)
         {
             if (string.IsNullOrWhiteSpace(argument))
@@ -202,7 +202,7 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void RequiresNotNullOrEmpty<T>(
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
-            ICollection<T> argument,
+            ICollection<T>? argument,
             [NotNull] string argumentName)
         {
             if ((argument?.Count ?? 0) == 0)
@@ -233,7 +233,7 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void RequiresNotNullOrEmptyPrivate<T>(
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
-            ICollection<T> argument,
+            ICollection<T>? argument,
             [NotNull] string argumentName)
         {
             if ((argument?.Count ?? 0) == 0)
@@ -262,7 +262,7 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void RequiresNotNullOrEmpty<T>(
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
-            T[] argument,
+            T[]? argument,
             [NotNull] string argumentName)
         {
             if ((argument?.Length ?? 0) == 0)
@@ -293,35 +293,12 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void RequiresNotNullOrEmptyPrivate<T>(
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
-            T[] argument,
+            T[]? argument,
             [NotNull] string argumentName)
         {
             if ((argument?.Length ?? 0) == 0)
             {
                 throw new ArgumentNullOrEmptyBinaryException(argumentName);
-            }
-        }
-
-        /// <summary>
-        ///     Called when a contract requires that a numeric argument is positive.
-        /// </summary>
-        /// <param name="argument">
-        ///     The numeric argument.
-        /// </param>
-        /// <param name="argumentName">
-        ///     The argument name.
-        /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
-        ///     The argument is negative or 0.
-        /// </exception>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void RequiresPositive(
-            sbyte argument,
-            [NotNull] string argumentName)
-        {
-            if (argument <= 0)
-            {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
             }
         }
 

@@ -25,23 +25,23 @@ namespace IX.StandardExtensions.Efficiency
     {
         [ThreadStatic]
         [SuppressMessage("ReSharper", "StaticMemberInGenericType", Justification = "This field is used exclusively under lock, so this is safe.")]
-        private static object threadStaticMethods;
+        private static object? threadStaticMethods;
 
 #if !NETSTANDARD2_1
         [ThreadStatic]
         [SuppressMessage("ReSharper", "StaticMemberInGenericType", Justification = "This field is used exclusively under lock, so this is safe.")]
-        private static object threadStaticAddFactory;
+        private static object? threadStaticAddFactory;
 #endif
 
         [ThreadStatic]
         [SuppressMessage("ReSharper", "StaticMemberInGenericType", Justification = "This field is used exclusively under lock, so this is safe.")]
-        private static object threadStaticUpdateFactory;
+        private static object? threadStaticUpdateFactory;
 
 #if !NETSTANDARD2_1
         private static TValue AddInternal<TState>(TKey key)
         {
-            var innerState = (TState)threadStaticMethods;
-            var innerAdd = (Func<TKey, TState, TValue>)threadStaticAddFactory;
+            var innerState = (TState)threadStaticMethods!;
+            var innerAdd = (Func<TKey, TState, TValue>)threadStaticAddFactory!;
 
             return innerAdd(
                 key,
@@ -53,8 +53,8 @@ namespace IX.StandardExtensions.Efficiency
             TKey key,
             TValue oldValue)
         {
-            var innerState = (TState)threadStaticMethods;
-            var innerUpdate = (Func<TKey, TValue, TState, TValue>)threadStaticUpdateFactory;
+            var innerState = (TState)threadStaticMethods!;
+            var innerUpdate = (Func<TKey, TValue, TState, TValue>)threadStaticUpdateFactory!;
 
             return innerUpdate(
                 key,
