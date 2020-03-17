@@ -36,6 +36,7 @@
   <!-- Code imports -->
   <ItemGroup>
     <Compile Include="..\CodeGenerator\IX.StandardExtensions\ComponentModel\DisposableBase.InvokeIfNotDisposed.cs" Link="ComponentModel\DisposableBase.InvokeIfNotDisposed.cs" />
+    <Compile Include="..\CodeGenerator\IX.StandardExtensions\Contracts\Contract.NumericTypesValidation.cs" Link="Contracts\Contract.NumericTypesValidation.cs" />
     <Compile Include="..\CodeGenerator\IX.StandardExtensions\Efficiency\ImmutableValueTuple.cs" Link="Efficiency\ImmutableValueTuple.cs" />
     <Compile Include="..\CodeGenerator\IX.StandardExtensions\Efficiency\RefDelegates.WithParameters.cs" Link="Efficiency\RefDelegates.WithParameters.cs" />
     <Compile Include="..\CodeGenerator\IX.StandardExtensions\Efficiency\RefIteratorDelegates.WithParameters.cs" Link="Efficiency\RefIteratorDelegates.WithParameters.cs" />
