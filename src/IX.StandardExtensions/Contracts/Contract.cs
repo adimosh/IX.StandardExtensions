@@ -829,18 +829,25 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
+        /// <returns>
+        ///     The converted argument.
+        /// </returns>
         /// <exception cref="ArgumentInvalidTypeException">
         ///     The condition is not being met.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void RequiresArgumentOfType<T>(
-            [CanBeNull] object argument,
+        [ContractAnnotation("argument:null => halt")]
+        [AssertionMethod]
+        public static T RequiresArgumentOfType<T>(
+            [CanBeNull, NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object argument,
             [NotNull] string argumentName)
         {
-            if (!(argument is T))
+            if (!(argument is T convertedValue))
             {
                 throw new ArgumentInvalidTypeException(argumentName);
             }
+
+            return convertedValue;
         }
 
         /// <summary>
