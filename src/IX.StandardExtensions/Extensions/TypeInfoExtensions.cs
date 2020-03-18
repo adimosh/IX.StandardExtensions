@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Extensions
@@ -22,8 +24,16 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="info">The type information.</param>
         /// <returns><see langword="true" /> if there is a parameterless constructor; otherwise, <see langword="false" />.</returns>
         public static bool HasPublicParameterlessConstructor(this TypeInfo info) =>
-            !info.IsInterface && !info.IsAbstract && !info.IsGenericTypeDefinition && info.DeclaredConstructors.Any(
-                p => !p.IsStatic && p.IsPublic && !p.IsGenericMethodDefinition && p.GetParameters().Length == 0);
+            !info.IsInterface &&
+            !info.IsAbstract &&
+            !info.IsGenericTypeDefinition &&
+            info.DeclaredConstructors.Any(
+                p => !p.IsStatic &&
+                     p.IsPublic &&
+                     !p.IsGenericMethodDefinition &&
+                     p.GetParameters()
+                         .Length ==
+                     0);
 
         /// <summary>
         ///     Instantiates an object of the specified type.
@@ -40,9 +50,10 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>An instance of the object to instantiate.</returns>
         public static object Instantiate(
             this TypeInfo info,
-            params object[] parameters) => Activator.CreateInstance(
-            info.AsType(),
-            parameters);
+            params object[] parameters) =>
+            Activator.CreateInstance(
+                info.AsType(),
+                parameters);
 
         /// <summary>
         ///     Gets a method with exact parameters, if one exists.
@@ -61,9 +72,11 @@ namespace IX.StandardExtensions.Extensions
         public static MethodInfo GetMethodWithExactParameters(
             this TypeInfo typeInfo,
             string name,
-            params Type[] parameters) => typeInfo.AsType().GetMethodWithExactParameters(
-            name,
-            parameters);
+            params Type[] parameters) =>
+            typeInfo.AsType()
+                .GetMethodWithExactParameters(
+                    name,
+                    parameters);
 
         /// <summary>
         ///     Gets a method with exact parameters, if one exists.
@@ -82,24 +95,38 @@ namespace IX.StandardExtensions.Extensions
         public static MethodInfo GetMethodWithExactParameters(
             this TypeInfo typeInfo,
             string name,
-            params TypeInfo[] parameters) => typeInfo.AsType().GetMethodWithExactParameters(
-            name,
-            parameters.Select(p => p.AsType()).ToArray());
+            params TypeInfo[] parameters) =>
+            typeInfo.AsType()
+                .GetMethodWithExactParameters(
+                    name,
+                    parameters.Select(p => p.AsType())
+                        .ToArray());
 
-#pragma warning disable HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance - The delegate is generic too
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator
         /// <summary>
         ///     Gets the attribute data by type without version binding.
         /// </summary>
-        /// <typeparam name="TAttribute">The type of the t attribute.</typeparam>
-        /// <typeparam name="TReturn">The type of the t return.</typeparam>
+        /// <typeparam name="TAttribute">The type of attribute to get data for.</typeparam>
+        /// <typeparam name="TReturn">The type of data to return.</typeparam>
         /// <param name="typeInfo">The type information.</param>
-        /// <param name="value">The value.</param>
-        /// <returns>System.Boolean.</returns>
+        /// <param name="value">The output value.</param>
+        /// <returns><see langword="true" /> if the attribute exists and has data, <see langword="false" /> otherwise.</returns>
+        [SuppressMessage(
+            "Performance",
+            "HAA0401:Possible allocation of reference type enumerator",
+            Justification = "Expected.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "Expected.")]
         public static bool GetAttributeDataByTypeWithoutVersionBinding<TAttribute, TReturn>(
             this TypeInfo typeInfo,
+#if NETSTANDARD2_1
+            [MaybeNullWhen(false)]
+#endif
             out TReturn value)
         {
+            Contract.RequiresNotNull(in typeInfo, nameof(typeInfo));
+
             CustomAttributeData attributeData = typeInfo.CustomAttributes.FirstOrDefault(
                 attribute => attribute.AttributeType.FullName == typeof(TAttribute).FullName);
 
@@ -110,7 +137,8 @@ namespace IX.StandardExtensions.Extensions
             }
 
             using (IEnumerator<CustomAttributeTypedArgument> arguments = attributeData.ConstructorArguments
-                .Where(p => p.ArgumentType == typeof(TReturn)).GetEnumerator())
+                .Where(p => p.ArgumentType == typeof(TReturn))
+                .GetEnumerator())
             {
                 if (arguments.MoveNext())
                 {
@@ -125,17 +153,18 @@ namespace IX.StandardExtensions.Extensions
 
             if (attributeData.NamedArguments != null)
             {
-                using (IEnumerator<CustomAttributeTypedArgument> arguments = attributeData.NamedArguments
-                    .Where(p => p.TypedValue.ArgumentType == typeof(TReturn)).Select(p => p.TypedValue).GetEnumerator())
-                {
-                    if (arguments.MoveNext())
-                    {
-                        value = (TReturn)arguments.Current.Value;
+                using IEnumerator<CustomAttributeTypedArgument> arguments = attributeData.NamedArguments
+                    .Where(p => p.TypedValue.ArgumentType == typeof(TReturn))
+                    .Select(p => p.TypedValue)
+                    .GetEnumerator();
 
-                        if (!arguments.MoveNext())
-                        {
-                            return true;
-                        }
+                if (arguments.MoveNext())
+                {
+                    value = (TReturn)arguments.Current.Value;
+
+                    if (!arguments.MoveNext())
+                    {
+                        return true;
                     }
                 }
             }
@@ -143,7 +172,5 @@ namespace IX.StandardExtensions.Extensions
             value = default;
             return false;
         }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
-#pragma warning restore HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance
     }
 }

@@ -52,7 +52,7 @@ namespace IX.StandardExtensions.Globalization
         /// </returns>
         public static int CurrentCultureIndexOf(
             this string source,
-            string value) => CultureInfo.CurrentUICulture.CompareInfo.IndexOf(
+            string value) => CultureInfo.CurrentCulture.CompareInfo.IndexOf(
             source,
             value,
             CompareOptions.None);
@@ -68,7 +68,7 @@ namespace IX.StandardExtensions.Globalization
         public static int CurrentCultureIndexOf(
             this string source,
             string value,
-            int startIndex) => CultureInfo.CurrentUICulture.CompareInfo.IndexOf(
+            int startIndex) => CultureInfo.CurrentCulture.CompareInfo.IndexOf(
             source,
             value,
             startIndex,
@@ -87,7 +87,7 @@ namespace IX.StandardExtensions.Globalization
             this string source,
             string value,
             int startIndex,
-            int count) => CultureInfo.CurrentUICulture.CompareInfo.IndexOf(
+            int count) => CultureInfo.CurrentCulture.CompareInfo.IndexOf(
             source,
             value,
             startIndex,
@@ -105,7 +105,7 @@ namespace IX.StandardExtensions.Globalization
         /// </returns>
         public static int CurrentCultureIndexOfInsensitive(
             this string source,
-            string value) => CultureInfo.CurrentUICulture.CompareInfo.IndexOf(
+            string value) => CultureInfo.CurrentCulture.CompareInfo.IndexOf(
             source,
             value,
             CompareOptions.IgnoreCase);
@@ -121,7 +121,7 @@ namespace IX.StandardExtensions.Globalization
         public static int CurrentCultureIndexOfInsensitive(
             this string source,
             string value,
-            int startIndex) => CultureInfo.CurrentUICulture.CompareInfo.IndexOf(
+            int startIndex) => CultureInfo.CurrentCulture.CompareInfo.IndexOf(
             source,
             value,
             startIndex,
@@ -140,7 +140,7 @@ namespace IX.StandardExtensions.Globalization
             this string source,
             string value,
             int startIndex,
-            int count) => CultureInfo.CurrentUICulture.CompareInfo.IndexOf(
+            int count) => CultureInfo.CurrentCulture.CompareInfo.IndexOf(
             source,
             value,
             startIndex,
@@ -158,7 +158,7 @@ namespace IX.StandardExtensions.Globalization
         /// </returns>
         public static int CurrentCultureCompareTo(
             this string source,
-            string value) => CultureInfo.CurrentUICulture.CompareInfo.Compare(
+            string value) => CultureInfo.CurrentCulture.CompareInfo.Compare(
             source,
             value,
             CompareOptions.None);
@@ -174,7 +174,7 @@ namespace IX.StandardExtensions.Globalization
         /// </returns>
         public static int CurrentCultureCompareToInsensitive(
             this string source,
-            string value) => CultureInfo.CurrentUICulture.CompareInfo.Compare(
+            string value) => CultureInfo.CurrentCulture.CompareInfo.Compare(
             source,
             value,
             CompareOptions.IgnoreCase);
@@ -216,7 +216,7 @@ namespace IX.StandardExtensions.Globalization
         /// </returns>
         public static bool CurrentCultureStartsWith(
             this string source,
-            string value) => CultureInfo.CurrentUICulture.CompareInfo.IsPrefix(
+            string value) => CultureInfo.CurrentCulture.CompareInfo.IsPrefix(
             source,
             value,
             CompareOptions.None);
@@ -232,7 +232,7 @@ namespace IX.StandardExtensions.Globalization
         /// </returns>
         public static bool CurrentCultureStartsWithInsensitive(
             this string source,
-            string value) => CultureInfo.CurrentUICulture.CompareInfo.IsPrefix(
+            string value) => CultureInfo.CurrentCulture.CompareInfo.IsPrefix(
             source,
             value,
             CompareOptions.IgnoreCase);
@@ -248,7 +248,7 @@ namespace IX.StandardExtensions.Globalization
         /// </returns>
         public static bool CurrentCultureEndsWith(
             this string source,
-            string value) => CultureInfo.CurrentUICulture.CompareInfo.IsSuffix(
+            string value) => CultureInfo.CurrentCulture.CompareInfo.IsSuffix(
             source,
             value,
             CompareOptions.None);
@@ -264,7 +264,7 @@ namespace IX.StandardExtensions.Globalization
         /// </returns>
         public static bool CurrentCultureEndsWithInsensitive(
             this string source,
-            string value) => CultureInfo.CurrentUICulture.CompareInfo.IsSuffix(
+            string value) => CultureInfo.CurrentCulture.CompareInfo.IsSuffix(
             source,
             value,
             CompareOptions.IgnoreCase);
