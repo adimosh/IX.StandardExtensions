@@ -24,10 +24,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageReleaseNotes>- Strong name.
-- Reference solution updated.
-- Implemented standard options as a submodule.
-- Nullable reference types implemented.</PackageReleaseNotes>
+    <PackageReleaseNotes>- Updated to semver 2.
+- General updates.</PackageReleaseNotes>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>../../opt/snk/ix.framework.strongname.snk</AssemblyOriginatorKeyFile>
