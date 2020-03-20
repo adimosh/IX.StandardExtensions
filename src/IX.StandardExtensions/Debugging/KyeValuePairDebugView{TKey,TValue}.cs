@@ -14,7 +14,7 @@ namespace IX.StandardExtensions.Debugging
     /// <typeparam name="TKey">The type of the key.</typeparam>
     /// <typeparam name="TValue">The type of the value.</typeparam>
     [ComVisible(false)]
-    [DebuggerDisplay("[{Key}] = \"{Value}\"")]
+    [DebuggerDisplay("[{" + nameof(Key) + "}] = \"{" + nameof(Value) + "}\"")]
     [PublicAPI]
     public sealed class KyeValuePairDebugView<TKey, TValue>
     {

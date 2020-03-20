@@ -2,6 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System;
 using System.Globalization;
 
 namespace IX.StandardExtensions.Globalization
@@ -21,6 +22,7 @@ namespace IX.StandardExtensions.Globalization
         ///     <see langword="true" /> if the source string contains the specified value string; otherwise,
         ///     <see langword="false" />.
         /// </returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static bool CurrentThreadCultureContains(
             this string source,
             string value) => source.CurrentCultureIndexOf(value) >= 0;
@@ -35,6 +37,7 @@ namespace IX.StandardExtensions.Globalization
         ///     <see langword="true" /> if the source string contains the specified value string; otherwise,
         ///     <see langword="false" />.
         /// </returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static bool CurrentThreadCultureContainsInsensitive(
             this string source,
             string value) => source.CurrentCultureIndexOfInsensitive(value) >= 0;
@@ -48,6 +51,7 @@ namespace IX.StandardExtensions.Globalization
         /// <returns>
         ///     The index where the string is found, otherwise -1.
         /// </returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static int CurrentThreadCultureIndexOf(
             this string source,
             string value) => CultureInfo.CurrentCulture.CompareInfo.IndexOf(
@@ -63,6 +67,7 @@ namespace IX.StandardExtensions.Globalization
         /// <param name="value">The string value to do the evaluation.</param>
         /// <param name="startIndex">The index in the source string to start searching at.</param>
         /// <returns>The index where the string is found, otherwise -1.</returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static int CurrentThreadCultureIndexOf(
             this string source,
             string value,
@@ -81,6 +86,7 @@ namespace IX.StandardExtensions.Globalization
         /// <param name="startIndex">The index in the source string to start searching at.</param>
         /// <param name="count">The number of characters to search.</param>
         /// <returns>The index where the string is found, otherwise -1.</returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static int CurrentThreadCultureIndexOf(
             this string source,
             string value,
@@ -101,6 +107,7 @@ namespace IX.StandardExtensions.Globalization
         /// <returns>
         ///     The index where the string is found, otherwise -1.
         /// </returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static int CurrentThreadCultureIndexOfInsensitive(
             this string source,
             string value) => CultureInfo.CurrentCulture.CompareInfo.IndexOf(
@@ -116,6 +123,7 @@ namespace IX.StandardExtensions.Globalization
         /// <param name="value">The string value to do the evaluation.</param>
         /// <param name="startIndex">The index in the source string to start searching at.</param>
         /// <returns>The index where the string is found, otherwise -1.</returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static int CurrentThreadCultureIndexOfInsensitive(
             this string source,
             string value,
@@ -134,6 +142,7 @@ namespace IX.StandardExtensions.Globalization
         /// <param name="startIndex">The index in the source string to start searching at.</param>
         /// <param name="count">The number of characters to search.</param>
         /// <returns>The index where the string is found, otherwise -1.</returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static int CurrentThreadCultureIndexOfInsensitive(
             this string source,
             string value,
@@ -154,6 +163,7 @@ namespace IX.StandardExtensions.Globalization
         /// <returns>
         ///     The comparison of the two strings, with 0 meaning equality.
         /// </returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static int CurrentThreadCultureCompareTo(
             this string source,
             string value) => CultureInfo.CurrentCulture.CompareInfo.Compare(
@@ -170,6 +180,7 @@ namespace IX.StandardExtensions.Globalization
         /// <returns>
         ///     The comparison of the two strings, with 0 meaning equality.
         /// </returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static int CurrentThreadCultureCompareToInsensitive(
             this string source,
             string value) => CultureInfo.CurrentCulture.CompareInfo.Compare(
@@ -186,6 +197,7 @@ namespace IX.StandardExtensions.Globalization
         /// <returns>
         ///     <see langword="true" /> if the source string is equal to the value; otherwise, <see langword="false" />.
         /// </returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static bool CurrentThreadCultureEquals(
             this string source,
             string value) => source.CurrentCultureCompareTo(value) == 0;
@@ -199,6 +211,7 @@ namespace IX.StandardExtensions.Globalization
         /// <returns>
         ///     <see langword="true" /> if the source string is equal to the value; otherwise, <see langword="false" />.
         /// </returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static bool CurrentThreadCultureEqualsInsensitive(
             this string source,
             string value) => source.CurrentCultureCompareToInsensitive(value) == 0;
@@ -212,6 +225,7 @@ namespace IX.StandardExtensions.Globalization
         /// <returns>
         ///     <see langword="true" /> if the source string is equal to the value; otherwise, <see langword="false" />.
         /// </returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static bool CurrentThreadCultureStartsWith(
             this string source,
             string value) => CultureInfo.CurrentCulture.CompareInfo.IsPrefix(
@@ -228,6 +242,7 @@ namespace IX.StandardExtensions.Globalization
         /// <returns>
         ///     <see langword="true" /> if the source string is equal to the value; otherwise, <see langword="false" />.
         /// </returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static bool CurrentThreadCultureStartsWithInsensitive(
             this string source,
             string value) => CultureInfo.CurrentCulture.CompareInfo.IsPrefix(
@@ -244,6 +259,7 @@ namespace IX.StandardExtensions.Globalization
         /// <returns>
         ///     <see langword="true" /> if the source string is equal to the value; otherwise, <see langword="false" />.
         /// </returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static bool CurrentThreadCultureEndsWith(
             this string source,
             string value) => CultureInfo.CurrentCulture.CompareInfo.IsSuffix(
@@ -260,6 +276,7 @@ namespace IX.StandardExtensions.Globalization
         /// <returns>
         ///     <see langword="true" /> if the source string is equal to the value; otherwise, <see langword="false" />.
         /// </returns>
+        [Obsolete("This method does essentially the same as without the \"Thread\" part and will be removed soon.")]
         public static bool CurrentThreadCultureEndsWithInsensitive(
             this string source,
             string value) => CultureInfo.CurrentCulture.CompareInfo.IsSuffix(

@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Threading
 {
@@ -17,10 +18,14 @@ namespace IX.StandardExtensions.Threading
     /// </summary>
     public partial class Fire
     {
-        [SuppressMessage("Performance", "HAA0603:Delegate allocation from a method group", Justification = "This is unavoidable in this case.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is unavoidable in this case.")]
+        [JetBrains.Annotations.NotNull]
         private static Task<TResult> ExecuteOnThreadPool<TResult>(
-            Func<object, CancellationToken, Task<TResult>> action,
-            object state,
+            [JetBrains.Annotations.NotNull] Func<object?, CancellationToken, Task<TResult>> action,
+            [CanBeNull] object? state,
             CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNullPrivate(
@@ -35,51 +40,24 @@ namespace IX.StandardExtensions.Threading
                 return taskCompletionSource.Task;
             }
 
-            var outerState =
-                new Tuple<Func<object, CancellationToken, Task<TResult>>, CultureInfo, CultureInfo,
-                    TaskCompletionSource<TResult>, object, CancellationToken>(
-                    action,
-                    CultureInfo.CurrentCulture,
-                    CultureInfo.CurrentUICulture,
-                    taskCompletionSource,
-                    state,
-                    cancellationToken);
+            var outerState = (action, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource,
+                state, cancellationToken);
 
-#if !NETSTANDARD2_1
             ThreadPool.QueueUserWorkItem(
                 WorkItem,
                 outerState);
-#else
-            ThreadPool.QueueUserWorkItem(
-                WorkItem,
-                outerState,
-                false);
-#endif
 
-#if !NETSTANDARD2_1
             void WorkItem(object rawState)
             {
-                Contract
-                    .RequiresArgumentOfTypePrivate<
-                        Tuple<Func<object, CancellationToken, Task<TResult>>, CultureInfo, CultureInfo,
-                            TaskCompletionSource<TResult>, object, CancellationToken>>(
-                        rawState,
-                        nameof(rawState));
-
-                var (func, currentCulture, currentUiCulture, tcs, payload, ct) = (Tuple<Func<object, CancellationToken, Task<TResult>>, CultureInfo, CultureInfo,
-                    TaskCompletionSource<TResult>, object, CancellationToken>)rawState;
-#else
-            void WorkItem(Tuple<Func<object, CancellationToken, Task<TResult>>, CultureInfo, CultureInfo,
-                TaskCompletionSource<TResult>, object, CancellationToken> rawState)
-            {
-                (Func<object, CancellationToken, Task<TResult>> func, CultureInfo currentCulture,
-                    CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs, object payload,
-                    CancellationToken ct) = rawState;
-#endif
-
-                Contract.RequiresNotNullPrivate(
-                    in rawState,
-                    nameof(rawState));
+                (Func<object?, CancellationToken, Task<TResult>> func, CultureInfo currentCulture,
+                        CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs, object? payload,
+                        CancellationToken ct) =
+                    Contract
+                        .RequiresArgumentOfType<(Func<object?, CancellationToken, Task<TResult>>, CultureInfo,
+                            CultureInfo,
+                            TaskCompletionSource<TResult>, object?, CancellationToken)>(
+                            rawState,
+                            nameof(rawState));
 
                 if (ct.IsCancellationRequested)
                 {
@@ -100,8 +78,11 @@ namespace IX.StandardExtensions.Threading
                 try
                 {
                     func(
-                        payload,
-                        ct).ContinueWith(Continuation, TaskContinuationOptions.ExecuteSynchronously);
+                            payload,
+                            ct)
+                        .ContinueWith(
+                            Continuation,
+                            TaskContinuationOptions.ExecuteSynchronously);
 
                     void Continuation(Task<TResult> completedTask)
                     {
@@ -111,7 +92,8 @@ namespace IX.StandardExtensions.Threading
                         }
                         else if (completedTask.IsFaulted)
                         {
-                            tcs.TrySetException(completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
+                            tcs.TrySetException(
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
                         }
                         else
                         {
@@ -136,9 +118,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "This is unavoidable in this case.")]
+        [JetBrains.Annotations.NotNull]
         private static Task<TResult> ExecuteOnThreadPool<TResult>(
-            Func<object, CancellationToken, TResult> action,
-            object state,
+            [JetBrains.Annotations.NotNull] Func<object?, CancellationToken, TResult> action,
+            [CanBeNull] object? state,
             CancellationToken cancellationToken = default)
         {
             Contract.RequiresNotNullPrivate(
@@ -153,55 +136,23 @@ namespace IX.StandardExtensions.Threading
                 return taskCompletionSource.Task;
             }
 
-            var outerState =
-                new Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
-                    TaskCompletionSource<TResult>, object, CancellationToken>(
-                    action,
-                    CultureInfo.CurrentCulture,
-                    CultureInfo.CurrentUICulture,
-                    taskCompletionSource,
-                    state,
-                    cancellationToken);
+            var outerState = (action, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource,
+                state, cancellationToken);
 
-#if !NETSTANDARD2_1
             ThreadPool.QueueUserWorkItem(
                 WorkItem,
                 outerState);
-#else
-            ThreadPool.QueueUserWorkItem(
-                WorkItem,
-                outerState,
-                false);
-#endif
 
-#if !NETSTANDARD2_1
             static void WorkItem(object rawState)
             {
-                Contract
-                    .RequiresArgumentOfTypePrivate<
-                        Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
-                            TaskCompletionSource<TResult>, object, CancellationToken>>(
-                        rawState,
-                        nameof(rawState));
-                Contract.RequiresNotNullPrivate(
-                    in rawState,
-                    nameof(rawState));
-
-                var (func, currentCulture, currentUiCulture, tcs, payload, ct) =
-                    (Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
-                        TaskCompletionSource<TResult>, object, CancellationToken>)rawState;
-#else
-            static void WorkItem(Tuple<Func<object, CancellationToken, TResult>, CultureInfo, CultureInfo,
-                TaskCompletionSource<TResult>, object, CancellationToken> rawState)
-            {
-                Contract.RequiresNotNullPrivate(
-                    in rawState,
-                    nameof(rawState));
-
-                (Func<object, CancellationToken, TResult> func, CultureInfo currentCulture,
-                    CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs, object payload,
-                    CancellationToken ct) = rawState;
-#endif
+                (Func<object?, CancellationToken, TResult> func, CultureInfo currentCulture,
+                        CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs, object? payload,
+                        CancellationToken ct) =
+                    Contract
+                        .RequiresArgumentOfType<(Func<object?, CancellationToken, TResult>, CultureInfo, CultureInfo,
+                            TaskCompletionSource<TResult>, object?, CancellationToken)>(
+                            rawState,
+                            nameof(rawState));
 
                 if (ct.IsCancellationRequested)
                 {

@@ -3,6 +3,9 @@
 // </copyright>
 
 using System;
+#if NETSTANDARD2_1
+using System.Diagnostics.CodeAnalysis;
+#endif
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.ComponentModel
@@ -50,7 +53,12 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="true" /> if the target is both not disposed and not collected, <see langword="false" />
         ///     otherwise.
         /// </returns>
-        public bool TryGetTarget(out T target)
+        public bool TryGetTarget(
+#if NETSTANDARD2_1
+            [MaybeNullWhen(false)]
+            [NotNullWhen(true)]
+#endif
+            out T? target)
         {
             if (!this.reference.TryGetTarget(out T intermediateTarget))
             {

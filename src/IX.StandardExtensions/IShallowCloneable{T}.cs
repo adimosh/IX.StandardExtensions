@@ -17,6 +17,10 @@ namespace IX.StandardExtensions
         /// Creates a shallow clone of the source object.
         /// </summary>
         /// <returns>A shallow clone.</returns>
+        [NotNull]
+#if NETSTANDARD2_1
+        [return: System.Diagnostics.CodeAnalysis.NotNull]
+#endif
         T ShallowClone();
     }
 }
