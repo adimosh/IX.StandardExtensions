@@ -27,7 +27,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IDE Configuration", "IDE Configuration", "{9ACF55FC-8537-4C24-8D87-54B21F95FD52}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
 Global

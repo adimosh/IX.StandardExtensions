@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageReleaseNotes>- Updated to semver 2.
+    <PackageReleaseNotes>- Standardized operations in codegen and build practices.
 - General updates.</PackageReleaseNotes>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
