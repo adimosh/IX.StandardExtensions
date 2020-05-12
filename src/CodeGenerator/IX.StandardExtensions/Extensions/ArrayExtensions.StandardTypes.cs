@@ -22,8 +22,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static byte[] DeepClone(this byte[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -48,8 +48,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static sbyte[] DeepClone(this sbyte[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -74,8 +74,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static short[] DeepClone(this short[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -100,8 +100,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static ushort[] DeepClone(this ushort[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -126,8 +126,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static char[] DeepClone(this char[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -152,8 +152,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static int[] DeepClone(this int[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -178,8 +178,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static uint[] DeepClone(this uint[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -204,8 +204,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static long[] DeepClone(this long[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -230,8 +230,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static ulong[] DeepClone(this ulong[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -256,8 +256,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static float[] DeepClone(this float[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -282,8 +282,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static double[] DeepClone(this double[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -308,8 +308,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static decimal[] DeepClone(this decimal[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -334,8 +334,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static DateTime[] DeepClone(this DateTime[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -360,8 +360,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static bool[] DeepClone(this bool[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -386,8 +386,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static TimeSpan[] DeepClone(this TimeSpan[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -412,8 +412,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static string[] DeepClone(this string[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;

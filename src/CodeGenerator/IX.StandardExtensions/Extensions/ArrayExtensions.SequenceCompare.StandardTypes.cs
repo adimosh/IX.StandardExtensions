@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Extensions
 {
@@ -16,8 +17,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this byte[] left, byte[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this byte[]? left,
+            [CanBeNull]
+            byte[]? right)
         {
             if (left == null)
             {
@@ -60,8 +67,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this sbyte[] left, sbyte[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this sbyte[]? left,
+            [CanBeNull]
+            sbyte[]? right)
         {
             if (left == null)
             {
@@ -104,8 +117,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this short[] left, short[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this short[]? left,
+            [CanBeNull]
+            short[]? right)
         {
             if (left == null)
             {
@@ -148,8 +167,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this ushort[] left, ushort[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this ushort[]? left,
+            [CanBeNull]
+            ushort[]? right)
         {
             if (left == null)
             {
@@ -192,8 +217,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this char[] left, char[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this char[]? left,
+            [CanBeNull]
+            char[]? right)
         {
             if (left == null)
             {
@@ -236,8 +267,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this int[] left, int[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this int[]? left,
+            [CanBeNull]
+            int[]? right)
         {
             if (left == null)
             {
@@ -280,8 +317,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this uint[] left, uint[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this uint[]? left,
+            [CanBeNull]
+            uint[]? right)
         {
             if (left == null)
             {
@@ -324,8 +367,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this long[] left, long[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this long[]? left,
+            [CanBeNull]
+            long[]? right)
         {
             if (left == null)
             {
@@ -368,8 +417,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this ulong[] left, ulong[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this ulong[]? left,
+            [CanBeNull]
+            ulong[]? right)
         {
             if (left == null)
             {
@@ -412,8 +467,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this float[] left, float[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this float[]? left,
+            [CanBeNull]
+            float[]? right)
         {
             if (left == null)
             {
@@ -456,8 +517,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this double[] left, double[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this double[]? left,
+            [CanBeNull]
+            double[]? right)
         {
             if (left == null)
             {
@@ -500,8 +567,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this decimal[] left, decimal[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this decimal[]? left,
+            [CanBeNull]
+            decimal[]? right)
         {
             if (left == null)
             {
@@ -544,8 +617,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this DateTime[] left, DateTime[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this DateTime[]? left,
+            [CanBeNull]
+            DateTime[]? right)
         {
             if (left == null)
             {
@@ -588,8 +667,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this bool[] left, bool[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this bool[]? left,
+            [CanBeNull]
+            bool[]? right)
         {
             if (left == null)
             {
@@ -632,8 +717,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this TimeSpan[] left, TimeSpan[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this TimeSpan[]? left,
+            [CanBeNull]
+            TimeSpan[]? right)
         {
             if (left == null)
             {
@@ -676,8 +767,14 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this string[] left, string[] right)
+        /// <returns>
+        ///     The result of the comparison.
+        /// </returns>
+        public static int SequenceCompare(
+            [CanBeNull]
+            this string[]? left,
+            [CanBeNull]
+            string[]? right)
         {
             if (left == null)
             {
@@ -705,7 +802,8 @@ namespace IX.StandardExtensions.Extensions
                 var c1 = b1 ? left[i] : default;
                 var c2 = b2 ? right[i] : default;
 
-                var cr = c1.CompareTo(c2);
+                var cr = string.Compare(c1, c2, StringComparison.CurrentCulture);
+
                 if (cr != 0)
                 {
                     return cr;

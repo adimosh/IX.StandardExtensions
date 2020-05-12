@@ -69,11 +69,11 @@ for (int i = 1; i <= 8; i++)
             RefIteratorAction<TItem, <#= paramTypes #>> action,
             <#= paramNameTypes #>)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)

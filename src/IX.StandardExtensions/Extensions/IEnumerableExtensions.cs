@@ -5,6 +5,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
@@ -15,11 +16,16 @@ namespace IX.StandardExtensions.Extensions
     /// Extensions for IEnumerable.
     /// </summary>
     [PublicAPI]
-
-    // ReSharper disable once InconsistentNaming - We're doing extensions for IEnumerable
+    [SuppressMessage(
+        "Performance",
+        "HAA0401:Possible allocation of reference type enumerator",
+        Justification = "These are extensions for IEnumerable, so we must allow this.")]
+    [SuppressMessage(
+        "ReSharper",
+        "InconsistentNaming",
+        Justification = "These are extensions for IEnumerable, so we must allow this.")]
     public static partial class IEnumerableExtensions
     {
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator - Makes sense, as this is IEnumerable extensions
         /// <summary>
         /// Executes an action for each one of the elements of an enumerable.
         /// </summary>
@@ -29,11 +35,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (T item in source)
@@ -41,7 +47,6 @@ namespace IX.StandardExtensions.Extensions
                 action(item);
             }
         }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
 
         /// <summary>
         /// Executes an action for each one of the elements of an enumerable.
@@ -51,11 +56,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach(this IEnumerable source, Action<object> action)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (var item in source)
@@ -64,7 +69,6 @@ namespace IX.StandardExtensions.Extensions
             }
         }
 
-#if !STANDARD
         /// <summary>
         /// Executes an independent action for each one of the elements of an enumerable, in parallel.
         /// </summary>
@@ -74,18 +78,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ParallelForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             Parallel.ForEach(source, action);
         }
-#endif
 
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator - Makes sense, as this is IEnumerable extensions
         /// <summary>
         /// Executes an action in sequence with an iterator.
         /// </summary>
@@ -95,11 +97,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void For<T>(this IEnumerable<T> source, Action<int, T> action)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             var i = 0;
@@ -109,7 +111,6 @@ namespace IX.StandardExtensions.Extensions
                 i++;
             }
         }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
 
         /// <summary>
         /// Executes an action in sequence with an iterator.
@@ -119,11 +120,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void For(this IEnumerable source, Action<int, object> action)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             var i = 0;
@@ -134,9 +135,6 @@ namespace IX.StandardExtensions.Extensions
             }
         }
 
-#if !STANDARD
-#pragma warning disable HAA0603 // Delegate allocation from a method group - Unavoidable
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator - This makes sense as it is IEnumerable extensions
         /// <summary>
         /// Executes an independent action in parallel, with an iterator that respects the original sequence.
         /// </summary>
@@ -144,18 +142,22 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="source">The enumerable source.</param>
         /// <param name="action">The action to execute.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is acceptable.")]
         public static void ParallelFor<T>(this IEnumerable<T> source, Action<int, T> action)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             Parallel.ForEach(EnumerateWithIndex(source, action), PerformParallelAction);
 
-            IEnumerable<Tuple<int, T, Action<int, T>>> EnumerateWithIndex(IEnumerable<T> sourceEnumerable, Action<int, T> actionToPerform)
+            static IEnumerable<Tuple<int, T, Action<int, T>>> EnumerateWithIndex(IEnumerable<T> sourceEnumerable, Action<int, T> actionToPerform)
             {
                 var i = 0;
                 foreach (T item in sourceEnumerable)
@@ -165,10 +167,7 @@ namespace IX.StandardExtensions.Extensions
                 }
             }
 
-            void PerformParallelAction(Tuple<int, T, Action<int, T>> state) => state.Item3(state.Item1, state.Item2);
+            static void PerformParallelAction(Tuple<int, T, Action<int, T>> state) => state.Item3(state.Item1, state.Item2);
         }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
-#pragma warning restore HAA0603 // Delegate allocation from a method group
-#endif
     }
 }

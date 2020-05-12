@@ -84,8 +84,8 @@ for (int i = 1; i <= 8; i++)
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
                     (Action<<#= paramTypes #>> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>)st;
 
@@ -125,8 +125,8 @@ for (int i = 1; i <= 8; i++)
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<<#= paramTypes #>, CancellationToken>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<<#= paramTypes #>, CancellationToken>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
                     (Action<<#= paramTypes #>, CancellationToken> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Action<<#= paramTypes #>, CancellationToken>, Tuple<<#= paramTypes #>>>)st;
 
@@ -166,8 +166,8 @@ for (int i = 1; i <= 8; i++)
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, Task>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<<#= paramTypes #>, Task>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
                     (Func<<#= paramTypes #>, Task> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Func<<#= paramTypes #>, Task>, Tuple<<#= paramTypes #>>>)st;
 
@@ -207,8 +207,8 @@ for (int i = 1; i <= 8; i++)
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, CancellationToken, Task>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<<#= paramTypes #>, CancellationToken, Task>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
                     (Func<<#= paramTypes #>, CancellationToken, Task> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Func<<#= paramTypes #>, CancellationToken, Task>, Tuple<<#= paramTypes #>>>)st;
 
@@ -249,8 +249,8 @@ for (int i = 1; i <= 8; i++)
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, TResult>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<<#= paramTypes #>, TResult>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
                     (Func<<#= paramTypes #>, TResult> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Func<<#= paramTypes #>, TResult>, Tuple<<#= paramTypes #>>>)st;
 
@@ -291,8 +291,8 @@ for (int i = 1; i <= 8; i++)
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, CancellationToken, TResult>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<<#= paramTypes #>, CancellationToken, TResult>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
                     (Func<<#= paramTypes #>, CancellationToken, TResult> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Func<<#= paramTypes #>, CancellationToken, TResult>, Tuple<<#= paramTypes #>>>)st;
 
@@ -333,8 +333,8 @@ for (int i = 1; i <= 8; i++)
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, Task<TResult>>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<<#= paramTypes #>, Task<TResult>>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
                     (Func<<#= paramTypes #>, Task<TResult>> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Func<<#= paramTypes #>, Task<TResult>>, Tuple<<#= paramTypes #>>>)st;
 
@@ -375,8 +375,8 @@ for (int i = 1; i <= 8; i++)
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, CancellationToken, Task<TResult>>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<<#= paramTypes #>, CancellationToken, Task<TResult>>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
 
                     (Func<<#= paramTypes #>, CancellationToken, Task<TResult>> actionL1, Tuple<<#= paramTypes #>> unpackedParameters) = (Tuple<Func<<#= paramTypes #>, CancellationToken, Task<TResult>>, Tuple<<#= paramTypes #>>>)st;
 

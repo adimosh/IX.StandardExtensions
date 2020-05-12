@@ -10,6 +10,8 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Extensions
 {
@@ -26,15 +28,37 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
 #>
 
         /// <summary>
-        /// Determines whether two enumerable objects have all members in sequence equal to one another.
+        ///     Determines whether two arrays have all members in sequence equal to one another.
         /// </summary>
-        /// <param name="left">The left operand enumerable.</param>
-        /// <param name="right">The right operand enumerable.</param>
-        /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
-        /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
-        public static bool SequenceEquals(this <#= fullTypeName #>[] left, <#= fullTypeName #>[] right)
+        /// <param name="left">The left operand array.</param>
+        /// <param name="right">The right operand array.</param>
+        /// <returns>
+        ///     <see langword="true"/> if the two arrays have the same length and each element at each position
+        ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
+        /// </returns>
+        [SuppressMessage(
+            "ReSharper",
+            "LoopCanBeConvertedToQuery",
+            Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
+<# if (typ == typeof(float) || typ == typeof(double))
+{ #>
+        [SuppressMessage(
+            "ReSharper",
+            "CompareOfFloatsByEqualityOperator",
+            Justification = "This is raw comparison and equation, we're not interested in the results of possible tolerance.")]
+<# } #>
+        public static bool SequenceEquals(
+            [CanBeNull]
+            this <#= fullTypeName #>[]? left,
+            [CanBeNull]
+            <#= fullTypeName #>[]? right)
         {
-            if ((left == null) ? (right != null) : (right == null))
+            if (left == null)
+            {
+                return right == null;
+            }
+
+            if (right == null)
             {
                 return false;
             }
@@ -54,6 +78,58 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
 
             return true;
         }
+<# if (typ == typeof(float) || typ == typeof(double))
+{ #>
+
+        /// <summary>
+        ///     Determines whether two arrays have all members in sequence equal to one another.
+        /// </summary>
+        /// <param name="left">The left operand array.</param>
+        /// <param name="right">The right operand array.</param>
+        /// <param name="tolerance">The tolerance under which to consider values equal.</param>
+        /// <returns>
+        ///     <see langword="true"/> if the two arrays have the same length and each element at each position
+        ///     in one array is within tolerance to the equivalent in the other, <see langword="false"/> otherwise.
+        /// </returns>
+        [SuppressMessage(
+            "ReSharper",
+            "LoopCanBeConvertedToQuery",
+            Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
+        public static bool SequenceEquals(
+            [CanBeNull]
+            this <#= fullTypeName #>[]? left,
+            [CanBeNull]
+            <#= fullTypeName #>[]? right,
+            <#= fullTypeName #> tolerance)
+        {
+            if (left == null)
+            {
+                return right == null;
+            }
+
+            if (right == null)
+            {
+                return false;
+            }
+
+            if (left.Length != right.Length)
+            {
+                return false;
+            }
+
+            tolerance = Math.Abs(tolerance);
+
+            for (var i = 0; i < left.Length; i++)
+            {
+                if (Math.Abs(left[i] - right[i]) > tolerance)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+<# } #>
 <#
 }
 #>

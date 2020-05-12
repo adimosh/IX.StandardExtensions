@@ -3,10 +3,8 @@
 // </copyright>
 
 using System;
-using JetBrains.Annotations;
-#if !STANDARD
 using System.Runtime.Serialization;
-#endif
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions
 {
@@ -14,9 +12,7 @@ namespace IX.StandardExtensions
     ///     An argument exception representing a boxed or polymorphic argument being passed as the wrong type.
     /// </summary>
     /// <seealso cref="System.ArgumentException" />
-#if !STANDARD
     [Serializable]
-#endif
     [PublicAPI]
     public class ArgumentInvalidTypeException : ArgumentException
     {
@@ -95,7 +91,6 @@ namespace IX.StandardExtensions
         {
         }
 
-#if !STANDARD
         /// <summary>
         ///     Initializes a new instance of the <see cref="ArgumentInvalidTypeException" /> class.
         /// </summary>
@@ -115,6 +110,5 @@ namespace IX.StandardExtensions
                 context)
         {
         }
-#endif
     }
 }

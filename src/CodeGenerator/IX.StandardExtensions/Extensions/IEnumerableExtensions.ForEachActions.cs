@@ -9,14 +9,14 @@ using IX.StandardExtensions.Contracts;
 namespace IX.StandardExtensions.Extensions
 {
     /// <summary>
-    /// Extensions for IEnumerable.
+    ///     Extensions for IEnumerable.
     /// </summary>
     // ReSharper disable once InconsistentNaming - We're doing extensions for IEnumerable
     public static partial class IEnumerableExtensions
     {
 #pragma warning disable HAA0401 // Possible allocation of reference type enumerator - This is acceptable, as these are IEnumerable extensions
         /// <summary>
-        /// Executes an action for each one of the elements of an enumerable.
+        ///     Executes an action for each one of the elements of an enumerable.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
@@ -26,11 +26,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1>(this IEnumerable<TItem> source, Action<TItem, TParam1> action, TParam1 param1)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -40,7 +40,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Executes an action for each one of the elements of an enumerable.
+        ///     Executes an action for each one of the elements of an enumerable.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
@@ -52,11 +52,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2>(this IEnumerable<TItem> source, Action<TItem, TParam1, TParam2> action, TParam1 param1, TParam2 param2)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -66,7 +66,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Executes an action for each one of the elements of an enumerable.
+        ///     Executes an action for each one of the elements of an enumerable.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
@@ -80,11 +80,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3>(this IEnumerable<TItem> source, Action<TItem, TParam1, TParam2, TParam3> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -94,7 +94,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Executes an action for each one of the elements of an enumerable.
+        ///     Executes an action for each one of the elements of an enumerable.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
@@ -110,11 +110,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, Action<TItem, TParam1, TParam2, TParam3, TParam4> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -124,7 +124,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Executes an action for each one of the elements of an enumerable.
+        ///     Executes an action for each one of the elements of an enumerable.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
@@ -142,11 +142,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, Action<TItem, TParam1, TParam2, TParam3, TParam4, TParam5> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -156,7 +156,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Executes an action for each one of the elements of an enumerable.
+        ///     Executes an action for each one of the elements of an enumerable.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
@@ -176,11 +176,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, Action<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -190,7 +190,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Executes an action for each one of the elements of an enumerable.
+        ///     Executes an action for each one of the elements of an enumerable.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
@@ -212,11 +212,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, Action<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -226,7 +226,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Executes an action for each one of the elements of an enumerable.
+        ///     Executes an action for each one of the elements of an enumerable.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked method at index 0.</typeparam>
@@ -250,11 +250,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, Action<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)

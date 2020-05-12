@@ -3,10 +3,8 @@
 // </copyright>
 
 using System;
-using JetBrains.Annotations;
-#if !STANDARD
 using System.Runtime.Serialization;
-#endif
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions
 {
@@ -14,9 +12,7 @@ namespace IX.StandardExtensions
     /// An exception that, when thrown, signals the thread it's on to stop retrying an operation.
     /// </summary>
     /// <seealso cref="System.Exception" />
-#if !STANDARD
     [Serializable]
-#endif
     [PublicAPI]
     public class StopRetryingException : Exception
     {
@@ -47,7 +43,6 @@ namespace IX.StandardExtensions
         {
         }
 
-#if !STANDARD
         /// <summary>
         /// Initializes a new instance of the <see cref="StopRetryingException"/> class.
         /// </summary>
@@ -57,6 +52,5 @@ namespace IX.StandardExtensions
             : base(info, context)
         {
         }
-#endif
     }
 }

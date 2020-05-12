@@ -108,7 +108,9 @@ for (int i = 1; i <= 8; i++)
             [CanBeNull] Action<Exception>? exceptionHandler,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
             var runningTask = ExecuteOnThreadPool(
@@ -116,10 +118,13 @@ for (int i = 1; i <= 8; i++)
                     st,
                     ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
+                    Requires.NotNull(
+                        st,
+                        nameof(st));
+                    var innerState = Requires.ArgumentOfType<Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>>(
+                        st,
+                        nameof(st));
 
-                    var innerState = (Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
 
@@ -201,7 +206,9 @@ for (int i = 1; i <= 8; i++)
             [CanBeNull] Action<Exception>? exceptionHandler,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
             var runningTask = ExecuteOnThreadPool(
@@ -209,10 +216,13 @@ for (int i = 1; i <= 8; i++)
                     st,
                     ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<<#= paramTypes #>, CancellationToken>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
+                    Requires.NotNull(
+                        st,
+                        nameof(st));
+                    var innerState = Requires.ArgumentOfType<Tuple<Action<<#= paramTypes #>, CancellationToken>, Tuple<<#= paramTypes #>>>>(
+                        st,
+                        nameof(st));
 
-                    var innerState = (Tuple<Action<<#= paramTypes #>, CancellationToken>, Tuple<<#= paramTypes #>>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
 
@@ -292,7 +302,9 @@ for (int i = 1; i <= 8; i++)
             [CanBeNull] Action<Exception>? exceptionHandler,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
             var runningTask = ExecuteOnThreadPool(
@@ -300,10 +312,13 @@ for (int i = 1; i <= 8; i++)
                     st,
                     ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, Task>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
+                    Requires.NotNull(
+                        st,
+                        nameof(st));
+                    var innerState = Requires.ArgumentOfType<Tuple<Func<<#= paramTypes #>, Task>, Tuple<<#= paramTypes #>>>>(
+                        st,
+                        nameof(st));
 
-                    var innerState = (Tuple<Func<<#= paramTypes #>, Task>, Tuple<<#= paramTypes #>>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
 
@@ -383,7 +398,9 @@ for (int i = 1; i <= 8; i++)
             [CanBeNull] Action<Exception>? exceptionHandler,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
             var runningTask = ExecuteOnThreadPool(
@@ -391,10 +408,13 @@ for (int i = 1; i <= 8; i++)
                     st,
                     ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<<#= paramTypes #>, CancellationToken, Task>, Tuple<<#= paramTypes #>>>>(st, nameof(st));
+                    Requires.NotNull(
+                        st,
+                        nameof(st));
+                    var innerState = Requires.ArgumentOfType<Tuple<Func<<#= paramTypes #>, CancellationToken, Task>, Tuple<<#= paramTypes #>>>>(
+                        st,
+                        nameof(st));
 
-                    var innerState = (Tuple<Func<<#= paramTypes #>, CancellationToken, Task>, Tuple<<#= paramTypes #>>>)st;
                     var actionL1 = innerState.Item1;
                     var unpackedParameters = innerState.Item2;
 

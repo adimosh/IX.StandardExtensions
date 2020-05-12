@@ -29,11 +29,11 @@ namespace IX.StandardExtensions.Extensions
             Action<TItem, TParam1> action,
             TParam1 param1)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -62,11 +62,11 @@ namespace IX.StandardExtensions.Extensions
             TParam1 param1,
             TParam2 param2)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -98,11 +98,11 @@ namespace IX.StandardExtensions.Extensions
             TParam2 param2,
             TParam3 param3)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -137,11 +137,11 @@ namespace IX.StandardExtensions.Extensions
             TParam3 param3,
             TParam4 param4)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -179,11 +179,11 @@ namespace IX.StandardExtensions.Extensions
             TParam4 param4,
             TParam5 param5)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -224,11 +224,11 @@ namespace IX.StandardExtensions.Extensions
             TParam5 param5,
             TParam6 param6)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -272,11 +272,11 @@ namespace IX.StandardExtensions.Extensions
             TParam6 param6,
             TParam7 param7)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -323,11 +323,11 @@ namespace IX.StandardExtensions.Extensions
             TParam7 param7,
             TParam8 param8)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)

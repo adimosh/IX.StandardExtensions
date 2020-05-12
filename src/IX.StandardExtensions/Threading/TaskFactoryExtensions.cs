@@ -31,8 +31,8 @@ namespace IX.StandardExtensions.Threading
             [NotNull] Action action,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
@@ -56,8 +56,8 @@ namespace IX.StandardExtensions.Threading
             [NotNull] Action action,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
@@ -82,8 +82,8 @@ namespace IX.StandardExtensions.Threading
             [NotNull] Func<TResult> action,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
@@ -108,8 +108,8 @@ namespace IX.StandardExtensions.Threading
             [NotNull] Func<TResult> action,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
@@ -120,9 +120,15 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
         }
 
-#pragma warning disable HAA0603 // Delegate allocation from a method group - This is expected
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
         [NotNull]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Unavoidable here.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Usage",
+            "DE0008:API is deprecated",
+            Justification = "Only after .NET 4.5.2.")]
         internal static Task StartWithStateOnDefaultTaskScheduler(
             [NotNull] TaskFactory taskFactory,
             [NotNull] Action<object> action,
@@ -130,11 +136,11 @@ namespace IX.StandardExtensions.Threading
             bool longRunning,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNullPrivate(
-                in taskFactory,
+            Requires.NotNull(
+                taskFactory,
                 nameof(taskFactory));
-            Contract.RequiresNotNullPrivate(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             TaskCreationOptions creationOptions = TaskCreationOptions.HideScheduler |
@@ -154,21 +160,14 @@ namespace IX.StandardExtensions.Threading
 
             static void StartAction(object rawState)
             {
-                Contract.RequiresNotNullPrivate(
-                    in rawState,
-                    nameof(rawState));
-                Contract.RequiresArgumentOfTypePrivate<Tuple<Action<object>, CultureInfo, CultureInfo, object>>(
-                    rawState,
-                    nameof(rawState));
-
                 var innerState = (Tuple<Action<object>, CultureInfo, CultureInfo, object>)rawState;
 
-#if FRAMEWORK_GT_451 || STANDARD_GT_12
-                CultureInfo.CurrentCulture = innerState.Item2;
-                CultureInfo.CurrentUICulture = innerState.Item3;
-#elif FRAMEWORK
+#if NET452
                 Thread.CurrentThread.CurrentCulture = innerState.Item2;
                 Thread.CurrentThread.CurrentUICulture = innerState.Item3;
+#else
+                CultureInfo.CurrentCulture = innerState.Item2;
+                CultureInfo.CurrentUICulture = innerState.Item3;
 #endif
 
                 innerState.Item1(innerState.Item4);
@@ -176,6 +175,14 @@ namespace IX.StandardExtensions.Threading
         }
 
         [NotNull]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Unavoidable here.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Usage",
+            "DE0008:API is deprecated",
+            Justification = "Only after .NET 4.5.2.")]
         internal static Task<TResult> StartWithStateOnDefaultTaskScheduler<TResult>(
             TaskFactory taskFactory,
             Func<object, TResult> action,
@@ -183,11 +190,11 @@ namespace IX.StandardExtensions.Threading
             bool longRunning,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNullPrivate(
-                in taskFactory,
+            Requires.NotNull(
+                taskFactory,
                 nameof(taskFactory));
-            Contract.RequiresNotNullPrivate(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             TaskCreationOptions creationOptions = TaskCreationOptions.HideScheduler |
@@ -207,28 +214,19 @@ namespace IX.StandardExtensions.Threading
 
             static TResult StartAction(object rawState)
             {
-                Contract.RequiresNotNullPrivate(
-                    in rawState,
-                    nameof(rawState));
-                Contract.RequiresArgumentOfTypePrivate<Tuple<Func<object, TResult>, CultureInfo, CultureInfo, object>>(
-                    rawState,
-                    nameof(rawState));
-
                 var innerState = (Tuple<Func<object, TResult>, CultureInfo, CultureInfo, object>)rawState;
 
-#if FRAMEWORK_GT_451 || STANDARD_GT_12
-                CultureInfo.CurrentCulture = innerState.Item2;
-                CultureInfo.CurrentUICulture = innerState.Item3;
-#elif FRAMEWORK
+#if NET452
                 Thread.CurrentThread.CurrentCulture = innerState.Item2;
                 Thread.CurrentThread.CurrentUICulture = innerState.Item3;
+#else
+                CultureInfo.CurrentCulture = innerState.Item2;
+                CultureInfo.CurrentUICulture = innerState.Item3;
 #endif
 
                 return innerState.Item1(innerState.Item4);
             }
         }
-#pragma warning restore DE0008 // API is deprecated
-#pragma warning restore HAA0603 // Delegate allocation from a method group
 
         private static TResult StateAsAction<TResult>(object state) => ((Func<TResult>)state)();
     }

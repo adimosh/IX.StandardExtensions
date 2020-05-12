@@ -36,7 +36,9 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
         /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, <#= fullTypeName #>> DeepClone<TKey>(this Dictionary<TKey, <#= fullTypeName #>> source)
         {
-            Contract.RequiresNotNull(in source, nameof(source));
+            Requires.NotNull(
+                source,
+                nameof(source));
 
             var destination = new Dictionary<TKey, <#= fullTypeName #>>();
 

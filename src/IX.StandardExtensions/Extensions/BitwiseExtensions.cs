@@ -159,10 +159,10 @@ namespace IX.StandardExtensions.Extensions
             BitArray data,
             int howManyBits)
         {
-            Contract.RequiresNotNull(
-                in data,
+            Requires.NotNull(
+                data,
                 nameof(data));
-            Contract.RequiresNonNegative(
+            Requires.NonNegative(
                 in howManyBits,
                 nameof(howManyBits));
 

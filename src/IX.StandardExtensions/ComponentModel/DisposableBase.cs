@@ -3,10 +3,11 @@
 // </copyright>
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using System.Threading;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
+using DiagCA = System.Diagnostics.CodeAnalysis;
 
 namespace IX.StandardExtensions.ComponentModel
 {
@@ -16,8 +17,8 @@ namespace IX.StandardExtensions.ComponentModel
     /// <seealso cref="System.IDisposable" />
     [DataContract]
     [PublicAPI]
-    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP025:Class with no virtual dispose method should be sealed.", Justification = "The pattern is not followed here, because, instead of overriding Dispose, one can and should override the two (managed and general) methods.")]
-    public abstract partial class DisposableBase
+    [DiagCA.SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP025:Class with no virtual dispose method should be sealed.", Justification = "The pattern is not followed here, because, instead of overriding Dispose, one can and should override the two (managed and general) methods.")]
+    public abstract partial class DisposableBase : IDisposable
     {
         /// <summary>
         ///     The thread-safe dispose signal.
@@ -46,14 +47,14 @@ namespace IX.StandardExtensions.ComponentModel
         public void Dispose()
         {
             if (Interlocked.Exchange(
-                    ref this.disposeSignaled,
-                    1) != 0)
+                ref this.disposeSignaled,
+                1) != 0)
             {
                 return;
             }
 
-            this.Dispose(true);
             GC.SuppressFinalize(this);
+            this.Dispose(true);
         }
 
         /// <summary>
@@ -76,13 +77,13 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <paramref name="action" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
-        protected void InvokeIfNotDisposed([JetBrains.Annotations.NotNull]
+        protected void InvokeIfNotDisposed([NotNull]
 #if NETSTANDARD2_1
-            [DisallowNull]
+            [DiagCA.DisallowNull]
 #endif
             Action action)
         {
-            this.ThrowIfCurrentObjectDisposed();
+            this.RequiresNotDisposed();
 
             action.Invoke();
         }
@@ -98,11 +99,11 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
 #if NETSTANDARD2_1
-        [return: MaybeNull]
+        [return: DiagCA.MaybeNull]
 #endif
-        protected TReturn InvokeIfNotDisposed<TReturn>([JetBrains.Annotations.NotNull]
+        protected TReturn InvokeIfNotDisposed<TReturn>([NotNull]
 #if NETSTANDARD2_1
-            [DisallowNull]
+            [DiagCA.DisallowNull]
 #endif
             Func<TReturn> func)
         {
@@ -134,22 +135,19 @@ namespace IX.StandardExtensions.ComponentModel
         /// </param>
         private void Dispose(bool disposing)
         {
-            // Development comment:
-            // This method appears to not be thread-safe. It is made thread-safe by the fact that it is only called from tne destructor and from a
-            // thread-safe Dispose method.
-            if (this.Disposed)
+            try
             {
-                return;
-            }
+                if (disposing)
+                {
+                    this.DisposeManagedContext();
+                }
 
-            if (disposing)
+                this.DisposeGeneralContext();
+            }
+            finally
             {
-                this.DisposeManagedContext();
+                this.Disposed = true;
             }
-
-            this.DisposeGeneralContext();
-
-            this.Disposed = true;
         }
     }
 }

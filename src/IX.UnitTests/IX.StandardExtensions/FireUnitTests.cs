@@ -28,7 +28,7 @@ namespace IX.UnitTests.IX.StandardExtensions
         /// <param name="output">The test output.</param>
         public FireUnitTests(ITestOutputHelper output)
         {
-            Contract.RequiresNotNull(ref this.output, output, nameof(output));
+            Requires.NotNull(ref this.output, output, nameof(output));
         }
 
         /// <summary>

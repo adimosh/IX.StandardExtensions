@@ -9,13 +9,13 @@ using IX.StandardExtensions.Contracts;
 namespace IX.StandardExtensions.Extensions
 {
     /// <summary>
-    /// Extension methods for LINQ.
+    ///     Extension methods for LINQ.
     /// </summary>
     public static partial class LinqExtensions
     {
 #pragma warning disable HAA0401 // Possible allocation of reference type enumerator - This is acceptable, as these are IEnumerable extensions
         /// <summary>
-        /// Determines whether a sequence contains any elements that match a specific predicate.
+        ///     Determines whether a sequence contains any elements that match a specific predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -26,11 +26,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1>(this IEnumerable<TItem> source, Func<TItem, TParam1, bool> action, TParam1 param1)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -45,7 +45,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Filters a sequence of values based on a predicate.
+        ///     Filters a sequence of values based on a predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -56,11 +56,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1>(this IEnumerable<TItem> source, Func<TItem, TParam1, bool> action, TParam1 param1)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -75,7 +75,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
+        ///     Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -86,11 +86,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1>(this IEnumerable<TItem> source, Func<TItem, TParam1, bool> action, TParam1 param1)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -105,7 +105,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Determines whether a sequence contains any elements that match a specific predicate.
+        ///     Determines whether a sequence contains any elements that match a specific predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -118,11 +118,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, bool> action, TParam1 param1, TParam2 param2)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -137,7 +137,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Filters a sequence of values based on a predicate.
+        ///     Filters a sequence of values based on a predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -150,11 +150,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, bool> action, TParam1 param1, TParam2 param2)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -169,7 +169,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
+        ///     Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -182,11 +182,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, bool> action, TParam1 param1, TParam2 param2)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -201,7 +201,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Determines whether a sequence contains any elements that match a specific predicate.
+        ///     Determines whether a sequence contains any elements that match a specific predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -216,11 +216,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, bool> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -235,7 +235,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Filters a sequence of values based on a predicate.
+        ///     Filters a sequence of values based on a predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -250,11 +250,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, bool> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -269,7 +269,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
+        ///     Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -284,11 +284,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, bool> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -303,7 +303,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Determines whether a sequence contains any elements that match a specific predicate.
+        ///     Determines whether a sequence contains any elements that match a specific predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -320,11 +320,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -339,7 +339,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Filters a sequence of values based on a predicate.
+        ///     Filters a sequence of values based on a predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -356,11 +356,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -375,7 +375,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
+        ///     Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -392,11 +392,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -411,7 +411,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Determines whether a sequence contains any elements that match a specific predicate.
+        ///     Determines whether a sequence contains any elements that match a specific predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -430,11 +430,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -449,7 +449,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Filters a sequence of values based on a predicate.
+        ///     Filters a sequence of values based on a predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -468,11 +468,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -487,7 +487,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
+        ///     Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -506,11 +506,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -525,7 +525,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Determines whether a sequence contains any elements that match a specific predicate.
+        ///     Determines whether a sequence contains any elements that match a specific predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -546,11 +546,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -565,7 +565,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Filters a sequence of values based on a predicate.
+        ///     Filters a sequence of values based on a predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -586,11 +586,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -605,7 +605,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
+        ///     Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -626,11 +626,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -645,7 +645,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Determines whether a sequence contains any elements that match a specific predicate.
+        ///     Determines whether a sequence contains any elements that match a specific predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -668,11 +668,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -687,7 +687,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Filters a sequence of values based on a predicate.
+        ///     Filters a sequence of values based on a predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -710,11 +710,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -729,7 +729,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
+        ///     Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -752,11 +752,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -771,7 +771,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Determines whether a sequence contains any elements that match a specific predicate.
+        ///     Determines whether a sequence contains any elements that match a specific predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -796,11 +796,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -815,7 +815,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Filters a sequence of values based on a predicate.
+        ///     Filters a sequence of values based on a predicate.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -840,11 +840,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)
@@ -859,7 +859,7 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        /// Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
+        ///     Returns the first element of the sequence that satisfies a condition or a default value if no such element is found.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
@@ -884,11 +884,11 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)

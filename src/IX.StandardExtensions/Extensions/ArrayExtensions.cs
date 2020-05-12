@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
@@ -27,8 +28,8 @@ namespace IX.StandardExtensions.Extensions
         public static T[] DeepClone<T>(this T[] source)
             where T : IDeepCloneable<T>
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -56,8 +57,8 @@ namespace IX.StandardExtensions.Extensions
         public static T[] CopyWithShallowClones<T>(this T[] source)
             where T : IShallowCloneable<T>
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -92,8 +93,8 @@ namespace IX.StandardExtensions.Extensions
         /// </exception>
         public static T[] Copy<T>(this T[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;
@@ -136,12 +137,12 @@ namespace IX.StandardExtensions.Extensions
             this T[] source,
             int length)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresValidArrayLength(
+            Requires.ValidArrayLength(
                 in length,
-                in source,
+                source,
                 nameof(length));
 
             var destination = new T[length];
@@ -186,13 +187,13 @@ namespace IX.StandardExtensions.Extensions
             int sourceIndex,
             int length)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresValidArrayRange(
+            Requires.ValidArrayRange(
                 in sourceIndex,
                 in length,
-                in source,
+                source,
                 nameof(length));
 
             var destination = new T[length];
@@ -217,15 +218,19 @@ namespace IX.StandardExtensions.Extensions
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
         /// </exception>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "Yes, but we don't want that to happen. We're interested in top performance in the loop.")]
         public static void ForEach<T>(
             this T[] source,
             Action<T> action)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)

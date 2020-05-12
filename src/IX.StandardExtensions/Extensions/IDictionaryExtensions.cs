@@ -30,8 +30,8 @@ namespace IX.StandardExtensions.Extensions
         public static Dictionary<TKey, TValue> DeepClone<TKey, TValue>(this Dictionary<TKey, TValue> source)
             where TValue : IDeepCloneable<TValue>
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, TValue>();
@@ -60,8 +60,8 @@ namespace IX.StandardExtensions.Extensions
         public static Dictionary<TKey, TValue> CopyWithShallowClones<TKey, TValue>(this Dictionary<TKey, TValue> source)
             where TValue : IShallowCloneable<TValue>
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, TValue>();

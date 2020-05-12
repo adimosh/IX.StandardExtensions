@@ -34,7 +34,9 @@ namespace IX.StandardExtensions.Threading
             TParam1 param1,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -67,7 +69,9 @@ namespace IX.StandardExtensions.Threading
             TParam1 param1,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -101,7 +105,9 @@ namespace IX.StandardExtensions.Threading
             TParam1 param1,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -134,7 +140,9 @@ namespace IX.StandardExtensions.Threading
             TParam1 param1,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -170,7 +178,9 @@ namespace IX.StandardExtensions.Threading
             TParam2 param2,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -207,7 +217,9 @@ namespace IX.StandardExtensions.Threading
             TParam2 param2,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -245,7 +257,9 @@ namespace IX.StandardExtensions.Threading
             TParam2 param2,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -282,7 +296,9 @@ namespace IX.StandardExtensions.Threading
             TParam2 param2,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -322,7 +338,9 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -363,7 +381,9 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -405,7 +425,9 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -446,7 +468,9 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -490,7 +514,9 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -535,7 +561,9 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -581,7 +609,9 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -626,7 +656,9 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -674,7 +706,9 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -723,7 +757,9 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -773,7 +809,9 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -822,7 +860,9 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -874,7 +914,9 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -927,7 +969,9 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -981,7 +1025,9 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -1034,7 +1080,9 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -1090,7 +1138,9 @@ namespace IX.StandardExtensions.Threading
             TParam7 param7,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -1147,7 +1197,9 @@ namespace IX.StandardExtensions.Threading
             TParam7 param7,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -1205,7 +1257,9 @@ namespace IX.StandardExtensions.Threading
             TParam7 param7,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -1262,7 +1316,9 @@ namespace IX.StandardExtensions.Threading
             TParam7 param7,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -1322,7 +1378,9 @@ namespace IX.StandardExtensions.Threading
             TParam8 param8,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -1383,7 +1441,9 @@ namespace IX.StandardExtensions.Threading
             TParam8 param8,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -1445,7 +1505,9 @@ namespace IX.StandardExtensions.Threading
             TParam8 param8,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -1506,7 +1568,9 @@ namespace IX.StandardExtensions.Threading
             TParam8 param8,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,

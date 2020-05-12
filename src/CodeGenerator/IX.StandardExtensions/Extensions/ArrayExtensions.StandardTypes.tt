@@ -36,8 +36,8 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
         /// </exception>
         public static <#= fullTypeName #>[] DeepClone(this <#= fullTypeName #>[] source)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
 
             var length = source.Length;

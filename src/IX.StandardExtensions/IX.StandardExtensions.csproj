@@ -34,7 +34,8 @@
   <!-- Code imports -->
   <ItemGroup>
     <Compile Include="..\CodeGenerator\IX.StandardExtensions\ComponentModel\DisposableBase.InvokeIfNotDisposed.cs" Link="ComponentModel\DisposableBase.InvokeIfNotDisposed.cs" />
-    <Compile Include="..\CodeGenerator\IX.StandardExtensions\Contracts\Contract.NumericTypesValidation.cs" Link="Contracts\Contract.NumericTypesValidation.cs" />
+    <Compile Include="..\CodeGenerator\IX.StandardExtensions\Contracts\Contract.NumericTypesValidation.cs" Link="Obsolete\0.4.3\Contract.NumericTypesValidation.cs" />
+    <Compile Include="..\CodeGenerator\IX.StandardExtensions\Contracts\Requires.NumericTypesValidation.cs" Link="Contracts\Requires.NumericTypesValidation.cs" />
     <Compile Include="..\CodeGenerator\IX.StandardExtensions\Efficiency\ImmutableValueTuple.cs" Link="Efficiency\ImmutableValueTuple.cs" />
     <Compile Include="..\CodeGenerator\IX.StandardExtensions\Efficiency\RefDelegates.WithParameters.cs" Link="Efficiency\RefDelegates.WithParameters.cs" />
     <Compile Include="..\CodeGenerator\IX.StandardExtensions\Efficiency\RefIteratorDelegates.WithParameters.cs" Link="Efficiency\RefIteratorDelegates.WithParameters.cs" />
@@ -138,6 +139,10 @@
     <PackageReference Include="System.ValueTuple" Version="[4.5.0,5)" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.1'">
+    <PackageReference Include="System.Memory" Version="[4.5.4,5)" />
+  </ItemGroup>
+
   <!-- Resources -->
   <ItemGroup>
     <Compile Update="Resources.Designer.cs">
@@ -182,13 +187,10 @@
 
   <!-- Project system and dependencies -->
   <ItemGroup>
-    <PackageReference Include="IX.Framework.ProjectSystem" Version="1.0.1">
+    <PackageReference Include="IX.Framework.ProjectSystem" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Obsolete\" />
   </ItemGroup>
 
 </Project>

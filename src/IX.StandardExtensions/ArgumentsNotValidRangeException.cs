@@ -3,19 +3,15 @@
 // </copyright>
 
 using System;
-using JetBrains.Annotations;
-#if !STANDARD
 using System.Runtime.Serialization;
-#endif
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions
 {
     /// <summary>
     ///     An exception representing that a certain set of arguments do not form a valid range of values.
     /// </summary>
-#if !STANDARD
     [Serializable]
-#endif
     [PublicAPI]
     public class ArgumentsNotValidRangeException : ArgumentsException
     {
@@ -76,7 +72,6 @@ namespace IX.StandardExtensions
         {
         }
 
-#if !STANDARD
         /// <summary>
         ///     Initializes a new instance of the <see cref="ArgumentsNotValidRangeException" /> class.
         /// </summary>
@@ -96,6 +91,5 @@ namespace IX.StandardExtensions
                 context)
         {
         }
-#endif
     }
 }

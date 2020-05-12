@@ -35,8 +35,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1>, Tuple<TParam1>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1>, Tuple<TParam1>>>(st, nameof(st));
 
                     (Action<TParam1> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Action<TParam1>, Tuple<TParam1>>)st;
 
@@ -62,8 +62,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, CancellationToken>, Tuple<TParam1>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, CancellationToken>, Tuple<TParam1>>>(st, nameof(st));
 
                     (Action<TParam1, CancellationToken> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Action<TParam1, CancellationToken>, Tuple<TParam1>>)st;
 
@@ -89,8 +89,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, Task>, Tuple<TParam1>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, Task>, Tuple<TParam1>>>(st, nameof(st));
 
                     (Func<TParam1, Task> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, Task>, Tuple<TParam1>>)st;
 
@@ -116,8 +116,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, CancellationToken, Task>, Tuple<TParam1>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, CancellationToken, Task>, Tuple<TParam1>>>(st, nameof(st));
 
                     (Func<TParam1, CancellationToken, Task> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, CancellationToken, Task>, Tuple<TParam1>>)st;
 
@@ -144,8 +144,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TResult>, Tuple<TParam1>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TResult>, Tuple<TParam1>>>(st, nameof(st));
 
                     (Func<TParam1, TResult> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, TResult>, Tuple<TParam1>>)st;
 
@@ -172,8 +172,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, CancellationToken, TResult>, Tuple<TParam1>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, CancellationToken, TResult>, Tuple<TParam1>>>(st, nameof(st));
 
                     (Func<TParam1, CancellationToken, TResult> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, CancellationToken, TResult>, Tuple<TParam1>>)st;
 
@@ -200,8 +200,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, Task<TResult>>, Tuple<TParam1>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, Task<TResult>>, Tuple<TParam1>>>(st, nameof(st));
 
                     (Func<TParam1, Task<TResult>> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, Task<TResult>>, Tuple<TParam1>>)st;
 
@@ -228,8 +228,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, CancellationToken, Task<TResult>>, Tuple<TParam1>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, CancellationToken, Task<TResult>>, Tuple<TParam1>>>(st, nameof(st));
 
                     (Func<TParam1, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, CancellationToken, Task<TResult>>, Tuple<TParam1>>)st;
 
@@ -259,8 +259,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>)st;
 
@@ -289,8 +289,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, CancellationToken>, Tuple<TParam1, TParam2>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, CancellationToken>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2, CancellationToken> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Action<TParam1, TParam2, CancellationToken>, Tuple<TParam1, TParam2>>)st;
 
@@ -319,8 +319,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, Task>, Tuple<TParam1, TParam2>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, Task>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, Task> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, Task>, Tuple<TParam1, TParam2>>)st;
 
@@ -349,8 +349,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, CancellationToken, Task>, Tuple<TParam1, TParam2>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, CancellationToken, Task>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, CancellationToken, Task>, Tuple<TParam1, TParam2>>)st;
 
@@ -380,8 +380,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TResult>, Tuple<TParam1, TParam2>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TResult>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TResult> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TResult>, Tuple<TParam1, TParam2>>)st;
 
@@ -411,8 +411,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, CancellationToken, TResult>, Tuple<TParam1, TParam2>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, CancellationToken, TResult>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, CancellationToken, TResult>, Tuple<TParam1, TParam2>>)st;
 
@@ -442,8 +442,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, Task<TResult>>, Tuple<TParam1, TParam2>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, Task<TResult>>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, Task<TResult>> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, Task<TResult>>, Tuple<TParam1, TParam2>>)st;
 
@@ -473,8 +473,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2>>)st;
 
@@ -507,8 +507,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2, TParam3> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>)st;
 
@@ -540,8 +540,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, CancellationToken>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, CancellationToken>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2, TParam3, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, CancellationToken>, Tuple<TParam1, TParam2, TParam3>>)st;
 
@@ -573,8 +573,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, Task>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, Task>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, Task> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, Task>, Tuple<TParam1, TParam2, TParam3>>)st;
 
@@ -606,8 +606,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3>>)st;
 
@@ -640,8 +640,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TResult>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TResult>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TResult> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TResult>, Tuple<TParam1, TParam2, TParam3>>)st;
 
@@ -674,8 +674,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3>>)st;
 
@@ -708,8 +708,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>)st;
 
@@ -742,8 +742,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>)st;
 
@@ -779,8 +779,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2, TParam3, TParam4> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
 
@@ -815,8 +815,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2, TParam3, TParam4, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
 
@@ -851,8 +851,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
 
@@ -887,8 +887,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
 
@@ -924,8 +924,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
 
@@ -961,8 +961,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
 
@@ -998,8 +998,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
 
@@ -1035,8 +1035,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
 
@@ -1075,8 +1075,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2, TParam3, TParam4, TParam5> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
 
@@ -1114,8 +1114,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
 
@@ -1153,8 +1153,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
 
@@ -1192,8 +1192,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
 
@@ -1232,8 +1232,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
 
@@ -1272,8 +1272,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
 
@@ -1312,8 +1312,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
 
@@ -1352,8 +1352,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
 
@@ -1395,8 +1395,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
 
@@ -1437,8 +1437,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
 
@@ -1479,8 +1479,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
 
@@ -1521,8 +1521,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
 
@@ -1564,8 +1564,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
 
@@ -1607,8 +1607,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
 
@@ -1650,8 +1650,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
 
@@ -1693,8 +1693,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
 
@@ -1739,8 +1739,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
 
@@ -1784,8 +1784,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
 
@@ -1829,8 +1829,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
 
@@ -1874,8 +1874,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
 
@@ -1920,8 +1920,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
 
@@ -1966,8 +1966,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
 
@@ -2012,8 +2012,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
 
@@ -2058,8 +2058,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
 
@@ -2107,8 +2107,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
 
@@ -2155,8 +2155,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
                     (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
 
@@ -2203,8 +2203,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
 
@@ -2251,8 +2251,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
 
@@ -2300,8 +2300,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
 
@@ -2349,8 +2349,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
 
@@ -2398,8 +2398,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
 
@@ -2447,8 +2447,8 @@ namespace IX.StandardExtensions.Threading
             CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
                 (st, ct) =>
                 {
-                    Contract.RequiresNotNullPrivate(in st, nameof(st));
-                    Contract.RequiresArgumentOfTypePrivate<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
+                    Requires.NotNull(st, nameof(st));
+                    Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
                     (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
 

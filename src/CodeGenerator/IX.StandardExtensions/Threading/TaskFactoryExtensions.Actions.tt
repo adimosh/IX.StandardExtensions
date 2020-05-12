@@ -76,7 +76,9 @@ for (int i = 1; i <= 8; i++)
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -139,7 +141,9 @@ for (int i = 1; i <= 8; i++)
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -203,7 +207,9 @@ for (int i = 1; i <= 8; i++)
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
@@ -266,7 +272,9 @@ for (int i = 1; i <= 8; i++)
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(in action, nameof(action));
+            Requires.NotNull(
+                action,
+                nameof(action));
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,

@@ -33,6 +33,7 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNull<T>(
             ref T field,
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
@@ -59,6 +60,7 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNullOrEmpty(
             ref string field,
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
@@ -91,6 +93,7 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNullOrWhitespace(
             ref string field,
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
@@ -126,6 +129,7 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNullOrEmpty<T>(
             ref ICollection<T> field,
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
@@ -161,6 +165,7 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNullOrEmpty<T>(
             ref T[] field,
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
@@ -191,6 +196,7 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresPositive(
             ref TimeSpan field,
             in TimeSpan argument,
@@ -220,6 +226,7 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNonNegative(
             ref TimeSpan field,
             in TimeSpan argument,
@@ -252,6 +259,7 @@ namespace IX.StandardExtensions.Contracts
         ///     The condition is not being met.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresArgumentOfType<T>(
             ref T field,
             [CanBeNull] object argument,

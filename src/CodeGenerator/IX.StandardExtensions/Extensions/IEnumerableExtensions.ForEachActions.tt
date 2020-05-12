@@ -15,7 +15,7 @@ using IX.StandardExtensions.Contracts;
 namespace IX.StandardExtensions.Extensions
 {
     /// <summary>
-    /// Extensions for IEnumerable.
+    ///     Extensions for IEnumerable.
     /// </summary>
     // ReSharper disable once InconsistentNaming - We're doing extensions for IEnumerable
     public static partial class IEnumerableExtensions
@@ -41,7 +41,7 @@ for (int i = 1; i <= 8; i++)
 #>
 
         /// <summary>
-        /// Executes an action for each one of the elements of an enumerable.
+        ///     Executes an action for each one of the elements of an enumerable.
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
 <#
@@ -65,11 +65,11 @@ for (int i = 1; i <= 8; i++)
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, <#= paramTypes #>>(this IEnumerable<TItem> source, Action<TItem, <#= paramTypes #>> action, <#= paramNameTypes #>)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             foreach (TItem item in source)

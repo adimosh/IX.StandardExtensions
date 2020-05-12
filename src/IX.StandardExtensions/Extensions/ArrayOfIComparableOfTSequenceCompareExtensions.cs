@@ -1,11 +1,4 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ assembly name="System.Core" #>
-<#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Collections.Generic" #>
-<#@ include file="..\..\..\..\opt\tt\StandardTypes.tt" #><#@ include file="..\..\..\..\opt\tt\TypeNamesFixture.tt" #>
-<#@ output extension=".cs" #>
-// <copyright file="ArrayExtensions.SequenceCompare.StandardTypes.cs" company="Adrian Mos">
+// <copyright file="ArrayOfIComparableOfTSequenceCompareExtensions.cs" company="Adrian Mos">
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
@@ -15,30 +8,26 @@ using JetBrains.Annotations;
 namespace IX.StandardExtensions.Extensions
 {
     /// <summary>
-    ///     Extensions for array types.
+    ///     Extensions for array types of <see cref="IComparable{T}"/>.
     /// </summary>
-    public static partial class ArrayExtensions
-    {<#
-List<string> code = new List<string>();
-
-foreach (var typ in types.Where(p => p != typeof(byte[])))
-{
-    string fullTypeName = GetTypeUsableName(typ);
-#>
-
+    [PublicAPI]
+    public static class ArrayOfIComparableOfTSequenceCompareExtensions
+    {
         /// <summary>
         ///     Compares two arrays to one another sequentially.
         /// </summary>
+        /// <typeparam name="T">The type of the item in the array.</typeparam>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
         /// <returns>
         ///     The result of the comparison.
         /// </returns>
-        public static int SequenceCompare(
+        public static int SequenceCompare<T>(
             [CanBeNull]
-            this <#= fullTypeName #>[]? left,
+            this T[]? left,
             [CanBeNull]
-            <#= fullTypeName #>[]? right)
+            T[]? right)
+        where T : IComparable<T>
         {
             if (left == null)
             {
@@ -60,29 +49,42 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
 
                 if (!b1 && !b2)
                 {
+                    // We have reached the end
                     return 0;
                 }
 
-                var c1 = b1 ? left[i] : default;
-                var c2 = b2 ? right[i] : default;
+                T c1 = b1 ? left[i] : default;
+                T c2 = b2 ? right[i] : default;
 
-<# if (typ == typeof(string))
-{ #>
-                var cr = string.Compare(c1, c2, StringComparison.CurrentCulture);
+                if (c1 == null)
+                {
+                    if (c2 == null)
+                    {
+                        // Both are null, go to next
+                        i++;
+                        continue;
+                    }
 
-<# } else { #>
+                    // Left is null, right is not
+                    return int.MinValue;
+                }
+
+                if (c2 == null)
+                {
+                    // Right is null, left is not
+                    return int.MaxValue;
+                }
+
                 var cr = c1.CompareTo(c2);
-<# } #>
                 if (cr != 0)
                 {
+                    // We have reached the first non-null difference
                     return cr;
                 }
 
+                // No difference at this level, let's proceed
                 i++;
             }
         }
-<#
-}
-#>
     }
 }

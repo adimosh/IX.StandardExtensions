@@ -11,7 +11,7 @@ namespace IX.StandardExtensions.ComponentModel
     ///     An abstract base class for correctly implementing the disposable pattern.
     /// </summary>
     /// <seealso cref="System.IDisposable" />
-    public abstract partial class DisposableBase : IDisposable
+    public abstract partial class DisposableBase
     {
         /// <summary>
         ///     Invokes an action if the current instance is not disposed.

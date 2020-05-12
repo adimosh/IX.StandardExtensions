@@ -174,4 +174,7 @@
   <data name="ErrorArgumentNotValidLength" xml:space="preserve">
     <value>The argument {0} cannot be considered a valid length, as it has to be a positive integer less than the length of the collection it is used for.</value>
   </data>
+  <data name="ErrorArgumentNullOrEmptyArray" xml:space="preserve">
+    <value>The array argument {0} is null (Nothing in Visual Basic) or empty.</value>
+  </data>
 </root>

@@ -3,10 +3,8 @@
 // </copyright>
 
 using System;
-using JetBrains.Annotations;
-#if !STANDARD
 using System.Runtime.Serialization;
-#endif
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions
 {
@@ -14,9 +12,7 @@ namespace IX.StandardExtensions
     ///     An argument exception representing a value given that cannot be used as an array length.
     /// </summary>
     /// <seealso cref="System.ArgumentException" />
-#if !STANDARD
     [Serializable]
-#endif
     [PublicAPI]
     public class ArgumentNotValidLengthException : ArgumentOutOfRangeException
     {
@@ -49,7 +45,6 @@ namespace IX.StandardExtensions
         {
         }
 
-#if !STANDARD
         /// <summary>
         ///     Initializes a new instance of the <see cref="ArgumentNotValidLengthException" /> class.
         /// </summary>
@@ -69,6 +64,5 @@ namespace IX.StandardExtensions
                 context)
         {
         }
-#endif
     }
 }

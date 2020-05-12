@@ -11,11 +11,12 @@
 
 using System;
 using System.Collections.Generic;
+using IX.StandardExtensions.Contracts;
 
 namespace IX.StandardExtensions.Extensions
 {
     /// <summary>
-    /// Extensions for IList.
+    ///     Extensions for IList.
     /// </summary>
     // ReSharper disable once InconsistentNaming
     public static partial class IListCloneExtensions
@@ -28,19 +29,18 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
 #>
 
         /// <summary>
-        /// Deep clones the list.
+        ///     Deep clones the list.
         /// </summary>
         /// <param name="list">The list to clone.</param>
         /// <returns>
-        /// A cloned list.
+        ///     A cloned list.
         /// </returns>
         /// <exception cref="System.ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<<#= fullTypeName #>> DeepClone(this List<<#= fullTypeName #>> list)
         {
-            if (list == null)
-            {
-                throw new ArgumentNullException(nameof(list));
-            }
+            Requires.NotNull(
+                list,
+                nameof(list));
 
             return new List<<#= fullTypeName #>>(list);
         }

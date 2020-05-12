@@ -3,10 +3,8 @@
 // </copyright>
 
 using System;
-using JetBrains.Annotations;
-#if !STANDARD
 using System.Runtime.Serialization;
-#endif
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions
 {
@@ -14,9 +12,7 @@ namespace IX.StandardExtensions
     /// The exception that is thrown when a requested method or operation is not implemented.
     /// </summary>
     /// <seealso cref="System.NotImplementedException" />
-#if !STANDARD
     [Serializable]
-#endif
     [PublicAPI]
     public class NotImplementedByDesignException : NotImplementedException
     {
@@ -24,7 +20,7 @@ namespace IX.StandardExtensions
         /// Initializes a new instance of the <see cref="NotImplementedByDesignException"/> class.
         /// </summary>
         public NotImplementedByDesignException()
-            : this(Resources.ErrorNotImplementedByDesign)
+            : base(Resources.ErrorNotImplementedByDesign)
         {
         }
 
@@ -32,13 +28,30 @@ namespace IX.StandardExtensions
         /// Initializes a new instance of the <see cref="NotImplementedByDesignException"/> class.
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
-        /// <param name="inner">The exception that is the cause of the current exception. If the <paramref name="inner" /> parameter is not null, the current exception is raised in a catch block that handles the inner exception.</param>
-        public NotImplementedByDesignException(string message, Exception? inner = null)
-            : base(message, inner)
+        public NotImplementedByDesignException(string message)
+            : base(message)
         {
         }
 
-#if !STANDARD
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotImplementedByDesignException"/> class.
+        /// </summary>
+        /// <param name="innerException">The exception that is the cause of the current exception. If the <paramref name="innerException" /> parameter is not null, the current exception is raised in a catch block that handles the inner exception.</param>
+        public NotImplementedByDesignException(Exception innerException)
+            : base(Resources.ErrorNotImplementedByDesign, innerException)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NotImplementedByDesignException"/> class.
+        /// </summary>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception. If the <paramref name="innerException" /> parameter is not null, the current exception is raised in a catch block that handles the inner exception.</param>
+        public NotImplementedByDesignException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NotImplementedByDesignException"/> class.
         /// </summary>
@@ -48,6 +61,5 @@ namespace IX.StandardExtensions
             : base(info, context)
         {
         }
-#endif
     }
 }

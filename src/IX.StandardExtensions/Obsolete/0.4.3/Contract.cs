@@ -8,9 +8,12 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using IX.StandardExtensions.ComponentModel;
 using JetBrains.Annotations;
+using Req = IX.StandardExtensions.Contracts.Requires;
 
+// ReSharper disable once CheckNamespace
 namespace IX.StandardExtensions.Contracts
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     /// <summary>
     ///     Methods for approximating the works of contract-oriented programming.
     /// </summary>
@@ -33,17 +36,15 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNull<T>(
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             in T? argument,
             [NotNull] string argumentName)
-            where T : class
-        {
-            if (argument == null)
-            {
-                throw new ArgumentNullException(argumentName);
-            }
-        }
+            where T : class =>
+            Req.NotNull(
+                argument,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that an argument is not null. Use this method for non-public contracts.
@@ -62,17 +63,15 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNullPrivate<T>(
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             in T? argument,
             [NotNull] string argumentName)
-            where T : class
-        {
-            if (argument == null)
-            {
-                throw new ArgumentNullException(argumentName);
-            }
-        }
+            where T : class =>
+            Req.NotNull(
+                argument,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that a string argument is not null or empty.
@@ -89,16 +88,14 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNullOrEmpty(
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
-            [NotNull] string argumentName)
-        {
-            if (string.IsNullOrEmpty(argument))
-            {
-                throw new ArgumentNullOrEmptyException(argumentName);
-            }
-        }
+            [NotNull] string argumentName) =>
+            Req.NotNullOrEmpty(
+                argument,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that a string argument is not null or empty. Use this method for non-public
@@ -117,16 +114,14 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNullOrEmptyPrivate(
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
-            [NotNull] string argumentName)
-        {
-            if (string.IsNullOrEmpty(argument))
-            {
-                throw new ArgumentNullOrEmptyException(argumentName);
-            }
-        }
+            [NotNull] string argumentName) =>
+            Req.NotNullOrEmpty(
+                argument,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that a string argument is not null or empty.
@@ -143,16 +138,14 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNullOrWhitespace(
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
-            [NotNull] string argumentName)
-        {
-            if (string.IsNullOrWhiteSpace(argument))
-            {
-                throw new ArgumentNullOrWhitespaceException(argumentName);
-            }
-        }
+            [NotNull] string argumentName) =>
+            Req.NotNullOrWhiteSpace(
+                argument,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that a string argument is not null or empty. Use this method for non-public
@@ -171,16 +164,14 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNullOrWhitespacePrivate(
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
-            [NotNull] string argumentName)
-        {
-            if (string.IsNullOrWhiteSpace(argument))
-            {
-                throw new ArgumentNullOrWhitespaceException(argumentName);
-            }
-        }
+            [NotNull] string argumentName) =>
+            Req.NotNullOrWhiteSpace(
+                argument,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that a collection argument is not null or empty.
@@ -200,6 +191,7 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNullOrEmpty<T>(
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             ICollection<T>? argument,
@@ -231,6 +223,7 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNullOrEmptyPrivate<T>(
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             ICollection<T>? argument,
@@ -260,16 +253,14 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNullOrEmpty<T>(
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? argument,
-            [NotNull] string argumentName)
-        {
-            if ((argument?.Length ?? 0) == 0)
-            {
-                throw new ArgumentNullOrEmptyBinaryException(argumentName);
-            }
-        }
+            [NotNull] string argumentName) =>
+            Req.NotEmpty(
+                argument,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that an array argument is not null or empty. Use this method for non-public
@@ -291,16 +282,14 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNotNullOrEmptyPrivate<T>(
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? argument,
-            [NotNull] string argumentName)
-        {
-            if ((argument?.Length ?? 0) == 0)
-            {
-                throw new ArgumentNullOrEmptyBinaryException(argumentName);
-            }
-        }
+            [NotNull] string argumentName) =>
+            Req.NotEmpty(
+                argument,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that a numeric argument is positive.
@@ -315,15 +304,13 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresPositive(
             in TimeSpan argument,
-            [NotNull] string argumentName)
-        {
-            if (argument <= TimeSpan.Zero)
-            {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
-            }
-        }
+            [NotNull] string argumentName) =>
+            Req.Positive(
+                in argument,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that a numeric argument is positive. Use this method for non-public contracts.
@@ -339,15 +326,13 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [Conditional(Constants.ContractsNonPublicSymbol)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresPositivePrivate(
             in TimeSpan argument,
-            [NotNull] string argumentName)
-        {
-            if (argument <= TimeSpan.Zero)
-            {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
-            }
-        }
+            [NotNull] string argumentName) =>
+            Req.Positive(
+                in argument,
+                argumentName);
 
         /// <summary>Called when a contract requires that aspecific index is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
@@ -363,6 +348,7 @@ namespace IX.StandardExtensions.Contracts
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresValidArrayIndex<T>(
             in int argument,
             in T[] array,
@@ -392,6 +378,7 @@ namespace IX.StandardExtensions.Contracts
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresValidArrayIndexPrivate<T>(
             in int argument,
             in T[] array,
@@ -403,7 +390,6 @@ namespace IX.StandardExtensions.Contracts
             }
         }
 
-#if !STANDARD
         /// <summary>Called when a contract requires that aspecific index is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="argument">The numeric argument to validate.</param>
@@ -418,6 +404,7 @@ namespace IX.StandardExtensions.Contracts
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresValidArrayIndex<T>(
             in long argument,
             in T[] array,
@@ -447,6 +434,7 @@ namespace IX.StandardExtensions.Contracts
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresValidArrayIndexPrivate<T>(
             in long argument,
             in T[] array,
@@ -457,7 +445,6 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNotValidIndexException(argumentName);
             }
         }
-#endif
 
         /// <summary>Called when a contract requires that aspecific index and length, constituting a range, is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
@@ -474,6 +461,7 @@ namespace IX.StandardExtensions.Contracts
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresValidArrayRange<T>(
             in int indexArgument,
             in int lengthArgument,
@@ -512,6 +500,7 @@ namespace IX.StandardExtensions.Contracts
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresValidArrayRangePrivate<T>(
             in int indexArgument,
             in int lengthArgument,
@@ -531,7 +520,6 @@ namespace IX.StandardExtensions.Contracts
             }
         }
 
-#if !STANDARD
         /// <summary>Called when a contract requires that aspecific index and length, constituting a range, is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="indexArgument">The numeric index argument to validate.</param>
@@ -547,6 +535,7 @@ namespace IX.StandardExtensions.Contracts
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresValidArrayRange<T>(
             in long indexArgument,
             in long lengthArgument,
@@ -585,6 +574,7 @@ namespace IX.StandardExtensions.Contracts
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresValidArrayRangePrivate<T>(
             in long indexArgument,
             in long lengthArgument,
@@ -603,7 +593,6 @@ namespace IX.StandardExtensions.Contracts
                     nameof(lengthArgument));
             }
         }
-#endif
 
         /// <summary>Called when a contract requires that aspecific length is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
@@ -619,6 +608,7 @@ namespace IX.StandardExtensions.Contracts
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresValidArrayLength<T>(
             in int argument,
             in T[] array,
@@ -648,6 +638,7 @@ namespace IX.StandardExtensions.Contracts
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresValidArrayLengthPrivate<T>(
             in int argument,
             in T[] array,
@@ -659,7 +650,6 @@ namespace IX.StandardExtensions.Contracts
             }
         }
 
-#if !STANDARD
         /// <summary>Called when a contract requires that aspecific length is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="argument">The numeric argument to validate.</param>
@@ -674,6 +664,7 @@ namespace IX.StandardExtensions.Contracts
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresValidArrayLength<T>(
             in long argument,
             in T[] array,
@@ -703,6 +694,7 @@ namespace IX.StandardExtensions.Contracts
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresValidArrayLengthPrivate<T>(
             in long argument,
             in T[] array,
@@ -713,7 +705,6 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNotValidLengthException(argumentName);
             }
         }
-#endif
 
         /// <summary>
         ///     Called when a contract requires that a numeric argument is not negative.
@@ -728,15 +719,13 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNonNegative(
             in TimeSpan argument,
-            [NotNull] string argumentName)
-        {
-            if (argument < TimeSpan.Zero)
-            {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
-            }
-        }
+            [NotNull] string argumentName) =>
+            Req.NonNegative(
+                in argument,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that a numeric argument is not negative. Use this method for non-public contracts.
@@ -752,15 +741,13 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [Conditional(Constants.ContractsNonPublicSymbol)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresNonNegativePrivate(
             in TimeSpan argument,
-            [NotNull] string argumentName)
-        {
-            if (argument < TimeSpan.Zero)
-            {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
-            }
-        }
+            [NotNull] string argumentName) =>
+            Req.NonNegative(
+                in argument,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that a numeric argument is not negative.
@@ -776,18 +763,14 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void Requires(
             [AssertionCondition(AssertionConditionType.IS_TRUE)]
             bool condition,
-            [NotNull] string argumentName)
-        {
-            if (!condition)
-            {
-                throw new ArgumentException(
-                    Resources.AContractConditionIsNotBeingMet,
-                    argumentName);
-            }
-        }
+            [NotNull] string argumentName) =>
+            Req.True(
+                condition,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that a numeric argument is not negative. Use this method for non-public contracts.
@@ -804,18 +787,14 @@ namespace IX.StandardExtensions.Contracts
         [Conditional(Constants.ContractsNonPublicSymbol)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresPrivate(
             [AssertionCondition(AssertionConditionType.IS_TRUE)]
             bool condition,
-            [NotNull] string argumentName)
-        {
-            if (!condition)
-            {
-                throw new ArgumentException(
-                    Resources.AContractConditionIsNotBeingMet,
-                    argumentName);
-            }
-        }
+            [NotNull] string argumentName) =>
+            Req.True(
+                condition,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that an argument is of a specific type.
@@ -838,17 +817,13 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static T RequiresArgumentOfType<T>(
             [CanBeNull, NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object argument,
-            [NotNull] string argumentName)
-        {
-            if (!(argument is T convertedValue))
-            {
-                throw new ArgumentInvalidTypeException(argumentName);
-            }
-
-            return convertedValue;
-        }
+            [NotNull] string argumentName) =>
+            Req.ArgumentOfType<T>(
+                argument,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that an argument is of a specific type. Use this method for non-public contracts.
@@ -867,15 +842,13 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [Conditional(Constants.ContractsNonPublicSymbol)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         public static void RequiresArgumentOfTypePrivate<T>(
             [CanBeNull] object argument,
-            [NotNull] string argumentName)
-        {
-            if (!(argument is T))
-            {
-                throw new ArgumentInvalidTypeException(argumentName);
-            }
-        }
+            [NotNull] string argumentName) =>
+            Req.ArgumentOfType<T>(
+                argument,
+                argumentName);
 
         /// <summary>
         ///     Called when a contract requires that an argument is not disposed.
@@ -885,7 +858,8 @@ namespace IX.StandardExtensions.Contracts
         /// </param>
         /// <exception cref="ObjectDisposedException">If the reference object is disposed, this exception will be thrown.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void RequiresNotDisposed([NotNull] this DisposableBase reference) =>
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
+        public static void RequiresNotDisposed([NotNull] DisposableBase reference) =>
             reference.ThrowIfCurrentObjectDisposed();
 
         /// <summary>
@@ -897,7 +871,9 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ObjectDisposedException">If the reference object is disposed, this exception will be thrown.</exception>
         [Conditional(Constants.ContractsNonPublicSymbol)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void RequiresNotDisposedPrivate([NotNull] this DisposableBase reference) =>
+        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
+        public static void RequiresNotDisposedPrivate([NotNull] DisposableBase reference) =>
             reference.ThrowIfCurrentObjectDisposed();
     }
+#pragma warning restore CS0618 // Type or member is obsolete
 }

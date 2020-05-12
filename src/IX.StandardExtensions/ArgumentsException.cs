@@ -3,19 +3,15 @@
 // </copyright>
 
 using System;
-using JetBrains.Annotations;
-#if !STANDARD
 using System.Runtime.Serialization;
-#endif
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions
 {
     /// <summary>
     ///     An exception representing something wrong with a set of arguments as a whole, rather than just one.
     /// </summary>
-#if !STANDARD
     [Serializable]
-#endif
     [PublicAPI]
     public class ArgumentsException : Exception
     {
@@ -90,7 +86,6 @@ namespace IX.StandardExtensions
             this.ArgumentNames = argumentNames;
         }
 
-#if !STANDARD
         /// <summary>
         ///     Initializes a new instance of the <see cref="ArgumentsException" /> class.
         /// </summary>
@@ -113,14 +108,12 @@ namespace IX.StandardExtensions
                 nameof(this.ArgumentNames),
                 typeof(string[]));
         }
-#endif
 
         /// <summary>
         ///     Gets the argument names.
         /// </summary>
         public string[] ArgumentNames { get; private set; }
 
-#if !STANDARD
         /// <summary>
         ///     Sets the <see cref="SerializationInfo" /> with information about the exception.
         /// </summary>
@@ -145,6 +138,5 @@ namespace IX.StandardExtensions
                 this.ArgumentNames,
                 typeof(string[]));
         }
-#endif
     }
 }

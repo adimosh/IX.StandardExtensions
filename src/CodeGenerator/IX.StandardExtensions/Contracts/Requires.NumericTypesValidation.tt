@@ -5,32 +5,26 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ include file="..\..\..\..\opt\tt\NumericTypes.tt" #><#@ include file="..\..\..\..\opt\tt\TypeNamesFixture.tt" #>
 <#@ output extension=".cs" #>
-// <copyright file="Contract.NumericTypesValidation.cs" company="Adrian Mos">
+// <copyright file="Requires.NumericTypesValidation.cs" company="Adrian Mos">
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Contracts
 {
-#pragma warning disable CS0618 // Type or member is obsolete
     /// <summary>
     ///     Methods for approximating the works of contract-oriented programming.
     /// </summary>
-    public static partial class Contract
+    public static partial class Requires
     {<#
 /* STAGE DESCRIPTION:
  * 1. RequiresPositive
- * 2. RequiresPositivePrivate
- * 3. RequiresNonNegative
- * 4. RequiresNonNegativePrivate
- * 5. RequiresPositive with ref
- * 6. skipped
- * 7. RequiresNonNegative with ref
- * 8. skipped
+ * 2. RequiresNonNegative
+ * 3. RequiresPositive with ref
+ * 4. RequiresNonNegative with ref
  */
 List<string> code = new List<string>();
 int stage = 1;
@@ -40,16 +34,15 @@ for (int i = 0; i < types.Length; i++)
     var typ = types[i];
     string fullTypeName = GetTypeUsableName(typ);
     bool isTypeUnsigned = IsTypeUnsigned(typ);
-    bool isPrivate = (stage % 2 == 0);
-    bool isReferencing = (stage > 4);
-    bool isNonNegative = (stage == 3 || stage == 4 || stage == 7);
+    bool isReferencing = (stage >= 3);
+    bool isNonNegative = (stage == 2 || stage == 4);
 
-    if (stage != 6 && stage != 8 && !(isNonNegative && isTypeUnsigned))
+    if (!(isNonNegative && isTypeUnsigned))
     {
 #>
 
         /// <summary>
-        ///     Called when a<#= isPrivate ? " non-public " : " " #><#= isReferencing ? "field initialization" : "contract" #> requires that a numeric argument of type <see cref="<#= fullTypeName #>" /> is
+        ///     Called when a <#= isReferencing ? "field initialization" : "contract" #> requires that a numeric argument of type <see cref="<#= fullTypeName #>" /> is
 <#
         if (isNonNegative)
         {
@@ -103,35 +96,12 @@ for (int i = 0; i < types.Length; i++)
         }
 #>
         /// </exception>
-<#
-        if (isPrivate)
-        {
-#>
-        /// <remarks>
-        ///     <para>Use this method for non-public contracts. The conditional symbol for non-public contracts will disable calls to it when not defined.</para>
-        ///     <para>
-        ///         You can use this method in your non-public code to further enforce contracts and do static analysis of your own code. You can then disable
-        ///         it in release builds to improve performance.
-        ///     </para>
-        /// </remarks>
-<#
-        }
-#>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-<#
-        if (isPrivate)
-        {
-#>
-        [Conditional(Constants.ContractsNonPublicSymbol)]
-<#
-        }
-#>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "<#= fullTypeName #> is a primitive type that the compiler can handle.")]
-        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
-        public static void Requires<#= isNonNegative ? "NonNegative" : "Positive" #><#= isPrivate ? "Private" : string.Empty #>(
+        public static void <#= isNonNegative ? "NonNegative" : "Positive" #>(
 <#
         if (isReferencing)
         {
@@ -161,7 +131,7 @@ for (int i = 0; i < types.Length; i++)
     }
 
     stage++;
-    if (stage == 9)
+    if (stage == 5)
     {
         stage = 1;
     }
@@ -172,5 +142,4 @@ for (int i = 0; i < types.Length; i++)
 }
 #>
     }
-#pragma warning restore CS0618 // Type or member is obsolete
 }

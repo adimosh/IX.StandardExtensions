@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using IX.StandardExtensions.Contracts;
 
 namespace IX.StandardExtensions.Extensions
 {
@@ -85,10 +86,9 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<<#= fullTypeName #>> left, IEnumerable<<#= fullTypeName #>> right, Func<<#= fullTypeName #>, bool> determineEmpty)
         {
-            if (determineEmpty == null)
-            {
-                throw new ArgumentNullException(nameof(determineEmpty));
-            }
+            Requires.NotNull(
+                determineEmpty,
+                nameof(determineEmpty));
 
             if ((left == null || !left.Any()) && (right == null || !right.Any()))
             {

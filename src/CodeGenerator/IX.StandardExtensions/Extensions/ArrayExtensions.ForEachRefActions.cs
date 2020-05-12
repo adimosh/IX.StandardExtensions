@@ -30,11 +30,11 @@ namespace IX.StandardExtensions.Extensions
             RefIteratorAction<TItem, TParam1> action,
             ref TParam1 param1)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -63,11 +63,11 @@ namespace IX.StandardExtensions.Extensions
             ref TParam1 param1,
             ref TParam2 param2)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -99,11 +99,11 @@ namespace IX.StandardExtensions.Extensions
             ref TParam2 param2,
             ref TParam3 param3)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -138,11 +138,11 @@ namespace IX.StandardExtensions.Extensions
             ref TParam3 param3,
             ref TParam4 param4)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -180,11 +180,11 @@ namespace IX.StandardExtensions.Extensions
             ref TParam4 param4,
             ref TParam5 param5)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -225,11 +225,11 @@ namespace IX.StandardExtensions.Extensions
             ref TParam5 param5,
             ref TParam6 param6)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -273,11 +273,11 @@ namespace IX.StandardExtensions.Extensions
             ref TParam6 param6,
             ref TParam7 param7)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)
@@ -324,11 +324,11 @@ namespace IX.StandardExtensions.Extensions
             ref TParam7 param7,
             ref TParam8 param8)
         {
-            Contract.RequiresNotNull(
-                in source,
+            Requires.NotNull(
+                source,
                 nameof(source));
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             for (var i = 0; i < source.Length; i++)

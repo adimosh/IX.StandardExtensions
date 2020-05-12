@@ -3,20 +3,16 @@
 // </copyright>
 
 using System;
-using JetBrains.Annotations;
-#if !STANDARD
 using System.Runtime.Serialization;
-#endif
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions
 {
     /// <summary>
-    ///     An argument exception representing a string argument being <c>null</c> (<c>Nothing</c> in Visual Basic) or empty.
+    ///     An argument exception representing a collection argument being <c>null</c> (<c>Nothing</c> in Visual Basic) or empty.
     /// </summary>
     /// <seealso cref="System.ArgumentException" />
-#if !STANDARD
     [Serializable]
-#endif
     [PublicAPI]
     public class ArgumentNullOrEmptyCollectionException : ArgumentException
     {
@@ -48,7 +44,6 @@ namespace IX.StandardExtensions
         {
         }
 
-#if !STANDARD
         /// <summary>
         ///     Initializes a new instance of the <see cref="ArgumentNullOrEmptyCollectionException" /> class.
         /// </summary>
@@ -68,6 +63,5 @@ namespace IX.StandardExtensions
                 context)
         {
         }
-#endif
     }
 }

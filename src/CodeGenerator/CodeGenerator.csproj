@@ -112,6 +112,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="IX.StandardExtensions\Contracts\Requires.NumericTypesValidation.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Requires.NumericTypesValidation.cs</LastGenOutput>
+    </Content>
     <Content Include="IX.StandardExtensions\Contracts\Contract.NumericTypesValidation.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Contract.NumericTypesValidation.cs</LastGenOutput>
@@ -186,6 +190,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Contract.NumericTypesValidation.tt</DependentUpon>
+    </None>
+    <None Include="IX.StandardExtensions\Contracts\Requires.NumericTypesValidation.cs">
+      <DependentUpon>Requires.NumericTypesValidation.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </None>
     <Compile Include="IX.StandardExtensions\Efficiency\ImmutableValueTuple.cs">
       <AutoGen>True</AutoGen>

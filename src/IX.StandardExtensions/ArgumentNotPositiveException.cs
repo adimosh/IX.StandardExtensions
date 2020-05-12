@@ -3,10 +3,8 @@
 // </copyright>
 
 using System;
-using JetBrains.Annotations;
-#if !STANDARD
 using System.Runtime.Serialization;
-#endif
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions
 {
@@ -14,9 +12,7 @@ namespace IX.StandardExtensions
     ///     An argument exception representing an argument not being a positive integer (like a capacity or a count).
     /// </summary>
     /// <seealso cref="System.ArgumentException" />
-#if !STANDARD
     [Serializable]
-#endif
     [PublicAPI]
     public class ArgumentNotPositiveException : ArgumentException
     {
@@ -48,7 +44,6 @@ namespace IX.StandardExtensions
         {
         }
 
-#if !STANDARD
         /// <summary>
         ///     Initializes a new instance of the <see cref="ArgumentNotPositiveException" /> class.
         /// </summary>
@@ -68,6 +63,5 @@ namespace IX.StandardExtensions
                 context)
         {
         }
-#endif
     }
 }
