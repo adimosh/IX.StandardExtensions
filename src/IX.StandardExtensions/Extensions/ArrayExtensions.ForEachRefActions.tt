@@ -9,6 +9,7 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Efficiency;
 
@@ -64,6 +65,10 @@ for (int i = 1; i <= 8; i++)
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
         /// </exception>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "A for loop on an array is going to be faster.")]
         public static void ForEach<TItem, <#= paramTypes #>>(
             this TItem[] source,
             RefIteratorAction<TItem, <#= paramTypes #>> action,

@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Efficiency;
 
@@ -25,6 +26,10 @@ namespace IX.StandardExtensions.Extensions
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
         /// </exception>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "A for loop on an array is going to be faster.")]
         public static void ForEach<TItem, TParam1>(
             this TItem[] source,
             RefIteratorAction<TItem, TParam1> action,
@@ -57,6 +62,10 @@ namespace IX.StandardExtensions.Extensions
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
         /// </exception>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "A for loop on an array is going to be faster.")]
         public static void ForEach<TItem, TParam1, TParam2>(
             this TItem[] source,
             RefIteratorAction<TItem, TParam1, TParam2> action,
@@ -92,6 +101,10 @@ namespace IX.StandardExtensions.Extensions
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
         /// </exception>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "A for loop on an array is going to be faster.")]
         public static void ForEach<TItem, TParam1, TParam2, TParam3>(
             this TItem[] source,
             RefIteratorAction<TItem, TParam1, TParam2, TParam3> action,
@@ -130,6 +143,10 @@ namespace IX.StandardExtensions.Extensions
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
         /// </exception>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "A for loop on an array is going to be faster.")]
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4>(
             this TItem[] source,
             RefIteratorAction<TItem, TParam1, TParam2, TParam3, TParam4> action,
@@ -171,6 +188,10 @@ namespace IX.StandardExtensions.Extensions
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
         /// </exception>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "A for loop on an array is going to be faster.")]
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(
             this TItem[] source,
             RefIteratorAction<TItem, TParam1, TParam2, TParam3, TParam4, TParam5> action,
@@ -215,6 +236,10 @@ namespace IX.StandardExtensions.Extensions
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
         /// </exception>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "A for loop on an array is going to be faster.")]
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             this TItem[] source,
             RefIteratorAction<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action,
@@ -262,6 +287,10 @@ namespace IX.StandardExtensions.Extensions
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
         /// </exception>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "A for loop on an array is going to be faster.")]
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             this TItem[] source,
             RefIteratorAction<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action,
@@ -312,6 +341,10 @@ namespace IX.StandardExtensions.Extensions
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
         /// </exception>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "A for loop on an array is going to be faster.")]
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             this TItem[] source,
             RefIteratorAction<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action,
