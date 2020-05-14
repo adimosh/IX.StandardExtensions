@@ -24,6 +24,7 @@ namespace IX.StandardExtensions.Threading
         /// </summary>
         /// <param name="action">The action.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget(
             [NotNull] Action action,
             CancellationToken cancellationToken = default) => AndForget(
@@ -38,18 +39,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget(
             [NotNull] Action action,
             [CanBeNull] Action<Exception>? exceptionHandler,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
-            Task runningTask = ExecuteOnThreadPool(
-                action,
-                cancellationToken);
+            Task runningTask = action.OnThreadPool(cancellationToken);
 
             if (exceptionHandler != null)
             {
@@ -69,6 +69,7 @@ namespace IX.StandardExtensions.Threading
         /// </summary>
         /// <param name="action">The action.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget(
             [NotNull] Action<CancellationToken> action,
             CancellationToken cancellationToken = default) => AndForget(
@@ -83,18 +84,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget(
             [NotNull] Action<CancellationToken> action,
             [CanBeNull] Action<Exception>? exceptionHandler,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
-            Task runningTask = ExecuteOnThreadPool(
-                action,
-                cancellationToken);
+            Task runningTask = action.OnThreadPool(cancellationToken);
 
             if (exceptionHandler != null)
             {
@@ -114,6 +114,7 @@ namespace IX.StandardExtensions.Threading
         /// </summary>
         /// <param name="action">The action.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget(
             [NotNull] Func<Task> action,
             CancellationToken cancellationToken = default) => AndForget(
@@ -128,21 +129,18 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget(
             [NotNull] Func<Task> action,
             [CanBeNull] Action<Exception>? exceptionHandler,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            Task runningTask = ExecuteOnThreadPool(
-                (
-                    actionL1,
-                    cancellationTokenL1) => ((Func<Task>)actionL1).Invoke(), action,
-                cancellationToken);
+            Task runningTask = action.OnThreadPool(cancellationToken);
 
             if (exceptionHandler != null)
             {
@@ -162,6 +160,7 @@ namespace IX.StandardExtensions.Threading
         /// </summary>
         /// <param name="action">The action.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget(
             [NotNull] Func<CancellationToken, Task> action,
             CancellationToken cancellationToken = default) => AndForget(
@@ -176,19 +175,18 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget(
             [NotNull] Func<CancellationToken, Task> action,
             [CanBeNull] Action<Exception>? exceptionHandler,
             CancellationToken cancellationToken = default)
         {
-            Contract.RequiresNotNull(
-                in action,
+            Requires.NotNull(
+                action,
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            Task runningTask = ExecuteOnThreadPool(
-                action,
-                cancellationToken);
+            Task runningTask = action.OnThreadPool(cancellationToken);
 
             if (exceptionHandler != null)
             {

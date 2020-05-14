@@ -25,6 +25,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1>(
             [NotNull] Action<TParam1> action,
             TParam1 param1,
@@ -39,6 +40,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1>(
             [NotNull] Action<TParam1> action,
             TParam1 param1,
@@ -50,7 +52,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -95,6 +97,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1>(
             [NotNull] Action<TParam1, CancellationToken> action,
             TParam1 param1,
@@ -109,6 +112,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1>(
             [NotNull] Action<TParam1, CancellationToken> action,
             TParam1 param1,
@@ -120,7 +124,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -163,6 +167,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1>(
             [NotNull] Func<TParam1, Task> action,
             TParam1 param1,
@@ -177,6 +182,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1>(
             [NotNull] Func<TParam1, Task> action,
             TParam1 param1,
@@ -188,7 +194,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -231,6 +237,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1>(
             [NotNull] Func<TParam1, CancellationToken, Task> action,
             TParam1 param1,
@@ -245,6 +252,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1>(
             [NotNull] Func<TParam1, CancellationToken, Task> action,
             TParam1 param1,
@@ -256,7 +264,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -301,6 +309,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2>(
             [NotNull] Action<TParam1, TParam2> action,
             TParam1 param1,
@@ -318,6 +327,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2>(
             [NotNull] Action<TParam1, TParam2> action,
             TParam1 param1,
@@ -330,7 +340,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -377,6 +387,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2>(
             [NotNull] Action<TParam1, TParam2, CancellationToken> action,
             TParam1 param1,
@@ -394,6 +405,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2>(
             [NotNull] Action<TParam1, TParam2, CancellationToken> action,
             TParam1 param1,
@@ -406,7 +418,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -451,6 +463,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2>(
             [NotNull] Func<TParam1, TParam2, Task> action,
             TParam1 param1,
@@ -468,6 +481,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2>(
             [NotNull] Func<TParam1, TParam2, Task> action,
             TParam1 param1,
@@ -480,7 +494,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -525,6 +539,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2>(
             [NotNull] Func<TParam1, TParam2, CancellationToken, Task> action,
             TParam1 param1,
@@ -542,6 +557,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2>(
             [NotNull] Func<TParam1, TParam2, CancellationToken, Task> action,
             TParam1 param1,
@@ -554,7 +570,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -601,6 +617,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3>(
             [NotNull] Action<TParam1, TParam2, TParam3> action,
             TParam1 param1,
@@ -621,6 +638,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3>(
             [NotNull] Action<TParam1, TParam2, TParam3> action,
             TParam1 param1,
@@ -634,7 +652,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -683,6 +701,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3>(
             [NotNull] Action<TParam1, TParam2, TParam3, CancellationToken> action,
             TParam1 param1,
@@ -703,6 +722,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3>(
             [NotNull] Action<TParam1, TParam2, TParam3, CancellationToken> action,
             TParam1 param1,
@@ -716,7 +736,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -763,6 +783,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3>(
             [NotNull] Func<TParam1, TParam2, TParam3, Task> action,
             TParam1 param1,
@@ -783,6 +804,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3>(
             [NotNull] Func<TParam1, TParam2, TParam3, Task> action,
             TParam1 param1,
@@ -796,7 +818,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -843,6 +865,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3>(
             [NotNull] Func<TParam1, TParam2, TParam3, CancellationToken, Task> action,
             TParam1 param1,
@@ -863,6 +886,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3>(
             [NotNull] Func<TParam1, TParam2, TParam3, CancellationToken, Task> action,
             TParam1 param1,
@@ -876,7 +900,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -925,6 +949,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4> action,
             TParam1 param1,
@@ -948,6 +973,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4> action,
             TParam1 param1,
@@ -962,7 +988,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -1013,6 +1039,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, CancellationToken> action,
             TParam1 param1,
@@ -1036,6 +1063,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, CancellationToken> action,
             TParam1 param1,
@@ -1050,7 +1078,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -1099,6 +1127,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, Task> action,
             TParam1 param1,
@@ -1122,6 +1151,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, Task> action,
             TParam1 param1,
@@ -1136,7 +1166,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -1185,6 +1215,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task> action,
             TParam1 param1,
@@ -1208,6 +1239,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task> action,
             TParam1 param1,
@@ -1222,7 +1254,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -1273,6 +1305,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5> action,
             TParam1 param1,
@@ -1299,6 +1332,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5> action,
             TParam1 param1,
@@ -1314,7 +1348,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -1367,6 +1401,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken> action,
             TParam1 param1,
@@ -1393,6 +1428,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken> action,
             TParam1 param1,
@@ -1408,7 +1444,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -1459,6 +1495,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task> action,
             TParam1 param1,
@@ -1485,6 +1522,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task> action,
             TParam1 param1,
@@ -1500,7 +1538,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -1551,6 +1589,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task> action,
             TParam1 param1,
@@ -1577,6 +1616,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task> action,
             TParam1 param1,
@@ -1592,7 +1632,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -1645,6 +1685,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action,
             TParam1 param1,
@@ -1674,6 +1715,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action,
             TParam1 param1,
@@ -1690,7 +1732,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -1745,6 +1787,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken> action,
             TParam1 param1,
@@ -1774,6 +1817,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken> action,
             TParam1 param1,
@@ -1790,7 +1834,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -1843,6 +1887,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task> action,
             TParam1 param1,
@@ -1872,6 +1917,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task> action,
             TParam1 param1,
@@ -1888,7 +1934,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -1941,6 +1987,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task> action,
             TParam1 param1,
@@ -1970,6 +2017,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task> action,
             TParam1 param1,
@@ -1986,7 +2034,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -2041,6 +2089,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action,
             TParam1 param1,
@@ -2073,6 +2122,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action,
             TParam1 param1,
@@ -2090,7 +2140,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -2147,6 +2197,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken> action,
             TParam1 param1,
@@ -2179,6 +2230,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken> action,
             TParam1 param1,
@@ -2196,7 +2248,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -2251,6 +2303,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task> action,
             TParam1 param1,
@@ -2283,6 +2336,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task> action,
             TParam1 param1,
@@ -2300,7 +2354,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -2355,6 +2409,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task> action,
             TParam1 param1,
@@ -2387,6 +2442,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task> action,
             TParam1 param1,
@@ -2404,7 +2460,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -2461,6 +2517,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action,
             TParam1 param1,
@@ -2496,6 +2553,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action,
             TParam1 param1,
@@ -2514,7 +2572,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -2573,6 +2631,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken> action,
             TParam1 param1,
@@ -2608,6 +2667,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken> action,
             TParam1 param1,
@@ -2626,7 +2686,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -2683,6 +2743,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task> action,
             TParam1 param1,
@@ -2718,6 +2779,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task> action,
             TParam1 param1,
@@ -2736,7 +2798,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>
@@ -2793,6 +2855,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task> action,
             TParam1 param1,
@@ -2828,6 +2891,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
         /// <param name="exceptionHandler">The exception handler. This parameter can be null.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        [Obsolete("Please use the methods in class Work.")]
         public static void AndForget<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task> action,
             TParam1 param1,
@@ -2846,7 +2910,7 @@ namespace IX.StandardExtensions.Threading
                 nameof(action));
 
             // We invoke our task-yielding operation in a different thread, guaranteed
-            var runningTask = ExecuteOnThreadPool(
+            var runningTask = Work.OnThreadPool(
                 (
                     st,
                     ct) =>

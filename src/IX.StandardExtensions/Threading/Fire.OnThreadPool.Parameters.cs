@@ -29,16 +29,17 @@ namespace IX.StandardExtensions.Threading
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1>(
             [NotNull] Action<TParam1> action,
             TParam1 param1,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1>, Tuple<TParam1>>>(st, nameof(st));
 
-                    (Action<TParam1> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Action<TParam1>, Tuple<TParam1>>)st;
+                    (Action<TParam1> actionL1, Tuple<TParam1> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -56,16 +57,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1>(
             [NotNull] Action<TParam1, CancellationToken> action,
             TParam1 param1,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, CancellationToken>, Tuple<TParam1>>>(st, nameof(st));
 
-                    (Action<TParam1, CancellationToken> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Action<TParam1, CancellationToken>, Tuple<TParam1>>)st;
+                    (Action<TParam1, CancellationToken> actionL1, Tuple<TParam1> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -83,16 +85,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1>(
             [NotNull] Func<TParam1, Task> action,
             TParam1 param1,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, Task>, Tuple<TParam1>>>(st, nameof(st));
 
-                    (Func<TParam1, Task> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, Task>, Tuple<TParam1>>)st;
+                    (Func<TParam1, Task> actionL1, Tuple<TParam1> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -110,16 +113,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1>(
             [NotNull] Func<TParam1, CancellationToken, Task> action,
             TParam1 param1,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, CancellationToken, Task>, Tuple<TParam1>>>(st, nameof(st));
 
-                    (Func<TParam1, CancellationToken, Task> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, CancellationToken, Task>, Tuple<TParam1>>)st;
+                    (Func<TParam1, CancellationToken, Task> actionL1, Tuple<TParam1> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -138,16 +142,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TResult>(
             [NotNull] Func<TParam1, TResult> action,
             TParam1 param1,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TResult>, Tuple<TParam1>>>(st, nameof(st));
 
-                    (Func<TParam1, TResult> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, TResult>, Tuple<TParam1>>)st;
+                    (Func<TParam1, TResult> actionL1, Tuple<TParam1> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -166,16 +171,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TResult>(
             [NotNull] Func<TParam1, CancellationToken, TResult> action,
             TParam1 param1,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, CancellationToken, TResult>, Tuple<TParam1>>>(st, nameof(st));
 
-                    (Func<TParam1, CancellationToken, TResult> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, CancellationToken, TResult>, Tuple<TParam1>>)st;
+                    (Func<TParam1, CancellationToken, TResult> actionL1, Tuple<TParam1> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -194,16 +200,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TResult>(
             [NotNull] Func<TParam1, Task<TResult>> action,
             TParam1 param1,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, Task<TResult>>, Tuple<TParam1>>>(st, nameof(st));
 
-                    (Func<TParam1, Task<TResult>> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, Task<TResult>>, Tuple<TParam1>>)st;
+                    (Func<TParam1, Task<TResult>> actionL1, Tuple<TParam1> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -222,16 +229,17 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TResult>(
             [NotNull] Func<TParam1, CancellationToken, Task<TResult>> action,
             TParam1 param1,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, CancellationToken, Task<TResult>>, Tuple<TParam1>>>(st, nameof(st));
 
-                    (Func<TParam1, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1> unpackedParameters) = (Tuple<Func<TParam1, CancellationToken, Task<TResult>>, Tuple<TParam1>>)st;
+                    (Func<TParam1, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -252,17 +260,18 @@ namespace IX.StandardExtensions.Threading
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2>(
             [NotNull] Action<TParam1, TParam2> action,
             TParam1 param1,
             TParam2 param2,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>)st;
+                    (Action<TParam1, TParam2> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -282,17 +291,18 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2>(
             [NotNull] Action<TParam1, TParam2, CancellationToken> action,
             TParam1 param1,
             TParam2 param2,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, CancellationToken>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2, CancellationToken> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Action<TParam1, TParam2, CancellationToken>, Tuple<TParam1, TParam2>>)st;
+                    (Action<TParam1, TParam2, CancellationToken> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -312,17 +322,18 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2>(
             [NotNull] Func<TParam1, TParam2, Task> action,
             TParam1 param1,
             TParam2 param2,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, Task>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, Task> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, Task>, Tuple<TParam1, TParam2>>)st;
+                    (Func<TParam1, TParam2, Task> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -342,17 +353,18 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2>(
             [NotNull] Func<TParam1, TParam2, CancellationToken, Task> action,
             TParam1 param1,
             TParam2 param2,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, CancellationToken, Task>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, CancellationToken, Task>, Tuple<TParam1, TParam2>>)st;
+                    (Func<TParam1, TParam2, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -373,17 +385,18 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TResult>(
             [NotNull] Func<TParam1, TParam2, TResult> action,
             TParam1 param1,
             TParam2 param2,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TResult>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TResult> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TResult>, Tuple<TParam1, TParam2>>)st;
+                    (Func<TParam1, TParam2, TResult> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -404,17 +417,18 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TResult>(
             [NotNull] Func<TParam1, TParam2, CancellationToken, TResult> action,
             TParam1 param1,
             TParam2 param2,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, CancellationToken, TResult>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, CancellationToken, TResult>, Tuple<TParam1, TParam2>>)st;
+                    (Func<TParam1, TParam2, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -435,17 +449,18 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TResult>(
             [NotNull] Func<TParam1, TParam2, Task<TResult>> action,
             TParam1 param1,
             TParam2 param2,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, Task<TResult>>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, Task<TResult>> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, Task<TResult>>, Tuple<TParam1, TParam2>>)st;
+                    (Func<TParam1, TParam2, Task<TResult>> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -466,17 +481,18 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TResult>(
             [NotNull] Func<TParam1, TParam2, CancellationToken, Task<TResult>> action,
             TParam1 param1,
             TParam2 param2,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = (Tuple<Func<TParam1, TParam2, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2>>)st;
+                    (Func<TParam1, TParam2, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -499,18 +515,19 @@ namespace IX.StandardExtensions.Threading
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3>(
             [NotNull] Action<TParam1, TParam2, TParam3> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2, TParam3> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>)st;
+                    (Action<TParam1, TParam2, TParam3> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -532,18 +549,19 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3>(
             [NotNull] Action<TParam1, TParam2, TParam3, CancellationToken> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, CancellationToken>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2, TParam3, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, CancellationToken>, Tuple<TParam1, TParam2, TParam3>>)st;
+                    (Action<TParam1, TParam2, TParam3, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -565,18 +583,19 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3>(
             [NotNull] Func<TParam1, TParam2, TParam3, Task> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, Task>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, Task> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, Task>, Tuple<TParam1, TParam2, TParam3>>)st;
+                    (Func<TParam1, TParam2, TParam3, Task> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -598,18 +617,19 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3>(
             [NotNull] Func<TParam1, TParam2, TParam3, CancellationToken, Task> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3>>)st;
+                    (Func<TParam1, TParam2, TParam3, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -632,18 +652,19 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TResult> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TResult>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TResult> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TResult>, Tuple<TParam1, TParam2, TParam3>>)st;
+                    (Func<TParam1, TParam2, TParam3, TResult> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -666,18 +687,19 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, CancellationToken, TResult> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3>>)st;
+                    (Func<TParam1, TParam2, TParam3, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -700,18 +722,19 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, Task<TResult>> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>)st;
+                    (Func<TParam1, TParam2, TParam3, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -734,18 +757,19 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3>>)st;
+                    (Func<TParam1, TParam2, TParam3, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -770,19 +794,20 @@ namespace IX.StandardExtensions.Threading
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
             TParam4 param4,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2, TParam3, TParam4> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+                    (Action<TParam1, TParam2, TParam3, TParam4> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -806,19 +831,20 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, CancellationToken> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
             TParam4 param4,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2, TParam3, TParam4, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+                    (Action<TParam1, TParam2, TParam3, TParam4, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -842,19 +868,20 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, Task> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
             TParam4 param4,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -878,19 +905,20 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
             TParam4 param4,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -915,19 +943,20 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TResult> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
             TParam4 param4,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -952,19 +981,20 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
             TParam4 param4,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -989,19 +1019,20 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
             TParam4 param4,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1026,19 +1057,20 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>> action,
             TParam1 param1,
             TParam2 param2,
             TParam3 param3,
             TParam4 param4,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1065,6 +1097,7 @@ namespace IX.StandardExtensions.Threading
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5> action,
             TParam1 param1,
@@ -1072,13 +1105,13 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             TParam4 param4,
             TParam5 param5,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1104,6 +1137,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken> action,
             TParam1 param1,
@@ -1111,13 +1145,13 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             TParam4 param4,
             TParam5 param5,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1143,6 +1177,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task> action,
             TParam1 param1,
@@ -1150,13 +1185,13 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             TParam4 param4,
             TParam5 param5,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1182,6 +1217,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task> action,
             TParam1 param1,
@@ -1189,13 +1225,13 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             TParam4 param4,
             TParam5 param5,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1222,6 +1258,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult> action,
             TParam1 param1,
@@ -1229,13 +1266,13 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             TParam4 param4,
             TParam5 param5,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1262,6 +1299,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult> action,
             TParam1 param1,
@@ -1269,13 +1307,13 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             TParam4 param4,
             TParam5 param5,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1302,6 +1340,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>> action,
             TParam1 param1,
@@ -1309,13 +1348,13 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             TParam4 param4,
             TParam5 param5,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1342,6 +1381,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>> action,
             TParam1 param1,
@@ -1349,13 +1389,13 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             TParam4 param4,
             TParam5 param5,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1384,6 +1424,7 @@ namespace IX.StandardExtensions.Threading
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action,
             TParam1 param1,
@@ -1392,13 +1433,13 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             TParam5 param5,
             TParam6 param6,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1426,6 +1467,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken> action,
             TParam1 param1,
@@ -1434,13 +1476,13 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             TParam5 param5,
             TParam6 param6,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1468,6 +1510,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task> action,
             TParam1 param1,
@@ -1476,13 +1519,13 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             TParam5 param5,
             TParam6 param6,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1510,6 +1553,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task> action,
             TParam1 param1,
@@ -1518,13 +1562,13 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             TParam5 param5,
             TParam6 param6,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1553,6 +1597,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult> action,
             TParam1 param1,
@@ -1561,13 +1606,13 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             TParam5 param5,
             TParam6 param6,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1596,6 +1641,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult> action,
             TParam1 param1,
@@ -1604,13 +1650,13 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             TParam5 param5,
             TParam6 param6,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1639,6 +1685,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>> action,
             TParam1 param1,
@@ -1647,13 +1694,13 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             TParam5 param5,
             TParam6 param6,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1682,6 +1729,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>> action,
             TParam1 param1,
@@ -1690,13 +1738,13 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             TParam5 param5,
             TParam6 param6,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1727,6 +1775,7 @@ namespace IX.StandardExtensions.Threading
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action,
             TParam1 param1,
@@ -1736,13 +1785,13 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             TParam6 param6,
             TParam7 param7,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1772,6 +1821,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken> action,
             TParam1 param1,
@@ -1781,13 +1831,13 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             TParam6 param6,
             TParam7 param7,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1817,6 +1867,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task> action,
             TParam1 param1,
@@ -1826,13 +1877,13 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             TParam6 param6,
             TParam7 param7,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1862,6 +1913,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task> action,
             TParam1 param1,
@@ -1871,13 +1923,13 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             TParam6 param6,
             TParam7 param7,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1908,6 +1960,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult> action,
             TParam1 param1,
@@ -1917,13 +1970,13 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             TParam6 param6,
             TParam7 param7,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -1954,6 +2007,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult> action,
             TParam1 param1,
@@ -1963,13 +2017,13 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             TParam6 param6,
             TParam7 param7,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2000,6 +2054,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>> action,
             TParam1 param1,
@@ -2009,13 +2064,13 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             TParam6 param6,
             TParam7 param7,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2046,6 +2101,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>> action,
             TParam1 param1,
@@ -2055,13 +2111,13 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             TParam6 param6,
             TParam7 param7,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2094,6 +2150,7 @@ namespace IX.StandardExtensions.Threading
         /// <returns>The task representing the current asynchronous operation.</returns>
         /// <remarks><para>On .NET Standard 1.2, due to the way the task scheduler works, it is not a guarantee that the method will run on a separate thread.</para></remarks>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action,
             TParam1 param1,
@@ -2104,13 +2161,13 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             TParam7 param7,
             TParam8 param8,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2142,6 +2199,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             [NotNull] Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken> action,
             TParam1 param1,
@@ -2152,13 +2210,13 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             TParam7 param7,
             TParam8 param8,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
-                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+                    (Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2190,6 +2248,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task> action,
             TParam1 param1,
@@ -2200,13 +2259,13 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             TParam7 param7,
             TParam8 param8,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2238,6 +2297,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task> action,
             TParam1 param1,
@@ -2248,13 +2308,13 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             TParam7 param7,
             TParam8 param8,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2287,6 +2347,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult> action,
             TParam1 param1,
@@ -2297,13 +2358,13 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             TParam7 param7,
             TParam8 param8,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2336,6 +2397,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult> action,
             TParam1 param1,
@@ -2346,13 +2408,13 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             TParam7 param7,
             TParam8 param8,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, TResult> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2385,6 +2447,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>> action,
             TParam1 param1,
@@ -2395,13 +2458,13 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             TParam7 param7,
             TParam8 param8,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 
@@ -2434,6 +2497,7 @@ namespace IX.StandardExtensions.Threading
         /// <param name="cancellationToken">The optional cancellation token for the operation.</param>
         /// <returns>The task representing the current asynchronous operation.</returns>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>(
             [NotNull] Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>> action,
             TParam1 param1,
@@ -2444,13 +2508,13 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             TParam7 param7,
             TParam8 param8,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
                 (st, ct) =>
                 {
                     Requires.NotNull(st, nameof(st));
                     Requires.ArgumentOfType<Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>>(st, nameof(st));
 
-                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)st;
+                    (Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, CancellationToken, Task<TResult>> actionL1, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters) = st;
 
                     ct.ThrowIfCancellationRequested();
 

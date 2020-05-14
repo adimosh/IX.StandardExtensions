@@ -4,7 +4,6 @@
 
 using System;
 using System.Threading.Tasks;
-using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Threading
@@ -114,18 +113,7 @@ namespace IX.StandardExtensions.Threading
             [NotNull] Task task,
             [NotNull] object innerState)
         {
-            Contract.RequiresNotNullPrivate(
-                in task,
-                nameof(task));
-            AggregateException exception = task.Exception;
-            Contract.RequiresNotNullPrivate(
-                in exception,
-                nameof(task));
-            Contract.RequiresArgumentOfTypePrivate<Action<Exception>>(
-                innerState,
-                nameof(innerState));
-
-            (innerState as Action<Exception>)?.Invoke(exception.GetBaseException());
+            (innerState as Action<Exception>)?.Invoke(task.Exception.GetBaseException());
         }
     }
 }

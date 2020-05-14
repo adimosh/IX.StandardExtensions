@@ -27,9 +27,10 @@ namespace IX.StandardExtensions.Threading
         ///     </para>
         /// </remarks>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool(
             [NotNull] Action action,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
             action,
             cancellationToken);
 
@@ -46,9 +47,10 @@ namespace IX.StandardExtensions.Threading
         ///     </para>
         /// </remarks>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task OnThreadPool(
             [NotNull] Action<CancellationToken> action,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
             action,
             cancellationToken);
 
@@ -66,9 +68,10 @@ namespace IX.StandardExtensions.Threading
         ///     </para>
         /// </remarks>
         [NotNull]
+        [Obsolete("Please use the methods in class Work.")]
         public static Task<TResult> OnThreadPool<TResult>(
             [NotNull] Func<TResult> action,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
             action,
             cancellationToken);
 
@@ -88,7 +91,7 @@ namespace IX.StandardExtensions.Threading
         [NotNull]
         public static Task<TResult> OnThreadPool<TResult>(
             [NotNull] Func<CancellationToken, TResult> action,
-            CancellationToken cancellationToken = default) => ExecuteOnThreadPool(
+            CancellationToken cancellationToken = default) => Work.OnThreadPool(
             action,
             cancellationToken);
     }
