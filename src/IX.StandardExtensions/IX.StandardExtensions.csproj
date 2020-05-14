@@ -1,4 +1,4 @@
-<!--EXTERNAL_PROPERTIES: TargetFrameworkIsFramework-->
+﻿<!--EXTERNAL_PROPERTIES: TargetFrameworkIsFramework-->
 <!--EXTERNAL_PROPERTIES: TargetFrameworkIsStandard-->
 <!--EXTERNAL_PROPERTIES: TargetFramework-->
 <Project Sdk="Microsoft.NET.Sdk">
@@ -25,8 +25,7 @@
 
   <PropertyGroup>
     <PackageReleaseNotes>- Removed code generation project.
-- Updated contracts to be more streamlined and to no longer be confused with Code Contracts.
-- Introduced data generation.</PackageReleaseNotes>
+- Updated contracts to be more streamlined and to no longer be confused with Code Contracts.</PackageReleaseNotes>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>../../opt/snk/ix.framework.strongname.snk</AssemblyOriginatorKeyFile>
