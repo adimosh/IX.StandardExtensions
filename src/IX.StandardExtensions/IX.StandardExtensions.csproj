@@ -128,7 +128,7 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Obsolete\0.4.3\Contract.NumericTypesValidation.cs">
+    <Compile Update="Obsolete\0.5.3\Contract.NumericTypesValidation.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Contract.NumericTypesValidation.tt</DependentUpon>
@@ -138,12 +138,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Threading\Fire.AndForgetActionsAndFuncs.cs">
+    <Compile Update="Obsolete\0.5.3\Fire.AndForgetActionsAndFuncs.cs">
       <DependentUpon>Fire.AndForgetActionsAndFuncs.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Threading\Fire.OnThreadPool.Parameters.cs">
+    <Compile Update="Obsolete\0.5.3\Fire.OnThreadPool.Parameters.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Fire.OnThreadPool.Parameters.tt</DependentUpon>
@@ -231,15 +231,15 @@
       <LastGenOutput>LinqExtensions.ActionsAndFuncs.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Obsolete\0.4.3\Contract.NumericTypesValidation.tt">
+    <None Update="Obsolete\0.5.3\Contract.NumericTypesValidation.tt">
       <LastGenOutput>Contract.NumericTypesValidation.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Threading\Fire.AndForgetActionsAndFuncs.tt">
+    <None Update="Obsolete\0.5.3\Fire.AndForgetActionsAndFuncs.tt">
       <LastGenOutput>Fire.AndForgetActionsAndFuncs.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Threading\Fire.OnThreadPool.Parameters.tt">
+    <None Update="Obsolete\0.5.3\Fire.OnThreadPool.Parameters.tt">
       <LastGenOutput>Fire.OnThreadPool.Parameters.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>

@@ -25,21 +25,19 @@ namespace IX.UnitTests
             // ARRANGE
             var currentThreadId = Thread.CurrentThread.ManagedThreadId;
             var separateThreadId = currentThreadId;
-            int returningThreadId;
 
-            void LocalMethod() { separateThreadId = Thread.CurrentThread.ManagedThreadId; }
+            void LocalMethod()
+            {
+                separateThreadId = Thread.CurrentThread.ManagedThreadId;
+            }
 
             // ACT
             await Work.OnThreadPool(LocalMethod);
-            returningThreadId = Thread.CurrentThread.ManagedThreadId;
 
             // ASSERT
             Assert.NotEqual(
                 currentThreadId,
                 separateThreadId);
-            Assert.NotEqual(
-                currentThreadId,
-                returningThreadId);
         }
     }
 }

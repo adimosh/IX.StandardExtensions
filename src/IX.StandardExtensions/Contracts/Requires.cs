@@ -840,7 +840,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [AssertionMethod]
-        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
@@ -875,7 +874,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [AssertionMethod]
-        [Obsolete("Please use the methods provided by the Requires class instead of this.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
