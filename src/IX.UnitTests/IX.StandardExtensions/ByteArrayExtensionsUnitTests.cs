@@ -8,15 +8,16 @@ using Xunit;
 namespace IX.UnitTests.IX.StandardExtensions
 {
     /// <summary>
-    /// Unit tests for ByteArrayExtensions.
+    ///     Unit tests for ByteArrayExtensions.
     /// </summary>
     public class ByteArrayExtensionsUnitTests
     {
         /// <summary>
-        /// Generates data for tests.
+        ///     Generates data for tests.
         /// </summary>
         /// <returns>The data, as a jagged array.</returns>
-        public static object[][] TestDataGenerator() => new[]
+        public static object[][] TestDataGenerator() =>
+            new[]
             {
                 new object[]
                 {
@@ -27,7 +28,7 @@ namespace IX.UnitTests.IX.StandardExtensions
                         7,
                         15,
                         177,
-                        0,
+                        0
                     },
                     new byte[]
                     {
@@ -35,9 +36,9 @@ namespace IX.UnitTests.IX.StandardExtensions
                         1,
                         7,
                         15,
-                        177,
+                        177
                     },
-                    0,
+                    0
                 },
                 new object[]
                 {
@@ -47,7 +48,7 @@ namespace IX.UnitTests.IX.StandardExtensions
                         1,
                         7,
                         15,
-                        177,
+                        177
                     },
                     new byte[]
                     {
@@ -55,9 +56,9 @@ namespace IX.UnitTests.IX.StandardExtensions
                         1,
                         7,
                         15,
-                        177,
+                        177
                     },
-                    0,
+                    0
                 },
                 new object[]
                 {
@@ -68,7 +69,7 @@ namespace IX.UnitTests.IX.StandardExtensions
                         7,
                         15,
                         178,
-                        0,
+                        0
                     },
                     new byte[]
                     {
@@ -76,9 +77,9 @@ namespace IX.UnitTests.IX.StandardExtensions
                         1,
                         7,
                         15,
-                        177,
+                        177
                     },
-                    1,
+                    1
                 },
                 new object[]
                 {
@@ -89,7 +90,7 @@ namespace IX.UnitTests.IX.StandardExtensions
                         0,
                         0,
                         178,
-                        0,
+                        0
                     },
                     new byte[]
                     {
@@ -97,30 +98,42 @@ namespace IX.UnitTests.IX.StandardExtensions
                         255,
                         255,
                         255,
-                        177,
+                        177
                     },
-                    1,
-                },
+                    1
+                }
             };
 
         /// <summary>
-        /// Tests the byte array comparison with MSB.
+        ///     Tests the byte array comparison with MSB.
         /// </summary>
         /// <param name="b1">Left-side array to compare.</param>
         /// <param name="b2">Right-side array to compare.</param>
         /// <param name="expectedResult">The expected result.</param>
         [Theory(DisplayName = "Comparison with MSB test")]
         [MemberData(nameof(TestDataGenerator))]
-        public void TestByteArrayComparisonWithMsb(byte[] b1, byte[] b2, int expectedResult) => Assert.Equal(expectedResult, b1.SequenceCompareWithMsb(b2));
+        public void TestByteArrayComparisonWithMsb(
+            byte[] b1,
+            byte[] b2,
+            int expectedResult) =>
+            Assert.Equal(
+                expectedResult,
+                b1.SequenceCompareWithMsb(b2));
 
         /// <summary>
-        /// Tests the byte array equality with MSB.
+        ///     Tests the byte array equality with MSB.
         /// </summary>
         /// <param name="b1">Left-side array to compare.</param>
         /// <param name="b2">Right-side array to compare.</param>
         /// <param name="expectedResult">The expected result.</param>
         [Theory(DisplayName = "Equality with MSB test")]
         [MemberData(nameof(TestDataGenerator))]
-        public void TestByteArrayEqualityWithMsb(byte[] b1, byte[] b2, int expectedResult) => Assert.Equal(expectedResult == 0, b1.SequenceEqualsWithMsb(b2));
+        public void TestByteArrayEqualityWithMsb(
+            byte[] b1,
+            byte[] b2,
+            int expectedResult) =>
+            Assert.Equal(
+                expectedResult == 0,
+                b1.SequenceEqualsWithMsb(b2));
     }
 }
