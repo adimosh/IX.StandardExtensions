@@ -13,7 +13,6 @@ namespace IX.StandardExtensions.Extensions
     /// </summary>
     public static partial class ArrayExtensions
     {
-#if !STANDARD
         /// <summary>
         ///     Converts all elements of an array into elements of a different type.
         /// </summary>
@@ -27,7 +26,6 @@ namespace IX.StandardExtensions.Extensions
             Converter<TInput, TOutput> converter) => Array.ConvertAll(
             array,
             converter);
-#endif
 
         /// <summary>
         ///     Searches a range of elements in a one-dimensional sorted array for a value, using
@@ -936,7 +934,6 @@ namespace IX.StandardExtensions.Extensions
             array,
             match);
 
-#if !STANDARD
         /// <summary>
         ///     Sorts a pair of <see cref="Array" /> objects (one contains the keys and the other contains
         ///     the corresponding items) based on the keys in the first <see cref="Array" /> using the
@@ -1130,6 +1127,5 @@ namespace IX.StandardExtensions.Extensions
             items,
             index,
             length);
-#endif
     }
 }
