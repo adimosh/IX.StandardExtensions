@@ -37,37 +37,39 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals(this IEnumerable<<#= fullTypeName #>> left, IEnumerable<<#= fullTypeName #>> right)
         {
-            if ((left == null) ? (right != null) : (right == null))
+            if (left == null)
+            {
+                return right == null;
+            }
+
+            if (right == null)
             {
                 return false;
             }
 
-            using (IEnumerator<<#= fullTypeName #>> e1 = left.GetEnumerator())
+            using IEnumerator<<#= fullTypeName #>> e1 = left.GetEnumerator();
+            using IEnumerator<<#= fullTypeName #>> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<<#= fullTypeName #>> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (b1 != b2)
                 {
-                    while (true)
+                    return false;
+                }
+
+                if (b1)
+                {
+                    if (e1.Current != e2.Current)
                     {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
-
-                        if (b1 != b2)
-                        {
-                            return false;
-                        }
-
-                        if (b1)
-                        {
-                            if (e1.Current != e2.Current)
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return false;
                     }
+                }
+                else
+                {
+                    return true;
                 }
             }
         }

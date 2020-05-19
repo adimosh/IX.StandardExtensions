@@ -8,12 +8,12 @@ using JetBrains.Annotations;
 namespace IX.StandardExtensions.Efficiency
 {
     /// <summary>
-    ///     A pooled object.
+    ///     A pooled object. This class cannot be inherited.
     /// </summary>
     /// <typeparam name="T">The type of class instance in the pool.</typeparam>
     /// <seealso cref="System.IDisposable" />
     [PublicAPI]
-    public class PooledObject<T> : IDisposable
+    public sealed class PooledObject<T> : IDisposable
         where T : class
     {
         private readonly ObjectPool<T> pool;

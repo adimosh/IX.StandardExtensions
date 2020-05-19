@@ -150,7 +150,7 @@ namespace IX.StandardExtensions.Efficiency
                 ref this.internalLazy,
                 this.lazyCreator());
 
-            return existingLazy.IsValueCreated ? existingLazy.Value : default;
+            return existingLazy.IsValueCreated ? existingLazy.Value : default!;
         }
     }
 }

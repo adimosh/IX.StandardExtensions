@@ -37,6 +37,10 @@ namespace IX.StandardExtensions.Efficiency
         ///     <para>Every time there is an exception, the action is re-invoked, and the retry count is increased.</para>
         ///     <para>In order to stop retrying, a <see cref="StopRetryingException" /> should be thrown.</para>
         /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is of little consequence here, and is required for operation.")]
         public ObjectPoolQueue(
             Func<IEnumerable<T>, int, Task<bool>> queueAction,
             int objectLimit = 1000,
@@ -47,10 +51,9 @@ namespace IX.StandardExtensions.Efficiency
             this.ObjectLimit = objectLimit;
             this.queueAction = queueAction;
 
-            Fire.AndForget(
-                s => s.Run(null),
-                this,
-                cancellationToken);
+            _ = Work.OnThreadPool(
+                this.Run,
+                this.cancellationToken);
         }
 
         /// <summary>
@@ -78,33 +81,27 @@ namespace IX.StandardExtensions.Efficiency
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Not really avoidable.")]
-        private void Run(Task? originalTask)
+        private async Task Run()
         {
-#if !STANDARD
             Thread.CurrentThread.Name = $"Object pool queue {Thread.CurrentThread.ManagedThreadId}";
-#endif
 
-            if (this.objects.Count == 0)
+            while (!this.cancellationToken.IsCancellationRequested)
             {
-                Task.Delay(
-                    1000,
-                    this.cancellationToken).ContinueWith(
-                    this.Run,
-                    TaskContinuationOptions.OnlyOnRanToCompletion);
-            }
-            else
-            {
-                Task.Run(
-                    ProcessObjects,
-                    this.cancellationToken).ContinueWith(
-                    this.Run,
-                    TaskContinuationOptions.OnlyOnRanToCompletion);
-
-                async Task ProcessObjects()
+                if (this.objects.Count == 0)
                 {
-                    // Do not change this line (see below)
-                    this.cancellationToken.ThrowIfCancellationRequested();
-
+                    try
+                    {
+                        await Task.Delay(
+                            1000,
+                            this.cancellationToken);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        return;
+                    }
+                }
+                else
+                {
                     var objectLimit = this.ObjectLimit;
                     var initialSize = objectLimit < this.objects.Count ? objectLimit : this.objects.Count;
 
@@ -118,11 +115,8 @@ namespace IX.StandardExtensions.Efficiency
                     var retryCounter = 0;
                     var shouldRetry = true;
 
-                    while (shouldRetry)
+                    while (shouldRetry && !this.cancellationToken.IsCancellationRequested)
                     {
-                        // Do not change this line. The OperationCancelledException must propagate further down and stop the cycle.
-                        this.cancellationToken.ThrowIfCancellationRequested();
-
                         try
                         {
                             shouldRetry = !await this.queueAction(

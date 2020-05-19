@@ -42,13 +42,13 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1>, Tuple<TParam1>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
+                    var item1 = innerState.Item1;
 
-                    innerState.Item1(item1);
+                    innerAction(item1);
                 },
-                new Tuple<Action<TParam1>, Tuple<TParam1>>(action, new Tuple<TParam1>(param1)),
+                (action, new Tuple<TParam1>(param1)),
                 false,
                 cancellationToken);
         }
@@ -77,13 +77,13 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1>, Tuple<TParam1>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
+                    var item1 = innerState.Item1;
 
-                    innerState.Item1(item1);
+                    innerAction(item1);
                 },
-                new Tuple<Action<TParam1>, Tuple<TParam1>>(action, new Tuple<TParam1>(param1)),
+                (action, new Tuple<TParam1>(param1)),
                 true,
                 cancellationToken);
         }
@@ -113,13 +113,13 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TResult>, Tuple<TParam1>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
+                    var item1 = innerState.Item1;
 
-                    return innerState.Item1(item1);
+                    return innerAction(item1);
                 },
-                new Tuple<Func<TParam1, TResult>, Tuple<TParam1>>(action, new Tuple<TParam1>(param1)),
+                (action, new Tuple<TParam1>(param1)),
                 false,
                 cancellationToken);
         }
@@ -148,13 +148,13 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TResult>, Tuple<TParam1>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
+                    var item1 = innerState.Item1;
 
-                    return innerState.Item1(item1);
+                    return innerAction(item1);
                 },
-                new Tuple<Func<TParam1, TResult>, Tuple<TParam1>>(action, new Tuple<TParam1>(param1)),
+                (action, new Tuple<TParam1>(param1)),
                 true,
                 cancellationToken);
         }
@@ -186,14 +186,14 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
 
-                    innerState.Item1(item1, item2);
+                    innerAction(item1, item2);
                 },
-                new Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>(action, new Tuple<TParam1, TParam2>(param1, param2)),
+                (action, new Tuple<TParam1, TParam2>(param1, param2)),
                 false,
                 cancellationToken);
         }
@@ -225,14 +225,14 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
 
-                    innerState.Item1(item1, item2);
+                    innerAction(item1, item2);
                 },
-                new Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>(action, new Tuple<TParam1, TParam2>(param1, param2)),
+                (action, new Tuple<TParam1, TParam2>(param1, param2)),
                 true,
                 cancellationToken);
         }
@@ -265,14 +265,14 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TResult>, Tuple<TParam1, TParam2>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
 
-                    return innerState.Item1(item1, item2);
+                    return innerAction(item1, item2);
                 },
-                new Tuple<Func<TParam1, TParam2, TResult>, Tuple<TParam1, TParam2>>(action, new Tuple<TParam1, TParam2>(param1, param2)),
+                (action, new Tuple<TParam1, TParam2>(param1, param2)),
                 false,
                 cancellationToken);
         }
@@ -304,14 +304,14 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TResult>, Tuple<TParam1, TParam2>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
 
-                    return innerState.Item1(item1, item2);
+                    return innerAction(item1, item2);
                 },
-                new Tuple<Func<TParam1, TParam2, TResult>, Tuple<TParam1, TParam2>>(action, new Tuple<TParam1, TParam2>(param1, param2)),
+                (action, new Tuple<TParam1, TParam2>(param1, param2)),
                 true,
                 cancellationToken);
         }
@@ -346,15 +346,15 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
 
-                    innerState.Item1(item1, item2, item3);
+                    innerAction(item1, item2, item3);
                 },
-                new Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>(action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
+                (action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
                 false,
                 cancellationToken);
         }
@@ -389,15 +389,15 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
 
-                    innerState.Item1(item1, item2, item3);
+                    innerAction(item1, item2, item3);
                 },
-                new Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>(action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
+                (action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
                 true,
                 cancellationToken);
         }
@@ -433,15 +433,15 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TResult>, Tuple<TParam1, TParam2, TParam3>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
 
-                    return innerState.Item1(item1, item2, item3);
+                    return innerAction(item1, item2, item3);
                 },
-                new Tuple<Func<TParam1, TParam2, TParam3, TResult>, Tuple<TParam1, TParam2, TParam3>>(action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
+                (action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
                 false,
                 cancellationToken);
         }
@@ -476,15 +476,15 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TResult>, Tuple<TParam1, TParam2, TParam3>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
 
-                    return innerState.Item1(item1, item2, item3);
+                    return innerAction(item1, item2, item3);
                 },
-                new Tuple<Func<TParam1, TParam2, TParam3, TResult>, Tuple<TParam1, TParam2, TParam3>>(action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
+                (action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
                 true,
                 cancellationToken);
         }
@@ -522,16 +522,16 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
 
-                    innerState.Item1(item1, item2, item3, item4);
+                    innerAction(item1, item2, item3, item4);
                 },
-                new Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
                 false,
                 cancellationToken);
         }
@@ -569,16 +569,16 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
 
-                    innerState.Item1(item1, item2, item3, item4);
+                    innerAction(item1, item2, item3, item4);
                 },
-                new Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
                 true,
                 cancellationToken);
         }
@@ -617,16 +617,16 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
 
-                    return innerState.Item1(item1, item2, item3, item4);
+                    return innerAction(item1, item2, item3, item4);
                 },
-                new Tuple<Func<TParam1, TParam2, TParam3, TParam4, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
                 false,
                 cancellationToken);
         }
@@ -664,16 +664,16 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
 
-                    return innerState.Item1(item1, item2, item3, item4);
+                    return innerAction(item1, item2, item3, item4);
                 },
-                new Tuple<Func<TParam1, TParam2, TParam3, TParam4, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
                 true,
                 cancellationToken);
         }
@@ -714,17 +714,17 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
 
-                    innerState.Item1(item1, item2, item3, item4, item5);
+                    innerAction(item1, item2, item3, item4, item5);
                 },
-                new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
                 false,
                 cancellationToken);
         }
@@ -765,17 +765,17 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
 
-                    innerState.Item1(item1, item2, item3, item4, item5);
+                    innerAction(item1, item2, item3, item4, item5);
                 },
-                new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
                 true,
                 cancellationToken);
         }
@@ -817,17 +817,17 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
 
-                    return innerState.Item1(item1, item2, item3, item4, item5);
+                    return innerAction(item1, item2, item3, item4, item5);
                 },
-                new Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
                 false,
                 cancellationToken);
         }
@@ -868,17 +868,17 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
 
-                    return innerState.Item1(item1, item2, item3, item4, item5);
+                    return innerAction(item1, item2, item3, item4, item5);
                 },
-                new Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
                 true,
                 cancellationToken);
         }
@@ -922,18 +922,18 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
-                    var item6 = innerState.Item2.Item6;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
+                    var item6 = innerState.Item6;
 
-                    innerState.Item1(item1, item2, item3, item4, item5, item6);
+                    innerAction(item1, item2, item3, item4, item5, item6);
                 },
-                new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
                 false,
                 cancellationToken);
         }
@@ -977,18 +977,18 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
-                    var item6 = innerState.Item2.Item6;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
+                    var item6 = innerState.Item6;
 
-                    innerState.Item1(item1, item2, item3, item4, item5, item6);
+                    innerAction(item1, item2, item3, item4, item5, item6);
                 },
-                new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
                 true,
                 cancellationToken);
         }
@@ -1033,18 +1033,18 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
-                    var item6 = innerState.Item2.Item6;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
+                    var item6 = innerState.Item6;
 
-                    return innerState.Item1(item1, item2, item3, item4, item5, item6);
+                    return innerAction(item1, item2, item3, item4, item5, item6);
                 },
-                new Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
                 false,
                 cancellationToken);
         }
@@ -1088,18 +1088,18 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
-                    var item6 = innerState.Item2.Item6;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
+                    var item6 = innerState.Item6;
 
-                    return innerState.Item1(item1, item2, item3, item4, item5, item6);
+                    return innerAction(item1, item2, item3, item4, item5, item6);
                 },
-                new Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
                 true,
                 cancellationToken);
         }
@@ -1146,19 +1146,19 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
-                    var item6 = innerState.Item2.Item6;
-                    var item7 = innerState.Item2.Item7;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
+                    var item6 = innerState.Item6;
+                    var item7 = innerState.Item7;
 
-                    innerState.Item1(item1, item2, item3, item4, item5, item6, item7);
+                    innerAction(item1, item2, item3, item4, item5, item6, item7);
                 },
-                new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
                 false,
                 cancellationToken);
         }
@@ -1205,19 +1205,19 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
-                    var item6 = innerState.Item2.Item6;
-                    var item7 = innerState.Item2.Item7;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
+                    var item6 = innerState.Item6;
+                    var item7 = innerState.Item7;
 
-                    innerState.Item1(item1, item2, item3, item4, item5, item6, item7);
+                    innerAction(item1, item2, item3, item4, item5, item6, item7);
                 },
-                new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
                 true,
                 cancellationToken);
         }
@@ -1265,19 +1265,19 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
-                    var item6 = innerState.Item2.Item6;
-                    var item7 = innerState.Item2.Item7;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
+                    var item6 = innerState.Item6;
+                    var item7 = innerState.Item7;
 
-                    return innerState.Item1(item1, item2, item3, item4, item5, item6, item7);
+                    return innerAction(item1, item2, item3, item4, item5, item6, item7);
                 },
-                new Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
                 false,
                 cancellationToken);
         }
@@ -1324,19 +1324,19 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
-                    var item6 = innerState.Item2.Item6;
-                    var item7 = innerState.Item2.Item7;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
+                    var item6 = innerState.Item6;
+                    var item7 = innerState.Item7;
 
-                    return innerState.Item1(item1, item2, item3, item4, item5, item6, item7);
+                    return innerAction(item1, item2, item3, item4, item5, item6, item7);
                 },
-                new Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
                 true,
                 cancellationToken);
         }
@@ -1386,20 +1386,20 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
-                    var item6 = innerState.Item2.Item6;
-                    var item7 = innerState.Item2.Item7;
-                    var item8 = innerState.Item2.Rest;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
+                    var item6 = innerState.Item6;
+                    var item7 = innerState.Item7;
+                    var item8 = innerState.Rest;
 
-                    innerState.Item1(item1, item2, item3, item4, item5, item6, item7, item8);
+                    innerAction(item1, item2, item3, item4, item5, item6, item7, item8);
                 },
-                new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
                 false,
                 cancellationToken);
         }
@@ -1449,20 +1449,20 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
-                    var item6 = innerState.Item2.Item6;
-                    var item7 = innerState.Item2.Item7;
-                    var item8 = innerState.Item2.Rest;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
+                    var item6 = innerState.Item6;
+                    var item7 = innerState.Item7;
+                    var item8 = innerState.Rest;
 
-                    innerState.Item1(item1, item2, item3, item4, item5, item6, item7, item8);
+                    innerAction(item1, item2, item3, item4, item5, item6, item7, item8);
                 },
-                new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
                 true,
                 cancellationToken);
         }
@@ -1513,20 +1513,20 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
-                    var item6 = innerState.Item2.Item6;
-                    var item7 = innerState.Item2.Item7;
-                    var item8 = innerState.Item2.Rest;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
+                    var item6 = innerState.Item6;
+                    var item7 = innerState.Item7;
+                    var item8 = innerState.Rest;
 
-                    return innerState.Item1(item1, item2, item3, item4, item5, item6, item7, item8);
+                    return innerAction(item1, item2, item3, item4, item5, item6, item7, item8);
                 },
-                new Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
                 false,
                 cancellationToken);
         }
@@ -1576,20 +1576,20 @@ namespace IX.StandardExtensions.Threading
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
-                    var item1 = innerState.Item2.Item1;
-                    var item2 = innerState.Item2.Item2;
-                    var item3 = innerState.Item2.Item3;
-                    var item4 = innerState.Item2.Item4;
-                    var item5 = innerState.Item2.Item5;
-                    var item6 = innerState.Item2.Item6;
-                    var item7 = innerState.Item2.Item7;
-                    var item8 = innerState.Item2.Rest;
+                    var item1 = innerState.Item1;
+                    var item2 = innerState.Item2;
+                    var item3 = innerState.Item3;
+                    var item4 = innerState.Item4;
+                    var item5 = innerState.Item5;
+                    var item6 = innerState.Item6;
+                    var item7 = innerState.Item7;
+                    var item8 = innerState.Rest;
 
-                    return innerState.Item1(item1, item2, item3, item4, item5, item6, item7, item8);
+                    return innerAction(item1, item2, item3, item4, item5, item6, item7, item8);
                 },
-                new Tuple<Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TResult>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
+                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
                 true,
                 cancellationToken);
         }

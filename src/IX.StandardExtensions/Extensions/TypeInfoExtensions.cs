@@ -69,7 +69,7 @@ namespace IX.StandardExtensions.Extensions
         ///     <paramref name="typeInfo" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
-        public static MethodInfo GetMethodWithExactParameters(
+        public static MethodInfo? GetMethodWithExactParameters(
             this TypeInfo typeInfo,
             string name,
             params Type[] parameters) =>
@@ -92,7 +92,7 @@ namespace IX.StandardExtensions.Extensions
         ///     <paramref name="typeInfo" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
-        public static MethodInfo GetMethodWithExactParameters(
+        public static MethodInfo? GetMethodWithExactParameters(
             this TypeInfo typeInfo,
             string name,
             params TypeInfo[] parameters) =>
@@ -125,14 +125,14 @@ namespace IX.StandardExtensions.Extensions
 #endif
             out TReturn value)
         {
-            Contract.RequiresNotNull(in typeInfo, nameof(typeInfo));
+            Requires.NotNull(typeInfo, nameof(typeInfo));
 
             CustomAttributeData attributeData = typeInfo.CustomAttributes.FirstOrDefault(
                 attribute => attribute.AttributeType.FullName == typeof(TAttribute).FullName);
 
             if (attributeData == null)
             {
-                value = default;
+                value = default!;
                 return false;
             }
 
@@ -169,7 +169,7 @@ namespace IX.StandardExtensions.Extensions
                 }
             }
 
-            value = default;
+            value = default!;
             return false;
         }
     }

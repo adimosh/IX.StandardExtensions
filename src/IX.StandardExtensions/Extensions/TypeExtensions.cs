@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Extensions
@@ -42,7 +43,6 @@ namespace IX.StandardExtensions.Extensions
             type,
             parameters);
 
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator - Unavoidable
         /// <summary>
         ///     Gets a method with exact parameters, if one exists.
         /// </summary>
@@ -57,12 +57,20 @@ namespace IX.StandardExtensions.Extensions
         ///     <paramref name="typeInfo" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
-        public static MethodInfo GetMethodWithExactParameters(
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0401:Possible allocation of reference type enumerator",
+            Justification = "Unavoidable.")]
+        public static MethodInfo? GetMethodWithExactParameters(
             this Type typeInfo,
             string name,
             params Type[] parameters)
         {
-            MethodInfo mi = null;
+            Requires.NotNull(
+                typeInfo,
+                nameof(typeInfo));
+
+            MethodInfo? mi = null;
             foreach (MethodInfo p in (typeInfo ?? throw new ArgumentNullException(nameof(typeInfo)))
                 .GetRuntimeMethods())
             {
@@ -90,7 +98,6 @@ namespace IX.StandardExtensions.Extensions
 
             return mi;
         }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
 
         /// <summary>
         ///     Gets a method with exact parameters, if one exists.
@@ -106,7 +113,7 @@ namespace IX.StandardExtensions.Extensions
         ///     <paramref name="typeInfo" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
-        public static MethodInfo GetMethodWithExactParameters(
+        public static MethodInfo? GetMethodWithExactParameters(
             this Type typeInfo,
             string name,
             params TypeInfo[] parameters) => typeInfo.GetMethodWithExactParameters(

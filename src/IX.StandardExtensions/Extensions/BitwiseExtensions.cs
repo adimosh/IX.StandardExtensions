@@ -31,7 +31,7 @@ namespace IX.StandardExtensions.Extensions
             this BitArray data,
             int howManyBits)
         {
-            BitArray result = Shift(
+            BitArray? result = Shift(
                 data,
                 howManyBits);
 
@@ -71,7 +71,7 @@ namespace IX.StandardExtensions.Extensions
             this BitArray data,
             int howManyBits)
         {
-            BitArray result = Shift(
+            BitArray? result = Shift(
                 data,
                 howManyBits);
 
@@ -118,7 +118,7 @@ namespace IX.StandardExtensions.Extensions
                 howManyBits);
 
             var result = new byte[data.Length];
-            ((ICollection)ba).CopyTo(
+            ba.CopyTo(
                 result,
                 0);
 
@@ -148,14 +148,14 @@ namespace IX.StandardExtensions.Extensions
                 howManyBits);
 
             var result = new byte[data.Length];
-            ((ICollection)ba).CopyTo(
+            ba.CopyTo(
                 result,
                 0);
 
             return result;
         }
 
-        private static BitArray Shift(
+        private static BitArray? Shift(
             BitArray data,
             int howManyBits)
         {

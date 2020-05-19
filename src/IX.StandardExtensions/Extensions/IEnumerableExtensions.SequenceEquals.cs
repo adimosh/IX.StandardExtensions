@@ -23,41 +23,41 @@ namespace IX.StandardExtensions.Extensions
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals<T>(this IEnumerable<IEquatable<T>> left, IEnumerable<T> right)
         {
-            if ((left == null) ? (right != null) : (right == null))
+            if (left == null)
+            {
+                return right == null;
+            }
+
+            if (right == null)
             {
                 return false;
             }
 
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator
-            using (IEnumerator<IEquatable<T>> e1 = left.GetEnumerator())
+            using IEnumerator<IEquatable<T>> e1 = left.GetEnumerator();
+            using IEnumerator<T> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<T> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (b1 != b2)
                 {
-                    while (true)
+                    return false;
+                }
+
+                if (b1)
+                {
+                    if (!e1.Current.Equals(e2.Current))
                     {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
-
-                        if (b1 != b2)
-                        {
-                            return false;
-                        }
-
-                        if (b1)
-                        {
-                            if (!e1.Current.Equals(e2.Current))
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return false;
                     }
                 }
+                else
+                {
+                    return true;
+                }
             }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
         }
 
         /// <summary>
@@ -70,41 +70,41 @@ namespace IX.StandardExtensions.Extensions
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals<T>(this IEnumerable<IComparable<T>> left, IEnumerable<T> right)
         {
-            if ((left == null) ? (right != null) : (right == null))
+            if (left == null)
+            {
+                return right == null;
+            }
+
+            if (right == null)
             {
                 return false;
             }
 
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator
-            using (IEnumerator<IComparable<T>> e1 = left.GetEnumerator())
+            using IEnumerator<IComparable<T>> e1 = left.GetEnumerator();
+            using IEnumerator<T> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<T> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (b1 != b2)
                 {
-                    while (true)
+                    return false;
+                }
+
+                if (b1)
+                {
+                    if (e1.Current.CompareTo(e2.Current) != 0)
                     {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
-
-                        if (b1 != b2)
-                        {
-                            return false;
-                        }
-
-                        if (b1)
-                        {
-                            if (e1.Current.CompareTo(e2.Current) != 0)
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return false;
                     }
                 }
+                else
+                {
+                    return true;
+                }
             }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
         }
 
         /// <summary>
@@ -116,41 +116,41 @@ namespace IX.StandardExtensions.Extensions
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals(this IEnumerable<IComparable> left, IEnumerable<object> right)
         {
-            if ((left == null) ? (right != null) : (right == null))
+            if (left == null)
+            {
+                return right == null;
+            }
+
+            if (right == null)
             {
                 return false;
             }
 
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator
-            using (IEnumerator<IComparable> e1 = left.GetEnumerator())
+            using IEnumerator<IComparable> e1 = left.GetEnumerator();
+            using IEnumerator<object> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<object> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (b1 != b2)
                 {
-                    while (true)
+                    return false;
+                }
+
+                if (b1)
+                {
+                    if (e1.Current.CompareTo(e2.Current) != 0)
                     {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
-
-                        if (b1 != b2)
-                        {
-                            return false;
-                        }
-
-                        if (b1)
-                        {
-                            if (e1.Current.CompareTo(e2.Current) != 0)
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return false;
                     }
                 }
+                else
+                {
+                    return true;
+                }
             }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
         }
 
         /// <summary>
@@ -164,41 +164,41 @@ namespace IX.StandardExtensions.Extensions
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals<T>(this IEnumerable<T> left, IEnumerable<T> right, IEqualityComparer<T> comparer)
         {
-            if ((left == null) ? (right != null) : (right == null))
+            if (left == null)
+            {
+                return right == null;
+            }
+
+            if (right == null)
             {
                 return false;
             }
 
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator
-            using (IEnumerator<T> e1 = left.GetEnumerator())
+            using IEnumerator<T> e1 = left.GetEnumerator();
+            using IEnumerator<T> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<T> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (b1 != b2)
                 {
-                    while (true)
+                    return false;
+                }
+
+                if (b1)
+                {
+                    if (!comparer.Equals(e1.Current, e2.Current))
                     {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
-
-                        if (b1 != b2)
-                        {
-                            return false;
-                        }
-
-                        if (b1)
-                        {
-                            if (!comparer.Equals(e1.Current, e2.Current))
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return false;
                     }
                 }
+                else
+                {
+                    return true;
+                }
             }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
         }
 
         /// <summary>
@@ -212,41 +212,41 @@ namespace IX.StandardExtensions.Extensions
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals<T>(this IEnumerable<T> left, IEnumerable<T> right, IComparer<T> comparer)
         {
-            if ((left == null) ? (right != null) : (right == null))
+            if (left == null)
+            {
+                return right == null;
+            }
+
+            if (right == null)
             {
                 return false;
             }
 
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator
-            using (IEnumerator<T> e1 = left.GetEnumerator())
+            using IEnumerator<T> e1 = left.GetEnumerator();
+            using IEnumerator<T> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<T> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (b1 != b2)
                 {
-                    while (true)
+                    return false;
+                }
+
+                if (b1)
+                {
+                    if (comparer.Compare(e1.Current, e2.Current) != 0)
                     {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
-
-                        if (b1 != b2)
-                        {
-                            return false;
-                        }
-
-                        if (b1)
-                        {
-                            if (comparer.Compare(e1.Current, e2.Current) != 0)
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return false;
                     }
                 }
+                else
+                {
+                    return true;
+                }
             }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
         }
 
         /// <summary>
@@ -260,41 +260,41 @@ namespace IX.StandardExtensions.Extensions
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals<T>(this IEnumerable<T> left, IEnumerable<T> right, Func<T, T, bool> comparer)
         {
-            if ((left == null) ? (right != null) : (right == null))
+            if (left == null)
+            {
+                return right == null;
+            }
+
+            if (right == null)
             {
                 return false;
             }
 
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator
-            using (IEnumerator<T> e1 = left.GetEnumerator())
+            using IEnumerator<T> e1 = left.GetEnumerator();
+            using IEnumerator<T> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<T> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (b1 != b2)
                 {
-                    while (true)
+                    return false;
+                }
+
+                if (b1)
+                {
+                    if (!comparer(e1.Current, e2.Current))
                     {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
-
-                        if (b1 != b2)
-                        {
-                            return false;
-                        }
-
-                        if (b1)
-                        {
-                            if (!comparer(e1.Current, e2.Current))
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return false;
                     }
                 }
+                else
+                {
+                    return true;
+                }
             }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
         }
 
         /// <summary>
@@ -308,41 +308,41 @@ namespace IX.StandardExtensions.Extensions
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals<T>(this IEnumerable<T> left, IEnumerable<T> right, Func<T, T, int> comparer)
         {
-            if ((left == null) ? (right != null) : (right == null))
+            if (left == null)
+            {
+                return right == null;
+            }
+
+            if (right == null)
             {
                 return false;
             }
 
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator
-            using (IEnumerator<T> e1 = left.GetEnumerator())
+            using IEnumerator<T> e1 = left.GetEnumerator();
+            using IEnumerator<T> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<T> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (b1 != b2)
                 {
-                    while (true)
+                    return false;
+                }
+
+                if (b1)
+                {
+                    if (comparer(e1.Current, e2.Current) != 0)
                     {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
-
-                        if (b1 != b2)
-                        {
-                            return false;
-                        }
-
-                        if (b1)
-                        {
-                            if (comparer(e1.Current, e2.Current) != 0)
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return false;
                     }
                 }
+                else
+                {
+                    return true;
+                }
             }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
         }
 
         /// <summary>
@@ -355,41 +355,41 @@ namespace IX.StandardExtensions.Extensions
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEqualsByObjectComparison<T>(this IEnumerable<object> left, IEnumerable<object> right)
         {
-            if ((left == null) ? (right != null) : (right == null))
+            if (left == null)
+            {
+                return right == null;
+            }
+
+            if (right == null)
             {
                 return false;
             }
 
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator
-            using (IEnumerator<object> e1 = left.GetEnumerator())
+            using IEnumerator<object> e1 = left.GetEnumerator();
+            using IEnumerator<object> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<object> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (b1 != b2)
                 {
-                    while (true)
+                    return false;
+                }
+
+                if (b1)
+                {
+                    if (!e1.Current.Equals(e2.Current))
                     {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
-
-                        if (b1 != b2)
-                        {
-                            return false;
-                        }
-
-                        if (b1)
-                        {
-                            if (!e1.Current.Equals(e2.Current))
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return false;
                     }
                 }
+                else
+                {
+                    return true;
+                }
             }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
         }
 
         /// <summary>
@@ -402,41 +402,41 @@ namespace IX.StandardExtensions.Extensions
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEqualsByReference<T>(this IEnumerable<object> left, IEnumerable<object> right)
         {
-            if ((left == null) ? (right != null) : (right == null))
+            if (left == null)
+            {
+                return right == null;
+            }
+
+            if (right == null)
             {
                 return false;
             }
 
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator
-            using (IEnumerator<object> e1 = left.GetEnumerator())
+            using IEnumerator<object> e1 = left.GetEnumerator();
+            using IEnumerator<object> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<object> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (b1 != b2)
                 {
-                    while (true)
+                    return false;
+                }
+
+                if (b1)
+                {
+                    if (!object.ReferenceEquals(e1.Current, e2.Current))
                     {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
-
-                        if (b1 != b2)
-                        {
-                            return false;
-                        }
-
-                        if (b1)
-                        {
-                            if (!object.ReferenceEquals(e1.Current, e2.Current))
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        return false;
                     }
                 }
+                else
+                {
+                    return true;
+                }
             }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
         }
     }
 }

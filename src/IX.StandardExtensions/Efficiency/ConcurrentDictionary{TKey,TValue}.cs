@@ -27,7 +27,7 @@ namespace IX.StandardExtensions.Efficiency
         [SuppressMessage("ReSharper", "StaticMemberInGenericType", Justification = "This field is used exclusively under lock, so this is safe.")]
         private static object? threadStaticMethods;
 
-#if !NETSTANDARD2_1
+#if !NETSTANDARD2_1 && !NET472
         [ThreadStatic]
         [SuppressMessage("ReSharper", "StaticMemberInGenericType", Justification = "This field is used exclusively under lock, so this is safe.")]
         private static object? threadStaticAddFactory;
@@ -37,7 +37,7 @@ namespace IX.StandardExtensions.Efficiency
         [SuppressMessage("ReSharper", "StaticMemberInGenericType", Justification = "This field is used exclusively under lock, so this is safe.")]
         private static object? threadStaticUpdateFactory;
 
-#if !NETSTANDARD2_1
+#if !NETSTANDARD2_1 && !NET472
         private static TValue AddInternal<TState>(TKey key)
         {
             var innerState = (TState)threadStaticMethods!;
@@ -62,7 +62,7 @@ namespace IX.StandardExtensions.Efficiency
                 innerState);
         }
 
-#if !NETSTANDARD2_1
+#if !NETSTANDARD2_1 && !NET472
         /// <summary>
         ///     Uses the specified functions to add a key/value pair to the <see cref="ConcurrentDictionary{TKey,TValue}" /> if the
         ///     key does not already exist, or to update a key/value pair in the <see cref="ConcurrentDictionary{TKey,TValue}" />
@@ -142,14 +142,14 @@ namespace IX.StandardExtensions.Efficiency
             finally
             {
                 threadStaticMethods = null;
-#if !NETSTANDARD2_1
+#if !NETSTANDARD2_1 && !NET472
                 threadStaticAddFactory = null;
 #endif
                 threadStaticUpdateFactory = null;
             }
         }
 
-#if !NETSTANDARD2_1
+#if !NETSTANDARD2_1 && !NET472
         /// <summary>
         ///     Adds a key/value pair to the <see cref="ConcurrentDictionary{TKey,TValue}" /> by using the specified function, if
         ///     the key does not already exist.

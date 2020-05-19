@@ -39,29 +39,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<byte> e1 = left.GetEnumerator())
+            using IEnumerator<byte> e1 = left.GetEnumerator();
+            using IEnumerator<byte> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<byte> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -91,29 +88,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<sbyte> e1 = left.GetEnumerator())
+            using IEnumerator<sbyte> e1 = left.GetEnumerator();
+            using IEnumerator<sbyte> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<sbyte> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -143,29 +137,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<short> e1 = left.GetEnumerator())
+            using IEnumerator<short> e1 = left.GetEnumerator();
+            using IEnumerator<short> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<short> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -195,29 +186,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<ushort> e1 = left.GetEnumerator())
+            using IEnumerator<ushort> e1 = left.GetEnumerator();
+            using IEnumerator<ushort> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<ushort> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -247,29 +235,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<char> e1 = left.GetEnumerator())
+            using IEnumerator<char> e1 = left.GetEnumerator();
+            using IEnumerator<char> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<char> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -299,29 +284,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<int> e1 = left.GetEnumerator())
+            using IEnumerator<int> e1 = left.GetEnumerator();
+            using IEnumerator<int> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<int> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -351,29 +333,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<uint> e1 = left.GetEnumerator())
+            using IEnumerator<uint> e1 = left.GetEnumerator();
+            using IEnumerator<uint> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<uint> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -403,29 +382,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<long> e1 = left.GetEnumerator())
+            using IEnumerator<long> e1 = left.GetEnumerator();
+            using IEnumerator<long> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<long> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -455,29 +431,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<ulong> e1 = left.GetEnumerator())
+            using IEnumerator<ulong> e1 = left.GetEnumerator();
+            using IEnumerator<ulong> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<ulong> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -507,29 +480,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<float> e1 = left.GetEnumerator())
+            using IEnumerator<float> e1 = left.GetEnumerator();
+            using IEnumerator<float> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<float> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -559,29 +529,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<double> e1 = left.GetEnumerator())
+            using IEnumerator<double> e1 = left.GetEnumerator();
+            using IEnumerator<double> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<double> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -611,29 +578,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<decimal> e1 = left.GetEnumerator())
+            using IEnumerator<decimal> e1 = left.GetEnumerator();
+            using IEnumerator<decimal> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<decimal> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -663,29 +627,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<DateTime> e1 = left.GetEnumerator())
+            using IEnumerator<DateTime> e1 = left.GetEnumerator();
+            using IEnumerator<DateTime> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<DateTime> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -715,29 +676,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<bool> e1 = left.GetEnumerator())
+            using IEnumerator<bool> e1 = left.GetEnumerator();
+            using IEnumerator<bool> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<bool> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -767,29 +725,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<TimeSpan> e1 = left.GetEnumerator())
+            using IEnumerator<TimeSpan> e1 = left.GetEnumerator();
+            using IEnumerator<TimeSpan> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<TimeSpan> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }
@@ -819,29 +774,26 @@ namespace IX.StandardExtensions.Extensions
                 return 1;
             }
 
-            using (IEnumerator<string> e1 = left.GetEnumerator())
+            using IEnumerator<string> e1 = left.GetEnumerator();
+            using IEnumerator<string> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<string> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }

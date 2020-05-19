@@ -37,7 +37,7 @@ namespace IX.StandardExtensions.Threading
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
-                rawState => ((Action)rawState)(),
+                rawState => rawState(),
                 action,
                 false,
                 cancellationToken);
@@ -62,7 +62,7 @@ namespace IX.StandardExtensions.Threading
 
             return StartWithStateOnDefaultTaskScheduler(
                 taskFactory,
-                rawState => ((Action)rawState)(),
+                rawState => rawState(),
                 action,
                 true,
                 cancellationToken);
@@ -129,10 +129,10 @@ namespace IX.StandardExtensions.Threading
             "Usage",
             "DE0008:API is deprecated",
             Justification = "Only after .NET 4.5.2.")]
-        internal static Task StartWithStateOnDefaultTaskScheduler(
+        internal static Task StartWithStateOnDefaultTaskScheduler<TState>(
             [NotNull] TaskFactory taskFactory,
-            [NotNull] Action<object> action,
-            object state,
+            [NotNull] Action<TState> action,
+            TState state,
             bool longRunning,
             CancellationToken cancellationToken = default)
         {
@@ -150,7 +150,7 @@ namespace IX.StandardExtensions.Threading
 
             return taskFactory.StartNew(
                 StartAction,
-                new Tuple<Action<object>, CultureInfo, CultureInfo, object>(
+                new Tuple<Action<TState>, CultureInfo, CultureInfo, TState>(
                     action,
                     CultureInfo.CurrentCulture,
                     CultureInfo.CurrentUICulture,
@@ -160,7 +160,7 @@ namespace IX.StandardExtensions.Threading
 
             static void StartAction(object rawState)
             {
-                var innerState = (Tuple<Action<object>, CultureInfo, CultureInfo, object>)rawState;
+                var innerState = (Tuple<Action<TState>, CultureInfo, CultureInfo, TState>)rawState;
 
 #if NET452
                 Thread.CurrentThread.CurrentCulture = innerState.Item2;
@@ -183,10 +183,10 @@ namespace IX.StandardExtensions.Threading
             "Usage",
             "DE0008:API is deprecated",
             Justification = "Only after .NET 4.5.2.")]
-        internal static Task<TResult> StartWithStateOnDefaultTaskScheduler<TResult>(
+        internal static Task<TResult> StartWithStateOnDefaultTaskScheduler<TState, TResult>(
             TaskFactory taskFactory,
-            Func<object, TResult> action,
-            object state,
+            Func<TState, TResult> action,
+            TState state,
             bool longRunning,
             CancellationToken cancellationToken = default)
         {
@@ -204,7 +204,7 @@ namespace IX.StandardExtensions.Threading
 
             return taskFactory.StartNew(
                 StartAction,
-                new Tuple<Func<object, TResult>, CultureInfo, CultureInfo, object>(
+                new Tuple<Func<TState, TResult>, CultureInfo, CultureInfo, TState>(
                     action,
                     CultureInfo.CurrentCulture,
                     CultureInfo.CurrentUICulture,
@@ -214,7 +214,7 @@ namespace IX.StandardExtensions.Threading
 
             static TResult StartAction(object rawState)
             {
-                var innerState = (Tuple<Func<object, TResult>, CultureInfo, CultureInfo, object>)rawState;
+                var innerState = (Tuple<Func<TState, TResult>, CultureInfo, CultureInfo, TState>)rawState;
 
 #if NET452
                 Thread.CurrentThread.CurrentCulture = innerState.Item2;

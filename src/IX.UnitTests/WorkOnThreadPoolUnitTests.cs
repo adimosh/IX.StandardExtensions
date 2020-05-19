@@ -73,7 +73,7 @@ namespace IX.UnitTests
             // ACT
             using (var mre = new ManualResetEventSlim())
             {
-                Work.OnThreadPool(
+                _ = Work.OnThreadPool(
                     ev =>
                     {
                         Thread.Sleep(waitTime);
@@ -117,7 +117,7 @@ namespace IX.UnitTests
             // ACT
             using (var mre = new ManualResetEventSlim())
             {
-                Work.OnThreadPool(
+                _ = Work.OnThreadPool(
                     ev =>
                     {
                         Thread.Sleep(waitTime);
@@ -182,7 +182,7 @@ namespace IX.UnitTests
                     }).ContinueWith(
                     task =>
                     {
-                        var exception = task.Exception.GetBaseException();
+                        var exception = task.Exception!.GetBaseException();
 #if DEBUG
                         this.output.WriteLine($"Exception handler started after {(DateTime.UtcNow - dt).TotalMilliseconds} ms.");
 #endif

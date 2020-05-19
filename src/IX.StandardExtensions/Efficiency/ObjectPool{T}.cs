@@ -36,7 +36,7 @@ namespace IX.StandardExtensions.Efficiency
         /// </exception>
         public ObjectPool([NotNull] Func<T> objectFactory)
         {
-            Contract.RequiresNotNull(
+            Requires.NotNull(
                 ref this.objectFactory,
                 objectFactory,
                 nameof(objectFactory));

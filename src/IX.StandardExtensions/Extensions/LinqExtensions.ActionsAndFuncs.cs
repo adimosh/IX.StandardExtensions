@@ -70,8 +70,6 @@ namespace IX.StandardExtensions.Extensions
                     yield return item;
                 }
             }
-
-            yield break;
         }
 
         /// <summary>
@@ -101,7 +99,7 @@ namespace IX.StandardExtensions.Extensions
                 }
             }
 
-            return default;
+            return default!;
         }
 
         /// <summary>
@@ -164,8 +162,6 @@ namespace IX.StandardExtensions.Extensions
                     yield return item;
                 }
             }
-
-            yield break;
         }
 
         /// <summary>
@@ -197,7 +193,7 @@ namespace IX.StandardExtensions.Extensions
                 }
             }
 
-            return default;
+            return default!;
         }
 
         /// <summary>
@@ -264,8 +260,6 @@ namespace IX.StandardExtensions.Extensions
                     yield return item;
                 }
             }
-
-            yield break;
         }
 
         /// <summary>
@@ -299,7 +293,7 @@ namespace IX.StandardExtensions.Extensions
                 }
             }
 
-            return default;
+            return default!;
         }
 
         /// <summary>
@@ -370,8 +364,6 @@ namespace IX.StandardExtensions.Extensions
                     yield return item;
                 }
             }
-
-            yield break;
         }
 
         /// <summary>
@@ -407,7 +399,7 @@ namespace IX.StandardExtensions.Extensions
                 }
             }
 
-            return default;
+            return default!;
         }
 
         /// <summary>
@@ -482,8 +474,6 @@ namespace IX.StandardExtensions.Extensions
                     yield return item;
                 }
             }
-
-            yield break;
         }
 
         /// <summary>
@@ -521,7 +511,7 @@ namespace IX.StandardExtensions.Extensions
                 }
             }
 
-            return default;
+            return default!;
         }
 
         /// <summary>
@@ -600,8 +590,6 @@ namespace IX.StandardExtensions.Extensions
                     yield return item;
                 }
             }
-
-            yield break;
         }
 
         /// <summary>
@@ -641,7 +629,7 @@ namespace IX.StandardExtensions.Extensions
                 }
             }
 
-            return default;
+            return default!;
         }
 
         /// <summary>
@@ -724,8 +712,6 @@ namespace IX.StandardExtensions.Extensions
                     yield return item;
                 }
             }
-
-            yield break;
         }
 
         /// <summary>
@@ -767,7 +753,7 @@ namespace IX.StandardExtensions.Extensions
                 }
             }
 
-            return default;
+            return default!;
         }
 
         /// <summary>
@@ -854,8 +840,6 @@ namespace IX.StandardExtensions.Extensions
                     yield return item;
                 }
             }
-
-            yield break;
         }
 
         /// <summary>
@@ -899,7 +883,7 @@ namespace IX.StandardExtensions.Extensions
                 }
             }
 
-            return default;
+            return default!;
         }
 #pragma warning restore HAA0401 // Possible allocation of reference type enumerator
     }

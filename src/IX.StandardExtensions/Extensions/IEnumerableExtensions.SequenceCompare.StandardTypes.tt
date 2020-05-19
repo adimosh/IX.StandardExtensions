@@ -53,29 +53,26 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
                 return 1;
             }
 
-            using (IEnumerator<<#= fullTypeName #>> e1 = left.GetEnumerator())
+            using IEnumerator<<#= fullTypeName #>> e1 = left.GetEnumerator();
+            using IEnumerator<<#= fullTypeName #>> e2 = right.GetEnumerator();
+
+            while (true)
             {
-                using (IEnumerator<<#= fullTypeName #>> e2 = right.GetEnumerator())
+                var b1 = e1.MoveNext();
+                var b2 = e2.MoveNext();
+
+                if (!b1 && !b2)
                 {
-                    while (true)
-                    {
-                        var b1 = e1.MoveNext();
-                        var b2 = e2.MoveNext();
+                    return 0;
+                }
 
-                        if (!b1 && !b2)
-                        {
-                            return 0;
-                        }
+                var c1 = b1 ? e1.Current : default;
+                var c2 = b2 ? e2.Current : default;
 
-                        var c1 = b1 ? e1.Current : default;
-                        var c2 = b2 ? e2.Current : default;
-
-                        var cr = c1.CompareTo(c2);
-                        if (cr != 0)
-                        {
-                            return cr;
-                        }
-                    }
+                var cr = c1.CompareTo(c2);
+                if (cr != 0)
+                {
+                    return cr;
                 }
             }
         }

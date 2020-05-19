@@ -33,7 +33,7 @@ namespace IX.StandardExtensions.Debugging
         /// </exception>
         public DictionaryDebugView(IDictionary<TKey, TValue> dictionary)
         {
-            Contract.RequiresNotNull(
+            Requires.NotNull(
                 ref this.dict,
                 dictionary,
                 nameof(dictionary));

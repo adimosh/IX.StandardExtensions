@@ -31,7 +31,7 @@ namespace IX.StandardExtensions.Debugging
         /// </exception>
         public CollectionDebugView(ICollection<T> collection)
         {
-            Contract.RequiresNotNull(
+            Requires.NotNull(
                 ref this.collection,
                 collection,
                 nameof(collection));

@@ -84,7 +84,7 @@ for (int i = 1; i <= 8; i++)
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
 <#
     for (int j = 1; j <= i; j++)
@@ -92,21 +92,21 @@ for (int i = 1; i <= 8; i++)
         if (j == 8)
         {
 #>
-                    var item<#= j #> = innerState.Item2.Rest;
+                    var item<#= j #> = innerState.Rest;
 <#
         }
         else
         {
 #>
-                    var item<#= j #> = innerState.Item2.Item<#= j #>;
+                    var item<#= j #> = innerState.Item<#= j #>;
 <#
         }
     }
 #>
 
-                    innerState.Item1(<#= paramParameters #>);
+                    innerAction(<#= paramParameters #>);
                 },
-                new Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>(action, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
+                (action, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
                 false,
                 cancellationToken);
         }
@@ -149,7 +149,7 @@ for (int i = 1; i <= 8; i++)
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
 <#
     for (int j = 1; j <= i; j++)
@@ -157,21 +157,21 @@ for (int i = 1; i <= 8; i++)
         if (j == 8)
         {
 #>
-                    var item<#= j #> = innerState.Item2.Rest;
+                    var item<#= j #> = innerState.Rest;
 <#
         }
         else
         {
 #>
-                    var item<#= j #> = innerState.Item2.Item<#= j #>;
+                    var item<#= j #> = innerState.Item<#= j #>;
 <#
         }
     }
 #>
 
-                    innerState.Item1(<#= paramParameters #>);
+                    innerAction(<#= paramParameters #>);
                 },
-                new Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>(action, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
+                (action, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
                 true,
                 cancellationToken);
         }
@@ -215,7 +215,7 @@ for (int i = 1; i <= 8; i++)
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<<#= paramTypes #>, TResult>, Tuple<<#= paramTypes #>>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
 <#
     for (int j = 1; j <= i; j++)
@@ -223,21 +223,21 @@ for (int i = 1; i <= 8; i++)
         if (j == 8)
         {
 #>
-                    var item<#= j #> = innerState.Item2.Rest;
+                    var item<#= j #> = innerState.Rest;
 <#
         }
         else
         {
 #>
-                    var item<#= j #> = innerState.Item2.Item<#= j #>;
+                    var item<#= j #> = innerState.Item<#= j #>;
 <#
         }
     }
 #>
 
-                    return innerState.Item1(<#= paramParameters #>);
+                    return innerAction(<#= paramParameters #>);
                 },
-                new Tuple<Func<<#= paramTypes #>, TResult>, Tuple<<#= paramTypes #>>>(action, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
+                (action, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
                 false,
                 cancellationToken);
         }
@@ -280,7 +280,7 @@ for (int i = 1; i <= 8; i++)
                 taskFactory,
                 rawState =>
                 {
-                    var innerState = (Tuple<Func<<#= paramTypes #>, TResult>, Tuple<<#= paramTypes #>>>)rawState;
+                    var (innerAction, innerState) = rawState;
 
 <#
     for (int j = 1; j <= i; j++)
@@ -288,21 +288,21 @@ for (int i = 1; i <= 8; i++)
         if (j == 8)
         {
 #>
-                    var item<#= j #> = innerState.Item2.Rest;
+                    var item<#= j #> = innerState.Rest;
 <#
         }
         else
         {
 #>
-                    var item<#= j #> = innerState.Item2.Item<#= j #>;
+                    var item<#= j #> = innerState.Item<#= j #>;
 <#
         }
     }
 #>
 
-                    return innerState.Item1(<#= paramParameters #>);
+                    return innerAction(<#= paramParameters #>);
                 },
-                new Tuple<Func<<#= paramTypes #>, TResult>, Tuple<<#= paramTypes #>>>(action, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
+                (action, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
                 true,
                 cancellationToken);
         }
