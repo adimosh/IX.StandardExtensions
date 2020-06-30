@@ -175,6 +175,9 @@
     <value>The argument {0} cannot be considered a valid length, as it has to be a positive integer less than the length of the collection it is used for.</value>
   </data>
   <data name="ErrorArgumentNullOrEmptyArray" xml:space="preserve">
-    <value>The array argument {0} is null (Nothing in Visual Basic) or empty.</value>
+    <value>The array argument {0} is null (Nothing in Visual Basic), or empty, or does not have the required length.</value>
+  </data>
+  <data name="ErrorArgumentDoesNotMatch" xml:space="preserve">
+    <value>The argument {0} does not match the expected pattern, or could not be implicitly matched to any supported input.</value>
   </data>
 </root>

@@ -79,6 +79,15 @@ namespace IX.StandardExtensions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The argument {0} does not match the expected pattern, or could not be implicitly matched to any supported input..
+        /// </summary>
+        internal static string ErrorArgumentDoesNotMatch {
+            get {
+                return ResourceManager.GetString("ErrorArgumentDoesNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The argument {0} must be a value less than the argument {1}..
         /// </summary>
         internal static string ErrorArgumentMustBeLessThan {
@@ -133,7 +142,7 @@ namespace IX.StandardExtensions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The array argument {0} is null (Nothing in Visual Basic) or empty..
+        ///   Looks up a localized string similar to The array argument {0} is null (Nothing in Visual Basic), or empty, or does not have the required length..
         /// </summary>
         internal static string ErrorArgumentNullOrEmptyArray {
             get {

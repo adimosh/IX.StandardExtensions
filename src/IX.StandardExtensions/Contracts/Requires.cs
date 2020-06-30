@@ -5,7 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using IX.StandardExtensions.ComponentModel;
+using IX.StandardExtensions.Efficiency;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Contracts
@@ -18,6 +20,8 @@ namespace IX.StandardExtensions.Contracts
     {
         #region Not null, empty or whitespace
 
+        #region Strings
+
         /// <summary>
         ///     Called when a contract requires that an argument is not null.
         /// </summary>
@@ -29,7 +33,7 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument name.
         /// </param>
         /// <returns>
-        ///     The converted argument.
+        ///     The validated argument.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         ///     The argument is <see langword="null" />.
@@ -87,7 +91,7 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument name.
         /// </param>
         /// <returns>
-        ///     The converted argument.
+        ///     The validated argument.
         /// </returns>
         /// <exception cref="ArgumentNullOrEmptyException">
         ///     The argument is <see langword="null" /> or empty.
@@ -150,7 +154,7 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument name.
         /// </param>
         /// <returns>
-        ///     The converted argument.
+        ///     The validated argument.
         /// </returns>
         /// <exception cref="ArgumentNullOrWhitespaceException">
         ///     The argument is <see langword="null" /> or empty.
@@ -203,6 +207,10 @@ namespace IX.StandardExtensions.Contracts
             field = argument!;
         }
 
+        #endregion
+
+        #region Arrays and collections
+
         /// <summary>
         ///     Called when a contract requires that a collection argument is not null or empty.
         /// </summary>
@@ -217,7 +225,7 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument name.
         /// </param>
         /// <returns>
-        ///     The converted argument.
+        ///     The validated argument.
         /// </returns>
         /// <exception cref="ArgumentNullOrEmptyCollectionException">
         ///     The argument is <see langword="null" /> or empty.
@@ -279,7 +287,7 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument name.
         /// </param>
         /// <returns>
-        ///     The converted argument.
+        ///     The validated argument.
         /// </returns>
         /// <exception cref="ArgumentNullOrEmptyBinaryException">
         ///     The argument is <see langword="null" /> or empty.
@@ -335,6 +343,611 @@ namespace IX.StandardExtensions.Contracts
 
         #endregion
 
+        #endregion
+
+        #region Fixed length
+
+        /// <summary>Called when a contract requires that an array is of a specific length.</summary>
+        /// <typeparam name="T">The type of items in the array.</typeparam>
+        /// <param name="array">The array for which we are validating the length.</param>
+        /// <param name="length">The exact length.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <returns>The validated argument.</returns>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is either negative or exceeds the bounds of the
+        ///     array.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("array:null => halt")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type that the compiler can handle.")]
+        public static T[] FixedLength<T>(
+            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            T[]? array,
+            in int length,
+            [NotNull] string argumentName)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            if (length < 0)
+            {
+                throw new ArgumentNotValidLengthException(nameof(length));
+            }
+
+            if (array.Length != length)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            return array!;
+        }
+
+        /// <summary>Called when a contract requires that an array is of a specific length.</summary>
+        /// <typeparam name="T">The type of items in the array.</typeparam>
+        /// <param name="field">
+        ///     The field that this argument is initializing.
+        /// </param>
+        /// <param name="array">The array for which we are validating the length.</param>
+        /// <param name="length">The exact length.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is either negative or exceeds the bounds of the
+        ///     array.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("array:null => halt")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type that the compiler can handle.")]
+        public static void FixedLength<T>(
+            ref T[] field,
+            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            T[]? array,
+            in int length,
+            [NotNull] string argumentName)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            if (length < 0)
+            {
+                throw new ArgumentNotValidLengthException(nameof(length));
+            }
+
+            if (array.Length != length)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            field = array!;
+        }
+
+        /// <summary>Called when a contract requires that an array is of a specific length.</summary>
+        /// <typeparam name="T">The type of items in the array.</typeparam>
+        /// <param name="array">The array for which we are validating the length.</param>
+        /// <param name="length">The exact length.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <returns>The validated argument.</returns>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is either negative or exceeds the bounds of the
+        ///     array.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("array:null => halt")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type that the compiler can handle.")]
+        public static T[] FixedLength<T>(
+            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            T[]? array,
+            in long length,
+            [NotNull] string argumentName)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            if (length < 0)
+            {
+                throw new ArgumentNotValidLengthException(nameof(length));
+            }
+
+            if (array.LongLength != length)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            return array!;
+        }
+
+        /// <summary>Called when a contract requires that an array is of a specific length.</summary>
+        /// <typeparam name="T">The type of items in the array.</typeparam>
+        /// <param name="field">
+        ///     The field that this argument is initializing.
+        /// </param>
+        /// <param name="array">The array for which we are validating the length.</param>
+        /// <param name="length">The exact length.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is either negative or exceeds the bounds of the
+        ///     array.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("array:null => halt")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type that the compiler can handle.")]
+        public static void FixedLength<T>(
+            ref T[] field,
+            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            T[]? array,
+            in long length,
+            [NotNull] string argumentName)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            if (length < 0)
+            {
+                throw new ArgumentNotValidLengthException(nameof(length));
+            }
+
+            if (array.LongLength != length)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            field = array!;
+        }
+
+        #endregion
+
+        #region Length at least
+
+        /// <summary>Called when a contract requires that an array's length is at least a specific value.</summary>
+        /// <typeparam name="T">The type of items in the array.</typeparam>
+        /// <param name="array">The array for which we are validating the length.</param>
+        /// <param name="length">The exact length.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <returns>The validated argument.</returns>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is either negative or exceeds the bounds of the
+        ///     array.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("array:null => halt")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type that the compiler can handle.")]
+        public static T[] LengthAtLeast<T>(
+            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            T[]? array,
+            in int length,
+            [NotNull] string argumentName)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            if (length < 0)
+            {
+                throw new ArgumentNotValidLengthException(nameof(length));
+            }
+
+            if (array.Length < length)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            return array!;
+        }
+
+        /// <summary>Called when a contract requires that an array's length is at least a specific value.</summary>
+        /// <typeparam name="T">The type of items in the array.</typeparam>
+        /// <param name="field">
+        ///     The field that this argument is initializing.
+        /// </param>
+        /// <param name="array">The array for which we are validating the length.</param>
+        /// <param name="length">The exact length.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is either negative or exceeds the bounds of the
+        ///     array.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("array:null => halt")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type that the compiler can handle.")]
+        public static void LengthAtLeast<T>(
+            ref T[] field,
+            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            T[]? array,
+            in int length,
+            [NotNull] string argumentName)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            if (length < 0)
+            {
+                throw new ArgumentNotValidLengthException(nameof(length));
+            }
+
+            if (array.Length < length)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            field = array!;
+        }
+
+        /// <summary>Called when a contract requires that an array's length is at least a specific value.</summary>
+        /// <typeparam name="T">The type of items in the array.</typeparam>
+        /// <param name="array">The array for which we are validating the length.</param>
+        /// <param name="length">The exact length.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <returns>The validated argument.</returns>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is either negative or exceeds the bounds of the
+        ///     array.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("array:null => halt")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type that the compiler can handle.")]
+        public static T[] LengthAtLeast<T>(
+            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            T[]? array,
+            in long length,
+            [NotNull] string argumentName)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            if (length < 0)
+            {
+                throw new ArgumentNotValidLengthException(nameof(length));
+            }
+
+            if (array.LongLength < length)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            return array!;
+        }
+
+        /// <summary>Called when a contract requires that an array's length is at least a specific value.</summary>
+        /// <typeparam name="T">The type of items in the array.</typeparam>
+        /// <param name="field">
+        ///     The field that this argument is initializing.
+        /// </param>
+        /// <param name="array">The array for which we are validating the length.</param>
+        /// <param name="length">The exact length.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is either negative or exceeds the bounds of the
+        ///     array.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("array:null => halt")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type that the compiler can handle.")]
+        public static void LengthAtLeast<T>(
+            ref T[] field,
+            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            T[]? array,
+            in long length,
+            [NotNull] string argumentName)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            if (length < 0)
+            {
+                throw new ArgumentNotValidLengthException(nameof(length));
+            }
+
+            if (array.LongLength < length)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            field = array!;
+        }
+
+        #endregion
+
+        #region Length at most
+
+        /// <summary>Called when a contract requires that an array's length is at most a specific value.</summary>
+        /// <typeparam name="T">The type of items in the array.</typeparam>
+        /// <param name="array">The array for which we are validating the length.</param>
+        /// <param name="length">The exact length.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <returns>The validated argument.</returns>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is either negative or exceeds the bounds of the
+        ///     array.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("array:null => halt")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type that the compiler can handle.")]
+        public static T[] LengthAtMost<T>(
+            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            T[]? array,
+            in int length,
+            [NotNull] string argumentName)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            if (length < 1)
+            {
+                throw new ArgumentNotValidLengthException(nameof(length));
+            }
+
+            if (array.Length > length)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            return array!;
+        }
+
+        /// <summary>Called when a contract requires that an array's length is at most a specific value.</summary>
+        /// <typeparam name="T">The type of items in the array.</typeparam>
+        /// <param name="field">
+        ///     The field that this argument is initializing.
+        /// </param>
+        /// <param name="array">The array for which we are validating the length.</param>
+        /// <param name="length">The exact length.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is either negative or exceeds the bounds of the
+        ///     array.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("array:null => halt")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type that the compiler can handle.")]
+        public static void LengthAtMost<T>(
+            ref T[] field,
+            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            T[]? array,
+            in int length,
+            [NotNull] string argumentName)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            if (length > 1)
+            {
+                throw new ArgumentNotValidLengthException(nameof(length));
+            }
+
+            if (array.Length < length)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            field = array!;
+        }
+
+        /// <summary>Called when a contract requires that an array's length is at most a specific value.</summary>
+        /// <typeparam name="T">The type of items in the array.</typeparam>
+        /// <param name="array">The array for which we are validating the length.</param>
+        /// <param name="length">The exact length.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <returns>The validated argument.</returns>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is either negative or exceeds the bounds of the
+        ///     array.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("array:null => halt")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type that the compiler can handle.")]
+        public static T[] LengthAtMost<T>(
+            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            T[]? array,
+            in long length,
+            [NotNull] string argumentName)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            if (length > 1)
+            {
+                throw new ArgumentNotValidLengthException(nameof(length));
+            }
+
+            if (array.LongLength < length)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            return array!;
+        }
+
+        /// <summary>Called when a contract requires that an array's length is at most a specific value.</summary>
+        /// <typeparam name="T">The type of items in the array.</typeparam>
+        /// <param name="field">
+        ///     The field that this argument is initializing.
+        /// </param>
+        /// <param name="array">The array for which we are validating the length.</param>
+        /// <param name="length">The exact length.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is either negative or exceeds the bounds of the
+        ///     array.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("array:null => halt")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type that the compiler can handle.")]
+        public static void LengthAtMost<T>(
+            ref T[] field,
+            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            T[]? array,
+            in long length,
+            [NotNull] string argumentName)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            if (length < 1)
+            {
+                throw new ArgumentNotValidLengthException(nameof(length));
+            }
+
+            if (array.LongLength > length)
+            {
+                throw new ArgumentNullOrEmptyArrayException(argumentName);
+            }
+
+            field = array!;
+        }
+
+        #endregion
+
+        #region Matches
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.OrderingRules",
+            "SA1201:Elements should appear in the correct order",
+            Justification = "Better code readability this way.")]
+        private static readonly Lazy<ConcurrentDictionary<string, Regex>> Regexes = new Lazy<ConcurrentDictionary<string, Regex>>(() => new ConcurrentDictionary<string, Regex>());
+
+        /// <summary>
+        /// Called when a contract requires that a string matches a specific pattern.
+        /// </summary>
+        /// <param name="argument">The string to validate.</param>
+        /// <param name="pattern">The pattern to match.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <returns>The validated argument.</returns>
+        /// <exception cref="ArgumentNullOrEmptyException">The pattern is <c>null</c> (<c>Nothing in Visual Basic</c>) or empty.</exception>
+        /// <exception cref="ArgumentNullException">The argument is <c>null</c> (<c>Nothing in Visual Basic</c>).</exception>
+        /// <exception cref="ArgumentDoesNotMatchException">The argument does not match the pattern.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("argument:null => halt")]
+        [AssertionMethod]
+        public static string Matches(
+            [CanBeNull] string? argument,
+            [NotNull] string pattern,
+            [NotNull] string argumentName)
+        {
+            if (string.IsNullOrEmpty(pattern))
+            {
+                throw new ArgumentNullOrEmptyException(nameof(pattern));
+            }
+
+            if (argument == null)
+            {
+                throw new ArgumentNullException(argumentName);
+            }
+
+            var patternRegex = Regexes.Value.GetOrAdd(
+                pattern,
+                p => new Regex(p));
+
+            if (!patternRegex.IsMatch(argument))
+            {
+                throw new ArgumentDoesNotMatchException(argumentName);
+            }
+
+            return argument!;
+        }
+
+        /// <summary>
+        /// Called when a contract requires that a string matches a specific pattern.
+        /// </summary>
+        /// <param name="field">
+        ///     The field that this argument is initializing.
+        /// </param>
+        /// <param name="argument">The string to validate.</param>
+        /// <param name="pattern">The pattern to match.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <exception cref="ArgumentNullOrEmptyException">The pattern is <c>null</c> (<c>Nothing in Visual Basic</c>) or empty.</exception>
+        /// <exception cref="ArgumentNullException">The argument is <c>null</c> (<c>Nothing in Visual Basic</c>).</exception>
+        /// <exception cref="ArgumentDoesNotMatchException">The argument does not match the pattern.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("argument:null => halt")]
+        [AssertionMethod]
+        public static void Matches(
+            ref string field,
+            [CanBeNull] string? argument,
+            [NotNull] string pattern,
+            [NotNull] string argumentName)
+        {
+            if (string.IsNullOrEmpty(pattern))
+            {
+                throw new ArgumentNullOrEmptyException(nameof(pattern));
+            }
+
+            if (argument == null)
+            {
+                throw new ArgumentNullException(argumentName);
+            }
+
+            var patternRegex = Regexes.Value.GetOrAdd(
+                pattern,
+                p => new Regex(p));
+
+            if (!patternRegex.IsMatch(argument))
+            {
+                throw new ArgumentDoesNotMatchException(argumentName);
+            }
+
+            field = argument!;
+        }
+
+        #endregion
+
         #region Positive
 
         /// <summary>
@@ -347,7 +960,7 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument name.
         /// </param>
         /// <returns>
-        ///     The converted argument.
+        ///     The validated argument.
         /// </returns>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is 0.
@@ -405,7 +1018,7 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument name.
         /// </param>
         /// <returns>
-        ///     The converted argument.
+        ///     The validated argument.
         /// </returns>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is 0.
@@ -453,7 +1066,7 @@ namespace IX.StandardExtensions.Contracts
 
         #region Array index and range
 
-        /// <summary>Called when a contract requires that aspecific index is valid for an array.</summary>
+        /// <summary>Called when a contract requires that a specific index is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="argument">The numeric argument to validate.</param>
         /// <param name="array">The array for which we are validating the index.</param>
@@ -478,7 +1091,7 @@ namespace IX.StandardExtensions.Contracts
             }
         }
 
-        /// <summary>Called when a contract requires that aspecific index is valid for an array.</summary>
+        /// <summary>Called when a contract requires that a specific index is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="field">The field that this argument is initializing.</param>
         /// <param name="argument">The numeric argument to validate.</param>
@@ -507,7 +1120,7 @@ namespace IX.StandardExtensions.Contracts
             field = argument;
         }
 
-        /// <summary>Called when a contract requires that aspecific index is valid for an array.</summary>
+        /// <summary>Called when a contract requires that a specific index is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="argument">The numeric argument to validate.</param>
         /// <param name="array">The array for which we are validating the index.</param>
@@ -532,7 +1145,7 @@ namespace IX.StandardExtensions.Contracts
             }
         }
 
-        /// <summary>Called when a contract requires that aspecific index is valid for an array.</summary>
+        /// <summary>Called when a contract requires that a specific index is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="field">The field that this argument is initializing.</param>
         /// <param name="argument">The numeric argument to validate.</param>
@@ -561,7 +1174,7 @@ namespace IX.StandardExtensions.Contracts
             field = argument;
         }
 
-        /// <summary>Called when a contract requires that aspecific index and length, constituting a range, is valid for an array.</summary>
+        /// <summary>Called when a contract requires that a specific index and length, constituting a range, is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="indexArgument">The numeric index argument to validate.</param>
         /// <param name="lengthArgument">The numeric length argument to validate.</param>
@@ -595,7 +1208,7 @@ namespace IX.StandardExtensions.Contracts
             }
         }
 
-        /// <summary>Called when a contract requires that aspecific index and length, constituting a range, is valid for an array.</summary>
+        /// <summary>Called when a contract requires that a specific index and length, constituting a range, is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="fieldIndex">The index field that this argument is initializing.</param>
         /// <param name="fieldLength">The length field that this argument is initializing.</param>
@@ -636,7 +1249,7 @@ namespace IX.StandardExtensions.Contracts
             fieldLength = lengthArgument;
         }
 
-        /// <summary>Called when a contract requires that aspecific index and length, constituting a range, is valid for an array.</summary>
+        /// <summary>Called when a contract requires that a specific index and length, constituting a range, is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="indexArgument">The numeric index argument to validate.</param>
         /// <param name="lengthArgument">The numeric length argument to validate.</param>
@@ -670,7 +1283,7 @@ namespace IX.StandardExtensions.Contracts
             }
         }
 
-        /// <summary>Called when a contract requires that aspecific index and length, constituting a range, is valid for an array.</summary>
+        /// <summary>Called when a contract requires that a specific index and length, constituting a range, is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="fieldIndex">The index field that this argument is initializing.</param>
         /// <param name="fieldLength">The length field that this argument is initializing.</param>
@@ -711,7 +1324,7 @@ namespace IX.StandardExtensions.Contracts
             fieldLength = lengthArgument;
         }
 
-        /// <summary>Called when a contract requires that aspecific length is valid for an array.</summary>
+        /// <summary>Called when a contract requires that a specific length is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="argument">The numeric argument to validate.</param>
         /// <param name="array">The array for which we are validating the length.</param>
@@ -736,7 +1349,7 @@ namespace IX.StandardExtensions.Contracts
             }
         }
 
-        /// <summary>Called when a contract requires that aspecific length is valid for an array.</summary>
+        /// <summary>Called when a contract requires that a specific length is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="field">The field that this argument is initializing.</param>
         /// <param name="argument">The numeric argument to validate.</param>
@@ -765,7 +1378,7 @@ namespace IX.StandardExtensions.Contracts
             field = argument;
         }
 
-        /// <summary>Called when a contract requires that aspecific length is valid for an array.</summary>
+        /// <summary>Called when a contract requires that a specific length is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="argument">The numeric argument to validate.</param>
         /// <param name="array">The array for which we are validating the length.</param>
@@ -790,7 +1403,7 @@ namespace IX.StandardExtensions.Contracts
             }
         }
 
-        /// <summary>Called when a contract requires that aspecific length is valid for an array.</summary>
+        /// <summary>Called when a contract requires that a specific length is valid for an array.</summary>
         /// <typeparam name="T">The type of items in the array.</typeparam>
         /// <param name="field">The field that this argument is initializing.</param>
         /// <param name="argument">The numeric argument to validate.</param>
@@ -833,7 +1446,7 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument name.
         /// </param>
         /// <returns>
-        ///     The converted argument.
+        ///     The validated argument.
         /// </returns>
         /// <exception cref="ArgumentException">
         ///     The condition is not being met.
@@ -904,7 +1517,7 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument name.
         /// </param>
         /// <returns>
-        ///     The converted argument.
+        ///     The validated argument.
         /// </returns>
         /// <exception cref="ArgumentException">
         ///     The condition is not being met.
