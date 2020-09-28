@@ -128,25 +128,10 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Obsolete\0.5.3\Contract.NumericTypesValidation.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Contract.NumericTypesValidation.tt</DependentUpon>
-    </Compile>
     <Compile Update="Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Obsolete\0.5.3\Fire.AndForgetActionsAndFuncs.cs">
-      <DependentUpon>Fire.AndForgetActionsAndFuncs.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Obsolete\0.5.3\Fire.OnThreadPool.Parameters.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Fire.OnThreadPool.Parameters.tt</DependentUpon>
     </Compile>
     <Compile Update="Threading\TaskFactoryExtensions.Actions.cs">
       <DesignTime>True</DesignTime>
@@ -231,18 +216,6 @@
       <LastGenOutput>LinqExtensions.ActionsAndFuncs.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Obsolete\0.5.3\Contract.NumericTypesValidation.tt">
-      <LastGenOutput>Contract.NumericTypesValidation.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Obsolete\0.5.3\Fire.AndForgetActionsAndFuncs.tt">
-      <LastGenOutput>Fire.AndForgetActionsAndFuncs.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Obsolete\0.5.3\Fire.OnThreadPool.Parameters.tt">
-      <LastGenOutput>Fire.OnThreadPool.Parameters.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
     <None Update="Threading\TaskFactoryExtensions.Actions.tt">
       <LastGenOutput>TaskFactoryExtensions.Actions.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -308,6 +281,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Obsolete\" />
   </ItemGroup>
 
 </Project>

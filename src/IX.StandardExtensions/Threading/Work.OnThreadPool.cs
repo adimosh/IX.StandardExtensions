@@ -19,7 +19,105 @@ namespace IX.StandardExtensions.Threading
     [PublicAPI]
     public static class Work
     {
-        #region Func with cancellation token, returning Task
+        #region Func with cancellation token, returning task
+
+        /// <summary>
+        /// Executes a method accepting a cancellation token on the thread pool.
+        /// </summary>
+        /// <param name="methodToInvoke">The method to invoke.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A task containing the result of the executed method.</returns>
+        [DiagCA.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is unavoidable in this case.")]
+        [DiagCA.SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "This is unavoidable because of thread switching.")]
+        [NotNull]
+        public static Task OnThreadPool(
+            [NotNull] this Func<CancellationToken, Task> methodToInvoke,
+            CancellationToken cancellationToken = default)
+        {
+            var taskCompletionSource = new TaskCompletionSource<int>();
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                taskCompletionSource.TrySetCanceled();
+                return taskCompletionSource.Task;
+            }
+
+            ThreadPool.QueueUserWorkItem(
+                WorkItem,
+                (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, cancellationToken));
+
+            static void WorkItem(object rawState)
+            {
+                (Func<CancellationToken, Task> func, CultureInfo currentCulture,
+                        CultureInfo currentUiCulture, TaskCompletionSource<int> tcs, CancellationToken ct) =
+                    Requires.ArgumentOfType<(Func<CancellationToken, Task>, CultureInfo,
+                            CultureInfo,
+                            TaskCompletionSource<int>, CancellationToken)>(
+                            rawState,
+                            nameof(rawState));
+
+                if (ct.IsCancellationRequested)
+                {
+                    tcs.TrySetCanceled();
+                    return;
+                }
+
+#if NET452
+#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
+                Thread.CurrentThread.CurrentCulture = currentCulture;
+                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
+#pragma warning restore DE0008 // API is deprecated
+#else
+                CultureInfo.CurrentCulture = currentCulture;
+                CultureInfo.CurrentUICulture = currentUiCulture;
+#endif
+
+                try
+                {
+                    func(ct)
+                        .ContinueWith(
+                            Continuation,
+                            TaskContinuationOptions.ExecuteSynchronously);
+
+                    void Continuation(Task completedTask)
+                    {
+                        if (completedTask.IsCanceled)
+                        {
+                            tcs.TrySetCanceled();
+                        }
+                        else if (completedTask.IsFaulted)
+                        {
+                            tcs.TrySetException(
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
+                        }
+                        else
+                        {
+                            tcs.TrySetResult(0);
+                        }
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    tcs.TrySetCanceled();
+                }
+                catch (Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
+            }
+
+            return taskCompletionSource.Task;
+        }
+
+        #endregion
+
+        #region Func with cancellation token, returning task with value
 
         /// <summary>
         /// Executes a method accepting a cancellation token on the thread pool.
@@ -119,6 +217,110 @@ namespace IX.StandardExtensions.Threading
         #endregion
 
         #region Func with payload and cancellation token, returning task
+
+        /// <summary>
+        /// Executes a method accepting a cancellation token on the thread pool.
+        /// </summary>
+        /// <typeparam name="TState">The type of the payload.</typeparam>
+        /// <param name="methodToInvoke">The method to invoke.</param>
+        /// <param name="state">The state, or payload, of the invoked method.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A task containing the result of the executed method.</returns>
+        [DiagCA.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is unavoidable in this case.")]
+        [DiagCA.SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "This is unavoidable because of thread switching.")]
+        [NotNull]
+        public static Task OnThreadPool<TState>(
+            [NotNull] this Func<TState, CancellationToken, Task> methodToInvoke,
+            [CanBeNull] TState state,
+            CancellationToken cancellationToken = default)
+        {
+            var taskCompletionSource = new TaskCompletionSource<int>();
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                taskCompletionSource.TrySetCanceled();
+                return taskCompletionSource.Task;
+            }
+
+            ThreadPool.QueueUserWorkItem(
+                WorkItem,
+                (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, state, cancellationToken));
+
+            static void WorkItem(object rawState)
+            {
+                (Func<TState, CancellationToken, Task> func, CultureInfo currentCulture,
+                        CultureInfo currentUiCulture, TaskCompletionSource<int> tcs, TState payload,
+                        CancellationToken ct) =
+                    Requires.ArgumentOfType<(Func<TState, CancellationToken, Task>, CultureInfo,
+                            CultureInfo,
+                            TaskCompletionSource<int>, TState, CancellationToken)>(
+                            rawState,
+                            nameof(rawState));
+
+                if (ct.IsCancellationRequested)
+                {
+                    tcs.TrySetCanceled();
+                    return;
+                }
+
+#if NET452
+#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
+                Thread.CurrentThread.CurrentCulture = currentCulture;
+                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
+#pragma warning restore DE0008 // API is deprecated
+#else
+                CultureInfo.CurrentCulture = currentCulture;
+                CultureInfo.CurrentUICulture = currentUiCulture;
+#endif
+
+                try
+                {
+                    func(
+                            payload,
+                            ct)
+                        .ContinueWith(
+                            Continuation,
+                            TaskContinuationOptions.ExecuteSynchronously);
+
+                    void Continuation(Task completedTask)
+                    {
+                        if (completedTask.IsCanceled)
+                        {
+                            tcs.TrySetCanceled();
+                        }
+                        else if (completedTask.IsFaulted)
+                        {
+                            tcs.TrySetException(
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
+                        }
+                        else
+                        {
+                            tcs.TrySetResult(0);
+                        }
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    tcs.TrySetCanceled();
+                }
+                catch (Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
+            }
+
+            return taskCompletionSource.Task;
+        }
+
+        #endregion
+
+        #region Func with payload and cancellation token, returning task with value
 
         /// <summary>
         /// Executes a method accepting a cancellation token on the thread pool.
@@ -390,7 +592,105 @@ namespace IX.StandardExtensions.Threading
 
         #endregion
 
-        #region Func, returning Task
+        #region Func, returning task
+
+        /// <summary>
+        /// Executes a method on the thread pool.
+        /// </summary>
+        /// <param name="methodToInvoke">The method to invoke.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A task containing the result of the executed method.</returns>
+        [DiagCA.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is unavoidable in this case.")]
+        [DiagCA.SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "This is unavoidable because of thread switching.")]
+        [NotNull]
+        public static Task OnThreadPool(
+            [NotNull] this Func<Task> methodToInvoke,
+            CancellationToken cancellationToken = default)
+        {
+            var taskCompletionSource = new TaskCompletionSource<int>();
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                taskCompletionSource.TrySetCanceled();
+                return taskCompletionSource.Task;
+            }
+
+            ThreadPool.QueueUserWorkItem(
+                WorkItem,
+                (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, cancellationToken));
+
+            static void WorkItem(object rawState)
+            {
+                (Func<Task> func, CultureInfo currentCulture,
+                        CultureInfo currentUiCulture, TaskCompletionSource<int> tcs, CancellationToken ct) =
+                    Requires.ArgumentOfType<(Func<Task>, CultureInfo,
+                            CultureInfo,
+                            TaskCompletionSource<int>, CancellationToken)>(
+                            rawState,
+                            nameof(rawState));
+
+                if (ct.IsCancellationRequested)
+                {
+                    tcs.TrySetCanceled();
+                    return;
+                }
+
+#if NET452
+#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
+                Thread.CurrentThread.CurrentCulture = currentCulture;
+                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
+#pragma warning restore DE0008 // API is deprecated
+#else
+                CultureInfo.CurrentCulture = currentCulture;
+                CultureInfo.CurrentUICulture = currentUiCulture;
+#endif
+
+                try
+                {
+                    func()
+                        .ContinueWith(
+                            Continuation,
+                            TaskContinuationOptions.ExecuteSynchronously);
+
+                    void Continuation(Task completedTask)
+                    {
+                        if (completedTask.IsCanceled)
+                        {
+                            tcs.TrySetCanceled();
+                        }
+                        else if (completedTask.IsFaulted)
+                        {
+                            tcs.TrySetException(
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
+                        }
+                        else
+                        {
+                            tcs.TrySetResult(0);
+                        }
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    tcs.TrySetCanceled();
+                }
+                catch (Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
+            }
+
+            return taskCompletionSource.Task;
+        }
+
+        #endregion
+
+        #region Func, returning task with value
 
         /// <summary>
         /// Executes a method on the thread pool.
@@ -490,6 +790,108 @@ namespace IX.StandardExtensions.Threading
         #endregion
 
         #region Func with payload, returning task
+
+        /// <summary>
+        /// Executes a method accepting a payload on the thread pool.
+        /// </summary>
+        /// <typeparam name="TState">The type of the payload.</typeparam>
+        /// <param name="methodToInvoke">The method to invoke.</param>
+        /// <param name="state">The state, or payload, of the invoked method.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A task containing the result of the executed method.</returns>
+        [DiagCA.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is unavoidable in this case.")]
+        [DiagCA.SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "This is unavoidable because of thread switching.")]
+        [NotNull]
+        public static Task OnThreadPool<TState>(
+            [NotNull] this Func<TState, Task> methodToInvoke,
+            [CanBeNull] TState state,
+            CancellationToken cancellationToken = default)
+        {
+            var taskCompletionSource = new TaskCompletionSource<int>();
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                taskCompletionSource.TrySetCanceled();
+                return taskCompletionSource.Task;
+            }
+
+            ThreadPool.QueueUserWorkItem(
+                WorkItem,
+                (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, state, cancellationToken));
+
+            static void WorkItem(object rawState)
+            {
+                (Func<TState, Task> func, CultureInfo currentCulture,
+                        CultureInfo currentUiCulture, TaskCompletionSource<int> tcs, TState payload,
+                        CancellationToken ct) =
+                    Requires.ArgumentOfType<(Func<TState, Task>, CultureInfo,
+                            CultureInfo,
+                            TaskCompletionSource<int>, TState, CancellationToken)>(
+                            rawState,
+                            nameof(rawState));
+
+                if (ct.IsCancellationRequested)
+                {
+                    tcs.TrySetCanceled();
+                    return;
+                }
+
+#if NET452
+#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
+                Thread.CurrentThread.CurrentCulture = currentCulture;
+                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
+#pragma warning restore DE0008 // API is deprecated
+#else
+                CultureInfo.CurrentCulture = currentCulture;
+                CultureInfo.CurrentUICulture = currentUiCulture;
+#endif
+
+                try
+                {
+                    func(payload)
+                        .ContinueWith(
+                            Continuation,
+                            TaskContinuationOptions.ExecuteSynchronously);
+
+                    void Continuation(Task completedTask)
+                    {
+                        if (completedTask.IsCanceled)
+                        {
+                            tcs.TrySetCanceled();
+                        }
+                        else if (completedTask.IsFaulted)
+                        {
+                            tcs.TrySetException(
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
+                        }
+                        else
+                        {
+                            tcs.TrySetResult(0);
+                        }
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    tcs.TrySetCanceled();
+                }
+                catch (Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
+            }
+
+            return taskCompletionSource.Task;
+        }
+
+        #endregion
+
+        #region Func with payload, returning task with value
 
         /// <summary>
         /// Executes a method accepting a payload on the thread pool.
