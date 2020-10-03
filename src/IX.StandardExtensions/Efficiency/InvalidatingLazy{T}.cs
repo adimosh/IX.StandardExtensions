@@ -108,17 +108,17 @@ namespace IX.StandardExtensions.Efficiency
 
         /// <summary>Gets the lazily initialized value of the current <see cref="InvalidatingLazy{T}"></see> instance.</summary>
         /// <returns>The lazily initialized value of the current <see cref="InvalidatingLazy{T}"></see> instance.</returns>
-        /// <exception cref="T:System.MemberAccessException">
+        /// <exception cref="MemberAccessException">
         ///     The <see cref="InvalidatingLazy{T}"></see> instance is initialized to use
         ///     the default constructor of the type that is being lazily initialized, and permissions to access the constructor are
         ///     missing.
         /// </exception>
-        /// <exception cref="T:System.MissingMemberException">
+        /// <exception cref="MissingMemberException">
         ///     The <see cref="InvalidatingLazy{T}"></see> instance is initialized to use
         ///     the default constructor of the type that is being lazily initialized, and that type does not have a public,
         ///     parameterless constructor.
         /// </exception>
-        /// <exception cref="T:System.InvalidOperationException">
+        /// <exception cref="InvalidOperationException">
         ///     The initialization function tries to access
         ///     <see cref="InvalidatingLazy{T}.Value"></see> on this instance.
         /// </exception>
@@ -129,12 +129,12 @@ namespace IX.StandardExtensions.Efficiency
         ///     instance.
         /// </summary>
         /// <returns>
-        ///     The result of calling the <see cref="M:System.Object.ToString"></see> method on the
+        ///     The result of calling the <see cref="object.ToString"></see> method on the
         ///     <see cref="InvalidatingLazy{T}.Value"></see> property for this instance, if the value has been created (that is, if the
         ///     <see cref="InvalidatingLazy{T}.IsValueCreated"></see> property returns true). Otherwise, a string indicating that the
         ///     value has not been created.
         /// </returns>
-        /// <exception cref="T:System.NullReferenceException">The <see cref="InvalidatingLazy{T}.Value"></see> property is null.</exception>
+        /// <exception cref="NullReferenceException">The <see cref="InvalidatingLazy{T}.Value"></see> property is null.</exception>
         public override string ToString() => this.internalLazy.ToString();
 
         /// <summary>

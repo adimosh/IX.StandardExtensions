@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using IX.StandardExtensions.Contracts;
 
 namespace IX.StandardExtensions.Extensions
 {
@@ -21,7 +22,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right operand enumerable.</param>
         /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
-        public static bool SequenceEquals<T>(this IEnumerable<IEquatable<T>> left, IEnumerable<T> right)
+        public static bool SequenceEquals<T>(this IEnumerable<IEquatable<T>>? left, IEnumerable<T>? right)
         {
             if (left == null)
             {
@@ -48,7 +49,7 @@ namespace IX.StandardExtensions.Extensions
 
                 if (b1)
                 {
-                    if (!e1.Current.Equals(e2.Current))
+                    if (!(e1.Current?.Equals(e2.Current) ?? e2.Current == null))
                     {
                         return false;
                     }
@@ -68,7 +69,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right operand enumerable.</param>
         /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
-        public static bool SequenceEquals<T>(this IEnumerable<IComparable<T>> left, IEnumerable<T> right)
+        public static bool SequenceEquals<T>(this IEnumerable<IComparable<T>>? left, IEnumerable<T>? right)
         {
             if (left == null)
             {
@@ -95,7 +96,7 @@ namespace IX.StandardExtensions.Extensions
 
                 if (b1)
                 {
-                    if (e1.Current.CompareTo(e2.Current) != 0)
+                    if ((e1.Current?.CompareTo(e2.Current) ?? (e2.Current == null ? 0 : 1)) != 0)
                     {
                         return false;
                     }
@@ -114,7 +115,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right operand enumerable.</param>
         /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
-        public static bool SequenceEquals(this IEnumerable<IComparable> left, IEnumerable<object> right)
+        public static bool SequenceEquals(this IEnumerable<IComparable>? left, IEnumerable<object>? right)
         {
             if (left == null)
             {
@@ -141,7 +142,7 @@ namespace IX.StandardExtensions.Extensions
 
                 if (b1)
                 {
-                    if (e1.Current.CompareTo(e2.Current) != 0)
+                    if ((e1.Current?.CompareTo(e2.Current) ?? (e2.Current == null ? 0 : 1)) != 0)
                     {
                         return false;
                     }
@@ -162,8 +163,10 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="comparer">The comparer to use when equating items.</param>
         /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
-        public static bool SequenceEquals<T>(this IEnumerable<T> left, IEnumerable<T> right, IEqualityComparer<T> comparer)
+        public static bool SequenceEquals<T>(this IEnumerable<T>? left, IEnumerable<T>? right, IEqualityComparer<T> comparer)
         {
+            Requires.NotNull(comparer, nameof(comparer));
+
             if (left == null)
             {
                 return right == null;
@@ -189,7 +192,7 @@ namespace IX.StandardExtensions.Extensions
 
                 if (b1)
                 {
-                    if (!comparer.Equals(e1.Current, e2.Current))
+                    if (!comparer!.Equals(e1.Current, e2.Current))
                     {
                         return false;
                     }
@@ -210,8 +213,10 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="comparer">The comparer to use when equating items.</param>
         /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
-        public static bool SequenceEquals<T>(this IEnumerable<T> left, IEnumerable<T> right, IComparer<T> comparer)
+        public static bool SequenceEquals<T>(this IEnumerable<T>? left, IEnumerable<T>? right, IComparer<T> comparer)
         {
+            Requires.NotNull(comparer, nameof(comparer));
+
             if (left == null)
             {
                 return right == null;
@@ -237,7 +242,7 @@ namespace IX.StandardExtensions.Extensions
 
                 if (b1)
                 {
-                    if (comparer.Compare(e1.Current, e2.Current) != 0)
+                    if (comparer!.Compare(e1.Current, e2.Current) != 0)
                     {
                         return false;
                     }
@@ -258,8 +263,10 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="comparer">The comparer to use when equating items.</param>
         /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
-        public static bool SequenceEquals<T>(this IEnumerable<T> left, IEnumerable<T> right, Func<T, T, bool> comparer)
+        public static bool SequenceEquals<T>(this IEnumerable<T>? left, IEnumerable<T>? right, Func<T, T, bool> comparer)
         {
+            Requires.NotNull(comparer, nameof(comparer));
+
             if (left == null)
             {
                 return right == null;
@@ -285,7 +292,7 @@ namespace IX.StandardExtensions.Extensions
 
                 if (b1)
                 {
-                    if (!comparer(e1.Current, e2.Current))
+                    if (!comparer!(e1.Current, e2.Current))
                     {
                         return false;
                     }
@@ -306,8 +313,10 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="comparer">The comparer to use when equating items.</param>
         /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
-        public static bool SequenceEquals<T>(this IEnumerable<T> left, IEnumerable<T> right, Func<T, T, int> comparer)
+        public static bool SequenceEquals<T>(this IEnumerable<T>? left, IEnumerable<T>? right, Func<T, T, int> comparer)
         {
+            Requires.NotNull(comparer, nameof(comparer));
+
             if (left == null)
             {
                 return right == null;
@@ -333,7 +342,7 @@ namespace IX.StandardExtensions.Extensions
 
                 if (b1)
                 {
-                    if (comparer(e1.Current, e2.Current) != 0)
+                    if (comparer!(e1.Current, e2.Current) != 0)
                     {
                         return false;
                     }
@@ -353,7 +362,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right operand enumerable.</param>
         /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
-        public static bool SequenceEqualsByObjectComparison<T>(this IEnumerable<object> left, IEnumerable<object> right)
+        public static bool SequenceEqualsByObjectComparison<T>(this IEnumerable<object>? left, IEnumerable<object>? right)
         {
             if (left == null)
             {
@@ -380,7 +389,7 @@ namespace IX.StandardExtensions.Extensions
 
                 if (b1)
                 {
-                    if (!e1.Current.Equals(e2.Current))
+                    if (!(e1.Current?.Equals(e2.Current) ?? e2.Current == null))
                     {
                         return false;
                     }
@@ -400,7 +409,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right operand enumerable.</param>
         /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
-        public static bool SequenceEqualsByReference<T>(this IEnumerable<object> left, IEnumerable<object> right)
+        public static bool SequenceEqualsByReference<T>(this IEnumerable<object>? left, IEnumerable<object>? right)
         {
             if (left == null)
             {

@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Globalization;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
@@ -15,6 +16,10 @@ namespace IX.StandardExtensions
     /// <seealso cref="System.ArgumentException" />
     [Serializable]
     [PublicAPI]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Design",
+        "CA1032:Implement standard exception constructors",
+        Justification = "Standard exception constructors make little sense for this exception.")]
     public class ArgumentNullOrWhitespaceException : ArgumentException
     {
         /// <summary>
@@ -24,6 +29,7 @@ namespace IX.StandardExtensions
         public ArgumentNullOrWhitespaceException(string argumentName)
             : base(
                 string.Format(
+                    CultureInfo.CurrentCulture,
                     Resources.ErrorArgumentNullOrWhitespace,
                     argumentName), argumentName)
         {
@@ -39,6 +45,7 @@ namespace IX.StandardExtensions
             Exception internalException)
             : base(
                 string.Format(
+                    CultureInfo.CurrentCulture,
                     Resources.ErrorArgumentNullOrWhitespace,
                     argumentName), argumentName,
                 internalException)

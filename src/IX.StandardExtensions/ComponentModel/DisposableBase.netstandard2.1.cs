@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 namespace IX.StandardExtensions.ComponentModel
 {
 #if NETSTANDARD2_1
-#pragma warning disable SA1601 // Partial elements should be documented
+    /// <summary>
+    ///     An abstract base class for correctly implementing the disposable pattern.
+    /// </summary>
+    /// <seealso cref="System.IDisposable" />
     public abstract partial class DisposableBase : IAsyncDisposable
     {
         /// <summary>
@@ -18,17 +21,23 @@ namespace IX.StandardExtensions.ComponentModel
         /// <returns>
         ///     A value task represengint the completed dispose operation.
         /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Usage",
+            "CA1816:Dispose methods should call SuppressFinalize",
+            Justification = "This is a dispose method.")]
         public async ValueTask DisposeAsync()
         {
             if (Interlocked.Exchange(
-                ref this.disposeSignaled,
-                1) != 0)
+                    ref this.disposeSignaled,
+                    1) !=
+                0)
             {
                 return;
             }
 
             GC.SuppressFinalize(this);
-            await this.DisposeAsync(true);
+            await this.DisposeAsync(true)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -37,6 +46,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <returns>
         ///     A value task represengint the completed dispose operation.
         /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "AsyncUsage.CSharp.Naming",
+            "AvoidAsyncSuffix:Avoid Async suffix",
+            Justification = "The naming is correct, but the analyzer can't tell.")]
         protected virtual ValueTask DisposeManagedContextAsync()
         {
             this.DisposeManagedContext();
@@ -50,6 +63,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <returns>
         ///     A value task represengint the completed dispose operation.
         /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "AsyncUsage.CSharp.Naming",
+            "AvoidAsyncSuffix:Avoid Async suffix",
+            Justification = "The naming is correct, but the analyzer can't tell.")]
         protected virtual ValueTask DisposeGeneralContextAsync()
         {
             this.DisposeGeneralContext();
@@ -70,10 +87,12 @@ namespace IX.StandardExtensions.ComponentModel
             {
                 if (disposing)
                 {
-                    await this.DisposeManagedContextAsync();
+                    await this.DisposeManagedContextAsync()
+                        .ConfigureAwait(false);
                 }
 
-                await this.DisposeGeneralContextAsync();
+                await this.DisposeGeneralContextAsync()
+                    .ConfigureAwait(false);
             }
             finally
             {
@@ -81,6 +100,5 @@ namespace IX.StandardExtensions.ComponentModel
             }
         }
     }
-#pragma warning restore SA1601 // Partial elements should be documented
 #endif
 }

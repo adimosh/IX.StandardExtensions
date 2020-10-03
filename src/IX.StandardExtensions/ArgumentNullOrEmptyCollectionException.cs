@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Globalization;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
@@ -14,6 +15,10 @@ namespace IX.StandardExtensions
     /// <seealso cref="System.ArgumentException" />
     [Serializable]
     [PublicAPI]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Design",
+        "CA1032:Implement standard exception constructors",
+        Justification = "Standard exception constructors make little sense for this exception.")]
     public class ArgumentNullOrEmptyCollectionException : ArgumentException
     {
         /// <summary>
@@ -23,6 +28,7 @@ namespace IX.StandardExtensions
         public ArgumentNullOrEmptyCollectionException(string argumentName)
             : base(
                 string.Format(
+                    CultureInfo.CurrentCulture,
                     Resources.ErrorArgumentNullOrEmptyCollection,
                     argumentName), argumentName)
         {
@@ -38,6 +44,7 @@ namespace IX.StandardExtensions
             Exception internalException)
             : base(
                 string.Format(
+                    CultureInfo.CurrentCulture,
                     Resources.ErrorArgumentNullOrEmptyCollection,
                     argumentName), argumentName,
                 internalException)

@@ -13,6 +13,10 @@ namespace IX.StandardExtensions
     /// </summary>
     [Serializable]
     [PublicAPI]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Design",
+        "CA1032:Implement standard exception constructors",
+        Justification = "Standard exception constructors make little sense for this exception.")]
     public class ArgumentsNotValidRangeException : ArgumentsException
     {
         /// <summary>

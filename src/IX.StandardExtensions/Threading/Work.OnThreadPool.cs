@@ -36,7 +36,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task OnThreadPool(
+        public static Task OnThreadPoolAsync(
             [NotNull] this Func<CancellationToken, Task> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
@@ -83,7 +83,9 @@ namespace IX.StandardExtensions.Threading
                     func(ct)
                         .ContinueWith(
                             Continuation,
-                            TaskContinuationOptions.ExecuteSynchronously);
+                            default,
+                            TaskContinuationOptions.ExecuteSynchronously,
+                            TaskScheduler.Current);
 
                     void Continuation(Task completedTask)
                     {
@@ -135,7 +137,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task<TResult> OnThreadPool<TResult>(
+        public static Task<TResult> OnThreadPoolAsync<TResult>(
             [NotNull] this Func<CancellationToken, Task<TResult>> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
@@ -182,7 +184,9 @@ namespace IX.StandardExtensions.Threading
                     func(ct)
                         .ContinueWith(
                             Continuation,
-                            TaskContinuationOptions.ExecuteSynchronously);
+                            default,
+                            TaskContinuationOptions.ExecuteSynchronously,
+                            TaskScheduler.Current);
 
                     void Continuation(Task<TResult> completedTask)
                     {
@@ -235,7 +239,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task OnThreadPool<TState>(
+        public static Task OnThreadPoolAsync<TState>(
             [NotNull] this Func<TState, CancellationToken, Task> methodToInvoke,
             [CanBeNull] TState state,
             CancellationToken cancellationToken = default)
@@ -286,7 +290,9 @@ namespace IX.StandardExtensions.Threading
                             ct)
                         .ContinueWith(
                             Continuation,
-                            TaskContinuationOptions.ExecuteSynchronously);
+                            default,
+                            TaskContinuationOptions.ExecuteSynchronously,
+                            TaskScheduler.Current);
 
                     void Continuation(Task completedTask)
                     {
@@ -340,7 +346,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task<TResult> OnThreadPool<TState, TResult>(
+        public static Task<TResult> OnThreadPoolAsync<TState, TResult>(
             [NotNull] this Func<TState, CancellationToken, Task<TResult>> methodToInvoke,
             [CanBeNull] TState state,
             CancellationToken cancellationToken = default)
@@ -391,7 +397,9 @@ namespace IX.StandardExtensions.Threading
                             ct)
                         .ContinueWith(
                             Continuation,
-                            TaskContinuationOptions.ExecuteSynchronously);
+                            default,
+                            TaskContinuationOptions.ExecuteSynchronously,
+                            TaskScheduler.Current);
 
                     void Continuation(Task<TResult> completedTask)
                     {
@@ -443,7 +451,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task<TResult> OnThreadPool<TResult>(
+        public static Task<TResult> OnThreadPoolAsync<TResult>(
             [NotNull] this Func<CancellationToken, TResult> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
@@ -526,7 +534,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task<TResult> OnThreadPool<TState, TResult>(
+        public static Task<TResult> OnThreadPoolAsync<TState, TResult>(
             [NotNull] this Func<TState, CancellationToken, TResult> methodToInvoke,
             [CanBeNull] TState state,
             CancellationToken cancellationToken = default)
@@ -609,7 +617,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task OnThreadPool(
+        public static Task OnThreadPoolAsync(
             [NotNull] this Func<Task> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
@@ -656,7 +664,9 @@ namespace IX.StandardExtensions.Threading
                     func()
                         .ContinueWith(
                             Continuation,
-                            TaskContinuationOptions.ExecuteSynchronously);
+                            default,
+                            TaskContinuationOptions.ExecuteSynchronously,
+                            TaskScheduler.Current);
 
                     void Continuation(Task completedTask)
                     {
@@ -708,7 +718,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task<TResult> OnThreadPool<TResult>(
+        public static Task<TResult> OnThreadPoolAsync<TResult>(
             [NotNull] this Func<Task<TResult>> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
@@ -755,7 +765,9 @@ namespace IX.StandardExtensions.Threading
                     func()
                         .ContinueWith(
                             Continuation,
-                            TaskContinuationOptions.ExecuteSynchronously);
+                            default,
+                            TaskContinuationOptions.ExecuteSynchronously,
+                            TaskScheduler.Current);
 
                     void Continuation(Task<TResult> completedTask)
                     {
@@ -808,7 +820,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task OnThreadPool<TState>(
+        public static Task OnThreadPoolAsync<TState>(
             [NotNull] this Func<TState, Task> methodToInvoke,
             [CanBeNull] TState state,
             CancellationToken cancellationToken = default)
@@ -857,7 +869,9 @@ namespace IX.StandardExtensions.Threading
                     func(payload)
                         .ContinueWith(
                             Continuation,
-                            TaskContinuationOptions.ExecuteSynchronously);
+                            default,
+                            TaskContinuationOptions.ExecuteSynchronously,
+                            TaskScheduler.Current);
 
                     void Continuation(Task completedTask)
                     {
@@ -911,7 +925,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task<TResult> OnThreadPool<TState, TResult>(
+        public static Task<TResult> OnThreadPoolAsync<TState, TResult>(
             [NotNull] this Func<TState, Task<TResult>> methodToInvoke,
             [CanBeNull] TState state,
             CancellationToken cancellationToken = default)
@@ -960,7 +974,9 @@ namespace IX.StandardExtensions.Threading
                     func(payload)
                         .ContinueWith(
                             Continuation,
-                            TaskContinuationOptions.ExecuteSynchronously);
+                            default,
+                            TaskContinuationOptions.ExecuteSynchronously,
+                            TaskScheduler.Current);
 
                     void Continuation(Task<TResult> completedTask)
                     {
@@ -1012,7 +1028,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task<TResult> OnThreadPool<TResult>(
+        public static Task<TResult> OnThreadPoolAsync<TResult>(
             [NotNull] this Func<TResult> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
@@ -1095,7 +1111,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task<TResult> OnThreadPool<TState, TResult>(
+        public static Task<TResult> OnThreadPoolAsync<TState, TResult>(
             [NotNull] this Func<TState, TResult> methodToInvoke,
             [CanBeNull] TState state,
             CancellationToken cancellationToken = default)
@@ -1178,7 +1194,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task OnThreadPool<TState>(
+        public static Task OnThreadPoolAsync<TState>(
             [NotNull] this Action<TState, CancellationToken> methodToInvoke,
             [CanBeNull] TState state,
             CancellationToken cancellationToken = default)
@@ -1261,7 +1277,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task OnThreadPool(
+        public static Task OnThreadPoolAsync(
             [NotNull] this Action<CancellationToken> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
@@ -1343,7 +1359,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task OnThreadPool<TState>(
+        public static Task OnThreadPoolAsync<TState>(
             [NotNull] this Action<TState> methodToInvoke,
             [CanBeNull] TState state,
             CancellationToken cancellationToken = default)
@@ -1424,7 +1440,7 @@ namespace IX.StandardExtensions.Threading
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
         [NotNull]
-        public static Task OnThreadPool(
+        public static Task OnThreadPoolAsync(
             [NotNull] this Action methodToInvoke,
             CancellationToken cancellationToken = default)
         {

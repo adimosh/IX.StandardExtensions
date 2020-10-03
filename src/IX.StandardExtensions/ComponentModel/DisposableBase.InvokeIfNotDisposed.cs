@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using IX.StandardExtensions.Contracts;
 
 namespace IX.StandardExtensions.ComponentModel
 {
@@ -31,6 +32,8 @@ namespace IX.StandardExtensions.ComponentModel
             Action<TParam1> action,
             TParam1 param1)
         {
+            Requires.NotNull(action, nameof(action));
+
             this.ThrowIfCurrentObjectDisposed();
 
             action.Invoke(
@@ -57,6 +60,8 @@ namespace IX.StandardExtensions.ComponentModel
             Func<TParam1, TReturn> func,
             TParam1 param1)
         {
+            Requires.NotNull(func, nameof(func));
+
             this.ThrowIfCurrentObjectDisposed();
 
             return func.Invoke(
@@ -84,6 +89,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam1 param1,
             TParam2 param2)
         {
+            Requires.NotNull(action, nameof(action));
+
             this.ThrowIfCurrentObjectDisposed();
 
             action.Invoke(
@@ -114,6 +121,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam1 param1,
             TParam2 param2)
         {
+            Requires.NotNull(func, nameof(func));
+
             this.ThrowIfCurrentObjectDisposed();
 
             return func.Invoke(
@@ -145,6 +154,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam2 param2,
             TParam3 param3)
         {
+            Requires.NotNull(action, nameof(action));
+
             this.ThrowIfCurrentObjectDisposed();
 
             action.Invoke(
@@ -179,6 +190,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam2 param2,
             TParam3 param3)
         {
+            Requires.NotNull(func, nameof(func));
+
             this.ThrowIfCurrentObjectDisposed();
 
             return func.Invoke(
@@ -214,6 +227,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam3 param3,
             TParam4 param4)
         {
+            Requires.NotNull(action, nameof(action));
+
             this.ThrowIfCurrentObjectDisposed();
 
             action.Invoke(
@@ -252,6 +267,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam3 param3,
             TParam4 param4)
         {
+            Requires.NotNull(func, nameof(func));
+
             this.ThrowIfCurrentObjectDisposed();
 
             return func.Invoke(
@@ -291,6 +308,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam4 param4,
             TParam5 param5)
         {
+            Requires.NotNull(action, nameof(action));
+
             this.ThrowIfCurrentObjectDisposed();
 
             action.Invoke(
@@ -333,6 +352,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam4 param4,
             TParam5 param5)
         {
+            Requires.NotNull(func, nameof(func));
+
             this.ThrowIfCurrentObjectDisposed();
 
             return func.Invoke(
@@ -376,6 +397,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam5 param5,
             TParam6 param6)
         {
+            Requires.NotNull(action, nameof(action));
+
             this.ThrowIfCurrentObjectDisposed();
 
             action.Invoke(
@@ -422,6 +445,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam5 param5,
             TParam6 param6)
         {
+            Requires.NotNull(func, nameof(func));
+
             this.ThrowIfCurrentObjectDisposed();
 
             return func.Invoke(
@@ -469,6 +494,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam6 param6,
             TParam7 param7)
         {
+            Requires.NotNull(action, nameof(action));
+
             this.ThrowIfCurrentObjectDisposed();
 
             action.Invoke(
@@ -519,6 +546,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam6 param6,
             TParam7 param7)
         {
+            Requires.NotNull(func, nameof(func));
+
             this.ThrowIfCurrentObjectDisposed();
 
             return func.Invoke(
@@ -570,6 +599,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam7 param7,
             TParam8 param8)
         {
+            Requires.NotNull(action, nameof(action));
+
             this.ThrowIfCurrentObjectDisposed();
 
             action.Invoke(
@@ -624,6 +655,8 @@ namespace IX.StandardExtensions.ComponentModel
             TParam7 param7,
             TParam8 param8)
         {
+            Requires.NotNull(func, nameof(func));
+
             this.ThrowIfCurrentObjectDisposed();
 
             return func.Invoke(

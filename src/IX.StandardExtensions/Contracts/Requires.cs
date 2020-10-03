@@ -966,6 +966,10 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type, the compiler can handle it.")]
         public static TimeSpan Positive(
             in TimeSpan argument,
             [NotNull] string argumentName)
@@ -992,6 +996,10 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type, the compiler can handle it.")]
         public static void Positive(
             ref TimeSpan field,
             in TimeSpan argument,
@@ -1024,6 +1032,10 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type, the compiler can handle it.")]
         public static TimeSpan NonNegative(
             in TimeSpan argument,
             [NotNull] string argumentName)
@@ -1050,6 +1062,10 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "EPS02:Non-readonly struct used as in-parameter",
+            Justification = "This is a primitive type, the compiler can handle it.")]
         public static void NonNegative(
             ref TimeSpan field,
             in TimeSpan argument,
@@ -1085,6 +1101,11 @@ namespace IX.StandardExtensions.Contracts
             [NotNull] T[] array,
             [NotNull] string argumentName)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (argument < 0 || argument >= array.Length)
             {
                 throw new ArgumentNotValidIndexException(argumentName);
@@ -1112,6 +1133,11 @@ namespace IX.StandardExtensions.Contracts
             [NotNull] T[] array,
             [NotNull] string argumentName)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (argument < 0 || argument >= array.Length)
             {
                 throw new ArgumentNotValidIndexException(argumentName);
@@ -1139,6 +1165,11 @@ namespace IX.StandardExtensions.Contracts
             [NotNull] T[] array,
             [NotNull] string argumentName)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (argument < 0 || argument >= array.LongLength)
             {
                 throw new ArgumentNotValidIndexException(argumentName);
@@ -1166,6 +1197,11 @@ namespace IX.StandardExtensions.Contracts
             [NotNull] T[] array,
             [NotNull] string argumentName)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (argument < 0 || argument >= array.LongLength)
             {
                 throw new ArgumentNotValidIndexException(argumentName);
@@ -1195,6 +1231,11 @@ namespace IX.StandardExtensions.Contracts
             [NotNull] T[] array,
             [NotNull] string argumentName)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (indexArgument < 0 || indexArgument >= array.Length)
             {
                 throw new ArgumentNotValidIndexException(argumentName);
@@ -1233,6 +1274,11 @@ namespace IX.StandardExtensions.Contracts
             [NotNull] T[] array,
             [NotNull] string argumentName)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (indexArgument < 0 || indexArgument >= array.Length)
             {
                 throw new ArgumentNotValidIndexException(argumentName);
@@ -1270,6 +1316,11 @@ namespace IX.StandardExtensions.Contracts
             [NotNull] T[] array,
             [NotNull] string argumentName)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (indexArgument < 0 || indexArgument >= array.LongLength)
             {
                 throw new ArgumentNotValidIndexException(argumentName);
@@ -1308,6 +1359,11 @@ namespace IX.StandardExtensions.Contracts
             [NotNull] T[] array,
             [NotNull] string argumentName)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (indexArgument < 0 || indexArgument >= array.LongLength)
             {
                 throw new ArgumentNotValidIndexException(argumentName);
@@ -1343,6 +1399,11 @@ namespace IX.StandardExtensions.Contracts
             [NotNull] T[] array,
             [NotNull] string argumentName)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (argument <= 0 || argument > array.Length)
             {
                 throw new ArgumentNotValidLengthException(argumentName);
@@ -1370,6 +1431,11 @@ namespace IX.StandardExtensions.Contracts
             [NotNull] T[] array,
             [NotNull] string argumentName)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (argument <= 0 || argument > array.Length)
             {
                 throw new ArgumentNotValidLengthException(argumentName);
@@ -1397,6 +1463,11 @@ namespace IX.StandardExtensions.Contracts
             in T[] array,
             [NotNull] string argumentName)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (argument <= 0 || argument > array.LongLength)
             {
                 throw new ArgumentNotValidLengthException(argumentName);
@@ -1424,6 +1495,11 @@ namespace IX.StandardExtensions.Contracts
             in T[] array,
             [NotNull] string argumentName)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (argument <= 0 || argument > array.LongLength)
             {
                 throw new ArgumentNotValidLengthException(argumentName);

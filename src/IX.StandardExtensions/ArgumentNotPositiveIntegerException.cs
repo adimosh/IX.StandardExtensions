@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Globalization;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
@@ -14,6 +15,10 @@ namespace IX.StandardExtensions
     /// <seealso cref="System.ArgumentException" />
     [Serializable]
     [PublicAPI]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Design",
+        "CA1032:Implement standard exception constructors",
+        Justification = "Standard exception constructors make little sense for this exception.")]
     public class ArgumentNotPositiveIntegerException : ArgumentException
     {
         /// <summary>
@@ -23,6 +28,7 @@ namespace IX.StandardExtensions
         public ArgumentNotPositiveIntegerException(string argumentName)
             : base(
                 string.Format(
+                    CultureInfo.CurrentCulture,
                     Resources.ErrorArgumentNotPositiveInteger,
                     argumentName), argumentName)
         {
@@ -38,6 +44,7 @@ namespace IX.StandardExtensions
             Exception internalException)
             : base(
                 string.Format(
+                    CultureInfo.CurrentCulture,
                     Resources.ErrorArgumentNotPositiveInteger,
                     argumentName), argumentName,
                 internalException)
@@ -48,11 +55,11 @@ namespace IX.StandardExtensions
         ///     Initializes a new instance of the <see cref="ArgumentNotPositiveIntegerException" /> class.
         /// </summary>
         /// <param name="info">
-        ///     The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> that holds the serialized object
+        ///     The <see cref="SerializationInfo" /> that holds the serialized object
         ///     data about the exception being thrown.
         /// </param>
         /// <param name="context">
-        ///     The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that contains contextual
+        ///     The <see cref="StreamingContext" /> that contains contextual
         ///     information about the source or destination.
         /// </param>
         protected ArgumentNotPositiveIntegerException(

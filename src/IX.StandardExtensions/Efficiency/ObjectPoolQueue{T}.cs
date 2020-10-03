@@ -51,8 +51,8 @@ namespace IX.StandardExtensions.Efficiency
             this.ObjectLimit = objectLimit;
             this.queueAction = queueAction;
 
-            _ = Work.OnThreadPool(
-                this.Run,
+            _ = Work.OnThreadPoolAsync(
+                this.RunAsync,
                 this.cancellationToken);
         }
 
@@ -81,7 +81,7 @@ namespace IX.StandardExtensions.Efficiency
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Not really avoidable.")]
-        private async Task Run()
+        private async Task RunAsync()
         {
             Thread.CurrentThread.Name = $"Object pool queue {Thread.CurrentThread.ManagedThreadId}";
 
@@ -93,7 +93,7 @@ namespace IX.StandardExtensions.Efficiency
                     {
                         await Task.Delay(
                             1000,
-                            this.cancellationToken);
+                            this.cancellationToken).ConfigureAwait(false);
                     }
                     catch (TaskCanceledException)
                     {

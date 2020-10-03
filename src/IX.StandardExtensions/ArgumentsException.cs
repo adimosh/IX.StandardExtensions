@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Globalization;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
@@ -13,6 +14,10 @@ namespace IX.StandardExtensions
     /// </summary>
     [Serializable]
     [PublicAPI]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Design",
+        "CA1032:Implement standard exception constructors",
+        Justification = "Standard exception constructors make little sense for this exception.")]
     public class ArgumentsException : Exception
     {
         /// <summary>
@@ -22,6 +27,7 @@ namespace IX.StandardExtensions
         public ArgumentsException(params string[] argumentNames)
             : base(
                 string.Format(
+                    CultureInfo.CurrentCulture,
                     Resources.AnInvalidSetOfArgumentsWasSpecifiedArgumentNames,
                     string.Join(
                         ", ",
@@ -40,6 +46,7 @@ namespace IX.StandardExtensions
             params string[] argumentNames)
             : base(
                 string.Format(
+                    CultureInfo.CurrentCulture,
                     Resources.AnInvalidSetOfArgumentsWasSpecifiedArgumentNames,
                     string.Join(
                         ", ",
@@ -60,6 +67,7 @@ namespace IX.StandardExtensions
             params string[] argumentNames)
             : base(
                 string.Format(
+                    CultureInfo.CurrentCulture,
                     message,
                     string.Join(
                         ", ",
@@ -78,6 +86,7 @@ namespace IX.StandardExtensions
             params string[] argumentNames)
             : base(
                 string.Format(
+                    CultureInfo.CurrentCulture,
                     message,
                     string.Join(
                         ", ",

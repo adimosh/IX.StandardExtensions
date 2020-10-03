@@ -50,7 +50,7 @@ namespace IX.UnitTests
             }
 
             // ACT
-            await Work.OnThreadPool(LocalMethod);
+            await Work.OnThreadPoolAsync(LocalMethod);
 
             // ASSERT
             Assert.NotEqual(
@@ -73,7 +73,7 @@ namespace IX.UnitTests
             // ACT
             using (var mre = new ManualResetEventSlim())
             {
-                _ = Work.OnThreadPool(
+                _ = Work.OnThreadPoolAsync(
                     ev =>
                     {
                         Thread.Sleep(waitTime);
@@ -117,7 +117,7 @@ namespace IX.UnitTests
             // ACT
             using (var mre = new ManualResetEventSlim())
             {
-                _ = Work.OnThreadPool(
+                _ = Work.OnThreadPoolAsync(
                     ev =>
                     {
                         Thread.Sleep(waitTime);
@@ -167,7 +167,7 @@ namespace IX.UnitTests
 #if DEBUG
                 DateTime dt = DateTime.UtcNow;
 #endif
-                Work.OnThreadPool(
+                Work.OnThreadPoolAsync(
                     () =>
                     {
 #if DEBUG
