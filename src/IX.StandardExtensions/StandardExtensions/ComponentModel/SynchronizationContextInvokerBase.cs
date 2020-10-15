@@ -1,0 +1,249 @@
+// <copyright file="SynchronizationContextInvokerBase.cs" company="Adrian Mos">
+// Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
+// </copyright>
+
+using System;
+using System.Threading;
+using IX.StandardExtensions.Contracts;
+using IX.StandardExtensions.Threading;
+using JetBrains.Annotations;
+
+namespace IX.StandardExtensions.ComponentModel
+{
+    /// <summary>
+    ///     An abstract base class for a synchronization context invoker.
+    /// </summary>
+    /// <seealso cref="DisposableBase" />
+    [PublicAPI]
+    public abstract partial class SynchronizationContextInvokerBase : DisposableBase, INotifyThreadException
+    {
+        private SynchronizationContext? synchronizationContext;
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="SynchronizationContextInvokerBase" /> class.
+        /// </summary>
+        protected SynchronizationContextInvokerBase()
+            : this(null)
+        {
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="SynchronizationContextInvokerBase" /> class.
+        /// </summary>
+        /// <param name="synchronizationContext">The specific synchronization context to use.</param>
+        protected SynchronizationContextInvokerBase(SynchronizationContext? synchronizationContext)
+        {
+            this.synchronizationContext = synchronizationContext;
+        }
+
+        /// <summary>
+        ///     Triggered when an exception has occurred on a different thread.
+        /// </summary>
+        public event EventHandler<ExceptionOccurredEventArgs>? ExceptionOccurredOnSeparateThread;
+
+        /// <summary>
+        ///     Gets the synchronization context used by this object, if any.
+        /// </summary>
+        /// <value>The synchronization context.</value>
+        public SynchronizationContext? SynchronizationContext => this.synchronizationContext;
+
+        /// <summary>
+        ///     Invokes the specified action using the synchronization context, or on either this thread or a separate thread if
+        ///     there is no synchronization context available.
+        /// </summary>
+        /// <param name="action">The action to invoke.</param>
+        protected void Invoke(Action action) => this.Invoke(
+            p => ((Action)p)(),
+            action);
+
+        /// <summary>
+        ///     Invokes the specified action using the synchronization context, or on either this thread or a separate thread if
+        ///     there is no synchronization context available.
+        /// </summary>
+        /// <param name="action">The action to invoke.</param>
+        /// <param name="state">The state object to pass on to the action.</param>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Appears to be unavoidable at this time.")]
+        protected void Invoke(
+            [NotNull] Action<object> action,
+            object state)
+        {
+            this.ThrowIfCurrentObjectDisposed();
+
+            Requires.NotNull(
+                action,
+                nameof(action));
+
+            SynchronizationContext? currentSynchronizationContext =
+                this.synchronizationContext ?? EnvironmentSettings.GetUsableSynchronizationContext();
+
+            if (currentSynchronizationContext == null)
+            {
+                if (EnvironmentSettings.InvokeAsynchronously)
+                {
+                    _ = action.OnThreadPoolAsync(state);
+                }
+                else
+                {
+                    action(state);
+                }
+            }
+            else
+            {
+                var outerState = new Tuple<Action<object>, object>(
+                    action,
+                    state);
+                if (EnvironmentSettings.InvokeAsynchronously)
+                {
+                    currentSynchronizationContext.Post(
+                        this.SendOrPost,
+                        outerState);
+                }
+                else
+                {
+                    currentSynchronizationContext.Send(
+                        this.SendOrPost,
+                        outerState);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Invokes the specified action by posting on the synchronization context, or on a separate thread if
+        ///     there is no synchronization context available.
+        /// </summary>
+        /// <param name="action">The action to invoke.</param>
+        protected void InvokePost(Action action) => this.InvokePost(
+            p => ((Action)p)(),
+            action);
+
+        /// <summary>
+        ///     Invokes the specified action by posting on the synchronization context, or on a separate thread if
+        ///     there is no synchronization context available.
+        /// </summary>
+        /// <param name="action">The action to invoke.</param>
+        /// <param name="state">The state object to pass on to the action.</param>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Appears to be unavoidable at this time.")]
+        protected void InvokePost(
+            [NotNull] Action<object> action,
+            object state)
+        {
+            this.ThrowIfCurrentObjectDisposed();
+
+            Requires.NotNull(
+                action,
+                nameof(action));
+
+            SynchronizationContext? currentSynchronizationContext =
+                this.synchronizationContext ?? EnvironmentSettings.GetUsableSynchronizationContext();
+
+            if (currentSynchronizationContext == null)
+            {
+                _ = action.OnThreadPoolAsync(state);
+            }
+            else
+            {
+                var outerState = new Tuple<Action<object>, object>(
+                    action,
+                    state);
+
+                currentSynchronizationContext.Post(
+                    this.SendOrPost,
+                    outerState);
+            }
+        }
+
+        /// <summary>
+        ///     Invokes the specified action synchronously using the synchronization context, or on this thread if
+        ///     there is no synchronization context available.
+        /// </summary>
+        /// <param name="action">The action to invoke.</param>
+        protected void InvokeSend(Action action) => this.InvokeSend(
+            p => ((Action)p)(),
+            action);
+
+        /// <summary>
+        ///     Invokes the specified action synchronously using the synchronization context, or on this thread if
+        ///     there is no synchronization context available.
+        /// </summary>
+        /// <param name="action">The action to invoke.</param>
+        /// <param name="state">The state object to pass on to the action.</param>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Appears to be unavoidable at this time.")]
+        protected void InvokeSend(
+            [NotNull] Action<object> action,
+            object state)
+        {
+            this.ThrowIfCurrentObjectDisposed();
+
+            Requires.NotNull(
+                action,
+                nameof(action));
+
+            SynchronizationContext? currentSynchronizationContext =
+                this.synchronizationContext ?? EnvironmentSettings.GetUsableSynchronizationContext();
+
+            if (currentSynchronizationContext == null)
+            {
+                action(state);
+            }
+            else
+            {
+                var outerState = new Tuple<Action<object>, object>(
+                    action,
+                    state);
+
+                currentSynchronizationContext.Send(
+                        this.SendOrPost,
+                        outerState);
+            }
+        }
+
+        /// <summary>
+        ///     Disposes in the general (managed and unmanaged) context.
+        /// </summary>
+        protected override void DisposeGeneralContext()
+        {
+            Interlocked.Exchange(
+                ref this.synchronizationContext,
+                null);
+
+            base.DisposeGeneralContext();
+        }
+
+        /// <summary>
+        ///     Invokes the <see cref="ExceptionOccurredOnSeparateThread" /> event in a safe manner, while ignoring any processing
+        ///     exceptions.
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        protected void InvokeExceptionOccurredOnSeparateThread(Exception ex) =>
+            this.ExceptionOccurredOnSeparateThread?.Invoke(
+                this,
+                new ExceptionOccurredEventArgs(ex));
+
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "We specifically do not want to do that.")]
+        private void SendOrPost(object innerState)
+        {
+            (Action<object> actionL1, object stateL1) = (Tuple<Action<object>, object>)innerState;
+
+            try
+            {
+                actionL1(stateL1);
+            }
+            catch (Exception ex)
+            {
+                this.InvokeExceptionOccurredOnSeparateThread(ex);
+            }
+        }
+    }
+}

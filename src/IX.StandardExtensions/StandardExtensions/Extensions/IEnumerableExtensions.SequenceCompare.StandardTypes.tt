@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace IX.StandardExtensions.Extensions
 {
@@ -34,7 +35,7 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<<#= fullTypeName #>> left, IEnumerable<<#= fullTypeName #>> right)
+        public static int SequenceCompare(this IEnumerable<<#= fullTypeName #>>? left, IEnumerable<<#= fullTypeName #>>? right)
         {
             if (left == null)
             {
@@ -69,7 +70,7 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
                 var c1 = b1 ? e1.Current : default;
                 var c2 = b2 ? e2.Current : default;
 
-                var cr = c1.CompareTo(c2);
+                var cr = <#= typ == typeof(string) ? "string.Compare(c1, c2, CultureInfo.CurrentCulture, CompareOptions.None);" : "c1.CompareTo(c2);" #>
                 if (cr != 0)
                 {
                     return cr;

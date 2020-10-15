@@ -14,10 +14,13 @@ namespace IX.StandardExtensions.ComponentModel
     /// <summary>
     ///     An abstract base class for correctly implementing the disposable pattern.
     /// </summary>
-    /// <seealso cref="System.IDisposable" />
+    /// <seealso cref="IDisposable" />
     [DataContract]
     [PublicAPI]
-    [DiagCA.SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP025:Class with no virtual dispose method should be sealed.", Justification = "The pattern is not followed here, because, instead of overriding Dispose, one can and should override the two (managed and general) methods.")]
+    [DiagCA.SuppressMessage(
+        "IDisposableAnalyzers.Correctness",
+        "IDISP025:Class with no virtual dispose method should be sealed.",
+        Justification = "The pattern is not followed here, because, instead of overriding Dispose, one can and should override the two (managed and general) methods.")]
     public abstract partial class DisposableBase : IDisposable
     {
         /// <summary>
@@ -44,6 +47,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <summary>
         ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1063:Implement IDisposable Correctly",
+            Justification = "The analyzer can't really tell what we're doing here.")]
         public void Dispose()
         {
             if (Interlocked.Exchange(
@@ -77,15 +84,11 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <paramref name="action" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
-        protected void InvokeIfNotDisposed([NotNull]
-#if NETSTANDARD2_1
-            [DiagCA.DisallowNull]
-#endif
-            Action action)
+        protected void InvokeIfNotDisposed(Action action)
         {
             this.RequiresNotDisposed();
 
-            action.Invoke();
+            Requires.NotNull(action, nameof(action))();
         }
 
         /// <summary>
@@ -98,18 +101,11 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <paramref name="func" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
-#if NETSTANDARD2_1
-        [return: DiagCA.MaybeNull]
-#endif
-        protected TReturn InvokeIfNotDisposed<TReturn>([NotNull]
-#if NETSTANDARD2_1
-            [DiagCA.DisallowNull]
-#endif
-            Func<TReturn> func)
+        protected TReturn InvokeIfNotDisposed<TReturn>(Func<TReturn> func)
         {
             this.ThrowIfCurrentObjectDisposed();
 
-            return func();
+            return Requires.NotNull(func, nameof(func))();
         }
 
         /// <summary>
@@ -133,6 +129,10 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only
         ///     unmanaged resources.
         /// </param>
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1063:Implement IDisposable Correctly",
+            Justification = "The analyzer can't really tell what we're doing here.")]
         private void Dispose(bool disposing)
         {
             try

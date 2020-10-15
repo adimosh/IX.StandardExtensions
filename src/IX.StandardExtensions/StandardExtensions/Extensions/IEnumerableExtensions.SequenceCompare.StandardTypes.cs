@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace IX.StandardExtensions.Extensions
 {
@@ -20,7 +21,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<byte> left, IEnumerable<byte> right)
+        public static int SequenceCompare(this IEnumerable<byte>? left, IEnumerable<byte>? right)
         {
             if (left == null)
             {
@@ -69,7 +70,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<sbyte> left, IEnumerable<sbyte> right)
+        public static int SequenceCompare(this IEnumerable<sbyte>? left, IEnumerable<sbyte>? right)
         {
             if (left == null)
             {
@@ -118,7 +119,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<short> left, IEnumerable<short> right)
+        public static int SequenceCompare(this IEnumerable<short>? left, IEnumerable<short>? right)
         {
             if (left == null)
             {
@@ -167,7 +168,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<ushort> left, IEnumerable<ushort> right)
+        public static int SequenceCompare(this IEnumerable<ushort>? left, IEnumerable<ushort>? right)
         {
             if (left == null)
             {
@@ -216,7 +217,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<char> left, IEnumerable<char> right)
+        public static int SequenceCompare(this IEnumerable<char>? left, IEnumerable<char>? right)
         {
             if (left == null)
             {
@@ -265,7 +266,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<int> left, IEnumerable<int> right)
+        public static int SequenceCompare(this IEnumerable<int>? left, IEnumerable<int>? right)
         {
             if (left == null)
             {
@@ -314,7 +315,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<uint> left, IEnumerable<uint> right)
+        public static int SequenceCompare(this IEnumerable<uint>? left, IEnumerable<uint>? right)
         {
             if (left == null)
             {
@@ -363,7 +364,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<long> left, IEnumerable<long> right)
+        public static int SequenceCompare(this IEnumerable<long>? left, IEnumerable<long>? right)
         {
             if (left == null)
             {
@@ -412,7 +413,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<ulong> left, IEnumerable<ulong> right)
+        public static int SequenceCompare(this IEnumerable<ulong>? left, IEnumerable<ulong>? right)
         {
             if (left == null)
             {
@@ -461,7 +462,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<float> left, IEnumerable<float> right)
+        public static int SequenceCompare(this IEnumerable<float>? left, IEnumerable<float>? right)
         {
             if (left == null)
             {
@@ -510,7 +511,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<double> left, IEnumerable<double> right)
+        public static int SequenceCompare(this IEnumerable<double>? left, IEnumerable<double>? right)
         {
             if (left == null)
             {
@@ -559,7 +560,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<decimal> left, IEnumerable<decimal> right)
+        public static int SequenceCompare(this IEnumerable<decimal>? left, IEnumerable<decimal>? right)
         {
             if (left == null)
             {
@@ -608,7 +609,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<DateTime> left, IEnumerable<DateTime> right)
+        public static int SequenceCompare(this IEnumerable<DateTime>? left, IEnumerable<DateTime>? right)
         {
             if (left == null)
             {
@@ -657,7 +658,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<bool> left, IEnumerable<bool> right)
+        public static int SequenceCompare(this IEnumerable<bool>? left, IEnumerable<bool>? right)
         {
             if (left == null)
             {
@@ -706,7 +707,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<TimeSpan> left, IEnumerable<TimeSpan> right)
+        public static int SequenceCompare(this IEnumerable<TimeSpan>? left, IEnumerable<TimeSpan>? right)
         {
             if (left == null)
             {
@@ -755,7 +756,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left operand enumerable.</param>
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<string> left, IEnumerable<string> right)
+        public static int SequenceCompare(this IEnumerable<string>? left, IEnumerable<string>? right)
         {
             if (left == null)
             {
@@ -790,7 +791,7 @@ namespace IX.StandardExtensions.Extensions
                 var c1 = b1 ? e1.Current : default;
                 var c2 = b2 ? e2.Current : default;
 
-                var cr = c1.CompareTo(c2);
+                var cr = string.Compare(c1, c2, CultureInfo.CurrentCulture, CompareOptions.None);
                 if (cr != 0)
                 {
                     return cr;

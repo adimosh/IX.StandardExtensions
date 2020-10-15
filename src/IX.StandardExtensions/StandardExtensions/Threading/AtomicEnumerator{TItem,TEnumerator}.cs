@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
@@ -123,10 +122,6 @@ namespace IX.StandardExtensions.Threading
             base.DisposeManagedContext();
 
             this.existingEnumerator.Dispose();
-
-            Interlocked.Exchange(
-                ref this.readLock,
-                null);
         }
     }
 }

@@ -4,7 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using IX.StandardExtensions.Contracts;
 
 namespace IX.StandardExtensions.Extensions
@@ -22,44 +22,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<byte> left, IEnumerable<byte> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<byte>? left, IEnumerable<byte>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<byte> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<byte>.Get();
+            using IEnumerator<byte> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<byte>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<byte> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<byte> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -70,48 +55,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<byte> left, IEnumerable<byte> right, Func<byte, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<byte>? left, IEnumerable<byte>? right, Func<byte, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<byte> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<byte>.Get();
+            using IEnumerator<byte> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<byte>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<byte> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<byte> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<byte> source)
@@ -124,7 +94,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -139,44 +109,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<sbyte> left, IEnumerable<sbyte> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<sbyte>? left, IEnumerable<sbyte>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<sbyte> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<sbyte>.Get();
+            using IEnumerator<sbyte> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<sbyte>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<sbyte> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<sbyte> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -187,48 +142,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<sbyte> left, IEnumerable<sbyte> right, Func<sbyte, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<sbyte>? left, IEnumerable<sbyte>? right, Func<sbyte, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<sbyte> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<sbyte>.Get();
+            using IEnumerator<sbyte> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<sbyte>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<sbyte> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<sbyte> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<sbyte> source)
@@ -241,7 +181,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -256,44 +196,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<short> left, IEnumerable<short> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<short>? left, IEnumerable<short>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<short> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<short>.Get();
+            using IEnumerator<short> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<short>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<short> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<short> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -304,48 +229,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<short> left, IEnumerable<short> right, Func<short, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<short>? left, IEnumerable<short>? right, Func<short, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<short> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<short>.Get();
+            using IEnumerator<short> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<short>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<short> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<short> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<short> source)
@@ -358,7 +268,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -373,44 +283,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<ushort> left, IEnumerable<ushort> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<ushort>? left, IEnumerable<ushort>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<ushort> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<ushort>.Get();
+            using IEnumerator<ushort> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<ushort>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<ushort> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<ushort> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -421,48 +316,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<ushort> left, IEnumerable<ushort> right, Func<ushort, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<ushort>? left, IEnumerable<ushort>? right, Func<ushort, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<ushort> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<ushort>.Get();
+            using IEnumerator<ushort> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<ushort>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<ushort> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<ushort> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<ushort> source)
@@ -475,7 +355,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -490,44 +370,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<char> left, IEnumerable<char> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<char>? left, IEnumerable<char>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<char> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<char>.Get();
+            using IEnumerator<char> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<char>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<char> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<char> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -538,48 +403,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<char> left, IEnumerable<char> right, Func<char, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<char>? left, IEnumerable<char>? right, Func<char, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<char> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<char>.Get();
+            using IEnumerator<char> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<char>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<char> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<char> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<char> source)
@@ -592,7 +442,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -607,44 +457,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<int> left, IEnumerable<int> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<int>? left, IEnumerable<int>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<int> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<int>.Get();
+            using IEnumerator<int> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<int>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<int> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<int> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -655,48 +490,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<int> left, IEnumerable<int> right, Func<int, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<int>? left, IEnumerable<int>? right, Func<int, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<int> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<int>.Get();
+            using IEnumerator<int> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<int>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<int> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<int> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<int> source)
@@ -709,7 +529,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -724,44 +544,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<uint> left, IEnumerable<uint> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<uint>? left, IEnumerable<uint>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<uint> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<uint>.Get();
+            using IEnumerator<uint> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<uint>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<uint> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<uint> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -772,48 +577,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<uint> left, IEnumerable<uint> right, Func<uint, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<uint>? left, IEnumerable<uint>? right, Func<uint, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<uint> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<uint>.Get();
+            using IEnumerator<uint> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<uint>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<uint> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<uint> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<uint> source)
@@ -826,7 +616,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -841,44 +631,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<long> left, IEnumerable<long> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<long>? left, IEnumerable<long>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<long> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<long>.Get();
+            using IEnumerator<long> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<long>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<long> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<long> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -889,48 +664,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<long> left, IEnumerable<long> right, Func<long, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<long>? left, IEnumerable<long>? right, Func<long, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<long> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<long>.Get();
+            using IEnumerator<long> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<long>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<long> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<long> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<long> source)
@@ -943,7 +703,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -958,44 +718,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<ulong> left, IEnumerable<ulong> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<ulong>? left, IEnumerable<ulong>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<ulong> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<ulong>.Get();
+            using IEnumerator<ulong> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<ulong>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<ulong> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<ulong> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -1006,48 +751,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<ulong> left, IEnumerable<ulong> right, Func<ulong, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<ulong>? left, IEnumerable<ulong>? right, Func<ulong, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<ulong> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<ulong>.Get();
+            using IEnumerator<ulong> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<ulong>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<ulong> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<ulong> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<ulong> source)
@@ -1060,7 +790,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -1075,44 +805,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<float> left, IEnumerable<float> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<float>? left, IEnumerable<float>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<float> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<float>.Get();
+            using IEnumerator<float> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<float>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<float> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<float> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -1123,48 +838,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<float> left, IEnumerable<float> right, Func<float, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<float>? left, IEnumerable<float>? right, Func<float, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<float> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<float>.Get();
+            using IEnumerator<float> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<float>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<float> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<float> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<float> source)
@@ -1177,7 +877,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -1192,44 +892,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<double> left, IEnumerable<double> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<double>? left, IEnumerable<double>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<double> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<double>.Get();
+            using IEnumerator<double> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<double>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<double> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<double> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -1240,48 +925,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<double> left, IEnumerable<double> right, Func<double, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<double>? left, IEnumerable<double>? right, Func<double, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<double> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<double>.Get();
+            using IEnumerator<double> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<double>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<double> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<double> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<double> source)
@@ -1294,7 +964,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -1309,44 +979,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<decimal> left, IEnumerable<decimal> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<decimal>? left, IEnumerable<decimal>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<decimal> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<decimal>.Get();
+            using IEnumerator<decimal> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<decimal>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<decimal> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<decimal> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -1357,48 +1012,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<decimal> left, IEnumerable<decimal> right, Func<decimal, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<decimal>? left, IEnumerable<decimal>? right, Func<decimal, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<decimal> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<decimal>.Get();
+            using IEnumerator<decimal> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<decimal>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<decimal> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<decimal> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<decimal> source)
@@ -1411,7 +1051,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -1426,44 +1066,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<DateTime> left, IEnumerable<DateTime> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<DateTime>? left, IEnumerable<DateTime>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<DateTime> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<DateTime>.Get();
+            using IEnumerator<DateTime> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<DateTime>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<DateTime> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<DateTime> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -1474,48 +1099,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<DateTime> left, IEnumerable<DateTime> right, Func<DateTime, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<DateTime>? left, IEnumerable<DateTime>? right, Func<DateTime, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<DateTime> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<DateTime>.Get();
+            using IEnumerator<DateTime> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<DateTime>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<DateTime> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<DateTime> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<DateTime> source)
@@ -1528,7 +1138,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -1543,44 +1153,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<bool> left, IEnumerable<bool> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<bool>? left, IEnumerable<bool>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<bool> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<bool>.Get();
+            using IEnumerator<bool> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<bool>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<bool> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<bool> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -1591,48 +1186,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<bool> left, IEnumerable<bool> right, Func<bool, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<bool>? left, IEnumerable<bool>? right, Func<bool, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<bool> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<bool>.Get();
+            using IEnumerator<bool> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<bool>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<bool> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<bool> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<bool> source)
@@ -1645,7 +1225,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -1660,44 +1240,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<TimeSpan> left, IEnumerable<TimeSpan> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<TimeSpan>? left, IEnumerable<TimeSpan>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<TimeSpan> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<TimeSpan>.Get();
+            using IEnumerator<TimeSpan> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<TimeSpan>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<TimeSpan> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<TimeSpan> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -1708,48 +1273,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<TimeSpan> left, IEnumerable<TimeSpan> right, Func<TimeSpan, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<TimeSpan>? left, IEnumerable<TimeSpan>? right, Func<TimeSpan, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<TimeSpan> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<TimeSpan>.Get();
+            using IEnumerator<TimeSpan> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<TimeSpan>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<TimeSpan> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<TimeSpan> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<TimeSpan> source)
@@ -1762,7 +1312,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
@@ -1777,44 +1327,29 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="left">The left item of comparison.</param>
         /// <param name="right">The right item of comparison.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<string> left, IEnumerable<string> right)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<string>? left, IEnumerable<string>? right)
         {
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<string> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<string>.Get();
+            using IEnumerator<string> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<string>.Get();
+
+            var leftBool = leftEnumerator.MoveNext();
+            var rightBool = rightEnumerator.MoveNext();
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return string.Compare(leftCompare, rightCompare, CultureInfo.CurrentCulture, CompareOptions.None) == 0;
 
-            using (IEnumerator<string> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<string> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = leftEnumerator.MoveNext();
-                    var rightBool = rightEnumerator.MoveNext();
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = leftEnumerator.MoveNext();
-                        rightBool = rightEnumerator.MoveNext();
-                    }
-                }
+                leftBool = leftEnumerator.MoveNext();
+                rightBool = rightEnumerator.MoveNext();
             }
         }
 
@@ -1825,48 +1360,33 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right item of comparison.</param>
         /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
         /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<string> left, IEnumerable<string> right, Func<string, bool> determineEmpty)
+        public static IEnumerable<bool> EquateSequentially(this IEnumerable<string>? left, IEnumerable<string>? right, Func<string, bool> determineEmpty)
         {
-            Requires.NotNull(
+            var localDetermineEmpty = Requires.NotNull(
                 determineEmpty,
                 nameof(determineEmpty));
 
-            if ((left == null || !left.Any()) && (right == null || !right.Any()))
+            if ((left == null) && (right == null))
             {
                 yield return true;
                 yield break;
             }
 
-            if (left == null || !left.Any())
+            using IEnumerator<string> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<string>.Get();
+            using IEnumerator<string> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<string>.Get();
+
+            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+            while (leftBool || rightBool)
             {
-                yield return false;
-                yield break;
-            }
+                var leftCompare = leftBool ? leftEnumerator.Current : default;
+                var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if (right == null || !right.Any())
-            {
-                yield return false;
-                yield break;
-            }
+                yield return leftCompare == rightCompare;
 
-            using (IEnumerator<string> leftEnumerator = left.GetEnumerator())
-            {
-                using (IEnumerator<string> rightEnumerator = right.GetEnumerator())
-                {
-                    var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                    var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-                    while (leftBool || rightBool)
-                    {
-                        var leftCompare = leftBool ? leftEnumerator.Current : default;
-                        var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                        yield return leftCompare == rightCompare;
-
-                        leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                        rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-                    }
-                }
+                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
             }
 
             bool EquateSequentiallyMoveNext(IEnumerator<string> source)
@@ -1879,7 +1399,7 @@ namespace IX.StandardExtensions.Extensions
                     return false;
                 }
 
-                if (determineEmpty(source.Current))
+                if (localDetermineEmpty(source.Current))
                 {
                     goto init;
                 }
