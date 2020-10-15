@@ -1,4 +1,4 @@
-﻿<!--EXTERNAL_PROPERTIES: TargetFrameworkIsFramework-->
+<!--EXTERNAL_PROPERTIES: TargetFrameworkIsFramework-->
 <!--EXTERNAL_PROPERTIES: TargetFrameworkIsStandard-->
 <!--EXTERNAL_PROPERTIES: TargetFramework-->
 <Project Sdk="Microsoft.NET.Sdk">
@@ -29,194 +29,204 @@
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>../../opt/snk/ix.framework.strongname.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>IX</RootNamespace>
   </PropertyGroup>
 
   <!-- Code imports -->
   <ItemGroup>
-    <Compile Update="ComponentModel\DisposableBase.InvokeIfNotDisposed.cs">
+    <Compile Update="StandardExtensions\ComponentModel\DisposableBase.InvokeIfNotDisposed.cs">
       <DependentUpon>DisposableBase.InvokeIfNotDisposed.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Contracts\Requires.NumericTypesValidation.cs">
+    <Compile Update="StandardExtensions\Contracts\Requires.NumericTypesValidation.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Requires.NumericTypesValidation.tt</DependentUpon>
     </Compile>
-    <Compile Update="Efficiency\ImmutableValueTuple.cs">
+    <Compile Update="StandardExtensions\Efficiency\ImmutableValueTuple.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ImmutableValueTuple.tt</DependentUpon>
     </Compile>
-    <Compile Update="Efficiency\InDelegates.WithParameters.cs">
+    <Compile Update="StandardExtensions\Efficiency\InDelegates.WithParameters.cs">
       <DependentUpon>InDelegates.WithParameters.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Efficiency\RefDelegates.WithParameters.cs">
+    <Compile Update="StandardExtensions\Efficiency\RefDelegates.WithParameters.cs">
       <DependentUpon>RefDelegates.WithParameters.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Efficiency\RefIteratorDelegates.WithParameters.cs">
+    <Compile Update="StandardExtensions\Efficiency\RefIteratorDelegates.WithParameters.cs">
       <DependentUpon>RefIteratorDelegates.WithParameters.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Extensions\ArrayExtensions.ForEachActions.cs">
+    <Compile Update="StandardExtensions\Extensions\ArrayExtensions.ForEachActions.cs">
       <DependentUpon>ArrayExtensions.ForEachActions.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Extensions\ArrayExtensions.ForEachRefActions.cs">
+    <Compile Update="StandardExtensions\Extensions\ArrayExtensions.ForEachRefActions.cs">
       <DependentUpon>ArrayExtensions.ForEachRefActions.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Extensions\ArrayExtensions.SequenceCompare.StandardTypes.cs">
+    <Compile Update="StandardExtensions\Extensions\ArrayExtensions.SequenceCompare.StandardTypes.cs">
       <DependentUpon>ArrayExtensions.SequenceCompare.StandardTypes.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Extensions\ArrayExtensions.SequenceEquals.StandardTypes.cs">
+    <Compile Update="StandardExtensions\Extensions\ArrayExtensions.SequenceEquals.StandardTypes.cs">
       <DependentUpon>ArrayExtensions.SequenceEquals.StandardTypes.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Extensions\ArrayExtensions.StandardTypes.cs">
+    <Compile Update="StandardExtensions\Extensions\ArrayExtensions.StandardTypes.cs">
       <DependentUpon>ArrayExtensions.StandardTypes.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Extensions\IDictionaryExtensions.StandardTypes.cs">
+    <Compile Update="StandardExtensions\Extensions\IDictionaryExtensions.StandardTypes.cs">
       <DependentUpon>IDictionaryExtensions.StandardTypes.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Extensions\IEnumerableExtensions.EquateSequentially.StandardTypes.cs">
+    <Compile Update="StandardExtensions\Extensions\IEnumerableExtensions.EquateSequentially.StandardTypes.cs">
       <DependentUpon>IEnumerableExtensions.EquateSequentially.StandardTypes.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Extensions\IEnumerableExtensions.ForEachActions.cs">
+    <Compile Update="StandardExtensions\Extensions\IEnumerableExtensions.ForEachActions.cs">
       <DependentUpon>IEnumerableExtensions.ForEachActions.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Extensions\IEnumerableExtensions.ForEachRefActions.cs">
+    <Compile Update="StandardExtensions\Extensions\IEnumerableExtensions.ForEachRefActions.cs">
       <DependentUpon>IEnumerableExtensions.ForEachRefActions.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Extensions\IEnumerableExtensions.SequenceCompare.StandardTypes.cs">
+    <Compile Update="StandardExtensions\Extensions\IEnumerableExtensions.SequenceCompare.StandardTypes.cs">
       <DependentUpon>IEnumerableExtensions.SequenceCompare.StandardTypes.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Extensions\IEnumerableExtensions.SequenceEquals.StandardTypes.cs">
+    <Compile Update="StandardExtensions\Extensions\IEnumerableExtensions.SequenceEquals.StandardTypes.cs">
       <DependentUpon>IEnumerableExtensions.SequenceEquals.StandardTypes.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Extensions\IListCloneExtensions.StandardTypes.cs">
+    <Compile Update="StandardExtensions\Extensions\IListCloneExtensions.StandardTypes.cs">
       <DependentUpon>IListCloneExtensions.StandardTypes.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Extensions\LinqExtensions.ActionsAndFuncs.cs">
+    <Compile Update="StandardExtensions\Extensions\LinqExtensions.ActionsAndFuncs.cs">
       <DependentUpon>LinqExtensions.ActionsAndFuncs.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Resources.Designer.cs">
+    <Compile Update="StandardExtensions\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Threading\TaskFactoryExtensions.Actions.cs">
+    <Compile Update="StandardExtensions\StandardExceptions.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StandardExceptions.tt</DependentUpon>
+    </Compile>
+    <Compile Update="StandardExtensions\Threading\TaskFactoryExtensions.Actions.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>TaskFactoryExtensions.Actions.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Update="ComponentModel\DisposableBase.InvokeIfNotDisposed.tt">
+    <None Update="StandardExtensions\ComponentModel\DisposableBase.InvokeIfNotDisposed.tt">
       <LastGenOutput>DisposableBase.InvokeIfNotDisposed.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Contracts\Requires.NumericTypesValidation.tt">
+    <None Update="StandardExtensions\Contracts\Requires.NumericTypesValidation.tt">
       <LastGenOutput>Requires.NumericTypesValidation.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Efficiency\ImmutableValueTuple.tt">
+    <None Update="StandardExtensions\Efficiency\ImmutableValueTuple.tt">
       <LastGenOutput>ImmutableValueTuple.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Efficiency\InDelegates.WithParameters.tt">
+    <None Update="StandardExtensions\Efficiency\InDelegates.WithParameters.tt">
       <LastGenOutput>InDelegates.WithParameters.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Efficiency\RefDelegates.WithParameters.tt">
+    <None Update="StandardExtensions\Efficiency\RefDelegates.WithParameters.tt">
       <LastGenOutput>RefDelegates.WithParameters.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Efficiency\RefIteratorDelegates.WithParameters.tt">
+    <None Update="StandardExtensions\Efficiency\RefIteratorDelegates.WithParameters.tt">
       <LastGenOutput>RefIteratorDelegates.WithParameters.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Extensions\ArrayExtensions.ForEachActions.tt">
+    <None Update="StandardExtensions\Extensions\ArrayExtensions.ForEachActions.tt">
       <LastGenOutput>ArrayExtensions.ForEachActions.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Extensions\ArrayExtensions.ForEachRefActions.tt">
+    <None Update="StandardExtensions\Extensions\ArrayExtensions.ForEachRefActions.tt">
       <LastGenOutput>ArrayExtensions.ForEachRefActions.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Extensions\ArrayExtensions.SequenceCompare.StandardTypes.tt">
+    <None Update="StandardExtensions\Extensions\ArrayExtensions.SequenceCompare.StandardTypes.tt">
       <LastGenOutput>ArrayExtensions.SequenceCompare.StandardTypes.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Extensions\ArrayExtensions.SequenceEquals.StandardTypes.tt">
+    <None Update="StandardExtensions\Extensions\ArrayExtensions.SequenceEquals.StandardTypes.tt">
       <LastGenOutput>ArrayExtensions.SequenceEquals.StandardTypes.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Extensions\ArrayExtensions.StandardTypes.tt">
+    <None Update="StandardExtensions\Extensions\ArrayExtensions.StandardTypes.tt">
       <LastGenOutput>ArrayExtensions.StandardTypes.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Extensions\IDictionaryExtensions.StandardTypes.tt">
+    <None Update="StandardExtensions\Extensions\IDictionaryExtensions.StandardTypes.tt">
       <LastGenOutput>IDictionaryExtensions.StandardTypes.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Extensions\IEnumerableExtensions.EquateSequentially.StandardTypes.tt">
+    <None Update="StandardExtensions\Extensions\IEnumerableExtensions.EquateSequentially.StandardTypes.tt">
       <LastGenOutput>IEnumerableExtensions.EquateSequentially.StandardTypes.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Extensions\IEnumerableExtensions.ForEachActions.tt">
+    <None Update="StandardExtensions\Extensions\IEnumerableExtensions.ForEachActions.tt">
       <LastGenOutput>IEnumerableExtensions.ForEachActions.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Extensions\IEnumerableExtensions.ForEachRefActions.tt">
+    <None Update="StandardExtensions\Extensions\IEnumerableExtensions.ForEachRefActions.tt">
       <LastGenOutput>IEnumerableExtensions.ForEachRefActions.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Extensions\IEnumerableExtensions.SequenceCompare.StandardTypes.tt">
+    <None Update="StandardExtensions\Extensions\IEnumerableExtensions.SequenceCompare.StandardTypes.tt">
       <LastGenOutput>IEnumerableExtensions.SequenceCompare.StandardTypes.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Extensions\IEnumerableExtensions.SequenceEquals.StandardTypes.tt">
+    <None Update="StandardExtensions\Extensions\IEnumerableExtensions.SequenceEquals.StandardTypes.tt">
       <LastGenOutput>IEnumerableExtensions.SequenceEquals.StandardTypes.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Extensions\IListCloneExtensions.StandardTypes.tt">
+    <None Update="StandardExtensions\Extensions\IListCloneExtensions.StandardTypes.tt">
       <LastGenOutput>IListCloneExtensions.StandardTypes.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Extensions\LinqExtensions.ActionsAndFuncs.tt">
+    <None Update="StandardExtensions\Extensions\LinqExtensions.ActionsAndFuncs.tt">
       <LastGenOutput>LinqExtensions.ActionsAndFuncs.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Threading\TaskFactoryExtensions.Actions.tt">
+    <None Update="StandardExtensions\StandardExceptions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StandardExceptions.cs</LastGenOutput>
+    </None>
+    <None Update="StandardExtensions\Threading\TaskFactoryExtensions.Actions.tt">
       <LastGenOutput>TaskFactoryExtensions.Actions.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
@@ -239,35 +249,36 @@
 
   <!-- Resources -->
   <ItemGroup>
-    <EmbeddedResource Update="Resources.de.resx">
+    <EmbeddedResource Update="StandardExtensions\Resources.de.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources.en.resx">
+    <EmbeddedResource Update="StandardExtensions\Resources.en.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources.es.resx">
+    <EmbeddedResource Update="StandardExtensions\Resources.es.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources.fr.resx">
+    <EmbeddedResource Update="StandardExtensions\Resources.fr.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources.it.resx">
+    <EmbeddedResource Update="StandardExtensions\Resources.it.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources.ja.resx">
+    <EmbeddedResource Update="StandardExtensions\Resources.ja.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources.resx">
+    <EmbeddedResource Update="StandardExtensions\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace></CustomToolNamespace>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources.ro.resx">
+    <EmbeddedResource Update="StandardExtensions\Resources.ro.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources.ru.resx">
+    <EmbeddedResource Update="StandardExtensions\Resources.ru.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources.se.resx">
+    <EmbeddedResource Update="StandardExtensions\Resources.se.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
