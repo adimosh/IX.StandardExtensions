@@ -15,7 +15,7 @@ namespace IX.StandardExtensions.ComponentModel
     ///     An abstract base class for correctly implementing the disposable pattern.
     /// </summary>
     /// <seealso cref="IDisposable" />
-    [DataContract]
+    [DataContract(Namespace = Constants.DataContractNamespace)]
     [PublicAPI]
     [DiagCA.SuppressMessage(
         "IDisposableAnalyzers.Correctness",

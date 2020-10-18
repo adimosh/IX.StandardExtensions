@@ -1,16 +1,16 @@
-// <copyright file="LeftBitwiseExtensionsUnitTests.cs" company="Adrian Mos">
+// <copyright file="RightBitwiseExtensionsUnitTests.cs" company="Adrian Mos">
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
 using IX.StandardExtensions.Extensions;
 using Xunit;
 
-namespace IX.UnitTests.IX.StandardExtensions
+namespace IX.UnitTests.StandardExtensions.Extensions
 {
     /// <summary>
-    /// Unit tests for left bitwise extensions.
+    /// Unit tet for right bitwise extensions.
     /// </summary>
-    public class LeftBitwiseExtensionsUnitTests
+    public class RightBitwiseExtensionsUnitTests
     {
         /// <summary>
         /// Generates data for tests.
@@ -22,25 +22,25 @@ namespace IX.UnitTests.IX.StandardExtensions
             {
                 new byte[] { 0b00000000, 0b00000001 },
                 3,
-                new byte[] { 0b00100000, 0b00000000 },
+                new byte[] { 0b00000000, 0b00001000 },
             },
             new object[]
             {
                 new byte[] { 0b00000000, 0b10000001 },
                 3,
-                new byte[] { 0b00100000, 0b00010000 },
+                new byte[] { 0b00000000, 0b00001000 },
             },
             new object[]
             {
                 new byte[] { 0b00000001, 0b10000001 },
                 3,
-                new byte[] { 0b00100000, 0b00010000 },
+                new byte[] { 0b00001000, 0b00001000 },
             },
             new object[]
             {
-                new byte[] { 0b10000000, 0b10000001 },
+                new byte[] { 0b10000001, 0b10000001 },
                 3,
-                new byte[] { 0b00110000, 0b00010000 },
+                new byte[] { 0b00001000, 0b00001100 },
             },
         };
 
@@ -54,7 +54,7 @@ namespace IX.UnitTests.IX.StandardExtensions
         [MemberData(nameof(TestDataGenerator))]
         public void TestBitwiseExtensions(byte[] data, int howManyBits, byte[] expectedResult)
         {
-            var result = data.LeftShift(howManyBits);
+            var result = data.RightShift(howManyBits);
 
             Assert.True(expectedResult.SequenceEquals(result));
         }

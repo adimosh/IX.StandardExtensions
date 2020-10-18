@@ -5,7 +5,7 @@
 using IX.StandardExtensions.Extensions;
 using Xunit;
 
-namespace IX.UnitTests.IX.StandardExtensions
+namespace IX.UnitTests.StandardExtensions.Extensions
 {
     /// <summary>
     ///     Unit tests for ByteArrayExtensions.

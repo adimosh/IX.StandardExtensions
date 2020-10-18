@@ -97,8 +97,8 @@ namespace IX.StandardExtensions.Threading
             "CA1000:Do not declare static members on generic types",
             Justification = "This is, honestly, a stupid rule.")]
         public static AtomicEnumerator<TItem> FromCollection<TCollection>(
-            [NotNull] TCollection collection,
-            [NotNull] Func<ReadOnlySynchronizationLocker> readLock)
+            TCollection collection,
+            Func<ReadOnlySynchronizationLocker> readLock)
             where TCollection : class, IEnumerable<TItem>
         {
             // Validate arguments
@@ -170,7 +170,7 @@ namespace IX.StandardExtensions.Threading
             "CA1000:Do not declare static members on generic types",
             Justification = "This is, honestly, a stupid rule.")]
         public static AtomicEnumerator<TItem> FromEnumerator<TEnumerator>(
-            [NotNull] TEnumerator enumerator,
+            TEnumerator enumerator,
             Func<ReadOnlySynchronizationLocker> readLock)
             where TEnumerator : IEnumerator<TItem>
         {
