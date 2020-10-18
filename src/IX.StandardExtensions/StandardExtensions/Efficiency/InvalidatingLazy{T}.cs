@@ -12,15 +12,13 @@ namespace IX.StandardExtensions.Efficiency
     ///     A lazy initializing class that also offers he possibility to invalidate the value stored in it.
     /// </summary>
     /// <typeparam name="T">The type of item instance initialized by the invalidating lazy.</typeparam>
-    /// <seealso cref="System.Lazy{T}" />
+    /// <seealso cref="Lazy{T}" />
     [PublicAPI]
     public class InvalidatingLazy<T>
     {
         private readonly Func<Lazy<T>> lazyCreator;
         private Lazy<T> internalLazy;
 
-#pragma warning disable HAA0302 // Display class allocation to capture closure - we need to form a closure
-#pragma warning disable HAA0301 // Closure Allocation Source
         /// <summary>
         ///     Initializes a new instance of the <see cref="InvalidatingLazy{T}" /> class.
         /// </summary>
@@ -34,6 +32,14 @@ namespace IX.StandardExtensions.Efficiency
         ///     Initializes a new instance of the <see cref="InvalidatingLazy{T}" /> class.
         /// </summary>
         /// <param name="valueFactory">The delegate that is invoked to produce the lazily initialized value when it is needed.</param>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "Unavoidable.")]
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "Unavoidable.")]
         public InvalidatingLazy(Func<T> valueFactory)
         {
             this.internalLazy = new Lazy<T>(valueFactory);
@@ -47,6 +53,14 @@ namespace IX.StandardExtensions.Efficiency
         ///     <see langword="true" /> to make this instance usable concurrently by multiple threads;
         ///     <see langword="false" /> to make the instance usable by only one thread at a time.
         /// </param>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "Unavoidable.")]
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "Unavoidable.")]
         public InvalidatingLazy(bool isThreadSafe)
         {
             this.internalLazy = new Lazy<T>(isThreadSafe);
@@ -57,6 +71,14 @@ namespace IX.StandardExtensions.Efficiency
         ///     Initializes a new instance of the <see cref="InvalidatingLazy{T}" /> class.
         /// </summary>
         /// <param name="mode">One of the enumeration values that specifies the thread safety mode.</param>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "Unavoidable.")]
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "Unavoidable.")]
         public InvalidatingLazy(LazyThreadSafetyMode mode)
         {
             this.internalLazy = new Lazy<T>(mode);
@@ -71,6 +93,14 @@ namespace IX.StandardExtensions.Efficiency
         ///     <see langword="true" /> to make this instance usable concurrently by multiple threads;
         ///     <see langword="false" /> to make this instance usable by only one thread at a time.
         /// </param>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "Unavoidable.")]
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "Unavoidable.")]
         public InvalidatingLazy(
             Func<T> valueFactory,
             bool isThreadSafe)
@@ -88,6 +118,14 @@ namespace IX.StandardExtensions.Efficiency
         /// </summary>
         /// <param name="valueFactory">The delegate that is invoked to produce the lazily initialized value when it is needed.</param>
         /// <param name="mode">One of the enumeration values that specifies the thread safety mode.</param>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "Unavoidable.")]
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "Unavoidable.")]
         public InvalidatingLazy(
             Func<T> valueFactory,
             LazyThreadSafetyMode mode)
@@ -99,8 +137,6 @@ namespace IX.StandardExtensions.Efficiency
                 valueFactory,
                 mode);
         }
-#pragma warning restore HAA0301 // Closure Allocation Source
-#pragma warning restore HAA0302 // Display class allocation to capture closure
 
         /// <summary>Gets a value indicating whether a value has been created for this <see cref="InvalidatingLazy{T}"></see> instance.</summary>
         /// <returns>true if a value has been created for this <see cref="InvalidatingLazy{T}"></see> instance; otherwise, false.</returns>

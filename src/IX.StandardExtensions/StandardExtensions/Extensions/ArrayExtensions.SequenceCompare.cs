@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.Generic;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Efficiency;
 
 namespace IX.StandardExtensions.Extensions
@@ -21,10 +22,14 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="comparer">The comparer to use when equating items.</param>
         /// <returns>The result of the comparison.</returns>
         public static int SequenceCompare<T>(
-            this T[] left,
-            T[] right,
+            this T[]? left,
+            T[]? right,
             IComparer<T> comparer)
         {
+            var localComparer = Requires.NotNull(
+                comparer,
+                nameof(comparer));
+
             if (left == null)
             {
                 // Left is null, we return based on whether or not right is null as well
@@ -71,7 +76,7 @@ namespace IX.StandardExtensions.Extensions
                     return int.MaxValue;
                 }
 
-                var cr = comparer.Compare(
+                var cr = localComparer.Compare(
                     c1,
                     c2);
                 if (cr != 0)
@@ -94,10 +99,14 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="comparer">The comparer to use when equating items.</param>
         /// <returns>The result of the comparison.</returns>
         public static int SequenceCompare<T>(
-            this T[] left,
-            T[] right,
+            this T[]? left,
+            T[]? right,
             InFunc<T, T, int> comparer)
         {
+            var localComparer = Requires.NotNull(
+                comparer,
+                nameof(comparer));
+
             if (left == null)
             {
                 // Left is null, we return based on whether or not right is null as well
@@ -122,8 +131,8 @@ namespace IX.StandardExtensions.Extensions
                     return 0;
                 }
 
-                T c1 = b1 ? left[i] : default;
-                T c2 = b2 ? right[i] : default;
+                T c1 = b1 ? left[i] : default!;
+                T c2 = b2 ? right[i] : default!;
 
                 if (c1 == null)
                 {
@@ -144,7 +153,7 @@ namespace IX.StandardExtensions.Extensions
                     return int.MaxValue;
                 }
 
-                var cr = comparer(
+                var cr = localComparer(
                     in c1,
                     in c2);
                 if (cr != 0)

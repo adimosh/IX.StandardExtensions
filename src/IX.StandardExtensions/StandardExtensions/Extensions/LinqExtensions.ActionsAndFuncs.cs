@@ -19,23 +19,23 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check for emptiness.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check for emptiness.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <returns><see langword="true"/> if the source sequence contains any elements; otherwise, <see langword="false"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1>(this IEnumerable<TItem> source, Func<TItem, TParam1, bool> action, TParam1 param1)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1))
+                if (localAction(item, param1))
                 {
                     return true;
                 }
@@ -49,23 +49,23 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to filter.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to filter.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <returns>The filtered enumerable.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1>(this IEnumerable<TItem> source, Func<TItem, TParam1, bool> action, TParam1 param1)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1))
+                if (localAction(item, param1))
                 {
                     yield return item;
                 }
@@ -77,23 +77,23 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <returns>The first filtered item, or a default value.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1>(this IEnumerable<TItem> source, Func<TItem, TParam1, bool> action, TParam1 param1)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1))
+                if (localAction(item, param1))
                 {
                     return item;
                 }
@@ -108,7 +108,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked predicate at index 1.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check for emptiness.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check for emptiness.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -116,16 +116,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, bool> action, TParam1 param1, TParam2 param2)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2))
+                if (localAction(item, param1, param2))
                 {
                     return true;
                 }
@@ -140,7 +140,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked predicate at index 1.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to filter.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to filter.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -148,16 +148,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, bool> action, TParam1 param1, TParam2 param2)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2))
+                if (localAction(item, param1, param2))
                 {
                     yield return item;
                 }
@@ -170,7 +170,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TItem">The enumerable item type.</typeparam>
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked predicate at index 1.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -178,16 +178,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, bool> action, TParam1 param1, TParam2 param2)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2))
+                if (localAction(item, param1, param2))
                 {
                     return item;
                 }
@@ -203,7 +203,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked predicate at index 1.</typeparam>
         /// <typeparam name="TParam3">The type of parameter to be passed to the invoked predicate at index 2.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check for emptiness.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check for emptiness.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -212,16 +212,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, bool> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3))
+                if (localAction(item, param1, param2, param3))
                 {
                     return true;
                 }
@@ -237,7 +237,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked predicate at index 1.</typeparam>
         /// <typeparam name="TParam3">The type of parameter to be passed to the invoked predicate at index 2.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to filter.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to filter.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -246,16 +246,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, bool> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3))
+                if (localAction(item, param1, param2, param3))
                 {
                     yield return item;
                 }
@@ -269,7 +269,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam1">The type of parameter to be passed to the invoked predicate at index 0.</typeparam>
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked predicate at index 1.</typeparam>
         /// <typeparam name="TParam3">The type of parameter to be passed to the invoked predicate at index 2.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -278,16 +278,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, bool> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3))
+                if (localAction(item, param1, param2, param3))
                 {
                     return item;
                 }
@@ -304,7 +304,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked predicate at index 1.</typeparam>
         /// <typeparam name="TParam3">The type of parameter to be passed to the invoked predicate at index 2.</typeparam>
         /// <typeparam name="TParam4">The type of parameter to be passed to the invoked predicate at index 3.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check for emptiness.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check for emptiness.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -314,16 +314,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4))
+                if (localAction(item, param1, param2, param3, param4))
                 {
                     return true;
                 }
@@ -340,7 +340,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked predicate at index 1.</typeparam>
         /// <typeparam name="TParam3">The type of parameter to be passed to the invoked predicate at index 2.</typeparam>
         /// <typeparam name="TParam4">The type of parameter to be passed to the invoked predicate at index 3.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to filter.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to filter.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -350,16 +350,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4))
+                if (localAction(item, param1, param2, param3, param4))
                 {
                     yield return item;
                 }
@@ -374,7 +374,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam2">The type of parameter to be passed to the invoked predicate at index 1.</typeparam>
         /// <typeparam name="TParam3">The type of parameter to be passed to the invoked predicate at index 2.</typeparam>
         /// <typeparam name="TParam4">The type of parameter to be passed to the invoked predicate at index 3.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -384,16 +384,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4))
+                if (localAction(item, param1, param2, param3, param4))
                 {
                     return item;
                 }
@@ -411,7 +411,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam3">The type of parameter to be passed to the invoked predicate at index 2.</typeparam>
         /// <typeparam name="TParam4">The type of parameter to be passed to the invoked predicate at index 3.</typeparam>
         /// <typeparam name="TParam5">The type of parameter to be passed to the invoked predicate at index 4.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check for emptiness.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check for emptiness.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -422,16 +422,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4, param5))
+                if (localAction(item, param1, param2, param3, param4, param5))
                 {
                     return true;
                 }
@@ -449,7 +449,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam3">The type of parameter to be passed to the invoked predicate at index 2.</typeparam>
         /// <typeparam name="TParam4">The type of parameter to be passed to the invoked predicate at index 3.</typeparam>
         /// <typeparam name="TParam5">The type of parameter to be passed to the invoked predicate at index 4.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to filter.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to filter.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -460,16 +460,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4, param5))
+                if (localAction(item, param1, param2, param3, param4, param5))
                 {
                     yield return item;
                 }
@@ -485,7 +485,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam3">The type of parameter to be passed to the invoked predicate at index 2.</typeparam>
         /// <typeparam name="TParam4">The type of parameter to be passed to the invoked predicate at index 3.</typeparam>
         /// <typeparam name="TParam5">The type of parameter to be passed to the invoked predicate at index 4.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -496,16 +496,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4, param5))
+                if (localAction(item, param1, param2, param3, param4, param5))
                 {
                     return item;
                 }
@@ -524,7 +524,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam4">The type of parameter to be passed to the invoked predicate at index 3.</typeparam>
         /// <typeparam name="TParam5">The type of parameter to be passed to the invoked predicate at index 4.</typeparam>
         /// <typeparam name="TParam6">The type of parameter to be passed to the invoked predicate at index 5.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check for emptiness.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check for emptiness.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -536,16 +536,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4, param5, param6))
+                if (localAction(item, param1, param2, param3, param4, param5, param6))
                 {
                     return true;
                 }
@@ -564,7 +564,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam4">The type of parameter to be passed to the invoked predicate at index 3.</typeparam>
         /// <typeparam name="TParam5">The type of parameter to be passed to the invoked predicate at index 4.</typeparam>
         /// <typeparam name="TParam6">The type of parameter to be passed to the invoked predicate at index 5.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to filter.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to filter.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -576,16 +576,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4, param5, param6))
+                if (localAction(item, param1, param2, param3, param4, param5, param6))
                 {
                     yield return item;
                 }
@@ -602,7 +602,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam4">The type of parameter to be passed to the invoked predicate at index 3.</typeparam>
         /// <typeparam name="TParam5">The type of parameter to be passed to the invoked predicate at index 4.</typeparam>
         /// <typeparam name="TParam6">The type of parameter to be passed to the invoked predicate at index 5.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -614,16 +614,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4, param5, param6))
+                if (localAction(item, param1, param2, param3, param4, param5, param6))
                 {
                     return item;
                 }
@@ -643,7 +643,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam5">The type of parameter to be passed to the invoked predicate at index 4.</typeparam>
         /// <typeparam name="TParam6">The type of parameter to be passed to the invoked predicate at index 5.</typeparam>
         /// <typeparam name="TParam7">The type of parameter to be passed to the invoked predicate at index 6.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check for emptiness.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check for emptiness.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -656,16 +656,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4, param5, param6, param7))
+                if (localAction(item, param1, param2, param3, param4, param5, param6, param7))
                 {
                     return true;
                 }
@@ -685,7 +685,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam5">The type of parameter to be passed to the invoked predicate at index 4.</typeparam>
         /// <typeparam name="TParam6">The type of parameter to be passed to the invoked predicate at index 5.</typeparam>
         /// <typeparam name="TParam7">The type of parameter to be passed to the invoked predicate at index 6.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to filter.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to filter.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -698,16 +698,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4, param5, param6, param7))
+                if (localAction(item, param1, param2, param3, param4, param5, param6, param7))
                 {
                     yield return item;
                 }
@@ -725,7 +725,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam5">The type of parameter to be passed to the invoked predicate at index 4.</typeparam>
         /// <typeparam name="TParam6">The type of parameter to be passed to the invoked predicate at index 5.</typeparam>
         /// <typeparam name="TParam7">The type of parameter to be passed to the invoked predicate at index 6.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -738,16 +738,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4, param5, param6, param7))
+                if (localAction(item, param1, param2, param3, param4, param5, param6, param7))
                 {
                     return item;
                 }
@@ -768,7 +768,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam6">The type of parameter to be passed to the invoked predicate at index 5.</typeparam>
         /// <typeparam name="TParam7">The type of parameter to be passed to the invoked predicate at index 6.</typeparam>
         /// <typeparam name="TParam8">The type of parameter to be passed to the invoked predicate at index 7.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check for emptiness.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check for emptiness.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -782,16 +782,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4, param5, param6, param7, param8))
+                if (localAction(item, param1, param2, param3, param4, param5, param6, param7, param8))
                 {
                     return true;
                 }
@@ -812,7 +812,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam6">The type of parameter to be passed to the invoked predicate at index 5.</typeparam>
         /// <typeparam name="TParam7">The type of parameter to be passed to the invoked predicate at index 6.</typeparam>
         /// <typeparam name="TParam8">The type of parameter to be passed to the invoked predicate at index 7.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to filter.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to filter.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -826,16 +826,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4, param5, param6, param7, param8))
+                if (localAction(item, param1, param2, param3, param4, param5, param6, param7, param8))
                 {
                     yield return item;
                 }
@@ -854,7 +854,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TParam6">The type of parameter to be passed to the invoked predicate at index 5.</typeparam>
         /// <typeparam name="TParam7">The type of parameter to be passed to the invoked predicate at index 6.</typeparam>
         /// <typeparam name="TParam8">The type of parameter to be passed to the invoked predicate at index 7.</typeparam>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check.</param>
         /// <param name="action">The predicate to check items with.</param>
         /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked predicate at index 0.</param>
         /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked predicate at index 1.</param>
@@ -868,16 +868,16 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, param1, param2, param3, param4, param5, param6, param7, param8))
+                if (localAction(item, param1, param2, param3, param4, param5, param6, param7, param8))
                 {
                     return item;
                 }

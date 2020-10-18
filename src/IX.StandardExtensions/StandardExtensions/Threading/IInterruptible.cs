@@ -22,6 +22,10 @@ namespace IX.StandardExtensions.Threading
         /// <summary>
         ///     Resumes this instance.
         /// </summary>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Naming",
+            "CA1716:Identifiers should not match keywords",
+            Justification = "Not applicable.")]
         void Resume();
     }
 }

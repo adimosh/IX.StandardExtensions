@@ -18,6 +18,7 @@ namespace IX.StandardExtensions.Extensions
     /// <summary>
     /// Extensions for IDictionary.
     /// </summary>
+    // ReSharper disable once InconsistentNaming - We are doing extensions for IDictionary :)
     public static partial class IDictionaryExtensions
     {<#
 List<string> code = new List<string>();
@@ -33,16 +34,16 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, <#= fullTypeName #>> DeepClone<TKey>(this Dictionary<TKey, <#= fullTypeName #>> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, <#= fullTypeName #>>();
 
-            foreach (KeyValuePair<TKey, <#= fullTypeName #>> p in source)
+            foreach (KeyValuePair<TKey, <#= fullTypeName #>> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }

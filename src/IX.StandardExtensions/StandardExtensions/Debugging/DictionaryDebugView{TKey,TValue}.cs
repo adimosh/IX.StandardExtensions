@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 using IX.StandardExtensions.Contracts;
@@ -21,7 +22,13 @@ namespace IX.StandardExtensions.Debugging
     [PublicAPI]
     public sealed class DictionaryDebugView<TKey, TValue>
     {
+#region Internal state
+
         private readonly IDictionary<TKey, TValue> dict;
+
+#endregion
+
+#region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="DictionaryDebugView{TKey, TValue}" /> class.
@@ -34,16 +41,24 @@ namespace IX.StandardExtensions.Debugging
         public DictionaryDebugView(IDictionary<TKey, TValue> dictionary)
         {
             Requires.NotNull(
-                ref this.dict,
+                out this.dict,
                 dictionary,
                 nameof(dictionary));
         }
+
+#endregion
+
+#region Properties and indexers
 
         /// <summary>
         ///     Gets the items.
         /// </summary>
         /// <value>The items.</value>
         [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+        [SuppressMessage(
+            "Performance",
+            "CA1819:Properties should not return arrays",
+            Justification = "This is supposed to be like this.")]
         public KyeValuePairDebugView<TKey, TValue>[] Items
         {
             get
@@ -52,9 +67,16 @@ namespace IX.StandardExtensions.Debugging
                 this.dict.CopyTo(
                     items,
                     0);
-                return items.Select(p => new KyeValuePairDebugView<TKey, TValue> { Key = p.Key, Value = p.Value })
+                return items.Select(
+                        p => new KyeValuePairDebugView<TKey, TValue>
+                        {
+                            Key = p.Key,
+                            Value = p.Value
+                        })
                     .ToArray();
             }
         }
+
+#endregion
     }
 }

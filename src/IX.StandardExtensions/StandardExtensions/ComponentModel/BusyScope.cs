@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
@@ -15,10 +16,16 @@ namespace IX.StandardExtensions.ComponentModel
     [PublicAPI]
     public class BusyScope : SynchronizationContextInvokerBase
     {
+#region Internal state
+
         private readonly string? initialDescription;
 
         private int busyCount;
         private string? description;
+
+#endregion
+
+#region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="BusyScope" /> class.
@@ -34,8 +41,8 @@ namespace IX.StandardExtensions.ComponentModel
         /// <exception cref="ArgumentNullException"><paramref name="description" /> is <see langword="null" />.</exception>
         public BusyScope(string description)
         {
-            Requires.NotNull(
-                ref this.initialDescription,
+            Requires.NotNull<string>(
+                out this.initialDescription,
                 description,
                 nameof(description));
         }
@@ -48,7 +55,7 @@ namespace IX.StandardExtensions.ComponentModel
         public BusyScope(int initialBusyCount)
         {
             Requires.NonNegative(
-                ref this.busyCount,
+                out this.busyCount,
                 in initialBusyCount,
                 nameof(initialBusyCount));
         }
@@ -65,19 +72,27 @@ namespace IX.StandardExtensions.ComponentModel
             string description)
         {
             Requires.NonNegative(
-                ref this.busyCount,
+                out this.busyCount,
                 in initialBusyCount,
                 nameof(initialBusyCount));
-            Requires.NotNull(
-                ref this.initialDescription,
+            Requires.NotNull<string>(
+                out this.initialDescription,
                 description,
                 nameof(description));
         }
+
+#endregion
+
+#region Events
 
         /// <summary>
         ///     Occurs when the busy status of the scope has changed.
         /// </summary>
         public event EventHandler? BusyScopeChanged;
+
+#endregion
+
+#region Properties and indexers
 
         /// <summary>
         ///     Gets the busy count.
@@ -91,20 +106,31 @@ namespace IX.StandardExtensions.ComponentModel
         /// <value>The description.</value>
         public string Description => this.description ?? this.initialDescription ?? string.Empty;
 
+#endregion
+
+#region Methods
+
         /// <summary>
         ///     Increments the busy scope.
         /// </summary>
         /// <param name="description">The description for the topmost busy operation.</param>
-        // ReSharper disable once ParameterHidesMember - We know, that is the point
+        [SuppressMessage(
+            "ReSharper",
+            "ParameterHidesMember",
+            Justification = "We know, that's the point.")]
         public void IncrementBusyScope(string? description = null)
         {
             Interlocked.Increment(ref this.busyCount);
-            Interlocked.Exchange(ref this.description, description);
+            Interlocked.Exchange(
+                ref this.description,
+                description);
 
             if (this.BusyScopeChanged != null)
             {
                 this.Invoke(
-                    (sender, evnt) => evnt.Invoke(
+                    (
+                        sender,
+                        evnt) => evnt.Invoke(
                         sender,
                         EventArgs.Empty),
                     this,
@@ -128,12 +154,16 @@ namespace IX.StandardExtensions.ComponentModel
             if (this.BusyScopeChanged != null)
             {
                 this.Invoke(
-                    (sender, evnt) => evnt.Invoke(
+                    (
+                        sender,
+                        evnt) => evnt.Invoke(
                         sender,
                         EventArgs.Empty),
                     this,
                     this.BusyScopeChanged);
             }
         }
+
+#endregion
     }
 }

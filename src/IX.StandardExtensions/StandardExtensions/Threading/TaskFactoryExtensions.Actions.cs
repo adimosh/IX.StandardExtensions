@@ -18,6 +18,7 @@ namespace IX.StandardExtensions.Threading
     public static partial class TaskFactoryExtensions
     {
 #pragma warning disable HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance
+#pragma warning disable UseAsyncSuffix // Use Async suffix
         /// <summary>
         ///     Starts a task on a new thread.
         /// </summary>
@@ -34,12 +35,15 @@ namespace IX.StandardExtensions.Threading
             TParam1 param1,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -48,7 +52,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1);
                 },
-                (action, new Tuple<TParam1>(param1)),
+                (localAction, new Tuple<TParam1>(param1)),
                 false,
                 cancellationToken);
         }
@@ -69,12 +73,15 @@ namespace IX.StandardExtensions.Threading
             TParam1 param1,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -83,7 +90,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1);
                 },
-                (action, new Tuple<TParam1>(param1)),
+                (localAction, new Tuple<TParam1>(param1)),
                 true,
                 cancellationToken);
         }
@@ -105,12 +112,15 @@ namespace IX.StandardExtensions.Threading
             TParam1 param1,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -119,7 +129,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1);
                 },
-                (action, new Tuple<TParam1>(param1)),
+                (localAction, new Tuple<TParam1>(param1)),
                 false,
                 cancellationToken);
         }
@@ -140,12 +150,15 @@ namespace IX.StandardExtensions.Threading
             TParam1 param1,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -154,7 +167,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1);
                 },
-                (action, new Tuple<TParam1>(param1)),
+                (localAction, new Tuple<TParam1>(param1)),
                 true,
                 cancellationToken);
         }
@@ -178,12 +191,15 @@ namespace IX.StandardExtensions.Threading
             TParam2 param2,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -193,7 +209,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2);
                 },
-                (action, new Tuple<TParam1, TParam2>(param1, param2)),
+                (localAction, new Tuple<TParam1, TParam2>(param1, param2)),
                 false,
                 cancellationToken);
         }
@@ -217,12 +233,15 @@ namespace IX.StandardExtensions.Threading
             TParam2 param2,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -232,7 +251,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2);
                 },
-                (action, new Tuple<TParam1, TParam2>(param1, param2)),
+                (localAction, new Tuple<TParam1, TParam2>(param1, param2)),
                 true,
                 cancellationToken);
         }
@@ -257,12 +276,15 @@ namespace IX.StandardExtensions.Threading
             TParam2 param2,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -272,7 +294,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2);
                 },
-                (action, new Tuple<TParam1, TParam2>(param1, param2)),
+                (localAction, new Tuple<TParam1, TParam2>(param1, param2)),
                 false,
                 cancellationToken);
         }
@@ -296,12 +318,15 @@ namespace IX.StandardExtensions.Threading
             TParam2 param2,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -311,7 +336,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2);
                 },
-                (action, new Tuple<TParam1, TParam2>(param1, param2)),
+                (localAction, new Tuple<TParam1, TParam2>(param1, param2)),
                 true,
                 cancellationToken);
         }
@@ -338,12 +363,15 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -354,7 +382,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2, item3);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
                 false,
                 cancellationToken);
         }
@@ -381,12 +409,15 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -397,7 +428,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2, item3);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
                 true,
                 cancellationToken);
         }
@@ -425,12 +456,15 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -441,7 +475,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2, item3);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
                 false,
                 cancellationToken);
         }
@@ -468,12 +502,15 @@ namespace IX.StandardExtensions.Threading
             TParam3 param3,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -484,7 +521,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2, item3);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3)),
                 true,
                 cancellationToken);
         }
@@ -514,12 +551,15 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -531,7 +571,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2, item3, item4);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
                 false,
                 cancellationToken);
         }
@@ -561,12 +601,15 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -578,7 +621,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2, item3, item4);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
                 true,
                 cancellationToken);
         }
@@ -609,12 +652,15 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -626,7 +672,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2, item3, item4);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
                 false,
                 cancellationToken);
         }
@@ -656,12 +702,15 @@ namespace IX.StandardExtensions.Threading
             TParam4 param4,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -673,7 +722,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2, item3, item4);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4)),
                 true,
                 cancellationToken);
         }
@@ -706,12 +755,15 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -724,7 +776,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2, item3, item4, item5);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
                 false,
                 cancellationToken);
         }
@@ -757,12 +809,15 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -775,7 +830,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2, item3, item4, item5);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
                 true,
                 cancellationToken);
         }
@@ -809,12 +864,15 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -827,7 +885,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2, item3, item4, item5);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
                 false,
                 cancellationToken);
         }
@@ -860,12 +918,15 @@ namespace IX.StandardExtensions.Threading
             TParam5 param5,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -878,7 +939,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2, item3, item4, item5);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5)),
                 true,
                 cancellationToken);
         }
@@ -914,12 +975,15 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -933,7 +997,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2, item3, item4, item5, item6);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
                 false,
                 cancellationToken);
         }
@@ -969,12 +1033,15 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -988,7 +1055,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2, item3, item4, item5, item6);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
                 true,
                 cancellationToken);
         }
@@ -1025,12 +1092,15 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -1044,7 +1114,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2, item3, item4, item5, item6);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
                 false,
                 cancellationToken);
         }
@@ -1080,12 +1150,15 @@ namespace IX.StandardExtensions.Threading
             TParam6 param6,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -1099,7 +1172,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2, item3, item4, item5, item6);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6)),
                 true,
                 cancellationToken);
         }
@@ -1138,12 +1211,15 @@ namespace IX.StandardExtensions.Threading
             TParam7 param7,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -1158,7 +1234,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2, item3, item4, item5, item6, item7);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
                 false,
                 cancellationToken);
         }
@@ -1197,12 +1273,15 @@ namespace IX.StandardExtensions.Threading
             TParam7 param7,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -1217,7 +1296,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2, item3, item4, item5, item6, item7);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
                 true,
                 cancellationToken);
         }
@@ -1257,12 +1336,15 @@ namespace IX.StandardExtensions.Threading
             TParam7 param7,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -1277,7 +1359,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2, item3, item4, item5, item6, item7);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
                 false,
                 cancellationToken);
         }
@@ -1316,12 +1398,15 @@ namespace IX.StandardExtensions.Threading
             TParam7 param7,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -1336,7 +1421,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2, item3, item4, item5, item6, item7);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7)),
                 true,
                 cancellationToken);
         }
@@ -1378,12 +1463,15 @@ namespace IX.StandardExtensions.Threading
             TParam8 param8,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -1399,7 +1487,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2, item3, item4, item5, item6, item7, item8);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
                 false,
                 cancellationToken);
         }
@@ -1441,12 +1529,15 @@ namespace IX.StandardExtensions.Threading
             TParam8 param8,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -1462,7 +1553,7 @@ namespace IX.StandardExtensions.Threading
 
                     innerAction(item1, item2, item3, item4, item5, item6, item7, item8);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
                 true,
                 cancellationToken);
         }
@@ -1505,12 +1596,15 @@ namespace IX.StandardExtensions.Threading
             TParam8 param8,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -1526,7 +1620,7 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2, item3, item4, item5, item6, item7, item8);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
                 false,
                 cancellationToken);
         }
@@ -1568,12 +1662,15 @@ namespace IX.StandardExtensions.Threading
             TParam8 param8,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
-                taskFactory,
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -1589,10 +1686,11 @@ namespace IX.StandardExtensions.Threading
 
                     return innerAction(item1, item2, item3, item4, item5, item6, item7, item8);
                 },
-                (action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
+                (localAction, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8)),
                 true,
                 cancellationToken);
         }
+#pragma warning restore UseAsyncSuffix // Use Async suffix
 #pragma warning restore HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance
     }
 }

@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
@@ -19,7 +20,13 @@ namespace IX.StandardExtensions.Debugging
     [PublicAPI]
     public sealed class CollectionDebugView<T>
     {
+#region Internal state
+
         private readonly ICollection<T> collection;
+
+#endregion
+
+#region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="CollectionDebugView{T}" /> class.
@@ -32,16 +39,24 @@ namespace IX.StandardExtensions.Debugging
         public CollectionDebugView(ICollection<T> collection)
         {
             Requires.NotNull(
-                ref this.collection,
+                out this.collection,
                 collection,
                 nameof(collection));
         }
+
+#endregion
+
+#region Properties and indexers
 
         /// <summary>
         ///     Gets the items.
         /// </summary>
         /// <value>The items.</value>
         [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+        [SuppressMessage(
+            "Performance",
+            "CA1819:Properties should not return arrays",
+            Justification = "This is supposed to be like this.")]
         public T[] Items
         {
             get
@@ -53,5 +68,7 @@ namespace IX.StandardExtensions.Debugging
                 return items;
             }
         }
+
+#endregion
     }
 }

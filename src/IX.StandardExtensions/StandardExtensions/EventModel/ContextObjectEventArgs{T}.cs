@@ -11,10 +11,12 @@ namespace IX.StandardExtensions.EventModel
     ///     An event arguments class depicting a context object.
     /// </summary>
     /// <typeparam name="T">The type of context object to hold.</typeparam>
-    /// <seealso cref="System.EventArgs" />
+    /// <seealso cref="EventArgs" />
     [PublicAPI]
     public class ContextObjectEventArgs<T> : EventArgs
     {
+#region Constructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ContextObjectEventArgs{T}" /> class.
         /// </summary>
@@ -24,10 +26,19 @@ namespace IX.StandardExtensions.EventModel
             this.Context = contextObject;
         }
 
+#endregion
+
+#region Properties and indexers
+
         /// <summary>
         ///     Gets the context.
         /// </summary>
         /// <value>The context object.</value>
-        public T Context { get; }
+        public T Context
+        {
+            get;
+        }
+
+#endregion
     }
 }

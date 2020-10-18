@@ -62,7 +62,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "byte is a primitive type that the compiler can handle.")]
         public static void Positive(
-            ref byte field,
+            out byte field,
             in byte argument,
             [NotNull] string argumentName)
         {
@@ -152,7 +152,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "sbyte is a primitive type that the compiler can handle.")]
         public static void Positive(
-            ref sbyte field,
+            out sbyte field,
             in sbyte argument,
             [NotNull] string argumentName)
         {
@@ -186,7 +186,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "sbyte is a primitive type that the compiler can handle.")]
         public static void NonNegative(
-            ref sbyte field,
+            out sbyte field,
             in sbyte argument,
             [NotNull] string argumentName)
         {
@@ -276,7 +276,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "short is a primitive type that the compiler can handle.")]
         public static void Positive(
-            ref short field,
+            out short field,
             in short argument,
             [NotNull] string argumentName)
         {
@@ -310,7 +310,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "short is a primitive type that the compiler can handle.")]
         public static void NonNegative(
-            ref short field,
+            out short field,
             in short argument,
             [NotNull] string argumentName)
         {
@@ -372,7 +372,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "ushort is a primitive type that the compiler can handle.")]
         public static void Positive(
-            ref ushort field,
+            out ushort field,
             in ushort argument,
             [NotNull] string argumentName)
         {
@@ -434,7 +434,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "char is a primitive type that the compiler can handle.")]
         public static void Positive(
-            ref char field,
+            out char field,
             in char argument,
             [NotNull] string argumentName)
         {
@@ -524,7 +524,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "int is a primitive type that the compiler can handle.")]
         public static void Positive(
-            ref int field,
+            out int field,
             in int argument,
             [NotNull] string argumentName)
         {
@@ -558,7 +558,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "int is a primitive type that the compiler can handle.")]
         public static void NonNegative(
-            ref int field,
+            out int field,
             in int argument,
             [NotNull] string argumentName)
         {
@@ -620,7 +620,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "uint is a primitive type that the compiler can handle.")]
         public static void Positive(
-            ref uint field,
+            out uint field,
             in uint argument,
             [NotNull] string argumentName)
         {
@@ -710,7 +710,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "long is a primitive type that the compiler can handle.")]
         public static void Positive(
-            ref long field,
+            out long field,
             in long argument,
             [NotNull] string argumentName)
         {
@@ -744,7 +744,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "long is a primitive type that the compiler can handle.")]
         public static void NonNegative(
-            ref long field,
+            out long field,
             in long argument,
             [NotNull] string argumentName)
         {
@@ -806,7 +806,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "ulong is a primitive type that the compiler can handle.")]
         public static void Positive(
-            ref ulong field,
+            out ulong field,
             in ulong argument,
             [NotNull] string argumentName)
         {
@@ -896,7 +896,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "float is a primitive type that the compiler can handle.")]
         public static void Positive(
-            ref float field,
+            out float field,
             in float argument,
             [NotNull] string argumentName)
         {
@@ -930,7 +930,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "float is a primitive type that the compiler can handle.")]
         public static void NonNegative(
-            ref float field,
+            out float field,
             in float argument,
             [NotNull] string argumentName)
         {
@@ -1020,7 +1020,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "double is a primitive type that the compiler can handle.")]
         public static void Positive(
-            ref double field,
+            out double field,
             in double argument,
             [NotNull] string argumentName)
         {
@@ -1054,7 +1054,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "double is a primitive type that the compiler can handle.")]
         public static void NonNegative(
-            ref double field,
+            out double field,
             in double argument,
             [NotNull] string argumentName)
         {
@@ -1144,7 +1144,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "decimal is a primitive type that the compiler can handle.")]
         public static void Positive(
-            ref decimal field,
+            out decimal field,
             in decimal argument,
             [NotNull] string argumentName)
         {
@@ -1178,7 +1178,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "decimal is a primitive type that the compiler can handle.")]
         public static void NonNegative(
-            ref decimal field,
+            out decimal field,
             in decimal argument,
             [NotNull] string argumentName)
         {

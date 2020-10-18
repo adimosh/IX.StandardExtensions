@@ -29,7 +29,7 @@ namespace IX.UnitTests
         /// <param name="output">The test output.</param>
         public WorkOnThreadPoolUnitTests(ITestOutputHelper output)
         {
-            Requires.NotNull(ref this.output, output, nameof(output));
+            Requires.NotNull(out this.output, output, nameof(output));
         }
 
         /// <summary>

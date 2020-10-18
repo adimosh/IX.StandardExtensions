@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using IX.StandardExtensions.Contracts;
 
 namespace IX.StandardExtensions.ComponentModel
@@ -11,7 +10,7 @@ namespace IX.StandardExtensions.ComponentModel
     /// <summary>
     ///     An abstract base class for correctly implementing the disposable pattern.
     /// </summary>
-    /// <seealso cref="System.IDisposable" />
+    /// <seealso cref="IDisposable" />
     public abstract partial class DisposableBase
     {
         /// <summary>
@@ -25,10 +24,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected void InvokeIfNotDisposed<TParam1>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Action<TParam1> action,
             TParam1 param1)
         {
@@ -53,10 +48,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected TReturn InvokeIfNotDisposed<TParam1, TReturn>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Func<TParam1, TReturn> func,
             TParam1 param1)
         {
@@ -81,10 +72,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected void InvokeIfNotDisposed<TParam1, TParam2>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Action<TParam1, TParam2> action,
             TParam1 param1,
             TParam2 param2)
@@ -113,10 +100,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected TReturn InvokeIfNotDisposed<TParam1, TParam2, TReturn>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Func<TParam1, TParam2, TReturn> func,
             TParam1 param1,
             TParam2 param2)
@@ -145,10 +128,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected void InvokeIfNotDisposed<TParam1, TParam2, TParam3>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Action<TParam1, TParam2, TParam3> action,
             TParam1 param1,
             TParam2 param2,
@@ -181,10 +160,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected TReturn InvokeIfNotDisposed<TParam1, TParam2, TParam3, TReturn>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Func<TParam1, TParam2, TParam3, TReturn> func,
             TParam1 param1,
             TParam2 param2,
@@ -217,10 +192,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected void InvokeIfNotDisposed<TParam1, TParam2, TParam3, TParam4>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Action<TParam1, TParam2, TParam3, TParam4> action,
             TParam1 param1,
             TParam2 param2,
@@ -257,10 +228,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected TReturn InvokeIfNotDisposed<TParam1, TParam2, TParam3, TParam4, TReturn>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Func<TParam1, TParam2, TParam3, TParam4, TReturn> func,
             TParam1 param1,
             TParam2 param2,
@@ -297,10 +264,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected void InvokeIfNotDisposed<TParam1, TParam2, TParam3, TParam4, TParam5>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Action<TParam1, TParam2, TParam3, TParam4, TParam5> action,
             TParam1 param1,
             TParam2 param2,
@@ -341,10 +304,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected TReturn InvokeIfNotDisposed<TParam1, TParam2, TParam3, TParam4, TParam5, TReturn>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TReturn> func,
             TParam1 param1,
             TParam2 param2,
@@ -385,10 +344,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected void InvokeIfNotDisposed<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action,
             TParam1 param1,
             TParam2 param2,
@@ -433,10 +388,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected TReturn InvokeIfNotDisposed<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TReturn>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TReturn> func,
             TParam1 param1,
             TParam2 param2,
@@ -481,10 +432,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected void InvokeIfNotDisposed<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action,
             TParam1 param1,
             TParam2 param2,
@@ -533,10 +480,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected TReturn InvokeIfNotDisposed<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TReturn>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TReturn> func,
             TParam1 param1,
             TParam2 param2,
@@ -585,10 +528,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected void InvokeIfNotDisposed<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action,
             TParam1 param1,
             TParam2 param2,
@@ -641,10 +580,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="Nothing"/> in Visual Basic).
         /// </exception>
         protected TReturn InvokeIfNotDisposed<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TReturn>(
-            [JetBrains.Annotations.NotNull]
-#if NETSTANDARD2_1
-            [DisallowNull]
-#endif
             Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TReturn> func,
             TParam1 param1,
             TParam2 param2,

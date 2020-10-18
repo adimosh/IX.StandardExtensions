@@ -2,6 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System;
 using System.Collections.Generic;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
@@ -23,7 +24,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TValue">The type of the value.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         ///     <paramref name="source" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
@@ -53,7 +54,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TValue">The type of the value.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A cloned dictionary with shallow clones.</returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         ///     <paramref name="source" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>

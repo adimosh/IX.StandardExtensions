@@ -3,8 +3,7 @@
 // </copyright>
 
 using System;
-using IX.StandardExtensions.ComponentModel;
-using IX.StandardExtensions.Threading;
+using IX.StandardExtensions.Contracts;
 
 namespace IX.StandardExtensions.Threading
 {
@@ -23,10 +22,13 @@ namespace IX.StandardExtensions.Threading
         protected void ReadLock<TParam1>(Action<TParam1> action, TParam1 param1)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                action(param1);
+                localAction(param1);
             }
         }
 
@@ -41,10 +43,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn ReadLock<TParam1, TReturn>(Func<TParam1, TReturn> action, TParam1 param1)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                return action(param1);
+                return localAction(param1);
             }
         }
 
@@ -57,10 +62,13 @@ namespace IX.StandardExtensions.Threading
         protected void WriteLock<TParam1>(Action<TParam1> action, TParam1 param1)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                action(param1);
+                localAction(param1);
             }
         }
 
@@ -75,10 +83,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn WriteLock<TParam1, TReturn>(Func<TParam1, TReturn> action, TParam1 param1)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                return action(param1);
+                return localAction(param1);
             }
         }
 
@@ -93,10 +104,13 @@ namespace IX.StandardExtensions.Threading
         protected void ReadLock<TParam1, TParam2>(Action<TParam1, TParam2> action, TParam1 param1, TParam2 param2)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2);
+                localAction(param1, param2);
             }
         }
 
@@ -113,10 +127,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn ReadLock<TParam1, TParam2, TReturn>(Func<TParam1, TParam2, TReturn> action, TParam1 param1, TParam2 param2)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2);
+                return localAction(param1, param2);
             }
         }
 
@@ -131,10 +148,13 @@ namespace IX.StandardExtensions.Threading
         protected void WriteLock<TParam1, TParam2>(Action<TParam1, TParam2> action, TParam1 param1, TParam2 param2)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2);
+                localAction(param1, param2);
             }
         }
 
@@ -151,10 +171,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn WriteLock<TParam1, TParam2, TReturn>(Func<TParam1, TParam2, TReturn> action, TParam1 param1, TParam2 param2)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2);
+                return localAction(param1, param2);
             }
         }
 
@@ -171,10 +194,13 @@ namespace IX.StandardExtensions.Threading
         protected void ReadLock<TParam1, TParam2, TParam3>(Action<TParam1, TParam2, TParam3> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2, param3);
+                localAction(param1, param2, param3);
             }
         }
 
@@ -193,10 +219,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn ReadLock<TParam1, TParam2, TParam3, TReturn>(Func<TParam1, TParam2, TParam3, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2, param3);
+                return localAction(param1, param2, param3);
             }
         }
 
@@ -213,10 +242,13 @@ namespace IX.StandardExtensions.Threading
         protected void WriteLock<TParam1, TParam2, TParam3>(Action<TParam1, TParam2, TParam3> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2, param3);
+                localAction(param1, param2, param3);
             }
         }
 
@@ -235,10 +267,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn WriteLock<TParam1, TParam2, TParam3, TReturn>(Func<TParam1, TParam2, TParam3, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2, param3);
+                return localAction(param1, param2, param3);
             }
         }
 
@@ -257,10 +292,13 @@ namespace IX.StandardExtensions.Threading
         protected void ReadLock<TParam1, TParam2, TParam3, TParam4>(Action<TParam1, TParam2, TParam3, TParam4> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2, param3, param4);
+                localAction(param1, param2, param3, param4);
             }
         }
 
@@ -281,10 +319,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn ReadLock<TParam1, TParam2, TParam3, TParam4, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2, param3, param4);
+                return localAction(param1, param2, param3, param4);
             }
         }
 
@@ -303,10 +344,13 @@ namespace IX.StandardExtensions.Threading
         protected void WriteLock<TParam1, TParam2, TParam3, TParam4>(Action<TParam1, TParam2, TParam3, TParam4> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2, param3, param4);
+                localAction(param1, param2, param3, param4);
             }
         }
 
@@ -327,10 +371,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn WriteLock<TParam1, TParam2, TParam3, TParam4, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2, param3, param4);
+                return localAction(param1, param2, param3, param4);
             }
         }
 
@@ -351,10 +398,13 @@ namespace IX.StandardExtensions.Threading
         protected void ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5>(Action<TParam1, TParam2, TParam3, TParam4, TParam5> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2, param3, param4, param5);
+                localAction(param1, param2, param3, param4, param5);
             }
         }
 
@@ -377,10 +427,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2, param3, param4, param5);
+                return localAction(param1, param2, param3, param4, param5);
             }
         }
 
@@ -401,10 +454,13 @@ namespace IX.StandardExtensions.Threading
         protected void WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5>(Action<TParam1, TParam2, TParam3, TParam4, TParam5> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2, param3, param4, param5);
+                localAction(param1, param2, param3, param4, param5);
             }
         }
 
@@ -427,10 +483,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2, param3, param4, param5);
+                return localAction(param1, param2, param3, param4, param5);
             }
         }
 
@@ -453,10 +512,13 @@ namespace IX.StandardExtensions.Threading
         protected void ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2, param3, param4, param5, param6);
+                localAction(param1, param2, param3, param4, param5, param6);
             }
         }
 
@@ -481,10 +543,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2, param3, param4, param5, param6);
+                return localAction(param1, param2, param3, param4, param5, param6);
             }
         }
 
@@ -507,10 +572,13 @@ namespace IX.StandardExtensions.Threading
         protected void WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2, param3, param4, param5, param6);
+                localAction(param1, param2, param3, param4, param5, param6);
             }
         }
 
@@ -535,10 +603,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2, param3, param4, param5, param6);
+                return localAction(param1, param2, param3, param4, param5, param6);
             }
         }
 
@@ -563,10 +634,13 @@ namespace IX.StandardExtensions.Threading
         protected void ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2, param3, param4, param5, param6, param7);
+                localAction(param1, param2, param3, param4, param5, param6, param7);
             }
         }
 
@@ -593,10 +667,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2, param3, param4, param5, param6, param7);
+                return localAction(param1, param2, param3, param4, param5, param6, param7);
             }
         }
 
@@ -621,10 +698,13 @@ namespace IX.StandardExtensions.Threading
         protected void WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2, param3, param4, param5, param6, param7);
+                localAction(param1, param2, param3, param4, param5, param6, param7);
             }
         }
 
@@ -651,10 +731,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2, param3, param4, param5, param6, param7);
+                return localAction(param1, param2, param3, param4, param5, param6, param7);
             }
         }
 
@@ -681,10 +764,13 @@ namespace IX.StandardExtensions.Threading
         protected void ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2, param3, param4, param5, param6, param7, param8);
+                localAction(param1, param2, param3, param4, param5, param6, param7, param8);
             }
         }
 
@@ -713,10 +799,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2, param3, param4, param5, param6, param7, param8);
+                return localAction(param1, param2, param3, param4, param5, param6, param7, param8);
             }
         }
 
@@ -743,10 +832,13 @@ namespace IX.StandardExtensions.Threading
         protected void WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                action(param1, param2, param3, param4, param5, param6, param7, param8);
+                localAction(param1, param2, param3, param4, param5, param6, param7, param8);
             }
         }
 
@@ -775,10 +867,13 @@ namespace IX.StandardExtensions.Threading
         protected TReturn WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                return action(param1, param2, param3, param4, param5, param6, param7, param8);
+                return localAction(param1, param2, param3, param4, param5, param6, param7, param8);
             }
         }
     }

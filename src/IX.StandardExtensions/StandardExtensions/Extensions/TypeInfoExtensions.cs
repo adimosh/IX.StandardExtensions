@@ -18,89 +18,9 @@ namespace IX.StandardExtensions.Extensions
     [PublicAPI]
     public static class TypeInfoExtensions
     {
-        /// <summary>
-        ///     Determines whether a type has a public parameterless constructor.
-        /// </summary>
-        /// <param name="info">The type information.</param>
-        /// <returns><see langword="true" /> if there is a parameterless constructor; otherwise, <see langword="false" />.</returns>
-        public static bool HasPublicParameterlessConstructor(this TypeInfo info) =>
-            !info.IsInterface &&
-            !info.IsAbstract &&
-            !info.IsGenericTypeDefinition &&
-            info.DeclaredConstructors.Any(
-                p => !p.IsStatic &&
-                     p.IsPublic &&
-                     !p.IsGenericMethodDefinition &&
-                     p.GetParameters()
-                         .Length ==
-                     0);
+#region Methods
 
-        /// <summary>
-        ///     Instantiates an object of the specified type.
-        /// </summary>
-        /// <param name="info">The type information.</param>
-        /// <returns>An instance of the object to instantiate.</returns>
-        public static object Instantiate(this TypeInfo info) => Activator.CreateInstance(info.AsType());
-
-        /// <summary>
-        ///     Instantiates an object of the specified type.
-        /// </summary>
-        /// <param name="info">The type information.</param>
-        /// <param name="parameters">The parameters to pass through to the constructor.</param>
-        /// <returns>An instance of the object to instantiate.</returns>
-        public static object Instantiate(
-            this TypeInfo info,
-            params object[] parameters) =>
-            Activator.CreateInstance(
-                info.AsType(),
-                parameters);
-
-        /// <summary>
-        ///     Gets a method with exact parameters, if one exists.
-        /// </summary>
-        /// <param name="typeInfo">The type information.</param>
-        /// <param name="name">The name of the method to find.</param>
-        /// <param name="parameters">The parameters list, if any.</param>
-        /// <returns>
-        ///     A <see cref="MethodInfo" /> object representing the found method, or <see langword="null" /> (
-        ///     <see langword="Nothing" /> in Visual Basic), if none is found.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="typeInfo" /> is <see langword="null" /> (
-        ///     <see langword="Nothing" /> in Visual Basic).
-        /// </exception>
-        public static MethodInfo? GetMethodWithExactParameters(
-            this TypeInfo typeInfo,
-            string name,
-            params Type[] parameters) =>
-            typeInfo.AsType()
-                .GetMethodWithExactParameters(
-                    name,
-                    parameters);
-
-        /// <summary>
-        ///     Gets a method with exact parameters, if one exists.
-        /// </summary>
-        /// <param name="typeInfo">The type information.</param>
-        /// <param name="name">The name of the method to find.</param>
-        /// <param name="parameters">The parameters list, if any.</param>
-        /// <returns>
-        ///     A <see cref="MethodInfo" /> object representing the found method, or <see langword="null" /> (
-        ///     <see langword="Nothing" /> in Visual Basic), if none is found.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="typeInfo" /> is <see langword="null" /> (
-        ///     <see langword="Nothing" /> in Visual Basic).
-        /// </exception>
-        public static MethodInfo? GetMethodWithExactParameters(
-            this TypeInfo typeInfo,
-            string name,
-            params TypeInfo[] parameters) =>
-            typeInfo.AsType()
-                .GetMethodWithExactParameters(
-                    name,
-                    parameters.Select(p => p.AsType())
-                        .ToArray());
+#region Static methods
 
         /// <summary>
         ///     Gets the attribute data by type without version binding.
@@ -125,14 +45,20 @@ namespace IX.StandardExtensions.Extensions
 #endif
             out TReturn value)
         {
-            Requires.NotNull(typeInfo, nameof(typeInfo));
+            Requires.NotNull(
+                typeInfo,
+                nameof(typeInfo));
 
-            CustomAttributeData attributeData = typeInfo.CustomAttributes.FirstOrDefault(
-                attribute => attribute.AttributeType.FullName == typeof(TAttribute).FullName);
+            CustomAttributeData? attributeData = Requires.NotNull(
+                    typeInfo,
+                    nameof(typeInfo))
+                .CustomAttributes.FirstOrDefault(
+                    attribute => attribute.AttributeType.FullName == typeof(TAttribute).FullName);
 
             if (attributeData == null)
             {
                 value = default!;
+
                 return false;
             }
 
@@ -170,7 +96,113 @@ namespace IX.StandardExtensions.Extensions
             }
 
             value = default!;
+
             return false;
         }
+
+        /// <summary>
+        ///     Gets a method with exact parameters, if one exists.
+        /// </summary>
+        /// <param name="typeInfo">The type information.</param>
+        /// <param name="name">The name of the method to find.</param>
+        /// <param name="parameters">The parameters list, if any.</param>
+        /// <returns>
+        ///     A <see cref="MethodInfo" /> object representing the found method, or <see langword="null" /> (
+        ///     <see langword="Nothing" /> in Visual Basic), if none is found.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="typeInfo" /> is <see langword="null" /> (
+        ///     <see langword="Nothing" /> in Visual Basic).
+        /// </exception>
+        public static MethodInfo? GetMethodWithExactParameters(
+            this TypeInfo typeInfo,
+            string name,
+            params Type[] parameters) =>
+            Requires.NotNull(
+                    typeInfo,
+                    nameof(typeInfo))
+                .AsType()
+                .GetMethodWithExactParameters(
+                    name,
+                    parameters);
+
+        /// <summary>
+        ///     Gets a method with exact parameters, if one exists.
+        /// </summary>
+        /// <param name="typeInfo">The type information.</param>
+        /// <param name="name">The name of the method to find.</param>
+        /// <param name="parameters">The parameters list, if any.</param>
+        /// <returns>
+        ///     A <see cref="MethodInfo" /> object representing the found method, or <see langword="null" /> (
+        ///     <see langword="Nothing" /> in Visual Basic), if none is found.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="typeInfo" /> is <see langword="null" /> (
+        ///     <see langword="Nothing" /> in Visual Basic).
+        /// </exception>
+        public static MethodInfo? GetMethodWithExactParameters(
+            this TypeInfo typeInfo,
+            string name,
+            params TypeInfo[] parameters) =>
+            Requires.NotNull(
+                    typeInfo,
+                    nameof(typeInfo))
+                .AsType()
+                .GetMethodWithExactParameters(
+                    name,
+                    parameters.Select(p => p.AsType())
+                        .ToArray());
+
+        /// <summary>
+        ///     Determines whether a type has a public parameterless constructor.
+        /// </summary>
+        /// <param name="info">The type information.</param>
+        /// <returns><see langword="true" /> if there is a parameterless constructor; otherwise, <see langword="false" />.</returns>
+        public static bool HasPublicParameterlessConstructor(this TypeInfo info) =>
+            !Requires.NotNull(
+                    info,
+                    nameof(info))
+                .IsInterface &&
+            !info.IsAbstract &&
+            !info.IsGenericTypeDefinition &&
+            info.DeclaredConstructors.Any(
+                p => !p.IsStatic &&
+                     p.IsPublic &&
+                     !p.IsGenericMethodDefinition &&
+                     p.GetParameters()
+                         .Length ==
+                     0);
+
+        /// <summary>
+        ///     Instantiates an object of the specified type.
+        /// </summary>
+        /// <param name="info">The type information.</param>
+        /// <returns>An instance of the object to instantiate.</returns>
+        public static object Instantiate(this TypeInfo info) =>
+            Activator.CreateInstance(
+                Requires.NotNull(
+                        info,
+                        nameof(info))
+                    .AsType());
+
+        /// <summary>
+        ///     Instantiates an object of the specified type.
+        /// </summary>
+        /// <param name="info">The type information.</param>
+        /// <param name="parameters">The parameters to pass through to the constructor.</param>
+        /// <returns>An instance of the object to instantiate.</returns>
+        public static object Instantiate(
+            this TypeInfo info,
+            params object[] parameters) =>
+            Activator.CreateInstance(
+                Requires.NotNull(
+                        info,
+                        nameof(info))
+                    .AsType(),
+                parameters);
+
+#endregion
+
+#endregion
     }
 }

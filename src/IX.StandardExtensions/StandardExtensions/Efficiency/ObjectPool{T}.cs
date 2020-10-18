@@ -17,6 +17,8 @@ namespace IX.StandardExtensions.Efficiency
     public class ObjectPool<T>
         where T : class
     {
+#region Internal state
+
         // Pool collections
         private readonly Queue<T> availableObjects;
 
@@ -25,6 +27,10 @@ namespace IX.StandardExtensions.Efficiency
 
         // Object factory
         private readonly Func<T> objectFactory;
+
+#endregion
+
+#region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ObjectPool{T}" /> class.
@@ -37,13 +43,17 @@ namespace IX.StandardExtensions.Efficiency
         public ObjectPool([NotNull] Func<T> objectFactory)
         {
             Requires.NotNull(
-                ref this.objectFactory,
+                out this.objectFactory,
                 objectFactory,
                 nameof(objectFactory));
 
             this.locker = new object();
             this.availableObjects = new Queue<T>();
         }
+
+#endregion
+
+#region Properties and indexers
 
         /// <summary>
         ///     Gets the count of unused objects in the pool.
@@ -54,15 +64,21 @@ namespace IX.StandardExtensions.Efficiency
         ///         If this property returns 0, there are no more unused objects in the pool. If one is requested, a new one will
         ///         most likely be created.
         ///     </para>
-        ///     <para>
-        ///         You should not make decisions on new instances based on this value, as it is not synchronized with the actual
-        ///         pool. It is possible to get a value of 0 here and
-        ///         a new item to not be created, should an object be returned to the pool between the property being accessed and
-        ///         the <see cref="Get" /> method called.
-        ///     </para>
         /// </remarks>
-        // ReSharper disable once InconsistentlySynchronizedField - We don't really care, we don't need this to be exact
-        public int Count => this.availableObjects.Count;
+        public int Count
+        {
+            get
+            {
+                lock (this.locker)
+                {
+                    return this.availableObjects.Count;
+                }
+            }
+        }
+
+#endregion
+
+#region Methods
 
         /// <summary>
         ///     Gets an object from the pool.
@@ -89,5 +105,7 @@ namespace IX.StandardExtensions.Efficiency
                 this.availableObjects.Enqueue(@object);
             }
         }
+
+#endregion
     }
 }

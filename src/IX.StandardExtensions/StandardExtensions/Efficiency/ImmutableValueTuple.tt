@@ -8,6 +8,8 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Efficiency
@@ -19,6 +21,8 @@ for (int i = 1; i <= 8; i++)
     string[] names = new string[i];
     string[] nameTypes = new string[i];
     string[] parameters = new string[i];
+    string[] parametersEquality = new string[i];
+    string[] parametersHashCode = new string[i];
 
     for (int j = 1; j <= i; j++)
     {
@@ -27,12 +31,18 @@ for (int i = 1; i <= 8; i++)
         names[idx] = $"item{j}";
         nameTypes[idx] = $"TItem{j} item{j}";
         parameters[idx] = $"this.Item{j} = item{j}";
+        parametersEquality[idx] = $"EqualityComparer<TItem{j}>.Default.Equals(this.Item{j}, other.Item{j})";
+        parametersHashCode[idx] = $"this.Item{j}";
     }
 
     string paramTypes = string.Join(", ", types);
     string paramNames = string.Join(", ", names);
     string paramNameTypes = string.Join(", ", nameTypes);
     string paramParameters = string.Join(", ", parameters);
+    string paramParametersEquality = string.Join($" &&{Environment.NewLine}            ", parametersEquality);
+    string paramParametersHashCode = i == 1 ?
+        parametersHashCode[0] + "?.GetHashCode() ?? 0" :
+        "(" + string.Join(", ", parametersHashCode) + ").GetHashCode()";
 #>
 
     /// <summary>
@@ -47,20 +57,8 @@ for (int i = 1; i <= 8; i++)
     }
 #>
     [PublicAPI]
-    public readonly struct ImmutableValueTuple<<#= paramTypes #>>
+    public readonly struct ImmutableValueTuple<<#= paramTypes #>> : IEquatable<ImmutableValueTuple<<#= paramTypes #>>>
     {
-<#
-    for (int j = 1; j <= i; j++)
-    {
-#>
-        /// <summary>
-        /// The item at index <#= j #>.
-        /// </summary>
-        public readonly <#= types[j-1] #> Item<#= j #>;
-
-<#
-    }
-#>
         /// <summary>
         /// Initializes a new instance of the <see cref="ImmutableValueTuple{<#= paramTypes #>}"/> struct.
         /// </summary>
@@ -83,6 +81,73 @@ for (int i = 1; i <= 8; i++)
     }
 #>
         }
+
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+        /// <summary>
+        /// Gets the item at index <#= j #>.
+        /// </summary>
+        public <#= types[j-1] #> Item<#= j #>
+        {
+            get;
+        }
+
+<#
+    }
+#>
+        /// <summary>
+        /// Implements the operator ==.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
+        public static bool operator ==(ImmutableValueTuple<<#= paramTypes #>> left, ImmutableValueTuple<<#= paramTypes #>> right) => left.Equals(right);
+
+        /// <summary>
+        /// Implements the operator !=.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
+        public static bool operator !=(ImmutableValueTuple<<#= paramTypes #>> left, ImmutableValueTuple<<#= paramTypes #>> right) => !(left == right);
+
+        /// <summary>
+        /// Equates this instance to another object.
+        /// </summary>
+        /// <param name="other">The other object to equate to.</param>
+        /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
+        public override bool Equals(object? other)
+        {
+            if (!(other is ImmutableValueTuple<<#= paramTypes #>> otherTuple))
+            {
+                return false;
+            }
+
+            return this.Equals(otherTuple);
+        }
+
+        /// <summary>
+        /// Equates this tuple to another tuple.
+        /// </summary>
+        /// <param name="other">The other tuple to equate to.</param>
+        /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
+        public bool Equals(ImmutableValueTuple<<#= paramTypes #>> other) =>
+            <#= paramParametersEquality #>;
+
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
+        /// </returns>
+        public override int GetHashCode() =>
+            <#= paramParametersHashCode #>;
     }
 <#
 }

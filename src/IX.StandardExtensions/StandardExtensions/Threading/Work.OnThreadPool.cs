@@ -19,6 +19,12 @@ namespace IX.StandardExtensions.Threading
     [PublicAPI]
     public static class Work
     {
+#if NET452
+        private static readonly Exception[] EmptyExceptionArray = new Exception[0];
+#else
+        private static readonly Exception[] EmptyExceptionArray = Array.Empty<Exception>();
+#endif
+
         #region Func with cancellation token, returning task
 
         /// <summary>
@@ -35,6 +41,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task OnThreadPoolAsync(
             [NotNull] this Func<CancellationToken, Task> methodToInvoke,
@@ -44,7 +54,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -64,7 +74,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -91,12 +101,12 @@ namespace IX.StandardExtensions.Threading
                     {
                         if (completedTask.IsCanceled)
                         {
-                            tcs.TrySetCanceled();
+                            tcs.TrySetCanceled(ct);
                         }
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
                         }
                         else
                         {
@@ -106,7 +116,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -136,6 +146,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TResult>(
             [NotNull] this Func<CancellationToken, Task<TResult>> methodToInvoke,
@@ -145,7 +159,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -165,7 +179,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -192,12 +206,12 @@ namespace IX.StandardExtensions.Threading
                     {
                         if (completedTask.IsCanceled)
                         {
-                            tcs.TrySetCanceled();
+                            tcs.TrySetCanceled(ct);
                         }
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
                         }
                         else
                         {
@@ -207,7 +221,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -238,6 +252,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task OnThreadPoolAsync<TState>(
             [NotNull] this Func<TState, CancellationToken, Task> methodToInvoke,
@@ -248,7 +266,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -269,7 +287,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -298,12 +316,12 @@ namespace IX.StandardExtensions.Threading
                     {
                         if (completedTask.IsCanceled)
                         {
-                            tcs.TrySetCanceled();
+                            tcs.TrySetCanceled(ct);
                         }
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
                         }
                         else
                         {
@@ -313,7 +331,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -345,6 +363,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TState, TResult>(
             [NotNull] this Func<TState, CancellationToken, Task<TResult>> methodToInvoke,
@@ -355,7 +377,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -376,7 +398,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -405,12 +427,12 @@ namespace IX.StandardExtensions.Threading
                     {
                         if (completedTask.IsCanceled)
                         {
-                            tcs.TrySetCanceled();
+                            tcs.TrySetCanceled(ct);
                         }
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
                         }
                         else
                         {
@@ -420,7 +442,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -450,6 +472,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TResult>(
             [NotNull] this Func<CancellationToken, TResult> methodToInvoke,
@@ -459,7 +485,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -479,7 +505,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -501,7 +527,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -533,6 +559,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TState, TResult>(
             [NotNull] this Func<TState, CancellationToken, TResult> methodToInvoke,
@@ -543,7 +573,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -563,7 +593,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -587,7 +617,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -616,6 +646,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task OnThreadPoolAsync(
             [NotNull] this Func<Task> methodToInvoke,
@@ -625,7 +659,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -645,7 +679,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -672,12 +706,12 @@ namespace IX.StandardExtensions.Threading
                     {
                         if (completedTask.IsCanceled)
                         {
-                            tcs.TrySetCanceled();
+                            tcs.TrySetCanceled(ct);
                         }
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
                         }
                         else
                         {
@@ -687,7 +721,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -717,6 +751,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TResult>(
             [NotNull] this Func<Task<TResult>> methodToInvoke,
@@ -726,7 +764,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -746,7 +784,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -773,12 +811,12 @@ namespace IX.StandardExtensions.Threading
                     {
                         if (completedTask.IsCanceled)
                         {
-                            tcs.TrySetCanceled();
+                            tcs.TrySetCanceled(ct);
                         }
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
                         }
                         else
                         {
@@ -788,7 +826,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -819,6 +857,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task OnThreadPoolAsync<TState>(
             [NotNull] this Func<TState, Task> methodToInvoke,
@@ -829,7 +871,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -850,7 +892,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -877,12 +919,12 @@ namespace IX.StandardExtensions.Threading
                     {
                         if (completedTask.IsCanceled)
                         {
-                            tcs.TrySetCanceled();
+                            tcs.TrySetCanceled(ct);
                         }
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
                         }
                         else
                         {
@@ -892,7 +934,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -924,6 +966,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TState, TResult>(
             [NotNull] this Func<TState, Task<TResult>> methodToInvoke,
@@ -934,7 +980,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -955,7 +1001,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -982,12 +1028,12 @@ namespace IX.StandardExtensions.Threading
                     {
                         if (completedTask.IsCanceled)
                         {
-                            tcs.TrySetCanceled();
+                            tcs.TrySetCanceled(ct);
                         }
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)new Exception[0]);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
                         }
                         else
                         {
@@ -997,7 +1043,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -1027,6 +1073,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TResult>(
             [NotNull] this Func<TResult> methodToInvoke,
@@ -1036,7 +1086,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -1056,7 +1106,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -1078,7 +1128,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -1110,6 +1160,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TState, TResult>(
             [NotNull] this Func<TState, TResult> methodToInvoke,
@@ -1120,7 +1174,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -1140,7 +1194,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -1162,7 +1216,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -1193,6 +1247,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task OnThreadPoolAsync<TState>(
             [NotNull] this Action<TState, CancellationToken> methodToInvoke,
@@ -1203,7 +1261,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -1223,7 +1281,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -1247,7 +1305,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -1276,6 +1334,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task OnThreadPoolAsync(
             [NotNull] this Action<CancellationToken> methodToInvoke,
@@ -1285,7 +1347,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -1305,7 +1367,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -1327,7 +1389,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -1358,6 +1420,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task OnThreadPoolAsync<TState>(
             [NotNull] this Action<TState> methodToInvoke,
@@ -1368,7 +1434,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -1388,7 +1454,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -1410,7 +1476,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -1439,6 +1505,10 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable because of thread switching.")]
+        [DiagCA.SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "It is OK to catch, as we're setting it in the task.")]
         [NotNull]
         public static Task OnThreadPoolAsync(
             [NotNull] this Action methodToInvoke,
@@ -1448,7 +1518,7 @@ namespace IX.StandardExtensions.Threading
 
             if (cancellationToken.IsCancellationRequested)
             {
-                taskCompletionSource.TrySetCanceled();
+                taskCompletionSource.TrySetCanceled(cancellationToken);
                 return taskCompletionSource.Task;
             }
 
@@ -1468,7 +1538,7 @@ namespace IX.StandardExtensions.Threading
 
                 if (ct.IsCancellationRequested)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                     return;
                 }
 
@@ -1490,7 +1560,7 @@ namespace IX.StandardExtensions.Threading
                 }
                 catch (OperationCanceledException)
                 {
-                    tcs.TrySetCanceled();
+                    tcs.TrySetCanceled(ct);
                 }
                 catch (Exception ex)
                 {
@@ -1502,5 +1572,11 @@ namespace IX.StandardExtensions.Threading
         }
 
         #endregion
+
+#if NET452
+        private static bool TrySetCanceled<TResult>(
+            this TaskCompletionSource<TResult> sourceTcs,
+            CancellationToken _ = default) => sourceTcs.TrySetCanceled();
+#endif
     }
 }

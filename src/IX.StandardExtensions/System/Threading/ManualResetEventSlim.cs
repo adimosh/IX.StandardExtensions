@@ -65,7 +65,7 @@ namespace IX.System.Threading
         public ManualResetEventSlim(GlobalThreading.ManualResetEventSlim manualResetEvent)
         {
             Requires.NotNull(
-                ref this.sre,
+                out this.sre,
                 manualResetEvent,
                 nameof(manualResetEvent));
         }

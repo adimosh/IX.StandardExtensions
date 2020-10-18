@@ -10,10 +10,12 @@ namespace IX.StandardExtensions.EventModel
     /// <summary>
     ///     An event arguments class depicting a boolean switch.
     /// </summary>
-    /// <seealso cref="System.EventArgs" />
+    /// <seealso cref="EventArgs" />
     [PublicAPI]
     public class SwitchEventArgs : EventArgs
     {
+#region Constructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="SwitchEventArgs" /> class.
         /// </summary>
@@ -23,12 +25,19 @@ namespace IX.StandardExtensions.EventModel
             this.Value = switchValue;
         }
 
-#pragma warning disable SA1623 // Property summary documentation should match accessors - It matches, however the analyzer expects that this is itself a switch instead of the boolean value of a switch.
+#endregion
+
+#region Properties and indexers
+
         /// <summary>
-        ///     Gets the value of the switch.
+        ///     Gets a value indicating whether the switch is set.
         /// </summary>
         /// <value>The switch value.</value>
-        public bool Value { get; }
-#pragma warning restore SA1623 // Property summary documentation should match accessors
+        public bool Value
+        {
+            get;
+        }
+
+#endregion
     }
 }

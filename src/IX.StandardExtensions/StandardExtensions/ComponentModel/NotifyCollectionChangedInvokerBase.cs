@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using JetBrains.Annotations;
@@ -19,6 +20,8 @@ namespace IX.StandardExtensions.ComponentModel
     [PublicAPI]
     public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase, INotifyCollectionChanged
     {
+#region Constructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="NotifyCollectionChangedInvokerBase" /> class.
         /// </summary>
@@ -35,12 +38,19 @@ namespace IX.StandardExtensions.ComponentModel
         {
         }
 
+#endregion
+
+#region Events
+
         /// <summary>
         ///     Occurs when the collection changes.
         /// </summary>
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
+        public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
-#pragma warning disable HAA0603 // Delegate allocation from a method group - This is unavoidable here
+#endregion
+
+#region Methods
+
         /// <summary>
         ///     Sends a notification to all the viewers of an observable collection inheriting this base class that their view
         ///     should be refreshed.
@@ -49,6 +59,10 @@ namespace IX.StandardExtensions.ComponentModel
         ///     This method is not affected by a notification suppression context, which means that it will send notifications even
         ///     if there currently is an ambient notification suppression context.
         /// </remarks>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         public void RefreshViewers()
         {
             if (this.CollectionChanged != null)
@@ -65,6 +79,10 @@ namespace IX.StandardExtensions.ComponentModel
         ///     This method is not affected by a notification suppression context, which means that it will send notifications even
         ///     if there currently is an ambient notification suppression context.
         /// </remarks>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         public void RefreshViewersAsynchronously()
         {
             if (this.CollectionChanged != null)
@@ -81,6 +99,10 @@ namespace IX.StandardExtensions.ComponentModel
         ///     This method is not affected by a notification suppression context, which means that it will send notifications even
         ///     if there currently is an ambient notification suppression context.
         /// </remarks>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         public void RefreshViewersSynchronously()
         {
             if (this.CollectionChanged != null)
@@ -92,6 +114,14 @@ namespace IX.StandardExtensions.ComponentModel
         /// <summary>
         ///     Triggers the <see cref="CollectionChanged" /> event as a collection reset event.
         /// </summary>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
+        [SuppressMessage(
+            "Design",
+            "CA1030:Use events where appropriate",
+            Justification = "This is used to raise the event.")]
         protected void RaiseCollectionReset()
         {
             if (SuppressNotificationsContext.AmbientSuppressionActive.Value)
@@ -108,6 +138,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <summary>
         ///     Triggers the <see cref="CollectionChanged" /> event as a collection reset event asynchronously.
         /// </summary>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void PostCollectionReset()
         {
             if (SuppressNotificationsContext.AmbientSuppressionActive.Value)
@@ -124,6 +158,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <summary>
         ///     Triggers the <see cref="CollectionChanged" /> event as a collection reset event synchronously.
         /// </summary>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void SendCollectionReset()
         {
             if (SuppressNotificationsContext.AmbientSuppressionActive.Value)
@@ -143,6 +181,14 @@ namespace IX.StandardExtensions.ComponentModel
         /// <typeparam name="T">The type of the item of the collection.</typeparam>
         /// <param name="index">The index at which the item was added.</param>
         /// <param name="item">The item that was added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
+        [SuppressMessage(
+            "Design",
+            "CA1030:Use events where appropriate",
+            Justification = "This is used to raise the event.")]
         protected void RaiseCollectionAdd<T>(
             int index,
             T item)
@@ -167,6 +213,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <typeparam name="T">The type of the item of the collection.</typeparam>
         /// <param name="index">The index at which the item was added.</param>
         /// <param name="item">The item that was added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void PostCollectionAdd<T>(
             int index,
             T item)
@@ -191,6 +241,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <typeparam name="T">The type of the item of the collection.</typeparam>
         /// <param name="index">The index at which the item was added.</param>
         /// <param name="item">The item that was added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void SendCollectionAdd<T>(
             int index,
             T item)
@@ -215,6 +269,14 @@ namespace IX.StandardExtensions.ComponentModel
         /// <typeparam name="T">The type of the item of the collection.</typeparam>
         /// <param name="index">The index at which the items were added.</param>
         /// <param name="items">The items that were added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
+        [SuppressMessage(
+            "Design",
+            "CA1030:Use events where appropriate",
+            Justification = "This is used to raise the event.")]
         protected void RaiseCollectionAdd<T>(
             int index,
             IEnumerable<T> items)
@@ -240,6 +302,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <typeparam name="T">The type of the item of the collection.</typeparam>
         /// <param name="index">The index at which the items were added.</param>
         /// <param name="items">The items that were added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void PostCollectionAdd<T>(
             int index,
             IEnumerable<T> items)
@@ -265,6 +331,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <typeparam name="T">The type of the item of the collection.</typeparam>
         /// <param name="index">The index at which the items were added.</param>
         /// <param name="items">The items that were added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void SendCollectionAdd<T>(
             int index,
             IEnumerable<T> items)
@@ -289,6 +359,14 @@ namespace IX.StandardExtensions.ComponentModel
         /// <typeparam name="T">The type of the item of the collection.</typeparam>
         /// <param name="index">The index at which the item was removed.</param>
         /// <param name="item">The item that was added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
+        [SuppressMessage(
+            "Design",
+            "CA1030:Use events where appropriate",
+            Justification = "This is used to raise the event.")]
         protected void RaiseCollectionRemove<T>(
             int index,
             T item)
@@ -313,6 +391,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <typeparam name="T">The type of the item of the collection.</typeparam>
         /// <param name="index">The index at which the item was removed.</param>
         /// <param name="item">The item that was added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void PostCollectionRemove<T>(
             int index,
             T item)
@@ -337,6 +419,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <typeparam name="T">The type of the item of the collection.</typeparam>
         /// <param name="index">The index at which the item was removed.</param>
         /// <param name="item">The item that was added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void SendCollectionRemove<T>(
             int index,
             T item)
@@ -361,6 +447,14 @@ namespace IX.StandardExtensions.ComponentModel
         /// <typeparam name="T">The type of the item of the collection.</typeparam>
         /// <param name="index">The index at which the items were removed.</param>
         /// <param name="items">The items that were removed.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
+        [SuppressMessage(
+            "Design",
+            "CA1030:Use events where appropriate",
+            Justification = "This is used to raise the event.")]
         protected void RaiseCollectionRemove<T>(
             int index,
             IEnumerable<T> items)
@@ -386,6 +480,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <typeparam name="T">The type of the item of the collection.</typeparam>
         /// <param name="index">The index at which the items were removed.</param>
         /// <param name="items">The items that were removed.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void PostCollectionRemove<T>(
             int index,
             IEnumerable<T> items)
@@ -411,6 +509,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <typeparam name="T">The type of the item of the collection.</typeparam>
         /// <param name="index">The index at which the items were removed.</param>
         /// <param name="items">The items that were removed.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void SendCollectionRemove<T>(
             int index,
             IEnumerable<T> items)
@@ -436,6 +538,14 @@ namespace IX.StandardExtensions.ComponentModel
         /// <param name="oldIndex">The index from which the item was moved.</param>
         /// <param name="newIndex">The index at which the item was moved.</param>
         /// <param name="item">The item that was added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
+        [SuppressMessage(
+            "Design",
+            "CA1030:Use events where appropriate",
+            Justification = "This is used to raise the event.")]
         protected void RaiseCollectionMove<T>(
             int oldIndex,
             int newIndex,
@@ -463,6 +573,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <param name="oldIndex">The index from which the item was moved.</param>
         /// <param name="newIndex">The index at which the item was moved.</param>
         /// <param name="item">The item that was added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void PostCollectionMove<T>(
             int oldIndex,
             int newIndex,
@@ -490,6 +604,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <param name="oldIndex">The index from which the item was moved.</param>
         /// <param name="newIndex">The index at which the item was moved.</param>
         /// <param name="item">The item that was added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void SendCollectionMove<T>(
             int oldIndex,
             int newIndex,
@@ -517,6 +635,14 @@ namespace IX.StandardExtensions.ComponentModel
         /// <param name="oldIndex">The index from which the items were moved.</param>
         /// <param name="newIndex">The index at which the items were moved.</param>
         /// <param name="items">The items that were added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
+        [SuppressMessage(
+            "Design",
+            "CA1030:Use events where appropriate",
+            Justification = "This is used to raise the event.")]
         protected void RaiseCollectionMove<T>(
             int oldIndex,
             int newIndex,
@@ -544,6 +670,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <param name="oldIndex">The index from which the items were moved.</param>
         /// <param name="newIndex">The index at which the items were moved.</param>
         /// <param name="items">The items that were added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void PostCollectionMove<T>(
             int oldIndex,
             int newIndex,
@@ -571,6 +701,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <param name="oldIndex">The index from which the items were moved.</param>
         /// <param name="newIndex">The index at which the items were moved.</param>
         /// <param name="items">The items that were added.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void SendCollectionMove<T>(
             int oldIndex,
             int newIndex,
@@ -598,6 +732,14 @@ namespace IX.StandardExtensions.ComponentModel
         /// <param name="index">The index at which the item was added.</param>
         /// <param name="oldItem">The original item.</param>
         /// <param name="newItem">The new item.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
+        [SuppressMessage(
+            "Design",
+            "CA1030:Use events where appropriate",
+            Justification = "This is used to raise the event.")]
         protected void RaiseCollectionReplace<T>(
             int index,
             T oldItem,
@@ -626,6 +768,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <param name="index">The index at which the item was added.</param>
         /// <param name="oldItem">The original item.</param>
         /// <param name="newItem">The new item.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void PostCollectionReplace<T>(
             int index,
             T oldItem,
@@ -653,6 +799,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <param name="index">The index at which the item was added.</param>
         /// <param name="oldItem">The original item.</param>
         /// <param name="newItem">The new item.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void SendCollectionReplace<T>(
             int index,
             T oldItem,
@@ -680,6 +830,14 @@ namespace IX.StandardExtensions.ComponentModel
         /// <param name="index">The index at which the items were added.</param>
         /// <param name="oldItems">The original items.</param>
         /// <param name="newItems">The new items.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
+        [SuppressMessage(
+            "Design",
+            "CA1030:Use events where appropriate",
+            Justification = "This is used to raise the event.")]
         protected void RaiseCollectionReplace<T>(
             int index,
             IEnumerable<T> oldItems,
@@ -708,6 +866,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <param name="index">The index at which the items were added.</param>
         /// <param name="oldItems">The original items.</param>
         /// <param name="newItems">The new items.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void PostCollectionReplace<T>(
             int index,
             IEnumerable<T> oldItems,
@@ -736,6 +898,10 @@ namespace IX.StandardExtensions.ComponentModel
         /// <param name="index">The index at which the items were added.</param>
         /// <param name="oldItems">The original items.</param>
         /// <param name="newItems">The new items.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "This is how the invoker works.")]
         protected void SendCollectionReplace<T>(
             int index,
             IEnumerable<T> oldItems,
@@ -755,14 +921,20 @@ namespace IX.StandardExtensions.ComponentModel
                     newItems);
             }
         }
-#pragma warning restore HAA0603 // Delegate allocation from a method group
 
         private void CollectionResetInvocationMethod() =>
             this.CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
-#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation - This is the way event arguments work
+        [SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "We have to catch Exception here, as that is the point of the invoker.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "We're sending it through an event, unavoidable.")]
         private void CollectionAddItemInvocationMethod<T>(
             int internalIndex,
             T internalItem)
@@ -784,6 +956,10 @@ namespace IX.StandardExtensions.ComponentModel
             }
         }
 
+        [SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "We have to catch Exception here, as that is the point of the invoker.")]
         private void CollectionAddItemsInvocationMethod<T>(
             int internalIndex,
             IEnumerable<T> internalItems)
@@ -805,6 +981,14 @@ namespace IX.StandardExtensions.ComponentModel
             }
         }
 
+        [SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "We have to catch Exception here, as that is the point of the invoker.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "We're sending it through an event, unavoidable.")]
         private void CollectionRemoveItemInvocationMethod<T>(
             int internalIndex,
             T internalItem)
@@ -826,6 +1010,10 @@ namespace IX.StandardExtensions.ComponentModel
             }
         }
 
+        [SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "We have to catch Exception here, as that is the point of the invoker.")]
         private void CollectionRemoveItemsInvocationMethod<T>(
             int internalIndex,
             IEnumerable<T> internalItems)
@@ -847,6 +1035,14 @@ namespace IX.StandardExtensions.ComponentModel
             }
         }
 
+        [SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "We have to catch Exception here, as that is the point of the invoker.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "We're sending it through an event, unavoidable.")]
         private void CollectionMoveItemInvocationMethod<T>(
             int internalOldIndex,
             int internalNewIndex,
@@ -870,6 +1066,10 @@ namespace IX.StandardExtensions.ComponentModel
             }
         }
 
+        [SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "We have to catch Exception here, as that is the point of the invoker.")]
         private void CollectionMoveItemsInvocationMethod<T>(
             int internalOldIndex,
             int internalNewIndex,
@@ -893,6 +1093,14 @@ namespace IX.StandardExtensions.ComponentModel
             }
         }
 
+        [SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "We have to catch Exception here, as that is the point of the invoker.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "We're sending it through an event, unavoidable.")]
         private void CollectionReplaceItemInvocationMethod<T>(
             int internalIndex,
             T internalOldItem,
@@ -916,6 +1124,10 @@ namespace IX.StandardExtensions.ComponentModel
             }
         }
 
+        [SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "We have to catch Exception here, as that is the point of the invoker.")]
         private void CollectionReplaceItemsInvocationMethod<T>(
             int internalIndex,
             IEnumerable<T> internalOldItems,
@@ -938,6 +1150,7 @@ namespace IX.StandardExtensions.ComponentModel
                     new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
         }
-#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
+
+#endregion
     }
 }

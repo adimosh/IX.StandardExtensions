@@ -21,7 +21,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="T">The type of the items of the array to clone.</typeparam>
         /// <param name="source">The source array.</param>
         /// <returns>An array of deeply-copied elements from the original array.</returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         ///     <paramref name="source" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
@@ -50,7 +50,7 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="T">The type of the items of the array to clone.</typeparam>
         /// <param name="source">The source array.</param>
         /// <returns>An array of deeply-copied elements from the original array.</returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         ///     <paramref name="source" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
@@ -87,7 +87,7 @@ namespace IX.StandardExtensions.Extensions
         ///     <para>If deep cloning is required, please use the <see cref="DeepClone{T}(T[])" /> instead of this method.</para>
         ///     <para>Value types are value-copied.</para>
         /// </remarks>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         ///     <paramref name="source" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
@@ -116,11 +116,11 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="source">The source array.</param>
         /// <param name="length">The length of the sub-array to copy.</param>
         /// <returns>A new array with items copied.</returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         ///     <paramref name="source" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
-        /// <exception cref="System.ArgumentException">
+        /// <exception cref="ArgumentException">
         ///     <paramref name="length" /> is greater than 0
         ///     or
         ///     the length exceeds the bounds of the source array.
@@ -163,11 +163,11 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="sourceIndex">The index at which to start.</param>
         /// <param name="length">The length of the sub-array to copy.</param>
         /// <returns>A new array with items copied.</returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         ///     <paramref name="source" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
-        /// <exception cref="System.ArgumentException">
+        /// <exception cref="ArgumentException">
         ///     <paramref name="sourceIndex" /> is less than 0 or greater than the size of the array
         ///     or
         ///     <paramref name="length" /> is greater than 0

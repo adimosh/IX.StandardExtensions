@@ -51,7 +51,7 @@ for (int i = 1; i <= 8; i++)
 <#
     }
 #>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check for emptiness.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check for emptiness.</param>
         /// <param name="action">The predicate to check items with.</param>
 <#
     for (int j = 1; j <= i; j++)
@@ -65,16 +65,16 @@ for (int i = 1; i <= 8; i++)
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, <#= paramTypes #>>(this IEnumerable<TItem> source, Func<TItem, <#= paramTypes #>, bool> action, <#= paramNameTypes #>)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, <#= paramNames #>))
+                if (localAction(item, <#= paramNames #>))
                 {
                     return true;
                 }
@@ -95,7 +95,7 @@ for (int i = 1; i <= 8; i++)
 <#
     }
 #>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to filter.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to filter.</param>
         /// <param name="action">The predicate to check items with.</param>
 <#
     for (int j = 1; j <= i; j++)
@@ -109,16 +109,16 @@ for (int i = 1; i <= 8; i++)
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, <#= paramTypes #>>(this IEnumerable<TItem> source, Func<TItem, <#= paramTypes #>, bool> action, <#= paramNameTypes #>)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, <#= paramNames #>))
+                if (localAction(item, <#= paramNames #>))
                 {
                     yield return item;
                 }
@@ -137,7 +137,7 @@ for (int i = 1; i <= 8; i++)
 <#
     }
 #>
-        /// <param name="source">The <see cref="System.Collections.Generic.IEnumerable{T}" /> to check.</param>
+        /// <param name="source">The <see cref="IEnumerable{T}" /> to check.</param>
         /// <param name="action">The predicate to check items with.</param>
 <#
     for (int j = 1; j <= i; j++)
@@ -151,16 +151,16 @@ for (int i = 1; i <= 8; i++)
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, <#= paramTypes #>>(this IEnumerable<TItem> source, Func<TItem, <#= paramTypes #>, bool> action, <#= paramNameTypes #>)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
-            Requires.NotNull(
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            foreach (TItem item in source)
+            foreach (TItem item in localSource)
             {
-                if (action(item, <#= paramNames #>))
+                if (localAction(item, <#= paramNames #>))
                 {
                     return item;
                 }

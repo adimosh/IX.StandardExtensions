@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace IX.StandardExtensions {
+namespace IX {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace IX.StandardExtensions {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("IX.StandardExtensions.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("IX.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -187,6 +187,15 @@ namespace IX.StandardExtensions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The given key was already present in the dictionary..
+        /// </summary>
+        internal static string ErrorKeyFoundInDictionary {
+            get {
+                return ResourceManager.GetString("ErrorKeyFoundInDictionary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The length should be small enough to not result in an operation outside of the bounds of the array..
         /// </summary>
         internal static string ErrorLengthGoesPastArrayLimits {
@@ -214,6 +223,15 @@ namespace IX.StandardExtensions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The queue is currently empty..
+        /// </summary>
+        internal static string ErrorQueueIsEmpty {
+            get {
+                return ResourceManager.GetString("ErrorQueueIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The source index must point to a location within the array..
         /// </summary>
         internal static string ErrorSourceIndexMustPointToALocationWithinTheArray {
@@ -223,11 +241,38 @@ namespace IX.StandardExtensions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The stack is currently empty..
+        /// </summary>
+        internal static string ErrorStackIsEmpty {
+            get {
+                return ResourceManager.GetString("ErrorStackIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The operation that has made a call to this method should stop retrying, as a critical error, a state change or unrecoverable environment conditions guarantee failure on subsequent retries..
         /// </summary>
         internal static string ErrorStopRetrying {
             get {
                 return ResourceManager.GetString("ErrorStopRetrying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Limit argument must be a non-negative integer..
+        /// </summary>
+        internal static string LimitArgumentNegativeExceptionDefaultTextNoArgument {
+            get {
+                return ResourceManager.GetString("LimitArgumentNegativeExceptionDefaultTextNoArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Limit argument must be a non-negative integer. Argument name: {0}.
+        /// </summary>
+        internal static string LimitArgumentNegativeExceptionDefaultTextWithArgument {
+            get {
+                return ResourceManager.GetString("LimitArgumentNegativeExceptionDefaultTextWithArgument", resourceCulture);
             }
         }
         

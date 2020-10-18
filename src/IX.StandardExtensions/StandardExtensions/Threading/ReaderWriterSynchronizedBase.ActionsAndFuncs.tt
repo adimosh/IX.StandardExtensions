@@ -9,8 +9,7 @@
 // </copyright>
 
 using System;
-using IX.StandardExtensions.ComponentModel;
-using IX.StandardExtensions.Threading;
+using IX.StandardExtensions.Contracts;
 
 namespace IX.StandardExtensions.Threading
 {
@@ -62,10 +61,13 @@ for (int i = 1; i <= 8; i++)
         protected void ReadLock<<#= paramTypes #>>(Action<<#= paramTypes #>> action, <#= paramNameTypes #>)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                action(<#= paramNames #>);
+                localAction(<#= paramNames #>);
             }
         }
 
@@ -94,10 +96,13 @@ for (int i = 1; i <= 8; i++)
         protected TReturn ReadLock<<#= paramTypes #>, TReturn>(Func<<#= paramTypes #>, TReturn> action, <#= paramNameTypes #>)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(this.locker))
             {
-                return action(<#= paramNames #>);
+                return localAction(<#= paramNames #>);
             }
         }
 
@@ -124,10 +129,13 @@ for (int i = 1; i <= 8; i++)
         protected void WriteLock<<#= paramTypes #>>(Action<<#= paramTypes #>> action, <#= paramNameTypes #>)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                action(<#= paramNames #>);
+                localAction(<#= paramNames #>);
             }
         }
 
@@ -156,10 +164,13 @@ for (int i = 1; i <= 8; i++)
         protected TReturn WriteLock<<#= paramTypes #>, TReturn>(Func<<#= paramTypes #>, TReturn> action, <#= paramNameTypes #>)
         {
             this.ThrowIfCurrentObjectDisposed();
+            var localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(this.locker))
             {
-                return action(<#= paramNames #>);
+                return localAction(<#= paramNames #>);
             }
         }
 <#

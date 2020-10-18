@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using IX.StandardExtensions.Contracts;
 
 namespace IX.StandardExtensions.Extensions
 {
@@ -22,8 +23,8 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
         public static int SequenceCompare<T>(
-            this IEnumerable<IComparable<T>> left,
-            IEnumerable<T> right)
+            this IEnumerable<IComparable<T>>? left,
+            IEnumerable<T>? right)
         {
             if (left == null)
             {
@@ -51,7 +52,7 @@ namespace IX.StandardExtensions.Extensions
                 }
 
                 IComparable<T>? c1 = b1 ? e1.Current : default;
-                T c2 = b2 ? e2.Current : default;
+                T c2 = b2 ? e2.Current : default!;
 
                 var cr = c1?.CompareTo(c2) ?? (c2 == null ? 0 : 1);
                 if (cr != 0)
@@ -68,8 +69,8 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
         public static int SequenceCompare(
-            this IEnumerable<IComparable> left,
-            IEnumerable<object> right)
+            this IEnumerable<IComparable>? left,
+            IEnumerable<object>? right)
         {
             if (left == null)
             {
@@ -116,10 +117,14 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="comparer">The comparer to use when equating items.</param>
         /// <returns>The result of the comparison.</returns>
         public static int SequenceCompare<T>(
-            this IEnumerable<T> left,
-            IEnumerable<T> right,
+            this IEnumerable<T>? left,
+            IEnumerable<T>? right,
             IComparer<T> comparer)
         {
+            var localComparer = Requires.NotNull(
+                comparer,
+                nameof(comparer));
+
             if (left == null)
             {
                 // Left is null, we return based on whether or not right is null as well
@@ -145,10 +150,10 @@ namespace IX.StandardExtensions.Extensions
                     return 0;
                 }
 
-                T c1 = b1 ? e1.Current : default;
-                T c2 = b2 ? e2.Current : default;
+                T c1 = b1 ? e1.Current : default!;
+                T c2 = b2 ? e2.Current : default!;
 
-                var cr = comparer.Compare(
+                var cr = localComparer.Compare(
                     c1,
                     c2);
                 if (cr != 0)
@@ -167,10 +172,14 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="comparer">The comparer to use when equating items.</param>
         /// <returns>The result of the comparison.</returns>
         public static int SequenceCompare<T>(
-            this IEnumerable<T> left,
-            IEnumerable<T> right,
+            this IEnumerable<T>? left,
+            IEnumerable<T>? right,
             Func<T, T, int> comparer)
         {
+            var localComparer = Requires.NotNull(
+                comparer,
+                nameof(comparer));
+
             if (left == null)
             {
                 // Left is null, we return based on whether or not right is null as well
@@ -196,10 +205,10 @@ namespace IX.StandardExtensions.Extensions
                     return 0;
                 }
 
-                T c1 = b1 ? e1.Current : default;
-                T c2 = b2 ? e2.Current : default;
+                T c1 = b1 ? e1.Current : default!;
+                T c2 = b2 ? e2.Current : default!;
 
-                var cr = comparer(
+                var cr = localComparer(
                     c1,
                     c2);
                 if (cr != 0)
@@ -216,8 +225,8 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
         public static int SequenceCompareByObjectComparison(
-            this IEnumerable<object> left,
-            IEnumerable<object> right)
+            this IEnumerable<object>? left,
+            IEnumerable<object>? right)
         {
             if (left == null)
             {
@@ -263,8 +272,8 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right operand enumerable.</param>
         /// <returns>The result of the comparison.</returns>
         public static int SequenceCompareByReference(
-            this IEnumerable<object> left,
-            IEnumerable<object> right)
+            this IEnumerable<object>? left,
+            IEnumerable<object>? right)
         {
             if (left == null)
             {

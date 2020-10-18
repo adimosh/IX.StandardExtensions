@@ -15,6 +15,10 @@ namespace IX.StandardExtensions.Extensions
     [PublicAPI]
     public static class BitwiseExtensions
     {
+#region Methods
+
+#region Static methods
+
         /// <summary>
         ///     Shifts all the bits in the bit array to the left.
         /// </summary>
@@ -31,8 +35,12 @@ namespace IX.StandardExtensions.Extensions
             this BitArray data,
             int howManyBits)
         {
-            BitArray? result = Shift(
+            BitArray localData = Requires.NotNull(
                 data,
+                nameof(data));
+
+            BitArray? result = Shift(
+                localData,
                 howManyBits);
 
             if (result != null)
@@ -56,6 +64,39 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
+        ///     Shifts all the bits in the byte array to the left.
+        /// </summary>
+        /// <param name="data">The original data.</param>
+        /// <param name="howManyBits">How many bits to shift by.</param>
+        /// <returns>The shifted byte array.</returns>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="data" /> is <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     <paramref name="howManyBits" /> is less than zero.
+        /// </exception>
+        public static byte[] LeftShift(
+            this byte[] data,
+            int howManyBits)
+        {
+            var ba = new BitArray(
+                Requires.NotNull(
+                    data,
+                    nameof(data)));
+
+            ba = LeftShift(
+                ba,
+                howManyBits);
+
+            var result = new byte[data.Length];
+            ba.CopyTo(
+                result,
+                0);
+
+            return result;
+        }
+
+        /// <summary>
         ///     Shifts all the bits in the bit array to the right.
         /// </summary>
         /// <param name="data">The original data.</param>
@@ -71,8 +112,12 @@ namespace IX.StandardExtensions.Extensions
             this BitArray data,
             int howManyBits)
         {
-            BitArray? result = Shift(
+            BitArray localData = Requires.NotNull(
                 data,
+                nameof(data));
+
+            BitArray? result = Shift(
+                localData,
                 howManyBits);
 
             if (result != null)
@@ -96,36 +141,6 @@ namespace IX.StandardExtensions.Extensions
         }
 
         /// <summary>
-        ///     Shifts all the bits in the byte array to the left.
-        /// </summary>
-        /// <param name="data">The original data.</param>
-        /// <param name="howManyBits">How many bits to shift by.</param>
-        /// <returns>The shifted byte array.</returns>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="data" /> is <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///     <paramref name="howManyBits" /> is less than zero.
-        /// </exception>
-        public static byte[] LeftShift(
-            this byte[] data,
-            int howManyBits)
-        {
-            var ba = new BitArray(data ?? throw new ArgumentNullException(nameof(data)));
-
-            ba = LeftShift(
-                ba,
-                howManyBits);
-
-            var result = new byte[data.Length];
-            ba.CopyTo(
-                result,
-                0);
-
-            return result;
-        }
-
-        /// <summary>
         ///     Shifts all the bits in the byte array to the right.
         /// </summary>
         /// <param name="data">The original data.</param>
@@ -141,7 +156,10 @@ namespace IX.StandardExtensions.Extensions
             this byte[] data,
             int howManyBits)
         {
-            var ba = new BitArray(data ?? throw new ArgumentNullException(nameof(data)));
+            var ba = new BitArray(
+                Requires.NotNull(
+                    data,
+                    nameof(data)));
 
             ba = RightShift(
                 ba,
@@ -159,9 +177,6 @@ namespace IX.StandardExtensions.Extensions
             BitArray data,
             int howManyBits)
         {
-            Requires.NotNull(
-                data,
-                nameof(data));
             Requires.NonNegative(
                 in howManyBits,
                 nameof(howManyBits));
@@ -173,5 +188,9 @@ namespace IX.StandardExtensions.Extensions
 
             return howManyBits >= data.Length ? new BitArray(data.Length) : null;
         }
+
+#endregion
+
+#endregion
     }
 }

@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
@@ -17,7 +18,13 @@ namespace IX.StandardExtensions.ComponentModel
     [PublicAPI]
     public abstract partial class SynchronizationContextInvokerBase : DisposableBase, INotifyThreadException
     {
+#region Internal state
+
         private SynchronizationContext? synchronizationContext;
+
+#endregion
+
+#region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SynchronizationContextInvokerBase" /> class.
@@ -36,10 +43,18 @@ namespace IX.StandardExtensions.ComponentModel
             this.synchronizationContext = synchronizationContext;
         }
 
+#endregion
+
+#region Events
+
         /// <summary>
         ///     Triggered when an exception has occurred on a different thread.
         /// </summary>
         public event EventHandler<ExceptionOccurredEventArgs>? ExceptionOccurredOnSeparateThread;
+
+#endregion
+
+#region Properties and indexers
 
         /// <summary>
         ///     Gets the synchronization context used by this object, if any.
@@ -47,14 +62,35 @@ namespace IX.StandardExtensions.ComponentModel
         /// <value>The synchronization context.</value>
         public SynchronizationContext? SynchronizationContext => this.synchronizationContext;
 
+#endregion
+
+#region Methods
+
+#region Disposable
+
+        /// <summary>
+        ///     Disposes in the general (managed and unmanaged) context.
+        /// </summary>
+        protected override void DisposeGeneralContext()
+        {
+            Interlocked.Exchange(
+                ref this.synchronizationContext,
+                null);
+
+            base.DisposeGeneralContext();
+        }
+
+#endregion
+
         /// <summary>
         ///     Invokes the specified action using the synchronization context, or on either this thread or a separate thread if
         ///     there is no synchronization context available.
         /// </summary>
         /// <param name="action">The action to invoke.</param>
-        protected void Invoke(Action action) => this.Invoke(
-            p => ((Action)p)(),
-            action);
+        protected void Invoke(Action action) =>
+            this.Invoke(
+                p => p(),
+                action);
 
         /// <summary>
         ///     Invokes the specified action using the synchronization context, or on either this thread or a separate thread if
@@ -62,12 +98,12 @@ namespace IX.StandardExtensions.ComponentModel
         /// </summary>
         /// <param name="action">The action to invoke.</param>
         /// <param name="state">The state object to pass on to the action.</param>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Appears to be unavoidable at this time.")]
         protected void Invoke(
-            [NotNull] Action<object> action,
+            Action<object> action,
             object state)
         {
             this.ThrowIfCurrentObjectDisposed();
@@ -115,9 +151,10 @@ namespace IX.StandardExtensions.ComponentModel
         ///     there is no synchronization context available.
         /// </summary>
         /// <param name="action">The action to invoke.</param>
-        protected void InvokePost(Action action) => this.InvokePost(
-            p => ((Action)p)(),
-            action);
+        protected void InvokePost(Action action) =>
+            this.InvokePost(
+                p => p(),
+                action);
 
         /// <summary>
         ///     Invokes the specified action by posting on the synchronization context, or on a separate thread if
@@ -125,12 +162,12 @@ namespace IX.StandardExtensions.ComponentModel
         /// </summary>
         /// <param name="action">The action to invoke.</param>
         /// <param name="state">The state object to pass on to the action.</param>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Appears to be unavoidable at this time.")]
         protected void InvokePost(
-            [NotNull] Action<object> action,
+            Action<object> action,
             object state)
         {
             this.ThrowIfCurrentObjectDisposed();
@@ -163,9 +200,10 @@ namespace IX.StandardExtensions.ComponentModel
         ///     there is no synchronization context available.
         /// </summary>
         /// <param name="action">The action to invoke.</param>
-        protected void InvokeSend(Action action) => this.InvokeSend(
-            p => ((Action)p)(),
-            action);
+        protected void InvokeSend(Action action) =>
+            this.InvokeSend(
+                p => p(),
+                action);
 
         /// <summary>
         ///     Invokes the specified action synchronously using the synchronization context, or on this thread if
@@ -173,12 +211,12 @@ namespace IX.StandardExtensions.ComponentModel
         /// </summary>
         /// <param name="action">The action to invoke.</param>
         /// <param name="state">The state object to pass on to the action.</param>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Appears to be unavoidable at this time.")]
         protected void InvokeSend(
-            [NotNull] Action<object> action,
+            Action<object> action,
             object state)
         {
             this.ThrowIfCurrentObjectDisposed();
@@ -201,21 +239,9 @@ namespace IX.StandardExtensions.ComponentModel
                     state);
 
                 currentSynchronizationContext.Send(
-                        this.SendOrPost,
-                        outerState);
+                    this.SendOrPost,
+                    outerState);
             }
-        }
-
-        /// <summary>
-        ///     Disposes in the general (managed and unmanaged) context.
-        /// </summary>
-        protected override void DisposeGeneralContext()
-        {
-            Interlocked.Exchange(
-                ref this.synchronizationContext,
-                null);
-
-            base.DisposeGeneralContext();
         }
 
         /// <summary>
@@ -228,7 +254,7 @@ namespace IX.StandardExtensions.ComponentModel
                 this,
                 new ExceptionOccurredEventArgs(ex));
 
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "We specifically do not want to do that.")]
@@ -245,5 +271,7 @@ namespace IX.StandardExtensions.ComponentModel
                 this.InvokeExceptionOccurredOnSeparateThread(ex);
             }
         }
+
+#endregion
     }
 }

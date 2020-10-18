@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
@@ -17,12 +18,18 @@ namespace IX.StandardExtensions.Threading
     /// <seealso cref="AtomicEnumerator{TItem}" />
     [PublicAPI]
     internal sealed class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TItem>
-        where TEnumerator : notnull, IEnumerator<TItem>
+        where TEnumerator : IEnumerator<TItem>
     {
+#region Internal state
+
+        private readonly Func<ReadOnlySynchronizationLocker> readLock;
         private TItem current;
         private TEnumerator existingEnumerator;
         private bool movedNext;
-        private Func<ReadOnlySynchronizationLocker> readLock;
+
+#endregion
+
+#region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="AtomicEnumerator{TItem, TEnumerator}" /> class.
@@ -45,9 +52,19 @@ namespace IX.StandardExtensions.Threading
             }
 
             this.existingEnumerator = existingEnumerator;
+            this.current = default!; /* We forgive this possible null reference, as it should not be possible to
+                                      * access it before reading something from the enumerator
+                                      */
 
-            Requires.NotNull(ref this.readLock, readLock, nameof(readLock));
+            Requires.NotNull(
+                out this.readLock,
+                readLock,
+                nameof(readLock));
         }
+
+#endregion
+
+#region Properties and indexers
 
         /// <summary>
         ///     Gets the element in the collection at the current position of the enumerator.
@@ -67,6 +84,10 @@ namespace IX.StandardExtensions.Threading
                 return this.current;
             }
         }
+
+#endregion
+
+#region Methods
 
         /// <summary>
         ///     Advances the enumerator to the next element of the collection.
@@ -110,10 +131,12 @@ namespace IX.StandardExtensions.Threading
             this.current = default!;
         }
 
+#region Disposable
+
         /// <summary>
         ///     Disposes in the managed context.
         /// </summary>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "IDisposableAnalyzers.Correctness",
             "IDISP007:Don't dispose injected.",
             Justification = "The atomic enumerator requires ownership of the source enumerator.")]
@@ -123,5 +146,9 @@ namespace IX.StandardExtensions.Threading
 
             this.existingEnumerator.Dispose();
         }
+
+#endregion
+
+#endregion
     }
 }

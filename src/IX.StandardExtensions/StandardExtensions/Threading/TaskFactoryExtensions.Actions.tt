@@ -23,7 +23,8 @@ namespace IX.StandardExtensions.Threading
     /// </summary>
     public static partial class TaskFactoryExtensions
     {
-#pragma warning disable HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance<#
+#pragma warning disable HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance
+#pragma warning disable UseAsyncSuffix // Use Async suffix<#
 for (int i = 1; i <= 8; i++)
 {
     string[] types = new string[i];
@@ -76,12 +77,15 @@ for (int i = 1; i <= 8; i++)
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            return StartWithStateOnDefaultTaskScheduler(
-                taskFactory,
+            return StartWithStateOnDefaultTaskSchedulerAsync(
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -106,7 +110,7 @@ for (int i = 1; i <= 8; i++)
 
                     innerAction(<#= paramParameters #>);
                 },
-                (action, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
+                (localAction, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
                 false,
                 cancellationToken);
         }
@@ -141,12 +145,15 @@ for (int i = 1; i <= 8; i++)
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            return StartWithStateOnDefaultTaskScheduler(
-                taskFactory,
+            return StartWithStateOnDefaultTaskSchedulerAsync(
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -171,7 +178,7 @@ for (int i = 1; i <= 8; i++)
 
                     innerAction(<#= paramParameters #>);
                 },
-                (action, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
+                (localAction, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
                 true,
                 cancellationToken);
         }
@@ -207,12 +214,15 @@ for (int i = 1; i <= 8; i++)
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            return StartWithStateOnDefaultTaskScheduler(
-                taskFactory,
+            return StartWithStateOnDefaultTaskSchedulerAsync(
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -237,7 +247,7 @@ for (int i = 1; i <= 8; i++)
 
                     return innerAction(<#= paramParameters #>);
                 },
-                (action, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
+                (localAction, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
                 false,
                 cancellationToken);
         }
@@ -272,12 +282,15 @@ for (int i = 1; i <= 8; i++)
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
+            var localTaskFactory = Requires.NotNull(
+                taskFactory,
+                nameof(taskFactory));
+            var localAction = Requires.NotNull(
                 action,
                 nameof(action));
 
-            return StartWithStateOnDefaultTaskScheduler(
-                taskFactory,
+            return StartWithStateOnDefaultTaskSchedulerAsync(
+                localTaskFactory,
                 rawState =>
                 {
                     var (innerAction, innerState) = rawState;
@@ -302,13 +315,14 @@ for (int i = 1; i <= 8; i++)
 
                     return innerAction(<#= paramParameters #>);
                 },
-                (action, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
+                (localAction, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
                 true,
                 cancellationToken);
         }
 <#
 }
 #>
+#pragma warning restore UseAsyncSuffix // Use Async suffix
 #pragma warning restore HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance
     }
 }

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using IX.StandardExtensions.ComponentModel;
@@ -19,9 +20,15 @@ namespace IX.StandardExtensions.Efficiency
     [PublicAPI]
     public class ObjectPoolQueue<T> : INotifyThreadException
     {
+#region Internal state
+
         private readonly CancellationToken cancellationToken;
         private readonly Queue<T> objects;
         private readonly Func<IEnumerable<T>, int, Task<bool>> queueAction;
+
+#endregion
+
+#region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ObjectPoolQueue{T}" /> class.
@@ -37,7 +44,7 @@ namespace IX.StandardExtensions.Efficiency
         ///     <para>Every time there is an exception, the action is re-invoked, and the retry count is increased.</para>
         ///     <para>In order to stop retrying, a <see cref="StopRetryingException" /> should be thrown.</para>
         /// </remarks>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "This is of little consequence here, and is required for operation.")]
@@ -56,35 +63,56 @@ namespace IX.StandardExtensions.Efficiency
                 this.cancellationToken);
         }
 
+#endregion
+
+#region Events
+
         /// <summary>
         ///     Triggered when an exception has occurred on a different thread.
         /// </summary>
         public event EventHandler<ExceptionOccurredEventArgs>? ExceptionOccurredOnSeparateThread;
 
+#endregion
+
+#region Properties and indexers
+
         /// <summary>
         ///     Gets or sets the object limit.
         /// </summary>
         /// <value>The object limit.</value>
-        public int ObjectLimit { get; set; }
+        public int ObjectLimit
+        {
+            get;
+            set;
+        }
+
+#endregion
+
+#region Methods
 
         /// <summary>
         ///     Enqueues the specified object in the pool queue.
         /// </summary>
         /// <param name="object">The object to enqueue.</param>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Naming",
             "CA1720:Identifier contains type name",
             Justification = "We don't really care.")]
-        public void Enqueue(T @object) => this.objects.Enqueue(@object);
+        public void Enqueue(T @object) =>
+            this.objects.Enqueue(@object);
 
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "We don't really know what boxing occurs here.")]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Not really avoidable.")]
+        [SuppressMessage(
+            "Design",
+            "CA1031:Do not catch general exception types",
+            Justification = "This is expected in this situation.")]
         private async Task RunAsync()
         {
             Thread.CurrentThread.Name = $"Object pool queue {Thread.CurrentThread.ManagedThreadId}";
@@ -96,8 +124,9 @@ namespace IX.StandardExtensions.Efficiency
                     try
                     {
                         await Task.Delay(
-                            1000,
-                            this.cancellationToken).ConfigureAwait(false);
+                                1000,
+                                this.cancellationToken)
+                            .ConfigureAwait(false);
                     }
                     catch (TaskCanceledException)
                     {
@@ -124,8 +153,9 @@ namespace IX.StandardExtensions.Efficiency
                         try
                         {
                             shouldRetry = !await this.queueAction(
-                                listProcess,
-                                retryCounter++).ConfigureAwait(false);
+                                    listProcess,
+                                    retryCounter++)
+                                .ConfigureAwait(false);
                         }
                         catch (StopRetryingException)
                         {
@@ -133,11 +163,15 @@ namespace IX.StandardExtensions.Efficiency
                         }
                         catch (Exception ex)
                         {
-                            this.ExceptionOccurredOnSeparateThread?.Invoke(this, new ExceptionOccurredEventArgs(ex));
+                            this.ExceptionOccurredOnSeparateThread?.Invoke(
+                                this,
+                                new ExceptionOccurredEventArgs(ex));
                         }
                     }
                 }
             }
         }
+
+#endregion
     }
 }

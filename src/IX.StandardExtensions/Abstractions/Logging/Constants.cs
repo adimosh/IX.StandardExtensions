@@ -10,7 +10,7 @@ namespace IX.Abstractions.Logging
     ///     Generally-used constants.
     /// </summary>
     [PublicAPI]
-    public class Constants
+    public static class Constants
     {
         /// <summary>
         ///     The logging symbol for all logging.

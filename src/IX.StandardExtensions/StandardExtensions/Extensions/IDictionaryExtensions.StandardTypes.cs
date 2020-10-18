@@ -11,6 +11,7 @@ namespace IX.StandardExtensions.Extensions
     /// <summary>
     /// Extensions for IDictionary.
     /// </summary>
+    // ReSharper disable once InconsistentNaming - We are doing extensions for IDictionary :)
     public static partial class IDictionaryExtensions
     {
         /// <summary>
@@ -19,16 +20,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, byte> DeepClone<TKey>(this Dictionary<TKey, byte> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, byte>();
 
-            foreach (KeyValuePair<TKey, byte> p in source)
+            foreach (KeyValuePair<TKey, byte> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -42,16 +43,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, sbyte> DeepClone<TKey>(this Dictionary<TKey, sbyte> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, sbyte>();
 
-            foreach (KeyValuePair<TKey, sbyte> p in source)
+            foreach (KeyValuePair<TKey, sbyte> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -65,16 +66,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, short> DeepClone<TKey>(this Dictionary<TKey, short> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, short>();
 
-            foreach (KeyValuePair<TKey, short> p in source)
+            foreach (KeyValuePair<TKey, short> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -88,16 +89,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, ushort> DeepClone<TKey>(this Dictionary<TKey, ushort> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, ushort>();
 
-            foreach (KeyValuePair<TKey, ushort> p in source)
+            foreach (KeyValuePair<TKey, ushort> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -111,16 +112,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, char> DeepClone<TKey>(this Dictionary<TKey, char> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, char>();
 
-            foreach (KeyValuePair<TKey, char> p in source)
+            foreach (KeyValuePair<TKey, char> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -134,16 +135,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, int> DeepClone<TKey>(this Dictionary<TKey, int> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, int>();
 
-            foreach (KeyValuePair<TKey, int> p in source)
+            foreach (KeyValuePair<TKey, int> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -157,16 +158,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, uint> DeepClone<TKey>(this Dictionary<TKey, uint> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, uint>();
 
-            foreach (KeyValuePair<TKey, uint> p in source)
+            foreach (KeyValuePair<TKey, uint> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -180,16 +181,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, long> DeepClone<TKey>(this Dictionary<TKey, long> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, long>();
 
-            foreach (KeyValuePair<TKey, long> p in source)
+            foreach (KeyValuePair<TKey, long> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -203,16 +204,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, ulong> DeepClone<TKey>(this Dictionary<TKey, ulong> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, ulong>();
 
-            foreach (KeyValuePair<TKey, ulong> p in source)
+            foreach (KeyValuePair<TKey, ulong> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -226,16 +227,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, float> DeepClone<TKey>(this Dictionary<TKey, float> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, float>();
 
-            foreach (KeyValuePair<TKey, float> p in source)
+            foreach (KeyValuePair<TKey, float> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -249,16 +250,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, double> DeepClone<TKey>(this Dictionary<TKey, double> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, double>();
 
-            foreach (KeyValuePair<TKey, double> p in source)
+            foreach (KeyValuePair<TKey, double> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -272,16 +273,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, decimal> DeepClone<TKey>(this Dictionary<TKey, decimal> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, decimal>();
 
-            foreach (KeyValuePair<TKey, decimal> p in source)
+            foreach (KeyValuePair<TKey, decimal> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -295,16 +296,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, DateTime> DeepClone<TKey>(this Dictionary<TKey, DateTime> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, DateTime>();
 
-            foreach (KeyValuePair<TKey, DateTime> p in source)
+            foreach (KeyValuePair<TKey, DateTime> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -318,16 +319,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, bool> DeepClone<TKey>(this Dictionary<TKey, bool> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, bool>();
 
-            foreach (KeyValuePair<TKey, bool> p in source)
+            foreach (KeyValuePair<TKey, bool> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -341,16 +342,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, TimeSpan> DeepClone<TKey>(this Dictionary<TKey, TimeSpan> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, TimeSpan>();
 
-            foreach (KeyValuePair<TKey, TimeSpan> p in source)
+            foreach (KeyValuePair<TKey, TimeSpan> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }
@@ -364,16 +365,16 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="source">The source.</param>
         /// <returns>A deeply-cloned dictionary.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static Dictionary<TKey, string> DeepClone<TKey>(this Dictionary<TKey, string> source)
         {
-            Requires.NotNull(
+            var localSource = Requires.NotNull(
                 source,
                 nameof(source));
 
             var destination = new Dictionary<TKey, string>();
 
-            foreach (KeyValuePair<TKey, string> p in source)
+            foreach (KeyValuePair<TKey, string> p in localSource)
             {
                 destination.Add(p.Key, p.Value);
             }

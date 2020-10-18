@@ -10,10 +10,12 @@ namespace IX.StandardExtensions.EventModel
     /// <summary>
     ///     An event arguments class depicting a named value.
     /// </summary>
-    /// <seealso cref="System.EventArgs" />
+    /// <seealso cref="EventArgs" />
     [PublicAPI]
     public class NameValueEventArgs : EventArgs
     {
+#region Constructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="NameValueEventArgs" /> class.
         /// </summary>
@@ -23,10 +25,19 @@ namespace IX.StandardExtensions.EventModel
             this.Name = nameValue;
         }
 
+#endregion
+
+#region Properties and indexers
+
         /// <summary>
         ///     Gets the name value.
         /// </summary>
         /// <value>The name value.</value>
-        public string Name { get; }
+        public string Name
+        {
+            get;
+        }
+
+#endregion
     }
 }

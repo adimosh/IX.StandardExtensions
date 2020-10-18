@@ -16,7 +16,9 @@ namespace IX.System.Collections.Generic
     /// <typeparam name="T">The type of items in the enumerator.</typeparam>
     /// <seealso cref="IEnumerator{T}" />
     /// <seealso cref="IEnumerator" />
+#if NETSTANDARD2_1
     /// <seealso cref="IAsyncEnumerator{T}" />
+#endif
     [PublicAPI]
     public sealed partial class EmptyEnumerator<T> : IEnumerator<T>
     {

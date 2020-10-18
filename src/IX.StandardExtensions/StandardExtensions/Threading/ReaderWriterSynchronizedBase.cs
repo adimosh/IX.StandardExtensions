@@ -22,6 +22,8 @@ namespace IX.StandardExtensions.Threading
     [PublicAPI]
     public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     {
+#region Internal state
+
         private readonly bool lockInherited;
 
         [SuppressMessage(
@@ -40,6 +42,10 @@ namespace IX.StandardExtensions.Threading
 
         [DataMember]
         private TimeSpan lockerTimeout;
+
+#endregion
+
+#region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ReaderWriterSynchronizedBase" /> class.
@@ -60,7 +66,10 @@ namespace IX.StandardExtensions.Threading
         /// </exception>
         protected ReaderWriterSynchronizedBase(IReaderWriterLock? locker)
         {
-            Requires.NotNull(ref this.locker, locker, nameof(locker));
+            Requires.NotNull(
+                out this.locker,
+                locker,
+                nameof(locker));
             this.lockInherited = true;
             this.lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
         }
@@ -88,10 +97,17 @@ namespace IX.StandardExtensions.Threading
             IReaderWriterLock locker,
             TimeSpan timeout)
         {
-            Requires.NotNull(ref this.locker, locker, nameof(locker));
+            Requires.NotNull(
+                out this.locker,
+                locker,
+                nameof(locker));
             this.lockInherited = true;
             this.lockerTimeout = timeout;
         }
+
+#endregion
+
+#region Methods
 
         /// <summary>
         ///     Called when the object is being deserialized, in order to set the locker to a new value.
@@ -110,6 +126,23 @@ namespace IX.StandardExtensions.Threading
             Interlocked.Exchange(
                 ref this.locker,
                 new ReaderWriterLockSlim());
+
+#region Disposable
+
+        /// <summary>
+        ///     Disposes in the managed context.
+        /// </summary>
+        protected override void DisposeManagedContext()
+        {
+            if (!this.lockInherited)
+            {
+                this.locker.Dispose();
+            }
+
+            base.DisposeManagedContext();
+        }
+
+#endregion
 
         /// <summary>
         ///     Produces a reader lock in concurrent collections.
@@ -131,7 +164,9 @@ namespace IX.StandardExtensions.Threading
         protected void ReadLock(Action action)
         {
             this.RequiresNotDisposed();
-            var localAction = Requires.NotNull(action, nameof(action));
+            Action localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(
                 this.locker,
@@ -150,7 +185,9 @@ namespace IX.StandardExtensions.Threading
         protected T ReadLock<T>(Func<T> action)
         {
             this.RequiresNotDisposed();
-            var localAction = Requires.NotNull(action, nameof(action));
+            Func<T> localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new ReadOnlySynchronizationLocker(
                 this.locker,
@@ -180,7 +217,9 @@ namespace IX.StandardExtensions.Threading
         protected void WriteLock(Action action)
         {
             this.RequiresNotDisposed();
-            var localAction = Requires.NotNull(action, nameof(action));
+            Action localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(
                 this.locker,
@@ -199,7 +238,9 @@ namespace IX.StandardExtensions.Threading
         protected T WriteLock<T>(Func<T> action)
         {
             this.RequiresNotDisposed();
-            var localAction = Requires.NotNull(action, nameof(action));
+            Func<T> localAction = Requires.NotNull(
+                action,
+                nameof(action));
 
             using (new WriteOnlySynchronizationLocker(
                 this.locker,
@@ -222,17 +263,6 @@ namespace IX.StandardExtensions.Threading
                 this.lockerTimeout);
         }
 
-        /// <summary>
-        ///     Disposes in the managed context.
-        /// </summary>
-        protected override void DisposeManagedContext()
-        {
-            if (!this.lockInherited)
-            {
-                this.locker.Dispose();
-            }
-
-            base.DisposeManagedContext();
-        }
+#endregion
     }
 }

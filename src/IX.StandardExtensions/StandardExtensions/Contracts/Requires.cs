@@ -76,7 +76,7 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static void NotNull<T>(
-            ref T field,
+            out T field,
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T? argument,
             [NotNull] string argumentName)
@@ -132,7 +132,7 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static void NotNullOrEmpty(
-            ref string field,
+            out string field,
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
             [NotNull] string argumentName)
@@ -195,7 +195,7 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static void NotNullOrWhiteSpace(
-            ref string field,
+            out string field,
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
             [NotNull] string argumentName)
@@ -261,7 +261,7 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static void NotEmpty<TCollection, T>(
-            ref TCollection field,
+            out TCollection field,
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             TCollection? argument,
             [NotNull] string argumentName)
@@ -329,7 +329,7 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static void NotEmpty<T>(
-            ref T[] field,
+            out T[] field,
             [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? argument,
             [NotNull] string argumentName)
@@ -407,7 +407,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void FixedLength<T>(
-            ref T[] field,
+            out T[] field,
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
@@ -490,7 +490,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void FixedLength<T>(
-            ref T[] field,
+            out T[] field,
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
@@ -577,7 +577,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void LengthAtLeast<T>(
-            ref T[] field,
+            out T[] field,
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
@@ -660,7 +660,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void LengthAtLeast<T>(
-            ref T[] field,
+            out T[] field,
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
@@ -747,7 +747,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void LengthAtMost<T>(
-            ref T[] field,
+            out T[] field,
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
@@ -830,7 +830,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void LengthAtMost<T>(
-            ref T[] field,
+            out T[] field,
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
@@ -920,7 +920,7 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static void Matches(
-            ref string field,
+            out string field,
             [CanBeNull] string? argument,
             [NotNull] string pattern,
             [NotNull] string argumentName)
@@ -1002,7 +1002,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type, the compiler can handle it.")]
         public static void Positive(
-            ref TimeSpan field,
+            out TimeSpan field,
             in TimeSpan argument,
             [NotNull] string argumentName)
         {
@@ -1068,7 +1068,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type, the compiler can handle it.")]
         public static void NonNegative(
-            ref TimeSpan field,
+            out TimeSpan field,
             in TimeSpan argument,
             [NotNull] string argumentName)
         {
@@ -1129,7 +1129,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayIndex<T>(
-            ref int field,
+            out int field,
             in int argument,
             [NotNull] T[] array,
             [NotNull] string argumentName)
@@ -1193,7 +1193,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayIndex<T>(
-            ref long field,
+            out long field,
             in long argument,
             [NotNull] T[] array,
             [NotNull] string argumentName)
@@ -1268,8 +1268,8 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayRange<T>(
-            ref int fieldIndex,
-            ref int fieldLength,
+            out int fieldIndex,
+            out int fieldLength,
             in int indexArgument,
             in int lengthArgument,
             [NotNull] T[] array,
@@ -1353,8 +1353,8 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayRange<T>(
-            ref long fieldIndex,
-            ref long fieldLength,
+            out long fieldIndex,
+            out long fieldLength,
             in long indexArgument,
             in long lengthArgument,
             [NotNull] T[] array,
@@ -1427,7 +1427,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayLength<T>(
-            ref int field,
+            out int field,
             in int argument,
             [NotNull] T[] array,
             [NotNull] string argumentName)
@@ -1491,7 +1491,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayLength<T>(
-            ref long field,
+            out long field,
             in long argument,
             in T[] array,
             [NotNull] string argumentName)
@@ -1569,7 +1569,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void True(
-            ref bool field,
+            out bool field,
             [AssertionCondition(AssertionConditionType.IS_TRUE)]
             bool condition,
             [NotNull] string argumentName)
@@ -1640,7 +1640,7 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void False(
-            ref bool field,
+            out bool field,
             [AssertionCondition(AssertionConditionType.IS_FALSE)]
             bool condition,
             [NotNull] string argumentName)
@@ -1711,7 +1711,7 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static void ArgumentOfType<T>(
-            ref T field,
+            out T field,
             [CanBeNull, NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object argument,
             [NotNull] string argumentName)
         {
@@ -1735,7 +1735,11 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ObjectDisposedException">If the reference object is disposed, this exception will be thrown.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RequiresNotDisposed([NotNull] this DisposableBase reference) =>
-            reference.ThrowIfCurrentObjectDisposed();
+            NotNull(
+                    reference,
+                    nameof(reference))
+                .ThrowIfCurrentObjectDisposed();
+
         #endregion
     }
 }
