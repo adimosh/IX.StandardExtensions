@@ -198,4 +198,13 @@
   <data name="LimitArgumentNegativeExceptionDefaultTextWithArgument" xml:space="preserve">
     <value>Limit argument must be a non-negative integer. Argument name: {0}</value>
   </data>
+  <data name="ErrorPersistedQueuesCannotBeCopied" xml:space="preserve">
+    <value>Attempting to copy the entire contents of a persisted queue is not a supported operation.</value>
+  </data>
+  <data name="ErrorPersistedQueuesCannotBeEnumerated" xml:space="preserve">
+    <value>Attempting to enumerate a persisted queue is not a supported operation.</value>
+  </data>
+  <data name="ErrorTheQueueIsCurrentlyInDisasterMode" xml:space="preserve">
+    <value>The queue is currently in disaster mode, enumeration operations are disabled by design.</value>
+  </data>
 </root>

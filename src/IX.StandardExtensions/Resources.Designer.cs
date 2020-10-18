@@ -223,6 +223,24 @@ namespace IX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attempting to copy the entire contents of a persisted queue is not a supported operation..
+        /// </summary>
+        internal static string ErrorPersistedQueuesCannotBeCopied {
+            get {
+                return ResourceManager.GetString("ErrorPersistedQueuesCannotBeCopied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attempting to enumerate a persisted queue is not a supported operation..
+        /// </summary>
+        internal static string ErrorPersistedQueuesCannotBeEnumerated {
+            get {
+                return ResourceManager.GetString("ErrorPersistedQueuesCannotBeEnumerated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The queue is currently empty..
         /// </summary>
         internal static string ErrorQueueIsEmpty {
@@ -255,6 +273,15 @@ namespace IX {
         internal static string ErrorStopRetrying {
             get {
                 return ResourceManager.GetString("ErrorStopRetrying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The queue is currently in disaster mode, enumeration operations are disabled by design..
+        /// </summary>
+        internal static string ErrorTheQueueIsCurrentlyInDisasterMode {
+            get {
+                return ResourceManager.GetString("ErrorTheQueueIsCurrentlyInDisasterMode", resourceCulture);
             }
         }
         
