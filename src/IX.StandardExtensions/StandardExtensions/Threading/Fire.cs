@@ -11,7 +11,8 @@ namespace IX.StandardExtensions.Threading
     /// <summary>
     ///     A class that provides methods and extensions to fire events.
     /// </summary>
-    public static partial class Fire
+    [PublicAPI]
+    public static class Fire
     {
         /// <summary>
         ///     Runs the specified ticker delegate periodically.
