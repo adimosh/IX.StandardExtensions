@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Collections.Generic;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Efficiency;
 
 namespace IX.StandardExtensions.Extensions
@@ -22,10 +23,14 @@ namespace IX.StandardExtensions.Extensions
         /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals<T>(
-            this T[] left,
-            T[] right,
+            this T[]? left,
+            T[]? right,
             IEqualityComparer<T> comparer)
         {
+            var localComparer = Requires.NotNull(
+                comparer,
+                nameof(comparer));
+
             if (left == null)
             {
                 return right == null;
@@ -43,7 +48,7 @@ namespace IX.StandardExtensions.Extensions
 
             for (var i = 0; i < left.Length; i++)
             {
-                if (!comparer.Equals(left[i], right[i]))
+                if (!localComparer.Equals(left[i], right[i]))
                 {
                     return false;
                 }
@@ -62,10 +67,14 @@ namespace IX.StandardExtensions.Extensions
         /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals<T>(
-            this T[] left,
-            T[] right,
+            this T[]? left,
+            T[]? right,
             InFunc<T, T, bool> comparer)
         {
+            var localComparer = Requires.NotNull(
+                comparer,
+                nameof(comparer));
+
             if (left == null)
             {
                 return right == null;
@@ -83,7 +92,7 @@ namespace IX.StandardExtensions.Extensions
 
             for (var i = 0; i < left.Length; i++)
             {
-                if (!comparer(in left[i], in right[i]))
+                if (!localComparer(in left[i], in right[i]))
                 {
                     return false;
                 }

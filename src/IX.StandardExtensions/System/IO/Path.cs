@@ -68,7 +68,7 @@ namespace IX.System.IO
         /// </remarks>
         public string ChangeExtension(
             string path,
-            string extension) => FS.Path.ChangeExtension(
+            string? extension) => FS.Path.ChangeExtension(
             path,
             extension);
 
@@ -101,7 +101,7 @@ namespace IX.System.IO
         ///     base class exception, <see cref="FS.IOException" />, instead.The path parameter is longer than the system-defined
         ///     maximum length.
         /// </exception>
-        public string GetDirectoryName([CanBeNull] string path) => FS.Path.GetDirectoryName(path)!;
+        public string GetDirectoryName(string? path) => FS.Path.GetDirectoryName(path)!;
 
         /// <summary>
         ///     Returns the extension of the specified path string.

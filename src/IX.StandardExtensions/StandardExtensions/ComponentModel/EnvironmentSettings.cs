@@ -14,6 +14,8 @@ namespace IX.StandardExtensions.ComponentModel
     [PublicAPI]
     public static class EnvironmentSettings
     {
+#region Properties and indexers
+
         /// <summary>
         ///     Gets or sets a value indicating whether to always suppress the current synchronization context. The default is
         ///     false.
@@ -29,7 +31,11 @@ namespace IX.StandardExtensions.ComponentModel
         ///         <see cref="BackupSynchronizationContext" /> will always be used, if it is set.
         ///     </para>
         /// </remarks>
-        public static bool AlwaysSuppressCurrentSynchronizationContext { get; set; }
+        public static bool AlwaysSuppressCurrentSynchronizationContext
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         ///     Gets or sets the backup synchronization context. the default is <see langword="null" /> (<see langword="Nothing" />
@@ -64,7 +70,11 @@ namespace IX.StandardExtensions.ComponentModel
         ///         <item><see langword="null" /> (<see langword="Nothing" /> in Visual Basic).</item>
         ///     </list>
         /// </remarks>
-        public static SynchronizationContext? BackupSynchronizationContext { get; set; }
+        public static SynchronizationContext? BackupSynchronizationContext
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         ///     Gets or sets a value indicating whether to post asynchronously to the synchronization context. The default is
@@ -81,7 +91,11 @@ namespace IX.StandardExtensions.ComponentModel
         ///         throwing <see cref="InvalidOperationException" />s that are very difficult to catch or manage.
         ///     </para>
         /// </remarks>
-        public static bool InvokeAsynchronously { get; set; }
+        public static bool InvokeAsynchronously
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         ///     Gets or sets a value indicating whether to send a notification of reset if there is an exception on collection
@@ -91,7 +105,17 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="true" /> if a reset on collection change notification exception should be sent; otherwise,
         ///     <see langword="false" />.
         /// </value>
-        public static bool ResetOnCollectionChangeNotificationException { get; set; }
+        public static bool ResetOnCollectionChangeNotificationException
+        {
+            get;
+            set;
+        }
+
+#endregion
+
+#region Methods
+
+#region Static methods
 
         /// <summary>
         ///     Gets the currently usable synchronization context, according to the framework rules, except for the explicit
@@ -113,5 +137,9 @@ namespace IX.StandardExtensions.ComponentModel
 
             return currentSyncContext ?? BackupSynchronizationContext;
         }
+
+#endregion
+
+#endregion
     }
 }
