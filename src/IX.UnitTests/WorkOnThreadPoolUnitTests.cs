@@ -5,9 +5,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using IX.DataGeneration;
 using IX.StandardExtensions;
 using IX.StandardExtensions.Contracts;
-using IX.StandardExtensions.TestUtils;
 using IX.StandardExtensions.Threading;
 using Xunit;
 using Xunit.Abstractions;

@@ -2,7 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using IX.StandardExtensions.TestUtils;
+using IX.DataGeneration;
 using IX.System.Collections.Generic;
 using Xunit;
 using GlobalCollectionsGeneric = System.Collections.Generic;

@@ -5,8 +5,8 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
+using IX.DataGeneration;
 using IX.StandardExtensions.Extensions;
-using IX.StandardExtensions.TestUtils;
 using IX.System.Collections.Generic;
 using Xunit;
 

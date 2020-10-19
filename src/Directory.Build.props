@@ -2,8 +2,4 @@
 
   <Import Project="../opt/msbuild/Standard.Build.props" />
 
-  <PropertyGroup Condition="'$(TargetFrameworkIsStandard)'=='true'">
-    <DefineConstants>$(DefineConstants);STANDARD</DefineConstants>
-  </PropertyGroup>
-
 </Project>

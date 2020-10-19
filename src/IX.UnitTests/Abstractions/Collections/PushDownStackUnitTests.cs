@@ -3,7 +3,7 @@
 // </copyright>
 
 using System;
-using IX.StandardExtensions.TestUtils;
+using IX.DataGeneration;
 using IX.System.Collections.Generic;
 using Xunit;
 

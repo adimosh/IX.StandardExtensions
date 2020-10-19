@@ -5,7 +5,7 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
-using IX.StandardExtensions.TestUtils;
+using IX.DataGeneration;
 using IX.UnitTests.StandardExtensions.Threading.Helpers;
 using Xunit;
 
