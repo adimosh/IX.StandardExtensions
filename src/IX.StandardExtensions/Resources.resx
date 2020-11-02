@@ -207,4 +207,28 @@
   <data name="ErrorTheQueueIsCurrentlyInDisasterMode" xml:space="preserve">
     <value>The queue is currently in disaster mode, enumeration operations are disabled by design.</value>
   </data>
+  <data name="ErrorArgumentInRange" xml:space="preserve">
+    <value>The argument is in the undesired range.</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThan" xml:space="preserve">
+    <value>The argument is not greater than a desired value.</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThanOrEqualTo" xml:space="preserve">
+    <value>The argument is not less than or equal to a desired value.</value>
+  </data>
+  <data name="ErrorArgumentNotInRange" xml:space="preserve">
+    <value>The argument is not in the desired range.</value>
+  </data>
+  <data name="ErrorArgumentNotLessThan" xml:space="preserve">
+    <value>The argument is not less than a desired value.</value>
+  </data>
+  <data name="ErrorArgumentNotLessThanOrEqualTo" xml:space="preserve">
+    <value>The argument is not less than or equal to a desired value.</value>
+  </data>
+  <data name="ErrorArgumentNotNegative" xml:space="preserve">
+    <value>The argument is not a negative number.</value>
+  </data>
+  <data name="ErrorArgumentNotNegativeInteger" xml:space="preserve">
+    <value>The argument is not a negative integer.</value>
+  </data>
 </root>

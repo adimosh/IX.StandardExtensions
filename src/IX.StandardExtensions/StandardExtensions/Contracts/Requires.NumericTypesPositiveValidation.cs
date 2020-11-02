@@ -1,4 +1,4 @@
-// <copyright file="Requires.NumericTypesValidation.cs" company="Adrian Mos">
+// <copyright file="Requires.NumericTypesPositiveValidation.cs" company="Adrian Mos">
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
@@ -828,7 +828,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
+        /// <exception cref="ArgumentNotPositiveException">
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -842,7 +842,7 @@ namespace IX.StandardExtensions.Contracts
         {
             if (argument <= 0)
             {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
+                throw new ArgumentNotPositiveException(argumentName);
             }
         }
 
@@ -856,7 +856,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
+        /// <exception cref="ArgumentNotPositiveException">
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -870,7 +870,7 @@ namespace IX.StandardExtensions.Contracts
         {
             if (argument < 0)
             {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
+                throw new ArgumentNotPositiveException(argumentName);
             }
         }
 
@@ -887,7 +887,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
+        /// <exception cref="ArgumentNotPositiveException">
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -902,7 +902,7 @@ namespace IX.StandardExtensions.Contracts
         {
             if (argument <= 0)
             {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
+                throw new ArgumentNotPositiveException(argumentName);
             }
 
             field = argument;
@@ -921,7 +921,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
+        /// <exception cref="ArgumentNotPositiveException">
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -936,7 +936,7 @@ namespace IX.StandardExtensions.Contracts
         {
             if (argument < 0)
             {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
+                throw new ArgumentNotPositiveException(argumentName);
             }
 
             field = argument;
@@ -952,7 +952,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
+        /// <exception cref="ArgumentNotPositiveException">
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -966,7 +966,7 @@ namespace IX.StandardExtensions.Contracts
         {
             if (argument <= 0)
             {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
+                throw new ArgumentNotPositiveException(argumentName);
             }
         }
 
@@ -980,7 +980,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
+        /// <exception cref="ArgumentNotPositiveException">
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -994,7 +994,7 @@ namespace IX.StandardExtensions.Contracts
         {
             if (argument < 0)
             {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
+                throw new ArgumentNotPositiveException(argumentName);
             }
         }
 
@@ -1011,7 +1011,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
+        /// <exception cref="ArgumentNotPositiveException">
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1026,7 +1026,7 @@ namespace IX.StandardExtensions.Contracts
         {
             if (argument <= 0)
             {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
+                throw new ArgumentNotPositiveException(argumentName);
             }
 
             field = argument;
@@ -1045,7 +1045,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
+        /// <exception cref="ArgumentNotPositiveException">
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1060,7 +1060,7 @@ namespace IX.StandardExtensions.Contracts
         {
             if (argument < 0)
             {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
+                throw new ArgumentNotPositiveException(argumentName);
             }
 
             field = argument;
@@ -1076,7 +1076,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
+        /// <exception cref="ArgumentNotPositiveException">
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1090,7 +1090,7 @@ namespace IX.StandardExtensions.Contracts
         {
             if (argument <= 0)
             {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
+                throw new ArgumentNotPositiveException(argumentName);
             }
         }
 
@@ -1104,7 +1104,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
+        /// <exception cref="ArgumentNotPositiveException">
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1118,7 +1118,7 @@ namespace IX.StandardExtensions.Contracts
         {
             if (argument < 0)
             {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
+                throw new ArgumentNotPositiveException(argumentName);
             }
         }
 
@@ -1135,7 +1135,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
+        /// <exception cref="ArgumentNotPositiveException">
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1150,7 +1150,7 @@ namespace IX.StandardExtensions.Contracts
         {
             if (argument <= 0)
             {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
+                throw new ArgumentNotPositiveException(argumentName);
             }
 
             field = argument;
@@ -1169,7 +1169,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
+        /// <exception cref="ArgumentNotPositiveException">
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1184,7 +1184,7 @@ namespace IX.StandardExtensions.Contracts
         {
             if (argument < 0)
             {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
+                throw new ArgumentNotPositiveException(argumentName);
             }
 
             field = argument;

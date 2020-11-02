@@ -48,10 +48,25 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SynchronizationContextInvokerBase.InvokeActionsAndFuncs.tt</DependentUpon>
     </Compile>
-    <Compile Update="StandardExtensions\Contracts\Requires.NumericTypesValidation.cs">
+    <Compile Update="StandardExtensions\Contracts\Requires.NumericTypesLtGt.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Requires.NumericTypesValidation.tt</DependentUpon>
+      <DependentUpon>Requires.NumericTypesLtGt.tt</DependentUpon>
+    </Compile>
+    <Compile Update="StandardExtensions\Contracts\Requires.NumericTypesRangeValidation.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Requires.NumericTypesRangeValidation.tt</DependentUpon>
+    </Compile>
+    <Compile Update="StandardExtensions\Contracts\Requires.NumericTypesPositiveValidation.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Requires.NumericTypesPositiveValidation.tt</DependentUpon>
+    </Compile>
+    <Compile Update="StandardExtensions\Contracts\Requires.NumericTypesNegativeValidation.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Requires.NumericTypesNegativeValidation.tt</DependentUpon>
     </Compile>
     <Compile Update="StandardExtensions\Efficiency\ImmutableValueTuple.cs">
       <DesignTime>True</DesignTime>
@@ -168,8 +183,20 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SynchronizationContextInvokerBase.InvokeActionsAndFuncs.cs</LastGenOutput>
     </None>
-    <None Update="StandardExtensions\Contracts\Requires.NumericTypesValidation.tt">
-      <LastGenOutput>Requires.NumericTypesValidation.cs</LastGenOutput>
+    <None Update="StandardExtensions\Contracts\Requires.NumericTypesLtGt.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Requires.NumericTypesLtGt.cs</LastGenOutput>
+    </None>
+    <None Update="StandardExtensions\Contracts\Requires.NumericTypesRangeValidation.tt">
+      <LastGenOutput>Requires.NumericTypesRangeValidation.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="StandardExtensions\Contracts\Requires.NumericTypesPositiveValidation.tt">
+      <LastGenOutput>Requires.NumericTypesPositiveValidation.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="StandardExtensions\Contracts\Requires.NumericTypesNegativeValidation.tt">
+      <LastGenOutput>Requires.NumericTypesNegativeValidation.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
     <None Update="StandardExtensions\Efficiency\ImmutableValueTuple.tt">

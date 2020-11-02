@@ -5,7 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ include file="..\..\..\..\opt\tt\NumericTypes.tt" #><#@ include file="..\..\..\..\opt\tt\TypeNamesFixture.tt" #>
 <#@ output extension=".cs" #>
-// <copyright file="Requires.NumericTypesValidation.cs" company="Adrian Mos">
+// <copyright file="Requires.NumericTypesPositiveValidation.cs" company="Adrian Mos">
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
@@ -20,10 +20,10 @@ namespace IX.StandardExtensions.Contracts
     public static partial class Requires
     {<#
 /* STAGE DESCRIPTION:
- * 1. RequiresPositive
- * 2. RequiresNonNegative
- * 3. RequiresPositive with out
- * 4. RequiresNonNegative with out
+ * 1. Requires.InRange
+ * 2. Requires.NotInRange
+ * 4. Requires.InRange with out
+ * 5. Requires.NotInRange with out
  */
 List<string> code = new List<string>();
 int stage = 1;
@@ -32,27 +32,24 @@ for (int i = 0; i < types.Length; i++)
 {
     var typ = types[i];
     string fullTypeName = GetTypeUsableName(typ);
-    bool isTypeUnsigned = IsTypeUnsigned(typ);
+    bool isInteger = (typ != typeof(float) && typ != typeof(double) && typ != typeof(decimal));
     bool isReferencing = (stage >= 3);
-    bool isNonNegative = (stage == 2 || stage == 4);
-
-    if (!(isNonNegative && isTypeUnsigned))
-    {
+    bool isNotInRange = (stage == 2 || stage == 4);
 #>
 
         /// <summary>
         ///     Called when a <#= isReferencing ? "field initialization" : "contract" #> requires that a numeric argument of type <see cref="<#= fullTypeName #>" /> is
 <#
-        if (isNonNegative)
+        if (isNotInRange)
         {
 #>
-        ///     non-negative (greater than or equal to zero).
+        ///     not located within an undesired range.
 <#
         }
         else
         {
 #>
-        ///     positive (greater than zero).
+        ///     located within a desired range.
 <#
         }
 #>
@@ -70,27 +67,27 @@ for (int i = 0; i < types.Length; i++)
         /// <param name="argument">
         ///     The numeric argument.
         /// </param>
+        /// <param name="lowerBound">
+        ///     The lower bound of the range to validate against. Must be less than or equal to <paramref name="upperBound" />.
+        /// </param>
+        /// <param name="upperBound">
+        ///     The upper bound of the range to validate against. Must be greater than or equal to <paramref name="lowerBound" />.
+        /// </param>
         /// <param name="argumentName">
         ///     The argument name.
         /// </param>
-        /// <exception cref="ArgumentNotPositiveIntegerException">
+        /// <exception cref="Argument<#= (!isNotInRange) ? "NotInRange" : "InRange" #>Exception">
 <#
-        if (isTypeUnsigned)
+        if (isNotInRange)
         {
 #>
-        ///     The argument is equal to 0.
-<#
-        }
-        else if (isNonNegative)
-        {
-#>
-        ///     The argument is less than 0.
+        ///     The argument is not within the desired range.
 <#
         }
         else
         {
 #>
-        ///     The argument is less than or equal to 0.
+        ///     The argument is within the undesired range.
 <#
         }
 #>
@@ -100,7 +97,7 @@ for (int i = 0; i < types.Length; i++)
             "Performance",
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "<#= fullTypeName #> is a primitive type that the compiler can handle.")]
-        public static void <#= isNonNegative ? "NonNegative" : "Positive" #>(
+        public static void <#= isNotInRange ? "NotInRange" : "InRange" #>(
 <#
         if (isReferencing)
         {
@@ -110,11 +107,18 @@ for (int i = 0; i < types.Length; i++)
         }
 #>
             in <#= fullTypeName #> argument,
+            in <#= fullTypeName #> lowerBound,
+            in <#= fullTypeName #> upperBound,
             [NotNull] string argumentName)
         {
-            if (argument <#= isTypeUnsigned ? "==" : (isNonNegative ? "<" : "<=") #> 0)
+            if (lowerBound > upperBound)
             {
-                throw new ArgumentNotPositiveIntegerException(argumentName);
+                throw new ArgumentNotLessThanOrEqualToException(nameof(lowerBound));
+            }
+
+            if (argument <#= (!isNotInRange) ? "<" : ">=" #> lowerBound || argument <#= (!isNotInRange) ? ">" : "<=" #> upperBound)
+            {
+                throw new Argument<#= (!isNotInRange) ? "NotInRange" : "InRange" #>Exception(argumentName);
             }
 <#
         if (isReferencing)
@@ -127,7 +131,6 @@ for (int i = 0; i < types.Length; i++)
 #>
         }
 <#
-    }
 
     stage++;
     if (stage == 5)

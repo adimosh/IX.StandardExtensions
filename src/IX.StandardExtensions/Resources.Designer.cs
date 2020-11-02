@@ -88,6 +88,15 @@ namespace IX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The argument is in the undesired range..
+        /// </summary>
+        internal static string ErrorArgumentInRange {
+            get {
+                return ResourceManager.GetString("ErrorArgumentInRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The argument supplied cannot be used as a valid path..
         /// </summary>
         internal static string ErrorArgumentInvalidPath {
@@ -102,6 +111,69 @@ namespace IX {
         internal static string ErrorArgumentInvalidType {
             get {
                 return ResourceManager.GetString("ErrorArgumentInvalidType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The argument is not greater than a desired value..
+        /// </summary>
+        internal static string ErrorArgumentNotGreaterThan {
+            get {
+                return ResourceManager.GetString("ErrorArgumentNotGreaterThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The argument is not less than or equal to a desired value..
+        /// </summary>
+        internal static string ErrorArgumentNotGreaterThanOrEqualTo {
+            get {
+                return ResourceManager.GetString("ErrorArgumentNotGreaterThanOrEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The argument is not in the desired range..
+        /// </summary>
+        internal static string ErrorArgumentNotInRange {
+            get {
+                return ResourceManager.GetString("ErrorArgumentNotInRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The argument is not less than a desired value..
+        /// </summary>
+        internal static string ErrorArgumentNotLessThan {
+            get {
+                return ResourceManager.GetString("ErrorArgumentNotLessThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The argument is not less than or equal to a desired value..
+        /// </summary>
+        internal static string ErrorArgumentNotLessThanOrEqualTo {
+            get {
+                return ResourceManager.GetString("ErrorArgumentNotLessThanOrEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The argument is not a negative number..
+        /// </summary>
+        internal static string ErrorArgumentNotNegative {
+            get {
+                return ResourceManager.GetString("ErrorArgumentNotNegative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The argument is not a negative integer..
+        /// </summary>
+        internal static string ErrorArgumentNotNegativeInteger {
+            get {
+                return ResourceManager.GetString("ErrorArgumentNotNegativeInteger", resourceCulture);
             }
         }
         
