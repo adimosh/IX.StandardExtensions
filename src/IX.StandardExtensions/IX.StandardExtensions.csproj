@@ -24,7 +24,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageReleaseNotes>- Merged the brunt of IX.Framework into this library.</PackageReleaseNotes>
+    <PackageReleaseNotes>- Mulitcast dictionary.
+- More validation requires.
+- Updates in analyzer packages.</PackageReleaseNotes>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>../../opt/snk/ix.framework.strongname.snk</AssemblyOriginatorKeyFile>
