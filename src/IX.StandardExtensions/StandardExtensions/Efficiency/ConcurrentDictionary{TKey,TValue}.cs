@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using IX.StandardExtensions.Debugging;
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Efficiency
 {
@@ -21,6 +22,7 @@ namespace IX.StandardExtensions.Efficiency
     [DebuggerDisplay("Count = {" + nameof(Count) + "}")]
     [DebuggerTypeProxy(typeof(DictionaryDebugView<,>))]
     [DefaultMember("Item")]
+    [PublicAPI]
     public class ConcurrentDictionary<TKey, TValue> : global::System.Collections.Concurrent.ConcurrentDictionary<TKey, TValue>
     {
         [ThreadStatic]

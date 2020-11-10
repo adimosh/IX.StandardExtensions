@@ -149,23 +149,8 @@ namespace IX.StandardExtensions.Extensions
             Func<T, T, bool>? comparer,
             Func<T, bool>? determineEmpty)
         {
-            if (left == null)
-            {
-#if !NET452
-                left = Array.Empty<T>();
-#else
-                left = new T[0];
-#endif
-            }
-
-            if (right == null)
-            {
-#if !NET452
-                right = Array.Empty<T>();
-#else
-                right = new T[0];
-#endif
-            }
+            left ??= Array.Empty<T>();
+            right ??= Array.Empty<T>();
 
             // TODO: #68 - Eliminate boxing from IEnumerable implementations
             using (IEnumerator<T> leftEnumerator = left.GetEnumerator())

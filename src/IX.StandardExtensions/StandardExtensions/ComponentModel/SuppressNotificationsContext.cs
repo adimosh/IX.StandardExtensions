@@ -35,13 +35,11 @@ namespace IX.StandardExtensions.ComponentModel
     [PublicAPI]
     public class SuppressNotificationsContext : DisposableBase
     {
-#pragma warning disable SA1401 // Fields should be private - NO IT SHOULDN'T !!!
-#if FRAMEWORK_GT_452
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.MaintainabilityRules",
+            "SA1401:Fields should be private",
+            Justification = "No they shouldn't.")]
         internal static AsyncLocal<bool> AmbientSuppressionActive = new AsyncLocal<bool>();
-#else
-        internal static ThreadLocal<bool> AmbientSuppressionActive = new ThreadLocal<bool>();
-#endif
-#pragma warning restore SA1401 // Fields should be private
 
         /// <summary>Initializes a new instance of the <see cref="SuppressNotificationsContext"/> class.</summary>
         public SuppressNotificationsContext()

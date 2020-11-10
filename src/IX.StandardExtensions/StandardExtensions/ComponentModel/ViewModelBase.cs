@@ -24,12 +24,6 @@ namespace IX.StandardExtensions.ComponentModel
     [PublicAPI]
     public abstract class ViewModelBase : NotifyPropertyChangedBase, INotifyDataErrorInfo
     {
-        #if NET452
-        private static readonly string[] EmptyStringArray = new string[0];
-        #else
-        private static readonly string[] EmptyStringArray = Array.Empty<string>();
-        #endif
-
         private readonly Lazy<ConcurrentDictionary<string, List<string>>> entityErrors;
         private readonly object validatorLock;
 
@@ -78,7 +72,7 @@ namespace IX.StandardExtensions.ComponentModel
                 propertyName,
                 out List<string> propertyErrors)
                 ? propertyErrors.ToArray()
-                : EmptyStringArray;
+                : Array.Empty<string>();
 
         /// <summary>
         ///     Validates this object.

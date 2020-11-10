@@ -16,11 +16,6 @@ namespace IX.StandardExtensions.EventModel
     [JetBrains.Annotations.PublicAPI]
     public static class AsyncEventInvokerExtensions
     {
-#if NET452
-        private static readonly Task EmptyTask = Task.FromResult(0);
-#else
-        private static readonly Task EmptyTask = Task.CompletedTask;
-#endif
 
         /// <summary>
         /// Invokes an asynchronous event.
@@ -38,7 +33,7 @@ namespace IX.StandardExtensions.EventModel
 
             return (invocationList?.Length ?? 0) switch
             {
-                0 => EmptyTask,
+                0 => Task.CompletedTask,
                 1 => handler!.Invoke(
                     sender,
                     EventArgs.Empty),
@@ -81,7 +76,7 @@ namespace IX.StandardExtensions.EventModel
 
             return (invocationList?.Length ?? 0) switch
             {
-                0 => EmptyTask,
+                0 => Task.CompletedTask,
                 1 => handler!.Invoke(
                     sender,
                     e),
@@ -122,7 +117,7 @@ namespace IX.StandardExtensions.EventModel
 
             return (invocationList?.Length ?? 0) switch
             {
-                0 => EmptyTask,
+                0 => Task.CompletedTask,
                 1 => handler!.Invoke(
                     sender,
                     e),

@@ -19,12 +19,6 @@ namespace IX.StandardExtensions.Threading
     [PublicAPI]
     public static class Work
     {
-#if NET452
-        private static readonly Exception[] EmptyExceptionArray = new Exception[0];
-#else
-        private static readonly Exception[] EmptyExceptionArray = Array.Empty<Exception>();
-#endif
-
         #region Func with cancellation token, returning task
 
         /// <summary>
@@ -78,15 +72,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -106,7 +93,7 @@ namespace IX.StandardExtensions.Threading
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)Array.Empty<Exception>());
                         }
                         else
                         {
@@ -183,15 +170,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -211,7 +191,7 @@ namespace IX.StandardExtensions.Threading
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)Array.Empty<Exception>());
                         }
                         else
                         {
@@ -291,15 +271,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -321,7 +294,7 @@ namespace IX.StandardExtensions.Threading
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)Array.Empty<Exception>());
                         }
                         else
                         {
@@ -402,15 +375,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -432,7 +398,7 @@ namespace IX.StandardExtensions.Threading
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)Array.Empty<Exception>());
                         }
                         else
                         {
@@ -509,15 +475,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -597,15 +556,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -683,15 +635,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -711,7 +656,7 @@ namespace IX.StandardExtensions.Threading
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)Array.Empty<Exception>());
                         }
                         else
                         {
@@ -788,15 +733,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -816,7 +754,7 @@ namespace IX.StandardExtensions.Threading
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)Array.Empty<Exception>());
                         }
                         else
                         {
@@ -896,15 +834,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -924,7 +855,7 @@ namespace IX.StandardExtensions.Threading
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)Array.Empty<Exception>());
                         }
                         else
                         {
@@ -1005,15 +936,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -1033,7 +957,7 @@ namespace IX.StandardExtensions.Threading
                         else if (completedTask.IsFaulted)
                         {
                             tcs.TrySetException(
-                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)EmptyExceptionArray);
+                                completedTask.Exception?.InnerExceptions ?? (IEnumerable<Exception>)Array.Empty<Exception>());
                         }
                         else
                         {
@@ -1110,15 +1034,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -1198,15 +1115,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -1285,15 +1195,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -1371,15 +1274,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -1458,15 +1354,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -1542,15 +1431,8 @@ namespace IX.StandardExtensions.Threading
                     return;
                 }
 
-#if NET452
-#pragma warning disable DE0008 // API is deprecated - This is an acceptable use, since we're writing on what's guaranteed to be the current thread
-                Thread.CurrentThread.CurrentCulture = currentCulture;
-                Thread.CurrentThread.CurrentUICulture = currentUiCulture;
-#pragma warning restore DE0008 // API is deprecated
-#else
                 CultureInfo.CurrentCulture = currentCulture;
                 CultureInfo.CurrentUICulture = currentUiCulture;
-#endif
 
                 try
                 {
@@ -1572,11 +1454,5 @@ namespace IX.StandardExtensions.Threading
         }
 
         #endregion
-
-#if NET452
-        private static bool TrySetCanceled<TResult>(
-            this TaskCompletionSource<TResult> sourceTcs,
-            CancellationToken _ = default) => sourceTcs.TrySetCanceled();
-#endif
     }
 }

@@ -1,11 +1,9 @@
-<!--EXTERNAL_PROPERTIES: TargetFrameworkIsFramework-->
-<!--EXTERNAL_PROPERTIES: TargetFrameworkIsStandard-->
-<!--EXTERNAL_PROPERTIES: TargetFramework-->
+<!--EXTERNAL_PROPERTIES: TargetFrameworkIsStandard;TargetFrameworkIsFramework;TargetFramework;TargetFramework-->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <!-- Build configuration -->
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-    <TargetFrameworks>net452;net46;net47;net472;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net46;net472;netstandard2.0;netstandard2.1</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
@@ -24,9 +22,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageReleaseNotes>- Mulitcast dictionary.
-- More validation requires.
-- Updates in analyzer packages.</PackageReleaseNotes>
+    <PackageReleaseNotes>- Removed .NET 4.5.2.
+- Fixed .NET 4.5.2 patchwork.</PackageReleaseNotes>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>../../opt/snk/ix.framework.strongname.snk</AssemblyOriginatorKeyFile>

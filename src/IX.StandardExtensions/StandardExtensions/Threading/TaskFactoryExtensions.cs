@@ -136,10 +136,6 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Unavoidable here.")]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Usage",
-            "DE0008:API is deprecated",
-            Justification = "Only after .NET 4.5.2.")]
         internal static Task StartWithStateOnDefaultTaskSchedulerAsync<TState>(
             [NotNull] TaskFactory taskFactory,
             [NotNull] Action<TState> action,
@@ -173,13 +169,8 @@ namespace IX.StandardExtensions.Threading
             {
                 var innerState = (Tuple<Action<TState>, CultureInfo, CultureInfo, TState>)rawState;
 
-#if NET452
-                Thread.CurrentThread.CurrentCulture = innerState.Item2;
-                Thread.CurrentThread.CurrentUICulture = innerState.Item3;
-#else
                 CultureInfo.CurrentCulture = innerState.Item2;
                 CultureInfo.CurrentUICulture = innerState.Item3;
-#endif
 
                 innerState.Item1(innerState.Item4);
             }
@@ -190,10 +181,6 @@ namespace IX.StandardExtensions.Threading
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Unavoidable here.")]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Usage",
-            "DE0008:API is deprecated",
-            Justification = "Only after .NET 4.5.2.")]
         internal static Task<TResult> StartWithStateOnDefaultTaskSchedulerAsync<TState, TResult>(
             TaskFactory taskFactory,
             Func<TState, TResult> action,
@@ -227,13 +214,8 @@ namespace IX.StandardExtensions.Threading
             {
                 var innerState = (Tuple<Func<TState, TResult>, CultureInfo, CultureInfo, TState>)rawState;
 
-#if NET452
-                Thread.CurrentThread.CurrentCulture = innerState.Item2;
-                Thread.CurrentThread.CurrentUICulture = innerState.Item3;
-#else
                 CultureInfo.CurrentCulture = innerState.Item2;
                 CultureInfo.CurrentUICulture = innerState.Item3;
-#endif
 
                 return innerState.Item1(innerState.Item4);
             }
