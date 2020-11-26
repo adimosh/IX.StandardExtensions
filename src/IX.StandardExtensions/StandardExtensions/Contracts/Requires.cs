@@ -46,9 +46,8 @@ namespace IX.StandardExtensions.Contracts
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T? argument,
             [NotNull] string argumentName)
-            where T : class
         {
-            if (argument == null)
+            if (argument is null)
             {
                 throw new ArgumentNullException(argumentName);
             }
@@ -80,7 +79,14 @@ namespace IX.StandardExtensions.Contracts
             [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T? argument,
             [NotNull] string argumentName)
-            where T : class => field = argument ?? throw new ArgumentNullException(argumentName);
+        {
+            if (argument is null)
+            {
+                throw new ArgumentNullException(argumentName);
+            }
+
+            field = argument;
+        }
 
         /// <summary>
         ///     Called when a contract requires that a string argument is not null or empty.
