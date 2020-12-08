@@ -2,7 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-#if NETSTANDARD2_1
+#if FRAMEWORK_ADVANCED
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

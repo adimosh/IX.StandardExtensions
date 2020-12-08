@@ -22,7 +22,7 @@ namespace IX.System.Collections.Generic
     [PublicAPI]
     public sealed partial class EmptyEnumerator<T> : IEnumerator<T>
     {
-        private static readonly EmptyEnumerator<T> EmptyInstance = new EmptyEnumerator<T>();
+        private static readonly EmptyEnumerator<T> EmptyInstance = new();
 
         /// <summary>
         /// Prevents a default instance of the <see cref="EmptyEnumerator{T}"/> class from being created.

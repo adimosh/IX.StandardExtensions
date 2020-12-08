@@ -32,7 +32,7 @@ namespace IX.StandardExtensions.Threading
             "StaticMemberInGenericType",
             Justification = "We have a specialized staatic field.")]
         private static readonly ConcurrentDictionary<Type, Delegate> ConstructionDelegates =
-            new ConcurrentDictionary<Type, Delegate>();
+            new();
 
 #endregion
 

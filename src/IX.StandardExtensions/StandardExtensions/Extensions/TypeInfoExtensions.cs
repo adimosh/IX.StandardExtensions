@@ -40,7 +40,7 @@ namespace IX.StandardExtensions.Extensions
             Justification = "Expected.")]
         public static bool GetAttributeDataByTypeWithoutVersionBinding<TAttribute, TReturn>(
             this TypeInfo typeInfo,
-#if NETSTANDARD2_1
+#if FRAMEWORK_ADVANCED
             [MaybeNullWhen(false)]
 #endif
             out TReturn value)

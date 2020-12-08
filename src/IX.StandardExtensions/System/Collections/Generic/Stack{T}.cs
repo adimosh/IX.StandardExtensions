@@ -60,7 +60,7 @@ namespace IX.System.Collections.Generic
         /// <param name="source">The source.</param>
         /// <returns>An IX Framework abstracted stack.</returns>
         public static Stack<T> FromStack(GlobalCollectionsGeneric.Stack<T> source) =>
-            new Stack<T>(source?.ToArray() ?? throw new ArgumentNullException(nameof(source)));
+            new(source?.ToArray() ?? throw new ArgumentNullException(nameof(source)));
 
         /// <summary>
         ///     Pushes a range of elements to the top of the stack.
@@ -133,7 +133,7 @@ namespace IX.System.Collections.Generic
             }
         }
 
-#if !NETSTANDARD2_1
+#if !FRAMEWORK_ADVANCED
         /// <summary>
         ///     Attempts to peek at the topmost item from the stack, without removing it.
         /// </summary>

@@ -71,7 +71,8 @@ namespace IX.StandardExtensions
                     message,
                     string.Join(
                         ", ",
-                        argumentNames ?? throw new ArgumentNullException(nameof(argumentNames)))), innerException)
+                        argumentNames ?? throw new ArgumentNullException(nameof(argumentNames)))),
+                innerException)
         {
             this.ArgumentNames = argumentNames;
         }

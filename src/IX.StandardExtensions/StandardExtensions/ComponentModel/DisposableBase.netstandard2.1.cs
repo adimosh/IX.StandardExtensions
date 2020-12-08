@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IX.StandardExtensions.ComponentModel
 {
-#if NETSTANDARD2_1
+#if FRAMEWORK_ADVANCED
     /// <summary>
     ///     An abstract base class for correctly implementing the disposable pattern.
     /// </summary>

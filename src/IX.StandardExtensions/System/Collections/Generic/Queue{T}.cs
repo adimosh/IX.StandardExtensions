@@ -135,7 +135,7 @@ namespace IX.System.Collections.Generic
             }
         }
 
-#if !NETSTANDARD2_1
+#if !FRAMEWORK_ADVANCED
         /// <summary>
         ///     Attempts to de-queue an item and to remove it from queue.
         /// </summary>
