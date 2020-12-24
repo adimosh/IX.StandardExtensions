@@ -2,13 +2,13 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
 using IX.StandardExtensions.Extensions;
+using IX.StandardExtensions.SourceGeneration.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -75,27 +75,7 @@ namespace IX.StandardExtensions.SourceGeneration
                             {
                                 className = semanticModel.GetDeclaredSymbol(td)
                                     ?.Name;
-
-                                modifier = AccessModifiers.None;
-                                foreach (var m in td.Modifiers)
-                                {
-                                    if (m.IsKind(SyntaxKind.PublicKeyword))
-                                    {
-                                        modifier |= AccessModifiers.Public;
-                                    }
-                                    else if (m.IsKind(SyntaxKind.PrivateKeyword))
-                                    {
-                                        modifier |= AccessModifiers.Private;
-                                    }
-                                    else if (m.IsKind(SyntaxKind.ProtectedKeyword))
-                                    {
-                                        modifier |= AccessModifiers.Protected;
-                                    }
-                                    else if (m.IsKind(SyntaxKind.InternalKeyword))
-                                    {
-                                        modifier |= AccessModifiers.Internal;
-                                    }
-                                }
+                                modifier = td.GetApplicableAccessModifier();
                             }
                             else
                             {
@@ -141,33 +121,7 @@ namespace IX.StandardExtensions.SourceGeneration
                     sb.Append($@"namespace {s.Key.NamespaceName}
 {{
     ");
-                    var modifier = s.Key.AccessModifiers;
-                    if (modifier == AccessModifiers.None)
-                    {
-                        sb.Append("private ");
-                    }
-                    else
-                    {
-                        if ((modifier & AccessModifiers.Public) != 0)
-                        {
-                            sb.Append("public ");
-                        }
-
-                        if ((modifier & AccessModifiers.Protected) != 0)
-                        {
-                            sb.Append("protected ");
-                        }
-
-                        if ((modifier & AccessModifiers.Internal) != 0)
-                        {
-                            sb.Append("internal ");
-                        }
-
-                        if ((modifier & AccessModifiers.Private) != 0)
-                        {
-                            sb.Append("private ");
-                        }
-                    }
+                    sb.AppendAccessModifierKeywords(s.Key.AccessModifiers);
 
                     sb.Append($@"partial class {s.Key.ClassName}
     {{
@@ -186,7 +140,9 @@ namespace IX.StandardExtensions.SourceGeneration
                     }
 
                     sb.Append(
-                        @"        }
+                        @"
+            base.DisposeAutomatically();
+        }
     }
 }");
 
@@ -214,16 +170,6 @@ namespace IX.StandardExtensions.SourceGeneration
 #endregion
 
 #region Nested types and delegates
-
-        [Flags]
-        private enum AccessModifiers
-        {
-            None = 0,
-            Public = 1,
-            Private = 2,
-            Internal = 4,
-            Protected = 8
-        }
 
         private sealed class MapToReceiver : ISyntaxReceiver
         {
