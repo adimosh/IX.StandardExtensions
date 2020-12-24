@@ -64,6 +64,9 @@ namespace IX.StandardExtensions.ComponentModel
             this.Dispose(true);
         }
 
+        protected virtual void DisposeAutomatically()
+        { }
+
         /// <summary>
         ///     Throws if the current object is disposed.
         /// </summary>
@@ -139,6 +142,8 @@ namespace IX.StandardExtensions.ComponentModel
             {
                 if (disposing)
                 {
+                    this.DisposeAutomatically();
+
                     this.DisposeManagedContext();
                 }
 

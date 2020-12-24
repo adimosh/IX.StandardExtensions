@@ -24,7 +24,8 @@
   <PropertyGroup>
     <PackageReleaseNotes>- DisposableBase properly updated for .NET 5.
 - ConcurrentDictionary properly updated.
-- Work.OnThreadPool missing method added.</PackageReleaseNotes>
+- Work.OnThreadPool missing method added.
+- Added plumbing for source generators.</PackageReleaseNotes>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>../../opt/snk/ix.framework.strongname.snk</AssemblyOriginatorKeyFile>
@@ -289,12 +290,13 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='net452' OR '$(TargetFramework)'=='net46'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net46'">
     <PackageReference Include="System.ValueTuple" Version="[4.5.0,5)" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.1'">
+  <ItemGroup Condition="'$(TargetFrameworkAdvanced)'!='true'">
     <PackageReference Include="System.Memory" Version="[4.5.4,5)" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="[4.5.3,5)" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFrameworkIsFramework)'!='true'">

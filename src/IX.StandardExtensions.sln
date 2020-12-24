@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Configurations", "Bui
 		azure.devops.releasebuild.yaml = azure.devops.releasebuild.yaml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IX.StandardExtensions.SourceGeneration", "IX.StandardExtensions.SourceGeneration\IX.StandardExtensions.SourceGeneration.csproj", "{86F77181-F86F-4C1D-9AB2-DB2D0DF7D416}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{EE8BE730-7219-4FE1-B975-248FB6255DB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE8BE730-7219-4FE1-B975-248FB6255DB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE8BE730-7219-4FE1-B975-248FB6255DB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86F77181-F86F-4C1D-9AB2-DB2D0DF7D416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86F77181-F86F-4C1D-9AB2-DB2D0DF7D416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86F77181-F86F-4C1D-9AB2-DB2D0DF7D416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86F77181-F86F-4C1D-9AB2-DB2D0DF7D416}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

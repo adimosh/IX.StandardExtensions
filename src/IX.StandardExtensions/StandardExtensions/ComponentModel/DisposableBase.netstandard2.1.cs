@@ -87,6 +87,8 @@ namespace IX.StandardExtensions.ComponentModel
             {
                 if (disposing)
                 {
+                    this.DisposeAutomatically();
+
                     await this.DisposeManagedContextAsync()
                         .ConfigureAwait(false);
                 }
