@@ -49,7 +49,7 @@ namespace IX.System.Collections.Generic
             "AsyncUsage.CSharp.Naming",
             "AvoidAsyncSuffix:Avoid Async suffix",
             Justification = "This method was originally meant to actually be async.")]
-        ValueTask<bool> IAsyncEnumerator<T>.MoveNextAsync() => new ValueTask<bool>(false);
+        ValueTask<bool> IAsyncEnumerator<T>.MoveNextAsync() => new(false);
 
 #endregion
 

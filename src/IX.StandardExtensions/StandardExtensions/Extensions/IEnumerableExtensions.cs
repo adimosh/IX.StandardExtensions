@@ -157,17 +157,17 @@ namespace IX.StandardExtensions.Extensions
 
             Parallel.ForEach(EnumerateWithIndex(source, action), PerformParallelAction);
 
-            static IEnumerable<Tuple<int, T, Action<int, T>>> EnumerateWithIndex(IEnumerable<T> sourceEnumerable, Action<int, T> actionToPerform)
+            static IEnumerable<(int Index, T Item, Action<int, T> Action)> EnumerateWithIndex(IEnumerable<T> sourceEnumerable, Action<int, T> actionToPerform)
             {
                 var i = 0;
                 foreach (T item in sourceEnumerable)
                 {
-                    yield return new Tuple<int, T, Action<int, T>>(i, item, actionToPerform);
+                    yield return (i, item, actionToPerform);
                     i++;
                 }
             }
 
-            static void PerformParallelAction(Tuple<int, T, Action<int, T>> state) => state.Item3(state.Item1, state.Item2);
+            static void PerformParallelAction((int Index, T Item, Action<int, T> Action) state) => state.Action(state.Index, state.Item);
         }
     }
 }

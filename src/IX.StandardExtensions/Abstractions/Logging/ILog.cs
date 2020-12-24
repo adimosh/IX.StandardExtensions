@@ -19,7 +19,7 @@ namespace IX.Abstractions.Logging
         /// <param name="message">
         ///     The message to log.
         /// </param>
-        void Debug([NotNull] string message);
+        void Debug(string message);
 
         /// <summary>
         ///     Logs a debug message.
@@ -32,7 +32,7 @@ namespace IX.Abstractions.Logging
         /// </param>
         [StringFormatMethod("message")]
         void Debug(
-            [NotNull] string message,
+            string message,
             params string[] formatParameters);
 
         /// <summary>
@@ -41,8 +41,8 @@ namespace IX.Abstractions.Logging
         /// <param name="exception">The exception.</param>
         /// <param name="message">The message to log.</param>
         void Debug(
-            [NotNull] Exception exception,
-            [NotNull] string message);
+            Exception exception,
+            string message);
 
         /// <summary>
         ///     Logs a debug message.
@@ -52,8 +52,8 @@ namespace IX.Abstractions.Logging
         /// <param name="formatParameters">The string format parameters.</param>
         [StringFormatMethod("message")]
         void Debug(
-            [NotNull] Exception exception,
-            [NotNull] string message,
+            Exception exception,
+            string message,
             params string[] formatParameters);
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace IX.Abstractions.Logging
         /// <param name="message">
         ///     The message to log.
         /// </param>
-        void Info([NotNull] string message);
+        void Info(string message);
 
         /// <summary>
         ///     Logs an informational message.
@@ -75,7 +75,7 @@ namespace IX.Abstractions.Logging
         /// </param>
         [StringFormatMethod("message")]
         void Info(
-            [NotNull] string message,
+            string message,
             params string[] formatParameters);
 
         /// <summary>
@@ -84,8 +84,8 @@ namespace IX.Abstractions.Logging
         /// <param name="exception">The exception.</param>
         /// <param name="message">The message to log.</param>
         void Info(
-            [NotNull] Exception exception,
-            [NotNull] string message);
+            Exception exception,
+            string message);
 
         /// <summary>
         ///     Logs an informational message.
@@ -95,8 +95,8 @@ namespace IX.Abstractions.Logging
         /// <param name="formatParameters">The string format parameters.</param>
         [StringFormatMethod("message")]
         void Info(
-            [NotNull] Exception exception,
-            [NotNull] string message,
+            Exception exception,
+            string message,
             params string[] formatParameters);
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace IX.Abstractions.Logging
         /// <param name="message">
         ///     The message to log.
         /// </param>
-        void Warning([NotNull] string message);
+        void Warning(string message);
 
         /// <summary>
         ///     Logs a warning message.
@@ -114,7 +114,7 @@ namespace IX.Abstractions.Logging
         /// <param name="formatParameters">The string format parameters.</param>
         [StringFormatMethod("message")]
         void Warning(
-            [NotNull] string message,
+            string message,
             params string[] formatParameters);
 
         /// <summary>
@@ -123,8 +123,8 @@ namespace IX.Abstractions.Logging
         /// <param name="exception">The exception.</param>
         /// <param name="message">The message to log.</param>
         void Warning(
-            [NotNull] Exception exception,
-            [NotNull] string message);
+            Exception exception,
+            string message);
 
         /// <summary>
         ///     Logs a warning message.
@@ -134,8 +134,8 @@ namespace IX.Abstractions.Logging
         /// <param name="formatParameters">The string format parameters.</param>
         [StringFormatMethod("message")]
         void Warning(
-            [NotNull] Exception exception,
-            [NotNull] string message,
+            Exception exception,
+            string message,
             params string[] formatParameters);
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace IX.Abstractions.Logging
         /// <param name="message">
         ///     The message to log.
         /// </param>
-        void Error([NotNull] string message);
+        void Error(string message);
 
         /// <summary>
         ///     Logs an error message.
@@ -157,7 +157,7 @@ namespace IX.Abstractions.Logging
         /// </param>
         [StringFormatMethod("message")]
         void Error(
-            [NotNull] string message,
+            string message,
             params string[] formatParameters);
 
         /// <summary>
@@ -166,8 +166,8 @@ namespace IX.Abstractions.Logging
         /// <param name="exception">The exception.</param>
         /// <param name="message">The message to log.</param>
         void Error(
-            [NotNull] Exception exception,
-            [NotNull] string message);
+            Exception exception,
+            string message);
 
         /// <summary>
         ///     Logs an error message.
@@ -177,8 +177,8 @@ namespace IX.Abstractions.Logging
         /// <param name="formatParameters">The string format parameters.</param>
         [StringFormatMethod("message")]
         void Error(
-            [NotNull] Exception exception,
-            [NotNull] string message,
+            Exception exception,
+            string message,
             params string[] formatParameters);
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace IX.Abstractions.Logging
         /// <param name="message">
         ///     The message to log.
         /// </param>
-        void Critical([NotNull] string message);
+        void Critical(string message);
 
         /// <summary>
         ///     Logs a critical error message.
@@ -200,7 +200,7 @@ namespace IX.Abstractions.Logging
         /// </param>
         [StringFormatMethod("message")]
         void Critical(
-            [NotNull] string message,
+            string message,
             params string[] formatParameters);
 
         /// <summary>
@@ -209,8 +209,8 @@ namespace IX.Abstractions.Logging
         /// <param name="exception">The exception.</param>
         /// <param name="message">The message to log.</param>
         void Critical(
-            [NotNull] Exception exception,
-            [NotNull] string message);
+            Exception exception,
+            string message);
 
         /// <summary>
         ///     Logs a critical error message.
@@ -220,8 +220,8 @@ namespace IX.Abstractions.Logging
         /// <param name="formatParameters">The string format parameters.</param>
         [StringFormatMethod("message")]
         void Critical(
-            [NotNull] Exception exception,
-            [NotNull] string message,
+            Exception exception,
+            string message,
             params string[] formatParameters);
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace IX.Abstractions.Logging
         /// <param name="message">
         ///     The message to log.
         /// </param>
-        void Fatal([NotNull] string message);
+        void Fatal(string message);
 
         /// <summary>
         ///     Logs a fatal error message.
@@ -243,7 +243,7 @@ namespace IX.Abstractions.Logging
         /// </param>
         [StringFormatMethod("message")]
         void Fatal(
-            [NotNull] string message,
+            string message,
             params string[] formatParameters);
 
         /// <summary>
@@ -252,8 +252,8 @@ namespace IX.Abstractions.Logging
         /// <param name="exception">The exception.</param>
         /// <param name="message">The message to log.</param>
         void Fatal(
-            [NotNull] Exception exception,
-            [NotNull] string message);
+            Exception exception,
+            string message);
 
         /// <summary>
         ///     Logs a fatal error message.
@@ -263,8 +263,8 @@ namespace IX.Abstractions.Logging
         /// <param name="formatParameters">The string format parameters.</param>
         [StringFormatMethod("message")]
         void Fatal(
-            [NotNull] Exception exception,
-            [NotNull] string message,
+            Exception exception,
+            string message,
             params string[] formatParameters);
     }
 }

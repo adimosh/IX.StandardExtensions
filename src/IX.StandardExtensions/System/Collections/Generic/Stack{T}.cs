@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 using GlobalCollectionsGeneric = System.Collections.Generic;
 
@@ -60,7 +61,11 @@ namespace IX.System.Collections.Generic
         /// <param name="source">The source.</param>
         /// <returns>An IX Framework abstracted stack.</returns>
         public static Stack<T> FromStack(GlobalCollectionsGeneric.Stack<T> source) =>
-            new(source?.ToArray() ?? throw new ArgumentNullException(nameof(source)));
+            new(
+                Requires.NotNull(
+                        source,
+                        nameof(source))
+                    .ToArray());
 
         /// <summary>
         ///     Pushes a range of elements to the top of the stack.
@@ -72,12 +77,9 @@ namespace IX.System.Collections.Generic
         /// </exception>
         public void PushRange(T[] items)
         {
-            if (items == null)
-            {
-                throw new ArgumentNullException(nameof(items));
-            }
-
-            foreach (var item in items)
+            foreach (T? item in Requires.NotNull(
+                items,
+                nameof(items)))
             {
                 this.Push(item);
             }
@@ -104,20 +106,8 @@ namespace IX.System.Collections.Generic
             int startIndex,
             int count)
         {
-            if (items == null)
-            {
-                throw new ArgumentNullException(nameof(items));
-            }
-
-            if (startIndex < 0 || startIndex >= items.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(startIndex));
-            }
-
-            if (count <= 0 || count + startIndex > items.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count));
-            }
+            Requires.NotNull(items, nameof(items));
+            Requires.ValidArrayRange(in startIndex, in count, items, nameof(items));
 
             T[] innerArray = new T[count];
             Array.Copy(

@@ -59,13 +59,13 @@ namespace IX.StandardExtensions.ComponentModel
         {
             if (!this.reference.TryGetTarget(out T intermediateTarget))
             {
-                target = null;
+                target = null!;
                 return false;
             }
 
             if (intermediateTarget.Disposed)
             {
-                target = null;
+                target = null!;
                 return false;
             }
 
