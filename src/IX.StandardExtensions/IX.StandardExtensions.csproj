@@ -296,7 +296,7 @@
 
   <ItemGroup Condition="'$(TargetFrameworkAdvanced)'!='true'">
     <PackageReference Include="System.Memory" Version="[4.5.4,5)" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" Version="[4.5.3,5)" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFrameworkIsFramework)'!='true'">
@@ -345,6 +345,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />

@@ -1,4 +1,4 @@
-﻿<!--EXTERNAL_PROPERTIES: IxDevOpsBuild-->
+<!--EXTERNAL_PROPERTIES: IxDevOpsBuild-->
 <!--EXTERNAL_PROPERTIES: TargetFramework-->
 <Project Sdk="Microsoft.NET.Sdk">
 
@@ -12,6 +12,7 @@
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
   </PropertyGroup>
 
   <PropertyGroup>
