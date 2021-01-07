@@ -2,6 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -32,14 +33,6 @@ namespace IX.StandardExtensions.SourceGeneration
         ///     Executes the generator in the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
-        [SuppressMessage(
-            "CodeSmell",
-            "ERP022:Unobserved exception in a generic exception handler",
-            Justification = "It is important that exceptions do not break the build process.")]
-        [SuppressMessage(
-            "ReSharper",
-            "EmptyGeneralCatchClause",
-            Justification = "It is important that exceptions do not break the build process.")]
         public void Execute(GeneratorExecutionContext context)
         {
             if (context.SyntaxReceiver is not StandardTypesSyntaxReceiver receiver)
@@ -47,135 +40,178 @@ namespace IX.StandardExtensions.SourceGeneration
                 return;
             }
 
-            List<(TypeDeclarationSyntax Type, string[] fieldNames)> autoDisposeMembers = new();
+            if (receiver.Candidates.Count == 0)
+            {
+                return;
+            }
+
+            context.DebugWarning($"Total number of candidates is {receiver.Candidates.Count}");
+
+            context.ReportDiagnostic(
+                Diagnostic.Create(
+                    DiagnosticDescriptors.Dd1003,
+                    Location.None,
+                    receiver.Candidates.Count));
+
+            List<(TypeDeclarationSyntax Type, string[] FieldNames)> autoDisposeMembers = new();
 
             Parallel.ForEach(
                 receiver.Candidates,
-                candidate =>
+                SelectCandidateMembers);
+
+            void SelectCandidateMembers(StandardTypesSyntaxReceiver.CandidateEntry candidate)
+            {
+                var syntaxTree = candidate.TypeDeclaration.SyntaxTree;
+                SemanticModel semanticModel = context.Compilation.GetSemanticModel(syntaxTree);
+                var semanticType = semanticModel.GetDeclaredSymbol(candidate.TypeDeclaration);
+
+                if (semanticType == null)
                 {
-                    var syntaxTree = candidate.TypeDeclaration.SyntaxTree;
-                    SemanticModel semanticModel = context.Compilation.GetSemanticModel(syntaxTree);
-                    var semanticType = semanticModel.GetDeclaredSymbol(candidate.TypeDeclaration);
+                    return;
+                }
 
-                    if (semanticType == null)
+                if (!candidate.IsPartial)
+                {
+                    context.ReportDiagnostic(
+                        Diagnostic.Create(
+                            DiagnosticDescriptors.Dd1001,
+                            Location.Create(
+                                syntaxTree,
+                                candidate.TypeDeclaration.Identifier.Span),
+                            semanticType.Name));
+
+                    return;
+                }
+
+                foreach (var member in candidate.TypeDeclaration.Members)
+                {
+                    if (member is FieldDeclarationSyntax field)
                     {
-                        return;
-                    }
-
-                    if (!candidate.IsPartial)
-                    {
-                        context.ReportDiagnostic(
-                            Diagnostic.Create(
-                                DiagnosticDescriptors.Dd1001,
-                                Location.Create(
-                                    syntaxTree,
-                                    candidate.TypeDeclaration.Identifier.Span),
-                                semanticType.Name));
-
-                        return;
-                    }
-
-                    foreach (var member in candidate.TypeDeclaration.Members)
-                    {
-                        if (member is FieldDeclarationSyntax field)
+                        // Test for auto-disposable
+                        if (field.AttributeLists.Any(
+                            q => q.Attributes.Any(
+                                r => r.Name.ToString()
+                                    .IsAttributeName("AutoDisposableMember"))))
                         {
-                            // Test for auto-disposable
-                            if (field.AttributeLists.Any(
-                                q => q.Attributes.Any(
-                                    r => r.Name.ToString()
-                                        .IsAttributeName("AutoDisposableMember"))))
-                            {
-                                var names = field.GetDeclaredFieldNames(semanticModel);
+                            var names = field.GetDeclaredFieldNames(semanticModel);
 
-                                // Check whether the base class is inherited from DisposableBase
-                                if (semanticType.GetBaseTypesAndThis()
-                                    .All(p => p.Name != "DisposableBase"))
-                                {
-                                    context.ReportDiagnostic(
-                                        Diagnostic.Create(
-                                            DiagnosticDescriptors.Dd1002,
-                                            Location.Create(
-                                                syntaxTree,
-                                                field.Span),
-                                            string.Join(",", names),
-                                            semanticType.Name));
-                                }
-                                else
-                                {
-                                    autoDisposeMembers.Add((candidate.TypeDeclaration, names));
-                                }
+                            // Check whether the base class is inherited from DisposableBase
+                            if (semanticType.GetBaseTypesAndThis()
+                                .All(p => p.Name != "DisposableBase"))
+                            {
+                                context.ReportDiagnostic(
+                                    Diagnostic.Create(
+                                        DiagnosticDescriptors.Dd1002,
+                                        Location.Create(
+                                            syntaxTree,
+                                            field.Span),
+                                        string.Join(",", names),
+                                        semanticType.Name));
+                            }
+                            else
+                            {
+                                autoDisposeMembers.Add((candidate.TypeDeclaration, names));
                             }
                         }
                     }
-                });
-
-            var invalidPathChars = Path.GetInvalidFileNameChars();
+                }
+            }
 
             // Auto-dispose members
             Parallel.ForEach(
                 autoDisposeMembers.GroupBy(p => p.Type),
-                s =>
+                ProcessAutoDispose);
+
+            void ProcessAutoDispose(IGrouping<TypeDeclarationSyntax, (TypeDeclarationSyntax Type, string[] FieldNames)> s)
+            {
+                try
                 {
-                    try
+                    TypeDeclarationSyntax key = s.Key;
+                    var syntaxTree = key.SyntaxTree;
+                    SemanticModel semanticModel = context.Compilation.GetSemanticModel(syntaxTree);
+                    var className = semanticModel.GetDeclaredSymbol(key)?
+                        .Name;
+
+                    if (className == null)
                     {
-                        TypeDeclarationSyntax key = s.Key;
-                        var syntaxTree = key.SyntaxTree;
-                        SemanticModel semanticModel = context.Compilation.GetSemanticModel(syntaxTree);
-                        var className = semanticModel.GetDeclaredSymbol(key)?
-                            .Name;
+                        return;
+                    }
 
-                        if (className == null)
-                        {
-                            return;
-                        }
+                    var fileName = className.Replace(
+                        Path.GetInvalidFileNameChars(),
+                        '_');
 
-                        var fileName = className.Replace(
-                            invalidPathChars,
-                            '_');
+                    StringBuilder sb = new();
 
-                        StringBuilder sb = new();
-
-                        sb.Append($@"// <auto-generated />
+                    sb.Append($@"// <auto-generated />
 
 namespace {key.GetContainingNamespace()}
 {{
     ");
 
-                        sb.AppendAccessModifierKeywords(key.GetApplicableAccessModifier());
+                    sb.AppendAccessModifierKeywords(key.GetApplicableAccessModifier());
 
-                        sb.Append($@"partial class {className}
+                    sb.Append($@"partial class {className}
     {{
         protected override void DisposeAutomatically()
         {{
+            this.Dispose_AutoGenerated();
+        }}
+
+        private void Dispose_AutoGenerated()
+        {{
 ");
 
-                        foreach (var fieldGroups in s)
+                    foreach (var (_, fieldNames) in s)
+                    {
+                        foreach (var name in fieldNames)
                         {
-                            foreach (var name in fieldGroups.fieldNames)
+#if DEBUG
+                            if (context.Compilation.Options.GeneralDiagnosticOption != ReportDiagnostic.Info)
                             {
-                                sb.Append("            this.");
-                                sb.Append(name);
-                                sb.AppendLine("?.Dispose();");
+                                context.ReportDiagnostic(
+                                    Diagnostic.Create(
+                                        "IXDEBUGDEBUG02",
+                                        "Debug",
+                                        $"Currently processing auto-dispose for {className}.{name}.",
+                                        DiagnosticSeverity.Warning,
+                                        DiagnosticSeverity.Warning,
+                                        true,
+                                        4));
                             }
-                        }
+#endif
 
-                        sb.Append(
-                            @"
+                            sb.Append("            this.");
+                            sb.Append(name);
+                            sb.AppendLine("?.Dispose();");
+                        }
+                    }
+
+                    sb.Append(
+                        @"
             base.DisposeAutomatically();
         }
     }
 }");
 
-                        context.AddSource(
-                            $"{fileName}.AutoDispose.cs",
-                            SourceText.From(
-                                sb.ToString(),
-                                Encoding.UTF8));
-                    }
-                    catch
-                    {
-                    }
-                });
+                    context.AddSource(
+                        $"{fileName}.AutoDispose.cs",
+                        SourceText.From(
+                            sb.ToString(),
+                            Encoding.UTF8));
+
+                    context.DebugWarning($"Added source {fileName} with contents: {sb.ToString()}");
+                }
+                catch (Exception ex)
+                {
+                    context.ReportDiagnostic(
+                        Diagnostic.Create(
+                            DiagnosticDescriptors.Dd1004,
+                            Location.None,
+                            ex.GetType(),
+                            ex));
+                }
+            }
         }
 
         /// <summary>

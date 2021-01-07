@@ -1,3 +1,7 @@
+// <copyright file="AccessModifiers.cs" company="Adrian Mos">
+// Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
+// </copyright>
+
 using System;
 
 namespace IX.StandardExtensions.SourceGeneration

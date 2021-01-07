@@ -23,5 +23,21 @@ namespace IX.StandardExtensions.SourceGeneration
             "Design",
             DiagnosticSeverity.Warning,
             true);
+
+        internal static readonly DiagnosticDescriptor Dd1003 = new(
+            "IXSTDEXTSG1003",
+            "Classes found",
+            "There are {0} candidate classes to do source generation on.",
+            "Statistics",
+            DiagnosticSeverity.Info,
+            true);
+
+        internal static readonly DiagnosticDescriptor Dd1004 = new(
+            "IXSTDEXTSG1004",
+            "Error during source generation",
+            "There was an exception of type {0} during source generation: {1}.",
+            "Errors",
+            DiagnosticSeverity.Error,
+            true);
     }
 }
