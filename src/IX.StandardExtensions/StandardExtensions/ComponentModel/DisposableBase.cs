@@ -65,7 +65,8 @@ namespace IX.StandardExtensions.ComponentModel
         }
 
         protected virtual void DisposeAutomatically()
-        { }
+        {
+        }
 
         /// <summary>
         ///     Throws if the current object is disposed.

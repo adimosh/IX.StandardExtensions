@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -25,6 +26,8 @@ namespace IX.StandardExtensions.SourceGeneration
     [Generator]
     public class SourceGenerator : ISourceGenerator
     {
+        private readonly object lockTarget = new object();
+
         #region Methods
 
         #region Interface implementations
@@ -53,7 +56,7 @@ namespace IX.StandardExtensions.SourceGeneration
                     Location.None,
                     receiver.Candidates.Count));
 
-            List<(TypeDeclarationSyntax Type, string[] FieldNames)> autoDisposeMembers = new();
+            ConcurrentBag<(TypeDeclarationSyntax Type, string[] FieldNames)> autoDisposeMembers = new();
 
             Parallel.ForEach(
                 receiver.Candidates,
@@ -95,6 +98,9 @@ namespace IX.StandardExtensions.SourceGeneration
                         {
                             var names = field.GetDeclaredFieldNames(semanticModel);
 
+                            context.DebugWarning(
+                                $"Found fields for auto-dispose in {semanticType.Name}: {string.Join(", ", names)}.");
+
                             // Check whether the base class is inherited from DisposableBase
                             if (semanticType.GetBaseTypesAndThis()
                                 .All(p => p.Name != "DisposableBase"))
@@ -110,12 +116,15 @@ namespace IX.StandardExtensions.SourceGeneration
                             }
                             else
                             {
+                                context.DebugWarning($"Auto-dispose {semanticType.Name}.{string.Join(", ", names)}.");
                                 autoDisposeMembers.Add((candidate.TypeDeclaration, names));
                             }
                         }
                     }
                 }
             }
+
+            context.DebugWarning($"Total number of auto-dispose candidates is {autoDisposeMembers.Count}");
 
             // Auto-dispose members
             Parallel.ForEach(
@@ -166,20 +175,7 @@ namespace {key.GetContainingNamespace()}
                     {
                         foreach (var name in fieldNames)
                         {
-#if DEBUG
-                            if (context.Compilation.Options.GeneralDiagnosticOption != ReportDiagnostic.Info)
-                            {
-                                context.ReportDiagnostic(
-                                    Diagnostic.Create(
-                                        "IXDEBUGDEBUG02",
-                                        "Debug",
-                                        $"Currently processing auto-dispose for {className}.{name}.",
-                                        DiagnosticSeverity.Warning,
-                                        DiagnosticSeverity.Warning,
-                                        true,
-                                        4));
-                            }
-#endif
+                            context.DebugWarning($"Currently processing auto-dispose for {className}.{name}.");
 
                             sb.Append("            this.");
                             sb.Append(name);
@@ -194,13 +190,16 @@ namespace {key.GetContainingNamespace()}
     }
 }");
 
-                    context.AddSource(
-                        $"{fileName}.AutoDispose.cs",
-                        SourceText.From(
-                            sb.ToString(),
-                            Encoding.UTF8));
+                    lock (this.lockTarget)
+                    {
+                        context.AddSource(
+                            $"{fileName}.AutoDispose.cs",
+                            SourceText.From(
+                                sb.ToString(),
+                                Encoding.UTF8));
+                    }
 
-                    context.DebugWarning($"Added source {fileName} with contents: {sb.ToString()}");
+                    context.DebugWarning($"Added source {fileName}.");
                 }
                 catch (Exception ex)
                 {

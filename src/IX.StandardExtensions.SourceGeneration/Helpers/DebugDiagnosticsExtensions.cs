@@ -12,7 +12,7 @@ namespace IX.StandardExtensions.SourceGeneration.Helpers
         [Conditional("DEBUG")]
         internal static void DebugWarning(this GeneratorExecutionContext context, string message) => context.ReportDiagnostic(
                 Diagnostic.Create(
-                    "IXDEBUGDEBUG01",
+                    "IXDEBUGDEBUG",
                     "Debug",
                     message,
                     DiagnosticSeverity.Warning,

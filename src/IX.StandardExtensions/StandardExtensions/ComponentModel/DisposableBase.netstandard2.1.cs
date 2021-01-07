@@ -2,13 +2,13 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+#if FRAMEWORK_ADVANCED
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace IX.StandardExtensions.ComponentModel
 {
-#if FRAMEWORK_ADVANCED
     /// <summary>
     ///     An abstract base class for correctly implementing the disposable pattern.
     /// </summary>
@@ -102,5 +102,5 @@ namespace IX.StandardExtensions.ComponentModel
             }
         }
     }
-#endif
 }
+#endif
