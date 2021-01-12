@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using IX.StandardExtensions.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -47,8 +48,7 @@ namespace IX.StandardExtensions.SourceGeneration
 
                 if (!typeDeclarationSyntax.AttributeLists.SelectMany(p => p.Attributes)
                     .Any(
-                        attribute => IsAttributeName(
-                            attribute.Name.ToString(),
+                        attribute => attribute.Name.ToString().IsAttributeName(
                             "SourceGenerationEnabled")))
                 {
                     // Type not marked for source generation
@@ -68,26 +68,6 @@ namespace IX.StandardExtensions.SourceGeneration
             }
             catch
             {
-            }
-
-            bool IsAttributeName(
-                string source,
-                string attributeName)
-            {
-                return source.Equals(
-                           attributeName,
-                           StringComparison.Ordinal) ||
-                       (source.Length > 9 &&
-                        source.EndsWith(
-                            "Attribute",
-                            StringComparison.Ordinal) &&
-                        string.Compare(
-                            attributeName,
-                            0,
-                            source,
-                            0,
-                            source.Length - 9) ==
-                        0);
             }
         }
 
