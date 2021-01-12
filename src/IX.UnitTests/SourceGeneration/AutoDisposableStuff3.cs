@@ -1,4 +1,4 @@
-// <copyright file="AutoDisposableStuff.cs" company="Adrian Mos">
+// <copyright file="AutoDisposableStuff3.cs" company="Adrian Mos">
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
@@ -20,21 +20,17 @@ namespace IX.UnitTests.SourceGeneration
         "ReSharper",
         "PartialTypeWithSinglePart",
         Justification = "This is a specific test for code generators.")]
-    public partial class AutoDisposableStuff : DisposableBase
+    public partial class AutoDisposableStuff3 : DisposableBase
     {
         [AutoDisposableMember]
         [UsedImplicitly]
-        [SuppressMessage(
-            "Style",
-            "IDE0044:Add readonly modifier",
-            Justification = "Not adding it is the point of this test.")]
-        private IDisposable disposableField;
+        private readonly IDisposable disposableField;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AutoDisposableStuff"/> class.
+        /// Initializes a new instance of the <see cref="AutoDisposableStuff3"/> class.
         /// </summary>
         /// <param name="field">The disposable field.</param>
-        public AutoDisposableStuff(IDisposable field)
+        public AutoDisposableStuff3(IDisposable field)
         {
             this.disposableField = field;
         }

@@ -1,4 +1,4 @@
-<!--EXTERNAL_PROPERTIES: IxDevOpsBuild-->
+﻿<!--EXTERNAL_PROPERTIES: IxDevOpsBuild-->
 <!--EXTERNAL_PROPERTIES: TargetFramework-->
 <Project Sdk="Microsoft.NET.Sdk">
 
@@ -41,7 +41,10 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'!='net46'">
-    <ProjectReference Include="..\IX.StandardExtensions.SourceGeneration\IX.StandardExtensions.SourceGeneration.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\IX.StandardExtensions.SourceGeneration\IX.StandardExtensions.SourceGeneration.csproj"
+                      OutputItemType="Analyzer"
+                      PrivateAssets="all"
+                      ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <ItemGroup>
