@@ -57,11 +57,11 @@ namespace IX.StandardExtensions.SourceGeneration.Helpers
             return string.Empty;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
             Justification = "Yeah this is OK.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
             Justification = "Yeah this is OK.")]

@@ -10,14 +10,23 @@ namespace IX.StandardExtensions.SourceGeneration.Helpers
     internal static class DebugDiagnosticsExtensions
     {
         [Conditional("DEBUG")]
+        internal static void Breakpoint()
+        {
+            if (!Debugger.IsAttached)
+            {
+                Debugger.Launch();
+            }
+        }
+
+        [Conditional("DEBUG")]
         internal static void DebugWarning(this GeneratorExecutionContext context, string message) => context.ReportDiagnostic(
-                Diagnostic.Create(
-                    "IXDEBUGDEBUG",
-                    "Debug",
-                    message,
-                    DiagnosticSeverity.Warning,
-                    DiagnosticSeverity.Warning,
-                    true,
-                    4));
+                    Diagnostic.Create(
+                        "IXDEBUGDEBUG",
+                        "Debug",
+                        message,
+                        DiagnosticSeverity.Warning,
+                        DiagnosticSeverity.Warning,
+                        true,
+                        4));
     }
 }

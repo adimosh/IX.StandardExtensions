@@ -2,9 +2,10 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using IX.StandardExtensions.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -26,31 +27,68 @@ namespace IX.StandardExtensions.SourceGeneration
 
 #region Interface implementations
 
+        [SuppressMessage(
+            "ReSharper",
+            "EmptyGeneralCatchClause",
+            Justification = "We're OK here, let's not make the compilation fail.")]
+        [SuppressMessage(
+            "CodeSmell",
+            "ERP022:Unobserved exception in a generic exception handler",
+            Justification = "We're OK here, let's not make the compilation fail.")]
         public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
         {
-            if (syntaxNode is not TypeDeclarationSyntax typeDeclarationSyntax)
+            try
             {
-                // We'll discover types
-                return;
+                if (syntaxNode is not TypeDeclarationSyntax typeDeclarationSyntax)
+                {
+                    // We'll discover types
+                    return;
+                }
+
+                if (!typeDeclarationSyntax.AttributeLists.SelectMany(p => p.Attributes)
+                    .Any(
+                        attribute => IsAttributeName(
+                            attribute.Name.ToString(),
+                            "SourceGenerationEnabled")))
+                {
+                    // Type not marked for source generation
+                    return;
+                }
+
+                // We'll see if the type is partial - we can't do generation if it isn't, and we must show a warning
+                bool isPartial = typeDeclarationSyntax.Modifiers.Any(SyntaxKind.PartialKeyword);
+
+                // We'll add our candidate to the list
+                this.Candidates.Add(
+                    new CandidateEntry
+                    {
+                        TypeDeclaration = typeDeclarationSyntax,
+                        IsPartial = isPartial
+                    });
+            }
+            catch
+            {
             }
 
-            if (!typeDeclarationSyntax.AttributeLists.SelectMany(p => p.Attributes)
-                .Any(
-                    attribute => attribute.Name.ToString().IsAttributeName("SourceGenerationEnabled")))
+            bool IsAttributeName(
+                string source,
+                string attributeName)
             {
-                // Type not marked for source generation
-                return;
+                return source.Equals(
+                           attributeName,
+                           StringComparison.Ordinal) ||
+                       (source.Length > 9 &&
+                        source.EndsWith(
+                            "Attribute",
+                            StringComparison.Ordinal) &&
+                        string.Compare(
+                            attributeName,
+                            0,
+                            source,
+                            0,
+                            source.Length - 9) ==
+                        0);
             }
-
-            // We'll see if the type is partial - we can't do generation if it isn't, and we must show a warning
-            bool isPartial = typeDeclarationSyntax.Modifiers.Any(SyntaxKind.PartialKeyword);
-
-            // We'll add our candidate to the list
-            this.Candidates.Add(new CandidateEntry
-            {
-                TypeDeclaration = typeDeclarationSyntax,
-                IsPartial = isPartial
-            });
         }
 
 #endregion

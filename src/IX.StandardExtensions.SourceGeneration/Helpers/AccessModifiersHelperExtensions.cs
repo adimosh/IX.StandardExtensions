@@ -2,6 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Collections.Generic;
 using System.Text;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -12,7 +13,7 @@ namespace IX.StandardExtensions.SourceGeneration.Helpers
     {
         internal static void AppendAccessModifierKeywords(
             this StringBuilder sb,
-            AccessModifiers modifiers)
+            in AccessModifiers modifiers)
         {
             if (modifiers == AccessModifiers.None)
             {
@@ -40,6 +41,42 @@ namespace IX.StandardExtensions.SourceGeneration.Helpers
                     sb.Append("private ");
                 }
             }
+        }
+
+        internal static string ConcatenateAccessModifierKeywords(
+            in AccessModifiers modifiers)
+        {
+            List<string> sb = new();
+            if (modifiers == AccessModifiers.None)
+            {
+                sb.Add("private");
+            }
+            else
+            {
+                if ((modifiers & AccessModifiers.Public) != 0)
+                {
+                    sb.Add("public");
+                }
+
+                if ((modifiers & AccessModifiers.Protected) != 0)
+                {
+                    sb.Add("protected");
+                }
+
+                if ((modifiers & AccessModifiers.Internal) != 0)
+                {
+                    sb.Add("internal");
+                }
+
+                if ((modifiers & AccessModifiers.Private) != 0)
+                {
+                    sb.Add("private");
+                }
+            }
+
+            return string.Join(
+                " ",
+                sb);
         }
 
         internal static AccessModifiers GetApplicableAccessModifier(this TypeDeclarationSyntax tds)
