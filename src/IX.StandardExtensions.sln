@@ -17,6 +17,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B5529E7C-26C5-4A91-BA0E-EDEA9D367DA3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IX.UnitTests", "IX.UnitTests\IX.UnitTests.csproj", "{EE8BE730-7219-4FE1-B975-248FB6255DB1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{86F77181-F86F-4C1D-9AB2-DB2D0DF7D416} = {86F77181-F86F-4C1D-9AB2-DB2D0DF7D416}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Configurations", "Build Configurations", "{F7C7F358-C8BF-4126-AE44-F4CA067EB4CE}"
 	ProjectSection(SolutionItems) = preProject
@@ -25,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Configurations", "Bui
 		azure.devops.releasebuild.yaml = azure.devops.releasebuild.yaml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IX.StandardExtensions.SourceGeneration", "IX.StandardExtensions.SourceGeneration\IX.StandardExtensions.SourceGeneration.csproj", "{86F77181-F86F-4C1D-9AB2-DB2D0DF7D416}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IX.StandardExtensions.SourceGeneration", "IX.StandardExtensions.SourceGeneration\IX.StandardExtensions.SourceGeneration.csproj", "{86F77181-F86F-4C1D-9AB2-DB2D0DF7D416}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
