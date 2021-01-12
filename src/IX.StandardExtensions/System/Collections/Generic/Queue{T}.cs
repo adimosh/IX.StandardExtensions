@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 using GlobalCollectionsGeneric = System.Collections.Generic;
 
@@ -43,7 +44,7 @@ namespace IX.System.Collections.Generic
         /// </summary>
         /// <param name="collection">The collection to copy elements from.</param>
         /// <exception cref="ArgumentNullException"><paramref name="collection" /> is <see langword="null" />.</exception>
-        public Queue([NotNull] GlobalCollectionsGeneric.IEnumerable<T> collection)
+        public Queue(GlobalCollectionsGeneric.IEnumerable<T> collection)
             : base(collection)
         {
         }
@@ -62,7 +63,7 @@ namespace IX.System.Collections.Generic
         /// <param name="source">The source.</param>
         /// <returns>An IX Framework abstracted queue.</returns>
         public static Queue<T> FromQueue(GlobalCollectionsGeneric.Queue<T> source) =>
-            new Queue<T>(source?.ToArray() ?? throw new ArgumentNullException(nameof(source)));
+            new(Requires.NotNull(source, nameof(source)).ToArray());
 
         /// <summary>
         ///     Queues a range of elements, adding them to the queue.
@@ -74,12 +75,7 @@ namespace IX.System.Collections.Generic
         /// </exception>
         public void EnqueueRange(T[] items)
         {
-            if (items == null)
-            {
-                throw new ArgumentNullException(nameof(items));
-            }
-
-            foreach (var item in items)
+            foreach (var item in Requires.NotNull(items, nameof(items)))
             {
                 this.Enqueue(item);
             }
@@ -106,20 +102,7 @@ namespace IX.System.Collections.Generic
             int startIndex,
             int count)
         {
-            if (items == null)
-            {
-                throw new ArgumentNullException(nameof(items));
-            }
-
-            if (startIndex < 0 || startIndex >= items.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(startIndex));
-            }
-
-            if (count <= 0 || count + startIndex > items.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count));
-            }
+            Requires.ValidArrayRange(in startIndex, in count, items, nameof(startIndex));
 
             T[] innerArray = new T[count];
             Array.Copy(

@@ -7,18 +7,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.EventModel
 {
     /// <summary>
-    /// Extension methods for async events.
+    ///     Extension methods for async events.
     /// </summary>
-    [JetBrains.Annotations.PublicAPI]
+    [PublicAPI]
     public static class AsyncEventInvokerExtensions
     {
+#region Methods
+
+#region Static methods
 
         /// <summary>
-        /// Invokes an asynchronous event.
+        ///     Invokes an asynchronous event.
         /// </summary>
         /// <param name="handler">The event handler.</param>
         /// <param name="sender">The sender.</param>
@@ -27,9 +31,11 @@ namespace IX.StandardExtensions.EventModel
             this AsyncEventHandler? handler,
             object sender)
         {
-            Requires.NotNull(sender, nameof(sender));
+            Requires.NotNull(
+                sender,
+                nameof(sender));
 
-            var invocationList = handler?.GetInvocationList();
+            Delegate[]? invocationList = handler?.GetInvocationList();
 
             return (invocationList?.Length ?? 0) switch
             {
@@ -49,19 +55,20 @@ namespace IX.StandardExtensions.EventModel
                                     eventHandler.Invoke(
                                         tuple.Sender,
                                         EventArgs.Empty));
+
                                 return tuple;
                             })
-                        .TaskList),
+                        .TaskList)
             };
         }
 
         /// <summary>
-        /// Invokes an asynchronous event.
+        ///     Invokes an asynchronous event.
         /// </summary>
         /// <typeparam name="TEventArgs">The type of the event arguments.</typeparam>
         /// <param name="handler">The event handler.</param>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <typeparamref name="TEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <typeparamref name="TEventArgs" /> instance containing the event data.</param>
         /// <returns>An task that can be awaited on by the invoker.</returns>
         public static Task InvokeAsync<TEventArgs>(
             this AsyncEventHandler<TEventArgs>? handler,
@@ -69,10 +76,14 @@ namespace IX.StandardExtensions.EventModel
             TEventArgs e)
             where TEventArgs : EventArgs
         {
-            Requires.NotNull(sender, nameof(sender));
-            Requires.NotNull(e, nameof(e));
+            Requires.NotNull(
+                sender,
+                nameof(sender));
+            Requires.NotNull(
+                e,
+                nameof(e));
 
-            var invocationList = handler?.GetInvocationList();
+            Delegate[]? invocationList = handler?.GetInvocationList();
 
             return (invocationList?.Length ?? 0) switch
             {
@@ -92,28 +103,33 @@ namespace IX.StandardExtensions.EventModel
                                     eventHandler.Invoke(
                                         tuple.Sender,
                                         tuple.EventArgs));
+
                                 return tuple;
                             })
-                        .TaskList),
+                        .TaskList)
             };
         }
 
         /// <summary>
-        /// Invokes an asynchronous event.
+        ///     Invokes an asynchronous event.
         /// </summary>
         /// <param name="handler">The event handler.</param>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         /// <returns>An task that can be awaited on by the invoker.</returns>
         public static Task InvokeAsync(
-            [JetBrains.Annotations.CanBeNull] this AsyncEventHandler<EventArgs>? handler,
-            [JetBrains.Annotations.NotNull] object sender,
-            [JetBrains.Annotations.NotNull] EventArgs e)
+            [CanBeNull] this AsyncEventHandler<EventArgs>? handler,
+            [NotNull] object sender,
+            [NotNull] EventArgs e)
         {
-            Requires.NotNull(sender, nameof(sender));
-            Requires.NotNull(e, nameof(e));
+            Requires.NotNull(
+                sender,
+                nameof(sender));
+            Requires.NotNull(
+                e,
+                nameof(e));
 
-            var invocationList = handler?.GetInvocationList();
+            Delegate[]? invocationList = handler?.GetInvocationList();
 
             return (invocationList?.Length ?? 0) switch
             {
@@ -133,10 +149,15 @@ namespace IX.StandardExtensions.EventModel
                                     eventHandler.Invoke(
                                         tuple.Sender,
                                         tuple.EventArgs));
+
                                 return tuple;
                             })
-                        .TaskList),
+                        .TaskList)
             };
         }
+
+#endregion
+
+#endregion
     }
 }

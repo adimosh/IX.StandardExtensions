@@ -23,7 +23,7 @@ namespace IX.StandardExtensions.Efficiency
     public class MulticastDictionary<TKey, TValue> : DisposableBase
         where TKey : notnull
     {
-        private readonly ConcurrentDictionary<TKey, List<TValue>> innerDictionary = new ConcurrentDictionary<TKey, List<TValue>>();
+        private readonly ConcurrentDictionary<TKey, List<TValue>> innerDictionary = new();
 
         /// <summary>
         /// Adds the specified key and value pair to the dictionary.

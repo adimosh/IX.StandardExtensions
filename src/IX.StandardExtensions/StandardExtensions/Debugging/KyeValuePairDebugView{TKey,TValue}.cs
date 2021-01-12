@@ -23,13 +23,13 @@ namespace IX.StandardExtensions.Debugging
         /// </summary>
         /// <value>The key.</value>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public TKey Key { get; internal set; }
+        public TKey? Key { get; internal set; }
 
         /// <summary>
         ///     Gets the value.
         /// </summary>
         /// <value>The value.</value>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public TValue Value { get; internal set; }
+        public TValue? Value { get; internal set; }
     }
 }

@@ -23,7 +23,8 @@ namespace IX.Guaranteed.Collections
         {
             get;
             set;
-        } = TimeSpan.FromSeconds(1);
+        }
+            = TimeSpan.FromSeconds(1);
 
 #endregion
     }

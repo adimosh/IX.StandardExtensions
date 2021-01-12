@@ -191,7 +191,7 @@ namespace IX.System.IO
         ///     <paramref name="path" /> contains one or more of the invalid characters defined in
         ///     <see cref="GetInvalidPathChars" />. -or- <see cref="string.Empty" /> was passed to <paramref name="path" />.
         /// </exception>
-        public string GetPathRoot(string path) => FS.Path.GetPathRoot(path);
+        public string? GetPathRoot(string path) => FS.Path.GetPathRoot(path);
 
         /// <summary>
         ///     Returns a random folder name or file name.

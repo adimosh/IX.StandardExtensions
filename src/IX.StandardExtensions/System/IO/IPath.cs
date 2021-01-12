@@ -139,7 +139,7 @@ namespace IX.System.IO
         ///     <see langword="null" />, or an empty string if <paramref name="path" /> does not contain root directory
         ///     information.
         /// </returns>
-        string GetPathRoot(string path);
+        string? GetPathRoot(string path);
 
         /// <summary>
         ///     Returns a random folder name or file name.

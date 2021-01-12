@@ -58,7 +58,8 @@ namespace IX.StandardExtensions.ComponentModel
                         invoker,
                         propertyName) => invoker.PropertyChanged?.Invoke(
                         invoker,
-                        new PropertyChangedEventArgs(propertyName)), this,
+                        new PropertyChangedEventArgs(propertyName)),
+                    this,
                     changedPropertyName);
             }
         }
@@ -81,7 +82,8 @@ namespace IX.StandardExtensions.ComponentModel
                         invoker,
                         propertyName) => invoker.PropertyChanged?.Invoke(
                         invoker,
-                        new PropertyChangedEventArgs(propertyName)), this,
+                        new PropertyChangedEventArgs(propertyName)),
+                    this,
                     changedPropertyName);
             }
         }
@@ -104,7 +106,8 @@ namespace IX.StandardExtensions.ComponentModel
                         invoker,
                         propertyName) => invoker.PropertyChanged?.Invoke(
                         invoker,
-                        new PropertyChangedEventArgs(propertyName)), this,
+                        new PropertyChangedEventArgs(propertyName)),
+                    this,
                     changedPropertyName);
             }
         }

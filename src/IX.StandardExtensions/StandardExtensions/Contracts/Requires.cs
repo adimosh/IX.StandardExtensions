@@ -1689,7 +1689,7 @@ namespace IX.StandardExtensions.Contracts
             [CanBeNull, NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object argument,
             [NotNull] string argumentName)
         {
-            if (!(argument is T convertedValue))
+            if (argument is not T convertedValue)
             {
                 throw new ArgumentInvalidTypeException(argumentName);
             }

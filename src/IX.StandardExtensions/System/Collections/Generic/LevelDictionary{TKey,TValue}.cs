@@ -22,6 +22,7 @@ namespace IX.System.Collections.Generic
     /// <typeparam name="TValue">The type of the value.</typeparam>
     [PublicAPI]
     public class LevelDictionary<TKey, TValue> : DisposableBase, IDictionary<TKey, TValue>
+        where TKey : notnull
     {
 #region Internal state
 

@@ -83,7 +83,8 @@ namespace IX.UnitTests
                             DataGenerator.RandomInteger());
 
                         ev.Set();
-                    }, mre);
+                    },
+                    mre);
 
                 result = mre.Wait(MaxWaitTime);
             }
@@ -127,7 +128,8 @@ namespace IX.UnitTests
                             Thread.CurrentThread.ManagedThreadId);
 
                         ev.Set();
-                    }, mre);
+                    },
+                    mre);
 
                 result = mre.Wait(MaxWaitTime);
             }

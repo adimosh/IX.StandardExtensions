@@ -29,7 +29,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1>, Tuple<TParam1>>)state;
                 Tuple<TParam1> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -48,7 +49,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1>, Tuple<TParam1>>)state;
                 Tuple<TParam1> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -67,7 +69,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1>, Tuple<TParam1>>)state;
                 Tuple<TParam1> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -88,7 +91,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>)state;
                 Tuple<TParam1, TParam2> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -109,7 +113,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>)state;
                 Tuple<TParam1, TParam2> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -130,7 +135,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>)state;
                 Tuple<TParam1, TParam2> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -153,7 +159,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>)state;
                 Tuple<TParam1, TParam2, TParam3> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -176,7 +183,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>)state;
                 Tuple<TParam1, TParam2, TParam3> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -199,7 +207,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>)state;
                 Tuple<TParam1, TParam2, TParam3> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -224,7 +233,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -249,7 +259,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -274,7 +285,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -301,7 +313,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4, unpackedParameters.Item5);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -328,7 +341,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4, unpackedParameters.Item5);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -355,7 +369,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4, unpackedParameters.Item5);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -384,7 +399,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4, unpackedParameters.Item5, unpackedParameters.Item6);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -413,7 +429,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4, unpackedParameters.Item5, unpackedParameters.Item6);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -442,7 +459,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4, unpackedParameters.Item5, unpackedParameters.Item6);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -473,7 +491,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4, unpackedParameters.Item5, unpackedParameters.Item6, unpackedParameters.Item7);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -504,7 +523,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4, unpackedParameters.Item5, unpackedParameters.Item6, unpackedParameters.Item7);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -535,7 +555,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4, unpackedParameters.Item5, unpackedParameters.Item6, unpackedParameters.Item7);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -568,7 +589,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4, unpackedParameters.Item5, unpackedParameters.Item6, unpackedParameters.Item7, unpackedParameters.Rest);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -601,7 +623,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4, unpackedParameters.Item5, unpackedParameters.Item6, unpackedParameters.Item7, unpackedParameters.Rest);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
 
         /// <summary>
@@ -634,7 +657,8 @@ namespace IX.StandardExtensions.ComponentModel
                 var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)state;
                 Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters = unpackedState.Item2;
                 unpackedState.Item1(unpackedParameters.Item1, unpackedParameters.Item2, unpackedParameters.Item3, unpackedParameters.Item4, unpackedParameters.Item5, unpackedParameters.Item6, unpackedParameters.Item7, unpackedParameters.Rest);
-            }, (object)outerState);
+            },
+            (object)outerState);
         }
     }
 #pragma warning restore SA1116 // Split parameters should start on line after declaration

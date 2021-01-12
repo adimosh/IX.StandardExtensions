@@ -24,10 +24,18 @@ namespace IX.System.IO
     [PublicAPI]
     public class Directory : IDirectory
     {
+#region Internal state
+
         /// <summary>
         ///     The all file default search pattern.
         /// </summary>
         private const string AllFilePattern = "*.*";
+
+        [SuppressMessage(
+            "Performance",
+            "HAA0604:Delegate allocation from a method group",
+            Justification = "Unavoidable, we use this cached instance to preserve running time.")]
+        private static readonly Func<string, DateTime> ReferenceMethodGetCreationTimeUtc = FSDir.GetCreationTimeUtc;
 
         [SuppressMessage(
             "Performance",
@@ -55,12 +63,240 @@ namespace IX.System.IO
         private static readonly Func<string, DateTime> ReferenceMethodInfoGetLastWriteTimeUtc =
             FSDir.GetLastWriteTimeUtc;
 
-        [SuppressMessage(
-            "Performance",
-            "HAA0604:Delegate allocation from a method group",
-            Justification = "Unavoidable, we use this cached instance to preserve running time.")]
-        private static readonly Func<string, DateTime> ReferenceMethodGetCreationTimeUtc =
-            FSDir.GetCreationTimeUtc;
+#endregion
+
+#region Methods
+
+#region Static methods
+
+        /// <summary>
+        ///     Enumerates directories.
+        /// </summary>
+        /// <param name="path">
+        ///     The path.
+        /// </param>
+        /// <param name="searchPattern">
+        ///     The search pattern.
+        /// </param>
+        /// <param name="recursively">
+        ///     Whether or not to execute this operation on folders recursively.
+        /// </param>
+        /// <returns>
+        ///     The The enumerated directories.
+        /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static IEnumerable<string> EnumerateDirectoriesInternal(
+            string path,
+            string searchPattern,
+            bool recursively)
+        {
+            var localPath = Requires.NotNullOrWhiteSpace(
+                path,
+                nameof(path));
+            var localSearchPattern = Requires.NotNullOrWhiteSpace(
+                searchPattern,
+                nameof(searchPattern));
+
+            return FSDir.EnumerateDirectories(
+                localPath,
+                localSearchPattern,
+                recursively ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+        }
+
+        /// <summary>
+        ///     Enumerates directories asynchronously.
+        /// </summary>
+        /// <param name="path">
+        ///     The path.
+        /// </param>
+        /// <param name="searchPattern">
+        ///     The search pattern.
+        /// </param>
+        /// <param name="recursively">
+        ///     Whether or not to execute this operation on folders recursively.
+        /// </param>
+        /// <param name="cancellationToken">
+        ///     The cancellation token.
+        /// </param>
+        /// <returns>
+        ///     The enumerated directories.
+        /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static Task<IEnumerable<string>> EnumerateDirectoriesInternalAsync(
+            string path,
+            string searchPattern,
+            bool recursively,
+            CancellationToken cancellationToken)
+        {
+            var localPath = Requires.NotNullOrWhiteSpace(
+                path,
+                nameof(path));
+            var localSearchPattern = Requires.NotNullOrWhiteSpace(
+                searchPattern,
+                nameof(searchPattern));
+
+            return Work.OnThreadPoolAsync(
+                state => FSDir.EnumerateDirectories(
+                    state.Path,
+                    state.Pattern,
+                    state.Recursive),
+                (Path: localPath, Pattern: localSearchPattern, Recursive: recursively ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly),
+                cancellationToken);
+        }
+
+        /// <summary>
+        ///     Enumerates files.
+        /// </summary>
+        /// <param name="path">
+        ///     The path.
+        /// </param>
+        /// <param name="searchPattern">
+        ///     The search pattern.
+        /// </param>
+        /// <param name="recursively">
+        ///     Whether or not to execute this operation on folders recursively.
+        /// </param>
+        /// <returns>
+        ///     The The enumerated files.
+        /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static IEnumerable<string> EnumerateFilesInternal(
+            string path,
+            string searchPattern,
+            bool recursively)
+        {
+            var localPath = Requires.NotNullOrWhiteSpace(
+                path,
+                nameof(path));
+            var localSearchPattern = Requires.NotNullOrWhiteSpace(
+                searchPattern,
+                nameof(searchPattern));
+
+            return FSDir.EnumerateFiles(
+                localPath,
+                localSearchPattern,
+                recursively ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+        }
+
+        /// <summary>
+        ///     Enumerates files asynchronously.
+        /// </summary>
+        /// <param name="path">
+        ///     The path.
+        /// </param>
+        /// <param name="searchPattern">
+        ///     The search pattern.
+        /// </param>
+        /// <param name="recursively">
+        ///     Whether or not to execute this operation on folders recursively.
+        /// </param>
+        /// <param name="cancellationToken">
+        ///     The cancellation token.
+        /// </param>
+        /// <returns>
+        ///     The The enumerated files.
+        /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static Task<IEnumerable<string>> EnumerateFilesInternalAsync(
+            string path,
+            string searchPattern,
+            bool recursively,
+            CancellationToken cancellationToken)
+        {
+            var localPath = Requires.NotNullOrWhiteSpace(
+                path,
+                nameof(path));
+            var localSearchPattern = Requires.NotNullOrWhiteSpace(
+                searchPattern,
+                nameof(searchPattern));
+
+            return Work.OnThreadPoolAsync(
+                state => FSDir.EnumerateFiles(
+                    state.Path,
+                    state.Pattern,
+                    state.Recursive),
+                (Path: localPath, Pattern: localSearchPattern, Recursive: recursively ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly),
+                cancellationToken);
+        }
+
+        /// <summary>
+        ///     Enumerates file system entries.
+        /// </summary>
+        /// <param name="path">
+        ///     The path.
+        /// </param>
+        /// <param name="searchPattern">
+        ///     The search pattern.
+        /// </param>
+        /// <param name="recursively">
+        ///     Whether or not to execute this operation on folders recursively.
+        /// </param>
+        /// <returns>
+        ///     The The enumerated file system entries.
+        /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static IEnumerable<string> EnumerateFileSystemEntriesInternal(
+            string path,
+            string searchPattern,
+            bool recursively)
+        {
+            var localPath = Requires.NotNullOrWhiteSpace(
+                path,
+                nameof(path));
+            var localSearchPattern = Requires.NotNullOrWhiteSpace(
+                searchPattern,
+                nameof(searchPattern));
+
+            return FSDir.EnumerateFileSystemEntries(
+                localPath,
+                localSearchPattern,
+                recursively ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+        }
+
+        /// <summary>
+        ///     Enumerates file system entries.
+        /// </summary>
+        /// <param name="path">
+        ///     The path.
+        /// </param>
+        /// <param name="searchPattern">
+        ///     The search pattern.
+        /// </param>
+        /// <param name="recursively">
+        ///     Whether or not to execute this operation on folders recursively.
+        /// </param>
+        /// <param name="cancellationToken">
+        ///     The cancellation token.
+        /// </param>
+        /// <returns>
+        ///     The The enumerated file system entries.
+        /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static Task<IEnumerable<string>> EnumerateFileSystemEntriesInternalAsync(
+            string path,
+            string searchPattern,
+            bool recursively,
+            CancellationToken cancellationToken)
+        {
+            var localPath = Requires.NotNullOrWhiteSpace(
+                path,
+                nameof(path));
+            var localSearchPattern = Requires.NotNullOrWhiteSpace(
+                searchPattern,
+                nameof(searchPattern));
+
+            return Work.OnThreadPoolAsync(
+                state => FSDir.EnumerateFileSystemEntries(
+                    state.Path,
+                    state.Pattern,
+                    state.Recursively),
+                (Path: localPath, Pattern: localSearchPattern, Recursively: recursively ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly),
+                cancellationToken);
+        }
+
+#endregion
+
+#region Interface implementations
 
         /// <summary>
         ///     Creates a new directory.
@@ -185,23 +421,6 @@ namespace IX.System.IO
                 false);
 
         /// <summary>
-        ///     Asynchronously enumerates all the directories contained at a certain directory.
-        /// </summary>
-        /// <param name="path">The path of the directory.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        ///     A task that has an enumerable of directory paths as result.
-        /// </returns>
-        public Task<IEnumerable<string>> EnumerateDirectoriesAsync(
-            string path,
-            CancellationToken cancellationToken = default) =>
-            EnumerateDirectoriesInternalAsync(
-                path,
-                AllFilePattern,
-                false,
-                cancellationToken);
-
-        /// <summary>
         ///     Enumerates the subdirectories of a certain directory.
         /// </summary>
         /// <param name="path">The path of the directory.</param>
@@ -222,6 +441,23 @@ namespace IX.System.IO
                 path,
                 searchPattern,
                 false);
+
+        /// <summary>
+        ///     Asynchronously enumerates all the directories contained at a certain directory.
+        /// </summary>
+        /// <param name="path">The path of the directory.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        ///     A task that has an enumerable of directory paths as result.
+        /// </returns>
+        public Task<IEnumerable<string>> EnumerateDirectoriesAsync(
+            string path,
+            CancellationToken cancellationToken = default) =>
+            EnumerateDirectoriesInternalAsync(
+                path,
+                AllFilePattern,
+                false,
+                cancellationToken);
 
         /// <summary>
         ///     Asynchronously enumerates the directories contained at a certain directory with a specific search pattern.
@@ -258,23 +494,6 @@ namespace IX.System.IO
                 true);
 
         /// <summary>
-        ///     Enumerates all the directories contained at a certain directory and all the subdirectories.
-        /// </summary>
-        /// <param name="path">The path of the directory.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        ///     A task that has an enumerable of directory paths as result.
-        /// </returns>
-        public Task<IEnumerable<string>> EnumerateDirectoriesRecursivelyAsync(
-            string path,
-            CancellationToken cancellationToken = default) =>
-            EnumerateDirectoriesInternalAsync(
-                path,
-                AllFilePattern,
-                true,
-                cancellationToken);
-
-        /// <summary>
         ///     Enumerates the directories contained at a certain directory and all the subdirectories with a specific search
         ///     pattern.
         /// </summary>
@@ -294,6 +513,23 @@ namespace IX.System.IO
                 path,
                 searchPattern,
                 true);
+
+        /// <summary>
+        ///     Enumerates all the directories contained at a certain directory and all the subdirectories.
+        /// </summary>
+        /// <param name="path">The path of the directory.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        ///     A task that has an enumerable of directory paths as result.
+        /// </returns>
+        public Task<IEnumerable<string>> EnumerateDirectoriesRecursivelyAsync(
+            string path,
+            CancellationToken cancellationToken = default) =>
+            EnumerateDirectoriesInternalAsync(
+                path,
+                AllFilePattern,
+                true,
+                cancellationToken);
 
         /// <summary>
         ///     Asynchronously enumerates the directories contained at a certain directory and all the subdirectories with a
@@ -333,23 +569,6 @@ namespace IX.System.IO
                 false);
 
         /// <summary>
-        ///     Asynchronously enumerates all the files contained at a certain directory.
-        /// </summary>
-        /// <param name="path">The path of the directory.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        ///     A task that has an enumerable of file paths as result.
-        /// </returns>
-        public Task<IEnumerable<string>> EnumerateFilesAsync(
-            string path,
-            CancellationToken cancellationToken = default) =>
-            EnumerateFilesInternalAsync(
-                path,
-                AllFilePattern,
-                false,
-                cancellationToken);
-
-        /// <summary>
         ///     Enumerates the files of a certain directory.
         /// </summary>
         /// <param name="path">The path of the directory.</param>
@@ -368,6 +587,23 @@ namespace IX.System.IO
                 path,
                 searchPattern,
                 false);
+
+        /// <summary>
+        ///     Asynchronously enumerates all the files contained at a certain directory.
+        /// </summary>
+        /// <param name="path">The path of the directory.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        ///     A task that has an enumerable of file paths as result.
+        /// </returns>
+        public Task<IEnumerable<string>> EnumerateFilesAsync(
+            string path,
+            CancellationToken cancellationToken = default) =>
+            EnumerateFilesInternalAsync(
+                path,
+                AllFilePattern,
+                false,
+                cancellationToken);
 
         /// <summary>
         ///     Asynchronously enumerates the files contained at a certain directory with a specific search pattern.
@@ -404,23 +640,6 @@ namespace IX.System.IO
                 true);
 
         /// <summary>
-        ///     Asynchronously enumerates all the files contained at a certain directory and all the subdirectories.
-        /// </summary>
-        /// <param name="path">The path of the directory.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        ///     A task that has an enumerable of file paths as result.
-        /// </returns>
-        public Task<IEnumerable<string>> EnumerateFilesRecursivelyAsync(
-            string path,
-            CancellationToken cancellationToken = default) =>
-            EnumerateFilesInternalAsync(
-                path,
-                AllFilePattern,
-                true,
-                cancellationToken);
-
-        /// <summary>
         ///     Enumerates the files contained at a certain directory and all the subdirectories with a specific search pattern.
         /// </summary>
         /// <param name="path">The path of the directory.</param>
@@ -437,6 +656,23 @@ namespace IX.System.IO
                 path,
                 searchPattern,
                 true);
+
+        /// <summary>
+        ///     Asynchronously enumerates all the files contained at a certain directory and all the subdirectories.
+        /// </summary>
+        /// <param name="path">The path of the directory.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        ///     A task that has an enumerable of file paths as result.
+        /// </returns>
+        public Task<IEnumerable<string>> EnumerateFilesRecursivelyAsync(
+            string path,
+            CancellationToken cancellationToken = default) =>
+            EnumerateFilesInternalAsync(
+                path,
+                AllFilePattern,
+                true,
+                cancellationToken);
 
         /// <summary>
         ///     Asynchronously enumerates the files contained at a certain directory and all the subdirectories with a specific
@@ -476,23 +712,6 @@ namespace IX.System.IO
                 false);
 
         /// <summary>
-        ///     Asynchronously enumerates all the file system entries contained at a certain directory.
-        /// </summary>
-        /// <param name="path">The path of the directory.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        ///     A task that has an enumerable of file system entry paths as result.
-        /// </returns>
-        public Task<IEnumerable<string>> EnumerateFileSystemEntriesAsync(
-            string path,
-            CancellationToken cancellationToken = default) =>
-            EnumerateFileSystemEntriesInternalAsync(
-                path,
-                AllFilePattern,
-                false,
-                cancellationToken);
-
-        /// <summary>
         ///     Enumerates the file system entries of a certain directory.
         /// </summary>
         /// <param name="path">The path of the directory.</param>
@@ -511,6 +730,23 @@ namespace IX.System.IO
                 path,
                 searchPattern,
                 false);
+
+        /// <summary>
+        ///     Asynchronously enumerates all the file system entries contained at a certain directory.
+        /// </summary>
+        /// <param name="path">The path of the directory.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        ///     A task that has an enumerable of file system entry paths as result.
+        /// </returns>
+        public Task<IEnumerable<string>> EnumerateFileSystemEntriesAsync(
+            string path,
+            CancellationToken cancellationToken = default) =>
+            EnumerateFileSystemEntriesInternalAsync(
+                path,
+                AllFilePattern,
+                false,
+                cancellationToken);
 
         /// <summary>
         ///     Asynchronously enumerates the file system entries contained at a certain directory with a specific search pattern.
@@ -547,23 +783,6 @@ namespace IX.System.IO
                 true);
 
         /// <summary>
-        ///     Asynchronously enumerates all the file system entries contained at a certain directory and all the subdirectories.
-        /// </summary>
-        /// <param name="path">The path of the directory.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        ///     A task that has an enumerable of file system entry paths as result.
-        /// </returns>
-        public Task<IEnumerable<string>> EnumerateFileSystemEntriesRecursivelyAsync(
-            string path,
-            CancellationToken cancellationToken = default) =>
-            EnumerateFileSystemEntriesInternalAsync(
-                path,
-                AllFilePattern,
-                true,
-                cancellationToken);
-
-        /// <summary>
         ///     Enumerates the file system entries contained at a certain directory and all the subdirectories with a specific
         ///     search pattern.
         /// </summary>
@@ -581,6 +800,23 @@ namespace IX.System.IO
                 path,
                 searchPattern,
                 true);
+
+        /// <summary>
+        ///     Asynchronously enumerates all the file system entries contained at a certain directory and all the subdirectories.
+        /// </summary>
+        /// <param name="path">The path of the directory.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        ///     A task that has an enumerable of file system entry paths as result.
+        /// </returns>
+        public Task<IEnumerable<string>> EnumerateFileSystemEntriesRecursivelyAsync(
+            string path,
+            CancellationToken cancellationToken = default) =>
+            EnumerateFileSystemEntriesInternalAsync(
+                path,
+                AllFilePattern,
+                true,
+                cancellationToken);
 
         /// <summary>
         ///     EAsynchronously enumerates the file system entries contained at a certain directory and all the subdirectories with
@@ -690,151 +926,8 @@ namespace IX.System.IO
         ///     Gets the current directory.
         /// </summary>
         /// <returns>The current directory.</returns>
-        public string GetCurrentDirectory() => FSDir.GetCurrentDirectory();
-
-        /// <summary>
-        ///     Lists all the directories contained at a certain directory.
-        /// </summary>
-        /// <param name="path">The path of the directory.</param>
-        /// <returns>
-        ///     An array of directory paths.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="path" /> is <see langword="null" /> (<see langword="Nothing" />
-        ///     in Visual Basic).
-        /// </exception>
-        public string[] GetDirectories(string path)
-        {
-            Requires.NotNullOrWhiteSpace(
-                path,
-                nameof(path));
-
-            return FSDir.GetDirectories(path);
-        }
-
-        /// <summary>
-        ///     Lists all the directories contained at a certain directory with a specific search pattern.
-        /// </summary>
-        /// <param name="path">The path of the directory.</param>
-        /// <param name="searchPattern">The search pattern to use.</param>
-        /// <returns>
-        ///     An array of directory paths.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="path" /> or <paramref name="searchPattern" /> is
-        ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
-        /// </exception>
-        public string[] GetDirectories(
-            string path,
-            string searchPattern)
-        {
-            Requires.NotNullOrWhiteSpace(
-                path,
-                nameof(path));
-            Requires.NotNullOrWhiteSpace(
-                searchPattern,
-                nameof(searchPattern));
-
-            return FSDir.GetDirectories(
-                path,
-                searchPattern);
-        }
-
-        /// <summary>
-        ///     Lists all the files contained at a certain directory.
-        /// </summary>
-        /// <param name="path">The path of the directory.</param>
-        /// <returns>
-        ///     An array of file paths.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="path" /> is <see langword="null" /> (<see langword="Nothing" />
-        ///     in Visual Basic).
-        /// </exception>
-        public string[] GetFiles(string path)
-        {
-            Requires.NotNullOrWhiteSpace(
-                path,
-                nameof(path));
-
-            return FSDir.GetFiles(path);
-        }
-
-        /// <summary>
-        ///     Lists all the files contained at a certain directory with a specific search pattern.
-        /// </summary>
-        /// <param name="path">The path of the directory.</param>
-        /// <param name="searchPattern">The search pattern to use.</param>
-        /// <returns>
-        ///     An array of file paths.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="path" /> or <paramref name="searchPattern" /> is
-        ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
-        /// </exception>
-        public string[] GetFiles(
-            string path,
-            string searchPattern)
-        {
-            Requires.NotNullOrWhiteSpace(
-                path,
-                nameof(path));
-            Requires.NotNullOrWhiteSpace(
-                searchPattern,
-                nameof(searchPattern));
-
-            return FSDir.GetFiles(
-                path,
-                searchPattern);
-        }
-
-        /// <summary>
-        ///     Lists all the file-system entries contained at a certain directory.
-        /// </summary>
-        /// <param name="path">The path of the directory.</param>
-        /// <returns>
-        ///     An array of file-system entry paths.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="path" /> is <see langword="null" /> (<see langword="Nothing" />
-        ///     in Visual Basic).
-        /// </exception>
-        public string[] GetFileSystemEntries(string path)
-        {
-            Requires.NotNullOrWhiteSpace(
-                path,
-                nameof(path));
-
-            return FSDir.GetFileSystemEntries(path);
-        }
-
-        /// <summary>
-        ///     Lists all the file-system entries contained at a certain directory with a specific search pattern.
-        /// </summary>
-        /// <param name="path">The path of the directory.</param>
-        /// <param name="searchPattern">The search pattern to use.</param>
-        /// <returns>
-        ///     An array of file-system entries paths.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="path" /> or <paramref name="searchPattern" /> is
-        ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
-        /// </exception>
-        public string[] GetFileSystemEntries(
-            string path,
-            string searchPattern)
-        {
-            Requires.NotNullOrWhiteSpace(
-                path,
-                nameof(path));
-            Requires.NotNullOrWhiteSpace(
-                searchPattern,
-                nameof(searchPattern));
-
-            return FSDir.GetFileSystemEntries(
-                path,
-                searchPattern);
-        }
+        public string GetCurrentDirectory() =>
+            FSDir.GetCurrentDirectory();
 
         /// <summary>
         ///     Gets a specific directory's last access time, in UTC.
@@ -1108,229 +1201,152 @@ namespace IX.System.IO
                 cancellationToken);
         }
 
+#endregion
+
         /// <summary>
-        ///     Enumerates directories.
+        ///     Lists all the directories contained at a certain directory.
         /// </summary>
-        /// <param name="path">
-        ///     The path.
-        /// </param>
-        /// <param name="searchPattern">
-        ///     The search pattern.
-        /// </param>
-        /// <param name="recursively">
-        ///     Whether or not to execute this operation on folders recursively.
-        /// </param>
+        /// <param name="path">The path of the directory.</param>
         /// <returns>
-        ///     The The enumerated directories.
+        ///     An array of directory paths.
         /// </returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static IEnumerable<string> EnumerateDirectoriesInternal(
-            string path,
-            string searchPattern,
-            bool recursively)
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="path" /> is <see langword="null" /> (<see langword="Nothing" />
+        ///     in Visual Basic).
+        /// </exception>
+        public string[] GetDirectories(string path)
         {
-            var localPath = Requires.NotNullOrWhiteSpace(
+            Requires.NotNullOrWhiteSpace(
                 path,
                 nameof(path));
-            var localSearchPattern = Requires.NotNullOrWhiteSpace(
-                searchPattern,
-                nameof(searchPattern));
 
-            return FSDir.EnumerateDirectories(
-                localPath,
-                localSearchPattern,
-                recursively ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+            return FSDir.GetDirectories(path);
         }
 
         /// <summary>
-        ///     Enumerates directories asynchronously.
+        ///     Lists all the directories contained at a certain directory with a specific search pattern.
         /// </summary>
-        /// <param name="path">
-        ///     The path.
-        /// </param>
-        /// <param name="searchPattern">
-        ///     The search pattern.
-        /// </param>
-        /// <param name="recursively">
-        ///     Whether or not to execute this operation on folders recursively.
-        /// </param>
-        /// <param name="cancellationToken">
-        ///     The cancellation token.
-        /// </param>
+        /// <param name="path">The path of the directory.</param>
+        /// <param name="searchPattern">The search pattern to use.</param>
         /// <returns>
-        ///     The enumerated directories.
+        ///     An array of directory paths.
         /// </returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Task<IEnumerable<string>> EnumerateDirectoriesInternalAsync(
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="path" /> or <paramref name="searchPattern" /> is
+        ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
+        /// </exception>
+        public string[] GetDirectories(
             string path,
-            string searchPattern,
-            bool recursively,
-            CancellationToken cancellationToken)
+            string searchPattern)
         {
-            var localPath = Requires.NotNullOrWhiteSpace(
+            Requires.NotNullOrWhiteSpace(
                 path,
                 nameof(path));
-            var localSearchPattern = Requires.NotNullOrWhiteSpace(
+            Requires.NotNullOrWhiteSpace(
                 searchPattern,
                 nameof(searchPattern));
 
-            return Work.OnThreadPoolAsync(
-                state => FSDir.EnumerateDirectories(
-                    state.Path,
-                    state.Pattern,
-                    state.Recursive),
-                (Path: localPath, Pattern: localSearchPattern, Recursive: recursively ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly),
-                cancellationToken);
+            return FSDir.GetDirectories(
+                path,
+                searchPattern);
         }
 
         /// <summary>
-        ///     Enumerates files.
+        ///     Lists all the files contained at a certain directory.
         /// </summary>
-        /// <param name="path">
-        ///     The path.
-        /// </param>
-        /// <param name="searchPattern">
-        ///     The search pattern.
-        /// </param>
-        /// <param name="recursively">
-        ///     Whether or not to execute this operation on folders recursively.
-        /// </param>
+        /// <param name="path">The path of the directory.</param>
         /// <returns>
-        ///     The The enumerated files.
+        ///     An array of file paths.
         /// </returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static IEnumerable<string> EnumerateFilesInternal(
-            string path,
-            string searchPattern,
-            bool recursively)
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="path" /> is <see langword="null" /> (<see langword="Nothing" />
+        ///     in Visual Basic).
+        /// </exception>
+        public string[] GetFiles(string path)
         {
-            var localPath = Requires.NotNullOrWhiteSpace(
+            Requires.NotNullOrWhiteSpace(
                 path,
                 nameof(path));
-            var localSearchPattern = Requires.NotNullOrWhiteSpace(
-                searchPattern,
-                nameof(searchPattern));
 
-            return FSDir.EnumerateFiles(
-                localPath,
-                localSearchPattern,
-                recursively ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+            return FSDir.GetFiles(path);
         }
 
         /// <summary>
-        ///     Enumerates files asynchronously.
+        ///     Lists all the files contained at a certain directory with a specific search pattern.
         /// </summary>
-        /// <param name="path">
-        ///     The path.
-        /// </param>
-        /// <param name="searchPattern">
-        ///     The search pattern.
-        /// </param>
-        /// <param name="recursively">
-        ///     Whether or not to execute this operation on folders recursively.
-        /// </param>
-        /// <param name="cancellationToken">
-        ///     The cancellation token.
-        /// </param>
+        /// <param name="path">The path of the directory.</param>
+        /// <param name="searchPattern">The search pattern to use.</param>
         /// <returns>
-        ///     The The enumerated files.
+        ///     An array of file paths.
         /// </returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Task<IEnumerable<string>> EnumerateFilesInternalAsync(
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="path" /> or <paramref name="searchPattern" /> is
+        ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
+        /// </exception>
+        public string[] GetFiles(
             string path,
-            string searchPattern,
-            bool recursively,
-            CancellationToken cancellationToken)
+            string searchPattern)
         {
-            var localPath = Requires.NotNullOrWhiteSpace(
+            Requires.NotNullOrWhiteSpace(
                 path,
                 nameof(path));
-            var localSearchPattern = Requires.NotNullOrWhiteSpace(
+            Requires.NotNullOrWhiteSpace(
                 searchPattern,
                 nameof(searchPattern));
 
-            return Work.OnThreadPoolAsync(
-                state => FSDir.EnumerateFiles(
-                    state.Path,
-                    state.Pattern,
-                    state.Recursive),
-                (Path: localPath, Pattern: localSearchPattern, Recursive: recursively ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly),
-                cancellationToken);
+            return FSDir.GetFiles(
+                path,
+                searchPattern);
         }
 
         /// <summary>
-        ///     Enumerates file system entries.
+        ///     Lists all the file-system entries contained at a certain directory.
         /// </summary>
-        /// <param name="path">
-        ///     The path.
-        /// </param>
-        /// <param name="searchPattern">
-        ///     The search pattern.
-        /// </param>
-        /// <param name="recursively">
-        ///     Whether or not to execute this operation on folders recursively.
-        /// </param>
+        /// <param name="path">The path of the directory.</param>
         /// <returns>
-        ///     The The enumerated file system entries.
+        ///     An array of file-system entry paths.
         /// </returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static IEnumerable<string> EnumerateFileSystemEntriesInternal(
-            string path,
-            string searchPattern,
-            bool recursively)
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="path" /> is <see langword="null" /> (<see langword="Nothing" />
+        ///     in Visual Basic).
+        /// </exception>
+        public string[] GetFileSystemEntries(string path)
         {
-            var localPath = Requires.NotNullOrWhiteSpace(
+            Requires.NotNullOrWhiteSpace(
                 path,
                 nameof(path));
-            var localSearchPattern = Requires.NotNullOrWhiteSpace(
-                searchPattern,
-                nameof(searchPattern));
 
-            return FSDir.EnumerateFileSystemEntries(
-                localPath,
-                localSearchPattern,
-                recursively ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+            return FSDir.GetFileSystemEntries(path);
         }
 
         /// <summary>
-        ///     Enumerates file system entries.
+        ///     Lists all the file-system entries contained at a certain directory with a specific search pattern.
         /// </summary>
-        /// <param name="path">
-        ///     The path.
-        /// </param>
-        /// <param name="searchPattern">
-        ///     The search pattern.
-        /// </param>
-        /// <param name="recursively">
-        ///     Whether or not to execute this operation on folders recursively.
-        /// </param>
-        /// <param name="cancellationToken">
-        ///     The cancellation token.
-        /// </param>
+        /// <param name="path">The path of the directory.</param>
+        /// <param name="searchPattern">The search pattern to use.</param>
         /// <returns>
-        ///     The The enumerated file system entries.
+        ///     An array of file-system entries paths.
         /// </returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Task<IEnumerable<string>> EnumerateFileSystemEntriesInternalAsync(
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="path" /> or <paramref name="searchPattern" /> is
+        ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
+        /// </exception>
+        public string[] GetFileSystemEntries(
             string path,
-            string searchPattern,
-            bool recursively,
-            CancellationToken cancellationToken)
+            string searchPattern)
         {
-            var localPath = Requires.NotNullOrWhiteSpace(
+            Requires.NotNullOrWhiteSpace(
                 path,
                 nameof(path));
-            var localSearchPattern = Requires.NotNullOrWhiteSpace(
+            Requires.NotNullOrWhiteSpace(
                 searchPattern,
                 nameof(searchPattern));
 
-            return Work.OnThreadPoolAsync(
-                state => FSDir.EnumerateFileSystemEntries(
-                    state.Path,
-                    state.Pattern,
-                    state.Recursively),
-                (Path: localPath, Pattern: localSearchPattern, Recursively: recursively ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly),
-                cancellationToken);
+            return FSDir.GetFileSystemEntries(
+                path,
+                searchPattern);
         }
+
+#endregion
     }
 }

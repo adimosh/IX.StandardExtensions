@@ -58,7 +58,8 @@ namespace IX.UnitTests.StandardExtensions.Threading
                             DataGenerator.RandomInteger());
 
                         ev.Set();
-                    }, mre);
+                    },
+                    mre);
 
                 result = mre.WaitOne(MaxWaitTime);
             }
@@ -102,7 +103,8 @@ namespace IX.UnitTests.StandardExtensions.Threading
                             Thread.CurrentThread.ManagedThreadId);
 
                         ev.Set();
-                    }, mre);
+                    },
+                    mre);
 
                 result = mre.WaitOne(MaxWaitTime);
             }
@@ -143,19 +145,21 @@ namespace IX.UnitTests.StandardExtensions.Threading
                 DateTime dt = DateTime.UtcNow;
 #endif
                 Work.OnThreadPoolAsync(
-                    () =>
+                    state =>
                     {
+                        var (dt2, wt2) = state;
 #if DEBUG
-                        this.output.WriteLine($"Beginning inner method after {(DateTime.UtcNow - dt).TotalMilliseconds} ms.");
+                        this.output.WriteLine($"Beginning inner method after {(DateTime.UtcNow - dt2).TotalMilliseconds} ms.");
 #endif
-                        Thread.Sleep(waitTime);
+                        Thread.Sleep(wt2);
 #if DEBUG
-                        this.output.WriteLine($"Inner method wait finished after {(DateTime.UtcNow - dt).TotalMilliseconds} ms.");
+                        this.output.WriteLine($"Inner method wait finished after {(DateTime.UtcNow - dt2).TotalMilliseconds} ms.");
 #endif
 
                         throw new ArgumentNotPositiveIntegerException(argumentName);
-                    }).ContinueWith(
-                    (task, state) =>
+                    },
+                    (dt, waitTime)).ContinueWith(
+                    (task, _) =>
                     {
 #if DEBUG
                         this.output.WriteLine($"Exception handler started after {(DateTime.UtcNow - dt).TotalMilliseconds} ms.");

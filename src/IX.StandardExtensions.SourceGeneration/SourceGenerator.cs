@@ -42,6 +42,14 @@ namespace IX.StandardExtensions.SourceGeneration
             "Performance",
             "HAA0301:Closure Allocation Source",
             Justification = "This is acceptable in this case.")]
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "Unavoidable, I'm afraid.")]
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "No worries.")]
         public void Execute(GeneratorExecutionContext context)
         {
             if (context.SyntaxReceiver is not StandardTypesSyntaxReceiver receiver)

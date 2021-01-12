@@ -105,7 +105,8 @@ namespace IX.StandardExtensions.ComponentModel
                     this,
                     new ValidationContext(
                         this,
-                        null), validationResults,
+                        null),
+                    validationResults,
                     true))
                 {
                     if (this.entityErrors.IsValueCreated)
@@ -207,7 +208,8 @@ namespace IX.StandardExtensions.ComponentModel
                 invoker,
                 internalPropertyName) => invoker.ErrorsChanged?.Invoke(
                 invoker,
-                new DataErrorsChangedEventArgs(internalPropertyName)), this,
+                new DataErrorsChangedEventArgs(internalPropertyName)),
+            this,
             propertyName);
     }
 }

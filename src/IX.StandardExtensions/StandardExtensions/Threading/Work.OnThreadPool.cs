@@ -52,11 +52,11 @@ namespace IX.StandardExtensions.Threading
                 return taskCompletionSource.Task;
             }
 
-            ThreadPool.QueueUserWorkItem(
+            _ = ThreadPool.QueueUserWorkItem(
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Func<CancellationToken, Task> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<int> tcs, CancellationToken ct) =

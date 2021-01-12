@@ -172,7 +172,8 @@ namespace IX.Guaranteed.Collections
         object ICollection.SyncRoot
         {
             get;
-        } = new object();
+        }
+            = new object();
 
 #endregion
 

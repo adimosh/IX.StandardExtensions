@@ -24,13 +24,20 @@ namespace IX.StandardExtensions.Efficiency
     [DefaultMember("Item")]
     [PublicAPI]
     public partial class ConcurrentDictionary<TKey, TValue> : global::System.Collections.Concurrent.ConcurrentDictionary<TKey, TValue>
+        where TKey : notnull
     {
         [ThreadStatic]
-        [SuppressMessage("ReSharper", "StaticMemberInGenericType", Justification = "This field is used exclusively under lock, so this is safe.")]
+        [SuppressMessage(
+            "ReSharper",
+            "StaticMemberInGenericType",
+            Justification = "This field is used exclusively under lock, so this is safe.")]
         private static object? threadStaticMethods;
 
         [ThreadStatic]
-        [SuppressMessage("ReSharper", "StaticMemberInGenericType", Justification = "This field is used exclusively under lock, so this is safe.")]
+        [SuppressMessage(
+            "ReSharper",
+            "StaticMemberInGenericType",
+            Justification = "This field is used exclusively under lock, so this is safe.")]
         private static object? threadStaticUpdateFactory;
 
         private static TValue UpdateInternal<TState>(

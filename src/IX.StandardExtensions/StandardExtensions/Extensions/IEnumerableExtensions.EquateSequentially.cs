@@ -137,12 +137,8 @@ namespace IX.StandardExtensions.Extensions
         /// </remarks>
         [SuppressMessage(
             "ReSharper",
-            "InconsistentNaming",
-            Justification = "Acceptable")]
-        [SuppressMessage(
-            "ReSharper",
-            "PossibleMultipleEnumeration",
-            Justification = "Acceptable")]
+            "TooManyArguments",
+            Justification = "They are required for the intended operation.")]
         public static IEnumerable<bool> EquateSequentially<T>(
             this IEnumerable<T>? left,
             IEnumerable<T>? right,
@@ -194,7 +190,9 @@ namespace IX.StandardExtensions.Extensions
                                 T l,
                                 T r)
                             {
+#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation - this is unavoidable here.
                                 return ((l as IComparable)?.CompareTo(r) ?? (r as IComparable)?.CompareTo(l) ?? 0) == 0;
+#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
                             }
                         }
                         else
@@ -205,7 +203,9 @@ namespace IX.StandardExtensions.Extensions
                                 T l,
                                 T r)
                             {
+#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation - this is unavoidable here.
                                 return l?.Equals(r) ?? r?.Equals(l) ?? true;
+#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
                             }
                         }
                     }

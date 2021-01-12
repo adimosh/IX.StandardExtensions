@@ -5,6 +5,7 @@
 using System;
 using System.Globalization;
 using System.Runtime.Serialization;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions
@@ -31,7 +32,7 @@ namespace IX.StandardExtensions
                     Resources.AnInvalidSetOfArgumentsWasSpecifiedArgumentNames,
                     string.Join(
                         ", ",
-                        argumentNames ?? throw new ArgumentNullException(nameof(argumentNames)))))
+                        Requires.NotNull(argumentNames, nameof(argumentNames)))))
         {
             this.ArgumentNames = argumentNames;
         }
@@ -50,7 +51,8 @@ namespace IX.StandardExtensions
                     Resources.AnInvalidSetOfArgumentsWasSpecifiedArgumentNames,
                     string.Join(
                         ", ",
-                        argumentNames ?? throw new ArgumentNullException(nameof(argumentNames)))), innerException)
+                        Requires.NotNull(argumentNames, nameof(argumentNames)))),
+                innerException)
         {
             this.ArgumentNames = argumentNames;
         }
@@ -71,7 +73,7 @@ namespace IX.StandardExtensions
                     message,
                     string.Join(
                         ", ",
-                        argumentNames ?? throw new ArgumentNullException(nameof(argumentNames)))),
+                        Requires.NotNull(argumentNames, nameof(argumentNames)))),
                 innerException)
         {
             this.ArgumentNames = argumentNames;
@@ -91,7 +93,7 @@ namespace IX.StandardExtensions
                     message,
                     string.Join(
                         ", ",
-                        argumentNames ?? throw new ArgumentNullException(nameof(argumentNames)))))
+                        Requires.NotNull(argumentNames, nameof(argumentNames)))))
         {
             this.ArgumentNames = argumentNames;
         }
@@ -114,9 +116,11 @@ namespace IX.StandardExtensions
                 info,
                 context)
         {
-            this.ArgumentNames = (string[])info.GetValue(
-                nameof(this.ArgumentNames),
-                typeof(string[]));
+            this.ArgumentNames = Requires.NotNull(
+                (string[])info.GetValue(
+                    nameof(this.ArgumentNames),
+                    typeof(string[])),
+                nameof(info));
         }
 
         /// <summary>

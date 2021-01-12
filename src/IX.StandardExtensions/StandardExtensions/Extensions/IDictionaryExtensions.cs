@@ -29,6 +29,7 @@ namespace IX.StandardExtensions.Extensions
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
         public static Dictionary<TKey, TValue> DeepClone<TKey, TValue>(this Dictionary<TKey, TValue> source)
+            where TKey : notnull
             where TValue : IDeepCloneable<TValue>
         {
             Requires.NotNull(
@@ -59,6 +60,7 @@ namespace IX.StandardExtensions.Extensions
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
         public static Dictionary<TKey, TValue> CopyWithShallowClones<TKey, TValue>(this Dictionary<TKey, TValue> source)
+            where TKey : notnull
             where TValue : IShallowCloneable<TValue>
         {
             Requires.NotNull(
