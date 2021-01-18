@@ -5,6 +5,7 @@
 using System;
 using System.Runtime.Serialization;
 using System.Threading;
+using IX.CodeGeneration;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 using DiagCA = System.Diagnostics.CodeAnalysis;
@@ -47,10 +48,6 @@ namespace IX.StandardExtensions.ComponentModel
         /// <summary>
         ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        [DiagCA.SuppressMessage(
-            "Design",
-            "CA1063:Implement IDisposable Correctly",
-            Justification = "The analyzer can't really tell what we're doing here.")]
         public void Dispose()
         {
             if (Interlocked.Exchange(
@@ -64,10 +61,6 @@ namespace IX.StandardExtensions.ComponentModel
             this.Dispose(true);
         }
 
-        protected virtual void DisposeAutomatically()
-        {
-        }
-
         /// <summary>
         ///     Throws if the current object is disposed.
         /// </summary>
@@ -78,6 +71,14 @@ namespace IX.StandardExtensions.ComponentModel
             {
                 throw new ObjectDisposedException(this.GetType().FullName);
             }
+        }
+
+        /// <summary>
+        /// Used to automatically dispose objects marked with the <see cref="AutoDisposableMemberAttribute" /> by code generation.
+        /// This method should not be overridden by user code.
+        /// </summary>
+        protected virtual void DisposeAutomatically()
+        {
         }
 
         /// <summary>
@@ -137,6 +138,14 @@ namespace IX.StandardExtensions.ComponentModel
             "Design",
             "CA1063:Implement IDisposable Correctly",
             Justification = "The analyzer can't really tell what we're doing here.")]
+        [DiagCA.SuppressMessage(
+            "ReSharper",
+            "FlagArgument",
+            Justification = "This method signature is the standard for the disposable pattern.")]
+        [DiagCA.SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Suppressions are justified for ReSharper. This was added for those that don't have it.")]
         private void Dispose(bool disposing)
         {
             try

@@ -3,14 +3,16 @@
 // </copyright>
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace IX.CodeGeneration
 {
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+    /// <summary>
+    /// An attribute that should be placed for any members of code-generation classes that require auto-disposability.
+    /// </summary>
+    /// <seealso cref="Attribute" />
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method, Inherited = false)]
+    [PublicAPI]
     public class AutoDisposableMemberAttribute : Attribute
     {
     }

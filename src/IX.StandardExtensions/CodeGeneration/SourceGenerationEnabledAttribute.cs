@@ -11,7 +11,7 @@ namespace IX.CodeGeneration
     /// Attribute to mark classes that are candidates for code generation by the IX.StandardExtensions.SourceGeneration analyzer.
     /// </summary>
     /// <seealso cref="Attribute" />
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     [PublicAPI]
     public class SourceGenerationEnabledAttribute : Attribute
     {

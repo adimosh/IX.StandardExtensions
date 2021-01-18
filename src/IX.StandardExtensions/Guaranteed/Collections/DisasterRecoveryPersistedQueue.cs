@@ -203,7 +203,7 @@ namespace IX.Guaranteed.Collections
                 array,
                 nameof(array));
             Requires.NonNegative(
-                index,
+                in index,
                 nameof(index));
 
             using (this.ReadLock())
@@ -1165,7 +1165,7 @@ namespace IX.Guaranteed.Collections
                     throw;
                 }
 
-                Interlocked.Exchange(
+                using var disposingQueue = Interlocked.Exchange(
                     ref this.persistedQueue,
                     transferQueue);
 
@@ -1188,7 +1188,7 @@ namespace IX.Guaranteed.Collections
 
                 Interlocked.Exchange(
                     ref this.queue,
-                    null);
+                    null!);
             }
         }
 
@@ -1233,7 +1233,7 @@ namespace IX.Guaranteed.Collections
 
                 Interlocked.Exchange(
                     ref this.persistedQueue,
-                    null);
+                    null!)?.Dispose();
             }
         }
 

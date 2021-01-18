@@ -1,4 +1,4 @@
-// <copyright file="Requires.NumericTypesPositiveValidation.cs" company="Adrian Mos">
+// <copyright file="Requires.NumericTypesRangeValidation.cs" company="Adrian Mos">
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
