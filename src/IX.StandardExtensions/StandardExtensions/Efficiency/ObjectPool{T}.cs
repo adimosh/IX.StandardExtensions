@@ -40,7 +40,7 @@ namespace IX.StandardExtensions.Efficiency
         ///     The <paramref name="objectFactory" /> is <see langword="null" /> (
         ///     <see langword="Nothing" /> in Visual Basic).
         /// </exception>
-        public ObjectPool([NotNull] Func<T> objectFactory)
+        public ObjectPool(Func<T> objectFactory)
         {
             Requires.NotNull(
                 out this.objectFactory,
@@ -49,6 +49,38 @@ namespace IX.StandardExtensions.Efficiency
 
             this.locker = new object();
             this.availableObjects = new Queue<T>();
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ObjectPool{T}" /> class.
+        /// </summary>
+        /// <param name="objectFactory">An object factory for when objects need to be created.</param>
+        /// <param name="initialNumberOfObjects">The number of objects to populate the pool with upon creation.</param>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="initialNumberOfObjects"/> is not a positive
+        ///     integer.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     The <paramref name="objectFactory" /> is <see langword="null" /> (
+        ///     <see langword="Nothing" /> in Visual Basic).
+        /// </exception>
+        public ObjectPool(Func<T> objectFactory, int initialNumberOfObjects)
+        {
+            Requires.Positive(
+                in initialNumberOfObjects,
+                nameof(initialNumberOfObjects));
+            Requires.NotNull(
+                out this.objectFactory,
+                objectFactory,
+                nameof(objectFactory));
+
+            this.locker = new object();
+            this.availableObjects = new Queue<T>();
+
+            for (int i = 0; i < initialNumberOfObjects; i++)
+            {
+                this.availableObjects.Enqueue(objectFactory());
+            }
         }
 
 #endregion
