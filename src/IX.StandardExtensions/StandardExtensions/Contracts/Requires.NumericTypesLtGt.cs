@@ -38,7 +38,7 @@ namespace IX.StandardExtensions.Contracts
             in byte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -70,7 +70,7 @@ namespace IX.StandardExtensions.Contracts
             in byte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -102,7 +102,7 @@ namespace IX.StandardExtensions.Contracts
             in byte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -134,7 +134,7 @@ namespace IX.StandardExtensions.Contracts
             in byte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -170,7 +170,7 @@ namespace IX.StandardExtensions.Contracts
             in byte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -208,7 +208,7 @@ namespace IX.StandardExtensions.Contracts
             in byte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -246,7 +246,7 @@ namespace IX.StandardExtensions.Contracts
             in byte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -284,7 +284,7 @@ namespace IX.StandardExtensions.Contracts
             in byte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -318,7 +318,7 @@ namespace IX.StandardExtensions.Contracts
             in sbyte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -350,7 +350,7 @@ namespace IX.StandardExtensions.Contracts
             in sbyte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -382,7 +382,7 @@ namespace IX.StandardExtensions.Contracts
             in sbyte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -414,7 +414,7 @@ namespace IX.StandardExtensions.Contracts
             in sbyte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -450,7 +450,7 @@ namespace IX.StandardExtensions.Contracts
             in sbyte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -488,7 +488,7 @@ namespace IX.StandardExtensions.Contracts
             in sbyte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -526,7 +526,7 @@ namespace IX.StandardExtensions.Contracts
             in sbyte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -564,7 +564,7 @@ namespace IX.StandardExtensions.Contracts
             in sbyte desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -598,7 +598,7 @@ namespace IX.StandardExtensions.Contracts
             in short desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -630,7 +630,7 @@ namespace IX.StandardExtensions.Contracts
             in short desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -662,7 +662,7 @@ namespace IX.StandardExtensions.Contracts
             in short desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -694,7 +694,7 @@ namespace IX.StandardExtensions.Contracts
             in short desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -730,7 +730,7 @@ namespace IX.StandardExtensions.Contracts
             in short desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -768,7 +768,7 @@ namespace IX.StandardExtensions.Contracts
             in short desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -806,7 +806,7 @@ namespace IX.StandardExtensions.Contracts
             in short desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -844,7 +844,7 @@ namespace IX.StandardExtensions.Contracts
             in short desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -878,7 +878,7 @@ namespace IX.StandardExtensions.Contracts
             in ushort desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -910,7 +910,7 @@ namespace IX.StandardExtensions.Contracts
             in ushort desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -942,7 +942,7 @@ namespace IX.StandardExtensions.Contracts
             in ushort desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -974,7 +974,7 @@ namespace IX.StandardExtensions.Contracts
             in ushort desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -1010,7 +1010,7 @@ namespace IX.StandardExtensions.Contracts
             in ushort desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -1048,7 +1048,7 @@ namespace IX.StandardExtensions.Contracts
             in ushort desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -1086,7 +1086,7 @@ namespace IX.StandardExtensions.Contracts
             in ushort desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -1124,7 +1124,7 @@ namespace IX.StandardExtensions.Contracts
             in ushort desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -1158,7 +1158,7 @@ namespace IX.StandardExtensions.Contracts
             in char desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -1190,7 +1190,7 @@ namespace IX.StandardExtensions.Contracts
             in char desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -1222,7 +1222,7 @@ namespace IX.StandardExtensions.Contracts
             in char desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -1254,7 +1254,7 @@ namespace IX.StandardExtensions.Contracts
             in char desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -1290,7 +1290,7 @@ namespace IX.StandardExtensions.Contracts
             in char desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -1328,7 +1328,7 @@ namespace IX.StandardExtensions.Contracts
             in char desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -1366,7 +1366,7 @@ namespace IX.StandardExtensions.Contracts
             in char desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -1404,7 +1404,7 @@ namespace IX.StandardExtensions.Contracts
             in char desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -1438,7 +1438,7 @@ namespace IX.StandardExtensions.Contracts
             in int desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -1470,7 +1470,7 @@ namespace IX.StandardExtensions.Contracts
             in int desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -1502,7 +1502,7 @@ namespace IX.StandardExtensions.Contracts
             in int desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -1534,7 +1534,7 @@ namespace IX.StandardExtensions.Contracts
             in int desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -1570,7 +1570,7 @@ namespace IX.StandardExtensions.Contracts
             in int desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -1608,7 +1608,7 @@ namespace IX.StandardExtensions.Contracts
             in int desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -1646,7 +1646,7 @@ namespace IX.StandardExtensions.Contracts
             in int desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -1684,7 +1684,7 @@ namespace IX.StandardExtensions.Contracts
             in int desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -1718,7 +1718,7 @@ namespace IX.StandardExtensions.Contracts
             in uint desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -1750,7 +1750,7 @@ namespace IX.StandardExtensions.Contracts
             in uint desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -1782,7 +1782,7 @@ namespace IX.StandardExtensions.Contracts
             in uint desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -1814,7 +1814,7 @@ namespace IX.StandardExtensions.Contracts
             in uint desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -1850,7 +1850,7 @@ namespace IX.StandardExtensions.Contracts
             in uint desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -1888,7 +1888,7 @@ namespace IX.StandardExtensions.Contracts
             in uint desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -1926,7 +1926,7 @@ namespace IX.StandardExtensions.Contracts
             in uint desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -1964,7 +1964,7 @@ namespace IX.StandardExtensions.Contracts
             in uint desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -1998,7 +1998,7 @@ namespace IX.StandardExtensions.Contracts
             in long desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -2030,7 +2030,7 @@ namespace IX.StandardExtensions.Contracts
             in long desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -2062,7 +2062,7 @@ namespace IX.StandardExtensions.Contracts
             in long desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -2094,7 +2094,7 @@ namespace IX.StandardExtensions.Contracts
             in long desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -2130,7 +2130,7 @@ namespace IX.StandardExtensions.Contracts
             in long desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -2168,7 +2168,7 @@ namespace IX.StandardExtensions.Contracts
             in long desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -2206,7 +2206,7 @@ namespace IX.StandardExtensions.Contracts
             in long desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -2244,7 +2244,7 @@ namespace IX.StandardExtensions.Contracts
             in long desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -2278,7 +2278,7 @@ namespace IX.StandardExtensions.Contracts
             in ulong desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -2310,7 +2310,7 @@ namespace IX.StandardExtensions.Contracts
             in ulong desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -2342,7 +2342,7 @@ namespace IX.StandardExtensions.Contracts
             in ulong desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -2374,7 +2374,7 @@ namespace IX.StandardExtensions.Contracts
             in ulong desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -2410,7 +2410,7 @@ namespace IX.StandardExtensions.Contracts
             in ulong desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -2448,7 +2448,7 @@ namespace IX.StandardExtensions.Contracts
             in ulong desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -2486,7 +2486,7 @@ namespace IX.StandardExtensions.Contracts
             in ulong desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -2524,7 +2524,7 @@ namespace IX.StandardExtensions.Contracts
             in ulong desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -2558,7 +2558,7 @@ namespace IX.StandardExtensions.Contracts
             in float desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -2590,7 +2590,7 @@ namespace IX.StandardExtensions.Contracts
             in float desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -2622,7 +2622,7 @@ namespace IX.StandardExtensions.Contracts
             in float desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -2654,7 +2654,7 @@ namespace IX.StandardExtensions.Contracts
             in float desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -2690,7 +2690,7 @@ namespace IX.StandardExtensions.Contracts
             in float desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -2728,7 +2728,7 @@ namespace IX.StandardExtensions.Contracts
             in float desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -2766,7 +2766,7 @@ namespace IX.StandardExtensions.Contracts
             in float desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -2804,7 +2804,7 @@ namespace IX.StandardExtensions.Contracts
             in float desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -2838,7 +2838,7 @@ namespace IX.StandardExtensions.Contracts
             in double desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -2870,7 +2870,7 @@ namespace IX.StandardExtensions.Contracts
             in double desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -2902,7 +2902,7 @@ namespace IX.StandardExtensions.Contracts
             in double desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -2934,7 +2934,7 @@ namespace IX.StandardExtensions.Contracts
             in double desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -2970,7 +2970,7 @@ namespace IX.StandardExtensions.Contracts
             in double desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -3008,7 +3008,7 @@ namespace IX.StandardExtensions.Contracts
             in double desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -3046,7 +3046,7 @@ namespace IX.StandardExtensions.Contracts
             in double desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -3084,7 +3084,7 @@ namespace IX.StandardExtensions.Contracts
             in double desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -3118,7 +3118,7 @@ namespace IX.StandardExtensions.Contracts
             in decimal desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -3150,7 +3150,7 @@ namespace IX.StandardExtensions.Contracts
             in decimal desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -3182,7 +3182,7 @@ namespace IX.StandardExtensions.Contracts
             in decimal desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -3214,7 +3214,7 @@ namespace IX.StandardExtensions.Contracts
             in decimal desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }
@@ -3250,7 +3250,7 @@ namespace IX.StandardExtensions.Contracts
             in decimal desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument < desiredComparisonValue)
+            if (argument >= desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanException(argumentName);
             }
@@ -3288,7 +3288,7 @@ namespace IX.StandardExtensions.Contracts
             in decimal desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <= desiredComparisonValue)
+            if (argument > desiredComparisonValue)
             {
                 throw new ArgumentNotLessThanOrEqualToException(argumentName);
             }
@@ -3326,7 +3326,7 @@ namespace IX.StandardExtensions.Contracts
             in decimal desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument > desiredComparisonValue)
+            if (argument <= desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanException(argumentName);
             }
@@ -3364,7 +3364,7 @@ namespace IX.StandardExtensions.Contracts
             in decimal desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument >= desiredComparisonValue)
+            if (argument < desiredComparisonValue)
             {
                 throw new ArgumentNotGreaterThanOrEqualToException(argumentName);
             }

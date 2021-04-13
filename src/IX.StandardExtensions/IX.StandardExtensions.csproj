@@ -10,26 +10,38 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Nullable>enable</Nullable>
     <FailObsoleteTargetFrameworks>true</FailObsoleteTargetFrameworks>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <!-- Package metadata -->
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <LangVersion>latest</LangVersion>
+    <PackageReleaseNotes>- Package updates on the classic version
+      - Updated opt and all other references
+      - Removed dependency on project system
+      - Mathematics definition cleaned up</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageReleaseNotes>- DisposableBase properly updated for .NET 5.
-- ConcurrentDictionary properly updated.
-- Work.OnThreadPool missing method added.
-- Added plumbing for source generators.</PackageReleaseNotes>
+    <VersionPrefix>0.7.5</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>../../opt/snk/ix.framework.strongname.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>IX</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Branding -->
+  <PropertyGroup>
+    <Authors>Adrian Mos</Authors>
+    <Company />
+    <Product>IX Framework</Product>
+    <Copyright>Adrian Mos, 2016</Copyright>
+    <PackageProjectUrl>https://github.com/adimosh/IX.Framework/</PackageProjectUrl>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <!-- Text templates -->
@@ -300,7 +312,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFrameworkIsFramework)'!='true'">
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
 
   <!-- Resources -->
@@ -345,7 +357,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
@@ -353,7 +364,6 @@
   <ItemGroup>
     <Folder Include="Guaranteed\" />
     <Folder Include="DataGeneration\" />
-    <Folder Include="Obsolete\" />
   </ItemGroup>
 
 </Project>

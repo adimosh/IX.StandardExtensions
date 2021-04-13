@@ -19,7 +19,7 @@ namespace IX.StandardExtensions.ComponentModel
         ///     Asynchronously performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         /// <returns>
-        ///     A value task represengint the completed dispose operation.
+        ///     A value task representing the completed dispose operation.
         /// </returns>
         [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Usage",
@@ -44,7 +44,7 @@ namespace IX.StandardExtensions.ComponentModel
         ///     Disposes in the managed context.
         /// </summary>
         /// <returns>
-        ///     A value task represengint the completed dispose operation.
+        ///     A value task representing the completed dispose operation.
         /// </returns>
         [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
             "AsyncUsage.CSharp.Naming",
@@ -61,7 +61,7 @@ namespace IX.StandardExtensions.ComponentModel
         ///     Disposes in the general (managed and unmanaged) context.
         /// </summary>
         /// <returns>
-        ///     A value task represengint the completed dispose operation.
+        ///     A value task representing the completed dispose operation.
         /// </returns>
         [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
             "AsyncUsage.CSharp.Naming",

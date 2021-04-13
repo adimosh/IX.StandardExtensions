@@ -147,7 +147,7 @@ for (int i = 0; i < types.Length; i++)
             in <#= fullTypeName #> desiredComparisonValue,
             [NotNull] string argumentName)
         {
-            if (argument <#= lessThan ? "<" : ">" #><#= isEqual ? "=" : string.Empty #> desiredComparisonValue)
+            if (argument <#= lessThan ? ">" : "<" #><#= isEqual ? string.Empty : "=" #> desiredComparisonValue)
             {
                 throw new ArgumentNot<#= lessThan ? "LessThan" : "GreaterThan" #><#= isEqual ? "OrEqualTo" : string.Empty #>Exception(argumentName);
             }
