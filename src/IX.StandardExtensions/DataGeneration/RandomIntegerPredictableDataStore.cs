@@ -2,7 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
 namespace IX.DataGeneration
@@ -15,25 +15,32 @@ namespace IX.DataGeneration
     [PublicAPI]
     public class RandomIntegerPredictableDataStore : PredictableDataStore<int>
     {
-#pragma warning disable HAA0603 // Delegate allocation from a method group - This is acceptable
+        #region Constructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="RandomIntegerPredictableDataStore" /> class.
         /// </summary>
         /// <param name="capacity">The capacity.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Unavoidable.")]
         public RandomIntegerPredictableDataStore(int capacity)
             : base(
                 capacity,
                 DataGenerator.RandomInteger)
         {
         }
-#pragma warning restore HAA0603 // Delegate allocation from a method group
 
-#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation - This is unavoidable, as we cannot have a generic type parameter in a constructor
         /// <summary>
         ///     Initializes a new instance of the <see cref="RandomIntegerPredictableDataStore" /> class.
         /// </summary>
         /// <param name="capacity">The capacity.</param>
         /// <param name="maximumValue">The maximum value.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "Unavoidable.")]
         public RandomIntegerPredictableDataStore(
             int capacity,
             int maximumValue)
@@ -43,7 +50,6 @@ namespace IX.DataGeneration
                 maximumValue)
         {
         }
-#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="RandomIntegerPredictableDataStore" /> class.
@@ -51,6 +57,10 @@ namespace IX.DataGeneration
         /// <param name="capacity">The capacity.</param>
         /// <param name="minimumValue">The minimum value.</param>
         /// <param name="maximumValue">The maximum value.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "Unavoidable.")]
         public RandomIntegerPredictableDataStore(
             int capacity,
             int minimumValue,
@@ -59,15 +69,16 @@ namespace IX.DataGeneration
                 capacity,
                 state =>
                 {
-                    var (item1, item2) = (Tuple<int, int>)state;
+                    var (item1, item2) = ((int, int))state;
 
                     return DataGenerator.RandomInteger(
                         item1,
                         item2);
-                }, new Tuple<int, int>(
-                    minimumValue,
-                    maximumValue))
+                },
+                (minimumValue, maximumValue))
         {
         }
+
+#endregion
     }
 }

@@ -1165,9 +1165,11 @@ namespace IX.Guaranteed.Collections
                     throw;
                 }
 
-                Interlocked.Exchange(
+#pragma warning disable IDISP004 // Don't ignore created IDisposable. - We're not, really
+                _ = Interlocked.Exchange(
                     ref this.persistedQueue,
                     transferQueue);
+#pragma warning restore IDISP004 // Don't ignore created IDisposable.
 
                 try
                 {
@@ -1186,7 +1188,7 @@ namespace IX.Guaranteed.Collections
                     throw;
                 }
 
-                Interlocked.Exchange(
+                _ = Interlocked.Exchange(
                     ref this.queue,
                     null);
             }
@@ -1210,7 +1212,7 @@ namespace IX.Guaranteed.Collections
             {
                 var transferQueue = new System.Collections.Generic.Queue<T>();
 
-                Interlocked.Exchange(
+                _ = Interlocked.Exchange(
                     ref this.queue,
                     transferQueue);
 
@@ -1231,7 +1233,7 @@ namespace IX.Guaranteed.Collections
                     throw;
                 }
 
-                Interlocked.Exchange(
+                _ = Interlocked.Exchange(
                     ref this.persistedQueue,
                     null);
             }
