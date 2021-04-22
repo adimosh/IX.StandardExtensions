@@ -43,9 +43,9 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static T NotNull<T>(
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T? argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument is null)
             {
@@ -76,9 +76,9 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void NotNull<T>(
             out T field,
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T? argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument is null)
             {
@@ -107,9 +107,9 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static string NotNullOrEmpty(
-            [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (string.IsNullOrEmpty(argument))
             {
@@ -139,9 +139,9 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void NotNullOrEmpty(
             out string field,
-            [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (string.IsNullOrEmpty(argument))
             {
@@ -170,9 +170,9 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static string NotNullOrWhiteSpace(
-            [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (string.IsNullOrWhiteSpace(argument))
             {
@@ -202,9 +202,9 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void NotNullOrWhiteSpace(
             out string field,
-            [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (string.IsNullOrWhiteSpace(argument))
             {
@@ -241,9 +241,9 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static TCollection NotEmpty<TCollection, T>(
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             TCollection? argument,
-            [NotNull] string argumentName)
+            string argumentName)
             where TCollection : class, ICollection<T>
         {
             if ((argument?.Count ?? 0) == 0)
@@ -268,9 +268,9 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void NotEmpty<TCollection, T>(
             out TCollection field,
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             TCollection? argument,
-            [NotNull] string argumentName)
+            string argumentName)
             where TCollection : class, ICollection<T>
         {
             if ((argument?.Count ?? 0) == 0)
@@ -303,9 +303,9 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static T[] NotEmpty<T>(
-            [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if ((argument?.Length ?? 0) == 0)
             {
@@ -336,9 +336,9 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void NotEmpty<T>(
             out T[] field,
-            [CanBeNull] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if ((argument?.Length ?? 0) == 0)
             {
@@ -371,10 +371,10 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static T[] FixedLength<T>(
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -414,10 +414,10 @@ namespace IX.StandardExtensions.Contracts
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void FixedLength<T>(
             out T[] field,
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -454,10 +454,10 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static T[] FixedLength<T>(
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -497,10 +497,10 @@ namespace IX.StandardExtensions.Contracts
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void FixedLength<T>(
             out T[] field,
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -541,10 +541,10 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static T[] LengthAtLeast<T>(
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -584,10 +584,10 @@ namespace IX.StandardExtensions.Contracts
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void LengthAtLeast<T>(
             out T[] field,
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -624,10 +624,10 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static T[] LengthAtLeast<T>(
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -667,10 +667,10 @@ namespace IX.StandardExtensions.Contracts
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void LengthAtLeast<T>(
             out T[] field,
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -711,10 +711,10 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static T[] LengthAtMost<T>(
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -754,10 +754,10 @@ namespace IX.StandardExtensions.Contracts
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void LengthAtMost<T>(
             out T[] field,
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -794,10 +794,10 @@ namespace IX.StandardExtensions.Contracts
             "EPS02:Non-readonly struct used as in-parameter",
             Justification = "This is a primitive type that the compiler can handle.")]
         public static T[] LengthAtMost<T>(
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -837,10 +837,10 @@ namespace IX.StandardExtensions.Contracts
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void LengthAtMost<T>(
             out T[] field,
-            [CanBeNull] [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
+            [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -884,9 +884,9 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static string Matches(
-            [CanBeNull] string? argument,
-            [NotNull] string pattern,
-            [NotNull] string argumentName)
+            string? argument,
+            string pattern,
+            string argumentName)
         {
             if (string.IsNullOrEmpty(pattern))
             {
@@ -927,9 +927,9 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void Matches(
             out string field,
-            [CanBeNull] string? argument,
-            [NotNull] string pattern,
-            [NotNull] string argumentName)
+            string? argument,
+            string pattern,
+            string argumentName)
         {
             if (string.IsNullOrEmpty(pattern))
             {
@@ -979,7 +979,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "This is a primitive type, the compiler can handle it.")]
         public static TimeSpan Positive(
             in TimeSpan argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= TimeSpan.Zero)
             {
@@ -1010,7 +1010,7 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out TimeSpan field,
             in TimeSpan argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= TimeSpan.Zero)
             {
@@ -1045,7 +1045,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "This is a primitive type, the compiler can handle it.")]
         public static TimeSpan NonNegative(
             in TimeSpan argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < TimeSpan.Zero)
             {
@@ -1076,7 +1076,7 @@ namespace IX.StandardExtensions.Contracts
         public static void NonNegative(
             out TimeSpan field,
             in TimeSpan argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < TimeSpan.Zero)
             {
@@ -1105,8 +1105,8 @@ namespace IX.StandardExtensions.Contracts
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayIndex<T>(
             in int argument,
-            [NotNull] T[] array,
-            [NotNull] string argumentName)
+            T[] array,
+            string argumentName)
         {
             if (array == null)
             {
@@ -1137,8 +1137,8 @@ namespace IX.StandardExtensions.Contracts
         public static void ValidArrayIndex<T>(
             out int field,
             in int argument,
-            [NotNull] T[] array,
-            [NotNull] string argumentName)
+            T[] array,
+            string argumentName)
         {
             if (array == null)
             {
@@ -1169,8 +1169,8 @@ namespace IX.StandardExtensions.Contracts
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayIndex<T>(
             in long argument,
-            [NotNull] T[] array,
-            [NotNull] string argumentName)
+            T[] array,
+            string argumentName)
         {
             if (array == null)
             {
@@ -1201,8 +1201,8 @@ namespace IX.StandardExtensions.Contracts
         public static void ValidArrayIndex<T>(
             out long field,
             in long argument,
-            [NotNull] T[] array,
-            [NotNull] string argumentName)
+            T[] array,
+            string argumentName)
         {
             if (array == null)
             {
@@ -1235,8 +1235,8 @@ namespace IX.StandardExtensions.Contracts
         public static void ValidArrayRange<T>(
             in int indexArgument,
             in int lengthArgument,
-            [NotNull] T[] array,
-            [NotNull] string argumentName)
+            T[] array,
+            string argumentName)
         {
             if (array == null)
             {
@@ -1278,8 +1278,8 @@ namespace IX.StandardExtensions.Contracts
             out int fieldLength,
             in int indexArgument,
             in int lengthArgument,
-            [NotNull] T[] array,
-            [NotNull] string argumentName)
+            T[] array,
+            string argumentName)
         {
             if (array == null)
             {
@@ -1320,8 +1320,8 @@ namespace IX.StandardExtensions.Contracts
         public static void ValidArrayRange<T>(
             in long indexArgument,
             in long lengthArgument,
-            [NotNull] T[] array,
-            [NotNull] string argumentName)
+            T[] array,
+            string argumentName)
         {
             if (array == null)
             {
@@ -1363,8 +1363,8 @@ namespace IX.StandardExtensions.Contracts
             out long fieldLength,
             in long indexArgument,
             in long lengthArgument,
-            [NotNull] T[] array,
-            [NotNull] string argumentName)
+            T[] array,
+            string argumentName)
         {
             if (array == null)
             {
@@ -1403,8 +1403,8 @@ namespace IX.StandardExtensions.Contracts
             Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayLength<T>(
             in int argument,
-            [NotNull] T[] array,
-            [NotNull] string argumentName)
+            T[] array,
+            string argumentName)
         {
             if (array == null)
             {
@@ -1435,8 +1435,8 @@ namespace IX.StandardExtensions.Contracts
         public static void ValidArrayLength<T>(
             out int field,
             in int argument,
-            [NotNull] T[] array,
-            [NotNull] string argumentName)
+            T[] array,
+            string argumentName)
         {
             if (array == null)
             {
@@ -1468,7 +1468,7 @@ namespace IX.StandardExtensions.Contracts
         public static void ValidArrayLength<T>(
             in long argument,
             in T[] array,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -1500,7 +1500,7 @@ namespace IX.StandardExtensions.Contracts
             out long field,
             in long argument,
             in T[] array,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (array == null)
             {
@@ -1543,7 +1543,7 @@ namespace IX.StandardExtensions.Contracts
         public static bool True(
             [AssertionCondition(AssertionConditionType.IS_TRUE)]
             bool condition,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (!condition)
             {
@@ -1578,7 +1578,7 @@ namespace IX.StandardExtensions.Contracts
             out bool field,
             [AssertionCondition(AssertionConditionType.IS_TRUE)]
             bool condition,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (!condition)
             {
@@ -1614,7 +1614,7 @@ namespace IX.StandardExtensions.Contracts
         public static bool False(
             [AssertionCondition(AssertionConditionType.IS_FALSE)]
             bool condition,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (condition)
             {
@@ -1649,7 +1649,7 @@ namespace IX.StandardExtensions.Contracts
             out bool field,
             [AssertionCondition(AssertionConditionType.IS_FALSE)]
             bool condition,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (condition)
             {
@@ -1687,7 +1687,7 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static T ArgumentOfType<T>(
             [CanBeNull, NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument is not T convertedValue)
             {
@@ -1719,7 +1719,7 @@ namespace IX.StandardExtensions.Contracts
         public static void ArgumentOfType<T>(
             out T field,
             [CanBeNull, NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (!(argument is T convertedValue))
             {
@@ -1740,7 +1740,7 @@ namespace IX.StandardExtensions.Contracts
         /// </param>
         /// <exception cref="ObjectDisposedException">If the reference object is disposed, this exception will be thrown.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void RequiresNotDisposed([NotNull] this DisposableBase reference) =>
+        public static void RequiresNotDisposed(this DisposableBase reference) =>
             NotNull(
                     reference,
                     nameof(reference))

@@ -3,7 +3,6 @@
 // </copyright>
 
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Contracts
 {
@@ -36,7 +35,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThan(
             in byte argument,
             in byte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -68,7 +67,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThanOrEqualTo(
             in byte argument,
             in byte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -100,7 +99,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThan(
             in byte argument,
             in byte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -132,7 +131,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThanOrEqualTo(
             in byte argument,
             in byte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -168,7 +167,7 @@ namespace IX.StandardExtensions.Contracts
             out byte field,
             in byte argument,
             in byte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -206,7 +205,7 @@ namespace IX.StandardExtensions.Contracts
             out byte field,
             in byte argument,
             in byte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -244,7 +243,7 @@ namespace IX.StandardExtensions.Contracts
             out byte field,
             in byte argument,
             in byte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -282,7 +281,7 @@ namespace IX.StandardExtensions.Contracts
             out byte field,
             in byte argument,
             in byte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -316,7 +315,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThan(
             in sbyte argument,
             in sbyte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -348,7 +347,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThanOrEqualTo(
             in sbyte argument,
             in sbyte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -380,7 +379,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThan(
             in sbyte argument,
             in sbyte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -412,7 +411,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThanOrEqualTo(
             in sbyte argument,
             in sbyte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -448,7 +447,7 @@ namespace IX.StandardExtensions.Contracts
             out sbyte field,
             in sbyte argument,
             in sbyte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -486,7 +485,7 @@ namespace IX.StandardExtensions.Contracts
             out sbyte field,
             in sbyte argument,
             in sbyte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -524,7 +523,7 @@ namespace IX.StandardExtensions.Contracts
             out sbyte field,
             in sbyte argument,
             in sbyte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -562,7 +561,7 @@ namespace IX.StandardExtensions.Contracts
             out sbyte field,
             in sbyte argument,
             in sbyte desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -596,7 +595,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThan(
             in short argument,
             in short desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -628,7 +627,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThanOrEqualTo(
             in short argument,
             in short desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -660,7 +659,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThan(
             in short argument,
             in short desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -692,7 +691,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThanOrEqualTo(
             in short argument,
             in short desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -728,7 +727,7 @@ namespace IX.StandardExtensions.Contracts
             out short field,
             in short argument,
             in short desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -766,7 +765,7 @@ namespace IX.StandardExtensions.Contracts
             out short field,
             in short argument,
             in short desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -804,7 +803,7 @@ namespace IX.StandardExtensions.Contracts
             out short field,
             in short argument,
             in short desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -842,7 +841,7 @@ namespace IX.StandardExtensions.Contracts
             out short field,
             in short argument,
             in short desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -876,7 +875,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThan(
             in ushort argument,
             in ushort desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -908,7 +907,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThanOrEqualTo(
             in ushort argument,
             in ushort desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -940,7 +939,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThan(
             in ushort argument,
             in ushort desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -972,7 +971,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThanOrEqualTo(
             in ushort argument,
             in ushort desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -1008,7 +1007,7 @@ namespace IX.StandardExtensions.Contracts
             out ushort field,
             in ushort argument,
             in ushort desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -1046,7 +1045,7 @@ namespace IX.StandardExtensions.Contracts
             out ushort field,
             in ushort argument,
             in ushort desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -1084,7 +1083,7 @@ namespace IX.StandardExtensions.Contracts
             out ushort field,
             in ushort argument,
             in ushort desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -1122,7 +1121,7 @@ namespace IX.StandardExtensions.Contracts
             out ushort field,
             in ushort argument,
             in ushort desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -1156,7 +1155,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThan(
             in char argument,
             in char desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -1188,7 +1187,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThanOrEqualTo(
             in char argument,
             in char desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -1220,7 +1219,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThan(
             in char argument,
             in char desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -1252,7 +1251,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThanOrEqualTo(
             in char argument,
             in char desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -1288,7 +1287,7 @@ namespace IX.StandardExtensions.Contracts
             out char field,
             in char argument,
             in char desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -1326,7 +1325,7 @@ namespace IX.StandardExtensions.Contracts
             out char field,
             in char argument,
             in char desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -1364,7 +1363,7 @@ namespace IX.StandardExtensions.Contracts
             out char field,
             in char argument,
             in char desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -1402,7 +1401,7 @@ namespace IX.StandardExtensions.Contracts
             out char field,
             in char argument,
             in char desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -1436,7 +1435,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThan(
             in int argument,
             in int desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -1468,7 +1467,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThanOrEqualTo(
             in int argument,
             in int desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -1500,7 +1499,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThan(
             in int argument,
             in int desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -1532,7 +1531,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThanOrEqualTo(
             in int argument,
             in int desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -1568,7 +1567,7 @@ namespace IX.StandardExtensions.Contracts
             out int field,
             in int argument,
             in int desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -1606,7 +1605,7 @@ namespace IX.StandardExtensions.Contracts
             out int field,
             in int argument,
             in int desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -1644,7 +1643,7 @@ namespace IX.StandardExtensions.Contracts
             out int field,
             in int argument,
             in int desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -1682,7 +1681,7 @@ namespace IX.StandardExtensions.Contracts
             out int field,
             in int argument,
             in int desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -1716,7 +1715,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThan(
             in uint argument,
             in uint desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -1748,7 +1747,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThanOrEqualTo(
             in uint argument,
             in uint desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -1780,7 +1779,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThan(
             in uint argument,
             in uint desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -1812,7 +1811,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThanOrEqualTo(
             in uint argument,
             in uint desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -1848,7 +1847,7 @@ namespace IX.StandardExtensions.Contracts
             out uint field,
             in uint argument,
             in uint desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -1886,7 +1885,7 @@ namespace IX.StandardExtensions.Contracts
             out uint field,
             in uint argument,
             in uint desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -1924,7 +1923,7 @@ namespace IX.StandardExtensions.Contracts
             out uint field,
             in uint argument,
             in uint desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -1962,7 +1961,7 @@ namespace IX.StandardExtensions.Contracts
             out uint field,
             in uint argument,
             in uint desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -1996,7 +1995,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThan(
             in long argument,
             in long desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -2028,7 +2027,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThanOrEqualTo(
             in long argument,
             in long desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -2060,7 +2059,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThan(
             in long argument,
             in long desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -2092,7 +2091,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThanOrEqualTo(
             in long argument,
             in long desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -2128,7 +2127,7 @@ namespace IX.StandardExtensions.Contracts
             out long field,
             in long argument,
             in long desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -2166,7 +2165,7 @@ namespace IX.StandardExtensions.Contracts
             out long field,
             in long argument,
             in long desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -2204,7 +2203,7 @@ namespace IX.StandardExtensions.Contracts
             out long field,
             in long argument,
             in long desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -2242,7 +2241,7 @@ namespace IX.StandardExtensions.Contracts
             out long field,
             in long argument,
             in long desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -2276,7 +2275,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThan(
             in ulong argument,
             in ulong desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -2308,7 +2307,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThanOrEqualTo(
             in ulong argument,
             in ulong desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -2340,7 +2339,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThan(
             in ulong argument,
             in ulong desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -2372,7 +2371,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThanOrEqualTo(
             in ulong argument,
             in ulong desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -2408,7 +2407,7 @@ namespace IX.StandardExtensions.Contracts
             out ulong field,
             in ulong argument,
             in ulong desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -2446,7 +2445,7 @@ namespace IX.StandardExtensions.Contracts
             out ulong field,
             in ulong argument,
             in ulong desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -2484,7 +2483,7 @@ namespace IX.StandardExtensions.Contracts
             out ulong field,
             in ulong argument,
             in ulong desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -2522,7 +2521,7 @@ namespace IX.StandardExtensions.Contracts
             out ulong field,
             in ulong argument,
             in ulong desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -2556,7 +2555,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThan(
             in float argument,
             in float desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -2588,7 +2587,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThanOrEqualTo(
             in float argument,
             in float desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -2620,7 +2619,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThan(
             in float argument,
             in float desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -2652,7 +2651,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThanOrEqualTo(
             in float argument,
             in float desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -2688,7 +2687,7 @@ namespace IX.StandardExtensions.Contracts
             out float field,
             in float argument,
             in float desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -2726,7 +2725,7 @@ namespace IX.StandardExtensions.Contracts
             out float field,
             in float argument,
             in float desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -2764,7 +2763,7 @@ namespace IX.StandardExtensions.Contracts
             out float field,
             in float argument,
             in float desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -2802,7 +2801,7 @@ namespace IX.StandardExtensions.Contracts
             out float field,
             in float argument,
             in float desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -2836,7 +2835,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThan(
             in double argument,
             in double desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -2868,7 +2867,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThanOrEqualTo(
             in double argument,
             in double desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -2900,7 +2899,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThan(
             in double argument,
             in double desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -2932,7 +2931,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThanOrEqualTo(
             in double argument,
             in double desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -2968,7 +2967,7 @@ namespace IX.StandardExtensions.Contracts
             out double field,
             in double argument,
             in double desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -3006,7 +3005,7 @@ namespace IX.StandardExtensions.Contracts
             out double field,
             in double argument,
             in double desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -3044,7 +3043,7 @@ namespace IX.StandardExtensions.Contracts
             out double field,
             in double argument,
             in double desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -3082,7 +3081,7 @@ namespace IX.StandardExtensions.Contracts
             out double field,
             in double argument,
             in double desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -3116,7 +3115,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThan(
             in decimal argument,
             in decimal desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -3148,7 +3147,7 @@ namespace IX.StandardExtensions.Contracts
         public static void LessThanOrEqualTo(
             in decimal argument,
             in decimal desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -3180,7 +3179,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThan(
             in decimal argument,
             in decimal desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -3212,7 +3211,7 @@ namespace IX.StandardExtensions.Contracts
         public static void GreaterThanOrEqualTo(
             in decimal argument,
             in decimal desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {
@@ -3248,7 +3247,7 @@ namespace IX.StandardExtensions.Contracts
             out decimal field,
             in decimal argument,
             in decimal desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument >= desiredComparisonValue)
             {
@@ -3286,7 +3285,7 @@ namespace IX.StandardExtensions.Contracts
             out decimal field,
             in decimal argument,
             in decimal desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument > desiredComparisonValue)
             {
@@ -3324,7 +3323,7 @@ namespace IX.StandardExtensions.Contracts
             out decimal field,
             in decimal argument,
             in decimal desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= desiredComparisonValue)
             {
@@ -3362,7 +3361,7 @@ namespace IX.StandardExtensions.Contracts
             out decimal field,
             in decimal argument,
             in decimal desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < desiredComparisonValue)
             {

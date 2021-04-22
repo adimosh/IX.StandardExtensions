@@ -11,10 +11,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-
 using IX.StandardExtensions.Contracts;
-
-using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Threading
 {
@@ -70,10 +67,9 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> that represents the started task.</returns>
-        [NotNull]
         public static Task StartOnDefaultTaskScheduler<<#= paramTypes #>>(
-            [NotNull] this TaskFactory taskFactory,
-            [NotNull] Action<<#= paramTypes #>> action,
+            this TaskFactory taskFactory,
+            Action<<#= paramTypes #>> action,
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
@@ -138,10 +134,9 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> that represents the started task.</returns>
-        [NotNull]
         public static Task StartLongRunningOnDefaultTaskScheduler<<#= paramTypes #>>(
-            [NotNull] this TaskFactory taskFactory,
-            [NotNull] Action<<#= paramTypes #>> action,
+            this TaskFactory taskFactory,
+            Action<<#= paramTypes #>> action,
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
@@ -207,10 +202,9 @@ for (int i = 1; i <= 8; i++)
 #>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> that represents the started task.</returns>
-        [NotNull]
         public static Task<TResult> StartOnDefaultTaskScheduler<<#= paramTypes #>, TResult>(
-            [NotNull] this TaskFactory taskFactory,
-            [NotNull] Func<<#= paramTypes #>, TResult> action,
+            this TaskFactory taskFactory,
+            Func<<#= paramTypes #>, TResult> action,
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
@@ -277,8 +271,8 @@ for (int i = 1; i <= 8; i++)
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> that represents the started task.</returns>
         public static Task<TResult> StartLongRunningOnDefaultTaskScheduler<<#= paramTypes #>, TResult>(
-            [NotNull] this TaskFactory taskFactory,
-            [NotNull] Func<<#= paramTypes #>, TResult> action,
+            this TaskFactory taskFactory,
+            Func<<#= paramTypes #>, TResult> action,
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {

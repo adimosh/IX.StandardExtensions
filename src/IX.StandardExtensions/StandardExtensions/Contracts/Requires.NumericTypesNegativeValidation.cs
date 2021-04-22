@@ -3,7 +3,6 @@
 // </copyright>
 
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Contracts
 {
@@ -32,7 +31,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "byte is a primitive type that the compiler can handle.")]
         public static void NonPositive(
             in byte argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument == 0)
             {
@@ -64,7 +63,7 @@ namespace IX.StandardExtensions.Contracts
         public static void NonPositive(
             out byte field,
             in byte argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument == 0)
             {
@@ -94,7 +93,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "sbyte is a primitive type that the compiler can handle.")]
         public static void Negative(
             in sbyte argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -122,7 +121,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "sbyte is a primitive type that the compiler can handle.")]
         public static void NonPositive(
             in sbyte argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {
@@ -154,7 +153,7 @@ namespace IX.StandardExtensions.Contracts
         public static void Negative(
             out sbyte field,
             in sbyte argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -188,7 +187,7 @@ namespace IX.StandardExtensions.Contracts
         public static void NonPositive(
             out sbyte field,
             in sbyte argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {
@@ -218,7 +217,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "short is a primitive type that the compiler can handle.")]
         public static void Negative(
             in short argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -246,7 +245,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "short is a primitive type that the compiler can handle.")]
         public static void NonPositive(
             in short argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {
@@ -278,7 +277,7 @@ namespace IX.StandardExtensions.Contracts
         public static void Negative(
             out short field,
             in short argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -312,7 +311,7 @@ namespace IX.StandardExtensions.Contracts
         public static void NonPositive(
             out short field,
             in short argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {
@@ -342,7 +341,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "ushort is a primitive type that the compiler can handle.")]
         public static void NonPositive(
             in ushort argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument == 0)
             {
@@ -374,7 +373,7 @@ namespace IX.StandardExtensions.Contracts
         public static void NonPositive(
             out ushort field,
             in ushort argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument == 0)
             {
@@ -404,7 +403,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "char is a primitive type that the compiler can handle.")]
         public static void NonPositive(
             in char argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument == 0)
             {
@@ -436,7 +435,7 @@ namespace IX.StandardExtensions.Contracts
         public static void NonPositive(
             out char field,
             in char argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument == 0)
             {
@@ -466,7 +465,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "int is a primitive type that the compiler can handle.")]
         public static void Negative(
             in int argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -494,7 +493,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "int is a primitive type that the compiler can handle.")]
         public static void NonPositive(
             in int argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {
@@ -526,7 +525,7 @@ namespace IX.StandardExtensions.Contracts
         public static void Negative(
             out int field,
             in int argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -560,7 +559,7 @@ namespace IX.StandardExtensions.Contracts
         public static void NonPositive(
             out int field,
             in int argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {
@@ -590,7 +589,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "uint is a primitive type that the compiler can handle.")]
         public static void NonPositive(
             in uint argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument == 0)
             {
@@ -622,7 +621,7 @@ namespace IX.StandardExtensions.Contracts
         public static void NonPositive(
             out uint field,
             in uint argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument == 0)
             {
@@ -652,7 +651,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "long is a primitive type that the compiler can handle.")]
         public static void Negative(
             in long argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -680,7 +679,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "long is a primitive type that the compiler can handle.")]
         public static void NonPositive(
             in long argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {
@@ -712,7 +711,7 @@ namespace IX.StandardExtensions.Contracts
         public static void Negative(
             out long field,
             in long argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -746,7 +745,7 @@ namespace IX.StandardExtensions.Contracts
         public static void NonPositive(
             out long field,
             in long argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {
@@ -776,7 +775,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "ulong is a primitive type that the compiler can handle.")]
         public static void NonPositive(
             in ulong argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument == 0)
             {
@@ -808,7 +807,7 @@ namespace IX.StandardExtensions.Contracts
         public static void NonPositive(
             out ulong field,
             in ulong argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument == 0)
             {
@@ -838,7 +837,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "float is a primitive type that the compiler can handle.")]
         public static void Negative(
             in float argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -866,7 +865,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "float is a primitive type that the compiler can handle.")]
         public static void NonPositive(
             in float argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {
@@ -898,7 +897,7 @@ namespace IX.StandardExtensions.Contracts
         public static void Negative(
             out float field,
             in float argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -932,7 +931,7 @@ namespace IX.StandardExtensions.Contracts
         public static void NonPositive(
             out float field,
             in float argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {
@@ -962,7 +961,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "double is a primitive type that the compiler can handle.")]
         public static void Negative(
             in double argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -990,7 +989,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "double is a primitive type that the compiler can handle.")]
         public static void NonPositive(
             in double argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {
@@ -1022,7 +1021,7 @@ namespace IX.StandardExtensions.Contracts
         public static void Negative(
             out double field,
             in double argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -1056,7 +1055,7 @@ namespace IX.StandardExtensions.Contracts
         public static void NonPositive(
             out double field,
             in double argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {
@@ -1086,7 +1085,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "decimal is a primitive type that the compiler can handle.")]
         public static void Negative(
             in decimal argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -1114,7 +1113,7 @@ namespace IX.StandardExtensions.Contracts
             Justification = "decimal is a primitive type that the compiler can handle.")]
         public static void NonPositive(
             in decimal argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {
@@ -1146,7 +1145,7 @@ namespace IX.StandardExtensions.Contracts
         public static void Negative(
             out decimal field,
             in decimal argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <= 0)
             {
@@ -1180,7 +1179,7 @@ namespace IX.StandardExtensions.Contracts
         public static void NonPositive(
             out decimal field,
             in decimal argument,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument < 0)
             {

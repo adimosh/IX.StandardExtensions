@@ -1187,7 +1187,6 @@ namespace IX.Guaranteed.Collections
         ///     </para>
         /// </remarks>
         /// <exception cref="InvalidOperationException">There are no more valid items in the folder.</exception>
-        [NotNull]
         protected IEnumerable<Tuple<T, string>> LoadValidItemObjectHandles()
         {
             foreach (var possibleFilePath in this.GetPossibleDataFiles())
@@ -1229,7 +1228,6 @@ namespace IX.Guaranteed.Collections
         ///     We have reached the maximum number of items saved in the same femtosecond.
         ///     This is theoretically not possible.
         /// </exception>
-        [NotNull]
         protected string SaveNewItem(T item)
         {
             this.RequiresNotDisposed();
@@ -1243,11 +1241,9 @@ namespace IX.Guaranteed.Collections
 
                 do
                 {
-#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation - This is a false positive
                     filePath = this.PathShim.Combine(
                         this.DataFolderPath,
                         $"{now:yyyy.MM.dd.HH.mm.ss.fffffff}.{i}.dat");
-#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
                     i++;
 
                     if (i == int.MaxValue)
@@ -1259,11 +1255,9 @@ namespace IX.Guaranteed.Collections
 
                 using (Stream stream = this.FileShim.Create(filePath))
                 {
-#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation - This is unavoidable
                     this.Serializer.WriteObject(
                         stream,
                         item);
-#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
                 }
 
                 return filePath;
@@ -1294,7 +1288,6 @@ namespace IX.Guaranteed.Collections
         ///     Gets the possible data files.
         /// </summary>
         /// <returns>An array of data file names.</returns>
-        [NotNull]
         protected string[] GetPossibleDataFiles() => this.DirectoryShim.EnumerateFiles(
             this.DataFolderPath,
             "*.dat").Except(this.poisonedUnremovableFiles).ToArray();

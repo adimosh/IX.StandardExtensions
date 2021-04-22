@@ -5,6 +5,7 @@
 using System;
 using System.Threading;
 using IX.StandardExtensions.ComponentModel;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Threading
@@ -21,8 +22,8 @@ namespace IX.StandardExtensions.Threading
     [PublicAPI]
     public delegate void FirePeriodicallyTicker(
         int tick,
-        [NotNull] IInterruptible interruptor,
-        [CanBeNull] object? state);
+        IInterruptible interruptor,
+        object? state);
 
     internal sealed class FirePeriodicallyContext : DisposableBase, IInterruptible
     {
@@ -42,8 +43,8 @@ namespace IX.StandardExtensions.Threading
         private int iteration;
 
         internal FirePeriodicallyContext(
-            [NotNull] FirePeriodicallyTicker tickerDelegate,
-            [CanBeNull] object? state,
+            FirePeriodicallyTicker tickerDelegate,
+            object? state,
             int milliseconds)
             : this(
                 tickerDelegate,
@@ -53,8 +54,8 @@ namespace IX.StandardExtensions.Threading
         }
 
         internal FirePeriodicallyContext(
-            [NotNull] FirePeriodicallyTicker tickerDelegate,
-            [CanBeNull] object? state,
+            FirePeriodicallyTicker tickerDelegate,
+            object? state,
             TimeSpan timeSpan)
             : this(
                 tickerDelegate,
@@ -65,8 +66,8 @@ namespace IX.StandardExtensions.Threading
         }
 
         internal FirePeriodicallyContext(
-            [NotNull] FirePeriodicallyTicker tickerDelegate,
-            [CanBeNull] object? state,
+            FirePeriodicallyTicker tickerDelegate,
+            object? state,
             TimeSpan initialDelay,
             TimeSpan timeSpan)
         {
@@ -74,7 +75,7 @@ namespace IX.StandardExtensions.Threading
             this.timeSpan = timeSpan;
             this.timer = new Timer(
                 this.TimerTick,
-                tickerDelegate ?? throw new ArgumentNullException(nameof(tickerDelegate)),
+                Requires.NotNull(tickerDelegate, nameof(tickerDelegate)),
                 initialDelay,
                 timeSpan);
         }

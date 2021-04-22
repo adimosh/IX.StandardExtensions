@@ -5,12 +5,11 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ include file="..\..\..\..\opt\tt\NumericTypes.tt" #><#@ include file="..\..\..\..\opt\tt\TypeNamesFixture.tt" #>
 <#@ output extension=".cs" #>
-// <copyright file="Requires.NumericTypesPositiveValidation.cs" company="Adrian Mos">
+// <copyright file="Requires.NumericTypesRangeValidation.cs" company="Adrian Mos">
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Contracts
 {
@@ -109,7 +108,7 @@ for (int i = 0; i < types.Length; i++)
             in <#= fullTypeName #> argument,
             in <#= fullTypeName #> lowerBound,
             in <#= fullTypeName #> upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {

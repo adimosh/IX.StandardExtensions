@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Threading
@@ -20,9 +19,8 @@ namespace IX.StandardExtensions.Threading
         /// <param name="tickerDelegate">The ticker delegate.</param>
         /// <param name="milliseconds">The milliseconds.</param>
         /// <returns>An interruptible handle for external control of the ticker.</returns>
-        [NotNull]
         public static IInterruptible Periodically(
-            [NotNull] FirePeriodicallyTicker tickerDelegate,
+            FirePeriodicallyTicker tickerDelegate,
             int milliseconds) => new FirePeriodicallyContext(
             tickerDelegate,
             null,
@@ -34,9 +32,8 @@ namespace IX.StandardExtensions.Threading
         /// <param name="tickerDelegate">The ticker delegate.</param>
         /// <param name="timeSpan">The time span.</param>
         /// <returns>An interruptible handle for external control of the ticker.</returns>
-        [NotNull]
         public static IInterruptible Periodically(
-            [NotNull] FirePeriodicallyTicker tickerDelegate,
+            FirePeriodicallyTicker tickerDelegate,
             TimeSpan timeSpan) => new FirePeriodicallyContext(
             tickerDelegate,
             null,
@@ -49,9 +46,8 @@ namespace IX.StandardExtensions.Threading
         /// <param name="initialDelay">The initial delay.</param>
         /// <param name="timeSpan">The time span.</param>
         /// <returns>An interruptible handle for external control of the ticker.</returns>
-        [NotNull]
         public static IInterruptible Periodically(
-            [NotNull] FirePeriodicallyTicker tickerDelegate,
+            FirePeriodicallyTicker tickerDelegate,
             TimeSpan initialDelay,
             TimeSpan timeSpan) => new FirePeriodicallyContext(
             tickerDelegate,
@@ -66,10 +62,9 @@ namespace IX.StandardExtensions.Threading
         /// <param name="payload">The payload.</param>
         /// <param name="milliseconds">The milliseconds.</param>
         /// <returns>An interruptible handle for external control of the ticker.</returns>
-        [NotNull]
         public static IInterruptible Periodically(
-            [NotNull] FirePeriodicallyTicker tickerDelegate,
-            [NotNull] object payload,
+            FirePeriodicallyTicker tickerDelegate,
+            object payload,
             int milliseconds) => new FirePeriodicallyContext(
             tickerDelegate,
             payload,
@@ -82,10 +77,9 @@ namespace IX.StandardExtensions.Threading
         /// <param name="payload">The payload.</param>
         /// <param name="timeSpan">The time span.</param>
         /// <returns>An interruptible handle for external control of the ticker.</returns>
-        [NotNull]
         public static IInterruptible Periodically(
-            [NotNull] FirePeriodicallyTicker tickerDelegate,
-            [NotNull] object payload,
+            FirePeriodicallyTicker tickerDelegate,
+            object payload,
             TimeSpan timeSpan) => new FirePeriodicallyContext(
             tickerDelegate,
             payload,
@@ -99,22 +93,14 @@ namespace IX.StandardExtensions.Threading
         /// <param name="initialDelay">The initial delay.</param>
         /// <param name="timeSpan">The time span.</param>
         /// <returns>An interruptible handle for external control of the ticker.</returns>
-        [NotNull]
         public static IInterruptible Periodically(
-            [NotNull] FirePeriodicallyTicker tickerDelegate,
-            [NotNull] object payload,
+            FirePeriodicallyTicker tickerDelegate,
+            object payload,
             TimeSpan initialDelay,
             TimeSpan timeSpan) => new FirePeriodicallyContext(
             tickerDelegate,
             payload,
             initialDelay,
             timeSpan);
-
-        private static void StandardContinuation(
-            [NotNull] Task task,
-            [NotNull] object innerState)
-        {
-            (innerState as Action<Exception>)?.Invoke(task.Exception.GetBaseException());
-        }
     }
 }

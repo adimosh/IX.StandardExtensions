@@ -118,9 +118,9 @@ namespace IX.StandardExtensions.EventModel
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         /// <returns>An task that can be awaited on by the invoker.</returns>
         public static Task InvokeAsync(
-            [CanBeNull] this AsyncEventHandler<EventArgs>? handler,
-            [NotNull] object sender,
-            [NotNull] EventArgs e)
+            this AsyncEventHandler<EventArgs>? handler,
+            object sender,
+            EventArgs e)
         {
             Requires.NotNull(
                 sender,

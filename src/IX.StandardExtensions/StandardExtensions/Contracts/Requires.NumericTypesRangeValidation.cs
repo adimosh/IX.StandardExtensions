@@ -1,9 +1,8 @@
-// <copyright file="Requires.NumericTypesPositiveValidation.cs" company="Adrian Mos">
+// <copyright file="Requires.NumericTypesRangeValidation.cs" company="Adrian Mos">
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Contracts
 {
@@ -40,7 +39,7 @@ namespace IX.StandardExtensions.Contracts
             in byte argument,
             in byte lowerBound,
             in byte upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -81,7 +80,7 @@ namespace IX.StandardExtensions.Contracts
             in byte argument,
             in byte lowerBound,
             in byte upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -126,7 +125,7 @@ namespace IX.StandardExtensions.Contracts
             in byte argument,
             in byte lowerBound,
             in byte upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -173,7 +172,7 @@ namespace IX.StandardExtensions.Contracts
             in byte argument,
             in byte lowerBound,
             in byte upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -216,7 +215,7 @@ namespace IX.StandardExtensions.Contracts
             in sbyte argument,
             in sbyte lowerBound,
             in sbyte upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -257,7 +256,7 @@ namespace IX.StandardExtensions.Contracts
             in sbyte argument,
             in sbyte lowerBound,
             in sbyte upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -302,7 +301,7 @@ namespace IX.StandardExtensions.Contracts
             in sbyte argument,
             in sbyte lowerBound,
             in sbyte upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -349,7 +348,7 @@ namespace IX.StandardExtensions.Contracts
             in sbyte argument,
             in sbyte lowerBound,
             in sbyte upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -392,7 +391,7 @@ namespace IX.StandardExtensions.Contracts
             in short argument,
             in short lowerBound,
             in short upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -433,7 +432,7 @@ namespace IX.StandardExtensions.Contracts
             in short argument,
             in short lowerBound,
             in short upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -478,7 +477,7 @@ namespace IX.StandardExtensions.Contracts
             in short argument,
             in short lowerBound,
             in short upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -525,7 +524,7 @@ namespace IX.StandardExtensions.Contracts
             in short argument,
             in short lowerBound,
             in short upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -568,7 +567,7 @@ namespace IX.StandardExtensions.Contracts
             in ushort argument,
             in ushort lowerBound,
             in ushort upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -609,7 +608,7 @@ namespace IX.StandardExtensions.Contracts
             in ushort argument,
             in ushort lowerBound,
             in ushort upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -654,7 +653,7 @@ namespace IX.StandardExtensions.Contracts
             in ushort argument,
             in ushort lowerBound,
             in ushort upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -701,7 +700,7 @@ namespace IX.StandardExtensions.Contracts
             in ushort argument,
             in ushort lowerBound,
             in ushort upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -744,7 +743,7 @@ namespace IX.StandardExtensions.Contracts
             in char argument,
             in char lowerBound,
             in char upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -785,7 +784,7 @@ namespace IX.StandardExtensions.Contracts
             in char argument,
             in char lowerBound,
             in char upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -830,7 +829,7 @@ namespace IX.StandardExtensions.Contracts
             in char argument,
             in char lowerBound,
             in char upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -877,7 +876,7 @@ namespace IX.StandardExtensions.Contracts
             in char argument,
             in char lowerBound,
             in char upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -920,7 +919,7 @@ namespace IX.StandardExtensions.Contracts
             in int argument,
             in int lowerBound,
             in int upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -961,7 +960,7 @@ namespace IX.StandardExtensions.Contracts
             in int argument,
             in int lowerBound,
             in int upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1006,7 +1005,7 @@ namespace IX.StandardExtensions.Contracts
             in int argument,
             in int lowerBound,
             in int upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1053,7 +1052,7 @@ namespace IX.StandardExtensions.Contracts
             in int argument,
             in int lowerBound,
             in int upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1096,7 +1095,7 @@ namespace IX.StandardExtensions.Contracts
             in uint argument,
             in uint lowerBound,
             in uint upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1137,7 +1136,7 @@ namespace IX.StandardExtensions.Contracts
             in uint argument,
             in uint lowerBound,
             in uint upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1182,7 +1181,7 @@ namespace IX.StandardExtensions.Contracts
             in uint argument,
             in uint lowerBound,
             in uint upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1229,7 +1228,7 @@ namespace IX.StandardExtensions.Contracts
             in uint argument,
             in uint lowerBound,
             in uint upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1272,7 +1271,7 @@ namespace IX.StandardExtensions.Contracts
             in long argument,
             in long lowerBound,
             in long upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1313,7 +1312,7 @@ namespace IX.StandardExtensions.Contracts
             in long argument,
             in long lowerBound,
             in long upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1358,7 +1357,7 @@ namespace IX.StandardExtensions.Contracts
             in long argument,
             in long lowerBound,
             in long upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1405,7 +1404,7 @@ namespace IX.StandardExtensions.Contracts
             in long argument,
             in long lowerBound,
             in long upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1448,7 +1447,7 @@ namespace IX.StandardExtensions.Contracts
             in ulong argument,
             in ulong lowerBound,
             in ulong upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1489,7 +1488,7 @@ namespace IX.StandardExtensions.Contracts
             in ulong argument,
             in ulong lowerBound,
             in ulong upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1534,7 +1533,7 @@ namespace IX.StandardExtensions.Contracts
             in ulong argument,
             in ulong lowerBound,
             in ulong upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1581,7 +1580,7 @@ namespace IX.StandardExtensions.Contracts
             in ulong argument,
             in ulong lowerBound,
             in ulong upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1624,7 +1623,7 @@ namespace IX.StandardExtensions.Contracts
             in float argument,
             in float lowerBound,
             in float upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1665,7 +1664,7 @@ namespace IX.StandardExtensions.Contracts
             in float argument,
             in float lowerBound,
             in float upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1710,7 +1709,7 @@ namespace IX.StandardExtensions.Contracts
             in float argument,
             in float lowerBound,
             in float upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1757,7 +1756,7 @@ namespace IX.StandardExtensions.Contracts
             in float argument,
             in float lowerBound,
             in float upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1800,7 +1799,7 @@ namespace IX.StandardExtensions.Contracts
             in double argument,
             in double lowerBound,
             in double upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1841,7 +1840,7 @@ namespace IX.StandardExtensions.Contracts
             in double argument,
             in double lowerBound,
             in double upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1886,7 +1885,7 @@ namespace IX.StandardExtensions.Contracts
             in double argument,
             in double lowerBound,
             in double upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1933,7 +1932,7 @@ namespace IX.StandardExtensions.Contracts
             in double argument,
             in double lowerBound,
             in double upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -1976,7 +1975,7 @@ namespace IX.StandardExtensions.Contracts
             in decimal argument,
             in decimal lowerBound,
             in decimal upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -2017,7 +2016,7 @@ namespace IX.StandardExtensions.Contracts
             in decimal argument,
             in decimal lowerBound,
             in decimal upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -2062,7 +2061,7 @@ namespace IX.StandardExtensions.Contracts
             in decimal argument,
             in decimal lowerBound,
             in decimal upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {
@@ -2109,7 +2108,7 @@ namespace IX.StandardExtensions.Contracts
             in decimal argument,
             in decimal lowerBound,
             in decimal upperBound,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (lowerBound > upperBound)
             {

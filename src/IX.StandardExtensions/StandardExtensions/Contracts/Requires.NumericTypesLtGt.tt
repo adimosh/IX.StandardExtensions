@@ -10,7 +10,6 @@
 // </copyright>
 
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Contracts
 {
@@ -145,7 +144,7 @@ for (int i = 0; i < types.Length; i++)
 #>
             in <#= fullTypeName #> argument,
             in <#= fullTypeName #> desiredComparisonValue,
-            [NotNull] string argumentName)
+            string argumentName)
         {
             if (argument <#= lessThan ? ">" : "<" #><#= isEqual ? string.Empty : "=" #> desiredComparisonValue)
             {
