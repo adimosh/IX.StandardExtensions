@@ -53,6 +53,7 @@ namespace IX.System.IO
         ///     <see langword="null" />, an implementation-specific
         ///     encoding will be used.
         /// </remarks>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task AppendAllLinesAsync(
             string path,
             IEnumerable<string> contents,
@@ -92,6 +93,7 @@ namespace IX.System.IO
         ///     <see langword="null" />, an implementation-specific
         ///     encoding will be used.
         /// </remarks>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task AppendAllTextAsync(
             string path,
             string contents,
@@ -134,6 +136,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task CopyAsync(
             string sourceFileName,
             string destinationFileName,
@@ -171,6 +174,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task DeleteAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -194,6 +198,7 @@ namespace IX.System.IO
         ///     A task representing the current operation, holding <see langword="true" /> if the specified file exists and is
         ///     accessible, <see langword="false" /> otherwise.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<bool> ExistsAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -213,6 +218,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation, holding a <see cref="DateTime" /> in UTC.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<DateTime> GetCreationTimeAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -232,6 +238,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation, holding a <see cref="DateTime" /> in UTC.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<DateTime> GetLastAccessTimeAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -251,6 +258,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation, holding a <see cref="DateTime" /> in UTC.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<DateTime> GetLastWriteTimeAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -273,6 +281,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task MoveAsync(
             string sourceFileName,
             string destinationFileName,
@@ -314,6 +323,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation, holding the contents of a file, in binary.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<byte[]> ReadAllBytesAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -351,6 +361,7 @@ namespace IX.System.IO
         ///         encoding will be used.
         ///     </para>
         /// </remarks>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<string[]> ReadAllLinesAsync(
             string path,
             Encoding? encoding = null,
@@ -389,6 +400,7 @@ namespace IX.System.IO
         ///         encoding will be used.
         ///     </para>
         /// </remarks>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<string> ReadAllTextAsync(
             string path,
             Encoding? encoding = null,
@@ -429,6 +441,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task SetCreationTimeAsync(
             string path,
             DateTime creationTime,
@@ -452,6 +465,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task SetLastAccessTimeAsync(
             string path,
             DateTime lastAccessTime,
@@ -475,6 +489,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task SetLastWriteTimeAsync(
             string path,
             DateTime lastWriteTime,
@@ -498,6 +513,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task WriteAllBytesAsync(
             string path,
             byte[] bytes,
@@ -538,6 +554,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task WriteAllLinesAsync(
             string path,
             IEnumerable<string> contents,
@@ -579,6 +596,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task WriteAllTextAsync(
             string path,
             string contents,

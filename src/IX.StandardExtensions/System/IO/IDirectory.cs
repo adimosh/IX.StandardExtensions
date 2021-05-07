@@ -33,6 +33,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task CreateDirectoryAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -53,6 +54,7 @@ namespace IX.System.IO
         /// <param name="recursive"><see langword="true" /> if deletion should be recursive to all subdirectories.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A task representing the current operation.</returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task DeleteAsync(
             string path,
             bool recursive = false,
@@ -73,6 +75,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has an enumerable of directory paths as result.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<IEnumerable<string>> EnumerateDirectoriesAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -96,6 +99,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has an enumerable of directory paths as result.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<IEnumerable<string>> EnumerateDirectoriesAsync(
             string path,
             string searchPattern,
@@ -116,6 +120,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has an enumerable of directory paths as result.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<IEnumerable<string>> EnumerateDirectoriesRecursivelyAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -141,6 +146,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has an enumerable of directory paths as result.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<IEnumerable<string>> EnumerateDirectoriesRecursivelyAsync(
             string path,
             string searchPattern,
@@ -161,6 +167,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has an enumerable of file paths as result.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<IEnumerable<string>> EnumerateFilesAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -184,6 +191,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has an enumerable of file paths as result.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<IEnumerable<string>> EnumerateFilesAsync(
             string path,
             string searchPattern,
@@ -204,6 +212,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has an enumerable of file paths as result.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<IEnumerable<string>> EnumerateFilesRecursivelyAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -228,6 +237,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has an enumerable of file paths as result.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<IEnumerable<string>> EnumerateFilesRecursivelyAsync(
             string path,
             string searchPattern,
@@ -248,6 +258,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has an enumerable of file system entry paths as result.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<IEnumerable<string>> EnumerateFileSystemEntriesAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -271,6 +282,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has an enumerable of file system entry paths as result.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<IEnumerable<string>> EnumerateFileSystemEntriesAsync(
             string path,
             string searchPattern,
@@ -291,6 +303,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has an enumerable of file system entry paths as result.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<IEnumerable<string>> EnumerateFileSystemEntriesRecursivelyAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -316,6 +329,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has an enumerable of file system entry paths as result.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<IEnumerable<string>> EnumerateFileSystemEntriesRecursivelyAsync(
             string path,
             string searchPattern,
@@ -341,6 +355,7 @@ namespace IX.System.IO
         ///     specified directory exists
         ///     and is accessible, <see langword="false" /> otherwise.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<bool> ExistsAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -360,6 +375,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has a <see cref="DateTime" /> in UTC.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<DateTime> GetCreationTimeAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -385,6 +401,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has a <see cref="DateTime" /> in UTC.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<DateTime> GetLastAccessTimeAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -404,6 +421,7 @@ namespace IX.System.IO
         /// <returns>
         ///     A task representing the current operation that has a <see cref="DateTime" /> in UTC.
         /// </returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<DateTime> GetLastWriteTimeAsync(
             string path,
             CancellationToken cancellationToken = default);
@@ -424,6 +442,7 @@ namespace IX.System.IO
         /// <param name="destinationDirectoryName">The destination directory name.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A task representing the current operation.</returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task MoveAsync(
             string sourceDirectoryName,
             string destinationDirectoryName,
@@ -445,6 +464,7 @@ namespace IX.System.IO
         /// <param name="creationTime">A <see cref="DateTime" /> with the directory attribute to set.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A task representing the current operation.</returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task SetCreationTimeAsync(
             string path,
             DateTime creationTime,
@@ -466,6 +486,7 @@ namespace IX.System.IO
         /// <param name="lastAccessTime">A <see cref="DateTime" /> with the directory attribute to set.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A task representing the current operation.</returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task SetLastAccessTimeAsync(
             string path,
             DateTime lastAccessTime,
@@ -487,6 +508,7 @@ namespace IX.System.IO
         /// <param name="lastWriteTime">A <see cref="DateTime" /> with the directory attribute to set.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A task representing the current operation.</returns>
+        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
         Task SetLastWriteTimeAsync(
             string path,
             DateTime lastWriteTime,
