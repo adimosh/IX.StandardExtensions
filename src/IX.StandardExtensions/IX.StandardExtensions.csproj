@@ -18,12 +18,11 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Package updates
-- Improved string culture comparison methods</PackageReleaseNotes>
+    <PackageReleaseNotes>- Improved some classes with ValueTasks and new constructors.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.7.7</VersionPrefix>
+    <VersionPrefix>0.7.8</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
