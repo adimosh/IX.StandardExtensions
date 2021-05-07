@@ -497,8 +497,42 @@ namespace IX.Guaranteed.Collections
         /// <param name="state">The state object to pass to the invoked action.</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns><see langword="true" /> if de-queuing and executing is successful, <see langword="false" /> otherwise.</returns>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Acceptable - we're doing a lot of allocation in the Task method anyway.")]
         protected async Task<bool> TryLoadTopmostItemWithActionAsync<TState>(
             Func<TState, T, Task> actionToInvoke,
+            TState state,
+            CancellationToken cancellationToken = default)
+        {
+            // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+            return await this.TryLoadTopmostItemWithActionAsync(
+                InvokeActionLocal,
+                state,
+                cancellationToken);
+
+            async ValueTask InvokeActionLocal(
+                TState stateInternal,
+                T obj)
+            {
+                await actionToInvoke(
+                    stateInternal,
+                    obj);
+            }
+        }
+
+        /// <summary>
+        ///     Asynchronously tries the load topmost item and execute an action on it, deleting the topmost object data if the
+        ///     operation is successful.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object to send to the action.</typeparam>
+        /// <param name="actionToInvoke">The action to invoke.</param>
+        /// <param name="state">The state object to pass to the invoked action.</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns><see langword="true" /> if de-queuing and executing is successful, <see langword="false" /> otherwise.</returns>
+        protected async ValueTask<bool> TryLoadTopmostItemWithActionAsync<TState>(
+            Func<TState, T, ValueTask> actionToInvoke,
             TState state,
             CancellationToken cancellationToken = default)
         {
@@ -569,7 +603,7 @@ namespace IX.Guaranteed.Collections
 
             try
             {
-                this.FileShim.Delete(possibleFilePath);
+                await this.FileShim.DeleteAsync(possibleFilePath, cancellationToken);
             }
             catch (IOException)
             {
@@ -711,7 +745,7 @@ namespace IX.Guaranteed.Collections
         }
 
         /// <summary>
-        ///     Asynchronouly tries to load the topmost item and execute an action on it, deleting the topmost object data if the
+        ///     Asynchronously tries to load the topmost item and execute an action on it, deleting the topmost object data if the
         ///     operation is successful.
         /// </summary>
         /// <typeparam name="TState">The type of the state object to send to the action.</typeparam>
@@ -727,8 +761,52 @@ namespace IX.Guaranteed.Collections
         ///         filters out items in a way that limits the amount of data passing through.
         ///     </para>
         /// </remarks>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Acceptable - we're doing a lot of allocation in the Task method anyway.")]
         protected async Task<int> TryLoadWhilePredicateWithActionAsync<TState>(
             Func<TState, T, Task<bool>> predicate,
+            Action<TState, IEnumerable<T>> actionToInvoke,
+            TState state,
+            CancellationToken cancellationToken = default)
+        {
+            // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+            return await this.TryLoadWhilePredicateWithActionAsync(
+                InvokePredicateLocal,
+                actionToInvoke,
+                state,
+                cancellationToken);
+
+            async ValueTask<bool> InvokePredicateLocal(
+                TState stateInternal,
+                T obj)
+            {
+                return await predicate(
+                    stateInternal,
+                    obj);
+            }
+        }
+
+        /// <summary>
+        ///     Asynchronously tries to load the topmost item and execute an action on it, deleting the topmost object data if the
+        ///     operation is successful.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object to send to the action.</typeparam>
+        /// <param name="predicate">The predicate.</param>
+        /// <param name="actionToInvoke">The action to invoke.</param>
+        /// <param name="state">The state object to pass to the invoked action.</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>The number of items that have been de-queued.</returns>
+        /// <remarks>
+        ///     <para>
+        ///         Warning! This method has the potential of overrunning its read/write lock timeouts. Please ensure that the
+        ///         <paramref name="predicate" /> method
+        ///         filters out items in a way that limits the amount of data passing through.
+        ///     </para>
+        /// </remarks>
+        protected async ValueTask<int> TryLoadWhilePredicateWithActionAsync<TState>(
+            Func<TState, T, ValueTask<bool>> predicate,
             Action<TState, IEnumerable<T>> actionToInvoke,
             TState state,
             CancellationToken cancellationToken = default)
@@ -823,7 +901,7 @@ namespace IX.Guaranteed.Collections
             {
                 try
                 {
-                    this.FileShim.Delete(possibleFilePath);
+                    await this.FileShim.DeleteAsync(possibleFilePath, cancellationToken);
                 }
                 catch (IOException)
                 {
@@ -860,9 +938,53 @@ namespace IX.Guaranteed.Collections
         ///         filters out items in a way that limits the amount of data passing through.
         ///     </para>
         /// </remarks>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Acceptable - we're doing a lot of allocation in the Task method anyway.")]
         protected async Task<int> TryLoadWhilePredicateWithActionAsync<TState>(
             Func<TState, T, bool> predicate,
             Func<TState, IEnumerable<T>, Task> actionToInvoke,
+            TState state,
+            CancellationToken cancellationToken = default)
+        {
+            // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+            return await this.TryLoadWhilePredicateWithActionAsync(
+                predicate,
+                InvokeActionLocal,
+                state,
+                cancellationToken);
+
+            async ValueTask InvokeActionLocal(
+                TState stateInternal,
+                IEnumerable<T> obj)
+            {
+                await actionToInvoke(
+                    stateInternal,
+                    obj);
+            }
+        }
+
+        /// <summary>
+        ///     Asynchronously tries to load the topmost item and execute an action on it, deleting the topmost object data if the
+        ///     operation is successful.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object to send to the action.</typeparam>
+        /// <param name="predicate">The predicate.</param>
+        /// <param name="actionToInvoke">The action to invoke.</param>
+        /// <param name="state">The state object to pass to the invoked action.</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>The number of items that have been de-queued.</returns>
+        /// <remarks>
+        ///     <para>
+        ///         Warning! This method has the potential of overrunning its read/write lock timeouts. Please ensure that the
+        ///         <paramref name="predicate" /> method
+        ///         filters out items in a way that limits the amount of data passing through.
+        ///     </para>
+        /// </remarks>
+        protected async ValueTask<int> TryLoadWhilePredicateWithActionAsync<TState>(
+            Func<TState, T, bool> predicate,
+            Func<TState, IEnumerable<T>, ValueTask> actionToInvoke,
             TState state,
             CancellationToken cancellationToken = default)
         {
@@ -956,7 +1078,7 @@ namespace IX.Guaranteed.Collections
             {
                 try
                 {
-                    this.FileShim.Delete(possibleFilePath);
+                    await this.FileShim.DeleteAsync(possibleFilePath, cancellationToken);
                 }
                 catch (IOException)
                 {
@@ -993,9 +1115,62 @@ namespace IX.Guaranteed.Collections
         ///         filters out items in a way that limits the amount of data passing through.
         ///     </para>
         /// </remarks>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Acceptable - we're doing a lot of allocation in the Task method anyway.")]
         protected async Task<int> TryLoadWhilePredicateWithActionAsync<TState>(
             Func<TState, T, Task<bool>> predicate,
             Func<TState, IEnumerable<T>, Task> actionToInvoke,
+            TState state,
+            CancellationToken cancellationToken = default)
+        {
+            // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+            return await this.TryLoadWhilePredicateWithActionAsync(
+                InvokePredicateLocal,
+                InvokeActionLocal,
+                state,
+                cancellationToken);
+
+            async ValueTask<bool> InvokePredicateLocal(
+                TState stateInternal,
+                T obj)
+            {
+                return await predicate(
+                    stateInternal,
+                    obj);
+            }
+
+            async ValueTask InvokeActionLocal(
+                TState stateInternal,
+                IEnumerable<T> obj)
+            {
+                await actionToInvoke(
+                    stateInternal,
+                    obj);
+            }
+        }
+
+        /// <summary>
+        ///     Asynchronously tries to load the topmost item and execute an action on it, deleting the topmost object data if the
+        ///     operation is successful.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object to send to the action.</typeparam>
+        /// <param name="predicate">The predicate.</param>
+        /// <param name="actionToInvoke">The action to invoke.</param>
+        /// <param name="state">The state object to pass to the invoked action.</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>The number of items that have been de-queued.</returns>
+        /// <remarks>
+        ///     <para>
+        ///         Warning! This method has the potential of overrunning its read/write lock timeouts. Please ensure that the
+        ///         <paramref name="predicate" /> method
+        ///         filters out items in a way that limits the amount of data passing through.
+        ///     </para>
+        /// </remarks>
+        protected async ValueTask<int> TryLoadWhilePredicateWithActionAsync<TState>(
+            Func<TState, T, ValueTask<bool>> predicate,
+            Func<TState, IEnumerable<T>, ValueTask> actionToInvoke,
             TState state,
             CancellationToken cancellationToken = default)
         {
@@ -1089,7 +1264,7 @@ namespace IX.Guaranteed.Collections
             {
                 try
                 {
-                    this.FileShim.Delete(possibleFilePath);
+                    await this.FileShim.DeleteAsync(possibleFilePath, cancellationToken);
                 }
                 catch (IOException)
                 {

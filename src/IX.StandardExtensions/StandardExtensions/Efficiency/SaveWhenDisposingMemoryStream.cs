@@ -15,7 +15,13 @@ namespace IX.StandardExtensions.Efficiency
     [PublicAPI]
     public class SaveWhenDisposingMemoryStream : MemoryStream
     {
+#region Internal state
+
         private readonly Action<byte[]> saveFile;
+
+#endregion
+
+#region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SaveWhenDisposingMemoryStream" /> class.
@@ -199,6 +205,10 @@ namespace IX.StandardExtensions.Efficiency
                 nameof(saveFile));
         }
 
+#endregion
+
+#region Methods
+
         /// <summary>
         ///     Releases the unmanaged resources used by the <see cref="MemoryStream" /> class and optionally releases
         ///     the managed resources.
@@ -216,5 +226,7 @@ namespace IX.StandardExtensions.Efficiency
 
             base.Dispose(disposing);
         }
+
+#endregion
     }
 }

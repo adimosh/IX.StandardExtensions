@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using JetBrains.Annotations;
 
@@ -16,8 +17,14 @@ namespace IX.StandardExtensions.Efficiency
     [PublicAPI]
     public class InvalidatingLazy<T>
     {
+#region Internal state
+
         private readonly Func<Lazy<T>> lazyCreator;
         private Lazy<T> internalLazy;
+
+#endregion
+
+#region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="InvalidatingLazy{T}" /> class.
@@ -32,11 +39,11 @@ namespace IX.StandardExtensions.Efficiency
         ///     Initializes a new instance of the <see cref="InvalidatingLazy{T}" /> class.
         /// </summary>
         /// <param name="valueFactory">The delegate that is invoked to produce the lazily initialized value when it is needed.</param>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
             Justification = "Unavoidable.")]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
             Justification = "Unavoidable.")]
@@ -53,11 +60,11 @@ namespace IX.StandardExtensions.Efficiency
         ///     <see langword="true" /> to make this instance usable concurrently by multiple threads;
         ///     <see langword="false" /> to make the instance usable by only one thread at a time.
         /// </param>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
             Justification = "Unavoidable.")]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
             Justification = "Unavoidable.")]
@@ -71,11 +78,11 @@ namespace IX.StandardExtensions.Efficiency
         ///     Initializes a new instance of the <see cref="InvalidatingLazy{T}" /> class.
         /// </summary>
         /// <param name="mode">One of the enumeration values that specifies the thread safety mode.</param>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
             Justification = "Unavoidable.")]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
             Justification = "Unavoidable.")]
@@ -93,11 +100,11 @@ namespace IX.StandardExtensions.Efficiency
         ///     <see langword="true" /> to make this instance usable concurrently by multiple threads;
         ///     <see langword="false" /> to make this instance usable by only one thread at a time.
         /// </param>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
             Justification = "Unavoidable.")]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
             Justification = "Unavoidable.")]
@@ -118,11 +125,11 @@ namespace IX.StandardExtensions.Efficiency
         /// </summary>
         /// <param name="valueFactory">The delegate that is invoked to produce the lazily initialized value when it is needed.</param>
         /// <param name="mode">One of the enumeration values that specifies the thread safety mode.</param>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
             Justification = "Unavoidable.")]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
             Justification = "Unavoidable.")]
@@ -138,7 +145,14 @@ namespace IX.StandardExtensions.Efficiency
                 mode);
         }
 
-        /// <summary>Gets a value indicating whether a value has been created for this <see cref="InvalidatingLazy{T}"></see> instance.</summary>
+#endregion
+
+#region Properties and indexers
+
+        /// <summary>
+        ///     Gets a value indicating whether a value has been created for this <see cref="InvalidatingLazy{T}"></see>
+        ///     instance.
+        /// </summary>
         /// <returns>true if a value has been created for this <see cref="InvalidatingLazy{T}"></see> instance; otherwise, false.</returns>
         public bool IsValueCreated => this.internalLazy.IsValueCreated;
 
@@ -160,14 +174,20 @@ namespace IX.StandardExtensions.Efficiency
         /// </exception>
         public T Value => this.internalLazy.Value;
 
+#endregion
+
+#region Methods
+
         /// <summary>
         ///     Creates and returns a string representation of the <see cref="InvalidatingLazy{T}.Value"></see> property for this
         ///     instance.
         /// </summary>
         /// <returns>
         ///     The result of calling the <see cref="object.ToString"></see> method on the
-        ///     <see cref="InvalidatingLazy{T}.Value"></see> property for this instance, if the value has been created (that is, if the
-        ///     <see cref="InvalidatingLazy{T}.IsValueCreated"></see> property returns true). Otherwise, a string indicating that the
+        ///     <see cref="InvalidatingLazy{T}.Value"></see> property for this instance, if the value has been created (that is, if
+        ///     the
+        ///     <see cref="InvalidatingLazy{T}.IsValueCreated"></see> property returns true). Otherwise, a string indicating that
+        ///     the
         ///     value has not been created.
         /// </returns>
         /// <exception cref="NullReferenceException">The <see cref="InvalidatingLazy{T}.Value"></see> property is null.</exception>
@@ -182,11 +202,13 @@ namespace IX.StandardExtensions.Efficiency
         /// </returns>
         public T Invalidate()
         {
-            var existingLazy = Interlocked.Exchange(
+            Lazy<T>? existingLazy = Interlocked.Exchange(
                 ref this.internalLazy,
                 this.lazyCreator());
 
             return existingLazy.IsValueCreated ? existingLazy.Value : default!;
         }
+
+#endregion
     }
 }
