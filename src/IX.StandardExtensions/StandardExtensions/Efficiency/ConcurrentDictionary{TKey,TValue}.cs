@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
@@ -13,7 +14,7 @@ using JetBrains.Annotations;
 namespace IX.StandardExtensions.Efficiency
 {
     /// <summary>
-    ///     An efficientized version of the concurrent dictionary.
+    ///     An efficient version of the concurrent dictionary.
     /// </summary>
     /// <typeparam name="TKey">The type of the key.</typeparam>
     /// <typeparam name="TValue">The type of the value.</typeparam>
@@ -26,6 +27,72 @@ namespace IX.StandardExtensions.Efficiency
     public partial class ConcurrentDictionary<TKey, TValue> : global::System.Collections.Concurrent.ConcurrentDictionary<TKey, TValue>
         where TKey : notnull
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}"/> class.
+        /// </summary>
+        public ConcurrentDictionary()
+            : base()
+        {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}"/> class.
+        /// </summary>
+        /// <param name="collection">The <see cref="IEnumerable{T}" /> whose elements are copied to the new <see cref="ConcurrentDictionary{TKey, TValue}" />.</param>
+        public ConcurrentDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection)
+            : base(collection)
+        {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}"/> class.
+        /// </summary>
+        /// <param name="collection">The <see cref="IEnumerable{T}" /> whose elements are copied to the new <see cref="ConcurrentDictionary{TKey, TValue}" />.</param>
+        /// <param name="comparer">The <see cref="IEqualityComparer{T}" /> implementation to use when comparing keys.</param>
+        public ConcurrentDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection, IEqualityComparer<TKey> comparer)
+            : base(collection, comparer)
+        {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}"/> class.
+        /// </summary>
+        /// <param name="comparer">The equality comparison implementation to use when comparing keys.</param>
+        public ConcurrentDictionary(IEqualityComparer<TKey> comparer)
+            : base(comparer)
+        {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}"/> class.
+        /// </summary>
+        /// <param name="concurrencyLevel">The estimated number of threads that will update the <see cref="ConcurrentDictionary{TKey, TValue}"/> concurrently.</param>
+        /// <param name="collection">The <see cref="IEnumerable{T}" /> whose elements are copied to the new <see cref="ConcurrentDictionary{TKey, TValue}" />.</param>
+        /// <param name="comparer">The <see cref="IEqualityComparer{T}" /> implementation to use when comparing keys.</param>
+        public ConcurrentDictionary(int concurrencyLevel, IEnumerable<KeyValuePair<TKey, TValue>> collection, IEqualityComparer<TKey> comparer)
+            : base(concurrencyLevel, collection, comparer)
+        {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}"/> class.
+        /// </summary>
+        /// <param name="concurrencyLevel">The estimated number of threads that will update the <see cref="ConcurrentDictionary{TKey, TValue}"/> concurrently.</param>
+        /// <param name="capacity">The initial number of elements that the <see cref="ConcurrentDictionary{TKey, TValue}"/> can contain.</param>
+        public ConcurrentDictionary(
+            int concurrencyLevel,
+            int capacity)
+            : base(concurrencyLevel, capacity)
+        {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}"/> class.
+        /// </summary>
+        /// <param name="concurrencyLevel">The estimated number of threads that will update the <see cref="ConcurrentDictionary{TKey, TValue}"/> concurrently.</param>
+        /// <param name="capacity">The initial number of elements that the <see cref="ConcurrentDictionary{TKey, TValue}"/> can contain.</param>
+        /// <param name="comparer">The <see cref="IEqualityComparer{T}" /> implementation to use when comparing keys.</param>
+        public ConcurrentDictionary(
+            int concurrencyLevel,
+            int capacity,
+            IEqualityComparer<TKey> comparer)
+            : base(concurrencyLevel, capacity, comparer)
+        {}
+
         [ThreadStatic]
         [SuppressMessage(
             "ReSharper",
@@ -94,6 +161,18 @@ namespace IX.StandardExtensions.Efficiency
 #endif
                 threadStaticUpdateFactory = null;
             }
+        }
+
+        /// <summary>
+        /// Clears the contents of the concurrent dictionary into an array.
+        /// </summary>
+        /// <returns>The array of current items.</returns>
+        public KeyValuePair<TKey, TValue>[] ClearToArray()
+        {
+            var arr = this.ToArray();
+            this.Clear();
+
+            return arr;
         }
     }
 }

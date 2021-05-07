@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using IX.StandardExtensions.ComponentModel;
 using IX.StandardExtensions.Contracts;
@@ -13,8 +12,8 @@ using JetBrains.Annotations;
 namespace IX.StandardExtensions.Efficiency
 {
     /// <summary>
-    /// A multicast dictionary that attempts to hold multiple values for the same key, and take them one
-    /// at a time if the previous one did not yield the correct actionable result.
+    ///     A multicast dictionary that attempts to hold multiple values for the same key, and take them one
+    ///     at a time if the previous one did not yield the correct actionable result.
     /// </summary>
     /// <typeparam name="TKey">The type of the key.</typeparam>
     /// <typeparam name="TValue">The type of the value.</typeparam>
@@ -23,10 +22,16 @@ namespace IX.StandardExtensions.Efficiency
     public class MulticastDictionary<TKey, TValue> : DisposableBase
         where TKey : notnull
     {
+#region Internal state
+
         private readonly ConcurrentDictionary<TKey, List<TValue>> innerDictionary = new();
 
+#endregion
+
+#region Methods
+
         /// <summary>
-        /// Adds the specified key and value pair to the dictionary.
+        ///     Adds the specified key and value pair to the dictionary.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
@@ -49,7 +54,7 @@ namespace IX.StandardExtensions.Efficiency
                 });
 
         /// <summary>
-        /// Removes a specified key entirely from the multicast dictionary.
+        ///     Removes a specified key entirely from the multicast dictionary.
         /// </summary>
         /// <param name="key">The key.</param>
         public void Remove(TKey key) =>
@@ -58,7 +63,7 @@ namespace IX.StandardExtensions.Efficiency
                 out _);
 
         /// <summary>
-        /// Removes a value pertaining to a specified key from the multicast dictionary.
+        ///     Removes a value pertaining to a specified key from the multicast dictionary.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
@@ -82,12 +87,12 @@ namespace IX.StandardExtensions.Efficiency
         }
 
         /// <summary>
-        /// Clears all keys from the multicast dictionary.
+        ///     Clears all keys from the multicast dictionary.
         /// </summary>
         public void Clear() => this.innerDictionary.Clear();
 
         /// <summary>
-        /// Tries to act on a specified key, based on its multiple values.
+        ///     Tries to act on a specified key, based on its multiple values.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="action">The action to attempt.</param>
@@ -108,9 +113,11 @@ namespace IX.StandardExtensions.Efficiency
                 return false;
             }
 
-            foreach (var value in list)
+            foreach (TValue value in list)
             {
-                KeyValuePair<TKey, TValue> mac = new KeyValuePair<TKey, TValue>(key, value);
+                var mac = new KeyValuePair<TKey, TValue>(
+                    key,
+                    value);
                 if (action(mac))
                 {
                     return true;
@@ -121,7 +128,7 @@ namespace IX.StandardExtensions.Efficiency
         }
 
         /// <summary>
-        /// Tries to act on a specified key, based on its multiple values.
+        ///     Tries to act on a specified key, based on its multiple values.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="action">The action to attempt.</param>
@@ -142,9 +149,11 @@ namespace IX.StandardExtensions.Efficiency
                 return false;
             }
 
-            foreach (var value in list)
+            foreach (TValue value in list)
             {
-                if (action(key, value))
+                if (action(
+                    key,
+                    value))
                 {
                     return true;
                 }
@@ -154,7 +163,7 @@ namespace IX.StandardExtensions.Efficiency
         }
 
         /// <summary>
-        /// Tries to act asynchronously on a specified key, based on its multiple values.
+        ///     Tries to act asynchronously on a specified key, based on its multiple values.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="action">The action to attempt.</param>
@@ -175,10 +184,13 @@ namespace IX.StandardExtensions.Efficiency
                 return false;
             }
 
-            foreach (var value in list)
+            foreach (TValue value in list)
             {
-                KeyValuePair<TKey, TValue> mac = new KeyValuePair<TKey, TValue>(key, value);
-                if (await action(mac).ConfigureAwait(false))
+                var mac = new KeyValuePair<TKey, TValue>(
+                    key,
+                    value);
+                if (await action(mac)
+                    .ConfigureAwait(false))
                 {
                     return true;
                 }
@@ -188,7 +200,7 @@ namespace IX.StandardExtensions.Efficiency
         }
 
         /// <summary>
-        /// Tries to act asynchronously on a specified key, based on its multiple values.
+        ///     Tries to act asynchronously on a specified key, based on its multiple values.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="action">The action to attempt.</param>
@@ -209,9 +221,12 @@ namespace IX.StandardExtensions.Efficiency
                 return false;
             }
 
-            foreach (var value in list)
+            foreach (TValue value in list)
             {
-                if (await action(key, value).ConfigureAwait(false))
+                if (await action(
+                        key,
+                        value)
+                    .ConfigureAwait(false))
                 {
                     return true;
                 }
@@ -220,20 +235,21 @@ namespace IX.StandardExtensions.Efficiency
             return false;
         }
 
+#region Disposable
+
         /// <summary>Disposes in the managed context.</summary>
         protected override void DisposeManagedContext()
         {
-            var currentKeys = this.innerDictionary.Keys.ToArray();
-            foreach (var key in currentKeys)
+            foreach (KeyValuePair<TKey, List<TValue>> key in this.innerDictionary.ClearToArray())
             {
-                if (this.innerDictionary.TryRemove(key, out var list))
-                {
-                    list.Clear();
-                }
+                key.Value?.Clear();
             }
 
-            this.innerDictionary.Clear();
             base.DisposeManagedContext();
         }
+
+#endregion
+
+#endregion
     }
 }
