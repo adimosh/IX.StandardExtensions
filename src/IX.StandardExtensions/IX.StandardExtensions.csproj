@@ -18,7 +18,7 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Improved some classes with ValueTasks and new constructors.</PackageReleaseNotes>
+    <PackageReleaseNotes>- Added abstractions for Environment.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
