@@ -1270,7 +1270,7 @@ namespace IX.Guaranteed.Collections
             using (this.WriteLock())
             {
                 return this.isInDisasterMode == 0
-                    ? this.queue!.TryDequeue(out item)
+                    ? this.queue!.TryDequeue(out item!)
                     : this.persistedQueue!.TryDequeue(out item);
             }
         }
@@ -1287,7 +1287,7 @@ namespace IX.Guaranteed.Collections
             using (this.ReadLock())
             {
                 return this.isInDisasterMode == 0
-                    ? this.queue!.TryPeek(out item)
+                    ? this.queue!.TryPeek(out item!)
                     : this.persistedQueue!.TryPeek(out item);
             }
         }

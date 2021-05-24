@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -52,6 +53,8 @@ namespace IX.StandardExtensions.SourceGeneration
             Justification = "No worries.")]
         public void Execute(GeneratorExecutionContext context)
         {
+            DebugDiagnosticsExtensions.Breakpoint();
+
             if (context.SyntaxReceiver is not StandardTypesSyntaxReceiver receiver)
             {
                 return;

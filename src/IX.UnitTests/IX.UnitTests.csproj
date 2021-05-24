@@ -1,4 +1,4 @@
-﻿<!--EXTERNAL_PROPERTIES: IxDevOpsBuild-->
+<!--EXTERNAL_PROPERTIES: IxDevOpsBuild-->
 <!--EXTERNAL_PROPERTIES: TargetFramework-->
 <Project Sdk="Microsoft.NET.Sdk">
 
@@ -17,6 +17,12 @@
   <PropertyGroup>
     <NoWarn>$(NoWarn);SA0001</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="SourceGeneration\**" />
+    <EmbeddedResource Remove="SourceGeneration\**" />
+    <None Remove="SourceGeneration\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\IX.StandardExtensions\IX.StandardExtensions.csproj" />
@@ -40,12 +46,9 @@
     <PackageReference Include="Moq" Version="4.16.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'!='net46'">
-    <ProjectReference Include="..\IX.StandardExtensions.SourceGeneration\IX.StandardExtensions.SourceGeneration.csproj"
-                      OutputItemType="Analyzer"
-                      PrivateAssets="all"
-                      ReferenceOutputAssembly="false" />
-  </ItemGroup>
+  <!--<ItemGroup Condition="'$(TargetFramework)'!='net46'">
+    <ProjectReference Include="..\IX.StandardExtensions.SourceGeneration\IX.StandardExtensions.SourceGeneration.csproj" OutputItemType="Analyzer" PrivateAssets="all" ReferenceOutputAssembly="false" />
+  </ItemGroup>-->
 
   <ItemGroup>
     <PackageReference Include="IX.Framework.ProjectSystem" Version="1.0.2">

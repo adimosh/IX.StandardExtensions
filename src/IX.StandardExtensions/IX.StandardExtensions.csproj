@@ -18,7 +18,8 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Added abstractions for Environment.</PackageReleaseNotes>
+    <PackageReleaseNotes>- Added abstractions for Environment.
+- Updated analyzers and removed explicit JetBrains annotations symbols.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

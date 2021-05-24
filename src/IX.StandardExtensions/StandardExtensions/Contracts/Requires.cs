@@ -1686,7 +1686,7 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static T ArgumentOfType<T>(
-            [CanBeNull, NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object argument,
+            [CanBeNull, NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object? argument,
             string argumentName)
         {
             if (argument is not T convertedValue)
@@ -1718,10 +1718,10 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void ArgumentOfType<T>(
             out T field,
-            [CanBeNull, NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object argument,
+            [CanBeNull, NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object? argument,
             string argumentName)
         {
-            if (!(argument is T convertedValue))
+            if (argument is not T convertedValue)
             {
                 throw new ArgumentInvalidTypeException(argumentName);
             }
@@ -1731,6 +1731,19 @@ namespace IX.StandardExtensions.Contracts
         #endregion
 
         #region Not disposed
+
+        /// <summary>
+        ///     Called when a contract requires that an argument is not disposed.
+        /// </summary>
+        /// <param name="reference">
+        ///     The object reference to check for disposed.
+        /// </param>
+        /// <exception cref="ObjectDisposedException">If the reference object is disposed, this exception will be thrown.</exception>
+        public static void NotDisposed(DisposableBase reference) =>
+            NotNull(
+                    reference,
+                    nameof(reference))
+                .ThrowIfCurrentObjectDisposed();
 
         /// <summary>
         ///     Called when a contract requires that an argument is not disposed.
