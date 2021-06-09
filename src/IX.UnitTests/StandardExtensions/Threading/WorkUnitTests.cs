@@ -124,7 +124,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
         }
 
         /// <summary>
-        /// Test Fire.AndForget eexception mechanism.
+        /// Test Fire.AndForget exception mechanism.
         /// </summary>
         [Fact(DisplayName = "Test Fire.AndForget exception mechanism")]
         public void Test3()
@@ -147,18 +147,22 @@ namespace IX.UnitTests.StandardExtensions.Threading
                 Work.OnThreadPoolAsync(
                     state =>
                     {
+#if DEBUG
                         var (dt2, wt2) = state;
-#if DEBUG
                         this.output.WriteLine($"Beginning inner method after {(DateTime.UtcNow - dt2).TotalMilliseconds} ms.");
-#endif
                         Thread.Sleep(wt2);
-#if DEBUG
                         this.output.WriteLine($"Inner method wait finished after {(DateTime.UtcNow - dt2).TotalMilliseconds} ms.");
+#else
+                        Thread.Sleep(state);
 #endif
 
                         throw new ArgumentNotPositiveIntegerException(argumentName);
                     },
+#if DEBUG
                     (dt, waitTime)).ContinueWith(
+#else
+                    waitTime).ContinueWith(
+#endif
                     (task, _) =>
                     {
 #if DEBUG
