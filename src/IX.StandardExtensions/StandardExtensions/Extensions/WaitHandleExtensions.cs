@@ -48,7 +48,11 @@ namespace IX.StandardExtensions.Extensions
             {
                 registeredHandle?.Unregister(null);
 
+                #if NETSTANDARD21_OR_GREATER
                 await tokenRegistration.DisposeAsync();
+                #else
+                tokenRegistration.Dispose();
+                #endif
             }
         }
 
