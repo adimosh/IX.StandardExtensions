@@ -20,7 +20,8 @@
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
     <PackageReleaseNotes>- Added abstractions for Environment.
 - Updated analyzers and removed explicit JetBrains annotations symbols.
-- Added abstractions for entities.</PackageReleaseNotes>
+- Added abstractions for entities.
+- Added asynchronous waiting methods for the event abstractions.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

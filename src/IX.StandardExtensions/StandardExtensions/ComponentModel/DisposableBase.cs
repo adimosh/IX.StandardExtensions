@@ -64,10 +64,6 @@ namespace IX.StandardExtensions.ComponentModel
             this.Dispose(true);
         }
 
-        protected virtual void DisposeAutomatically()
-        {
-        }
-
         /// <summary>
         ///     Throws if the current object is disposed.
         /// </summary>
@@ -78,6 +74,13 @@ namespace IX.StandardExtensions.ComponentModel
             {
                 throw new ObjectDisposedException(this.GetType().FullName);
             }
+        }
+
+        /// <summary>
+        /// Anchor for automatic disposal of this instance.
+        /// </summary>
+        protected virtual void DisposeAutomatically()
+        {
         }
 
         /// <summary>

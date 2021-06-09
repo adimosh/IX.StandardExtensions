@@ -1403,6 +1403,10 @@ namespace IX.Guaranteed.Collections
         ///     We have reached the maximum number of items saved in the same femtosecond.
         ///     This is theoretically not possible.
         /// </exception>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "This is unavoidable, considering how the method works.")]
         protected string SaveNewItem(T item)
         {
             this.RequiresNotDisposed();

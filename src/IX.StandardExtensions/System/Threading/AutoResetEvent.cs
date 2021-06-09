@@ -4,8 +4,11 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using IX.StandardExtensions.ComponentModel;
 using IX.StandardExtensions.Contracts;
+using IX.StandardExtensions.Extensions;
+using IX.StandardExtensions.Threading;
 using JetBrains.Annotations;
 using GlobalThreading = System.Threading;
 
@@ -23,7 +26,7 @@ namespace IX.System.Threading
         private readonly bool eventLocal;
 
         /// <summary>
-        ///     The manual reset event.
+        ///     The auto-reset event.
         /// </summary>
         [SuppressMessage(
             "IDisposableAnalyzers.Correctness",
@@ -86,7 +89,7 @@ namespace IX.System.Threading
         /// <param name="autoResetEvent">The automatic reset event.</param>
         /// <returns>The result of the conversion.</returns>
         public static implicit operator AutoResetEvent(GlobalThreading.AutoResetEvent autoResetEvent) =>
-            new AutoResetEvent(autoResetEvent);
+            new(autoResetEvent);
 
         /// <summary>
         ///     Performs an implicit conversion from <see cref="AutoResetEvent" /> to
@@ -124,6 +127,18 @@ namespace IX.System.Threading
         /// <summary>
         ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
         /// </summary>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>A potentially awaitable value task.</returns>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Unavoidable.")]
+        public async ValueTask WaitOneAsync(GlobalThreading.CancellationToken cancellationToken = default) =>
+            _ = await this.sre.WaitOneAsync(GlobalThreading.Timeout.InfiniteTimeSpan, cancellationToken);
+
+        /// <summary>
+        ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
+        /// </summary>
         /// <param name="millisecondsTimeout">The timeout period, in milliseconds.</param>
         /// <returns>
         ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
@@ -131,6 +146,18 @@ namespace IX.System.Threading
         /// </returns>
         public bool WaitOne(int millisecondsTimeout) =>
             this.sre.WaitOne(TimeSpan.FromMilliseconds(millisecondsTimeout));
+
+        /// <summary>
+        ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
+        /// </summary>
+        /// <param name="millisecondsTimeout">The timeout period, in milliseconds.</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>
+        ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
+        ///     is reached.
+        /// </returns>
+        public ValueTask<bool> WaitOneAsync(int millisecondsTimeout, GlobalThreading.CancellationToken cancellationToken = default) =>
+            this.sre.WaitOneAsync(millisecondsTimeout, cancellationToken);
 
         /// <summary>
         ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
@@ -146,12 +173,36 @@ namespace IX.System.Threading
         /// <summary>
         ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
         /// </summary>
+        /// <param name="millisecondsTimeout">The timeout period, in milliseconds.</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>
+        ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
+        ///     is reached.
+        /// </returns>
+        public ValueTask<bool> WaitOneAsync(double millisecondsTimeout, GlobalThreading.CancellationToken cancellationToken = default) =>
+            this.sre.WaitOneAsync(millisecondsTimeout, cancellationToken);
+
+        /// <summary>
+        ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
+        /// </summary>
         /// <param name="timeout">The timeout period.</param>
         /// <returns>
         ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
         ///     is reached.
         /// </returns>
         public bool WaitOne(TimeSpan timeout) => this.sre.WaitOne(timeout);
+
+        /// <summary>
+        ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
+        /// </summary>
+        /// <param name="timeout">The timeout period.</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>
+        ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
+        ///     is reached.
+        /// </returns>
+        public ValueTask<bool> WaitOneAsync(TimeSpan timeout, GlobalThreading.CancellationToken cancellationToken = default) =>
+            this.sre.WaitOneAsync(timeout, cancellationToken);
 
         /// <summary>
         ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
@@ -180,6 +231,25 @@ namespace IX.System.Threading
         ///     If set to <see langword="true" />, the synchronization domain is exited before
         ///     the call.
         /// </param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>
+        ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
+        ///     is reached.
+        /// </returns>
+        public ValueTask<bool> WaitOneAsync(
+            int millisecondsTimeout,
+            bool exitSynchronizationDomain,
+            GlobalThreading.CancellationToken cancellationToken = default) =>
+            this.sre.WaitOneAsync(millisecondsTimeout, cancellationToken);
+
+        /// <summary>
+        ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
+        /// </summary>
+        /// <param name="millisecondsTimeout">The timeout period, in milliseconds.</param>
+        /// <param name="exitSynchronizationDomain">
+        ///     If set to <see langword="true" />, the synchronization domain is exited before
+        ///     the call.
+        /// </param>
         /// <returns>
         ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
         ///     is reached.
@@ -190,6 +260,25 @@ namespace IX.System.Threading
             this.sre.WaitOne(
                 TimeSpan.FromMilliseconds(millisecondsTimeout),
                 exitSynchronizationDomain);
+
+        /// <summary>
+        ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
+        /// </summary>
+        /// <param name="millisecondsTimeout">The timeout period, in milliseconds.</param>
+        /// <param name="exitSynchronizationDomain">
+        ///     If set to <see langword="true" />, the synchronization domain is exited before
+        ///     the call.
+        /// </param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>
+        ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
+        ///     is reached.
+        /// </returns>
+        public ValueTask<bool> WaitOneAsync(
+            double millisecondsTimeout,
+            bool exitSynchronizationDomain,
+            GlobalThreading.CancellationToken cancellationToken = default) =>
+            this.sre.WaitOneAsync(millisecondsTimeout, cancellationToken);
 
         /// <summary>
         ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
@@ -209,6 +298,25 @@ namespace IX.System.Threading
             this.sre.WaitOne(
                 timeout,
                 exitSynchronizationDomain);
+
+        /// <summary>
+        ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
+        /// </summary>
+        /// <param name="timeout">The timeout period.</param>
+        /// <param name="exitSynchronizationDomain">
+        ///     If set to <see langword="true" />, the synchronization domain is exited before
+        ///     the call.
+        /// </param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>
+        ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
+        ///     is reached.
+        /// </returns>
+        public ValueTask<bool> WaitOneAsync(
+            TimeSpan timeout,
+            bool exitSynchronizationDomain,
+            GlobalThreading.CancellationToken cancellationToken = default) =>
+            this.sre.WaitOneAsync(timeout, cancellationToken);
 
 #endregion
 
