@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using IX.StandardExtensions.Debugging;
 using JetBrains.Annotations;
+using ConcurrentCollections = System.Collections.Concurrent;
 
 namespace IX.StandardExtensions.Efficiency
 {
@@ -18,14 +19,14 @@ namespace IX.StandardExtensions.Efficiency
     /// </summary>
     /// <typeparam name="TKey">The type of the key.</typeparam>
     /// <typeparam name="TValue">The type of the value.</typeparam>
-    /// <seealso cref="global::System.Collections.Concurrent.ConcurrentDictionary{TKey, TValue}" />
+    /// <seealso cref="ConcurrentCollections.ConcurrentDictionary{TKey, TValue}" />
     [ComVisible(false)]
     [DebuggerDisplay("Count = {" + nameof(Count) + "}")]
     [DebuggerTypeProxy(typeof(DictionaryDebugView<,>))]
     [DefaultMember("Item")]
     [PublicAPI]
     public partial class ConcurrentDictionary<TKey, TValue> :
-        global::System.Collections.Concurrent.ConcurrentDictionary<TKey, TValue>
+        ConcurrentCollections.ConcurrentDictionary<TKey, TValue>
         where TKey : notnull
     {
 #region Internal state
@@ -46,14 +47,12 @@ namespace IX.StandardExtensions.Efficiency
 
 #endregion
 
-#region Constructors
+#region Constructors and destructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}" /> class.
         /// </summary>
-        public ConcurrentDictionary()
-        {
-        }
+        public ConcurrentDictionary() { }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}" /> class.
@@ -63,9 +62,7 @@ namespace IX.StandardExtensions.Efficiency
         ///     <see cref="ConcurrentDictionary{TKey, TValue}" />.
         /// </param>
         public ConcurrentDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection)
-            : base(collection)
-        {
-        }
+            : base(collection) { }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}" /> class.
@@ -80,18 +77,14 @@ namespace IX.StandardExtensions.Efficiency
             IEqualityComparer<TKey> comparer)
             : base(
                 collection,
-                comparer)
-        {
-        }
+                comparer) { }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}" /> class.
         /// </summary>
         /// <param name="comparer">The equality comparison implementation to use when comparing keys.</param>
         public ConcurrentDictionary(IEqualityComparer<TKey> comparer)
-            : base(comparer)
-        {
-        }
+            : base(comparer) { }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}" /> class.
@@ -112,9 +105,7 @@ namespace IX.StandardExtensions.Efficiency
             : base(
                 concurrencyLevel,
                 collection,
-                comparer)
-        {
-        }
+                comparer) { }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}" /> class.
@@ -132,9 +123,7 @@ namespace IX.StandardExtensions.Efficiency
             int capacity)
             : base(
                 concurrencyLevel,
-                capacity)
-        {
-        }
+                capacity) { }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}" /> class.
@@ -155,9 +144,7 @@ namespace IX.StandardExtensions.Efficiency
             : base(
                 concurrencyLevel,
                 capacity,
-                comparer)
-        {
-        }
+                comparer) { }
 
 #endregion
 

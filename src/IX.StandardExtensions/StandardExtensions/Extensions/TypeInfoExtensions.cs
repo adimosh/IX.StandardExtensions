@@ -40,10 +40,7 @@ namespace IX.StandardExtensions.Extensions
             Justification = "Expected.")]
         public static bool GetAttributeDataByTypeWithoutVersionBinding<TAttribute, TReturn>(
             this TypeInfo typeInfo,
-#if FRAMEWORK_ADVANCED
-            [MaybeNullWhen(false)]
-#endif
-            out TReturn value)
+            out TReturn? value)
         {
             Requires.NotNull(
                 typeInfo,
@@ -68,7 +65,7 @@ namespace IX.StandardExtensions.Extensions
             {
                 if (arguments.MoveNext())
                 {
-                    value = (TReturn)arguments.Current.Value;
+                    value = (TReturn?)arguments.Current.Value;
 
                     if (!arguments.MoveNext())
                     {
@@ -86,7 +83,7 @@ namespace IX.StandardExtensions.Extensions
 
                 if (arguments.MoveNext())
                 {
-                    value = (TReturn)arguments.Current.Value;
+                    value = (TReturn?)arguments.Current.Value;
 
                     if (!arguments.MoveNext())
                     {
@@ -154,10 +151,10 @@ namespace IX.StandardExtensions.Extensions
                         .ToArray());
 
         /// <summary>
-        ///     Determines whether a type has a public parameterless constructor.
+        ///     Determines whether a type has a public parameter-less constructor.
         /// </summary>
         /// <param name="info">The type information.</param>
-        /// <returns><see langword="true" /> if there is a parameterless constructor; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true" /> if there is a parameter-less constructor; otherwise, <see langword="false" />.</returns>
         public static bool HasPublicParameterlessConstructor(this TypeInfo info) =>
             !Requires.NotNull(
                     info,

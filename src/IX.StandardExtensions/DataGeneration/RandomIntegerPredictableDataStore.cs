@@ -28,7 +28,8 @@ namespace IX.DataGeneration
         public RandomIntegerPredictableDataStore(int capacity)
             : base(
                 capacity,
-                DataGenerator.RandomInteger)
+                DataGenerator.RandomInteger,
+                false)
         {
         }
 
@@ -47,7 +48,8 @@ namespace IX.DataGeneration
             : base(
                 capacity,
                 state => DataGenerator.RandomInteger((int)state),
-                maximumValue)
+                maximumValue,
+                false)
         {
         }
 
@@ -75,7 +77,8 @@ namespace IX.DataGeneration
                         item1,
                         item2);
                 },
-                (minimumValue, maximumValue))
+                (minimumValue, maximumValue),
+                false)
         {
         }
 

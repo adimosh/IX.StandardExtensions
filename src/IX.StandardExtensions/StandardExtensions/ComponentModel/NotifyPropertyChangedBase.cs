@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using JetBrains.Annotations;
 
@@ -13,34 +14,41 @@ namespace IX.StandardExtensions.ComponentModel
     /// </summary>
     /// <seealso cref="INotifyPropertyChanged" />
     [PublicAPI]
-    public abstract class NotifyPropertyChangedBase : SynchronizationContextInvokerBase, INotifyPropertyChanged
+    public abstract class NotifyPropertyChangedBase : SynchronizationContextInvokerBase,
+        INotifyPropertyChanged
     {
+#region Constructors and destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="NotifyPropertyChangedBase" /> class.
         /// </summary>
-        protected NotifyPropertyChangedBase()
-        {
-        }
+        protected NotifyPropertyChangedBase() { }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="NotifyPropertyChangedBase" /> class.
         /// </summary>
         /// <param name="synchronizationContext">The specific synchronization context to use.</param>
         protected NotifyPropertyChangedBase(SynchronizationContext? synchronizationContext)
-            : base(synchronizationContext)
-        {
-        }
+            : base(synchronizationContext) { }
+
+#endregion
+
+#region Events
 
         /// <summary>
         ///     Triggered whenever a property has changed its value and its display should be refreshed.
         /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;
 
+#endregion
+
+#region Methods
+
         /// <summary>
         ///     Triggers the <see cref="PropertyChanged" /> event.
         /// </summary>
         /// <param name="changedPropertyName">The name of the changed property.</param>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Design",
             "CA1030:Use events where appropriate",
             Justification = "This is not a violation, we're actively using an event.")]
@@ -111,5 +119,7 @@ namespace IX.StandardExtensions.ComponentModel
                     changedPropertyName);
             }
         }
+
+#endregion
     }
 }

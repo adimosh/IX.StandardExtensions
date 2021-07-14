@@ -27,9 +27,7 @@ namespace IX.StandardExtensions.Extensions
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "IComparable works that way.")]
         public static int SequenceCompare<T>(
-            [CanBeNull]
             this T[]? left,
-            [CanBeNull]
             T[]? right)
         where T : IComparable
         {
@@ -57,8 +55,8 @@ namespace IX.StandardExtensions.Extensions
                     return 0;
                 }
 
-                T c1 = b1 ? left[i] : default;
-                T c2 = b2 ? right[i] : default;
+                T? c1 = b1 ? left[i] : default;
+                T? c2 = b2 ? right[i] : default;
 
                 if (c1 == null)
                 {

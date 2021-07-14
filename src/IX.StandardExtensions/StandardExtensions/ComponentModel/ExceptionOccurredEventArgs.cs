@@ -13,6 +13,8 @@ namespace IX.StandardExtensions.ComponentModel
     [PublicAPI]
     public class ExceptionOccurredEventArgs : EventArgs
     {
+#region Constructors and destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ExceptionOccurredEventArgs" /> class.
         /// </summary>
@@ -22,9 +24,15 @@ namespace IX.StandardExtensions.ComponentModel
             this.Exception = exception;
         }
 
+#endregion
+
+#region Properties and indexers
+
         /// <summary>
         ///     Gets the exception that has occurred.
         /// </summary>
         public Exception Exception { get; }
+
+#endregion
     }
 }

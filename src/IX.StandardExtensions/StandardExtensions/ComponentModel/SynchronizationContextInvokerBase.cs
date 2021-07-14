@@ -16,7 +16,8 @@ namespace IX.StandardExtensions.ComponentModel
     /// </summary>
     /// <seealso cref="DisposableBase" />
     [PublicAPI]
-    public abstract partial class SynchronizationContextInvokerBase : DisposableBase, INotifyThreadException
+    public abstract partial class SynchronizationContextInvokerBase : DisposableBase,
+        INotifyThreadException
     {
 #region Internal state
 
@@ -24,15 +25,13 @@ namespace IX.StandardExtensions.ComponentModel
 
 #endregion
 
-#region Constructors
+#region Constructors and destructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SynchronizationContextInvokerBase" /> class.
         /// </summary>
         protected SynchronizationContextInvokerBase()
-            : this(null)
-        {
-        }
+            : this(null) { }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SynchronizationContextInvokerBase" /> class.

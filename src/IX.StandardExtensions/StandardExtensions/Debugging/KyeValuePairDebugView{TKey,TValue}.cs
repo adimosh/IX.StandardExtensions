@@ -18,6 +18,8 @@ namespace IX.StandardExtensions.Debugging
     [PublicAPI]
     public sealed class KyeValuePairDebugView<TKey, TValue>
     {
+#region Properties and indexers
+
         /// <summary>
         ///     Gets the key.
         /// </summary>
@@ -31,5 +33,7 @@ namespace IX.StandardExtensions.Debugging
         /// <value>The value.</value>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public TValue? Value { get; internal set; }
+
+#endregion
     }
 }

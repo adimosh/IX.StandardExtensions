@@ -28,7 +28,7 @@ namespace IX.StandardExtensions.Debugging
 
 #endregion
 
-#region Constructors
+#region Constructors and destructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="DictionaryDebugView{TKey, TValue}" /> class.
@@ -67,6 +67,7 @@ namespace IX.StandardExtensions.Debugging
                 this.dict.CopyTo(
                     items,
                     0);
+
                 return items.Select(
                         p => new KyeValuePairDebugView<TKey, TValue>
                         {

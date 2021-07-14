@@ -27,7 +27,7 @@ namespace IX.StandardExtensions.Threading
     {
 #region Internal state
 
-        [DiagCA.SuppressMessageAttribute(
+        [DiagCA.SuppressMessage(
             "ReSharper",
             "StaticMemberInGenericType",
             Justification = "We have a specialized staatic field.")]
@@ -62,7 +62,7 @@ namespace IX.StandardExtensions.Threading
         ///     Gets the element in the collection at the current position of the enumerator.
         /// </summary>
         /// <value>The current element.</value>
-        [DiagCA.SuppressMessageAttribute(
+        [DiagCA.SuppressMessage(
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "Unavoidable with a generic enumerator.")]
@@ -88,11 +88,11 @@ namespace IX.StandardExtensions.Threading
         ///     <paramref name="readLock" />
         ///     is <c>null</c> (<c>Nothing</c> in Visual Basic).
         /// </exception>
-        [DiagCA.SuppressMessageAttribute(
+        [DiagCA.SuppressMessage(
             "Performance",
             "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
             Justification = "We need this instance allocated.")]
-        [DiagCA.SuppressMessageAttribute(
+        [DiagCA.SuppressMessage(
             "Design",
             "CA1000:Do not declare static members on generic types",
             Justification = "This is, honestly, a stupid rule.")]
@@ -165,7 +165,7 @@ namespace IX.StandardExtensions.Threading
         ///     <paramref name="readLock" />
         ///     is <c>null</c> (<c>Nothing</c> in Visual Basic).
         /// </exception>
-        [DiagCA.SuppressMessageAttribute(
+        [DiagCA.SuppressMessage(
             "Design",
             "CA1000:Do not declare static members on generic types",
             Justification = "This is, honestly, a stupid rule.")]

@@ -13,12 +13,16 @@ namespace IX.Guaranteed.Collections
     [PublicAPI]
     public static class EnvironmentSettings
     {
-#region Properties and indexers
+        #region Properties and indexers
 
         /// <summary>
         ///     Gets or sets the persisted collections lock timeout.
         /// </summary>
         /// <value>The persisted collections lock timeout.</value>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.LayoutRules",
+            "SA1513:Closing brace should be followed by blank line",
+            Justification = "Initializer used here.")]
         public static TimeSpan PersistedCollectionsLockTimeout
         {
             get;

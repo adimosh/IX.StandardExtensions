@@ -26,7 +26,7 @@ namespace IX.StandardExtensions.Debugging
 
 #endregion
 
-#region Constructors
+#region Constructors and destructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="CollectionDebugView{T}" /> class.
@@ -65,6 +65,7 @@ namespace IX.StandardExtensions.Debugging
                 this.collection.CopyTo(
                     items,
                     0);
+
                 return items;
             }
         }

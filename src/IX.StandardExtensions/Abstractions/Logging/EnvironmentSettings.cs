@@ -12,9 +12,13 @@ namespace IX.Abstractions.Logging
     [PublicAPI]
     public class EnvironmentSettings
     {
+#region Properties and indexers
+
         /// <summary>
         ///     Gets or sets the default logging provider (if any).
         /// </summary>
         public ILog? DefaultLoggingProvider { get; set; }
+
+#endregion
     }
 }

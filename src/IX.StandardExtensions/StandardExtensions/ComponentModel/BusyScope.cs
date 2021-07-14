@@ -130,7 +130,7 @@ namespace IX.StandardExtensions.ComponentModel
                 this.Invoke(
                     (
                         sender,
-                        evnt) => evnt.Invoke(
+                        @event) => @event.Invoke(
                         sender,
                         EventArgs.Empty),
                     this,
@@ -156,7 +156,7 @@ namespace IX.StandardExtensions.ComponentModel
                 this.Invoke(
                     (
                         sender,
-                        evnt) => evnt.Invoke(
+                        @event) => @event.Invoke(
                         sender,
                         EventArgs.Empty),
                     this,

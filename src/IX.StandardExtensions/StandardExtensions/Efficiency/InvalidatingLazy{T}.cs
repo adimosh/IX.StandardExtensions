@@ -24,7 +24,7 @@ namespace IX.StandardExtensions.Efficiency
 
 #endregion
 
-#region Constructors
+#region Constructors and destructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="InvalidatingLazy{T}" /> class.
@@ -166,7 +166,7 @@ namespace IX.StandardExtensions.Efficiency
         /// <exception cref="MissingMemberException">
         ///     The <see cref="InvalidatingLazy{T}"></see> instance is initialized to use
         ///     the default constructor of the type that is being lazily initialized, and that type does not have a public,
-        ///     parameterless constructor.
+        ///     parameter-less constructor.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         ///     The initialization function tries to access

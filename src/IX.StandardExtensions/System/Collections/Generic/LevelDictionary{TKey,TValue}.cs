@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading;
 using IX.StandardExtensions;
 using IX.StandardExtensions.ComponentModel;
 using JetBrains.Annotations;
@@ -21,7 +20,8 @@ namespace IX.System.Collections.Generic
     /// <typeparam name="TKey">The type of the key.</typeparam>
     /// <typeparam name="TValue">The type of the value.</typeparam>
     [PublicAPI]
-    public class LevelDictionary<TKey, TValue> : DisposableBase, IDictionary<TKey, TValue>
+    public class LevelDictionary<TKey, TValue> : DisposableBase,
+        IDictionary<TKey, TValue>
         where TKey : notnull
     {
 #region Internal state
@@ -31,6 +31,8 @@ namespace IX.System.Collections.Generic
         private Dictionary<TKey, int> levelKeys;
 
 #endregion
+
+#region Constructors and destructors
 
 #region Constructors
 
@@ -46,29 +48,9 @@ namespace IX.System.Collections.Generic
 
 #endregion
 
+#endregion
+
 #region Properties and indexers
-
-        /// <summary>
-        ///     Gets or sets the <typeparamref name="TValue" /> with the specified key.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <returns>TValue.</returns>
-        public TValue this[TKey key]
-        {
-            get
-            {
-                this.ThrowIfCurrentObjectDisposed();
-
-                return this.internalDictionary[key];
-            }
-
-            set
-            {
-                this.ThrowIfCurrentObjectDisposed();
-
-                this.internalDictionary[key] = value;
-            }
-        }
 
         /// <summary>
         ///     Gets the count.
@@ -140,36 +122,33 @@ namespace IX.System.Collections.Generic
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the <typeparamref name="TValue" /> with the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>TValue.</returns>
+        public TValue this[TKey key]
+        {
+            get
+            {
+                this.ThrowIfCurrentObjectDisposed();
+
+                return this.internalDictionary[key];
+            }
+
+            set
+            {
+                this.ThrowIfCurrentObjectDisposed();
+
+                this.internalDictionary[key] = value;
+            }
+        }
+
 #endregion
 
 #region Methods
 
 #region Interface implementations
-
-        /// <summary>
-        ///     Adds the specified key.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="value">The value.</param>
-        /// <exception cref="NotImplementedByDesignException">
-        ///     This method is not implemented by design. Do not call it, as it will
-        ///     always throw an exception.
-        /// </exception>
-        void IDictionary<TKey, TValue>.Add(
-            TKey key,
-            TValue value) =>
-            throw new NotImplementedByDesignException();
-
-        /// <summary>
-        ///     Adds the specified item.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <exception cref="NotImplementedByDesignException">
-        ///     This method is not implemented by design. Do not call it, as it will
-        ///     always throw an exception.
-        /// </exception>
-        void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item) =>
-            throw new NotImplementedByDesignException();
 
         /// <summary>
         ///     Clears the dictionary.
@@ -184,18 +163,6 @@ namespace IX.System.Collections.Generic
         }
 
         /// <summary>
-        ///     Determines whether the specified item is contained in the dictionary.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <returns><see langword="true" /> if the dictionary contains the specified item; otherwise, <see langword="false" />.</returns>
-        bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
-        {
-            this.ThrowIfCurrentObjectDisposed();
-
-            return (this.internalDictionary as ICollection<KeyValuePair<TKey, TValue>>).Contains(item);
-        }
-
-        /// <summary>
         ///     Determines whether the dictionary contains they key.
         /// </summary>
         /// <param name="key">The key.</param>
@@ -206,40 +173,6 @@ namespace IX.System.Collections.Generic
 
             return this.internalDictionary.ContainsKey(key);
         }
-
-        /// <summary>
-        ///     Copies the contents of the dictionary to an array.
-        /// </summary>
-        /// <param name="array">The array.</param>
-        /// <param name="arrayIndex">Index of the array.</param>
-        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(
-            KeyValuePair<TKey, TValue>[] array,
-            int arrayIndex)
-        {
-            this.ThrowIfCurrentObjectDisposed();
-
-            (this.internalDictionary as ICollection<KeyValuePair<TKey, TValue>>).CopyTo(
-                array,
-                arrayIndex);
-        }
-
-        /// <summary>
-        ///     Gets the enumerator.
-        /// </summary>
-        /// <returns>The dictionary enumerator.</returns>
-        [SuppressMessage(
-            "Performance",
-            "HAA0601:Value type to reference type conversion causing boxing allocation",
-            Justification = "Unavoidable here.")]
-        IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() =>
-            this.GetEnumerator();
-
-        /// <summary>
-        ///     Removes the specified item from the dictionary.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <returns><see langword="true" /> if the removal was a success, <see langword="false" /> otherwise.</returns>
-        bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item) => this.Remove(item.Key);
 
         /// <summary>
         ///     Tries to get a value by key.
@@ -259,6 +192,73 @@ namespace IX.System.Collections.Generic
         }
 
         /// <summary>
+        ///     Adds the specified item.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <exception cref="NotImplementedByDesignException">
+        ///     This method is not implemented by design. Do not call it, as it will
+        ///     always throw an exception.
+        /// </exception>
+        void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item) =>
+            throw new NotImplementedByDesignException();
+
+        /// <summary>
+        ///     Determines whether the specified item is contained in the dictionary.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns><see langword="true" /> if the dictionary contains the specified item; otherwise, <see langword="false" />.</returns>
+        bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
+        {
+            this.ThrowIfCurrentObjectDisposed();
+
+            return (this.internalDictionary as ICollection<KeyValuePair<TKey, TValue>>).Contains(item);
+        }
+
+        /// <summary>
+        ///     Copies the contents of the dictionary to an array.
+        /// </summary>
+        /// <param name="array">The array.</param>
+        /// <param name="arrayIndex">Index of the array.</param>
+        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(
+            KeyValuePair<TKey, TValue>[] array,
+            int arrayIndex)
+        {
+            this.ThrowIfCurrentObjectDisposed();
+
+            (this.internalDictionary as ICollection<KeyValuePair<TKey, TValue>>).CopyTo(
+                array,
+                arrayIndex);
+        }
+
+        /// <summary>
+        ///     Removes the specified item from the dictionary.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns><see langword="true" /> if the removal was a success, <see langword="false" /> otherwise.</returns>
+        bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item) => this.Remove(item.Key);
+
+        /// <summary>
+        ///     Adds the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <exception cref="NotImplementedByDesignException">
+        ///     This method is not implemented by design. Do not call it, as it will
+        ///     always throw an exception.
+        /// </exception>
+        void IDictionary<TKey, TValue>.Add(
+            TKey key,
+            TValue value) =>
+            throw new NotImplementedByDesignException();
+
+        /// <summary>
+        ///     Removes the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns><see langword="true" /> if the key has been removed, <see langword="false" /> otherwise.</returns>
+        bool IDictionary<TKey, TValue>.Remove(TKey key) => this.Remove(in key);
+
+        /// <summary>
         ///     Gets the enumerator.
         /// </summary>
         /// <returns>IEnumerator.</returns>
@@ -269,11 +269,15 @@ namespace IX.System.Collections.Generic
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         /// <summary>
-        ///     Removes the specified key.
+        ///     Gets the enumerator.
         /// </summary>
-        /// <param name="key">The key.</param>
-        /// <returns><see langword="true" /> if the key has been removed, <see langword="false" /> otherwise.</returns>
-        bool IDictionary<TKey, TValue>.Remove(TKey key) => this.Remove(in key);
+        /// <returns>The dictionary enumerator.</returns>
+        [SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "Unavoidable here.")]
+        IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() =>
+            this.GetEnumerator();
 
 #endregion
 
@@ -375,24 +379,6 @@ namespace IX.System.Collections.Generic
             this.levelKeys.Clear();
 
             base.DisposeManagedContext();
-        }
-
-        /// <summary>
-        ///     Disposes the general context.
-        /// </summary>
-        protected override void DisposeGeneralContext()
-        {
-            base.DisposeGeneralContext();
-
-            Interlocked.Exchange(
-                ref this.internalDictionary,
-                null!);
-            Interlocked.Exchange(
-                ref this.keyLevels,
-                null!);
-            Interlocked.Exchange(
-                ref this.levelKeys,
-                null!);
         }
 
 #endregion

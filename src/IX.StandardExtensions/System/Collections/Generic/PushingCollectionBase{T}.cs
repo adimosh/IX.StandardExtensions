@@ -97,7 +97,7 @@ namespace IX.System.Collections.Generic
         }
 
         /// <summary>
-        ///     Gets a value indicating whether this pushing bollection is empty.
+        ///     Gets a value indicating whether this pushing collection is empty.
         /// </summary>
         /// <value>
         ///     <c>true</c> if this pushing collection is empty; otherwise, <c>false</c>.

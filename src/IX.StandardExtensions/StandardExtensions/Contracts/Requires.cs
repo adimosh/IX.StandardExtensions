@@ -868,7 +868,7 @@ namespace IX.StandardExtensions.Contracts
             "StyleCop.CSharp.OrderingRules",
             "SA1201:Elements should appear in the correct order",
             Justification = "Better code readability this way.")]
-        private static readonly Lazy<ConcurrentDictionary<string, Regex>> Regexes = new Lazy<ConcurrentDictionary<string, Regex>>(() => new ConcurrentDictionary<string, Regex>());
+        private static readonly Lazy<ConcurrentDictionary<string, Regex>> Regexes = new(() => new ConcurrentDictionary<string, Regex>());
 
         /// <summary>
         /// Called when a contract requires that a string matches a specific pattern.

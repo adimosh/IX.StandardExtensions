@@ -18,25 +18,22 @@ namespace IX.StandardExtensions.ComponentModel
     /// <seealso cref="IX.StandardExtensions.ComponentModel.NotifyPropertyChangedBase" />
     /// <seealso cref="INotifyCollectionChanged" />
     [PublicAPI]
-    public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase, INotifyCollectionChanged
+    public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
+        INotifyCollectionChanged
     {
-#region Constructors
+#region Constructors and destructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="NotifyCollectionChangedInvokerBase" /> class.
         /// </summary>
-        protected NotifyCollectionChangedInvokerBase()
-        {
-        }
+        protected NotifyCollectionChangedInvokerBase() { }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="NotifyCollectionChangedInvokerBase" /> class.
         /// </summary>
         /// <param name="synchronizationContext">The specific synchronization context to use.</param>
         protected NotifyCollectionChangedInvokerBase(SynchronizationContext synchronizationContext)
-            : base(synchronizationContext)
-        {
-        }
+            : base(synchronizationContext) { }
 
 #endregion
 

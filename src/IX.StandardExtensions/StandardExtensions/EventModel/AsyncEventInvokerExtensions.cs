@@ -70,6 +70,10 @@ namespace IX.StandardExtensions.EventModel
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <typeparamref name="TEventArgs" /> instance containing the event data.</param>
         /// <returns>An task that can be awaited on by the invoker.</returns>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "Not avoidable here.")]
         public static Task InvokeAsync<TEventArgs>(
             this AsyncEventHandler<TEventArgs>? handler,
             object sender,

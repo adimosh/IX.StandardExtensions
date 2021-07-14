@@ -3,11 +3,11 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using System.Threading;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
-using DiagCA = System.Diagnostics.CodeAnalysis;
 
 namespace IX.StandardExtensions.ComponentModel
 {
@@ -17,16 +17,22 @@ namespace IX.StandardExtensions.ComponentModel
     /// <seealso cref="IDisposable" />
     [DataContract(Namespace = Constants.DataContractNamespace)]
     [PublicAPI]
-    [DiagCA.SuppressMessage(
+    [SuppressMessage(
         "IDisposableAnalyzers.Correctness",
         "IDISP025:Class with no virtual dispose method should be sealed.",
         Justification = "The pattern is not followed here, because, instead of overriding Dispose, one can and should override the two (managed and general) methods.")]
     public abstract partial class DisposableBase : IDisposable
     {
+#region Internal state
+
         /// <summary>
         ///     The thread-safe dispose signal.
         /// </summary>
         private volatile int disposeSignaled;
+
+#endregion
+
+#region Constructors and destructors
 
         /// <summary>
         ///     Finalizes an instance of the <see cref="DisposableBase" /> class.
@@ -36,6 +42,10 @@ namespace IX.StandardExtensions.ComponentModel
             this.Dispose(false);
         }
 
+#endregion
+
+#region Properties and indexers
+
         /// <summary>
         ///     Gets a value indicating whether this <see cref="DisposableBase" /> is disposed.
         /// </summary>
@@ -44,18 +54,21 @@ namespace IX.StandardExtensions.ComponentModel
         /// </value>
         internal bool Disposed { get; private set; }
 
+#endregion
+
+#region Methods
+
+#region Interface implementations
+
         /// <summary>
         ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        [DiagCA.SuppressMessage(
-            "Design",
-            "CA1063:Implement IDisposable Correctly",
-            Justification = "The analyzer can't really tell what we're doing here.")]
         public void Dispose()
         {
             if (Interlocked.Exchange(
-                ref this.disposeSignaled,
-                1) != 0)
+                    ref this.disposeSignaled,
+                    1) !=
+                0)
             {
                 return;
             }
@@ -63,6 +76,8 @@ namespace IX.StandardExtensions.ComponentModel
             GC.SuppressFinalize(this);
             this.Dispose(true);
         }
+
+#endregion
 
         /// <summary>
         ///     Throws if the current object is disposed.
@@ -72,16 +87,16 @@ namespace IX.StandardExtensions.ComponentModel
         {
             if (this.Disposed)
             {
-                throw new ObjectDisposedException(this.GetType().FullName);
+                throw new ObjectDisposedException(
+                    this.GetType()
+                        .FullName);
             }
         }
 
         /// <summary>
-        /// Anchor for automatic disposal of this instance.
+        ///     Anchor for automatic disposal of this instance.
         /// </summary>
-        protected virtual void DisposeAutomatically()
-        {
-        }
+        protected virtual void DisposeAutomatically() { }
 
         /// <summary>
         ///     Invokes an action if the current instance is not disposed.
@@ -95,7 +110,9 @@ namespace IX.StandardExtensions.ComponentModel
         {
             this.RequiresNotDisposed();
 
-            Requires.NotNull(action, nameof(action))();
+            Requires.NotNull(
+                action,
+                nameof(action))();
         }
 
         /// <summary>
@@ -112,22 +129,20 @@ namespace IX.StandardExtensions.ComponentModel
         {
             this.ThrowIfCurrentObjectDisposed();
 
-            return Requires.NotNull(func, nameof(func))();
+            return Requires.NotNull(
+                func,
+                nameof(func))();
         }
 
         /// <summary>
         ///     Disposes in the managed context.
         /// </summary>
-        protected virtual void DisposeManagedContext()
-        {
-        }
+        protected virtual void DisposeManagedContext() { }
 
         /// <summary>
         ///     Disposes in the general (managed and unmanaged) context.
         /// </summary>
-        protected virtual void DisposeGeneralContext()
-        {
-        }
+        protected virtual void DisposeGeneralContext() { }
 
         /// <summary>
         ///     Releases unmanaged and - optionally - managed resources.
@@ -136,10 +151,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only
         ///     unmanaged resources.
         /// </param>
-        [DiagCA.SuppressMessage(
-            "Design",
-            "CA1063:Implement IDisposable Correctly",
-            Justification = "The analyzer can't really tell what we're doing here.")]
         private void Dispose(bool disposing)
         {
             try
@@ -158,5 +169,7 @@ namespace IX.StandardExtensions.ComponentModel
                 this.Disposed = true;
             }
         }
+
+#endregion
     }
 }

@@ -4,6 +4,9 @@
 
 using System;
 using JetBrains.Annotations;
+#if FRAMEWORK_ADVANCED
+using System.Diagnostics.CodeAnalysis;
+#endif
 
 namespace IX.StandardExtensions.ComponentModel
 {
@@ -21,7 +24,13 @@ namespace IX.StandardExtensions.ComponentModel
     public class SmartDisposableWeakReference<T>
         where T : DisposableBase
     {
+#region Internal state
+
         private readonly WeakReference<T> reference;
+
+#endregion
+
+#region Constructors and destructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SmartDisposableWeakReference{T}" /> class.
@@ -32,6 +41,10 @@ namespace IX.StandardExtensions.ComponentModel
             this.reference = new WeakReference<T>(obj);
         }
 
+#endregion
+
+#region Properties and indexers
+
         /// <summary>
         ///     Gets a value indicating whether the target is alive.
         /// </summary>
@@ -40,6 +53,10 @@ namespace IX.StandardExtensions.ComponentModel
         ///     <see langword="false" />.
         /// </value>
         public bool TargetAlive => this.TryGetTarget(out _);
+
+#endregion
+
+#region Methods
 
         /// <summary>
         ///     Tries to retrieve the target object that is weakly referenced by the current
@@ -51,25 +68,27 @@ namespace IX.StandardExtensions.ComponentModel
         ///     otherwise.
         /// </returns>
         public bool TryGetTarget(
-#if FRAMEWORK_ADVANCED
-            [global::System.Diagnostics.CodeAnalysis.MaybeNullWhen(false)]
-            [global::System.Diagnostics.CodeAnalysis.NotNullWhen(true)]
-#endif
+            #if FRAMEWORK_ADVANCED
+            [MaybeNullWhen(false)] [NotNullWhen(true)]
+            #endif
             out T target)
         {
             if (!this.reference.TryGetTarget(out T intermediateTarget))
             {
                 target = null!;
+
                 return false;
             }
 
             if (intermediateTarget.Disposed)
             {
                 target = null!;
+
                 return false;
             }
 
             target = intermediateTarget;
+
             return true;
         }
 
@@ -78,5 +97,7 @@ namespace IX.StandardExtensions.ComponentModel
         /// </summary>
         /// <param name="newObject">The new object.</param>
         public void SetTarget(T newObject) => this.reference.SetTarget(newObject);
+
+#endregion
     }
 }

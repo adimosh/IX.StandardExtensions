@@ -22,11 +22,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>
         ///     The result of the comparison.
         /// </returns>
-        public static bool SequenceEquals<T>(
-            [CanBeNull]
-            this T[]? left,
-            [CanBeNull]
-            T[]? right)
+        public static bool SequenceEquals<T>(this T[]? left, T[]? right)
         where T : IEquatable<T>
         {
             if (left == null)
@@ -53,8 +49,8 @@ namespace IX.StandardExtensions.Extensions
                     return true;
                 }
 
-                T c1 = b1 ? left[i] : default;
-                T c2 = b2 ? right[i] : default;
+                T? c1 = b1 ? left[i] : default;
+                T? c2 = b2 ? right[i] : default;
 
                 if (c1 == null)
                 {

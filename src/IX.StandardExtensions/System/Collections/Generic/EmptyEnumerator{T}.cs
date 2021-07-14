@@ -10,22 +10,33 @@ using JetBrains.Annotations;
 
 namespace IX.System.Collections.Generic
 {
+    #if NETSTANDARD2_1
     /// <summary>
     ///     An empty enumerator.
     /// </summary>
     /// <typeparam name="T">The type of items in the enumerator.</typeparam>
     /// <seealso cref="IEnumerator{T}" />
     /// <seealso cref="IEnumerator" />
-#if NETSTANDARD2_1
     /// <seealso cref="IAsyncEnumerator{T}" />
-#endif
+    #else
+    /// <summary>
+    ///     An empty enumerator.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the enumerator.</typeparam>
+    /// <seealso cref="IEnumerator{T}" />
+    /// <seealso cref="IEnumerator" />
+    #endif
     [PublicAPI]
+    [SuppressMessage(
+        "ReSharper",
+        "PartialTypeWithSinglePart",
+        Justification = "Used in .NET Standard 2.1")]
     public sealed partial class EmptyEnumerator<T> : IEnumerator<T>
     {
         private static readonly EmptyEnumerator<T> EmptyInstance = new();
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="EmptyEnumerator{T}"/> class from being created.
+        ///     Prevents a default instance of the <see cref="EmptyEnumerator{T}" /> class from being created.
         /// </summary>
         private EmptyEnumerator()
         {
@@ -48,12 +59,12 @@ namespace IX.System.Collections.Generic
         /// </summary>
         T IEnumerator<T>.Current => default!;
 
-        #endregion
+#endregion
 
-        #region Methods
+#region Methods
 
         /// <summary>
-        /// Gets this empty instance.
+        ///     Gets this empty instance.
         /// </summary>
         /// <returns>The empty instance.</returns>
         [SuppressMessage(

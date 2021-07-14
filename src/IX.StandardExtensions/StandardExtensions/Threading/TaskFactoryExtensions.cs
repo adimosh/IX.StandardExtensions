@@ -161,7 +161,8 @@ namespace IX.StandardExtensions.Threading
                     action,
                     CultureInfo.CurrentCulture,
                     CultureInfo.CurrentUICulture,
-                    state), cancellationToken,
+                    state),
+                cancellationToken,
                 creationOptions,
                 TaskScheduler.Default);
 
@@ -206,7 +207,8 @@ namespace IX.StandardExtensions.Threading
                     action,
                     CultureInfo.CurrentCulture,
                     CultureInfo.CurrentUICulture,
-                    state), cancellationToken,
+                    state),
+                cancellationToken,
                 creationOptions,
                 TaskScheduler.Default);
 

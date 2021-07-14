@@ -9,6 +9,10 @@ namespace IX.DataGeneration
     /// </summary>
     public static partial class DataGenerator
     {
+#region Methods
+
+#region Static methods
+
         /// <summary>
         ///     Returns a random integer.
         /// </summary>
@@ -92,5 +96,9 @@ namespace IX.DataGeneration
                 return R.Next(maxValue);
             }
         }
+
+#endregion
+
+#endregion
     }
 }

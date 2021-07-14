@@ -5,6 +5,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -26,12 +27,15 @@ namespace IX.Guaranteed.Collections
     /// <seealso cref="StandardExtensions.ComponentModel.DisposableBase" />
     /// <seealso cref="System.Collections.Generic.IQueue{T}" />
     [PublicAPI]
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Design",
         "CA1010:Generic interface should also be implemented",
         Justification = "This is not necessary.")]
-    public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase, IQueue<T>
+    public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
+        IQueue<T>
     {
+#region Internal state
+
         private readonly IDirectory directoryShim;
         private readonly IFile fileShim;
         private readonly IPath pathShim;
@@ -42,6 +46,10 @@ namespace IX.Guaranteed.Collections
         private readonly List<string> poisonedUnremovableFiles;
 
         private readonly DataContractSerializer serializer;
+
+#endregion
+
+#region Constructors and destructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="PersistedQueueBase{T}" /> class.
@@ -141,6 +149,10 @@ namespace IX.Guaranteed.Collections
             }
         }
 
+#endregion
+
+#region Properties and indexers
+
         /// <summary>
         ///     Gets the number of elements contained in the <see cref="PersistedQueueBase{T}" />.
         /// </summary>
@@ -148,24 +160,24 @@ namespace IX.Guaranteed.Collections
         public abstract int Count { get; }
 
         /// <summary>
-        /// Gets a value indicating whether this queue is empty.
+        ///     Gets a value indicating whether this queue is empty.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this queue is empty; otherwise, <c>false</c>.
+        ///     <c>true</c> if this queue is empty; otherwise, <c>false</c>.
         /// </value>
         public bool IsEmpty => this.Count == 0;
-
-        /// <summary>
-        ///     Gets an object that can be used to synchronize access to the <see cref="PersistedQueueBase{T}" />.
-        /// </summary>
-        /// <value>The synchronize root.</value>
-        object ICollection.SyncRoot { get; } = new object();
 
         /// <summary>
         ///     Gets a value indicating whether access to the <see cref="PersistedQueueBase{T}" /> is synchronized (thread safe).
         /// </summary>
         /// <value>The is synchronized.</value>
         bool ICollection.IsSynchronized => true;
+
+        /// <summary>
+        ///     Gets an object that can be used to synchronize access to the <see cref="PersistedQueueBase{T}" />.
+        /// </summary>
+        /// <value>The synchronize root.</value>
+        object ICollection.SyncRoot { get; } = new();
 
         /// <summary>
         ///     Gets the data folder path.
@@ -203,17 +215,11 @@ namespace IX.Guaranteed.Collections
         /// <value>The serializer.</value>
         protected DataContractSerializer Serializer => this.serializer;
 
-        /// <summary>
-        ///     Clears the queue of all elements.
-        /// </summary>
-        public abstract void Clear();
+#endregion
 
-        /// <summary>
-        ///     Verifies whether or not an item is contained in the queue.
-        /// </summary>
-        /// <param name="item">The item to verify.</param>
-        /// <returns><see langword="true" /> if the item is queued, <see langword="false" /> otherwise.</returns>
-        public abstract bool Contains(T item);
+#region Methods
+
+#region Interface implementations
 
         /// <summary>
         ///     Copies the elements of the <see cref="PersistedQueueBase{T}" /> to an <see cref="Array" />, starting at a
@@ -229,20 +235,28 @@ namespace IX.Guaranteed.Collections
             int index);
 
         /// <summary>
+        ///     Returns an enumerator that iterates through the queue.
+        /// </summary>
+        /// <returns>An enumerator that can be used to iterate through the queue.</returns>
+        public abstract IEnumerator<T> GetEnumerator();
+
+        /// <summary>
+        ///     Clears the queue of all elements.
+        /// </summary>
+        public abstract void Clear();
+
+        /// <summary>
+        ///     Verifies whether or not an item is contained in the queue.
+        /// </summary>
+        /// <param name="item">The item to verify.</param>
+        /// <returns><see langword="true" /> if the item is queued, <see langword="false" /> otherwise.</returns>
+        public abstract bool Contains(T item);
+
+        /// <summary>
         ///     De-queues an item and removes it from the queue.
         /// </summary>
         /// <returns>The item that has been de-queued.</returns>
         public abstract T Dequeue();
-
-        /// <summary>
-        ///     Attempts to de-queue an item and to remove it from queue.
-        /// </summary>
-        /// <param name="item">The item that has been de-queued, default if unsuccessful.</param>
-        /// <returns>
-        ///     <see langword="true" /> if an item is de-queued successfully, <see langword="false" /> otherwise, or if the
-        ///     queue is empty.
-        /// </returns>
-        public abstract bool TryDequeue(out T item);
 
         /// <summary>
         ///     Queues an item, adding it to the queue.
@@ -251,51 +265,50 @@ namespace IX.Guaranteed.Collections
         public abstract void Enqueue(T item);
 
         /// <summary>
-        /// Attempts to peek at the current queue and return the item that is next in line to be dequeued.
-        /// </summary>
-        /// <param name="item">The item, or default if unsuccessful.</param>
-        /// <returns>
-        ///   <see langword="true" /> if an item is found, <see langword="false" /> otherwise, or if the queue is empty.
-        /// </returns>
-        public abstract bool TryPeek(out T item);
-
-        /// <summary>
-        /// Queues a range of elements, adding them to the queue.
+        ///     Queues a range of elements, adding them to the queue.
         /// </summary>
         /// <param name="items">The item range to push.</param>
         public void EnqueueRange(T[] items)
         {
-            Requires.NotNull(items, nameof(items));
+            Requires.NotNull(
+                items,
+                nameof(items));
 
-            foreach (var item in items)
+            foreach (T item in items)
             {
                 this.Enqueue(item);
             }
         }
 
         /// <summary>
-        /// Queues a range of elements, adding them to the queue.
+        ///     Queues a range of elements, adding them to the queue.
         /// </summary>
         /// <param name="items">The item range to enqueue.</param>
         /// <param name="startIndex">The start index.</param>
         /// <param name="count">The number of items to enqueue.</param>
-        public void EnqueueRange(T[] items, int startIndex, int count)
+        public void EnqueueRange(
+            T[] items,
+            int startIndex,
+            int count)
         {
-            Requires.NotNull(items, nameof(items));
-            Requires.ValidArrayRange(in startIndex, in count, items, nameof(items));
+            Requires.NotNull(
+                items,
+                nameof(items));
+            Requires.ValidArrayRange(
+                in startIndex,
+                in count,
+                items,
+                nameof(items));
 
-            ReadOnlySpan<T> itemsRange = new ReadOnlySpan<T>(items, startIndex, count);
-            foreach (var item in itemsRange)
+            var itemsRange = new ReadOnlySpan<T>(
+                items,
+                startIndex,
+                count);
+            foreach (T item in itemsRange)
             {
                 this.Enqueue(item);
             }
         }
-
-        /// <summary>
-        ///     Returns an enumerator that iterates through the queue.
-        /// </summary>
-        /// <returns>An enumerator that can be used to iterate through the queue.</returns>
-        public abstract IEnumerator<T> GetEnumerator();
 
         /// <summary>
         ///     Peeks at the topmost element in the queue, without removing it.
@@ -312,9 +325,26 @@ namespace IX.Guaranteed.Collections
         /// <summary>
         ///     Trims the excess free space from within the queue, reducing the capacity to the actual number of elements.
         /// </summary>
-        public virtual void TrimExcess()
-        {
-        }
+        public virtual void TrimExcess() { }
+
+        /// <summary>
+        ///     Attempts to de-queue an item and to remove it from queue.
+        /// </summary>
+        /// <param name="item">The item that has been de-queued, default if unsuccessful.</param>
+        /// <returns>
+        ///     <see langword="true" /> if an item is de-queued successfully, <see langword="false" /> otherwise, or if the
+        ///     queue is empty.
+        /// </returns>
+        public abstract bool TryDequeue(out T item);
+
+        /// <summary>
+        ///     Attempts to peek at the current queue and return the item that is next in line to be dequeued.
+        /// </summary>
+        /// <param name="item">The item, or default if unsuccessful.</param>
+        /// <returns>
+        ///     <see langword="true" /> if an item is found, <see langword="false" /> otherwise, or if the queue is empty.
+        /// </returns>
+        public abstract bool TryPeek(out T item);
 #pragma warning disable HAA0401 // Possible allocation of reference type enumerator - Yeah, we know
         /// <summary>
         ///     Returns an enumerator that iterates through the queue.
@@ -322,6 +352,8 @@ namespace IX.Guaranteed.Collections
         /// <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the queue.</returns>
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 #pragma warning restore HAA0401 // Possible allocation of reference type enumerator
+
+#endregion
 
         /// <summary>
         ///     Loads the topmost item from the folder, ensuring its deletion afterwards.
@@ -351,7 +383,7 @@ namespace IX.Guaranteed.Collections
                     try
                     {
                         using Stream stream = this.FileShim.OpenRead(possibleFilePath);
-                        obj = (T)this.Serializer.ReadObject(stream);
+                        obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
 
                         break;
                     }
@@ -432,7 +464,7 @@ namespace IX.Guaranteed.Collections
                 {
                     using Stream stream = this.FileShim.OpenRead(possibleFilePath);
 
-                    obj = (T)this.Serializer.ReadObject(stream);
+                    obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
 
                     break;
                 }
@@ -461,9 +493,7 @@ namespace IX.Guaranteed.Collections
             }
             catch (Exception)
             {
-#pragma warning disable ERP022 // Catching everything considered harmful. - We will mitigate shortly
                 return false;
-#pragma warning restore ERP022 // Catching everything considered harmful.
             }
 
             locker.Upgrade();
@@ -497,7 +527,7 @@ namespace IX.Guaranteed.Collections
         /// <param name="state">The state object to pass to the invoked action.</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns><see langword="true" /> if de-queuing and executing is successful, <see langword="false" /> otherwise.</returns>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Acceptable - we're doing a lot of allocation in the Task method anyway.")]
@@ -506,7 +536,7 @@ namespace IX.Guaranteed.Collections
             TState state,
             CancellationToken cancellationToken = default)
         {
-            // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+            // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
             return await this.TryLoadTopmostItemWithActionAsync(
                 InvokeActionLocal,
                 state,
@@ -563,9 +593,9 @@ namespace IX.Guaranteed.Collections
 
                 try
                 {
-                    using Stream stream = this.FileShim.OpenRead(possibleFilePath);
+                    await using Stream stream = this.FileShim.OpenRead(possibleFilePath);
 
-                    obj = (T)this.Serializer.ReadObject(stream);
+                    obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
 
                     break;
                 }
@@ -589,21 +619,22 @@ namespace IX.Guaranteed.Collections
             try
             {
                 await actionToInvoke(
-                    state,
-                    obj).ConfigureAwait(false);
+                        state,
+                        obj)
+                    .ConfigureAwait(false);
             }
             catch (Exception)
             {
-#pragma warning disable ERP022 // Catching everything considered harmful. - We will mitigate shortly
                 return false;
-#pragma warning restore ERP022 // Catching everything considered harmful.
             }
 
             locker.Upgrade();
 
             try
             {
-                await this.FileShim.DeleteAsync(possibleFilePath, cancellationToken);
+                await this.FileShim.DeleteAsync(
+                    possibleFilePath,
+                    cancellationToken);
             }
             catch (IOException)
             {
@@ -669,7 +700,7 @@ namespace IX.Guaranteed.Collections
 
                     using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
                     {
-                        obj = (T)this.Serializer.ReadObject(stream);
+                        obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
                     }
 
                     if (!predicate(
@@ -714,9 +745,7 @@ namespace IX.Guaranteed.Collections
             }
             catch (Exception)
             {
-#pragma warning disable ERP022 // Catching everything considered harmful. - We will mitigate shortly
                 return 0;
-#pragma warning restore ERP022 // Catching everything considered harmful.
             }
 
             locker.Upgrade();
@@ -761,7 +790,7 @@ namespace IX.Guaranteed.Collections
         ///         filters out items in a way that limits the amount of data passing through.
         ///     </para>
         /// </remarks>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Acceptable - we're doing a lot of allocation in the Task method anyway.")]
@@ -771,7 +800,7 @@ namespace IX.Guaranteed.Collections
             TState state,
             CancellationToken cancellationToken = default)
         {
-            // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+            // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
             return await this.TryLoadWhilePredicateWithActionAsync(
                 InvokePredicateLocal,
                 actionToInvoke,
@@ -841,14 +870,15 @@ namespace IX.Guaranteed.Collections
                 {
                     T obj;
 
-                    using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                    await using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
                     {
-                        obj = (T)this.Serializer.ReadObject(stream);
+                        obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
                     }
 
                     if (!await predicate(
-                        state,
-                        obj).ConfigureAwait(false))
+                            state,
+                            obj)
+                        .ConfigureAwait(false))
                     {
                         break;
                     }
@@ -878,6 +908,7 @@ namespace IX.Guaranteed.Collections
             if (accumulatedObjects.Count <= 0)
             {
                 cancellationToken.ThrowIfCancellationRequested();
+
                 return accumulatedPaths.Count;
             }
 
@@ -890,9 +921,8 @@ namespace IX.Guaranteed.Collections
             catch (Exception)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-#pragma warning disable ERP022 // Catching everything considered harmful. - We will mitigate shortly
+
                 return 0;
-#pragma warning restore ERP022 // Catching everything considered harmful.
             }
 
             locker.Upgrade();
@@ -901,7 +931,9 @@ namespace IX.Guaranteed.Collections
             {
                 try
                 {
-                    await this.FileShim.DeleteAsync(possibleFilePath, cancellationToken);
+                    await this.FileShim.DeleteAsync(
+                        possibleFilePath,
+                        cancellationToken);
                 }
                 catch (IOException)
                 {
@@ -918,6 +950,7 @@ namespace IX.Guaranteed.Collections
             }
 
             cancellationToken.ThrowIfCancellationRequested();
+
             return accumulatedPaths.Count;
         }
 
@@ -938,7 +971,7 @@ namespace IX.Guaranteed.Collections
         ///         filters out items in a way that limits the amount of data passing through.
         ///     </para>
         /// </remarks>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Acceptable - we're doing a lot of allocation in the Task method anyway.")]
@@ -948,7 +981,7 @@ namespace IX.Guaranteed.Collections
             TState state,
             CancellationToken cancellationToken = default)
         {
-            // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+            // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
             return await this.TryLoadWhilePredicateWithActionAsync(
                 predicate,
                 InvokeActionLocal,
@@ -1018,9 +1051,9 @@ namespace IX.Guaranteed.Collections
                 {
                     T obj;
 
-                    using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                    await using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
                     {
-                        obj = (T)this.Serializer.ReadObject(stream);
+                        obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
                     }
 
                     if (!predicate(
@@ -1055,21 +1088,22 @@ namespace IX.Guaranteed.Collections
             if (accumulatedObjects.Count <= 0)
             {
                 cancellationToken.ThrowIfCancellationRequested();
+
                 return accumulatedPaths.Count;
             }
 
             try
             {
                 await actionToInvoke(
-                    state,
-                    accumulatedObjects).ConfigureAwait(false);
+                        state,
+                        accumulatedObjects)
+                    .ConfigureAwait(false);
             }
             catch (Exception)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-#pragma warning disable ERP022 // Catching everything considered harmful. - We will mitigate shortly
+
                 return 0;
-#pragma warning restore ERP022 // Catching everything considered harmful.
             }
 
             locker.Upgrade();
@@ -1078,7 +1112,9 @@ namespace IX.Guaranteed.Collections
             {
                 try
                 {
-                    await this.FileShim.DeleteAsync(possibleFilePath, cancellationToken);
+                    await this.FileShim.DeleteAsync(
+                        possibleFilePath,
+                        cancellationToken);
                 }
                 catch (IOException)
                 {
@@ -1095,6 +1131,7 @@ namespace IX.Guaranteed.Collections
             }
 
             cancellationToken.ThrowIfCancellationRequested();
+
             return accumulatedPaths.Count;
         }
 
@@ -1115,7 +1152,7 @@ namespace IX.Guaranteed.Collections
         ///         filters out items in a way that limits the amount of data passing through.
         ///     </para>
         /// </remarks>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Acceptable - we're doing a lot of allocation in the Task method anyway.")]
@@ -1125,7 +1162,7 @@ namespace IX.Guaranteed.Collections
             TState state,
             CancellationToken cancellationToken = default)
         {
-            // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+            // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
             return await this.TryLoadWhilePredicateWithActionAsync(
                 InvokePredicateLocal,
                 InvokeActionLocal,
@@ -1204,14 +1241,15 @@ namespace IX.Guaranteed.Collections
                 {
                     T obj;
 
-                    using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                    await using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
                     {
-                        obj = (T)this.Serializer.ReadObject(stream);
+                        obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
                     }
 
                     if (!await predicate(
-                        state,
-                        obj).ConfigureAwait(false))
+                            state,
+                            obj)
+                        .ConfigureAwait(false))
                     {
                         break;
                     }
@@ -1241,21 +1279,22 @@ namespace IX.Guaranteed.Collections
             if (accumulatedObjects.Count <= 0)
             {
                 cancellationToken.ThrowIfCancellationRequested();
+
                 return accumulatedPaths.Count;
             }
 
             try
             {
                 await actionToInvoke(
-                    state,
-                    accumulatedObjects).ConfigureAwait(false);
+                        state,
+                        accumulatedObjects)
+                    .ConfigureAwait(false);
             }
             catch (Exception)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-#pragma warning disable ERP022 // Catching everything considered harmful. - We will mitigate shortly
+
                 return 0;
-#pragma warning restore ERP022 // Catching everything considered harmful.
             }
 
             locker.Upgrade();
@@ -1264,7 +1303,9 @@ namespace IX.Guaranteed.Collections
             {
                 try
                 {
-                    await this.FileShim.DeleteAsync(possibleFilePath, cancellationToken);
+                    await this.FileShim.DeleteAsync(
+                        possibleFilePath,
+                        cancellationToken);
                 }
                 catch (IOException)
                 {
@@ -1281,6 +1322,7 @@ namespace IX.Guaranteed.Collections
             }
 
             cancellationToken.ThrowIfCancellationRequested();
+
             return accumulatedPaths.Count;
         }
 
@@ -1291,7 +1333,7 @@ namespace IX.Guaranteed.Collections
         /// <exception cref="InvalidOperationException">There are no more valid items in the folder.</exception>
         protected T PeekTopmostItem()
         {
-            if (!this.TryPeekTopmostItem(out var item))
+            if (!this.TryPeekTopmostItem(out T item))
             {
                 throw new InvalidOperationException();
             }
@@ -1300,11 +1342,11 @@ namespace IX.Guaranteed.Collections
         }
 
         /// <summary>
-        /// Peeks at the topmost item in the folder.
+        ///     Peeks at the topmost item in the folder.
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>
-        ///   <see langword="true" /> if an item is found, <see langword="false" /> otherwise, or if the queue is empty.
+        ///     <see langword="true" /> if an item is found, <see langword="false" /> otherwise, or if the queue is empty.
         /// </returns>
         protected bool TryPeekTopmostItem(out T item)
         {
@@ -1320,6 +1362,7 @@ namespace IX.Guaranteed.Collections
                     if (i >= files.Length)
                     {
                         item = default!;
+
                         return false;
                     }
 
@@ -1328,7 +1371,8 @@ namespace IX.Guaranteed.Collections
                     try
                     {
                         using Stream stream = this.FileShim.OpenRead(possibleFilePath);
-                        item = (T)this.Serializer.ReadObject(stream);
+                        item = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
+
                         return true;
                     }
                     catch (IOException)
@@ -1370,21 +1414,24 @@ namespace IX.Guaranteed.Collections
                 try
                 {
                     using Stream stream = this.FileShim.OpenRead(possibleFilePath);
-                    obj = (T)this.Serializer.ReadObject(stream);
+                    obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
                 }
                 catch (IOException)
                 {
                     this.HandleFileLoadProblem(possibleFilePath);
+
                     continue;
                 }
                 catch (UnauthorizedAccessException)
                 {
                     this.HandleFileLoadProblem(possibleFilePath);
+
                     continue;
                 }
                 catch (SerializationException)
                 {
                     this.HandleFileLoadProblem(possibleFilePath);
+
                     continue;
                 }
 
@@ -1403,7 +1450,7 @@ namespace IX.Guaranteed.Collections
         ///     We have reached the maximum number of items saved in the same femtosecond.
         ///     This is theoretically not possible.
         /// </exception>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is unavoidable, considering how the method works.")]
@@ -1436,7 +1483,7 @@ namespace IX.Guaranteed.Collections
                 {
                     this.Serializer.WriteObject(
                         stream,
-                        item);
+                        item!);
                 }
 
                 return filePath;
@@ -1453,8 +1500,9 @@ namespace IX.Guaranteed.Collections
             using (this.WriteLock())
             {
                 foreach (var possibleFilePath in this.DirectoryShim.EnumerateFiles(
-                    this.DataFolderPath,
-                    "*.dat").ToArray())
+                        this.DataFolderPath,
+                        "*.dat")
+                    .ToArray())
                 {
                     this.HandleImpossibleMoveToPoison(possibleFilePath);
                 }
@@ -1467,9 +1515,12 @@ namespace IX.Guaranteed.Collections
         ///     Gets the possible data files.
         /// </summary>
         /// <returns>An array of data file names.</returns>
-        protected string[] GetPossibleDataFiles() => this.DirectoryShim.EnumerateFiles(
-            this.DataFolderPath,
-            "*.dat").Except(this.poisonedUnremovableFiles).ToArray();
+        protected string[] GetPossibleDataFiles() =>
+            this.DirectoryShim.EnumerateFiles(
+                    this.DataFolderPath,
+                    "*.dat")
+                .Except(this.poisonedUnremovableFiles)
+                .ToArray();
 
         /// <summary>
         ///     Handles the file load problem.
@@ -1495,11 +1546,13 @@ namespace IX.Guaranteed.Collections
             catch (IOException)
             {
                 this.HandleImpossibleMoveToPoison(possibleFilePath);
+
                 return;
             }
             catch (UnauthorizedAccessException)
             {
                 this.HandleImpossibleMoveToPoison(possibleFilePath);
+
                 return;
             }
 
@@ -1544,6 +1597,10 @@ namespace IX.Guaranteed.Collections
         /// <summary>
         ///     Fixes the unmovable references.
         /// </summary>
+        [SuppressMessage(
+            "StyleCop.CSharp.LayoutRules",
+            "SA1501:Statement should not be on a single line",
+            Justification = "It's fine.")]
         private void FixUnmovableReferences()
         {
             foreach (var file in this.poisonedUnremovableFiles.ToArray())
@@ -1555,13 +1612,11 @@ namespace IX.Guaranteed.Collections
                         this.poisonedUnremovableFiles.Remove(file);
                     }
                 }
-                catch (IOException)
-                {
-                }
-                catch (UnauthorizedAccessException)
-                {
-                }
+                catch (IOException) { }
+                catch (UnauthorizedAccessException) { }
             }
         }
+
+#endregion
     }
 }

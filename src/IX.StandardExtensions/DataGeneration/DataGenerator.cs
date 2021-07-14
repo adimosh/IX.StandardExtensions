@@ -16,8 +16,14 @@ namespace IX.DataGeneration
     [PublicAPI]
     public static partial class DataGenerator
     {
+#region Internal state
+
         // Random generator
-        private static readonly Random R = new Random();
+        private static readonly Random R = new();
+
+#endregion
+
+#region Constructors and destructors
 
         static DataGenerator()
         {
@@ -48,19 +54,29 @@ namespace IX.DataGeneration
 
             NumericCharacters = tempList.ToArray();
 
-            AlphaCharacters = LowerCaseAlphaCharacters.Union(UpperCaseAlphaCharacters).ToArray();
-            AlphaNumericCharacters = AlphaCharacters.Union(NumericCharacters).ToArray();
-            AllCharacters = AlphaNumericCharacters.Union(BasicSymbolCharacters).ToArray();
+            AlphaCharacters = LowerCaseAlphaCharacters.Union(UpperCaseAlphaCharacters)
+                .ToArray();
+            AlphaNumericCharacters = AlphaCharacters.Union(NumericCharacters)
+                .ToArray();
+            AllCharacters = AlphaNumericCharacters.Union(BasicSymbolCharacters)
+                .ToArray();
         }
+
+#endregion
+
+#region Methods
+
+#region Static methods
 
         /// <summary>
         ///     Generates an array of random integers of the specified size.
         /// </summary>
         /// <param name="limit">The size limit of the array.</param>
         /// <returns>An array of random integers.</returns>
-        public static int[] RandomIntegerArray(int limit) => RandomIntegerArray(
-            limit,
-            R);
+        public static int[] RandomIntegerArray(int limit) =>
+            RandomIntegerArray(
+                limit,
+                R);
 
         /// <summary>
         ///     Generates an array of predictable random integers of the specified size.
@@ -70,9 +86,10 @@ namespace IX.DataGeneration
         /// <returns>An array of predictable random integers.</returns>
         public static int[] RandomIntegerArray(
             int limit,
-            int seed) => RandomIntegerArray(
-            limit,
-            new Random(seed));
+            int seed) =>
+            RandomIntegerArray(
+                limit,
+                new Random(seed));
 
         /// <summary>
         ///     Generates an array of predictable random integers of the specified size.
@@ -84,7 +101,9 @@ namespace IX.DataGeneration
             int limit,
             Random random)
         {
-            var localRandom = Requires.NotNull(random, nameof(random));
+            Random? localRandom = Requires.NotNull(
+                random,
+                nameof(random));
             Requires.Positive(
                 in limit,
                 nameof(limit));
@@ -101,5 +120,9 @@ namespace IX.DataGeneration
 
             return array;
         }
+
+#endregion
+
+#endregion
     }
 }

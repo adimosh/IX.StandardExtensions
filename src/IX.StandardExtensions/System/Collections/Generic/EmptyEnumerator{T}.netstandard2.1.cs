@@ -23,9 +23,9 @@ namespace IX.System.Collections.Generic
         /// </summary>
         T IAsyncEnumerator<T>.Current => default!;
 
-        #endregion
+#endregion
 
-        #region Methods
+#region Methods
 
 #region Interface implementations
 

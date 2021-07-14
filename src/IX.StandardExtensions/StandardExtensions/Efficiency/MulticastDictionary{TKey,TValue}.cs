@@ -26,15 +26,23 @@ namespace IX.StandardExtensions.Efficiency
 
         private readonly ConcurrentDictionary<TKey, List<TValue>> innerDictionary = new();
 
-#endregion
+        #endregion
 
-#region Methods
+        #region Methods
 
         /// <summary>
         ///     Adds the specified key and value pair to the dictionary.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "This is acceptable.")]
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "This is acceptable.")]
         public void Add(
             TKey key,
             TValue value) =>

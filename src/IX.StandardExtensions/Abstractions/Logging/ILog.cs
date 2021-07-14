@@ -13,6 +13,8 @@ namespace IX.Abstractions.Logging
     [PublicAPI]
     public interface ILog
     {
+#region Methods
+
         /// <summary>
         ///     Logs a debug message.
         /// </summary>
@@ -266,5 +268,7 @@ namespace IX.Abstractions.Logging
             Exception exception,
             string message,
             params string[] formatParameters);
+
+#endregion
     }
 }

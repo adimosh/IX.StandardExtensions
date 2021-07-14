@@ -54,8 +54,8 @@ namespace IX.StandardExtensions.Extensions
                     return 0;
                 }
 
-                T c1 = b1 ? left[i] : default;
-                T c2 = b2 ? right[i] : default;
+                T? c1 = b1 ? left[i] : default;
+                T? c2 = b2 ? right[i] : default;
 
                 if (c1 == null)
                 {
@@ -131,8 +131,8 @@ namespace IX.StandardExtensions.Extensions
                     return 0;
                 }
 
-                T c1 = b1 ? left[i] : default!;
-                T c2 = b2 ? right[i] : default!;
+                T? c1 = b1 ? left[i] : default;
+                T? c2 = b2 ? right[i] : default;
 
                 if (c1 == null)
                 {

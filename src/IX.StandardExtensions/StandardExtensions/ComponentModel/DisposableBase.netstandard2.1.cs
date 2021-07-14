@@ -4,6 +4,7 @@
 
 #if FRAMEWORK_ADVANCED
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,13 +16,18 @@ namespace IX.StandardExtensions.ComponentModel
     /// <seealso cref="IDisposable" />
     public abstract partial class DisposableBase : IAsyncDisposable
     {
+#region Methods
+
+#region Interface implementations
+
         /// <summary>
-        ///     Asynchronously performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        ///     Asynchronously performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
+        ///     resources.
         /// </summary>
         /// <returns>
         ///     A value task representing the completed dispose operation.
         /// </returns>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Usage",
             "CA1816:Dispose methods should call SuppressFinalize",
             Justification = "This is a dispose method.")]
@@ -40,16 +46,14 @@ namespace IX.StandardExtensions.ComponentModel
                 .ConfigureAwait(false);
         }
 
+#endregion
+
         /// <summary>
         ///     Disposes in the managed context.
         /// </summary>
         /// <returns>
         ///     A value task representing the completed dispose operation.
         /// </returns>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "AsyncUsage.CSharp.Naming",
-            "AvoidAsyncSuffix:Avoid Async suffix",
-            Justification = "The naming is correct, but the analyzer can't tell.")]
         protected virtual ValueTask DisposeManagedContextAsync()
         {
             this.DisposeManagedContext();
@@ -63,10 +67,6 @@ namespace IX.StandardExtensions.ComponentModel
         /// <returns>
         ///     A value task representing the completed dispose operation.
         /// </returns>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "AsyncUsage.CSharp.Naming",
-            "AvoidAsyncSuffix:Avoid Async suffix",
-            Justification = "The naming is correct, but the analyzer can't tell.")]
         protected virtual ValueTask DisposeGeneralContextAsync()
         {
             this.DisposeGeneralContext();
@@ -101,6 +101,8 @@ namespace IX.StandardExtensions.ComponentModel
                 this.Disposed = true;
             }
         }
+
+#endregion
     }
 }
 #endif

@@ -839,7 +839,7 @@ namespace IX.System.IO
                 cancellationToken);
 
         /// <summary>
-        ///     Checks whether a certain subdirectory exists.
+        ///     Checks whether a certain sub-directory exists.
         /// </summary>
         /// <param name="path">The path of the directory.</param>
         /// <returns>
@@ -864,9 +864,13 @@ namespace IX.System.IO
         /// <param name="path">The path of the directory.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        ///     Returnsa task that has the result of a boolean of value <see langword="true" /> if the specified directory exists
+        ///     Returns a task that has the result of a boolean of value <see langword="true" /> if the specified directory exists
         ///     and is accessible, <see langword="false" /> otherwise.
         /// </returns>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Acceptable here.")]
         public Task<bool> ExistsAsync(
             string path,
             CancellationToken cancellationToken = default)
@@ -926,8 +930,7 @@ namespace IX.System.IO
         ///     Gets the current directory.
         /// </summary>
         /// <returns>The current directory.</returns>
-        public string GetCurrentDirectory() =>
-            FSDir.GetCurrentDirectory();
+        public string GetCurrentDirectory() => FSDir.GetCurrentDirectory();
 
         /// <summary>
         ///     Gets a specific directory's last access time, in UTC.

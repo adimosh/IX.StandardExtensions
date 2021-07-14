@@ -44,6 +44,8 @@ namespace IX.Guaranteed.Collections
     {
 #region Internal state
 
+        private readonly object syncRoot = new();
+
         private readonly IDirectory directoryShim;
         private readonly IFile fileShim;
         private readonly IPath pathShim;
@@ -169,11 +171,11 @@ namespace IX.Guaranteed.Collections
         /// <summary>
         ///     Gets the sync root.
         /// </summary>
-        object ICollection.SyncRoot
-        {
-            get;
-        }
-            = new object();
+        [SuppressMessage(
+            "ReSharper",
+            "ConvertToAutoProperty",
+            Justification = "We're doing this because of an analyzer error.")]
+        object ICollection.SyncRoot => this.syncRoot;
 
 #endregion
 
@@ -329,9 +331,7 @@ namespace IX.Guaranteed.Collections
                 }
                 catch (Exception)
                 {
-#pragma warning disable ERP022 // Unobserved exception in generic exception handler - We know, that's the point of the method.
                     return 0;
-#pragma warning restore ERP022 // Unobserved exception in generic exception handler
                 }
 
                 for (var i = 0; i < index; i++)
@@ -421,9 +421,7 @@ namespace IX.Guaranteed.Collections
                 }
                 catch (Exception)
                 {
-#pragma warning disable ERP022 // Unobserved exception in generic exception handler - We know, that's the point of the method.
                     return 0;
-#pragma warning restore ERP022 // Unobserved exception in generic exception handler
                 }
 
                 for (var i = 0; i < index; i++)
@@ -462,7 +460,7 @@ namespace IX.Guaranteed.Collections
             TState state,
             CancellationToken cancellationToken = default)
         {
-            // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+            // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
             return await this.DequeueWhilePredicateWithActionAsync(
                 InvokePredicateLocal,
                 actionToInvoke,
@@ -557,9 +555,7 @@ namespace IX.Guaranteed.Collections
                 }
                 catch (Exception)
                 {
-#pragma warning disable ERP022 // Unobserved exception in generic exception handler - We know, that's the point of the method.
                     return 0;
-#pragma warning restore ERP022 // Unobserved exception in generic exception handler
                 }
 
                 for (var i = 0; i < index; i++)
@@ -598,7 +594,7 @@ namespace IX.Guaranteed.Collections
             TState state,
             CancellationToken cancellationToken = default)
         {
-            // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+            // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
             return await this.DequeueWhilePredicateWithActionAsync(
                 predicate,
                 InvokeActionLocal,
@@ -694,9 +690,7 @@ namespace IX.Guaranteed.Collections
                 }
                 catch (Exception)
                 {
-#pragma warning disable ERP022 // Unobserved exception in generic exception handler - We know, that's the point of the method.
                     return 0;
-#pragma warning restore ERP022 // Unobserved exception in generic exception handler
                 }
 
                 for (var i = 0; i < index; i++)
@@ -735,7 +729,7 @@ namespace IX.Guaranteed.Collections
             TState state,
             CancellationToken cancellationToken = default)
         {
-            // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+            // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
             return await this.DequeueWhilePredicateWithActionAsync(
                 InvokePredicateLocal,
                 InvokeActionLocal,
@@ -840,9 +834,7 @@ namespace IX.Guaranteed.Collections
                 }
                 catch (Exception)
                 {
-#pragma warning disable ERP022 // Unobserved exception in generic exception handler - We know, that's the point of the method.
                     return 0;
-#pragma warning restore ERP022 // Unobserved exception in generic exception handler
                 }
 
                 for (var i = 0; i < index; i++)
@@ -898,9 +890,7 @@ namespace IX.Guaranteed.Collections
                 }
                 catch (Exception)
                 {
-#pragma warning disable ERP022 // Unobserved exception in generic exception handler - Acceptable
                     return false;
-#pragma warning restore ERP022 // Unobserved exception in generic exception handler
                 }
 
                 this.queue.Dequeue();
@@ -925,7 +915,7 @@ namespace IX.Guaranteed.Collections
             TState state,
             CancellationToken cancellationToken = default)
         {
-            // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+            // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
             Requires.NotNull(
                 actionToInvoke,
                 nameof(actionToInvoke));
@@ -960,9 +950,7 @@ namespace IX.Guaranteed.Collections
                 }
                 catch (Exception)
                 {
-#pragma warning disable ERP022 // Unobserved exception in generic exception handler - Acceptable
                     return false;
-#pragma warning restore ERP022 // Unobserved exception in generic exception handler
                 }
 
                 this.queue.Dequeue();
@@ -991,7 +979,7 @@ namespace IX.Guaranteed.Collections
             TState state,
             CancellationToken cancellationToken = default)
         {
-            // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+            // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
             return await this.DequeueWithActionAsync(
                 InvokeActionLocal,
                 state,
@@ -1056,9 +1044,7 @@ namespace IX.Guaranteed.Collections
                 }
                 catch (Exception)
                 {
-#pragma warning disable ERP022 // Unobserved exception in generic exception handler - Acceptable
                     return false;
-#pragma warning restore ERP022 // Unobserved exception in generic exception handler
                 }
 
                 this.queue.Dequeue();
@@ -1305,7 +1291,7 @@ namespace IX.Guaranteed.Collections
         IEnumerator IEnumerable.GetEnumerator() =>
             this.GetEnumerator();
 
-#endregion
+        #endregion
 
         /// <summary>
         ///     Puts the queue in disaster mode, indicating that there is a major fault and that the queue contents need to be
@@ -1343,15 +1329,13 @@ namespace IX.Guaranteed.Collections
                     throw;
                 }
 
-#pragma warning disable IDISP004 // Don't ignore created IDisposable. - We're not, really
-                _ = Interlocked.Exchange(
+                Interlocked.Exchange(
                     ref this.persistedQueue,
-                    transferQueue);
-#pragma warning restore IDISP004 // Don't ignore created IDisposable.
+                    transferQueue)?.Dispose();
 
                 try
                 {
-                    while (this.queue!.TryDequeue(out T transferItem))
+                    while (this.queue!.TryDequeue(out T? transferItem))
                     {
                         transferQueue.Enqueue(transferItem);
                     }
@@ -1368,7 +1352,7 @@ namespace IX.Guaranteed.Collections
 
                 _ = Interlocked.Exchange(
                     ref this.queue,
-                    null);
+                    null!);
             }
         }
 
@@ -1411,9 +1395,9 @@ namespace IX.Guaranteed.Collections
                     throw;
                 }
 
-                _ = Interlocked.Exchange(
+                Interlocked.Exchange(
                     ref this.persistedQueue,
-                    null);
+                    null!).Dispose();
             }
         }
 

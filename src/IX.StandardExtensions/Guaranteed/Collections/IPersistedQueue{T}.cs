@@ -62,7 +62,7 @@ namespace IX.Guaranteed.Collections
         ///         filters out items in a way that limits the amount of data passing through.
         ///     </para>
         /// </remarks>
-        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+        // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<int> DequeueWhilePredicateWithActionAsync<TState>(
             Func<TState, T, bool> predicate,
             Action<TState, IEnumerable<T>> actionToInvoke,
@@ -86,7 +86,7 @@ namespace IX.Guaranteed.Collections
         ///         filters out items in a way that limits the amount of data passing through.
         ///     </para>
         /// </remarks>
-        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+        // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<int> DequeueWhilePredicateWithActionAsync<TState>(
             Func<TState, T, Task<bool>> predicate,
             Action<TState, IEnumerable<T>> actionToInvoke,
@@ -133,7 +133,7 @@ namespace IX.Guaranteed.Collections
         ///         filters out items in a way that limits the amount of data passing through.
         ///     </para>
         /// </remarks>
-        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+        // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<int> DequeueWhilePredicateWithActionAsync<TState>(
             Func<TState, T, bool> predicate,
             Func<TState, IEnumerable<T>, Task> actionToInvoke,
@@ -180,7 +180,7 @@ namespace IX.Guaranteed.Collections
         ///         filters out items in a way that limits the amount of data passing through.
         ///     </para>
         /// </remarks>
-        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+        // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<int> DequeueWhilePredicateWithActionAsync<TState>(
             Func<TState, T, Task<bool>> predicate,
             Func<TState, IEnumerable<T>, Task> actionToInvoke,
@@ -235,7 +235,7 @@ namespace IX.Guaranteed.Collections
         ///     <see langword="true" /> if the dequeuing is successful, and the action performed, <see langword="false" />
         ///     otherwise.
         /// </returns>
-        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+        // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<bool> DequeueWithActionAsync<TState>(
             Action<TState, T> actionToInvoke,
             TState state,
@@ -252,7 +252,7 @@ namespace IX.Guaranteed.Collections
         ///     <see langword="true" /> if the dequeuing is successful, and the action performed, <see langword="false" />
         ///     otherwise.
         /// </returns>
-        // TODO: In next breaking-changes version, switch this to a ValueTask-returning method
+        // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
         Task<bool> DequeueWithActionAsync<TState>(
             Func<TState, T, Task> actionToInvoke,
             TState state,

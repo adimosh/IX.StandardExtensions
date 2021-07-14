@@ -13,9 +13,12 @@ namespace IX.StandardExtensions.Efficiency
         Justification = "This conflicts with how XML documentation works.")]
     public partial class ConcurrentDictionary<TKey, TValue>
     {
-#if !FRAMEWORK_ADVANCED && !FRAMEWORK_GT_471
+        #if !FRAMEWORK_ADVANCED && !FRAMEWORK_GT_471
         [ThreadStatic]
-        [SuppressMessage("ReSharper", "StaticMemberInGenericType", Justification = "This field is used exclusively under lock, so this is safe.")]
+        [SuppressMessage(
+            "ReSharper",
+            "StaticMemberInGenericType",
+            Justification = "This field is used exclusively under lock, so this is safe.")]
         private static object? threadStaticAddFactory;
 
         private static TValue AddInternal<TState>(TKey key)
@@ -103,6 +106,6 @@ namespace IX.StandardExtensions.Efficiency
                 threadStaticUpdateFactory = null;
             }
         }
-#endif
+        #endif
     }
 }
