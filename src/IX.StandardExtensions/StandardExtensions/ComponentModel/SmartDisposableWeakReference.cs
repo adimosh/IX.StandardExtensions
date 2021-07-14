@@ -73,7 +73,7 @@ namespace IX.StandardExtensions.ComponentModel
             #endif
             out T target)
         {
-            if (!this.reference.TryGetTarget(out T intermediateTarget))
+            if (!this.reference.TryGetTarget(out T? intermediateTarget))
             {
                 target = null!;
 

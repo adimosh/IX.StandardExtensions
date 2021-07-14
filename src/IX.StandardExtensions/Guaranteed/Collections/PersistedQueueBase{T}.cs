@@ -593,7 +593,10 @@ namespace IX.Guaranteed.Collections
 
                 try
                 {
-                    await using Stream stream = this.FileShim.OpenRead(possibleFilePath);
+                    #if FRAMEWORK_ADVANCED
+                    await
+                    #endif
+                    using Stream stream = this.FileShim.OpenRead(possibleFilePath);
 
                     obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
 
@@ -870,7 +873,10 @@ namespace IX.Guaranteed.Collections
                 {
                     T obj;
 
-                    await using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                    #if FRAMEWORK_ADVANCED
+                    await
+                    #endif
+                    using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
                     {
                         obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
                     }
@@ -1051,7 +1057,10 @@ namespace IX.Guaranteed.Collections
                 {
                     T obj;
 
-                    await using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                    #if FRAMEWORK_ADVANCED
+                    await
+                    #endif
+                    using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
                     {
                         obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
                     }
@@ -1241,7 +1250,10 @@ namespace IX.Guaranteed.Collections
                 {
                     T obj;
 
-                    await using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                    #if FRAMEWORK_ADVANCED
+                    await
+                    #endif
+                    using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
                     {
                         obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
                     }

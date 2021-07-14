@@ -257,9 +257,9 @@ namespace IX.StandardExtensions.ComponentModel
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "We specifically do not want to do that.")]
-        private void SendOrPost(object innerState)
+        private void SendOrPost(object? innerState)
         {
-            (Action<object> actionL1, object stateL1) = (Tuple<Action<object>, object>)innerState;
+            (Action<object> actionL1, object stateL1) = (Tuple<Action<object>, object>)Requires.NotNull(innerState, nameof(innerState));
 
             try
             {

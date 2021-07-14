@@ -337,7 +337,7 @@ namespace IX.System.Collections.Generic
 
             if (this.keyLevels.TryGetValue(
                 level,
-                out List<TKey> list))
+                out List<TKey>? list))
             {
                 list.Add(key);
             }

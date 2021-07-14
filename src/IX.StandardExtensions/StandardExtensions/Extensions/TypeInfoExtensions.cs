@@ -18,9 +18,9 @@ namespace IX.StandardExtensions.Extensions
     [PublicAPI]
     public static class TypeInfoExtensions
     {
-#region Methods
+        #region Methods
 
-#region Static methods
+        #region Static methods
 
         /// <summary>
         ///     Gets the attribute data by type without version binding.
@@ -74,21 +74,18 @@ namespace IX.StandardExtensions.Extensions
                 }
             }
 
-            if (attributeData.NamedArguments != null)
+            using IEnumerator<CustomAttributeTypedArgument> namedArguments = attributeData.NamedArguments
+                .Where(p => p.TypedValue.ArgumentType == typeof(TReturn))
+                .Select(p => p.TypedValue)
+                .GetEnumerator();
+
+            if (namedArguments.MoveNext())
             {
-                using IEnumerator<CustomAttributeTypedArgument> arguments = attributeData.NamedArguments
-                    .Where(p => p.TypedValue.ArgumentType == typeof(TReturn))
-                    .Select(p => p.TypedValue)
-                    .GetEnumerator();
+                value = (TReturn?)namedArguments.Current.Value;
 
-                if (arguments.MoveNext())
+                if (!namedArguments.MoveNext())
                 {
-                    value = (TReturn?)arguments.Current.Value;
-
-                    if (!arguments.MoveNext())
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
 
@@ -180,7 +177,7 @@ namespace IX.StandardExtensions.Extensions
                 Requires.NotNull(
                         info,
                         nameof(info))
-                    .AsType());
+                    .AsType()) ?? throw new InvalidOperationException("Could not instantiate the object.");
 
         /// <summary>
         ///     Instantiates an object of the specified type.
@@ -196,10 +193,11 @@ namespace IX.StandardExtensions.Extensions
                         info,
                         nameof(info))
                     .AsType(),
-                parameters);
+                parameters) ??
+            throw new InvalidOperationException("Could not instantiate the object.");
 
-#endregion
+        #endregion
 
-#endregion
+        #endregion
     }
 }
