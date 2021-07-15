@@ -17,7 +17,8 @@ namespace IX.System.Threading
     /// </summary>
     /// <seealso cref="IX.System.Threading.IReaderWriterLock" />
     [PublicAPI]
-    public class ReaderWriterLockSlim : DisposableBase, IReaderWriterLock
+    public class ReaderWriterLockSlim : DisposableBase,
+        IReaderWriterLock
     {
 #region Internal state
 
@@ -31,7 +32,7 @@ namespace IX.System.Threading
 
 #endregion
 
-#region Constructors
+#region Constructors and destructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ReaderWriterLockSlim" /> class.
@@ -104,8 +105,7 @@ namespace IX.System.Threading
         /// </summary>
         /// <param name="lock">The locker.</param>
         /// <returns>The result of the conversion.</returns>
-        public static implicit operator ReaderWriterLockSlim(GlobalThreading.ReaderWriterLockSlim @lock) =>
-            new ReaderWriterLockSlim(@lock);
+        public static implicit operator ReaderWriterLockSlim(GlobalThreading.ReaderWriterLockSlim @lock) => new(@lock);
 
         /// <summary>
         ///     Performs an implicit conversion from <see cref="ReaderWriterLockSlim" /> to

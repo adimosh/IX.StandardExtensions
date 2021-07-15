@@ -41,11 +41,11 @@ namespace IX.System.Threading
         void WaitOne();
 
         /// <summary>
-        /// Enters a wait period and, should there be no signal set, blocks the thread calling.
+        ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>
-        /// A potentially awaitable value task.
+        ///     A potentially awaitable value task.
         /// </returns>
         ValueTask WaitOneAsync(CancellationToken cancellationToken = default);
 
@@ -68,7 +68,9 @@ namespace IX.System.Threading
         ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
         ///     is reached.
         /// </returns>
-        ValueTask<bool> WaitOneAsync(int millisecondsTimeout, CancellationToken cancellationToken = default);
+        ValueTask<bool> WaitOneAsync(
+            int millisecondsTimeout,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
@@ -89,7 +91,9 @@ namespace IX.System.Threading
         ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
         ///     is reached.
         /// </returns>
-        ValueTask<bool> WaitOneAsync(double millisecondsTimeout, CancellationToken cancellationToken = default);
+        ValueTask<bool> WaitOneAsync(
+            double millisecondsTimeout,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
@@ -110,7 +114,9 @@ namespace IX.System.Threading
         ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
         ///     is reached.
         /// </returns>
-        ValueTask<bool> WaitOneAsync(TimeSpan timeout, CancellationToken cancellationToken = default);
+        ValueTask<bool> WaitOneAsync(
+            TimeSpan timeout,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
@@ -213,6 +219,33 @@ namespace IX.System.Threading
             TimeSpan timeout,
             bool exitSynchronizationDomain,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///     Gets the awaiter for this event, so that it can be awaited on using &quot;await mre;&quot;.
+        /// </summary>
+        /// <returns>An awaiter that works the same as <see cref="WaitOne()" />, continuing on a different thread.</returns>
+        SetResetEventAwaiter GetAwaiter();
+
+        /// <summary>
+        ///     Gets the awaiter for this event, with a timeout.
+        /// </summary>
+        /// <param name="timeout">The timeout to wait until expiring.</param>
+        /// <returns>An awaiter that works the same as <see cref="WaitOne(TimeSpan)" />, continuing on a different thread.</returns>
+        SetResetEventAwaiterWithTimeout WithTimeout(TimeSpan timeout);
+
+        /// <summary>
+        ///     Gets the awaiter for this event, with a timeout.
+        /// </summary>
+        /// <param name="timeout">The timeout to wait until expiring.</param>
+        /// <returns>An awaiter that works the same as <see cref="WaitOne(double)" />, continuing on a different thread.</returns>
+        SetResetEventAwaiterWithTimeout WithTimeout(double timeout);
+
+        /// <summary>
+        ///     Gets the awaiter for this event, with a timeout.
+        /// </summary>
+        /// <param name="timeout">The timeout to wait until expiring.</param>
+        /// <returns>An awaiter that works the same as <see cref="WaitOne(int)" />, continuing on a different thread.</returns>
+        SetResetEventAwaiterWithTimeout WithTimeout(int timeout);
 
 #endregion
     }
