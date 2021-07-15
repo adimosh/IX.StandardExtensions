@@ -33,7 +33,7 @@ namespace IX.StandardExtensions.Extensions
 
                 registeredHandle = ThreadPool.RegisterWaitForSingleObject(
                     handle,
-                    (state, timedOut) => ((TaskCompletionSource<bool>)state).TrySetResult(!timedOut),
+                    (state, timedOut) => ((TaskCompletionSource<bool>)state!).TrySetResult(!timedOut),
                     tcs,
                     timeout,
                     true);

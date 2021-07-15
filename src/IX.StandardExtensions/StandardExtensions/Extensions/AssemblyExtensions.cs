@@ -2,10 +2,11 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Extensions
@@ -16,20 +17,31 @@ namespace IX.StandardExtensions.Extensions
     [PublicAPI]
     public static class AssemblyExtensions
     {
-#pragma warning disable HAA0603 // Delegate allocation from a method group - This is acceptable for now
+#region Methods
+
+#region Static methods
+
         /// <summary>
         ///     Gets the types assignable from a specified type from an assembly.
         /// </summary>
         /// <typeparam name="T">The type that all fetched types must be assignable from.</typeparam>
         /// <param name="assembly">The assembly to search.</param>
         /// <returns>An enumeration of types that are assignable from the given type.</returns>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Unfortunately, this is not avoidable.")]
         public static IEnumerable<TypeInfo> GetTypesAssignableFrom<T>(this Assembly assembly)
         {
-            return assembly?.DefinedTypes?.Where(Filter) ?? throw new ArgumentNullException(nameof(assembly));
+            return Requires.NotNull(
+                    assembly,
+                    nameof(assembly))
+                .DefinedTypes.Where(Filter);
 
-            bool Filter(TypeInfo p)
+            static bool Filter(TypeInfo p)
             {
-                return typeof(T).GetTypeInfo().IsAssignableFrom(p);
+                return typeof(T).GetTypeInfo()
+                    .IsAssignableFrom(p);
             }
         }
 
@@ -39,15 +51,25 @@ namespace IX.StandardExtensions.Extensions
         /// <typeparam name="T">The type that all fetched types must be assignable from.</typeparam>
         /// <param name="assemblies">The assemblies to search.</param>
         /// <returns>An enumeration of types that are assignable from the given type.</returns>
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Unfortunately, this is not avoidable.")]
         public static IEnumerable<TypeInfo> GetTypesAssignableFrom<T>(this IEnumerable<Assembly> assemblies)
         {
-            return assemblies?.SelectMany(GetAssignableTypes) ?? throw new ArgumentNullException(nameof(assemblies));
+            return Requires.NotNull(
+                    assemblies,
+                    nameof(assemblies))
+                .SelectMany(GetAssignableTypes);
 
-            IEnumerable<TypeInfo> GetAssignableTypes(Assembly p)
+            static IEnumerable<TypeInfo> GetAssignableTypes(Assembly p)
             {
                 return p.GetTypesAssignableFrom<T>();
             }
         }
-#pragma warning restore HAA0603 // Delegate allocation from a method group
+
+#endregion
+
+#endregion
     }
 }

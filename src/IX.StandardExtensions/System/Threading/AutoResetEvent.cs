@@ -326,6 +326,33 @@ namespace IX.System.Threading
         /// <returns>The <see cref="GlobalThreading.ManualResetEvent" /> that is encapsulated in this instance.</returns>
         public GlobalThreading.AutoResetEvent ToAutoResetEvent() => this.sre;
 
+        /// <summary>
+        /// Gets the awaiter for this event, so that it can be awaited on using &quot;await mre;&quot;.
+        /// </summary>
+        /// <returns>An awaiter that works the same as <see cref="WaitOne()"/>, continuing on a different thread.</returns>
+        public SetResetEventAwaiter GetAwaiter() => new(this);
+
+        /// <summary>
+        /// Gets the awaiter for this event, with a timeout.
+        /// </summary>
+        /// <param name="timeout">The timeout to wait until expiring.</param>
+        /// <returns>An awaiter that works the same as <see cref="WaitOne(TimeSpan)"/>, continuing on a different thread.</returns>
+        public SetResetEventAwaiterWithTimeout WithTimeout(TimeSpan timeout) => new(this, timeout);
+
+        /// <summary>
+        /// Gets the awaiter for this event, with a timeout.
+        /// </summary>
+        /// <param name="timeout">The timeout to wait until expiring.</param>
+        /// <returns>An awaiter that works the same as <see cref="WaitOne(double)"/>, continuing on a different thread.</returns>
+        public SetResetEventAwaiterWithTimeout WithTimeout(double timeout) => new(this, timeout);
+
+        /// <summary>
+        /// Gets the awaiter for this event, with a timeout.
+        /// </summary>
+        /// <param name="timeout">The timeout to wait until expiring.</param>
+        /// <returns>An awaiter that works the same as <see cref="WaitOne(int)"/>, continuing on a different thread.</returns>
+        public SetResetEventAwaiterWithTimeout WithTimeout(int timeout) => new(this, timeout);
+
 #region Disposable
 
         /// <summary>

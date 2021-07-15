@@ -4,25 +4,31 @@
 
 using System.Collections;
 using IX.StandardExtensions.Contracts;
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Extensions
 {
     /// <summary>
-    /// Extensions for the <see cref="BitArray"/> class.
+    ///     Extensions for the <see cref="BitArray" /> class.
     /// </summary>
+    [PublicAPI]
     public static class BitArrayExtensions
     {
+#region Methods
+
+#region Static methods
+
         /// <summary>
-        /// Adds one from the least significant byte, with carryover up to the most significant byte.
+        ///     Adds one from the least significant byte, with carryover up to the most significant byte.
         /// </summary>
         /// <param name="source">The source bit array.</param>
         public static void AddOne(this BitArray source)
         {
-            var ba = Requires.NotNull(
+            BitArray? ba = Requires.NotNull(
                 source,
                 nameof(source));
 
-            for (int i = 0; i < ba.Length; i++)
+            for (var i = 0; i < ba.Length; i++)
             {
                 if (ba[i])
                 {
@@ -34,5 +40,9 @@ namespace IX.StandardExtensions.Extensions
                 }
             }
         }
+
+#endregion
+
+#endregion
     }
 }

@@ -36,8 +36,9 @@ namespace IX.UnitTests.StandardExtensions.Threading
         /// <summary>
         /// Test basic Fire.AndForget mechanism.
         /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [Fact(DisplayName = "Test basic Fire.AndForget mechanism")]
-        public void Test1()
+        public async Task Test1()
         {
             // ARRANGE
             int initialValue = DataGenerator.RandomInteger();
@@ -48,7 +49,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
             // ACT
             using (var mre = new ManualResetEventSlim())
             {
-                Work.OnThreadPoolAsync(
+                _ = Work.OnThreadPoolAsync(
                     ev =>
                     {
                         Thread.Sleep(waitTime);
@@ -61,7 +62,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
                     },
                     mre);
 
-                result = mre.WaitOne(MaxWaitTime);
+                result = await mre.WithTimeout(MaxWaitTime);
             }
 
             // ASSERT
@@ -81,8 +82,9 @@ namespace IX.UnitTests.StandardExtensions.Threading
         /// <summary>
         /// Test Fire.AndForget distinct threading mechanism.
         /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [Fact(DisplayName = "Test Fire.AndForget distinct threading mechanism")]
-        public void Test2()
+        public async Task Test2()
         {
             // ARRANGE
             int initialValue = Thread.CurrentThread.ManagedThreadId;
@@ -93,7 +95,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
             // ACT
             using (var mre = new ManualResetEventSlim())
             {
-                Work.OnThreadPoolAsync(
+                _ = Work.OnThreadPoolAsync(
                     ev =>
                     {
                         Thread.Sleep(waitTime);
@@ -106,7 +108,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
                     },
                     mre);
 
-                result = mre.WaitOne(MaxWaitTime);
+                result = await mre.WithTimeout(MaxWaitTime);
             }
 
             // ASSERT
@@ -126,8 +128,9 @@ namespace IX.UnitTests.StandardExtensions.Threading
         /// <summary>
         /// Test Fire.AndForget exception mechanism.
         /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [Fact(DisplayName = "Test Fire.AndForget exception mechanism")]
-        public void Test3()
+        public async Task Test3()
         {
             // ARRANGE
             string argumentName = DataGenerator.RandomLowercaseString(
@@ -144,7 +147,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
 #if DEBUG
                 DateTime dt = DateTime.UtcNow;
 #endif
-                Work.OnThreadPoolAsync(
+                _ = Work.OnThreadPoolAsync(
                     state =>
                     {
 #if DEBUG
@@ -178,7 +181,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
                     null,
                     TaskContinuationOptions.OnlyOnFaulted);
 
-                result = mre.WaitOne(MaxWaitTime);
+                result = await mre.WithTimeout(MaxWaitTime);
 #if DEBUG
                 this.output.WriteLine($"Outer method unlocked after {(DateTime.UtcNow - dt).TotalMilliseconds} ms.");
 #endif
@@ -190,8 +193,8 @@ namespace IX.UnitTests.StandardExtensions.Threading
                 Assert.True(result);
                 Assert.NotNull(ex);
                 var aggregateException = Assert.IsType<AggregateException>(ex);
-                var singleExcepion = Assert.Single(aggregateException.InnerExceptions);
-                var anpiex = Assert.IsType<ArgumentNotPositiveIntegerException>(singleExcepion);
+                var singleException = Assert.Single(aggregateException.InnerExceptions);
+                var anpiex = Assert.IsType<ArgumentNotPositiveIntegerException>(singleException);
                 Assert.Equal(argumentName, anpiex.ParamName);
             }
             catch

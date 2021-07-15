@@ -115,7 +115,7 @@ namespace IX.StandardExtensions.Threading
                 typeof(TCollection),
                 (
                     collectionType,
-                    internalCollection) =>
+                    _) =>
                 {
                     // Get used types
                     MethodInfo getEnumeratorMethodInfo = collectionType.GetMethod(

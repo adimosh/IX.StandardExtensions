@@ -191,7 +191,7 @@ namespace IX.StandardExtensions.Efficiency
         ///     value has not been created.
         /// </returns>
         /// <exception cref="NullReferenceException">The <see cref="InvalidatingLazy{T}.Value"></see> property is null.</exception>
-        public override string ToString() => this.internalLazy.ToString();
+        public override string ToString() => this.internalLazy.ToString() ?? string.Empty;
 
         /// <summary>
         ///     Invalidates the instance stored into this lazy initializer, and allows a new one to be created.

@@ -58,7 +58,7 @@ namespace IX.StandardExtensions.Extensions
             cancellationToken.Register(
                 objectState =>
                 {
-                    (var innerCallback, TState innerState) = ((Action<TState>, TState))objectState;
+                    (var innerCallback, TState innerState) = ((Action<TState>, TState))objectState!;
 
                     innerCallback(innerState);
                 },
@@ -112,7 +112,7 @@ namespace IX.StandardExtensions.Extensions
             cancellationToken.Register(
                 objectState =>
                 {
-                    (var innerCallback, TState innerState) = ((Action<TState>, TState))objectState;
+                    (var innerCallback, TState innerState) = ((Action<TState>, TState))objectState!;
 
                     innerCallback(innerState);
                 },
