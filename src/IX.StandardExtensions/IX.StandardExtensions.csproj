@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.7.9</VersionPrefix>
+    <VersionPrefix>0.7.10</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
@@ -307,7 +307,7 @@
 
   <ItemGroup Condition="'$(TargetFrameworkAdvanced)'!='true'">
     <PackageReference Include="System.Memory" Version="[4.5.4,5)" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="[4.5.4,5)" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFrameworkIsFramework)'!='true'">
