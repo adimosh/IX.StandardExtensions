@@ -118,7 +118,7 @@ namespace IX.UnitTests.Abstractions.Collections
         public void Test3()
         {
             // ARRANGE
-            var seq = new System.Collections.Generic.Queue<int>();
+            var seq = new Queue<int>();
             int int1 = DataGenerator.RandomInteger();
             int int2 = DataGenerator.RandomInteger();
             int int3 = DataGenerator.RandomInteger();
@@ -269,7 +269,7 @@ namespace IX.UnitTests.Abstractions.Collections
         public void Test6()
         {
             // ARRANGE
-            var seq = new System.Collections.Generic.Stack<int>();
+            var seq = new Stack<int>();
             int int1 = DataGenerator.RandomInteger();
             int int2 = DataGenerator.RandomInteger();
             int int3 = DataGenerator.RandomInteger();

@@ -367,6 +367,22 @@ namespace IX.System.Collections.Generic
             return this.internalDictionary.GetEnumerator();
         }
 
+        /// <summary>
+        /// Enumerates values based on key levels.
+        /// </summary>
+        /// <returns>A values enumerable that enumerates based on key levels.</returns>
+        public IEnumerable<TValue> EnumerateValuesOnLevelKeys()
+        {
+            foreach (var keyList in this.keyLevels.OrderBy(p => p.Key)
+                .Select(p => p.Value))
+            {
+                foreach (var key in keyList)
+                {
+                    yield return this.internalDictionary[key];
+                }
+            }
+        }
+
 #region Disposable
 
         /// <summary>

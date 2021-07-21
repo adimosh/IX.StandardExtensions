@@ -18,9 +18,8 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Under the hood upgrades
-- A few extra extensions
-- Set/Reset evets can now be awaited on</PackageReleaseNotes>
+    <PackageReleaseNotes>- Logging extensions improved
+- Level dictionary now offers the option to enumerate</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
