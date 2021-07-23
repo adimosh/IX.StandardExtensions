@@ -18,7 +18,7 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Merged IX.Observable
+    <PackageReleaseNotes>- Logging extensions improved
 - Level dictionary now offers the option to enumerate</PackageReleaseNotes>
   </PropertyGroup>
 
@@ -44,11 +44,6 @@
 
   <!-- Text templates -->
   <ItemGroup>
-    <Compile Update="Observable\ConcurrentObservableDictionary{TKey,TValue}.ActionsAndFuncs.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ConcurrentObservableDictionary{TKey,TValue}.ActionsAndFuncs.tt</DependentUpon>
-    </Compile>
     <Compile Update="Observable\ObservableBase.ActionsAndFuncs.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -196,10 +191,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Update="Observable\ConcurrentObservableDictionary{TKey,TValue}.ActionsAndFuncs.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ConcurrentObservableDictionary{TKey,TValue}.ActionsAndFuncs.cs</LastGenOutput>
-    </None>
     <None Update="Observable\ObservableBase.ActionsAndFuncs.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ObservableBase.ActionsAndFuncs.cs</LastGenOutput>

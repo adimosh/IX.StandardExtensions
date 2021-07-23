@@ -264,4 +264,7 @@
   <data name="TheGivenCollectionToRemoveIsNotContainedInTheInitialCollection" xml:space="preserve">
     <value>The given collection to remove is not contained in the initial collection.</value>
   </data>
+  <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
+    <value>Attempting to access an undo/redo stack while undo is disabled is not allowed.</value>
+  </data>
 </root>

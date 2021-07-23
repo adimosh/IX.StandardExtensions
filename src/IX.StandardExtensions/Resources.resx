@@ -264,4 +264,7 @@
   <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
     <value>Undo and Redo operations are not supported while an explicit transaction block is open.</value>
   </data>
+  <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
+    <value>Attempting to access an undo/redo stack while undo is disabled is not allowed.</value>
+  </data>
 </root>

@@ -79,6 +79,15 @@ namespace IX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attempting to access an undo/redo stack while undo is disabled is not allowed..
+        /// </summary>
+        internal static string AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed {
+            get {
+                return ResourceManager.GetString("AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An item with the same key already exists in this dictionary..
         /// </summary>
         internal static string DictionaryItemAlreadyExists {

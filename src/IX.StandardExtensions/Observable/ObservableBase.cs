@@ -1,0 +1,117 @@
+// <copyright file="ObservableBase.cs" company="Adrian Mos">
+// Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
+// </copyright>
+
+using System;
+using System.Threading;
+using IX.StandardExtensions.ComponentModel;
+using IX.StandardExtensions.Threading;
+using IX.System.Threading;
+using JetBrains.Annotations;
+
+namespace IX.Observable
+{
+    /// <summary>
+    ///     A base class for collections that are observable.
+    /// </summary>
+    /// <seealso cref="NotifyCollectionChangedInvokerBase" />
+    [PublicAPI]
+    public abstract partial class ObservableBase : NotifyCollectionChangedInvokerBase
+    {
+#region Constructors and destructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ObservableBase" /> class.
+        /// </summary>
+        protected ObservableBase() { }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ObservableBase" /> class.
+        /// </summary>
+        /// <param name="context">The synchronization context to use, if any.</param>
+        protected ObservableBase(SynchronizationContext context)
+            : base(context) { }
+
+#endregion
+
+#region Properties and indexers
+
+        /// <summary>
+        ///     Gets a synchronization lock item to be used when trying to synchronize read/write operations between threads.
+        /// </summary>
+        /// <remarks>
+        ///     <para>
+        ///         On non-concurrent collections, this should be left <see langword="null" /> (<see langword="Nothing" /> in
+        ///         Visual Basic).
+        ///     </para>
+        ///     <para>
+        ///         On concurrent collections, this should be overridden to return an instance. All read/write operations on the
+        ///         underlying constructs should rely on
+        ///         the same instance of <see cref="IReaderWriterLock" /> that is returned here to synchronize.
+        ///     </para>
+        /// </remarks>
+        protected virtual IReaderWriterLock? SynchronizationLock => null;
+
+#endregion
+
+#region Methods
+
+        /// <summary>
+        ///     Produces a reader lock in concurrent collections.
+        /// </summary>
+        /// <returns>A disposable object representing the lock.</returns>
+        protected ReadOnlySynchronizationLocker ReadLock() => new(this.SynchronizationLock);
+
+        /// <summary>
+        ///     Invokes using a reader lock.
+        /// </summary>
+        /// <param name="action">An action that is called.</param>
+        protected void ReadLock(Action action)
+        {
+            using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+            {
+                action();
+            }
+        }
+
+        /// <summary>
+        ///     Gets a result from an invoker using a reader lock.
+        /// </summary>
+        /// <param name="action">An action that is called to get the result.</param>
+        /// <typeparam name="T">The type of the object to return.</typeparam>
+        /// <returns>A disposable object representing the lock.</returns>
+        protected T ReadLock<T>(Func<T> action)
+        {
+            using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+            {
+                return action();
+            }
+        }
+
+        /// <summary>
+        ///     Produces a writer lock in concurrent collections.
+        /// </summary>
+        /// <returns>A disposable object representing the lock.</returns>
+        protected WriteOnlySynchronizationLocker WriteLock() => new(this.SynchronizationLock);
+
+        /// <summary>
+        ///     Invokes using a writer lock.
+        /// </summary>
+        /// <param name="action">An action that is called.</param>
+        protected void WriteLock(Action action)
+        {
+            using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+            {
+                action();
+            }
+        }
+
+        /// <summary>
+        ///     Produces an upgradeable reader lock in concurrent collections.
+        /// </summary>
+        /// <returns>A disposable object representing the lock.</returns>
+        protected ReadWriteSynchronizationLocker ReadWriteLock() => new(this.SynchronizationLock);
+
+#endregion
+    }
+}
