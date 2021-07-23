@@ -264,4 +264,7 @@
   <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
     <value>Las operaciones Deshacer y Rehacer no se admiten mientras está abierto un bloque de transacciones explícito.</value>
   </data>
+  <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
+    <value>No se permite intentar acceder a una pila de deshacer/rehacer mientras deshacer está deshabilitado.</value>
+  </data>
 </root>

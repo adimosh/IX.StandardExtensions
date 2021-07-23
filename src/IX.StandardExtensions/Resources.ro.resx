@@ -264,4 +264,7 @@
   <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
     <value>Operațiunile de anulare și refacere nu sunt acceptate în timp ce este deschis un bloc de tranzacții explicit.</value>
   </data>
+  <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
+    <value>Încercarea de a accesa o stivă de anulare/refacere în timp ce anularea este dezactivată nu este permisă.</value>
+  </data>
 </root>

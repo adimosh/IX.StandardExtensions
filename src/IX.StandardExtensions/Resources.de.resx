@@ -264,4 +264,7 @@
   <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
     <value>Rückgängig- und Wiederholen-Vorgänge werden nicht unterstützt, während ein expliziter Transaktionsblock geöffnet ist.</value>
   </data>
+  <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
+    <value>Der Versuch, auf einen Rückgängig/Wiederholen-Stack zuzugreifen, während das Rückgängigmachen deaktiviert ist, ist nicht zulässig.</value>
+  </data>
 </root>

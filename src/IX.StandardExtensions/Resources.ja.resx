@@ -264,4 +264,7 @@
   <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
     <value>明示的なトランザクション ブロックが開いている間は、元に戻す操作とやり直し操作はサポートされません。</value>
   </data>
+  <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
+    <value>元に戻す/やり直しスタックにアクセスしようとしても、元に戻す操作が無効になっていません。</value>
+  </data>
 </root>

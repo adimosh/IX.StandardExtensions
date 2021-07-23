@@ -264,4 +264,7 @@
   <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
     <value>Le operazioni annulla e Rifa non sono supportate mentre è aperto un blocco di transazioni esplicito.</value>
   </data>
+  <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
+    <value>Il tentativo di accedere a uno stack di annullamento/ro mentre l'annullamento è disabilitato non è consentito.</value>
+  </data>
 </root>

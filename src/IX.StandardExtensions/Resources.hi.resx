@@ -117,154 +117,154 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
-    <value>Операции отмены и повтора не поддерживаются, пока открыт явный блок транзакций.</value>
-  </data>
   <data name="ErrorLengthGoesPastArrayLimits" xml:space="preserve">
-    <value>Длина должна быть достаточно мала, чтобы не привести к операции за пределами массива.</value>
+    <value>सरणी की सीमा के बाहर एक ऑपरेशन में परिणाम नहीं करने के लिए लंबाई काफी छोटी होनी चाहिए।</value>
   </data>
   <data name="ErrorLengthMustBeAPositiveInteger" xml:space="preserve">
-    <value>Длина должна быть положительным целым числом.</value>
+    <value>लंबाई एक सकारात्मक पूर्णांक होना चाहिए।</value>
   </data>
   <data name="ErrorNotImplementedByDesign" xml:space="preserve">
-    <value>Этот элемент не реализован по замыслу.</value>
+    <value>यह सदस्य डिजाइन द्वारा लागू नहीं किया जाता है।</value>
   </data>
   <data name="ErrorSourceIndexMustPointToALocationWithinTheArray" xml:space="preserve">
-    <value>Исходный индекс должен указывать на расположение в массиве.</value>
+    <value>स्रोत सूचकांक को सरणी के भीतर किसी स्थान पर इंगित करना चाहिए।</value>
   </data>
   <data name="ErrorArgumentInvalidType" xml:space="preserve">
-    <value>Предоставленный коробчатый или полиморфный аргумент неправильного типа.</value>
+    <value>आपूर्ति बॉक्स्ड या बहुरूपिक तर्क एक गलत प्रकार का है।</value>
   </data>
   <data name="ErrorStopRetrying" xml:space="preserve">
-    <value>Операция, вызвавшая этот метод, должна прекратить повторную попытку, так как критическая ошибка, изменение состояния или невосстановимые условия среды гарантируют сбой при последующих повторных попытках.</value>
+    <value>ऑपरेशन है कि इस विधि के लिए एक फोन किया है फिर से प्रयास बंद कर देना चाहिए, एक महत्वपूर्ण त्रुटि के रूप में, एक राज्य परिवर्तन या अप्राप्य पर्यावरण की स्थिति बाद में retries पर विफलता की गारंटी ।</value>
   </data>
   <data name="ErrorArgumentNotPositiveInteger" xml:space="preserve">
-    <value>Аргумент не является положительным целым числом.</value>
+    <value>तर्क एक सकारात्मक पूर्णांक नहीं है ।</value>
   </data>
   <data name="SingleOrDefaultMultipleElements" xml:space="preserve">
-    <value>Входная последовательность содержит более одного элемента.</value>
+    <value>इनपुट सीक्वेंस में एक से अधिक तत्व होते हैं।</value>
   </data>
   <data name="AnInvalidSetOfArgumentsWasSpecifiedArgumentNames" xml:space="preserve">
-    <value>Указан недопустимый набор аргументов. Имена аргументов: {0}</value>
+    <value>तर्कों का एक अमान्य सेट निर्दिष्ट किया गया था । तर्क के नाम: {0}</value>
   </data>
   <data name="TheProvidedArgumentsDoNotFormAValidRangeOfValuesArguments" xml:space="preserve">
-    <value>Предоставленные аргументы не образуют допустимый диапазон значений. Аргументы: {0}</value>
+    <value>प्रदान किए गए तर्क मूल्यों की एक वैध श्रृंखला नहीं बनाते हैं। तर्क: {0}</value>
   </data>
   <data name="ErrorArgumentNotPositive" xml:space="preserve">
-    <value>Аргумент не является положительным числом.</value>
+    <value>तर्क कोई सकारात्मक संख्या नहीं है ।</value>
   </data>
   <data name="ErrorArgumentNullOrEmptyString" xml:space="preserve">
-    <value>Строковый аргумент имеет значение null (Nothing в Visual Basic) или пустой.</value>
+    <value>स्ट्रिंग तर्क अशक्त है (दृश्य बुनियादी में कुछ भी नहीं) या खाली है।</value>
   </data>
   <data name="ErrorArgumentNullOrWhiteSpaceString" xml:space="preserve">
-    <value>Строковый аргумент имеет значение null (Nothing в Visual Basic), пустой или только пробел.</value>
+    <value>स्ट्रिंग तर्क अशक्त है (दृश्य बुनियादी में कुछ भी नहीं), खाली या व्हाइटस्पेस-केवल।</value>
   </data>
   <data name="ErrorArgumentNullOrEmptyBinary" xml:space="preserve">
-    <value>Аргумент имеет значение null (Nothing в Visual Basic) или пустой массив байтов.</value>
+    <value>तर्क अशक्त (दृश्य बुनियादी में कुछ भी नहीं) या एक खाली बाइट सरणी है।</value>
   </data>
   <data name="ErrorArgumentNullOrEmptyCollection" xml:space="preserve">
-    <value>Аргумент коллекции имеет значение null (Nothing в Visual Basic) или пуст.</value>
+    <value>संग्रह तर्क अशक्त है (दृश्य बुनियादी में कुछ भी नहीं) या खाली है।</value>
   </data>
   <data name="AContractConditionIsNotBeingMet" xml:space="preserve">
-    <value>Условие контракта не выполняется.</value>
+    <value>ठेके की शर्त पूरी नहीं हो पा रही है।</value>
   </data>
   <data name="ErrorArgumentNotValidIndex" xml:space="preserve">
-    <value>Аргумент нельзя считать допустимым индексом.</value>
+    <value>तर्क को वैध सूचकांक नहीं माना जा सकता।</value>
   </data>
   <data name="ErrorArgumentNotValidLength" xml:space="preserve">
-    <value>Аргумент нельзя считать допустимой длиной, так как он должен быть положительным целым числом, меньшим длины коллекции, для которого он используется.</value>
+    <value>तर्क को वैध लंबाई नहीं माना जा सकता, क्योंकि इसके लिए उपयोग किए जाने वाले संग्रह की लंबाई से कम सकारात्मक पूर्णांक होना चाहिए।</value>
   </data>
   <data name="ErrorArgumentNullOrEmptyArray" xml:space="preserve">
-    <value>Аргумент массива имеет значение null (Nothing в Visual Basic), или пуст, или не имеет требуемой длины.</value>
+    <value>सरणी तर्क अशक्त है (दृश्य बुनियादी में कुछ भी नहीं), या खाली है, या आवश्यक लंबाई नहीं है ।</value>
   </data>
   <data name="ErrorArgumentDoesNotMatch" xml:space="preserve">
-    <value>Аргумент не соответствует ожидаемому шаблону или не может быть неявно сопоставлен с любым поддерживаемым входным данным.</value>
+    <value>तर्क अपेक्षित पैटर्न से मेल नहीं खाती है, या किसी भी समर्थित इनपुट से स्पष्टतः मेल नहीं खाती है।</value>
   </data>
   <data name="ErrorArgumentInvalidPath" xml:space="preserve">
-    <value>Предоставленный аргумент нельзя использовать в качестве допустимого пути.</value>
+    <value>आपूर्ति किए गए तर्क को वैध मार्ग के रूप में उपयोग नहीं किया जा सकता है।</value>
   </data>
   <data name="MoveNextNotInvoked" xml:space="preserve">
-    <value>Перед вызовом метода Current необходимо сначала вызвать метод MoveNext.</value>
+    <value>करंट कॉल करने से पहले आपको सबसे पहले मूवनेक्स्ट विधि का आह्वान करना होगा।</value>
   </data>
   <data name="ErrorKeyFoundInDictionary" xml:space="preserve">
-    <value>Данный ключ уже присутствовал в словаре.</value>
+    <value>दी गई चाबी पहले से ही शब्दकोश में मौजूद थी।</value>
   </data>
   <data name="ErrorQueueIsEmpty" xml:space="preserve">
-    <value>В настоящее время очередь пуста.</value>
+    <value>फिलहाल कतार खाली है।</value>
   </data>
   <data name="ErrorStackIsEmpty" xml:space="preserve">
-    <value>Стек в настоящее время пуст.</value>
+    <value>फिलहाल ढेर खाली है।</value>
   </data>
   <data name="LimitArgumentNegativeExceptionDefaultTextNoArgument" xml:space="preserve">
-    <value>Аргумент Limit должен быть неотрицательным целым числом.</value>
+    <value>सीमित तर्क एक गैर नकारात्मक पूर्णांक होना चाहिए ।</value>
   </data>
   <data name="LimitArgumentNegativeExceptionDefaultTextWithArgument" xml:space="preserve">
-    <value>Аргумент Limit должен быть неотрицательным целым числом. Имя аргумента: {0}</value>
+    <value>सीमित तर्क एक गैर नकारात्मक पूर्णांक होना चाहिए । तर्क का नाम: {0}</value>
   </data>
   <data name="ErrorPersistedQueuesCannotBeCopied" xml:space="preserve">
-    <value>Попытка скопировать все содержимое сохраненной очереди не поддерживается.</value>
+    <value>एक कायम कतार की पूरी सामग्री को कॉपी करने का प्रयास एक समर्थित ऑपरेशन नहीं है।</value>
   </data>
   <data name="ErrorPersistedQueuesCannotBeEnumerated" xml:space="preserve">
-    <value>Попытка перечислить сохраненную очередь не поддерживается.</value>
+    <value>एक कायम कतार की गणना करने का प्रयास एक समर्थित ऑपरेशन नहीं है।</value>
   </data>
   <data name="ErrorTheQueueIsCurrentlyInDisasterMode" xml:space="preserve">
-    <value>Очередь в настоящее время находится в аварийном режиме, операции перечисления отключены по замыслу.</value>
+    <value>कतार वर्तमान में आपदा मोड में है, गणना संचालन डिजाइन द्वारा अक्षम हैं ।</value>
   </data>
   <data name="ErrorArgumentInRange" xml:space="preserve">
-    <value>Аргумент находится в нежелательном диапазоне.</value>
+    <value>तर्क अवांछित रेंज में है ।</value>
   </data>
   <data name="ErrorArgumentNotGreaterThan" xml:space="preserve">
-    <value>Аргумент не превышает желаемого значения.</value>
+    <value>तर्क एक वांछित मूल्य से अधिक नहीं है ।</value>
   </data>
   <data name="ErrorArgumentNotGreaterThanOrEqualTo" xml:space="preserve">
-    <value>Аргумент не меньше или равен желаемому значению.</value>
+    <value>तर्क किसी वांछित मूल्य से कम या बराबर नहीं है ।</value>
   </data>
   <data name="ErrorArgumentNotInRange" xml:space="preserve">
-    <value>Аргумент не находится в нужном диапазоне.</value>
+    <value>तर्क वांछित सीमा में नहीं है।</value>
   </data>
   <data name="ErrorArgumentNotLessThan" xml:space="preserve">
-    <value>Аргумент не меньше желаемого значения.</value>
+    <value>तर्क किसी वांछित मूल्य से कम नहीं है।</value>
   </data>
   <data name="ErrorArgumentNotLessThanOrEqualTo" xml:space="preserve">
-    <value>Аргумент не меньше или равен желаемому значению.</value>
+    <value>तर्क किसी वांछित मूल्य से कम या बराबर नहीं है ।</value>
   </data>
   <data name="ErrorArgumentNotNegative" xml:space="preserve">
-    <value>Аргумент не является отрицательным числом.</value>
+    <value>तर्क नकारात्मक संख्या नहीं है ।</value>
   </data>
   <data name="ErrorArgumentNotNegativeInteger" xml:space="preserve">
-    <value>Аргумент не является отрицательным целым числом.</value>
+    <value>तर्क कोई नकारात्मक पूर्णांक नहीं है ।</value>
   </data>
   <data name="DictionaryItemAlreadyExists" xml:space="preserve">
-    <value>Элемент с таким же ключом уже существует в этом словаре.</value>
+    <value>एक ही कुंजी के साथ एक आइटम पहले से ही इस शब्दकोश में मौजूद है।</value>
   </data>
   <data name="ItemAlreadyCapturedIntoUndoContextException" xml:space="preserve">
-    <value>Операция не может быть завершена, так как текущий элемент захвачен существующим контекстом отмены.</value>
+    <value>ऑपरेशन पूरा नहीं किया जा सका क्योंकि वर्तमान आइटम मौजूदा पूर्ववत संदर्भ से फंसा हुआ है ।</value>
   </data>
   <data name="ItemIsInEditModeExceptionDefaultMessage" xml:space="preserve">
-    <value>Операция не может быть завершена, так как текущий элемент находится в режиме редактирования.</value>
+    <value>वर्तमान आइटम एडिट मोड में होने के कारण ऑपरेशन पूरा नहीं हो सका।</value>
   </data>
   <data name="ItemNotCapturedIntoUndoContextException" xml:space="preserve">
-    <value>Операция не может быть завершена, так как текущий элемент не попадает в существующий контекст отмены.</value>
+    <value>ऑपरेशन पूरा नहीं किया जा सका क्योंकि वर्तमान आइटम मौजूदा पूर्ववत संदर्भ में नहीं फंसा है ।</value>
   </data>
   <data name="ItemNotInEditModeExceptionDefaultMessage" xml:space="preserve">
-    <value>Операция не может быть завершена, так как текущий элемент не находится в режиме редактирования.</value>
+    <value>वर्तमान आइटम एडिट मोड में नहीं होने के कारण ऑपरेशन पूरा नहीं हो सका।</value>
   </data>
   <data name="NoHistoryLevelsException" xml:space="preserve">
-    <value>Стеки отмены/повтора не могут быть инициализированы, так как не определены уровни истории.</value>
+    <value>कोई पूर्ववत/फिर से तैयार ढेर शुरू किया जा सकता है, के रूप में वहां कोई इतिहास का स्तर परिभाषित कर रहे हैं ।</value>
   </data>
   <data name="OperationItemTypeError" xml:space="preserve">
-    <value>Тип аргумента не совместим со списком.</value>
+    <value>तर्क का प्रकार सूची में एक संगत प्रकार नहीं है।</value>
   </data>
   <data name="TheCollectionIsCapturedIntoAContextItCannotStartAnExplicitTransaction" xml:space="preserve">
-    <value>Коллекция записывается в контекст, она не может запустить явную транзакцию.</value>
+    <value>संग्रह को एक संदर्भ में कैप्चर किया गया है, यह एक स्पष्ट लेनदेन शुरू नहीं कर सकता है।</value>
   </data>
   <data name="TheGivenCollectionToRemoveIsNotContainedInTheInitialCollection" xml:space="preserve">
-    <value>Заданная коллекция для удаления не содержится в исходной коллекции.</value>
+    <value>हटाने के लिए दिया संग्रह प्रारंभिक संग्रह में निहित नहीं है।</value>
   </data>
   <data name="ThereAlreadyIsAnOpenUndoTransaction" xml:space="preserve">
-    <value>Уже существует открытая транзакция отмены.</value>
+    <value>वहां पहले से ही एक खुला पूर्ववत लेनदेन है ।</value>
+  </data>
+  <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
+    <value>एक स्पष्ट लेनदेन ब्लॉक खुला होने के दौरान पूर्ववत और रेडो संचालन का समर्थन नहीं किया जाता है।</value>
   </data>
   <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
-    <value>Попытка получить доступ к стеку отмены/повтора при отключенной отмене не допускается.</value>
+    <value>पूर्ववत/रीडो स्टैक तक पहुंचने का प्रयास करते हुए पूर्ववत अक्षम होने की अनुमति नहीं है ।</value>
   </data>
 </root>

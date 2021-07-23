@@ -362,7 +362,7 @@
     <EmbeddedResource Update="Resources.ru.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources.se.resx">
+    <EmbeddedResource Update="Resources.hi.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
