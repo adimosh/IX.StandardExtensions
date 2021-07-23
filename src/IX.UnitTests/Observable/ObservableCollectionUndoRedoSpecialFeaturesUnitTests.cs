@@ -5,7 +5,7 @@
 using IX.Observable;
 using Xunit;
 
-namespace IX.UnitTests.IX.Observable
+namespace IX.UnitTests.Observable
 {
     /// <summary>
     ///     Special undo/redo features test for observable collections.

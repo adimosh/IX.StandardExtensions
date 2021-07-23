@@ -11,7 +11,7 @@ using IX.Observable;
 using IX.StandardExtensions.Extensions;
 using Xunit;
 
-namespace IX.UnitTests.IX.Observable
+namespace IX.UnitTests.Observable
 {
     /// <summary>
     ///     Serialization tests.

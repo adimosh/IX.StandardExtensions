@@ -7,7 +7,7 @@ using IX.Observable;
 using Xunit;
 using EnvironmentSettings = IX.StandardExtensions.ComponentModel.EnvironmentSettings;
 
-namespace IX.UnitTests.IX.Observable
+namespace IX.UnitTests.Observable
 {
     /// <summary>
     ///     Captured items test for ObservableList.

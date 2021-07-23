@@ -7,7 +7,7 @@ using IX.Guaranteed;
 using IX.Observable;
 using Xunit;
 
-namespace IX.UnitTests.IX.Observable
+namespace IX.UnitTests.Observable
 {
     /// <summary>
     ///     Unit tests for explicit transactions.
