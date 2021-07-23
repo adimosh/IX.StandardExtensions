@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -137,5 +137,131 @@
   </data>
   <data name="MoveNextNotInvoked" xml:space="preserve">
     <value>Vous devez d'abord appeler la méthode MoveNext avant de pouvoir appeler Current.</value>
+  </data>
+  <data name="DictionaryItemAlreadyExists" xml:space="preserve">
+    <value>Un élément possédant la même clé existe déjà dans ce dictionnaire.</value>
+  </data>
+  <data name="ItemAlreadyCapturedIntoUndoContextException" xml:space="preserve">
+    <value>L'opération n'a pas pu être terminée car l'élément en cours est intercepté par un contexte d'annulation existant.</value>
+  </data>
+  <data name="ItemIsInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>L'opération n'a pas pu être terminée car l'élément actuel est en mode édition.</value>
+  </data>
+  <data name="ItemNotCapturedIntoUndoContextException" xml:space="preserve">
+    <value>L'opération n'a pas pu être terminée car l'élément actuel n'est pas pris dans un contexte d'annulation existant.</value>
+  </data>
+  <data name="ItemNotInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>L'opération n'a pas pu être terminée car l'élément actuel n'est pas en mode édition.</value>
+  </data>
+  <data name="OperationItemTypeError" xml:space="preserve">
+    <value>Le type de l’argument n’est pas un type compatible à la liste.</value>
+  </data>
+  <data name="ErrorArgumentNotPositiveInteger" xml:space="preserve">
+    <value>L’argument n’est pas un entier positif.</value>
+  </data>
+  <data name="SingleOrDefaultMultipleElements" xml:space="preserve">
+    <value>La séquence d’entrée contient plusieurs éléments.</value>
+  </data>
+  <data name="AnInvalidSetOfArgumentsWasSpecifiedArgumentNames" xml:space="preserve">
+    <value>Un ensemble d’arguments non valide a été spécifié. Noms d’arguments : {0}</value>
+  </data>
+  <data name="TheProvidedArgumentsDoNotFormAValidRangeOfValuesArguments" xml:space="preserve">
+    <value>Les arguments fournis ne forment pas une plage de valeurs valide. Arguments : {0}</value>
+  </data>
+  <data name="ErrorArgumentNotPositive" xml:space="preserve">
+    <value>L’argument n’est pas un nombre positif.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyString" xml:space="preserve">
+    <value>L’argument string est null (Nothing en Visual Basic) ou vide.</value>
+  </data>
+  <data name="ErrorArgumentNullOrWhiteSpaceString" xml:space="preserve">
+    <value>L’argument string est null (Nothing en Visual Basic), vide ou espace réservé.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyBinary" xml:space="preserve">
+    <value>L’argument est null (Nothing en Visual Basic) ou un tableau d’octets vide.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyCollection" xml:space="preserve">
+    <value>L’argument collection est null (Nothing en Visual Basic) ou vide.</value>
+  </data>
+  <data name="AContractConditionIsNotBeingMet" xml:space="preserve">
+    <value>Une condition contractuelle n’est pas remplie.</value>
+  </data>
+  <data name="ErrorArgumentNotValidIndex" xml:space="preserve">
+    <value>L’argument ne peut pas être considéré comme un index valide.</value>
+  </data>
+  <data name="ErrorArgumentNotValidLength" xml:space="preserve">
+    <value>L’argument ne peut pas être considéré comme une longueur valide, car il doit s’agir d’un entier positif inférieur à la longueur de la collection pour laquelle il est utilisé.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyArray" xml:space="preserve">
+    <value>L’argument array est null (Nothing en Visual Basic), vide ou n’a pas la longueur requise.</value>
+  </data>
+  <data name="ErrorArgumentDoesNotMatch" xml:space="preserve">
+    <value>L’argument ne correspond pas au modèle attendu ou n’a pas pu être mis en correspondance implicitement avec une entrée prise en charge.</value>
+  </data>
+  <data name="ErrorArgumentInvalidPath" xml:space="preserve">
+    <value>L’argument fourni ne peut pas être utilisé comme chemin d’accès valide.</value>
+  </data>
+  <data name="ErrorKeyFoundInDictionary" xml:space="preserve">
+    <value>La clé donnée était déjà présente dans le dictionnaire.</value>
+  </data>
+  <data name="ErrorQueueIsEmpty" xml:space="preserve">
+    <value>La file d’attente est actuellement vide.</value>
+  </data>
+  <data name="ErrorStackIsEmpty" xml:space="preserve">
+    <value>La pile est actuellement vide.</value>
+  </data>
+  <data name="LimitArgumentNegativeExceptionDefaultTextNoArgument" xml:space="preserve">
+    <value>L’argument Limit doit être un entier non négatif.</value>
+  </data>
+  <data name="LimitArgumentNegativeExceptionDefaultTextWithArgument" xml:space="preserve">
+    <value>L’argument Limit doit être un entier non négatif. Nom de l’argument : {0}</value>
+  </data>
+  <data name="ErrorPersistedQueuesCannotBeCopied" xml:space="preserve">
+    <value>Toute tentative de copie de l’intégralité du contenu d’une file d’attente persistante n’est pas une opération prise en charge.</value>
+  </data>
+  <data name="ErrorPersistedQueuesCannotBeEnumerated" xml:space="preserve">
+    <value>La tentative d’énumération d’une file d’attente persistante n’est pas une opération prise en charge.</value>
+  </data>
+  <data name="ErrorTheQueueIsCurrentlyInDisasterMode" xml:space="preserve">
+    <value>La file d’attente est actuellement en mode sinistre, les opérations d’énumération sont désactivées par conception.</value>
+  </data>
+  <data name="ErrorArgumentInRange" xml:space="preserve">
+    <value>L’argument est dans la plage indésirable.</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThan" xml:space="preserve">
+    <value>L’argument n’est pas supérieur à une valeur souhaitée.</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThanOrEqualTo" xml:space="preserve">
+    <value>L’argument n’est ni inférieur ni égal à une valeur souhaitée.</value>
+  </data>
+  <data name="ErrorArgumentNotInRange" xml:space="preserve">
+    <value>L’argument n’est pas dans la plage souhaitée.</value>
+  </data>
+  <data name="ErrorArgumentNotLessThan" xml:space="preserve">
+    <value>L’argument n’est pas inférieur à une valeur souhaitée.</value>
+  </data>
+  <data name="ErrorArgumentNotLessThanOrEqualTo" xml:space="preserve">
+    <value>L’argument n’est ni inférieur ni égal à une valeur souhaitée.</value>
+  </data>
+  <data name="ErrorArgumentNotNegative" xml:space="preserve">
+    <value>L’argument n’est pas un nombre négatif.</value>
+  </data>
+  <data name="ErrorArgumentNotNegativeInteger" xml:space="preserve">
+    <value>L’argument n’est pas un entier négatif.</value>
+  </data>
+  <data name="NoHistoryLevelsException" xml:space="preserve">
+    <value>Aucune pile d’annulation/rétablir n’a pu être initialisée, car aucun niveau d’historique n’est défini.</value>
+  </data>
+  <data name="TheCollectionIsCapturedIntoAContextItCannotStartAnExplicitTransaction" xml:space="preserve">
+    <value>La collection est capturée dans un contexte, elle ne peut pas démarrer une transaction explicite.</value>
+  </data>
+  <data name="TheGivenCollectionToRemoveIsNotContainedInTheInitialCollection" xml:space="preserve">
+    <value>La collection donnée à supprimer n’est pas contenue dans la collection initiale.</value>
+  </data>
+  <data name="ThereAlreadyIsAnOpenUndoTransaction" xml:space="preserve">
+    <value>Il existe déjà une transaction d’annulation ouverte.</value>
+  </data>
+  <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
+    <value>Les opérations d’annulation et de rétablir ne sont pas prises en charge lorsqu’un bloc de transaction explicite est ouvert.</value>
   </data>
 </root>

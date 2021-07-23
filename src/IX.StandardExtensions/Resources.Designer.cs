@@ -79,6 +79,15 @@ namespace IX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An item with the same key already exists in this dictionary..
+        /// </summary>
+        internal static string DictionaryItemAlreadyExists {
+            get {
+                return ResourceManager.GetString("DictionaryItemAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The argument does not match the expected pattern, or could not be implicitly matched to any supported input..
         /// </summary>
         internal static string ErrorArgumentDoesNotMatch {
@@ -358,6 +367,42 @@ namespace IX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The operation could not be completed as the current item is trapped by an existing undo context..
+        /// </summary>
+        internal static string ItemAlreadyCapturedIntoUndoContextException {
+            get {
+                return ResourceManager.GetString("ItemAlreadyCapturedIntoUndoContextException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The operation could not be completed as the current item is in edit mode..
+        /// </summary>
+        internal static string ItemIsInEditModeExceptionDefaultMessage {
+            get {
+                return ResourceManager.GetString("ItemIsInEditModeExceptionDefaultMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The operation could not be completed as the current item is not trapped into an existing undo context..
+        /// </summary>
+        internal static string ItemNotCapturedIntoUndoContextException {
+            get {
+                return ResourceManager.GetString("ItemNotCapturedIntoUndoContextException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The operation could not be completed as the current item is not in edit mode..
+        /// </summary>
+        internal static string ItemNotInEditModeExceptionDefaultMessage {
+            get {
+                return ResourceManager.GetString("ItemNotInEditModeExceptionDefaultMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Limit argument must be a non-negative integer..
         /// </summary>
         internal static string LimitArgumentNegativeExceptionDefaultTextNoArgument {
@@ -385,6 +430,24 @@ namespace IX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No undo/redo stacks could be initialized, as there are no history levels defined..
+        /// </summary>
+        internal static string NoHistoryLevelsException {
+            get {
+                return ResourceManager.GetString("NoHistoryLevelsException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The type of the argument is not a compatible type to the list..
+        /// </summary>
+        internal static string OperationItemTypeError {
+            get {
+                return ResourceManager.GetString("OperationItemTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The input sequence contains more than one element..
         /// </summary>
         internal static string SingleOrDefaultMultipleElements {
@@ -394,11 +457,47 @@ namespace IX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The collection is captured into a context, it cannot start an explicit transaction..
+        /// </summary>
+        internal static string TheCollectionIsCapturedIntoAContextItCannotStartAnExplicitTransaction {
+            get {
+                return ResourceManager.GetString("TheCollectionIsCapturedIntoAContextItCannotStartAnExplicitTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The given collection to remove is not contained in the initial collection..
+        /// </summary>
+        internal static string TheGivenCollectionToRemoveIsNotContainedInTheInitialCollection {
+            get {
+                return ResourceManager.GetString("TheGivenCollectionToRemoveIsNotContainedInTheInitialCollection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The provided arguments do not form a valid range of values. Arguments: {0}.
         /// </summary>
         internal static string TheProvidedArgumentsDoNotFormAValidRangeOfValuesArguments {
             get {
                 return ResourceManager.GetString("TheProvidedArgumentsDoNotFormAValidRangeOfValuesArguments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There already is an open undo transaction..
+        /// </summary>
+        internal static string ThereAlreadyIsAnOpenUndoTransaction {
+            get {
+                return ResourceManager.GetString("ThereAlreadyIsAnOpenUndoTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undo and Redo operations are not supported while an explicit transaction block is open..
+        /// </summary>
+        internal static string UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen {
+            get {
+                return ResourceManager.GetString("UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen", resourceCulture);
             }
         }
     }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -230,5 +230,38 @@
   </data>
   <data name="ErrorArgumentNotNegativeInteger" xml:space="preserve">
     <value>The argument is not a negative integer.</value>
+  </data>
+  <data name="DictionaryItemAlreadyExists" xml:space="preserve">
+    <value>An item with the same key already exists in this dictionary.</value>
+  </data>
+  <data name="ItemAlreadyCapturedIntoUndoContextException" xml:space="preserve">
+    <value>The operation could not be completed as the current item is trapped by an existing undo context.</value>
+  </data>
+  <data name="ItemIsInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>The operation could not be completed as the current item is in edit mode.</value>
+  </data>
+  <data name="ItemNotCapturedIntoUndoContextException" xml:space="preserve">
+    <value>The operation could not be completed as the current item is not trapped into an existing undo context.</value>
+  </data>
+  <data name="ItemNotInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>The operation could not be completed as the current item is not in edit mode.</value>
+  </data>
+  <data name="NoHistoryLevelsException" xml:space="preserve">
+    <value>No undo/redo stacks could be initialized, as there are no history levels defined.</value>
+  </data>
+  <data name="OperationItemTypeError" xml:space="preserve">
+    <value>The type of the argument is not a compatible type to the list.</value>
+  </data>
+  <data name="TheCollectionIsCapturedIntoAContextItCannotStartAnExplicitTransaction" xml:space="preserve">
+    <value>The collection is captured into a context, it cannot start an explicit transaction.</value>
+  </data>
+  <data name="TheGivenCollectionToRemoveIsNotContainedInTheInitialCollection" xml:space="preserve">
+    <value>The given collection to remove is not contained in the initial collection.</value>
+  </data>
+  <data name="ThereAlreadyIsAnOpenUndoTransaction" xml:space="preserve">
+    <value>There already is an open undo transaction.</value>
+  </data>
+  <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
+    <value>Undo and Redo operations are not supported while an explicit transaction block is open.</value>
   </data>
 </root>

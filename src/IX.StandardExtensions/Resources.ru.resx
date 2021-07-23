@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,4 +117,151 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
+    <value>Операции отмены и повтора не поддерживаются, пока открыт явный блок транзакций.</value>
+  </data>
+  <data name="ErrorLengthGoesPastArrayLimits" xml:space="preserve">
+    <value>Длина должна быть достаточно мала, чтобы не привести к операции за пределами массива.</value>
+  </data>
+  <data name="ErrorLengthMustBeAPositiveInteger" xml:space="preserve">
+    <value>Длина должна быть положительным целым числом.</value>
+  </data>
+  <data name="ErrorNotImplementedByDesign" xml:space="preserve">
+    <value>Этот элемент не реализован по замыслу.</value>
+  </data>
+  <data name="ErrorSourceIndexMustPointToALocationWithinTheArray" xml:space="preserve">
+    <value>Исходный индекс должен указывать на расположение в массиве.</value>
+  </data>
+  <data name="ErrorArgumentInvalidType" xml:space="preserve">
+    <value>Предоставленный коробчатый или полиморфный аргумент неправильного типа.</value>
+  </data>
+  <data name="ErrorStopRetrying" xml:space="preserve">
+    <value>Операция, вызвавшая этот метод, должна прекратить повторную попытку, так как критическая ошибка, изменение состояния или невосстановимые условия среды гарантируют сбой при последующих повторных попытках.</value>
+  </data>
+  <data name="ErrorArgumentNotPositiveInteger" xml:space="preserve">
+    <value>Аргумент не является положительным целым числом.</value>
+  </data>
+  <data name="SingleOrDefaultMultipleElements" xml:space="preserve">
+    <value>Входная последовательность содержит более одного элемента.</value>
+  </data>
+  <data name="AnInvalidSetOfArgumentsWasSpecifiedArgumentNames" xml:space="preserve">
+    <value>Указан недопустимый набор аргументов. Имена аргументов: {0}</value>
+  </data>
+  <data name="TheProvidedArgumentsDoNotFormAValidRangeOfValuesArguments" xml:space="preserve">
+    <value>Предоставленные аргументы не образуют допустимый диапазон значений. Аргументы: {0}</value>
+  </data>
+  <data name="ErrorArgumentNotPositive" xml:space="preserve">
+    <value>Аргумент не является положительным числом.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyString" xml:space="preserve">
+    <value>Строковый аргумент имеет значение null (Nothing в Visual Basic) или пустой.</value>
+  </data>
+  <data name="ErrorArgumentNullOrWhiteSpaceString" xml:space="preserve">
+    <value>Строковый аргумент имеет значение null (Nothing в Visual Basic), пустой или только пробел.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyBinary" xml:space="preserve">
+    <value>Аргумент имеет значение null (Nothing в Visual Basic) или пустой массив байтов.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyCollection" xml:space="preserve">
+    <value>Аргумент коллекции имеет значение null (Nothing в Visual Basic) или пуст.</value>
+  </data>
+  <data name="AContractConditionIsNotBeingMet" xml:space="preserve">
+    <value>Условие контракта не выполняется.</value>
+  </data>
+  <data name="ErrorArgumentNotValidIndex" xml:space="preserve">
+    <value>Аргумент нельзя считать допустимым индексом.</value>
+  </data>
+  <data name="ErrorArgumentNotValidLength" xml:space="preserve">
+    <value>Аргумент нельзя считать допустимой длиной, так как он должен быть положительным целым числом, меньшим длины коллекции, для которого он используется.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyArray" xml:space="preserve">
+    <value>Аргумент массива имеет значение null (Nothing в Visual Basic), или пуст, или не имеет требуемой длины.</value>
+  </data>
+  <data name="ErrorArgumentDoesNotMatch" xml:space="preserve">
+    <value>Аргумент не соответствует ожидаемому шаблону или не может быть неявно сопоставлен с любым поддерживаемым входным данным.</value>
+  </data>
+  <data name="ErrorArgumentInvalidPath" xml:space="preserve">
+    <value>Предоставленный аргумент нельзя использовать в качестве допустимого пути.</value>
+  </data>
+  <data name="MoveNextNotInvoked" xml:space="preserve">
+    <value>Перед вызовом метода Current необходимо сначала вызвать метод MoveNext.</value>
+  </data>
+  <data name="ErrorKeyFoundInDictionary" xml:space="preserve">
+    <value>Данный ключ уже присутствовал в словаре.</value>
+  </data>
+  <data name="ErrorQueueIsEmpty" xml:space="preserve">
+    <value>В настоящее время очередь пуста.</value>
+  </data>
+  <data name="ErrorStackIsEmpty" xml:space="preserve">
+    <value>Стек в настоящее время пуст.</value>
+  </data>
+  <data name="LimitArgumentNegativeExceptionDefaultTextNoArgument" xml:space="preserve">
+    <value>Аргумент Limit должен быть неотрицательным целым числом.</value>
+  </data>
+  <data name="LimitArgumentNegativeExceptionDefaultTextWithArgument" xml:space="preserve">
+    <value>Аргумент Limit должен быть неотрицательным целым числом. Имя аргумента: {0}</value>
+  </data>
+  <data name="ErrorPersistedQueuesCannotBeCopied" xml:space="preserve">
+    <value>Попытка скопировать все содержимое сохраненной очереди не поддерживается.</value>
+  </data>
+  <data name="ErrorPersistedQueuesCannotBeEnumerated" xml:space="preserve">
+    <value>Попытка перечислить сохраненную очередь не поддерживается.</value>
+  </data>
+  <data name="ErrorTheQueueIsCurrentlyInDisasterMode" xml:space="preserve">
+    <value>Очередь в настоящее время находится в аварийном режиме, операции перечисления отключены по замыслу.</value>
+  </data>
+  <data name="ErrorArgumentInRange" xml:space="preserve">
+    <value>Аргумент находится в нежелательном диапазоне.</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThan" xml:space="preserve">
+    <value>Аргумент не превышает желаемого значения.</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThanOrEqualTo" xml:space="preserve">
+    <value>Аргумент не меньше или равен желаемому значению.</value>
+  </data>
+  <data name="ErrorArgumentNotInRange" xml:space="preserve">
+    <value>Аргумент не находится в нужном диапазоне.</value>
+  </data>
+  <data name="ErrorArgumentNotLessThan" xml:space="preserve">
+    <value>Аргумент не меньше желаемого значения.</value>
+  </data>
+  <data name="ErrorArgumentNotLessThanOrEqualTo" xml:space="preserve">
+    <value>Аргумент не меньше или равен желаемому значению.</value>
+  </data>
+  <data name="ErrorArgumentNotNegative" xml:space="preserve">
+    <value>Аргумент не является отрицательным числом.</value>
+  </data>
+  <data name="ErrorArgumentNotNegativeInteger" xml:space="preserve">
+    <value>Аргумент не является отрицательным целым числом.</value>
+  </data>
+  <data name="DictionaryItemAlreadyExists" xml:space="preserve">
+    <value>Элемент с таким же ключом уже существует в этом словаре.</value>
+  </data>
+  <data name="ItemAlreadyCapturedIntoUndoContextException" xml:space="preserve">
+    <value>Операция не может быть завершена, так как текущий элемент захвачен существующим контекстом отмены.</value>
+  </data>
+  <data name="ItemIsInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>Операция не может быть завершена, так как текущий элемент находится в режиме редактирования.</value>
+  </data>
+  <data name="ItemNotCapturedIntoUndoContextException" xml:space="preserve">
+    <value>Операция не может быть завершена, так как текущий элемент не попадает в существующий контекст отмены.</value>
+  </data>
+  <data name="ItemNotInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>Операция не может быть завершена, так как текущий элемент не находится в режиме редактирования.</value>
+  </data>
+  <data name="NoHistoryLevelsException" xml:space="preserve">
+    <value>Стеки отмены/повтора не могут быть инициализированы, так как не определены уровни истории.</value>
+  </data>
+  <data name="OperationItemTypeError" xml:space="preserve">
+    <value>Тип аргумента не совместим со списком.</value>
+  </data>
+  <data name="TheCollectionIsCapturedIntoAContextItCannotStartAnExplicitTransaction" xml:space="preserve">
+    <value>Коллекция записывается в контекст, она не может запустить явную транзакцию.</value>
+  </data>
+  <data name="TheGivenCollectionToRemoveIsNotContainedInTheInitialCollection" xml:space="preserve">
+    <value>Заданная коллекция для удаления не содержится в исходной коллекции.</value>
+  </data>
+  <data name="ThereAlreadyIsAnOpenUndoTransaction" xml:space="preserve">
+    <value>Уже существует открытая транзакция отмены.</value>
+  </data>
 </root>

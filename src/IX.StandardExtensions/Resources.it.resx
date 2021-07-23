@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -134,5 +134,134 @@
   </data>
   <data name="MoveNextNotInvoked" xml:space="preserve">
     <value>È innanzitutto necessario richiamare il metodo MoveNext prima di chiamare corrente.</value>
+  </data>
+  <data name="DictionaryItemAlreadyExists" xml:space="preserve">
+    <value>Un elemento con la stessa chiave è già presente in questo dizionario.</value>
+  </data>
+  <data name="ItemAlreadyCapturedIntoUndoContextException" xml:space="preserve">
+    <value>Impossibile completare l'operazione.</value>
+  </data>
+  <data name="ItemIsInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>L'operazione potrebbe non essere completata come l'elemento corrente è in modalità di modifica.</value>
+  </data>
+  <data name="ItemNotCapturedIntoUndoContextException" xml:space="preserve">
+    <value>Impossibile completare l'operazione come l'elemento corrente non è intrappolato in un contesto di annullamento esistente.</value>
+  </data>
+  <data name="ItemNotInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>L'operazione potrebbe non essere completata come l'elemento corrente non è in modalità di modifica.</value>
+  </data>
+  <data name="OperationItemTypeError" xml:space="preserve">
+    <value>Il tipo dell'argomento non è un tipo compatibile all'elenco.</value>
+  </data>
+  <data name="ErrorStopRetrying" xml:space="preserve">
+    <value>L'operazione che ha effettuato una chiamata a questo metodo deve interrompere il tentativo, come errore critico, una modifica dello stato o condizioni di ambiente irrecuperabili garantiscono un errore nei tentativi successivi.</value>
+  </data>
+  <data name="ErrorArgumentNotPositiveInteger" xml:space="preserve">
+    <value>L'argomento non è un numero intero positivo.</value>
+  </data>
+  <data name="SingleOrDefaultMultipleElements" xml:space="preserve">
+    <value>La sequenza di input contiene più di un elemento.</value>
+  </data>
+  <data name="AnInvalidSetOfArgumentsWasSpecifiedArgumentNames" xml:space="preserve">
+    <value>È stato specificato un insieme non valido di argomenti. Nomi degli argomenti: {0}</value>
+  </data>
+  <data name="TheProvidedArgumentsDoNotFormAValidRangeOfValuesArguments" xml:space="preserve">
+    <value>Gli argomenti forniti non formano un intervallo di valori valido. Argomenti: {0}</value>
+  </data>
+  <data name="ErrorArgumentNotPositive" xml:space="preserve">
+    <value>L'argomento non è un numero positivo.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyString" xml:space="preserve">
+    <value>L'argomento stringa è null (Nothing in Visual Basic) o vuoto.</value>
+  </data>
+  <data name="ErrorArgumentNullOrWhiteSpaceString" xml:space="preserve">
+    <value>L'argomento stringa è null (Nothing in Visual Basic), vuoto o solo spazi vuoti.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyBinary" xml:space="preserve">
+    <value>L'argomento è null (Nothing in Visual Basic) o una matrice di byte vuota.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyCollection" xml:space="preserve">
+    <value>L'argomento dell'insieme è null (Nothing in Visual Basic) o vuoto.</value>
+  </data>
+  <data name="AContractConditionIsNotBeingMet" xml:space="preserve">
+    <value>Non viene soddisfatta una condizione contrattuale.</value>
+  </data>
+  <data name="ErrorArgumentNotValidIndex" xml:space="preserve">
+    <value>L'argomento non può essere considerato un indice valido.</value>
+  </data>
+  <data name="ErrorArgumentNotValidLength" xml:space="preserve">
+    <value>L'argomento non può essere considerato una lunghezza valida, in quanto deve essere un numero intero positivo inferiore alla lunghezza dell'insieme per cui viene utilizzato.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyArray" xml:space="preserve">
+    <value>L'argomento della matrice è null (Nothing in Visual Basic) o vuoto o non ha la lunghezza richiesta.</value>
+  </data>
+  <data name="ErrorArgumentDoesNotMatch" xml:space="preserve">
+    <value>L'argomento non corrisponde al modello previsto o non può essere abbinato in modo implicito a qualsiasi input supportato.</value>
+  </data>
+  <data name="ErrorArgumentInvalidPath" xml:space="preserve">
+    <value>L'argomento fornito non può essere utilizzato come percorso valido.</value>
+  </data>
+  <data name="ErrorKeyFoundInDictionary" xml:space="preserve">
+    <value>La chiave fornita era già presente nel dizionario.</value>
+  </data>
+  <data name="ErrorQueueIsEmpty" xml:space="preserve">
+    <value>La coda è attualmente vuota.</value>
+  </data>
+  <data name="ErrorStackIsEmpty" xml:space="preserve">
+    <value>Lo stack è attualmente vuoto.</value>
+  </data>
+  <data name="LimitArgumentNegativeExceptionDefaultTextNoArgument" xml:space="preserve">
+    <value>L'argomento Limite deve essere un numero intero non negativo.</value>
+  </data>
+  <data name="LimitArgumentNegativeExceptionDefaultTextWithArgument" xml:space="preserve">
+    <value>L'argomento Limite deve essere un numero intero non negativo. Nome argomento: {0}</value>
+  </data>
+  <data name="ErrorPersistedQueuesCannotBeCopied" xml:space="preserve">
+    <value>Il tentativo di copiare l'intero contenuto di una coda persistente non è un'operazione supportata.</value>
+  </data>
+  <data name="ErrorPersistedQueuesCannotBeEnumerated" xml:space="preserve">
+    <value>Il tentativo di enumerare una coda persistente non è un'operazione supportata.</value>
+  </data>
+  <data name="ErrorTheQueueIsCurrentlyInDisasterMode" xml:space="preserve">
+    <value>La coda è attualmente in modalità di emergenza, le operazioni di enumerazione sono disabilitate in base alla progettazione.</value>
+  </data>
+  <data name="ErrorArgumentInRange" xml:space="preserve">
+    <value>L'argomento è nell'intervallo indesiderato.</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThan" xml:space="preserve">
+    <value>L'argomento non è maggiore di un valore desiderato.</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThanOrEqualTo" xml:space="preserve">
+    <value>L'argomento non è minore o uguale a un valore desiderato.</value>
+  </data>
+  <data name="ErrorArgumentNotInRange" xml:space="preserve">
+    <value>L'argomento non è nell'intervallo desiderato.</value>
+  </data>
+  <data name="ErrorArgumentNotLessThan" xml:space="preserve">
+    <value>L'argomento non è minore di un valore desiderato.</value>
+  </data>
+  <data name="ErrorArgumentNotLessThanOrEqualTo" xml:space="preserve">
+    <value>L'argomento non è minore o uguale a un valore desiderato.</value>
+  </data>
+  <data name="ErrorArgumentNotNegative" xml:space="preserve">
+    <value>L'argomento non è un numero negativo.</value>
+  </data>
+  <data name="ErrorArgumentNotNegativeInteger" xml:space="preserve">
+    <value>L'argomento non è un numero intero negativo.</value>
+  </data>
+  <data name="NoHistoryLevelsException" xml:space="preserve">
+    <value>Non è stato possibile inizializzare stack di annullamento/ro, in quanto non sono stati definiti livelli di cronologia.</value>
+  </data>
+  <data name="TheCollectionIsCapturedIntoAContextItCannotStartAnExplicitTransaction" xml:space="preserve">
+    <value>L'insieme viene acquisito in un contesto, non può avviare una transazione esplicita.</value>
+  </data>
+  <data name="TheGivenCollectionToRemoveIsNotContainedInTheInitialCollection" xml:space="preserve">
+    <value>La raccolta specificata da rimuovere non è contenuta nella raccolta iniziale.</value>
+  </data>
+  <data name="ThereAlreadyIsAnOpenUndoTransaction" xml:space="preserve">
+    <value>Esiste già una transazione di annullamento aperta.</value>
+  </data>
+  <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
+    <value>Le operazioni annulla e Rifa non sono supportate mentre è aperto un blocco di transazioni esplicito.</value>
   </data>
 </root>

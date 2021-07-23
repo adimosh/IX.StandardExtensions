@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -137,5 +137,131 @@
   </data>
   <data name="MoveNextNotInvoked" xml:space="preserve">
     <value>Sie müssen zuerst die MoveNext-Methode aufrufen, bevor Sie Current aufrufen können.</value>
+  </data>
+  <data name="DictionaryItemAlreadyExists" xml:space="preserve">
+    <value>Ein Element mit demselben Schlüssel bereits vorhanden ist, in diesem Wörterbuch.</value>
+  </data>
+  <data name="ItemAlreadyCapturedIntoUndoContextException" xml:space="preserve">
+    <value>Die Operation konnte nicht abgeschlossen werden, da das aktuelle Objekt von einem vorhandenen Rückgängig-Kontext gefangen wird.</value>
+  </data>
+  <data name="ItemIsInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>Der Vorgang konnte nicht abgeschlossen werden, da sich das aktuelle Element im Bearbeitungsmodus befindet.</value>
+  </data>
+  <data name="ItemNotCapturedIntoUndoContextException" xml:space="preserve">
+    <value>Die Operation konnte nicht abgeschlossen werden, da das aktuelle Element nicht in einem vorhandenen Rückgängig-Kontext gefangen ist.</value>
+  </data>
+  <data name="ItemNotInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>Der Vorgang konnte nicht abgeschlossen werden, da sich das aktuelle Element nicht im Bearbeitungsmodus befindet.</value>
+  </data>
+  <data name="OperationItemTypeError" xml:space="preserve">
+    <value>Der Typ des Arguments ist keinen kompatiblen Typ hinzu.</value>
+  </data>
+  <data name="ErrorArgumentNotPositiveInteger" xml:space="preserve">
+    <value>Das Argument ist keine positive ganze Zahl.</value>
+  </data>
+  <data name="SingleOrDefaultMultipleElements" xml:space="preserve">
+    <value>Die Eingabesequenz enthält mehr als ein Element.</value>
+  </data>
+  <data name="AnInvalidSetOfArgumentsWasSpecifiedArgumentNames" xml:space="preserve">
+    <value>Ein ungültiger Satz von Argumenten wurde angegeben. Argumentnamen: {0}</value>
+  </data>
+  <data name="TheProvidedArgumentsDoNotFormAValidRangeOfValuesArguments" xml:space="preserve">
+    <value>Die angegebenen Argumente bilden keinen gültigen Wertebereich. Argumente: {0}</value>
+  </data>
+  <data name="ErrorArgumentNotPositive" xml:space="preserve">
+    <value>Das Argument ist keine positive Zahl.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyString" xml:space="preserve">
+    <value>Das Argument string ist null (Nothing in Visual Basic) oder empty.</value>
+  </data>
+  <data name="ErrorArgumentNullOrWhiteSpaceString" xml:space="preserve">
+    <value>Das Argument string ist null (Nothing in Visual Basic), empty oder whitespace-only.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyBinary" xml:space="preserve">
+    <value>Das Argument ist null (Nothing in Visual Basic) oder ein leeres Bytearray.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyCollection" xml:space="preserve">
+    <value>Das Argument collection ist null (Nothing in Visual Basic) oder empty.</value>
+  </data>
+  <data name="AContractConditionIsNotBeingMet" xml:space="preserve">
+    <value>Eine Vertragsbedingung wird nicht erfüllt.</value>
+  </data>
+  <data name="ErrorArgumentNotValidIndex" xml:space="preserve">
+    <value>Das Argument kann nicht als gültiger Index betrachtet werden.</value>
+  </data>
+  <data name="ErrorArgumentNotValidLength" xml:space="preserve">
+    <value>Das Argument kann nicht als gültige Länge betrachtet werden, da es eine positive ganze Zahl sein muss, die kleiner ist als die Länge der Auflistung, für die es verwendet wird.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyArray" xml:space="preserve">
+    <value>Das Argument array ist null (Nothing in Visual Basic) oder leer oder hat nicht die erforderliche Länge.</value>
+  </data>
+  <data name="ErrorArgumentDoesNotMatch" xml:space="preserve">
+    <value>Das Argument stimmt nicht mit dem erwarteten Muster überein oder konnte nicht implizit einer unterstützten Eingabe zugeordnet werden.</value>
+  </data>
+  <data name="ErrorArgumentInvalidPath" xml:space="preserve">
+    <value>Das angegebene Argument kann nicht als gültiger Pfad verwendet werden.</value>
+  </data>
+  <data name="ErrorKeyFoundInDictionary" xml:space="preserve">
+    <value>Der angegebene Schlüssel war bereits im Wörterbuch vorhanden.</value>
+  </data>
+  <data name="ErrorQueueIsEmpty" xml:space="preserve">
+    <value>Die Warteschlange ist derzeit leer.</value>
+  </data>
+  <data name="ErrorStackIsEmpty" xml:space="preserve">
+    <value>Der Stapel ist derzeit leer.</value>
+  </data>
+  <data name="LimitArgumentNegativeExceptionDefaultTextNoArgument" xml:space="preserve">
+    <value>Das Argument limit muss eine nicht negative ganze Zahl sein.</value>
+  </data>
+  <data name="LimitArgumentNegativeExceptionDefaultTextWithArgument" xml:space="preserve">
+    <value>Das Argument limit muss eine nicht negative ganze Zahl sein. Argumentname: {0}</value>
+  </data>
+  <data name="ErrorPersistedQueuesCannotBeCopied" xml:space="preserve">
+    <value>Der Versuch, den gesamten Inhalt einer persistenten Warteschlange zu kopieren, wird nicht unterstützt.</value>
+  </data>
+  <data name="ErrorPersistedQueuesCannotBeEnumerated" xml:space="preserve">
+    <value>Der Versuch, eine persistente Warteschlange aufzulisten, ist kein unterstützter Vorgang.</value>
+  </data>
+  <data name="ErrorTheQueueIsCurrentlyInDisasterMode" xml:space="preserve">
+    <value>Die Warteschlange befindet sich derzeit im Notfallmodus, Enumerationsvorgänge sind standardmäßig deaktiviert.</value>
+  </data>
+  <data name="ErrorArgumentInRange" xml:space="preserve">
+    <value>Das Argument liegt im unerwünschten Bereich.</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThan" xml:space="preserve">
+    <value>Das Argument ist nicht größer als ein gewünschter Wert.</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThanOrEqualTo" xml:space="preserve">
+    <value>Das Argument ist nicht kleiner oder gleich einem gewünschten Wert.</value>
+  </data>
+  <data name="ErrorArgumentNotInRange" xml:space="preserve">
+    <value>Das Argument liegt nicht im gewünschten Bereich.</value>
+  </data>
+  <data name="ErrorArgumentNotLessThan" xml:space="preserve">
+    <value>Das Argument ist nicht weniger als ein gewünschter Wert.</value>
+  </data>
+  <data name="ErrorArgumentNotLessThanOrEqualTo" xml:space="preserve">
+    <value>Das Argument ist nicht kleiner oder gleich einem gewünschten Wert.</value>
+  </data>
+  <data name="ErrorArgumentNotNegative" xml:space="preserve">
+    <value>Das Argument ist keine negative Zahl.</value>
+  </data>
+  <data name="ErrorArgumentNotNegativeInteger" xml:space="preserve">
+    <value>Das Argument ist keine negative ganze Zahl.</value>
+  </data>
+  <data name="NoHistoryLevelsException" xml:space="preserve">
+    <value>Es konnten keine Rückgängig-/Wiederholungsstapel initialisiert werden, da keine Verlaufsebenen definiert sind.</value>
+  </data>
+  <data name="TheCollectionIsCapturedIntoAContextItCannotStartAnExplicitTransaction" xml:space="preserve">
+    <value>Die Auflistung wird in einem Kontext erfasst, sie kann keine explizite Transaktion starten.</value>
+  </data>
+  <data name="TheGivenCollectionToRemoveIsNotContainedInTheInitialCollection" xml:space="preserve">
+    <value>Die angegebene zu entfernene Auflistung ist nicht in der ursprünglichen Auflistung enthalten.</value>
+  </data>
+  <data name="ThereAlreadyIsAnOpenUndoTransaction" xml:space="preserve">
+    <value>Es gibt bereits eine offene Rückgängig-Transaktion.</value>
+  </data>
+  <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
+    <value>Rückgängig- und Wiederholen-Vorgänge werden nicht unterstützt, während ein expliziter Transaktionsblock geöffnet ist.</value>
   </data>
 </root>

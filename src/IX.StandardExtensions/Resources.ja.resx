@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -134,5 +134,134 @@
   </data>
   <data name="MoveNextNotInvoked" xml:space="preserve">
     <value>最初電流を呼び出す前に MoveNext メソッドを呼び出す必要があります!。</value>
+  </data>
+  <data name="DictionaryItemAlreadyExists" xml:space="preserve">
+    <value>このタクソノミーには同じ名称の項目がすでに存在しています。</value>
+  </data>
+  <data name="ItemAlreadyCapturedIntoUndoContextException" xml:space="preserve">
+    <value>既存の undo コンテキストで現在の項目はトラップは、操作を完了できませんでした!。</value>
+  </data>
+  <data name="ItemIsInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>要求された操作は完了できませんでした</value>
+  </data>
+  <data name="ItemNotCapturedIntoUndoContextException" xml:space="preserve">
+    <value>元のファイルと出力先が同じファイルのため操作を完了できませんでした。</value>
+  </data>
+  <data name="ItemNotInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>現在の項目が編集モードでないと、操作を完了できませんでした!。</value>
+  </data>
+  <data name="OperationItemTypeError" xml:space="preserve">
+    <value>引数の型がリストに互換性のある型ではありません!。</value>
+  </data>
+  <data name="ErrorStopRetrying" xml:space="preserve">
+    <value>このメソッドを呼び出した操作は、重大なエラーとして、状態変更または回復不可能な環境条件が、その後の再試行でエラーを保証するため、再試行を停止する必要があります。</value>
+  </data>
+  <data name="ErrorArgumentNotPositiveInteger" xml:space="preserve">
+    <value>引数が正の整数ではありません。</value>
+  </data>
+  <data name="SingleOrDefaultMultipleElements" xml:space="preserve">
+    <value>入力シーケンスに複数の要素が含まれています。</value>
+  </data>
+  <data name="AnInvalidSetOfArgumentsWasSpecifiedArgumentNames" xml:space="preserve">
+    <value>無効な引数のセットが指定されました。引数名: {0}</value>
+  </data>
+  <data name="TheProvidedArgumentsDoNotFormAValidRangeOfValuesArguments" xml:space="preserve">
+    <value>指定された引数は、有効な値の範囲を形成しません。引数: {0}</value>
+  </data>
+  <data name="ErrorArgumentNotPositive" xml:space="preserve">
+    <value>引数が正の数ではありません。</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyString" xml:space="preserve">
+    <value>文字列引数が null (Visual Basic では何もない) または空です。</value>
+  </data>
+  <data name="ErrorArgumentNullOrWhiteSpaceString" xml:space="preserve">
+    <value>文字列引数は null (Visual Basic では何もない)、空または空白のみの引数です。</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyBinary" xml:space="preserve">
+    <value>引数が null (Visual Basic では何もない) または空のバイト配列です。</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyCollection" xml:space="preserve">
+    <value>コレクションの引数が null (Visual Basic では何もない) または空です。</value>
+  </data>
+  <data name="AContractConditionIsNotBeingMet" xml:space="preserve">
+    <value>契約条件が満たされていません。</value>
+  </data>
+  <data name="ErrorArgumentNotValidIndex" xml:space="preserve">
+    <value>引数は有効なインデックスと見なせません。</value>
+  </data>
+  <data name="ErrorArgumentNotValidLength" xml:space="preserve">
+    <value>引数は、使用されるコレクションの長さより小さい正の整数でなければならないため、有効な長さと見なすことはできません。</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyArray" xml:space="preserve">
+    <value>配列の引数が null (Visual Basic では何もない) であるか、空であるか、または必要な長さがありません。</value>
+  </data>
+  <data name="ErrorArgumentDoesNotMatch" xml:space="preserve">
+    <value>引数が予期されたパターンと一致しないか、サポートされているどの入力とも暗黙的に一致することができませんでした。</value>
+  </data>
+  <data name="ErrorArgumentInvalidPath" xml:space="preserve">
+    <value>指定された引数を有効なパスとして使用することはできません。</value>
+  </data>
+  <data name="ErrorKeyFoundInDictionary" xml:space="preserve">
+    <value>指定されたキーは既に辞書に存在していました。</value>
+  </data>
+  <data name="ErrorQueueIsEmpty" xml:space="preserve">
+    <value>キューは現在空です。</value>
+  </data>
+  <data name="ErrorStackIsEmpty" xml:space="preserve">
+    <value>スタックは現在空です。</value>
+  </data>
+  <data name="LimitArgumentNegativeExceptionDefaultTextNoArgument" xml:space="preserve">
+    <value>Limit 引数は負でない整数でなければなりません。</value>
+  </data>
+  <data name="LimitArgumentNegativeExceptionDefaultTextWithArgument" xml:space="preserve">
+    <value>Limit 引数は負でない整数でなければなりません。引数名: {0}</value>
+  </data>
+  <data name="ErrorPersistedQueuesCannotBeCopied" xml:space="preserve">
+    <value>永続キューの内容全体をコピーしようとしても、サポートされている操作ではありません。</value>
+  </data>
+  <data name="ErrorPersistedQueuesCannotBeEnumerated" xml:space="preserve">
+    <value>永続化されたキューを列挙しようとしても、サポートされていない操作です。</value>
+  </data>
+  <data name="ErrorTheQueueIsCurrentlyInDisasterMode" xml:space="preserve">
+    <value>キューは現在障害モードで、列挙操作は設計上無効になっています。</value>
+  </data>
+  <data name="ErrorArgumentInRange" xml:space="preserve">
+    <value>引数が望ましくない範囲にあります。</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThan" xml:space="preserve">
+    <value>引数が目的の値より大きくなっていません。</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThanOrEqualTo" xml:space="preserve">
+    <value>引数が目的の値以下です。</value>
+  </data>
+  <data name="ErrorArgumentNotInRange" xml:space="preserve">
+    <value>引数が目的の範囲にありません。</value>
+  </data>
+  <data name="ErrorArgumentNotLessThan" xml:space="preserve">
+    <value>引数が希望の値より小さい値です。</value>
+  </data>
+  <data name="ErrorArgumentNotLessThanOrEqualTo" xml:space="preserve">
+    <value>引数が目的の値以下です。</value>
+  </data>
+  <data name="ErrorArgumentNotNegative" xml:space="preserve">
+    <value>引数が負の数ではありません。</value>
+  </data>
+  <data name="ErrorArgumentNotNegativeInteger" xml:space="preserve">
+    <value>引数が負の整数ではありません。</value>
+  </data>
+  <data name="NoHistoryLevelsException" xml:space="preserve">
+    <value>履歴レベルが定義されていないため、元に戻す/やり直しスタックを初期化できませんでした。</value>
+  </data>
+  <data name="TheCollectionIsCapturedIntoAContextItCannotStartAnExplicitTransaction" xml:space="preserve">
+    <value>コレクションはコンテキストにキャプチャされ、明示的なトランザクションを開始できません。</value>
+  </data>
+  <data name="TheGivenCollectionToRemoveIsNotContainedInTheInitialCollection" xml:space="preserve">
+    <value>削除する指定されたコレクションは、初期コレクションに含まれていません。</value>
+  </data>
+  <data name="ThereAlreadyIsAnOpenUndoTransaction" xml:space="preserve">
+    <value>既に、開いている元に戻すトランザクションがあります。</value>
+  </data>
+  <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
+    <value>明示的なトランザクション ブロックが開いている間は、元に戻す操作とやり直し操作はサポートされません。</value>
   </data>
 </root>

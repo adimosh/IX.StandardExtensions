@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -137,5 +137,131 @@
   </data>
   <data name="MoveNextNotInvoked" xml:space="preserve">
     <value>Debes ingresar antes de que puedas publicar un anuncio o evento.</value>
+  </data>
+  <data name="DictionaryItemAlreadyExists" xml:space="preserve">
+    <value>Ya existe un objeto con el mismo nombre en este directorio.</value>
+  </data>
+  <data name="ItemAlreadyCapturedIntoUndoContextException" xml:space="preserve">
+    <value>No se pudo completar la operación como el elemento actual es atrapado por un contexto de deshacer existente.!</value>
+  </data>
+  <data name="ItemIsInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>No se pudo completar la operación como el elemento actual está en modo de edición.!</value>
+  </data>
+  <data name="ItemNotCapturedIntoUndoContextException" xml:space="preserve">
+    <value>No se pudo completar la operación como el elemento actual no está atrapado en un contexto de deshacer existente.!</value>
+  </data>
+  <data name="ItemNotInEditModeExceptionDefaultMessage" xml:space="preserve">
+    <value>No se pudo completar la operación como el elemento actual no está en modo de edición.!</value>
+  </data>
+  <data name="OperationItemTypeError" xml:space="preserve">
+    <value>El tipo del argumento no es un tipo compatible a la lista.!</value>
+  </data>
+  <data name="ErrorArgumentNotPositiveInteger" xml:space="preserve">
+    <value>El argumento no es un entero positivo.</value>
+  </data>
+  <data name="SingleOrDefaultMultipleElements" xml:space="preserve">
+    <value>La secuencia de entrada contiene más de un elemento.</value>
+  </data>
+  <data name="AnInvalidSetOfArgumentsWasSpecifiedArgumentNames" xml:space="preserve">
+    <value>Se especificó un conjunto de argumentos no válido. Nombres de argumentos: {0}</value>
+  </data>
+  <data name="TheProvidedArgumentsDoNotFormAValidRangeOfValuesArguments" xml:space="preserve">
+    <value>Los argumentos proporcionados no forman un intervalo válido de valores. Argumentos: {0}</value>
+  </data>
+  <data name="ErrorArgumentNotPositive" xml:space="preserve">
+    <value>El argumento no es un número positivo.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyString" xml:space="preserve">
+    <value>El argumento string es null (Nothing en Visual Basic) o está vacío.</value>
+  </data>
+  <data name="ErrorArgumentNullOrWhiteSpaceString" xml:space="preserve">
+    <value>El argumento string es null (Nothing en Visual Basic), vacío o sólo en espacios en blanco.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyBinary" xml:space="preserve">
+    <value>El argumento es null (Nothing en Visual Basic) o una matriz de bytes vacía.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyCollection" xml:space="preserve">
+    <value>El argumento collection es null (Nothing en Visual Basic) o está vacío.</value>
+  </data>
+  <data name="AContractConditionIsNotBeingMet" xml:space="preserve">
+    <value>No se cumple una condición contractual.</value>
+  </data>
+  <data name="ErrorArgumentNotValidIndex" xml:space="preserve">
+    <value>El argumento no se puede considerar un índice válido.</value>
+  </data>
+  <data name="ErrorArgumentNotValidLength" xml:space="preserve">
+    <value>El argumento no se puede considerar una longitud válida, ya que tiene que ser un entero positivo menor que la longitud de la colección para la que se utiliza.</value>
+  </data>
+  <data name="ErrorArgumentNullOrEmptyArray" xml:space="preserve">
+    <value>El argumento de matriz es null (Nothing en Visual Basic), o está vacío, o no tiene la longitud necesaria.</value>
+  </data>
+  <data name="ErrorArgumentDoesNotMatch" xml:space="preserve">
+    <value>El argumento no coincide con el modelo esperado o no se puede hacer coincidir implícitamente con ninguna entrada admitida.</value>
+  </data>
+  <data name="ErrorArgumentInvalidPath" xml:space="preserve">
+    <value>El argumento proporcionado no se puede utilizar como una ruta de acceso válida.</value>
+  </data>
+  <data name="ErrorKeyFoundInDictionary" xml:space="preserve">
+    <value>La clave dada ya estaba presente en el diccionario.</value>
+  </data>
+  <data name="ErrorQueueIsEmpty" xml:space="preserve">
+    <value>La cola está actualmente vacía.</value>
+  </data>
+  <data name="ErrorStackIsEmpty" xml:space="preserve">
+    <value>La pila está actualmente vacía.</value>
+  </data>
+  <data name="LimitArgumentNegativeExceptionDefaultTextNoArgument" xml:space="preserve">
+    <value>El argumento Limit debe ser un entero no negativo.</value>
+  </data>
+  <data name="LimitArgumentNegativeExceptionDefaultTextWithArgument" xml:space="preserve">
+    <value>El argumento Limit debe ser un entero no negativo. Nombre del argumento: {0}</value>
+  </data>
+  <data name="ErrorPersistedQueuesCannotBeCopied" xml:space="preserve">
+    <value>Intentar copiar todo el contenido de una cola persistente no es una operación admitida.</value>
+  </data>
+  <data name="ErrorPersistedQueuesCannotBeEnumerated" xml:space="preserve">
+    <value>Intentar enumerar una cola persistente no es una operación admitida.</value>
+  </data>
+  <data name="ErrorTheQueueIsCurrentlyInDisasterMode" xml:space="preserve">
+    <value>La cola está actualmente en modo de desastre, las operaciones de enumeración están deshabilitadas por diseño.</value>
+  </data>
+  <data name="ErrorArgumentInRange" xml:space="preserve">
+    <value>El argumento está en el rango no deseado.</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThan" xml:space="preserve">
+    <value>El argumento no es mayor que un valor deseado.</value>
+  </data>
+  <data name="ErrorArgumentNotGreaterThanOrEqualTo" xml:space="preserve">
+    <value>El argumento no es menor o igual que un valor deseado.</value>
+  </data>
+  <data name="ErrorArgumentNotInRange" xml:space="preserve">
+    <value>El argumento no está en el intervalo deseado.</value>
+  </data>
+  <data name="ErrorArgumentNotLessThan" xml:space="preserve">
+    <value>El argumento no es menor que un valor deseado.</value>
+  </data>
+  <data name="ErrorArgumentNotLessThanOrEqualTo" xml:space="preserve">
+    <value>El argumento no es menor o igual que un valor deseado.</value>
+  </data>
+  <data name="ErrorArgumentNotNegative" xml:space="preserve">
+    <value>El argumento no es un número negativo.</value>
+  </data>
+  <data name="ErrorArgumentNotNegativeInteger" xml:space="preserve">
+    <value>El argumento no es un entero negativo.</value>
+  </data>
+  <data name="NoHistoryLevelsException" xml:space="preserve">
+    <value>No se pudo inicializar ninguna pila de deshacer/rehacer, ya que no hay niveles de historial definidos.</value>
+  </data>
+  <data name="TheCollectionIsCapturedIntoAContextItCannotStartAnExplicitTransaction" xml:space="preserve">
+    <value>La colección se captura en un contexto, no puede iniciar una transacción explícita.</value>
+  </data>
+  <data name="TheGivenCollectionToRemoveIsNotContainedInTheInitialCollection" xml:space="preserve">
+    <value>La colección determinada que se va a quitar no está incluida en la colección inicial.</value>
+  </data>
+  <data name="ThereAlreadyIsAnOpenUndoTransaction" xml:space="preserve">
+    <value>Ya hay una transacción de deshacer abierta.</value>
+  </data>
+  <data name="UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen" xml:space="preserve">
+    <value>Las operaciones Deshacer y Rehacer no se admiten mientras está abierto un bloque de transacciones explícito.</value>
   </data>
 </root>
