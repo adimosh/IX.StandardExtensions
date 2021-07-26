@@ -10,12 +10,13 @@ using System.Linq;
 using System.Threading;
 using IX.Guaranteed;
 using IX.Observable.Adapters;
-using IX.Observable.UndoLevels;
+using IX.Observable.StateChanges;
 using IX.StandardExtensions;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 using IX.StandardExtensions.Threading;
 using IX.Undoable;
+using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
 
 namespace IX.Observable
@@ -171,12 +172,10 @@ namespace IX.Observable
 
                             // Push the undo level
                             this.PushUndoLevel(
-                                new ChangeAtUndoLevel<T>
-                                {
-                                    Index = index,
-                                    OldValue = oldValue,
-                                    NewValue = value
-                                });
+                                new ChangeAtStateChange<T>(
+                                    index,
+                                    value,
+                                    oldValue));
 
                             // Mark the second transaction as successful
                             tc2.Success();
@@ -282,11 +281,9 @@ namespace IX.Observable
 
                     // Push undo level
                     this.PushUndoLevel(
-                        new AddUndoLevel<T>
-                        {
-                            AddedItem = item,
-                            Index = index
-                        });
+                        new AddStateChange<T>(
+                            item,
+                            index));
 
                     // Mark transaction as successful
                     tc.Success();
@@ -343,11 +340,9 @@ namespace IX.Observable
 
                     // Push an undo level
                     this.PushUndoLevel(
-                        new RemoveUndoLevel<T>
-                        {
-                            Index = index,
-                            RemovedItem = item
-                        });
+                        new RemoveStateChange<T>(
+                            index,
+                            item));
 
                     // Mark the transaction as successful
                     tc.Success();
@@ -480,11 +475,9 @@ namespace IX.Observable
 
                     // Push an undo level
                     this.PushUndoLevel(
-                        new AddMultipleUndoLevel<T>
-                        {
-                            AddedItems = itemsList,
-                            Index = newIndex
-                        });
+                        new AddMultipleStateChange<T>(
+                            itemsList,
+                            newIndex));
 
                     // Mark the transaction as successful
                     tc.Success();
@@ -566,11 +559,9 @@ namespace IX.Observable
 
                     // Push an undo level
                     this.PushUndoLevel(
-                        new RemoveMultipleUndoLevel<T>
-                        {
-                            RemovedItems = itemsList,
-                            Indexes = indexesList
-                        });
+                        new RemoveMultipleStateChange<T>(
+                            indexesList,
+                            itemsList));
 
                     // Mark the transaction as successful
                     tc.Success();
@@ -663,11 +654,9 @@ namespace IX.Observable
 
                     // Push an undo level
                     this.PushUndoLevel(
-                        new RemoveMultipleUndoLevel<T>
-                        {
-                            RemovedItems = itemsList,
-                            Indexes = indexesList
-                        });
+                        new RemoveMultipleStateChange<T>(
+                            indexesList,
+                            itemsList));
 
                     // Mark the transaction as successful
                     tc.Success();
@@ -748,13 +737,11 @@ namespace IX.Observable
 
                     // Push undo transaction
                     this.PushUndoLevel(
-                        new RemoveMultipleUndoLevel<T>
-                        {
-                            RemovedItems = itemsToDelete.Select(p => p.Item)
+                        new RemoveMultipleStateChange<T>(
+                            itemsToDelete.Select(p => p.Index)
                                 .ToArray(),
-                            Indexes = itemsToDelete.Select(p => p.Index)
-                                .ToArray()
-                        });
+                            itemsToDelete.Select(p => p.Item)
+                                .ToArray()));
 
                     // Mark the transaction as successful
                     tc.Success();
@@ -832,11 +819,9 @@ namespace IX.Observable
 
                     // Push an undo level
                     this.PushUndoLevel(
-                        new AddMultipleUndoLevel<T>
-                        {
-                            AddedItems = itemsList,
-                            Index = index
-                        });
+                        new AddMultipleStateChange<T>(
+                            itemsList,
+                            index));
 
                     // Mark the transaction as successful
                     tc.Success();
@@ -956,7 +941,7 @@ namespace IX.Observable
         /// <param name="state">The state object to pass to the invocation.</param>
         /// <returns><see langword="true" /> if the undo was successful, <see langword="false" /> otherwise.</returns>
         protected override bool UndoInternally(
-            StateChange undoRedoLevel,
+            StateChangeBase undoRedoLevel,
             out Action<object> toInvokeOutsideLock,
             out object state)
         {
@@ -970,7 +955,7 @@ namespace IX.Observable
 
             switch (undoRedoLevel)
             {
-                case AddUndoLevel<T> aul:
+                case AddStateChange<T> aul:
                 {
                     var index = aul.Index;
 
@@ -1008,7 +993,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case AddMultipleUndoLevel<T> amul:
+                case AddMultipleStateChange<T> amul:
                 {
                     var index = amul.Index;
 
@@ -1051,7 +1036,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case RemoveUndoLevel<T> rul:
+                case RemoveStateChange<T> rul:
                 {
                     T item = rul.RemovedItem;
                     var index = rul.Index;
@@ -1089,7 +1074,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case RemoveMultipleUndoLevel<T> rmul:
+                case RemoveMultipleStateChange<T> rmul:
                 {
                     T[] items = rmul.RemovedItems;
                     int[] indexes = rmul.Indexes;
@@ -1129,7 +1114,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case ClearUndoLevel<T> cul:
+                case ClearStateChange<T> cul:
                 {
                     foreach (T t in cul.OriginalItems)
                     {
@@ -1159,7 +1144,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case ChangeAtUndoLevel<T> caul:
+                case ChangeAtStateChange<T> caul:
                 {
                     T oldItem = caul.NewValue;
                     T newItem = caul.OldValue;
@@ -1222,7 +1207,7 @@ namespace IX.Observable
         /// <param name="state">The state object to pass to the invocation.</param>
         /// <returns><see langword="true" /> if the redo was successful, <see langword="false" /> otherwise.</returns>
         protected override bool RedoInternally(
-            StateChange undoRedoLevel,
+            StateChangeBase undoRedoLevel,
             out Action<object> toInvokeOutsideLock,
             out object state)
         {
@@ -1236,7 +1221,7 @@ namespace IX.Observable
 
             switch (undoRedoLevel)
             {
-                case AddUndoLevel<T> aul:
+                case AddStateChange<T> aul:
                 {
                     var index = aul.Index;
                     T item = aul.AddedItem;
@@ -1271,7 +1256,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case AddMultipleUndoLevel<T> amul:
+                case AddMultipleStateChange<T> amul:
                 {
                     var index = amul.Index;
                     IEnumerable<T> items = amul.AddedItems;
@@ -1315,7 +1300,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case RemoveUndoLevel<T> rul:
+                case RemoveStateChange<T> rul:
                 {
                     T item = rul.RemovedItem;
                     var index = rul.Index;
@@ -1349,7 +1334,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case RemoveMultipleUndoLevel<T> rmul:
+                case RemoveMultipleStateChange<T> rmul:
                 {
                     foreach (var t in rmul.Indexes)
                     {
@@ -1388,7 +1373,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case ClearUndoLevel<T> cul:
+                case ClearStateChange<T> cul:
                 {
                     this.InternalContainer.Clear();
 
@@ -1419,7 +1404,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case ChangeAtUndoLevel<T> caul:
+                case ChangeAtStateChange<T> caul:
                 {
                     T oldItem = caul.OldValue;
                     T newItem = caul.NewValue;

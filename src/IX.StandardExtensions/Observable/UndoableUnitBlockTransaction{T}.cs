@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using IX.Guaranteed;
 using IX.StandardExtensions.Contracts;
-using IX.Undoable;
+using IX.Undoable.StateChanges;
 
 namespace IX.Observable
 {
@@ -31,17 +31,14 @@ namespace IX.Observable
                 state => { ((ObservableCollectionBase<T>)state).FailExplicitUndoBlockTransaction(); },
                 collectionBase);
 
-            this.StateChanges = new BlockStateChange
-            {
-                StateChanges = new List<StateChange>()
-            };
+            this.StateChanges = new CompositeStateChange(new List<StateChangeBase>());
         }
 
 #endregion
 
 #region Properties and indexers
 
-        internal BlockStateChange StateChanges { get; }
+        internal CompositeStateChange StateChanges { get; }
 
 #endregion
 

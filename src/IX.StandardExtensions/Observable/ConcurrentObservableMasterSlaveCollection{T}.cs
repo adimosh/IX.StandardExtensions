@@ -93,9 +93,9 @@ namespace IX.Observable
         /// </summary>
         protected override void DisposeManagedContext()
         {
-            Lazy<ReaderWriterLockSlim> l = GlobalThreading.Interlocked.Exchange(
-                ref this.locker,
-                null);
+            Lazy<ReaderWriterLockSlim>? l = GlobalThreading.Interlocked.Exchange(
+                ref this.locker!,
+                null!);
             if (l?.IsValueCreated ?? false)
             {
                 l.Value.Dispose();
@@ -110,8 +110,8 @@ namespace IX.Observable
         protected override void DisposeGeneralContext()
         {
             GlobalThreading.Interlocked.Exchange(
-                ref this.locker,
-                null);
+                ref this.locker!,
+                null!);
 
             base.DisposeGeneralContext();
         }

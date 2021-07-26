@@ -5,7 +5,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using IX.StandardExtensions;
 using IX.StandardExtensions.ComponentModel;
@@ -26,9 +25,9 @@ namespace IX.System.Collections.Generic
     {
 #region Internal state
 
-        private Dictionary<TKey, TValue> internalDictionary;
-        private Dictionary<int, List<TKey>> keyLevels;
-        private Dictionary<TKey, int> levelKeys;
+        private readonly Dictionary<TKey, TValue> internalDictionary;
+        private readonly Dictionary<int, List<TKey>> keyLevels;
+        private readonly Dictionary<TKey, int> levelKeys;
 
 #endregion
 
@@ -90,10 +89,6 @@ namespace IX.System.Collections.Generic
         ///     Gets the keys by level.
         /// </summary>
         /// <value>The keys by level.</value>
-        [SuppressMessage(
-            "Performance",
-            "CA1819:Properties should not return arrays",
-            Justification = "This is currently unavoidable.")]
         public IEnumerable<KeyValuePair<int, TKey[]>> KeysByLevel
         {
             get
@@ -262,20 +257,12 @@ namespace IX.System.Collections.Generic
         ///     Gets the enumerator.
         /// </summary>
         /// <returns>IEnumerator.</returns>
-        [SuppressMessage(
-            "Performance",
-            "HAA0601:Value type to reference type conversion causing boxing allocation",
-            Justification = "Unavoidable here.")]
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         /// <summary>
         ///     Gets the enumerator.
         /// </summary>
         /// <returns>The dictionary enumerator.</returns>
-        [SuppressMessage(
-            "Performance",
-            "HAA0601:Value type to reference type conversion causing boxing allocation",
-            Justification = "Unavoidable here.")]
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() =>
             this.GetEnumerator();
 

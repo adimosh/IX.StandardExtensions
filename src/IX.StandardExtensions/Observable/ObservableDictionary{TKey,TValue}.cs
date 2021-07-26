@@ -9,10 +9,11 @@ using System.Runtime.Serialization;
 using System.Threading;
 using IX.Observable.Adapters;
 using IX.Observable.DebugAide;
-using IX.Observable.UndoLevels;
+using IX.Observable.StateChanges;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using IX.Undoable;
+using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
 
 namespace IX.Observable
@@ -440,12 +441,10 @@ namespace IX.Observable
 
                         // Push a change undo level
                         this.PushUndoLevel(
-                            new DictionaryChangeUndoLevel<TKey, TValue>
-                            {
-                                Key = key,
-                                OldValue = val,
-                                NewValue = value
-                            });
+                            new DictionaryChangeStateChange<TKey, TValue>(
+                                key,
+                                value,
+                                val));
                     }
                     else
                     {
@@ -456,11 +455,9 @@ namespace IX.Observable
 
                         // Push an add undo level
                         this.PushUndoLevel(
-                            new DictionaryAddUndoLevel<TKey, TValue>
-                            {
-                                Key = key,
-                                Value = value
-                            });
+                            new DictionaryAddStateChange<TKey, TValue>(
+                                key,
+                                value));
                     }
                 }
 
@@ -501,13 +498,11 @@ namespace IX.Observable
 
                 // Push the undo level
                 this.PushUndoLevel(
-                    new AddUndoLevel<KeyValuePair<TKey, TValue>>
-                    {
-                        AddedItem = new KeyValuePair<TKey, TValue>(
+                    new AddStateChange<KeyValuePair<TKey, TValue>>(
+                        new KeyValuePair<TKey, TValue>(
                             key,
                             value),
-                        Index = newIndex
-                    });
+                        newIndex));
             }
 
             // NOTIFICATIONS
@@ -566,11 +561,9 @@ namespace IX.Observable
                 if (result)
                 {
                     this.PushUndoLevel(
-                        new DictionaryRemoveUndoLevel<TKey, TValue>
-                        {
-                            Key = key,
-                            Value = value
-                        });
+                        new DictionaryRemoveStateChange<TKey, TValue>(
+                            key,
+                            value));
                 }
             }
 
@@ -646,7 +639,7 @@ namespace IX.Observable
         /// <param name="state">The state object to pass to the invocation.</param>
         /// <returns><see langword="true" /> if the undo was successful, <see langword="false" /> otherwise.</returns>
         protected override bool UndoInternally(
-            StateChange undoRedoLevel,
+            StateChangeBase undoRedoLevel,
             out Action<object> toInvokeOutsideLock,
             out object state)
         {
@@ -660,7 +653,7 @@ namespace IX.Observable
 
             switch (undoRedoLevel)
             {
-                case AddUndoLevel<KeyValuePair<TKey, TValue>> aul:
+                case AddStateChange<KeyValuePair<TKey, TValue>> aul:
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
@@ -673,7 +666,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case RemoveUndoLevel<KeyValuePair<TKey, TValue>> rul:
+                case RemoveStateChange<KeyValuePair<TKey, TValue>> rul:
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
@@ -688,7 +681,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case ClearUndoLevel<KeyValuePair<TKey, TValue>> cul:
+                case ClearStateChange<KeyValuePair<TKey, TValue>> cul:
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
@@ -706,7 +699,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case DictionaryAddUndoLevel<TKey, TValue> daul:
+                case DictionaryAddStateChange<TKey, TValue> daul:
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
@@ -719,7 +712,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case DictionaryRemoveUndoLevel<TKey, TValue> raul:
+                case DictionaryRemoveStateChange<TKey, TValue> raul:
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
@@ -734,7 +727,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case DictionaryChangeUndoLevel<TKey, TValue> caul:
+                case DictionaryChangeStateChange<TKey, TValue> caul:
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
@@ -767,7 +760,7 @@ namespace IX.Observable
         /// <param name="state">The state object to pass to the invocation.</param>
         /// <returns><see langword="true" /> if the redo was successful, <see langword="false" /> otherwise.</returns>
         protected override bool RedoInternally(
-            StateChange undoRedoLevel,
+            StateChangeBase undoRedoLevel,
             out Action<object> toInvokeOutsideLock,
             out object state)
         {
@@ -781,7 +774,7 @@ namespace IX.Observable
 
             switch (undoRedoLevel)
             {
-                case AddUndoLevel<KeyValuePair<TKey, TValue>> aul:
+                case AddStateChange<KeyValuePair<TKey, TValue>> aul:
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
@@ -796,7 +789,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case RemoveUndoLevel<KeyValuePair<TKey, TValue>> rul:
+                case RemoveStateChange<KeyValuePair<TKey, TValue>> rul:
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
@@ -809,7 +802,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case ClearUndoLevel<KeyValuePair<TKey, TValue>> _:
+                case ClearStateChange<KeyValuePair<TKey, TValue>> _:
                 {
                     this.InternalContainer.Clear();
 
@@ -820,7 +813,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case DictionaryAddUndoLevel<TKey, TValue> daul:
+                case DictionaryAddStateChange<TKey, TValue> daul:
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
@@ -835,7 +828,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case DictionaryRemoveUndoLevel<TKey, TValue> raul:
+                case DictionaryRemoveStateChange<TKey, TValue> raul:
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
@@ -848,7 +841,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case DictionaryChangeUndoLevel<TKey, TValue> caul:
+                case DictionaryChangeStateChange<TKey, TValue> caul:
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 

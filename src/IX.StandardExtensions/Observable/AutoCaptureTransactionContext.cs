@@ -20,9 +20,9 @@ namespace IX.Observable
     {
 #region Internal state
 
-        private readonly EventHandler<EditCommittedEventArgs> editableHandler;
-        private readonly IUndoableItem item;
-        private readonly IUndoableItem[] items;
+        private readonly EventHandler<EditCommittedEventArgs>? editableHandler;
+        private readonly IUndoableItem? item;
+        private readonly IUndoableItem[]? items;
 
 #endregion
 

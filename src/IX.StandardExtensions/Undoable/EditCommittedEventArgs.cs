@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
 
 namespace IX.Undoable
@@ -19,7 +20,7 @@ namespace IX.Undoable
         ///     Initializes a new instance of the <see cref="EditCommittedEventArgs" /> class.
         /// </summary>
         /// <param name="stateChanges">The state changes that have been committed.</param>
-        public EditCommittedEventArgs([NotNull] params StateChange[] stateChanges)
+        public EditCommittedEventArgs(StateChangeBase stateChanges)
         {
             this.StateChanges = stateChanges;
         }
@@ -31,7 +32,7 @@ namespace IX.Undoable
         /// <summary>
         ///     Gets the state changes that have been committed.
         /// </summary>
-        public StateChange[] StateChanges { get; }
+        public StateChangeBase StateChanges { get; }
 
 #endregion
     }

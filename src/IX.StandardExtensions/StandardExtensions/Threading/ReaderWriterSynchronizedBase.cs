@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using System.Threading;
 using IX.StandardExtensions.ComponentModel;
@@ -26,18 +25,6 @@ namespace IX.StandardExtensions.Threading
 
         private readonly bool lockInherited;
 
-        [SuppressMessage(
-            "IDisposableAnalyzers.Correctness",
-            "IDISP008:Don't assign member with injected and created disposables.",
-            Justification = "We can't do that here, as doing exactly that is the purpose of this class.")]
-        [SuppressMessage(
-            "IDisposableAnalyzers.Correctness",
-            "IDISP002:Dispose member.",
-            Justification = "It is.")]
-        [SuppressMessage(
-            "IDisposableAnalyzers.Correctness",
-            "IDISP006:Implement IDisposable.",
-            Justification = "It is.")]
         private IReaderWriterLock locker;
 
         [DataMember]
@@ -45,7 +32,7 @@ namespace IX.StandardExtensions.Threading
 
 #endregion
 
-#region Constructors
+#region Constructors and destructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ReaderWriterSynchronizedBase" /> class.
@@ -114,14 +101,6 @@ namespace IX.StandardExtensions.Threading
         /// </summary>
         /// <param name="context">The streaming context.</param>
         [OnDeserializing]
-        [SuppressMessage(
-            "IDisposableAnalyzers.Correctness",
-            "IDISP003:Dispose previous before re-assigning.",
-            Justification = "This method is the OnDeserializing method, so there is no instance to dispose of before reassigning.")]
-        [SuppressMessage(
-            "IDisposableAnalyzers.Correctness",
-            "IDISP004:Don't ignore created IDisposable.",
-            Justification = "We really aren't.")]
         internal void OnDeserializingMethod(StreamingContext context) =>
             Interlocked.Exchange(
                 ref this.locker,

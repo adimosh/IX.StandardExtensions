@@ -2,6 +2,8 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System;
+using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
 
 namespace IX.Undoable
@@ -104,26 +106,26 @@ namespace IX.Undoable
         /// <summary>
         ///     When implemented, has the state changes received undone from the object.
         /// </summary>
-        /// <param name="changesToUndo">The state changes to redo.</param>
+        /// <param name="changeToUndo">The state change to redo.</param>
         /// <remarks>
         ///     <para>
         ///         This method is to only be used by a capturing undo/redo context. If the implementer is not captured, an
         ///         <see cref="ItemNotCapturedIntoUndoContextException" /> should be thrown.
         ///     </para>
         /// </remarks>
-        void UndoStateChanges(StateChange[] changesToUndo);
+        void UndoStateChanges(StateChangeBase changeToUndo);
 
         /// <summary>
         ///     When implemented, has the state changes received redone into the object.
         /// </summary>
-        /// <param name="changesToRedo">The state changes to redo.</param>
+        /// <param name="changeToRedo">The state change to redo.</param>
         /// <remarks>
         ///     <para>
         ///         This method is to only be used by a capturing undo/redo context. If the implementer is not captured, an
         ///         <see cref="ItemNotCapturedIntoUndoContextException" /> should be thrown.
         ///     </para>
         /// </remarks>
-        void RedoStateChanges(StateChange[] changesToRedo);
+        void RedoStateChanges(StateChangeBase changeToRedo);
 
         /// <summary>
         ///     Allows the implementer to be captured by a containing undo-/redo-capable object so that undo and redo operations

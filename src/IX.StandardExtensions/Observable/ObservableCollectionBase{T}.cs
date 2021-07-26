@@ -6,15 +6,17 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using IX.Guaranteed;
 using IX.Observable.Adapters;
-using IX.Observable.UndoLevels;
+using IX.Observable.StateChanges;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using IX.Undoable;
+using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
 
 namespace IX.Observable
@@ -27,7 +29,7 @@ namespace IX.Observable
     /// <seealso cref="INotifyCollectionChanged" />
     /// <seealso cref="IEnumerable{T}" />
     [PublicAPI]
-    public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollectionBase<T>,
+    public abstract partial class ObservableCollectionBase<T> : ObservableReadOnlyCollectionBase<T>,
         ICollection<T>,
         IUndoableItem,
         IEditCommittableItem
@@ -35,10 +37,10 @@ namespace IX.Observable
 #region Internal state
 
         private bool automaticallyCaptureSubItems;
-        private UndoableUnitBlockTransaction<T> currentUndoBlockTransaction;
+        private UndoableUnitBlockTransaction<T>? currentUndoBlockTransaction;
         private int historyLevels;
         private bool suppressUndoable;
-        private Lazy<UndoableInnerContext> undoContext;
+        private Lazy<UndoableInnerContext>? undoContext;
 
 #endregion
 
@@ -110,7 +112,7 @@ namespace IX.Observable
         /// <summary>
         ///     Occurs when an edit is committed to the collection, whichever that may be.
         /// </summary>
-        protected event EventHandler<EditCommittedEventArgs> EditCommittedInternal;
+        protected event EventHandler<EditCommittedEventArgs>? EditCommittedInternal;
 
         /// <summary>
         ///     Occurs when an edit on this item is committed.
@@ -148,7 +150,7 @@ namespace IX.Observable
 
                 return this.ParentUndoContext?.CanRedo ??
                        this.ReadLock(
-                           thisL1 => thisL1.undoContext.IsValueCreated && thisL1.undoContext.Value.RedoStack.Count > 0,
+                           thisL1 => (thisL1.undoContext?.IsValueCreated ?? false) && thisL1.undoContext.Value.RedoStackHasData,
                            this);
             }
         }
@@ -173,7 +175,7 @@ namespace IX.Observable
 
                 return this.ParentUndoContext?.CanUndo ??
                        this.ReadLock(
-                           thisL1 => thisL1.undoContext.IsValueCreated && thisL1.undoContext.Value.UndoStack.Count > 0,
+                           thisL1 => (thisL1.undoContext?.IsValueCreated ?? false) && thisL1.undoContext.Value.UndoStackHasData,
                            this);
             }
         }
@@ -267,7 +269,7 @@ namespace IX.Observable
         ///         when deserialized.
         ///     </para>
         /// </remarks>
-        public IUndoableItem ParentUndoContext { get; private set; }
+        public IUndoableItem? ParentUndoContext { get; private set; }
 
 #endregion
 
@@ -303,11 +305,9 @@ namespace IX.Observable
 
                     // Push the undo level
                     this.PushUndoLevel(
-                        new AddUndoLevel<T>
-                        {
-                            AddedItem = item,
-                            Index = newIndex
-                        });
+                        new AddStateChange<T>(
+                            item,
+                            newIndex));
 
                     // Mark the transaction as a success
                     tc.Success();
@@ -379,11 +379,9 @@ namespace IX.Observable
 
                     // Push an undo level
                     this.PushUndoLevel(
-                        new RemoveUndoLevel<T>
-                        {
-                            RemovedItem = item,
-                            Index = oldIndex
-                        });
+                        new RemoveStateChange<T>(
+                            oldIndex,
+                            item));
 
                     // Mark the transaction as a success
                     tc.Success();
@@ -478,7 +476,7 @@ namespace IX.Observable
             bool internalResult;
             using (ReadWriteSynchronizationLocker locker = this.ReadWriteLock())
             {
-                if (!this.undoContext.IsValueCreated || this.undoContext.Value.RedoStack.Count == 0)
+                if (!this.undoContext.IsValueCreated || !this.undoContext.Value.RedoStackHasData)
                 {
                     return;
                 }
@@ -487,14 +485,14 @@ namespace IX.Observable
 
                 UndoableInnerContext uc = this.undoContext.Value;
 
-                StateChange[] level = uc.RedoStack.Pop();
+                StateChangeBase level = uc.PopRedo();
                 internalResult = this.RedoInternally(
-                    level[0],
+                    level,
                     out toInvoke,
                     out state);
                 if (internalResult)
                 {
-                    uc.UndoStack.Push(level);
+                    uc.PushUndo(level);
                 }
             }
 
@@ -512,7 +510,7 @@ namespace IX.Observable
         /// </summary>
         /// <param name="changesToRedo">The state changes to redo.</param>
         /// <exception cref="ItemNotCapturedIntoUndoContextException">There is no capturing context.</exception>
-        public void RedoStateChanges(StateChange[] changesToRedo)
+        public void RedoStateChanges(StateChangeBase changesToRedo)
         {
             // PRECONDITIONS
             if (this.suppressUndoable || EnvironmentSettings.DisableUndoable || this.historyLevels == 0)
@@ -530,47 +528,22 @@ namespace IX.Observable
             }
 
             // ACTION
-            foreach (StateChange sc in changesToRedo)
+            switch (changesToRedo)
             {
-                switch (sc)
+                case SubItemStateChange sisc:
                 {
-                    case SubItemStateChange sisc:
+                    sisc.SubItem.RedoStateChanges(sisc.StateChange);
+
+                    break;
+                }
+
+                case CompositeStateChange blsc:
+                {
+                    foreach (StateChangeBase ulsc in blsc.StateChanges)
                     {
-                        sisc.SubObject.RedoStateChanges(sisc.StateChanges);
-
-                        break;
-                    }
-
-                    case BlockStateChange blsc:
-                    {
-                        foreach (StateChange ulsc in blsc.StateChanges)
-                        {
-                            object state;
-                            bool internalResult;
-                            Action<object> act;
-                            using (this.WriteLock())
-                            {
-                                internalResult = this.RedoInternally(
-                                    ulsc,
-                                    out act,
-                                    out state);
-                            }
-
-                            if (internalResult)
-                            {
-                                act?.Invoke(state);
-                            }
-                        }
-
-                        break;
-                    }
-
-                    case StateChange ulsc:
-                    {
-                        Action<object> act;
                         object state;
                         bool internalResult;
-
+                        Action<object> act;
                         using (this.WriteLock())
                         {
                             internalResult = this.RedoInternally(
@@ -583,9 +556,31 @@ namespace IX.Observable
                         {
                             act?.Invoke(state);
                         }
-
-                        break;
                     }
+
+                    break;
+                }
+
+                case { } ulsc:
+                {
+                    Action<object?>? act;
+                    object? state;
+                    bool internalResult;
+
+                    using (this.WriteLock())
+                    {
+                        internalResult = this.RedoInternally(
+                            ulsc,
+                            out act,
+                            out state);
+                    }
+
+                    if (internalResult)
+                    {
+                        act?.Invoke(state);
+                    }
+
+                    break;
                 }
             }
         }
@@ -647,7 +642,7 @@ namespace IX.Observable
             bool internalResult;
             using (ReadWriteSynchronizationLocker locker = this.ReadWriteLock())
             {
-                if (!this.undoContext.IsValueCreated || this.undoContext.Value.UndoStack.Count == 0)
+                if (!this.undoContext.IsValueCreated || !this.undoContext.Value.UndoStackHasData)
                 {
                     return;
                 }
@@ -656,14 +651,14 @@ namespace IX.Observable
 
                 UndoableInnerContext uc = this.undoContext.Value;
 
-                StateChange[] level = uc.UndoStack.Pop();
+                StateChangeBase level = uc.PopUndo();
                 internalResult = this.UndoInternally(
-                    level[0],
+                    level,
                     out toInvoke,
                     out state);
                 if (internalResult)
                 {
-                    uc.RedoStack.Push(level);
+                    uc.PushRedo(level);
                 }
             }
 
@@ -681,7 +676,7 @@ namespace IX.Observable
         /// </summary>
         /// <param name="changesToUndo">The state changes to redo.</param>
         /// <exception cref="ItemNotCapturedIntoUndoContextException">There is no capturing context.</exception>
-        public void UndoStateChanges(StateChange[] changesToUndo)
+        public void UndoStateChanges(StateChangeBase changesToUndo)
         {
             // PRECONDITIONS
             if (this.suppressUndoable || EnvironmentSettings.DisableUndoable || this.historyLevels == 0)
@@ -699,47 +694,22 @@ namespace IX.Observable
             }
 
             // ACTION
-            foreach (StateChange sc in changesToUndo)
+            switch (changesToUndo)
             {
-                switch (sc)
+                case SubItemStateChange sisc:
                 {
-                    case SubItemStateChange sisc:
-                    {
-                        sisc.SubObject.UndoStateChanges(sisc.StateChanges);
+                    sisc.SubItem.UndoStateChanges(sisc.StateChange);
 
-                        break;
-                    }
+                    break;
+                }
 
-                    case BlockStateChange bsc:
-                    {
-                        foreach (StateChange ulsc in bsc.StateChanges)
-                        {
-                            Action<object> act;
-                            object state;
-                            bool internalResult;
-                            using (this.WriteLock())
-                            {
-                                internalResult = this.UndoInternally(
-                                    ulsc,
-                                    out act,
-                                    out state);
-                            }
-
-                            if (internalResult)
-                            {
-                                act?.Invoke(state);
-                            }
-                        }
-
-                        break;
-                    }
-
-                    case StateChange ulsc:
+                case CompositeStateChange bsc:
+                {
+                    foreach (StateChangeBase ulsc in bsc.StateChanges)
                     {
                         Action<object> act;
                         object state;
                         bool internalResult;
-
                         using (this.WriteLock())
                         {
                             internalResult = this.UndoInternally(
@@ -752,9 +722,31 @@ namespace IX.Observable
                         {
                             act?.Invoke(state);
                         }
-
-                        break;
                     }
+
+                    break;
+                }
+
+                case { } ulsc:
+                {
+                    Action<object> act;
+                    object state;
+                    bool internalResult;
+
+                    using (this.WriteLock())
+                    {
+                        internalResult = this.UndoInternally(
+                            ulsc,
+                            out act,
+                            out state);
+                    }
+
+                    if (internalResult)
+                    {
+                        act?.Invoke(state);
+                    }
+
+                    break;
                 }
             }
         }
@@ -838,17 +830,13 @@ namespace IX.Observable
         /// </summary>
         internal void FinishExplicitUndoBlockTransaction()
         {
-            this.undoContext.Value.UndoStack.Push(
-                new StateChange[]
-                {
-                    this.currentUndoBlockTransaction.StateChanges
-                });
+            this.undoContext.Value.PushUndo(this.currentUndoBlockTransaction.StateChanges);
 
             Interlocked.Exchange(
                 ref this.currentUndoBlockTransaction,
                 null);
 
-            this.undoContext.Value.RedoStack.Clear();
+            this.undoContext.Value.ClearRedoStack();
 
             this.RaisePropertyChanged(nameof(this.CanUndo));
             this.RaisePropertyChanged(nameof(this.CanRedo));
@@ -891,74 +879,80 @@ namespace IX.Observable
         /// <param name="state">The state object to pass to the invocation.</param>
         /// <returns><see langword="true" /> if the undo was successful, <see langword="false" /> otherwise.</returns>
         protected virtual bool UndoInternally(
-            [NotNull] StateChange undoRedoLevel,
-            [CanBeNull] out Action<object> toInvokeOutsideLock,
-            [CanBeNull] out object state)
+            StateChangeBase undoRedoLevel,
+            #if FRAMEWORK_ADVANCED
+            [MaybeNullWhen(false)]
+            #endif
+            out Action<object?>? toInvokeOutsideLock,
+            #if FRAMEWORK_ADVANCED
+            [MaybeNullWhen(false)]
+            #endif
+            out object? state)
         {
-            if (undoRedoLevel is SubItemStateChange lvl)
+            switch (undoRedoLevel)
             {
-                lvl.SubObject.UndoStateChanges(lvl.StateChanges);
+                case SubItemStateChange lvl:
+                    lvl.SubItem.UndoStateChanges(lvl.StateChange);
 
-                toInvokeOutsideLock = null;
-                state = null;
-
-                return true;
-            }
-
-            if (undoRedoLevel is BlockStateChange bsc)
-            {
-                var count = bsc.StateChanges.Count;
-                if (count == 0)
-                {
                     toInvokeOutsideLock = null;
                     state = null;
 
                     return true;
-                }
-
-                var actionsToInvoke = new Action<object>[count];
-                var states = new object[count];
-                var counter = 0;
-                var result = true;
-                foreach (StateChange sc in ((IEnumerable<StateChange>)bsc.StateChanges).Reverse())
+                case CompositeStateChange bsc:
                 {
-                    try
+                    var count = bsc.StateChanges.Count;
+                    if (count == 0)
                     {
-                        var localResult = this.UndoInternally(
-                            sc,
-                            out Action<object> toInvoke,
-                            out object toState);
+                        toInvokeOutsideLock = null;
+                        state = null;
 
-                        if (!localResult)
+                        return true;
+                    }
+
+                    var actionsToInvoke = new Action<object>[count];
+                    var states = new object[count];
+                    var counter = 0;
+                    var result = true;
+                    foreach (StateChangeBase sc in ((IEnumerable<StateChangeBase>)bsc.StateChanges).Reverse())
+                    {
+                        try
                         {
-                            result = false;
+                            var localResult = this.UndoInternally(
+                                sc,
+                                out Action<object?>? toInvoke,
+                                out object? toState);
+
+                            if (!localResult)
+                            {
+                                result = false;
+                            }
+                            else
+                            {
+                                actionsToInvoke[counter] = toInvoke!;
+                                states[counter] = toState!;
+                            }
                         }
-                        else
+                        finally
                         {
-                            actionsToInvoke[counter] = toInvoke;
-                            states[counter] = toState;
+                            counter++;
                         }
                     }
-                    finally
+
+                    state = new Tuple<Action<object>[], object[], ObservableCollectionBase<T>>(
+                        actionsToInvoke,
+                        states,
+                        this);
+                    toInvokeOutsideLock = innerState =>
                     {
-                        counter++;
-                    }
+                        var convertedState = (Tuple<Action<object?>?[], object?[], ObservableCollectionBase<T>>)innerState;
+
+                        convertedState.Item3.InterpretBlockStateChangesOutsideLock(
+                            convertedState.Item1,
+                            convertedState.Item2);
+                    };
+
+                    return result;
                 }
-
-                state = new Tuple<Action<object>[], object[], ObservableCollectionBase<T>>(
-                    actionsToInvoke,
-                    states,
-                    this);
-                toInvokeOutsideLock = innerState =>
-                {
-                    var convertedState = (Tuple<Action<object>[], object[], ObservableCollectionBase<T>>)innerState;
-
-                    convertedState.Item3.InterpretBlockStateChangesOutsideLock(
-                        convertedState.Item1,
-                        convertedState.Item2);
-                };
-
-                return result;
             }
 
             toInvokeOutsideLock = null;
@@ -975,74 +969,80 @@ namespace IX.Observable
         /// <param name="state">The state object to pass to the invocation.</param>
         /// <returns><see langword="true" /> if the redo was successful, <see langword="false" /> otherwise.</returns>
         protected virtual bool RedoInternally(
-            [NotNull] StateChange undoRedoLevel,
-            [CanBeNull] out Action<object> toInvokeOutsideLock,
-            [CanBeNull] out object state)
+            StateChangeBase undoRedoLevel,
+            #if FRAMEWORK_ADVANCED
+            [MaybeNullWhen(false)]
+            #endif
+            out Action<object?>? toInvokeOutsideLock,
+            #if FRAMEWORK_ADVANCED
+            [MaybeNullWhen(false)]
+            #endif
+            out object? state)
         {
-            if (undoRedoLevel is SubItemStateChange lvl)
+            switch (undoRedoLevel)
             {
-                lvl.SubObject.RedoStateChanges(lvl.StateChanges);
+                case SubItemStateChange(var subItem, var stateChange):
+                    subItem.RedoStateChanges(stateChange);
 
-                toInvokeOutsideLock = null;
-                state = null;
-
-                return true;
-            }
-
-            if (undoRedoLevel is BlockStateChange bsc)
-            {
-                var count = bsc.StateChanges.Count;
-                if (count == 0)
-                {
                     toInvokeOutsideLock = null;
                     state = null;
 
                     return true;
-                }
-
-                var actionsToInvoke = new Action<object>[count];
-                var states = new object[count];
-                var counter = 0;
-                var result = true;
-                foreach (StateChange sc in bsc.StateChanges)
+                case CompositeStateChange bsc:
                 {
-                    try
+                    var count = bsc.StateChanges.Count;
+                    if (count == 0)
                     {
-                        var localResult = this.RedoInternally(
-                            sc,
-                            out Action<object> toInvoke,
-                            out object toState);
+                        toInvokeOutsideLock = null;
+                        state = null;
 
-                        if (!localResult)
+                        return true;
+                    }
+
+                    var actionsToInvoke = new Action<object?>[count];
+                    var states = new object[count];
+                    var counter = 0;
+                    var result = true;
+                    foreach (StateChangeBase sc in bsc.StateChanges)
+                    {
+                        try
                         {
-                            result = false;
+                            var localResult = this.RedoInternally(
+                                sc,
+                                out Action<object>? toInvoke,
+                                out object? toState);
+
+                            if (!localResult)
+                            {
+                                result = false;
+                            }
+                            else
+                            {
+                                actionsToInvoke[counter] = toInvoke!;
+                                states[counter] = toState!;
+                            }
                         }
-                        else
+                        finally
                         {
-                            actionsToInvoke[counter] = toInvoke;
-                            states[counter] = toState;
+                            counter++;
                         }
                     }
-                    finally
+
+                    state = new Tuple<Action<object?>[], object[], ObservableCollectionBase<T>>(
+                        actionsToInvoke,
+                        states,
+                        this);
+                    toInvokeOutsideLock = innerState =>
                     {
-                        counter++;
-                    }
+                        var convertedState = (Tuple<Action<object?>[], object[], ObservableCollectionBase<T>>)innerState;
+
+                        convertedState.Item3.InterpretBlockStateChangesOutsideLock(
+                            convertedState.Item1,
+                            convertedState.Item2);
+                    };
+
+                    return result;
                 }
-
-                state = new Tuple<Action<object>[], object[], ObservableCollectionBase<T>>(
-                    actionsToInvoke,
-                    states,
-                    this);
-                toInvokeOutsideLock = innerState =>
-                {
-                    var convertedState = (Tuple<Action<object>[], object[], ObservableCollectionBase<T>>)innerState;
-
-                    convertedState.Item3.InterpretBlockStateChangesOutsideLock(
-                        convertedState.Item1,
-                        convertedState.Item2);
-                };
-
-                return result;
             }
 
             toInvokeOutsideLock = null;
@@ -1057,8 +1057,8 @@ namespace IX.Observable
         /// <param name="actions">The actions to employ.</param>
         /// <param name="states">The state objects to send to the corresponding actions.</param>
         protected virtual void InterpretBlockStateChangesOutsideLock(
-            Action<object>[] actions,
-            object[] states)
+            Action<object?>?[] actions,
+            object?[] states)
         {
             for (var i = 0; i < actions.Length; i++)
             {
@@ -1071,7 +1071,7 @@ namespace IX.Observable
         ///     Push an undo level into the stack.
         /// </summary>
         /// <param name="undoRedoLevel">The undo level to push.</param>
-        protected void PushUndoLevel(StateChange undoRedoLevel)
+        protected void PushUndoLevel(StateChangeBase undoRedoLevel)
         {
             if (this.suppressUndoable || EnvironmentSettings.DisableUndoable || this.historyLevels == 0)
             {
@@ -1084,20 +1084,16 @@ namespace IX.Observable
                     this,
                     new EditCommittedEventArgs(undoRedoLevel));
 
-                this.undoContext.Value.RedoStack.Clear();
+                this.undoContext.Value.ClearRedoStack();
 
                 this.RaisePropertyChanged(nameof(this.CanUndo));
                 this.RaisePropertyChanged(nameof(this.CanRedo));
             }
             else if (this.currentUndoBlockTransaction == null)
             {
-                this.undoContext.Value.UndoStack.Push(
-                    new[]
-                    {
-                        undoRedoLevel
-                    });
+                this.undoContext.Value.PushUndo(undoRedoLevel);
 
-                this.undoContext.Value.RedoStack.Clear();
+                this.undoContext.Value.ClearRedoStack();
 
                 this.RaisePropertyChanged(nameof(this.CanUndo));
                 this.RaisePropertyChanged(nameof(this.CanRedo));
@@ -1255,11 +1251,7 @@ namespace IX.Observable
                     this.InternalContainer.Clear();
 
                     // Push an undo level
-                    this.PushUndoLevel(
-                        new ClearUndoLevel<T>
-                        {
-                            OriginalItems = tempArray
-                        });
+                    this.PushUndoLevel(new ClearStateChange<T>(tempArray));
 
                     // Mark the transaction as a success
                     tc.Success();
@@ -1284,11 +1276,9 @@ namespace IX.Observable
             object sender,
             EditCommittedEventArgs e) =>
             this.PushUndoLevel(
-                new SubItemStateChange
-                {
-                    SubObject = sender as IUndoableItem,
-                    StateChanges = e.StateChanges
-                });
+                new SubItemStateChange(
+                    sender as IUndoableItem,
+                    e.StateChanges));
 
         private void InitializeInternalState(
             ICollectionAdapter<T> internalContainer,
@@ -1319,7 +1309,7 @@ namespace IX.Observable
                 return;
             }
 
-            ReadWriteSynchronizationLocker locker = lockAcquired ? null : this.ReadWriteLock();
+            ReadWriteSynchronizationLocker? locker = lockAcquired ? null : this.ReadWriteLock();
 
             if (value)
             {
@@ -1331,10 +1321,7 @@ namespace IX.Observable
                         return;
                     }
 
-                    if (!lockAcquired)
-                    {
-                        locker.Upgrade();
-                    }
+                    locker?.Upgrade();
 
                     foreach (IUndoableItem item in this.InternalContainer.Cast<IUndoableItem>())
                     {
@@ -1343,10 +1330,7 @@ namespace IX.Observable
                 }
                 finally
                 {
-                    if (!lockAcquired)
-                    {
-                        locker.Dispose();
-                    }
+                    locker?.Dispose();
                 }
             }
             else
@@ -1359,10 +1343,7 @@ namespace IX.Observable
                         return;
                     }
 
-                    if (!lockAcquired)
-                    {
-                        locker.Upgrade();
-                    }
+                    locker?.Upgrade();
 
                     foreach (IUndoableItem item in this.InternalContainer.Cast<IUndoableItem>())
                     {
@@ -1371,10 +1352,7 @@ namespace IX.Observable
                 }
                 finally
                 {
-                    if (!lockAcquired)
-                    {
-                        locker.Dispose();
-                    }
+                    locker?.Dispose();
                 }
             }
         }

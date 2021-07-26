@@ -8,11 +8,11 @@ using System.Diagnostics;
 using System.Threading;
 using IX.Observable.Adapters;
 using IX.Observable.DebugAide;
-using IX.Observable.UndoLevels;
+using IX.Observable.StateChanges;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using IX.System.Collections.Generic;
-using IX.Undoable;
+using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
 
 namespace IX.Observable
@@ -425,7 +425,7 @@ namespace IX.Observable
         /// <param name="state">The state object to pass to the invocation.</param>
         /// <returns><see langword="true" /> if the redo was successful, <see langword="false" /> otherwise.</returns>
         protected override bool RedoInternally(
-            StateChange undoRedoLevel,
+            StateChangeBase undoRedoLevel,
             out Action<object> toInvokeOutsideLock,
             out object state)
         {
@@ -439,7 +439,7 @@ namespace IX.Observable
 
             switch (undoRedoLevel)
             {
-                case AddUndoLevel<T> aul:
+                case AddStateChange<T> aul:
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
 
@@ -466,7 +466,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case EnqueueUndoLevel<T> eul:
+                case EnqueueStateChange<T> eul:
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
 
@@ -493,7 +493,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case DequeueUndoLevel<T> _:
+                case DequeueStateChange<T> _:
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
 
@@ -518,7 +518,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case RemoveUndoLevel<T> _:
+                case RemoveStateChange<T> _:
                 {
                     toInvokeOutsideLock = null;
                     state = null;
@@ -526,7 +526,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case ClearUndoLevel<T> _:
+                case ClearStateChange<T> _:
                 {
                     this.InternalContainer.Clear();
 
@@ -564,7 +564,7 @@ namespace IX.Observable
         /// <param name="state">The state object to pass to the invocation.</param>
         /// <returns><see langword="true" /> if the undo was successful, <see langword="false" /> otherwise.</returns>
         protected override bool UndoInternally(
-            StateChange undoRedoLevel,
+            StateChangeBase undoRedoLevel,
             out Action<object> toInvokeOutsideLock,
             out object state)
         {
@@ -578,7 +578,7 @@ namespace IX.Observable
 
             switch (undoRedoLevel)
             {
-                case AddUndoLevel<T> _:
+                case AddStateChange<T> _:
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
 
@@ -603,7 +603,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case EnqueueUndoLevel<T> _:
+                case EnqueueStateChange<T> _:
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
 
@@ -628,7 +628,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case DequeueUndoLevel<T> dul:
+                case DequeueStateChange<T> dul:
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
 
@@ -655,7 +655,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case RemoveUndoLevel<T> _:
+                case RemoveStateChange<T> _:
                 {
                     toInvokeOutsideLock = null;
                     state = null;
@@ -663,7 +663,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case ClearUndoLevel<T> cul:
+                case ClearStateChange<T> cul:
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
                     for (var i = 0; i < cul.OriginalItems.Length - 1; i++)

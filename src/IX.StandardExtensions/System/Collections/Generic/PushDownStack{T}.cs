@@ -30,15 +30,13 @@ namespace IX.System.Collections.Generic
     public class PushDownStack<T> : PushingCollectionBase<T>,
         IStack<T>
     {
-#region Constructors
+#region Constructors and destructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="PushDownStack{T}" /> class.
         /// </summary>
         public PushDownStack()
-            : this(Constants.DefaultPushDownLimit)
-        {
-        }
+            : this(Constants.DefaultPushDownLimit) { }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="PushDownStack{T}" /> class.
@@ -49,9 +47,7 @@ namespace IX.System.Collections.Generic
         ///     integer.
         /// </exception>
         public PushDownStack(int limit)
-            : base(limit)
-        {
-        }
+            : base(limit) { }
 
 #endregion
 
@@ -91,15 +87,13 @@ namespace IX.System.Collections.Generic
         ///     Pushes an element to the top of the stack.
         /// </summary>
         /// <param name="item">The item to push.</param>
-        public void Push(T item) =>
-            this.Append(item);
+        public void Push(T item) => this.Append(item);
 
         /// <summary>
         ///     Pushes a range of elements to the top of the stack.
         /// </summary>
         /// <param name="items">The item range to push.</param>
-        public void PushRange(T[] items) =>
-            this.Append(items);
+        public void PushRange(T[] items) => this.Append(items);
 
         /// <summary>
         ///     Pushes a range of elements to the top of the stack.
@@ -193,9 +187,7 @@ namespace IX.System.Collections.Generic
         /// <summary>
         ///     This method does nothing.
         /// </summary>
-        void IStack<T>.TrimExcess()
-        {
-        }
+        void IStack<T>.TrimExcess() { }
 
 #endregion
 

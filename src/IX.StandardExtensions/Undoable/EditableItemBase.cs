@@ -4,9 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Linq;
 using IX.StandardExtensions.ComponentModel;
 using IX.StandardExtensions.Contracts;
+using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
 
 namespace IX.Undoable
@@ -19,10 +20,10 @@ namespace IX.Undoable
     [PublicAPI]
     public abstract class EditableItemBase : ViewModelBase, ITransactionEditableItem, IUndoableItem
     {
-        private readonly List<StateChange> stateChanges;
-        private int historyLevels;
+        private readonly List<StateChangeBase> stateChanges;
+        private readonly Lazy<UndoableInnerContext> undoContext;
 
-        private Lazy<UndoableInnerContext> undoContext;
+        private int historyLevels;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="EditableItemBase" /> class.
@@ -45,13 +46,13 @@ namespace IX.Undoable
                 nameof(limit));
 
             this.undoContext = new Lazy<UndoableInnerContext>(this.InnerContextFactory);
-            this.stateChanges = new List<StateChange>();
+            this.stateChanges = new List<StateChangeBase>();
         }
 
         /// <summary>
         ///     Occurs when an edit on this item is committed.
         /// </summary>
-        public event EventHandler<EditCommittedEventArgs> EditCommitted;
+        public event EventHandler<EditCommittedEventArgs>? EditCommitted;
 
         /// <summary>
         ///     Gets a value indicating whether this instance is in edit mode.
@@ -107,7 +108,7 @@ namespace IX.Undoable
         ///     <see langword="false" /> otherwise.
         /// </value>
         public bool CanUndo => this.IsCapturedIntoUndoContext ||
-                               (this.undoContext.IsValueCreated && this.undoContext.Value.UndoStack.Count > 0);
+                               (this.undoContext.IsValueCreated && this.undoContext.Value.UndoStackHasData);
 
         /// <summary>
         ///     Gets a value indicating whether or not a redo can be performed on this item.
@@ -117,13 +118,13 @@ namespace IX.Undoable
         ///     <see langword="false" /> otherwise.
         /// </value>
         public bool CanRedo => this.IsCapturedIntoUndoContext ||
-                               (this.undoContext.IsValueCreated && this.undoContext.Value.RedoStack.Count > 0);
+                               (this.undoContext.IsValueCreated && this.undoContext.Value.RedoStackHasData);
 
         /// <summary>
         ///     Gets the parent undo context.
         /// </summary>
         /// <value>The parent undo context.</value>
-        public IUndoableItem ParentUndoContext { get; private set; }
+        public IUndoableItem? ParentUndoContext { get; private set; }
 
         /// <summary>
         ///     Begins the editing of an item.
@@ -157,7 +158,8 @@ namespace IX.Undoable
                 return;
             }
 
-            this.RevertChanges(this.stateChanges.ToArray());
+            this.RevertChanges(
+                this.stateChanges.Count == 1 ? this.stateChanges[0] : new CompositeStateChange(this.stateChanges));
 
             this.stateChanges.Clear();
         }
@@ -306,14 +308,14 @@ namespace IX.Undoable
 
             // Undo context created, let's try to undo
             UndoableInnerContext uc = this.undoContext.Value;
-            if (uc.UndoStack.Count == 0)
+            if (!uc.UndoStackHasData)
             {
                 // We don't have anything to Undo.
                 return;
             }
 
-            StateChange[] undoData = uc.UndoStack.Pop();
-            uc.RedoStack.Push(undoData);
+            StateChangeBase undoData = uc.PopUndo();
+            uc.PushRedo(undoData);
             this.RevertChanges(undoData);
 
             this.RaisePropertyChanged(nameof(this.CanUndo));
@@ -354,14 +356,14 @@ namespace IX.Undoable
 
             // Undo context created, let's try to undo
             UndoableInnerContext uc = this.undoContext.Value;
-            if (uc.RedoStack.Count == 0)
+            if (!uc.RedoStackHasData)
             {
                 // We don't have anything to Redo.
                 return;
             }
 
-            StateChange[] redoData = uc.RedoStack.Pop();
-            uc.UndoStack.Push(redoData);
+            var redoData = uc.PopRedo();
+            uc.PushUndo(redoData);
             this.DoChanges(redoData);
 
             this.RaisePropertyChanged(nameof(this.CanUndo));
@@ -380,7 +382,7 @@ namespace IX.Undoable
         ///     The item is not captured into an undo/redo context, and this
         ///     operation is illegal.
         /// </exception>
-        public void UndoStateChanges(StateChange[] changesToUndo)
+        public void UndoStateChanges(StateChangeBase changesToUndo)
         {
             Requires.NotNull(
                 changesToUndo,
@@ -391,10 +393,7 @@ namespace IX.Undoable
                 throw new ItemNotCapturedIntoUndoContextException();
             }
 
-            if (changesToUndo.Length > 0)
-            {
-                this.RevertChanges(changesToUndo);
-            }
+            this.RevertChanges(changesToUndo);
         }
 
         /// <summary>
@@ -409,7 +408,7 @@ namespace IX.Undoable
         ///     The item is not captured into an undo/redo context, and this
         ///     operation is illegal.
         /// </exception>
-        public void RedoStateChanges(StateChange[] changesToRedo)
+        public void RedoStateChanges(StateChangeBase changesToRedo)
         {
             Requires.NotNull(
                 changesToRedo,
@@ -420,10 +419,7 @@ namespace IX.Undoable
                 throw new ItemNotCapturedIntoUndoContextException();
             }
 
-            if (changesToRedo.Length > 0)
-            {
-                this.DoChanges(changesToRedo);
-            }
+            this.DoChanges(changesToRedo);
         }
 
         /// <summary>
@@ -481,7 +477,7 @@ namespace IX.Undoable
         ///     Can be called to advertise a change of state in an implementing class.
         /// </summary>
         /// <param name="stateChange">The state change to advertise.</param>
-        protected void AdvertiseStateChange(StateChange stateChange)
+        protected void AdvertiseStateChange(StateChangeBase stateChange)
         {
             if (this.IsInEditMode)
             {
@@ -503,13 +499,11 @@ namespace IX.Undoable
         protected void AdvertisePropertyChange<T>(
             string propertyName,
             T oldValue,
-            T newValue) => this.AdvertiseStateChange(
-            new PropertyStateChange<T>
-            {
-                PropertyName = propertyName,
-                OldValue = oldValue,
-                NewValue = newValue
-            });
+            T newValue) =>
+            this.AdvertiseStateChange(new PropertyStateChange<T>(
+                propertyName,
+                oldValue,
+                newValue));
 
         /// <summary>
         ///     Disposes in the managed context.
@@ -518,13 +512,9 @@ namespace IX.Undoable
         {
             base.DisposeManagedContext();
 
-            var uc = Interlocked.Exchange(
-                ref this.undoContext,
-                null);
-
-            if (uc?.IsValueCreated ?? false)
+            if (this.undoContext.IsValueCreated)
             {
-                uc.Value.Dispose();
+                this.undoContext.Value.Dispose();
             }
         }
 
@@ -532,13 +522,13 @@ namespace IX.Undoable
         ///     Called when a list of state changes are canceled and must be reverted.
         /// </summary>
         /// <param name="stateChanges">The state changes to revert.</param>
-        protected abstract void RevertChanges(StateChange[] stateChanges);
+        protected abstract void RevertChanges(StateChangeBase stateChanges);
 
         /// <summary>
         ///     Called when a list of state changes must be executed.
         /// </summary>
         /// <param name="stateChanges">The state changes to execute.</param>
-        protected abstract void DoChanges(StateChange[] stateChanges);
+        protected abstract void DoChanges(StateChangeBase stateChanges);
 
         /// <summary>
         ///     Handles the EditCommitted event of the sub-item.
@@ -549,8 +539,9 @@ namespace IX.Undoable
             object sender,
             EditCommittedEventArgs e)
         {
-            this.stateChanges.Add(
-                new SubItemStateChange { StateChanges = e.StateChanges, SubObject = (IUndoableItem)sender });
+            this.stateChanges.Add(new SubItemStateChange(
+                (IUndoableItem)sender,
+                e.StateChanges));
 
             this.CommitEditInternal(this.stateChanges.ToArray());
         }
@@ -559,17 +550,21 @@ namespace IX.Undoable
         ///     Commits the edit internally.
         /// </summary>
         /// <param name="changesToCommit">The state changes.</param>
-        private void CommitEditInternal(StateChange[] changesToCommit)
+        private void CommitEditInternal(StateChangeBase[] changesToCommit)
         {
-            if ((changesToCommit?.Length ?? 0) == 0)
+            if (changesToCommit.Length == 0)
             {
                 return;
             }
 
+            StateChangeBase stateChangeBase = changesToCommit.Length == 1
+                ? changesToCommit[0]
+                : new CompositeStateChange(changesToCommit.ToList());
+
             if (this.ParentUndoContext == null && this.historyLevels > 0)
             {
-                this.undoContext.Value.UndoStack.Push(changesToCommit);
-                this.undoContext.Value.RedoStack.Clear();
+                this.undoContext.Value.PushUndo(stateChangeBase);
+                this.undoContext.Value.ClearRedoStack();
             }
 
             this.RaisePropertyChanged(nameof(this.CanUndo));
@@ -577,10 +572,10 @@ namespace IX.Undoable
 
             this.EditCommitted?.Invoke(
                 this,
-                new EditCommittedEventArgs(changesToCommit));
+                new EditCommittedEventArgs(stateChangeBase));
         }
 
-        private UndoableInnerContext InnerContextFactory() => new UndoableInnerContext
+        private UndoableInnerContext InnerContextFactory() => new()
         {
             HistoryLevels = this.historyLevels
         };

@@ -4,6 +4,7 @@
 
 using System;
 using IX.Undoable;
+using IX.Undoable.StateChanges;
 
 namespace IX.UnitTests.Observable
 {
@@ -44,66 +45,60 @@ namespace IX.UnitTests.Observable
         /// <summary>
         ///     Called when a list of state changes must be executed.
         /// </summary>
-        /// <param name="stateChanges">The state changes to execute.</param>
+        /// <param name="stateChange">The state changes to execute.</param>
         /// <exception cref="InvalidOperationException">
         ///     Undo/Redo advertised a state change that is not for the only property, some state is leaking.
         ///     or
         ///     Undo/Redo advertised a state change that is of a different type than property, some state is leaking.
         /// </exception>
-        protected override void DoChanges(StateChange[] stateChanges)
+        protected override void DoChanges(StateChangeBase stateChange)
         {
-            foreach (StateChange stateChange in stateChanges)
+            if (stateChange is PropertyStateChange<string> psts)
             {
-                if (stateChange is PropertyStateChange<string> psts)
-                {
-                    if (psts.PropertyName != nameof(this.TestProperty))
-                    {
-                        throw new InvalidOperationException(
-                            "Undo/Redo advertised a state change that is not for the only property, some state is leaking.");
-                    }
-
-                    this.testProperty = psts.NewValue;
-
-                    this.RaisePropertyChanged(nameof(this.TestProperty));
-                }
-                else
+                if (psts.PropertyName != nameof(this.TestProperty))
                 {
                     throw new InvalidOperationException(
-                        "Undo/Redo advertised a state change that is of a different type than property, some state is leaking.");
+                        "Undo/Redo advertised a state change that is not for the only property, some state is leaking.");
                 }
+
+                this.testProperty = psts.NewValue;
+
+                this.RaisePropertyChanged(nameof(this.TestProperty));
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    "Undo/Redo advertised a state change that is of a different type than property, some state is leaking.");
             }
         }
 
         /// <summary>
         ///     Called when a list of state changes are canceled and must be reverted.
         /// </summary>
-        /// <param name="stateChanges">The state changes to revert.</param>
+        /// <param name="stateChange">The state changes to revert.</param>
         /// <exception cref="InvalidOperationException">
         ///     Undo/Redo advertised a state change that is not for the only property, some state is leaking.
         ///     or
         ///     Undo/Redo advertised a state change that is of a different type than property, some state is leaking.
         /// </exception>
-        protected override void RevertChanges(StateChange[] stateChanges)
+        protected override void RevertChanges(StateChangeBase stateChange)
         {
-            foreach (StateChange stateChange in stateChanges)
+            if (stateChange is PropertyStateChange<string> psts)
             {
-                if (stateChange is PropertyStateChange<string> psts)
-                {
-                    if (psts.PropertyName != nameof(this.TestProperty))
-                    {
-                        throw new InvalidOperationException(
-                            "Undo/Redo advertised a state change that is not for the only property, some state is leaking.");
-                    }
-
-                    this.testProperty = psts.OldValue;
-
-                    this.RaisePropertyChanged(nameof(this.TestProperty));
-                }
-                else
+                if (psts.PropertyName != nameof(this.TestProperty))
                 {
                     throw new InvalidOperationException(
-                        "Undo/Redo advertised a state change that is of a different type than property, some state is leaking.");
+                        "Undo/Redo advertised a state change that is not for the only property, some state is leaking.");
                 }
+
+                this.testProperty = psts.OldValue;
+
+                this.RaisePropertyChanged(nameof(this.TestProperty));
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    "Undo/Redo advertised a state change that is of a different type than property, some state is leaking.");
             }
         }
     }

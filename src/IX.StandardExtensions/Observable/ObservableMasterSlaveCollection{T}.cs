@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Threading;
 using IX.Observable.Adapters;
 using IX.Observable.DebugAide;
-using IX.Observable.UndoLevels;
+using IX.Observable.StateChanges;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using JetBrains.Annotations;
@@ -224,11 +224,9 @@ namespace IX.Observable
                 this.InternalContainer.RemoveAt(index);
 
                 this.PushUndoLevel(
-                    new RemoveUndoLevel<T>
-                    {
-                        Index = index,
-                        RemovedItem = item
-                    });
+                    new RemoveStateChange<T>(
+                        index,
+                        item));
             }
 
             this.RaiseCollectionChangedRemove(
@@ -262,11 +260,7 @@ namespace IX.Observable
 
                 this.InternalContainer.Clear();
 
-                this.PushUndoLevel(
-                    new ClearUndoLevel<T>
-                    {
-                        OriginalItems = originalArray
-                    });
+                this.PushUndoLevel(new ClearStateChange<T>(originalArray));
             }
 
             this.RaiseCollectionReset();

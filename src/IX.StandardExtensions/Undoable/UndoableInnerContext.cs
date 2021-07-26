@@ -3,8 +3,10 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using IX.StandardExtensions.ComponentModel;
 using IX.System.Collections.Generic;
+using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
 
 namespace IX.Undoable
@@ -19,30 +21,24 @@ namespace IX.Undoable
 #region Internal state
 
         private int historyLevels;
-        private Lazy<PushDownStack<StateChange[]>>? redoStack;
-        private Lazy<PushDownStack<StateChange[]>>? undoStack;
+        private Lazy<PushDownStack<StateChangeBase>>? redoStack;
+        private Lazy<PushDownStack<StateChangeBase>>? undoStack;
 
-#endregion
+        #endregion
 
-#region Properties and indexers
-
-        /// <summary>
-        ///     Gets the redo stack.
-        /// </summary>
-        /// <value>The redo stack.</value>
-        public PushDownStack<StateChange[]> RedoStack =>
-            this.redoStack?.Value ??
-            throw new InvalidOperationException(
-                Resources.AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed);
+        #region Properties and indexers
 
         /// <summary>
-        ///     Gets the undo stack.
+        /// Gets a value indicating whether or not the redo stack has data.
         /// </summary>
-        /// <value>The undo stack.</value>
-        public PushDownStack<StateChange[]> UndoStack =>
-            this.undoStack?.Value ??
-            throw new InvalidOperationException(
-                Resources.AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed);
+        public bool RedoStackHasData =>
+            (this.redoStack?.IsValueCreated ?? false) && this.redoStack.Value.Count > 0;
+
+        /// <summary>
+        /// Gets a value indicating whether or not the undo stack has data.
+        /// </summary>
+        public bool UndoStackHasData =>
+            (this.undoStack?.IsValueCreated ?? false) && this.undoStack.Value.Count > 0;
 
         /// <summary>
         ///     Gets or sets the number of levels to keep undo or redo information.
@@ -103,15 +99,69 @@ namespace IX.Undoable
             this.HistoryLevels = 0;
         }
 
-#endregion
+        #endregion
 
+        /// <summary>
+        /// Clears the redo stack.
+        /// </summary>
+        public void ClearRedoStack()
+        {
+            if (this.redoStack?.IsValueCreated ?? false)
+            {
+                this.redoStack.Value.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Clears the undo stack.
+        /// </summary>
+        public void ClearUndoStack()
+        {
+            if (this.undoStack?.IsValueCreated ?? false)
+            {
+                this.undoStack.Value.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Pushes one state change on the redo stack.
+        /// </summary>
+        /// <returns>A state change.</returns>
+        public StateChangeBase PopRedo() =>
+            (this.redoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Pop();
+
+        /// <summary>
+        /// Pushes one state change on the undo stack.
+        /// </summary>
+        /// <returns>A state change.</returns>
+        public StateChangeBase PopUndo() =>
+            (this.undoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Pop();
+
+        /// <summary>
+        /// Pushes one state change on the redo stack.
+        /// </summary>
+        /// <param name="stateChange">A state change to push.</param>
+        public void PushRedo(StateChangeBase stateChange) =>
+            (this.redoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Push(stateChange);
+
+        /// <summary>
+        /// Pushes one state change on the undo stack.
+        /// </summary>
+        /// <param name="stateChange">A state change to push.</param>
+        public void PushUndo(StateChangeBase stateChange) =>
+            (this.undoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Push(stateChange);
+
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "We're using this for Lazy.")]
         private void ProcessHistoryLevelsChange()
         {
             // WARNING !!! Always execute this method within a lock
             if (this.historyLevels == 0)
             {
                 // Undo stack
-                Lazy<PushDownStack<StateChange[]>>? stack = this.undoStack;
+                var stack = this.undoStack;
 
                 if (stack != null)
                 {
@@ -169,20 +219,20 @@ namespace IX.Undoable
                     }
 
                     // Do proper stack initialization
-                    this.undoStack = new Lazy<PushDownStack<StateChange[]>>(this.GenerateStack);
-                    this.redoStack = new Lazy<PushDownStack<StateChange[]>>(this.GenerateStack);
+                    this.undoStack = new(this.GenerateStack);
+                    this.redoStack = new(this.GenerateStack);
                 }
             }
         }
 
-        private PushDownStack<StateChange[]> GenerateStack()
+        private PushDownStack<StateChangeBase> GenerateStack()
         {
             if (this.historyLevels == 0)
             {
                 throw new InvalidOperationException(Resources.NoHistoryLevelsException);
             }
 
-            return new PushDownStack<StateChange[]>(this.historyLevels);
+            return new(this.historyLevels);
         }
 
 #endregion
