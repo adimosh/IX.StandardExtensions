@@ -18,20 +18,26 @@ namespace IX.Undoable
     /// <seealso cref="IX.Undoable.ITransactionEditableItem" />
     /// <seealso cref="IX.Undoable.IUndoableItem" />
     [PublicAPI]
-    public abstract class EditableItemBase : ViewModelBase, ITransactionEditableItem, IUndoableItem
+    public abstract class EditableItemBase : ViewModelBase,
+        ITransactionEditableItem,
+        IUndoableItem
     {
+#region Internal state
+
         private readonly List<StateChangeBase> stateChanges;
         private readonly Lazy<UndoableInnerContext> undoContext;
 
         private int historyLevels;
 
+#endregion
+
+#region Constructors and destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="EditableItemBase" /> class.
         /// </summary>
         protected EditableItemBase()
-            : this(0)
-        {
-        }
+            : this(0) { }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="EditableItemBase" /> class.
@@ -49,16 +55,46 @@ namespace IX.Undoable
             this.stateChanges = new List<StateChangeBase>();
         }
 
+#endregion
+
+#region Events
+
         /// <summary>
         ///     Occurs when an edit on this item is committed.
         /// </summary>
         public event EventHandler<EditCommittedEventArgs>? EditCommitted;
 
+#endregion
+
+#region Properties and indexers
+
         /// <summary>
-        ///     Gets a value indicating whether this instance is in edit mode.
+        ///     Gets a value indicating whether or not a redo can be performed on this item.
         /// </summary>
-        /// <value><see langword="true" /> if this instance is in edit mode; otherwise, <see langword="false" />.</value>
-        public bool IsInEditMode { get; private set; }
+        /// <value>
+        ///     <see langword="true" /> if the call to the <see cref="Redo" /> method would result in a state change,
+        ///     <see langword="false" /> otherwise.
+        /// </value>
+        public bool CanRedo =>
+            this.IsCapturedIntoUndoContext ||
+            (this.undoContext.IsValueCreated && this.undoContext.Value.RedoStackHasData);
+
+        /// <summary>
+        ///     Gets a value indicating whether or not an undo can be performed on this item.
+        /// </summary>
+        /// <value>
+        ///     <see langword="true" /> if the call to the <see cref="Undo" /> method would result in a state change,
+        ///     <see langword="false" /> otherwise.
+        /// </value>
+        public bool CanUndo =>
+            this.IsCapturedIntoUndoContext ||
+            (this.undoContext.IsValueCreated && this.undoContext.Value.UndoStackHasData);
+
+        /// <summary>
+        ///     Gets a value indicating whether this instance is captured in undo context.
+        /// </summary>
+        /// <value><see langword="true" /> if this instance is captured in undo context; otherwise, <see langword="false" />.</value>
+        public bool IsCapturedIntoUndoContext => this.ParentUndoContext != null;
 
         /// <summary>
         ///     Gets or sets the number of levels to keep undo or redo information.
@@ -95,36 +131,22 @@ namespace IX.Undoable
         }
 
         /// <summary>
-        ///     Gets a value indicating whether this instance is captured in undo context.
+        ///     Gets a value indicating whether this instance is in edit mode.
         /// </summary>
-        /// <value><see langword="true" /> if this instance is captured in undo context; otherwise, <see langword="false" />.</value>
-        public bool IsCapturedIntoUndoContext => this.ParentUndoContext != null;
-
-        /// <summary>
-        ///     Gets a value indicating whether or not an undo can be performed on this item.
-        /// </summary>
-        /// <value>
-        ///     <see langword="true" /> if the call to the <see cref="Undo" /> method would result in a state change,
-        ///     <see langword="false" /> otherwise.
-        /// </value>
-        public bool CanUndo => this.IsCapturedIntoUndoContext ||
-                               (this.undoContext.IsValueCreated && this.undoContext.Value.UndoStackHasData);
-
-        /// <summary>
-        ///     Gets a value indicating whether or not a redo can be performed on this item.
-        /// </summary>
-        /// <value>
-        ///     <see langword="true" /> if the call to the <see cref="Redo" /> method would result in a state change,
-        ///     <see langword="false" /> otherwise.
-        /// </value>
-        public bool CanRedo => this.IsCapturedIntoUndoContext ||
-                               (this.undoContext.IsValueCreated && this.undoContext.Value.RedoStackHasData);
+        /// <value><see langword="true" /> if this instance is in edit mode; otherwise, <see langword="false" />.</value>
+        public bool IsInEditMode { get; private set; }
 
         /// <summary>
         ///     Gets the parent undo context.
         /// </summary>
         /// <value>The parent undo context.</value>
         public IUndoableItem? ParentUndoContext { get; private set; }
+
+#endregion
+
+#region Methods
+
+#region Interface implementations
 
         /// <summary>
         ///     Begins the editing of an item.
@@ -251,6 +273,81 @@ namespace IX.Undoable
         }
 
         /// <summary>
+        ///     Has the last undone operation performed on this item, presuming that it has not changed since then, redone.
+        /// </summary>
+        /// <remarks>
+        ///     <para>
+        ///         If the object is captured, the method will call the capturing parent's Redo method, which can bubble down to
+        ///         the last instance of an undo-/redo-capable object.
+        ///     </para>
+        ///     <para>
+        ///         If that is the case, the capturing object is solely responsible for ensuring that the inner state of the whole
+        ///         system is correct. Implementing classes should not expect this method to also handle state.
+        ///     </para>
+        ///     <para>If the object is released, it is expected that this method once again starts ensuring state when called.</para>
+        /// </remarks>
+        public void Redo()
+        {
+            if (this.ParentUndoContext != null)
+            {
+                // We are captured by a parent context, let's invoke that context's Redo.
+                this.ParentUndoContext.Redo();
+
+                return;
+            }
+
+            // We are not captured, let's proceed with Undo.
+
+            // Let's check whether or not we have an undo inner context first
+            if (!this.undoContext.IsValueCreated)
+            {
+                // Undo inner context not created, there's nothing to undo
+                return;
+            }
+
+            // Undo context created, let's try to undo
+            UndoableInnerContext uc = this.undoContext.Value;
+            if (!uc.RedoStackHasData)
+            {
+                // We don't have anything to Redo.
+                return;
+            }
+
+            StateChangeBase redoData = uc.PopRedo();
+            uc.PushUndo(redoData);
+            this.DoChanges(redoData);
+
+            this.RaisePropertyChanged(nameof(this.CanUndo));
+            this.RaisePropertyChanged(nameof(this.CanRedo));
+        }
+
+        /// <summary>
+        ///     Has the state changes received redone into the object.
+        /// </summary>
+        /// <param name="changesToRedo">The state changes to redo.</param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="changesToRedo" /> is <see langword="null" /> (
+        ///     <see langword="Nothing" /> in Visual Basic).
+        /// </exception>
+        /// <exception cref="ItemNotCapturedIntoUndoContextException">
+        ///     The item is not captured into an undo/redo context, and this
+        ///     operation is illegal.
+        /// </exception>
+        public void RedoStateChanges(StateChangeBase changesToRedo)
+        {
+            Requires.NotNull(
+                changesToRedo,
+                nameof(changesToRedo));
+
+            if (!this.IsCapturedIntoUndoContext)
+            {
+                throw new ItemNotCapturedIntoUndoContextException();
+            }
+
+            this.DoChanges(changesToRedo);
+        }
+
+        /// <summary>
         ///     Releases the item from being captured into an undo and redo context.
         /// </summary>
         /// <remarks>This method is meant to be used by containers, and should not be called directly.</remarks>
@@ -294,6 +391,7 @@ namespace IX.Undoable
             {
                 // We are captured by a parent context, let's invoke that context's Undo.
                 this.ParentUndoContext.Undo();
+
                 return;
             }
 
@@ -317,54 +415,6 @@ namespace IX.Undoable
             StateChangeBase undoData = uc.PopUndo();
             uc.PushRedo(undoData);
             this.RevertChanges(undoData);
-
-            this.RaisePropertyChanged(nameof(this.CanUndo));
-            this.RaisePropertyChanged(nameof(this.CanRedo));
-        }
-
-        /// <summary>
-        ///     Has the last undone operation performed on this item, presuming that it has not changed since then, redone.
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///         If the object is captured, the method will call the capturing parent's Redo method, which can bubble down to
-        ///         the last instance of an undo-/redo-capable object.
-        ///     </para>
-        ///     <para>
-        ///         If that is the case, the capturing object is solely responsible for ensuring that the inner state of the whole
-        ///         system is correct. Implementing classes should not expect this method to also handle state.
-        ///     </para>
-        ///     <para>If the object is released, it is expected that this method once again starts ensuring state when called.</para>
-        /// </remarks>
-        public void Redo()
-        {
-            if (this.ParentUndoContext != null)
-            {
-                // We are captured by a parent context, let's invoke that context's Redo.
-                this.ParentUndoContext.Redo();
-                return;
-            }
-
-            // We are not captured, let's proceed with Undo.
-
-            // Let's check whether or not we have an undo inner context first
-            if (!this.undoContext.IsValueCreated)
-            {
-                // Undo inner context not created, there's nothing to undo
-                return;
-            }
-
-            // Undo context created, let's try to undo
-            UndoableInnerContext uc = this.undoContext.Value;
-            if (!uc.RedoStackHasData)
-            {
-                // We don't have anything to Redo.
-                return;
-            }
-
-            var redoData = uc.PopRedo();
-            uc.PushUndo(redoData);
-            this.DoChanges(redoData);
 
             this.RaisePropertyChanged(nameof(this.CanUndo));
             this.RaisePropertyChanged(nameof(this.CanRedo));
@@ -396,31 +446,24 @@ namespace IX.Undoable
             this.RevertChanges(changesToUndo);
         }
 
+#endregion
+
+#region Disposable
+
         /// <summary>
-        ///     Has the state changes received redone into the object.
+        ///     Disposes in the managed context.
         /// </summary>
-        /// <param name="changesToRedo">The state changes to redo.</param>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="changesToRedo" /> is <see langword="null" /> (
-        ///     <see langword="Nothing" /> in Visual Basic).
-        /// </exception>
-        /// <exception cref="ItemNotCapturedIntoUndoContextException">
-        ///     The item is not captured into an undo/redo context, and this
-        ///     operation is illegal.
-        /// </exception>
-        public void RedoStateChanges(StateChangeBase changesToRedo)
+        protected override void DisposeManagedContext()
         {
-            Requires.NotNull(
-                changesToRedo,
-                nameof(changesToRedo));
+            base.DisposeManagedContext();
 
-            if (!this.IsCapturedIntoUndoContext)
+            if (this.undoContext.IsValueCreated)
             {
-                throw new ItemNotCapturedIntoUndoContextException();
+                this.undoContext.Value.Dispose();
             }
-
-            this.DoChanges(changesToRedo);
         }
+
+#endregion
 
         /// <summary>
         ///     Captures a sub item into the present context.
@@ -485,7 +528,11 @@ namespace IX.Undoable
             }
             else
             {
-                this.CommitEditInternal(new[] { stateChange });
+                this.CommitEditInternal(
+                    new[]
+                    {
+                        stateChange
+                    });
             }
         }
 
@@ -500,23 +547,11 @@ namespace IX.Undoable
             string propertyName,
             T oldValue,
             T newValue) =>
-            this.AdvertiseStateChange(new PropertyStateChange<T>(
-                propertyName,
-                oldValue,
-                newValue));
-
-        /// <summary>
-        ///     Disposes in the managed context.
-        /// </summary>
-        protected override void DisposeManagedContext()
-        {
-            base.DisposeManagedContext();
-
-            if (this.undoContext.IsValueCreated)
-            {
-                this.undoContext.Value.Dispose();
-            }
-        }
+            this.AdvertiseStateChange(
+                new PropertyStateChange<T>(
+                    propertyName,
+                    oldValue,
+                    newValue));
 
         /// <summary>
         ///     Called when a list of state changes are canceled and must be reverted.
@@ -539,9 +574,10 @@ namespace IX.Undoable
             object sender,
             EditCommittedEventArgs e)
         {
-            this.stateChanges.Add(new SubItemStateChange(
-                (IUndoableItem)sender,
-                e.StateChanges));
+            this.stateChanges.Add(
+                new SubItemStateChange(
+                    (IUndoableItem)sender,
+                    e.StateChanges));
 
             this.CommitEditInternal(this.stateChanges.ToArray());
         }
@@ -575,9 +611,12 @@ namespace IX.Undoable
                 new EditCommittedEventArgs(stateChangeBase));
         }
 
-        private UndoableInnerContext InnerContextFactory() => new()
-        {
-            HistoryLevels = this.historyLevels
-        };
+        private UndoableInnerContext InnerContextFactory() =>
+            new()
+            {
+                HistoryLevels = this.historyLevels
+            };
+
+#endregion
     }
 }

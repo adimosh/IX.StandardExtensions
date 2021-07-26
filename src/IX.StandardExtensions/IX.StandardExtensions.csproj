@@ -19,7 +19,7 @@
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
     <PackageReleaseNotes>- Merged IX.Observable
-- Level dictionary now offers the option to enumerate</PackageReleaseNotes>
+- Many records and init-only properties</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

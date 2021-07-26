@@ -24,21 +24,19 @@ namespace IX.Undoable
         private Lazy<PushDownStack<StateChangeBase>>? redoStack;
         private Lazy<PushDownStack<StateChangeBase>>? undoStack;
 
-        #endregion
+#endregion
 
-        #region Properties and indexers
-
-        /// <summary>
-        /// Gets a value indicating whether or not the redo stack has data.
-        /// </summary>
-        public bool RedoStackHasData =>
-            (this.redoStack?.IsValueCreated ?? false) && this.redoStack.Value.Count > 0;
+#region Properties and indexers
 
         /// <summary>
-        /// Gets a value indicating whether or not the undo stack has data.
+        ///     Gets a value indicating whether or not the redo stack has data.
         /// </summary>
-        public bool UndoStackHasData =>
-            (this.undoStack?.IsValueCreated ?? false) && this.undoStack.Value.Count > 0;
+        public bool RedoStackHasData => (this.redoStack?.IsValueCreated ?? false) && this.redoStack.Value.Count > 0;
+
+        /// <summary>
+        ///     Gets a value indicating whether or not the undo stack has data.
+        /// </summary>
+        public bool UndoStackHasData => (this.undoStack?.IsValueCreated ?? false) && this.undoStack.Value.Count > 0;
 
         /// <summary>
         ///     Gets or sets the number of levels to keep undo or redo information.
@@ -88,6 +86,58 @@ namespace IX.Undoable
 
 #region Methods
 
+        /// <summary>
+        ///     Clears the redo stack.
+        /// </summary>
+        public void ClearRedoStack()
+        {
+            if (this.redoStack?.IsValueCreated ?? false)
+            {
+                this.redoStack.Value.Clear();
+            }
+        }
+
+        /// <summary>
+        ///     Clears the undo stack.
+        /// </summary>
+        public void ClearUndoStack()
+        {
+            if (this.undoStack?.IsValueCreated ?? false)
+            {
+                this.undoStack.Value.Clear();
+            }
+        }
+
+        /// <summary>
+        ///     Pushes one state change on the redo stack.
+        /// </summary>
+        /// <returns>A state change.</returns>
+        public StateChangeBase PopRedo() =>
+            (this.redoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Pop();
+
+        /// <summary>
+        ///     Pushes one state change on the undo stack.
+        /// </summary>
+        /// <returns>A state change.</returns>
+        public StateChangeBase PopUndo() =>
+            (this.undoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Pop();
+
+        /// <summary>
+        ///     Pushes one state change on the redo stack.
+        /// </summary>
+        /// <param name="stateChange">A state change to push.</param>
+        public void PushRedo(StateChangeBase stateChange) =>
+            (this.redoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Push(
+                stateChange);
+
+        /// <summary>
+        ///     Pushes one state change on the undo stack.
+        /// </summary>
+        /// <param name="stateChange">A state change to push.</param>
+        public void PushUndo(StateChangeBase stateChange) =>
+            (this.undoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Push(
+                stateChange);
+
 #region Disposable
 
         /// <summary>Disposes in the managed context.</summary>
@@ -99,57 +149,7 @@ namespace IX.Undoable
             this.HistoryLevels = 0;
         }
 
-        #endregion
-
-        /// <summary>
-        /// Clears the redo stack.
-        /// </summary>
-        public void ClearRedoStack()
-        {
-            if (this.redoStack?.IsValueCreated ?? false)
-            {
-                this.redoStack.Value.Clear();
-            }
-        }
-
-        /// <summary>
-        /// Clears the undo stack.
-        /// </summary>
-        public void ClearUndoStack()
-        {
-            if (this.undoStack?.IsValueCreated ?? false)
-            {
-                this.undoStack.Value.Clear();
-            }
-        }
-
-        /// <summary>
-        /// Pushes one state change on the redo stack.
-        /// </summary>
-        /// <returns>A state change.</returns>
-        public StateChangeBase PopRedo() =>
-            (this.redoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Pop();
-
-        /// <summary>
-        /// Pushes one state change on the undo stack.
-        /// </summary>
-        /// <returns>A state change.</returns>
-        public StateChangeBase PopUndo() =>
-            (this.undoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Pop();
-
-        /// <summary>
-        /// Pushes one state change on the redo stack.
-        /// </summary>
-        /// <param name="stateChange">A state change to push.</param>
-        public void PushRedo(StateChangeBase stateChange) =>
-            (this.redoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Push(stateChange);
-
-        /// <summary>
-        /// Pushes one state change on the undo stack.
-        /// </summary>
-        /// <param name="stateChange">A state change to push.</param>
-        public void PushUndo(StateChangeBase stateChange) =>
-            (this.undoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Push(stateChange);
+#endregion
 
         [SuppressMessage(
             "Performance",
@@ -161,7 +161,7 @@ namespace IX.Undoable
             if (this.historyLevels == 0)
             {
                 // Undo stack
-                var stack = this.undoStack;
+                Lazy<PushDownStack<StateChangeBase>>? stack = this.undoStack;
 
                 if (stack != null)
                 {
@@ -219,8 +219,8 @@ namespace IX.Undoable
                     }
 
                     // Do proper stack initialization
-                    this.undoStack = new(this.GenerateStack);
-                    this.redoStack = new(this.GenerateStack);
+                    this.undoStack = new Lazy<PushDownStack<StateChangeBase>>(this.GenerateStack);
+                    this.redoStack = new Lazy<PushDownStack<StateChangeBase>>(this.GenerateStack);
                 }
             }
         }
@@ -232,7 +232,7 @@ namespace IX.Undoable
                 throw new InvalidOperationException(Resources.NoHistoryLevelsException);
             }
 
-            return new(this.historyLevels);
+            return new PushDownStack<StateChangeBase>(this.historyLevels);
         }
 
 #endregion
