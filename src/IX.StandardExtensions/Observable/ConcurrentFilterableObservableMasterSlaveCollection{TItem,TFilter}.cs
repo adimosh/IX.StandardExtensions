@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using IX.Observable.DebugAide;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using IX.System.Threading;
 using JetBrains.Annotations;
@@ -28,7 +29,7 @@ namespace IX.Observable
     {
 #region Internal state
 
-        private IList<TItem> cachedFilteredElements;
+        private IList<TItem>? cachedFilteredElements;
         private IReaderWriterLock cacheLocker;
 
         private TFilter filter;
@@ -48,7 +49,7 @@ namespace IX.Observable
         /// </exception>
         public ConcurrentFilterableObservableMasterSlaveCollection(Func<TItem, TFilter, bool> filteringPredicate)
         {
-            this.FilteringPredicate = filteringPredicate ?? throw new ArgumentNullException(nameof(filteringPredicate));
+            this.FilteringPredicate = Requires.NotNull(filteringPredicate, nameof(filteringPredicate));
             this.cacheLocker = new ReaderWriterLockSlim(GlobalThreading.LockRecursionPolicy.NoRecursion);
         }
 
@@ -67,7 +68,7 @@ namespace IX.Observable
             GlobalThreading.SynchronizationContext context)
             : base(context)
         {
-            this.FilteringPredicate = filteringPredicate ?? throw new ArgumentNullException(nameof(filteringPredicate));
+            this.FilteringPredicate = Requires.NotNull(filteringPredicate, nameof(filteringPredicate));
             this.cacheLocker = new ReaderWriterLockSlim(GlobalThreading.LockRecursionPolicy.NoRecursion);
         }
 
@@ -86,7 +87,7 @@ namespace IX.Observable
             bool suppressUndoable)
             : base(suppressUndoable)
         {
-            this.FilteringPredicate = filteringPredicate ?? throw new ArgumentNullException(nameof(filteringPredicate));
+            this.FilteringPredicate = Requires.NotNull(filteringPredicate, nameof(filteringPredicate));
             this.cacheLocker = new ReaderWriterLockSlim(GlobalThreading.LockRecursionPolicy.NoRecursion);
         }
 
@@ -109,7 +110,7 @@ namespace IX.Observable
                 context,
                 suppressUndoable)
         {
-            this.FilteringPredicate = filteringPredicate ?? throw new ArgumentNullException(nameof(filteringPredicate));
+            this.FilteringPredicate = Requires.NotNull(filteringPredicate, nameof(filteringPredicate));
             this.cacheLocker = new ReaderWriterLockSlim(GlobalThreading.LockRecursionPolicy.NoRecursion);
         }
 
@@ -274,64 +275,62 @@ namespace IX.Observable
         {
             TFilter filter = this.Filter;
 
-            using (IEnumerator<TItem> enumerator = base.GetEnumerator())
+            using IEnumerator<TItem> enumerator = base.GetEnumerator();
+
+            while (enumerator.MoveNext())
             {
-                while (enumerator.MoveNext())
+                TItem current = enumerator.Current;
+                if (this.FilteringPredicate(
+                    current,
+                    filter))
                 {
-                    TItem current = enumerator.Current;
-                    if (this.FilteringPredicate(
-                        current,
-                        filter))
-                    {
-                        yield return current;
-                    }
+                    yield return current;
                 }
             }
         }
 
         private IList<TItem> CheckAndCache()
         {
-            using (var locker = new ReadWriteSynchronizationLocker(this.cacheLocker))
+            using var locker = new ReadWriteSynchronizationLocker(this.cacheLocker);
+
+            if (this.cachedFilteredElements != null)
             {
-                if (this.cachedFilteredElements == null)
-                {
-                    locker.Upgrade();
-
-                    this.cachedFilteredElements = new List<TItem>(this.InternalContainer.Count);
-
-                    using (IEnumerator<TItem> enumerator = this.EnumerateFiltered())
-                    {
-                        while (enumerator.MoveNext())
-                        {
-                            TItem current = enumerator.Current;
-                            this.cachedFilteredElements.Add(current);
-                        }
-                    }
-
-                    return this.cachedFilteredElements;
-                }
-
                 return this.cachedFilteredElements;
             }
+
+            locker.Upgrade();
+
+            this.cachedFilteredElements = new List<TItem>(this.InternalContainer.Count);
+
+            using IEnumerator<TItem> enumerator = this.EnumerateFiltered();
+
+            while (enumerator.MoveNext())
+            {
+                TItem current = enumerator.Current;
+                this.cachedFilteredElements.Add(current);
+            }
+
+            return this.cachedFilteredElements;
         }
 
         private void ClearCachedContents()
         {
-            using (new WriteOnlySynchronizationLocker(this.cacheLocker))
+            using var synchronizationLocker = new WriteOnlySynchronizationLocker(this.cacheLocker);
+
+            if (this.cachedFilteredElements == null)
             {
-                if (this.cachedFilteredElements != null)
-                {
-                    IList<TItem> coll = this.cachedFilteredElements;
-                    this.cachedFilteredElements = null;
-                    coll.Clear();
-                }
+                return;
             }
+
+            IList<TItem> coll = this.cachedFilteredElements;
+            this.cachedFilteredElements = null;
+            coll.Clear();
         }
 
         private bool IsFilter() =>
             !EqualityComparer<TFilter>.Default.Equals(
                 this.Filter,
-                default);
+                default!);
 
 #endregion
     }
