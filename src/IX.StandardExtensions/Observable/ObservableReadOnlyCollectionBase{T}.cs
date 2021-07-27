@@ -12,6 +12,7 @@ using System.Threading;
 using IX.Observable.Adapters;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
+using JetBrains.Annotations;
 
 namespace IX.Observable
 {
@@ -21,18 +22,19 @@ namespace IX.Observable
     /// <typeparam name="T">The type of the item.</typeparam>
     /// <seealso cref="INotifyPropertyChanged" />
     /// <seealso cref="IEnumerable{T}" />
+    [PublicAPI]
     public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
         IReadOnlyCollection<T>,
         ICollection
     {
-#region Internal state
+        #region Internal state
 
-        private readonly object resetCountLocker;
-        private ICollectionAdapter<T> internalContainer;
+        private readonly object resetCountLocker = new();
+        private readonly ICollectionAdapter<T> internalContainer;
 
-#endregion
+        #endregion
 
-#region Constructors and destructors
+        #region Constructors and destructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ObservableReadOnlyCollectionBase{T}" /> class.
@@ -40,8 +42,9 @@ namespace IX.Observable
         /// <param name="internalContainer">The internal container of items.</param>
         protected ObservableReadOnlyCollectionBase(ICollectionAdapter<T> internalContainer)
         {
-            this.InternalContainer = internalContainer;
-            this.resetCountLocker = new object();
+            Requires.NotNull(out this.internalContainer, internalContainer, nameof(internalContainer));
+            this.internalContainer.MustReset -= this.InternalContainer_MustReset;
+            this.internalContainer.MustReset += this.InternalContainer_MustReset;
         }
 
         /// <summary>
@@ -54,13 +57,14 @@ namespace IX.Observable
             SynchronizationContext context)
             : base(context)
         {
-            this.InternalContainer = internalContainer;
-            this.resetCountLocker = new object();
+            Requires.NotNull(out this.internalContainer, internalContainer, nameof(internalContainer));
+            this.internalContainer.MustReset -= this.InternalContainer_MustReset;
+            this.internalContainer.MustReset += this.InternalContainer_MustReset;
         }
 
-#endregion
+        #endregion
 
-#region Properties and indexers
+        #region Properties and indexers
 
         /// <summary>
         ///     Gets the number of elements in the collection.
@@ -114,30 +118,12 @@ namespace IX.Observable
         public object SyncRoot { get; } = new();
 
         /// <summary>
-        ///     Gets or sets the internal object container.
+        ///     Gets the internal object container.
         /// </summary>
         /// <value>
         ///     The internal container.
         /// </value>
-        protected internal ICollectionAdapter<T> InternalContainer
-        {
-            get => this.internalContainer;
-
-            set
-            {
-                if (this.internalContainer != null)
-                {
-                    this.internalContainer.MustReset -= this.InternalContainer_MustReset;
-                }
-
-                this.internalContainer = value;
-
-                if (this.internalContainer != null)
-                {
-                    this.internalContainer.MustReset += this.InternalContainer_MustReset;
-                }
-            }
-        }
+        protected internal ICollectionAdapter<T> InternalContainer => this.internalContainer;
 
         /// <summary>
         ///     Gets the ignore reset count.
@@ -157,11 +143,11 @@ namespace IX.Observable
         /// </remarks>
         protected int IgnoreResetCount { get; private set; }
 
-#endregion
+        #endregion
 
-#region Methods
+        #region Methods
 
-#region Interface implementations
+        #region Interface implementations
 
         /// <summary>
         ///     Returns a locking enumerator that iterates through the collection.
@@ -244,7 +230,7 @@ namespace IX.Observable
             Justification = "Unavoidable with this interface.")]
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-#endregion
+        #endregion
 
         /// <summary>
         ///     Determines whether the <see cref="ObservableCollectionBase{T}" /> contains a specific value.
@@ -306,9 +292,9 @@ namespace IX.Observable
 
             using (this.ReadLock())
             {
-                var clount = this.InternalContainer.Count;
+                var containerCount = this.InternalContainer.Count;
 
-                if (fromIndex >= clount || fromIndex < 0)
+                if (fromIndex >= containerCount || fromIndex < 0)
                 {
                     throw new ArgumentOutOfRangeException(nameof(fromIndex));
                 }
@@ -317,7 +303,7 @@ namespace IX.Observable
 
                 if (fromIndex == 0)
                 {
-                    array = new T[clount];
+                    array = new T[containerCount];
                     this.InternalContainer.CopyTo(
                         array,
                         0);
@@ -343,9 +329,9 @@ namespace IX.Observable
 
             using (this.ReadLock())
             {
-                var clount = this.InternalContainer.Count;
+                var containerCount = this.InternalContainer.Count;
 
-                var array = new T[clount];
+                var array = new T[containerCount];
                 this.InternalContainer.CopyTo(
                     array,
                     0);
@@ -354,15 +340,11 @@ namespace IX.Observable
             }
         }
 
-#region Disposable
+        #region Disposable
 
         /// <summary>
         ///     Disposes the managed context.
         /// </summary>
-        [SuppressMessage(
-            "CodeSmell",
-            "ERP022:Unobserved exception in generic exception handler",
-            Justification = "Acceptable.")]
         [SuppressMessage(
             "ReSharper",
             "EmptyGeneralCatchClause",
@@ -373,22 +355,14 @@ namespace IX.Observable
             {
                 this.internalContainer.Clear();
             }
-            catch { }
+            catch
+            {
+            }
 
             base.DisposeManagedContext();
         }
 
-        /// <summary>
-        ///     Disposes the general context.
-        /// </summary>
-        protected override void DisposeGeneralContext()
-        {
-            this.internalContainer = null;
-
-            base.DisposeGeneralContext();
-        }
-
-#endregion
+        #endregion
 
         /// <summary>
         ///     Increases the <see cref="IgnoreResetCount" /> by one.
@@ -449,6 +423,6 @@ namespace IX.Observable
                 },
                 this);
 
-#endregion
+        #endregion
     }
 }

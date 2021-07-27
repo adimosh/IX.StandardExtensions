@@ -23,7 +23,7 @@ namespace IX.Observable
     {
 #region Internal state
 
-        private Lazy<ReaderWriterLockSlim> locker;
+        private readonly Lazy<ReaderWriterLockSlim> locker;
 
 #endregion
 
@@ -97,27 +97,12 @@ namespace IX.Observable
         /// </summary>
         protected override void DisposeManagedContext()
         {
-            Lazy<ReaderWriterLockSlim> l = Interlocked.Exchange(
-                ref this.locker,
-                null);
-            if (l?.IsValueCreated ?? false)
+            if (this.locker.IsValueCreated)
             {
-                l.Value.Dispose();
+                this.locker.Value.Dispose();
             }
 
             base.DisposeManagedContext();
-        }
-
-        /// <summary>
-        ///     Disposes the general context.
-        /// </summary>
-        protected override void DisposeGeneralContext()
-        {
-            Interlocked.Exchange(
-                ref this.locker,
-                null);
-
-            base.DisposeGeneralContext();
         }
 
 #endregion

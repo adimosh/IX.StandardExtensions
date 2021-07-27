@@ -571,9 +571,14 @@ namespace IX.Undoable
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EditCommittedEventArgs" /> instance containing the event data.</param>
         private void Item_EditCommitted(
-            object sender,
+            object? sender,
             EditCommittedEventArgs e)
         {
+            if (sender is null)
+            {
+                return;
+            }
+
             this.stateChanges.Add(
                 new SubItemStateChange(
                     (IUndoableItem)sender,

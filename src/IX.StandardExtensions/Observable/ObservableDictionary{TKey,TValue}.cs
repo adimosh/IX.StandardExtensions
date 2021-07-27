@@ -11,8 +11,8 @@ using IX.Observable.Adapters;
 using IX.Observable.DebugAide;
 using IX.Observable.StateChanges;
 using IX.StandardExtensions.Contracts;
+using IX.StandardExtensions.Extensions;
 using IX.StandardExtensions.Threading;
-using IX.Undoable;
 using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
 
@@ -386,13 +386,6 @@ namespace IX.Observable
         }
 
         /// <summary>
-        ///     Gets the internal object container.
-        /// </summary>
-        /// <value>The internal container.</value>
-        protected internal new IDictionaryCollectionAdapter<TKey, TValue> InternalContainer =>
-            (DictionaryCollectionAdapter<TKey, TValue>)base.InternalContainer;
-
-        /// <summary>
         ///     Gets the collection of keys in this dictionary.
         /// </summary>
         IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => this.Keys;
@@ -401,6 +394,13 @@ namespace IX.Observable
         ///     Gets the collection of values in this dictionary.
         /// </summary>
         IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => this.Values;
+
+        /// <summary>
+        ///     Gets the internal object container.
+        /// </summary>
+        /// <value>The internal container.</value>
+        protected internal new IDictionaryCollectionAdapter<TKey, TValue> InternalContainer =>
+            (DictionaryCollectionAdapter<TKey, TValue>)base.InternalContainer;
 
         /// <summary>
         ///     Gets or sets the value associated with a specific key.
@@ -614,22 +614,9 @@ namespace IX.Observable
         /// <param name="actions">The actions to employ.</param>
         /// <param name="states">The state objects to send to the corresponding actions.</param>
         protected override void InterpretBlockStateChangesOutsideLock(
-            Action<object>[] actions,
-            object[] states) =>
+            Action<object?>?[] actions,
+            object?[] states) =>
             this.BroadcastChange();
-
-        private void BroadcastChange()
-        {
-            this.RaiseCollectionReset();
-            this.RaisePropertyChanged(nameof(this.Keys));
-            this.RaisePropertyChanged(nameof(this.Values));
-            this.RaisePropertyChanged(nameof(this.Count));
-            this.RaisePropertyChanged(Constants.ItemsName);
-        }
-
-#endregion
-
-#region Undo/Redo
 
         /// <summary>
         ///     Has the last operation undone.
@@ -640,8 +627,8 @@ namespace IX.Observable
         /// <returns><see langword="true" /> if the undo was successful, <see langword="false" /> otherwise.</returns>
         protected override bool UndoInternally(
             StateChangeBase undoRedoLevel,
-            out Action<object> toInvokeOutsideLock,
-            out object state)
+            out Action<object?>? toInvokeOutsideLock,
+            out object? state)
         {
             if (base.UndoInternally(
                 undoRedoLevel,
@@ -653,88 +640,130 @@ namespace IX.Observable
 
             switch (undoRedoLevel)
             {
-                case AddStateChange<KeyValuePair<TKey, TValue>> aul:
+                case AddStateChange<KeyValuePair<TKey, TValue>>(var keyValuePair, _):
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
-                    container.Remove(aul.AddedItem.Key);
+                    container.Remove(keyValuePair.Key);
 
                     toInvokeOutsideLock = innerState =>
+                    {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         ((ObservableDictionary<TKey, TValue>)innerState).BroadcastChange();
+                    };
                     state = this;
 
                     break;
                 }
 
-                case RemoveStateChange<KeyValuePair<TKey, TValue>> rul:
+                case RemoveStateChange<KeyValuePair<TKey, TValue>>(_, var (key, value)):
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
                     container.Add(
-                        rul.RemovedItem.Key,
-                        rul.RemovedItem.Value);
+                        key,
+                        value);
 
                     toInvokeOutsideLock = innerState =>
+                    {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         ((ObservableDictionary<TKey, TValue>)innerState).BroadcastChange();
+                    };
                     state = this;
 
                     break;
                 }
 
-                case ClearStateChange<KeyValuePair<TKey, TValue>> cul:
+                case ClearStateChange<KeyValuePair<TKey, TValue>>(var keyValuePairs):
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
-                    foreach (KeyValuePair<TKey, TValue> item in cul.OriginalItems)
+                    foreach ((TKey key, TValue value) in keyValuePairs)
                     {
                         container.Add(
-                            item.Key,
-                            item.Value);
+                            key,
+                            value);
                     }
 
                     toInvokeOutsideLock = innerState =>
+                    {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         ((ObservableDictionary<TKey, TValue>)innerState).BroadcastChange();
+                    };
                     state = this;
 
                     break;
                 }
 
-                case DictionaryAddStateChange<TKey, TValue> daul:
+                case DictionaryAddStateChange<TKey, TValue>(var key, _):
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
-                    container.Remove(daul.Key);
+                    container.Remove(key);
 
                     toInvokeOutsideLock = innerState =>
+                    {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         ((ObservableDictionary<TKey, TValue>)innerState).BroadcastChange();
+                    };
                     state = this;
 
                     break;
                 }
 
-                case DictionaryRemoveStateChange<TKey, TValue> raul:
+                case DictionaryRemoveStateChange<TKey, TValue>(var key, var value):
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
                     container.Add(
-                        raul.Key,
-                        raul.Value);
+                        key,
+                        value);
 
                     toInvokeOutsideLock = innerState =>
+                    {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         ((ObservableDictionary<TKey, TValue>)innerState).BroadcastChange();
+                    };
                     state = this;
 
                     break;
                 }
 
-                case DictionaryChangeStateChange<TKey, TValue> caul:
+                case DictionaryChangeStateChange<TKey, TValue>(var key, _, var oldValue):
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
-                    container[caul.Key] = caul.OldValue;
+                    container[key] = oldValue;
 
                     toInvokeOutsideLock = innerState =>
+                    {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         ((ObservableDictionary<TKey, TValue>)innerState).BroadcastChange();
+                    };
                     state = this;
 
                     break;
@@ -761,8 +790,8 @@ namespace IX.Observable
         /// <returns><see langword="true" /> if the redo was successful, <see langword="false" /> otherwise.</returns>
         protected override bool RedoInternally(
             StateChangeBase undoRedoLevel,
-            out Action<object> toInvokeOutsideLock,
-            out object state)
+            out Action<object?>? toInvokeOutsideLock,
+            out object? state)
         {
             if (base.RedoInternally(
                 undoRedoLevel,
@@ -774,81 +803,123 @@ namespace IX.Observable
 
             switch (undoRedoLevel)
             {
-                case AddStateChange<KeyValuePair<TKey, TValue>> aul:
+                case AddStateChange<KeyValuePair<TKey, TValue>>(var (key, value), _):
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
                     container.Add(
-                        aul.AddedItem.Key,
-                        aul.AddedItem.Value);
+                        key,
+                        value);
 
                     toInvokeOutsideLock = innerState =>
+                    {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         ((ObservableDictionary<TKey, TValue>)innerState).BroadcastChange();
+                    };
                     state = this;
 
                     break;
                 }
 
-                case RemoveStateChange<KeyValuePair<TKey, TValue>> rul:
+                case RemoveStateChange<KeyValuePair<TKey, TValue>>(_, var keyValuePair):
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
-                    container.Remove(rul.RemovedItem.Key);
+                    container.Remove(keyValuePair.Key);
 
                     toInvokeOutsideLock = innerState =>
+                    {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         ((ObservableDictionary<TKey, TValue>)innerState).BroadcastChange();
+                    };
                     state = this;
 
                     break;
                 }
 
-                case ClearStateChange<KeyValuePair<TKey, TValue>> _:
+                case ClearStateChange<KeyValuePair<TKey, TValue>>:
                 {
                     this.InternalContainer.Clear();
 
                     toInvokeOutsideLock = innerState =>
+                    {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         ((ObservableDictionary<TKey, TValue>)innerState).BroadcastChange();
+                    };
                     state = this;
 
                     break;
                 }
 
-                case DictionaryAddStateChange<TKey, TValue> daul:
+                case DictionaryAddStateChange<TKey, TValue>(var key, var value):
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
                     container.Add(
-                        daul.Key,
-                        daul.Value);
+                        key,
+                        value);
 
                     toInvokeOutsideLock = innerState =>
+                    {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         ((ObservableDictionary<TKey, TValue>)innerState).BroadcastChange();
+                    };
                     state = this;
 
                     break;
                 }
 
-                case DictionaryRemoveStateChange<TKey, TValue> raul:
+                case DictionaryRemoveStateChange<TKey, TValue>(var key, _):
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
-                    container.Remove(raul.Key);
+                    container.Remove(key);
 
                     toInvokeOutsideLock = innerState =>
+                    {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         ((ObservableDictionary<TKey, TValue>)innerState).BroadcastChange();
+                    };
                     state = this;
 
                     break;
                 }
 
-                case DictionaryChangeStateChange<TKey, TValue> caul:
+                case DictionaryChangeStateChange<TKey, TValue>(var key, var newValue, _):
                 {
                     IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
 
-                    container[caul.Key] = caul.NewValue;
+                    container[key] = newValue;
 
                     toInvokeOutsideLock = innerState =>
+                    {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         ((ObservableDictionary<TKey, TValue>)innerState).BroadcastChange();
+                    };
                     state = this;
 
                     break;
@@ -864,6 +935,15 @@ namespace IX.Observable
             }
 
             return true;
+        }
+
+        private void BroadcastChange()
+        {
+            this.RaiseCollectionReset();
+            this.RaisePropertyChanged(nameof(this.Keys));
+            this.RaisePropertyChanged(nameof(this.Values));
+            this.RaisePropertyChanged(nameof(this.Count));
+            this.RaisePropertyChanged(Constants.ItemsName);
         }
 
 #endregion

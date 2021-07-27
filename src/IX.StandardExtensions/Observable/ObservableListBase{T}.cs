@@ -214,12 +214,12 @@ namespace IX.Observable
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "Unavoidable here.")]
-        object IList.this[int index]
+        object? IList.this[int index]
         {
             get => this[index];
             set
             {
-                if (!(value is T v))
+                if (value is not T v)
                 {
                     throw new ArgumentInvalidTypeException();
                 }
@@ -272,22 +272,21 @@ namespace IX.Observable
             using (this.WriteLock())
             {
                 // Inside an undo/redo transaction
-                using (OperationTransaction tc = this.CheckItemAutoCapture(item))
-                {
-                    // Actually insert
-                    this.InternalContainer.Insert(
-                        index,
-                        item);
+                using OperationTransaction tc = this.CheckItemAutoCapture(item);
 
-                    // Push undo level
-                    this.PushUndoLevel(
-                        new AddStateChange<T>(
-                            item,
-                            index));
+                // Actually insert
+                this.InternalContainer.Insert(
+                    index,
+                    item);
 
-                    // Mark transaction as successful
-                    tc.Success();
-                }
+                // Push undo level
+                this.PushUndoLevel(
+                    new AddStateChange<T>(
+                        item,
+                        index));
+
+                // Mark transaction as successful
+                tc.Success();
             }
 
             // NOTIFICATION
@@ -333,20 +332,19 @@ namespace IX.Observable
                 item = this.InternalContainer[index];
 
                 // Using an undo/redo transaction
-                using (OperationTransaction tc = this.CheckItemAutoRelease(item))
-                {
-                    // Actually do the removal
-                    this.InternalContainer.RemoveAt(index);
+                using OperationTransaction tc = this.CheckItemAutoRelease(item);
 
-                    // Push an undo level
-                    this.PushUndoLevel(
-                        new RemoveStateChange<T>(
-                            index,
-                            item));
+                // Actually do the removal
+                this.InternalContainer.RemoveAt(index);
 
-                    // Mark the transaction as successful
-                    tc.Success();
-                }
+                // Push an undo level
+                this.PushUndoLevel(
+                    new RemoveStateChange<T>(
+                        index,
+                        item));
+
+                // Mark the transaction as successful
+                tc.Success();
             }
 
             // NOTIFICATION
@@ -370,7 +368,7 @@ namespace IX.Observable
         /// <returns>The index at which the item was added.</returns>
         int IList.Add(object value)
         {
-            if (!(value is T v))
+            if (value is not T v)
             {
                 throw new ArgumentInvalidTypeException(nameof(value));
             }
@@ -421,7 +419,7 @@ namespace IX.Observable
             int index,
             object value)
         {
-            if (!(value is T v))
+            if (value is not T v)
             {
                 throw new ArgumentInvalidTypeException(nameof(value));
             }
@@ -468,20 +466,19 @@ namespace IX.Observable
             using (this.WriteLock())
             {
                 // Use an undo/redo transaction
-                using (OperationTransaction tc = this.CheckItemAutoCapture(itemsList))
-                {
-                    // Actually add the items
-                    newIndex = this.InternalContainer.AddRange(itemsList);
+                using OperationTransaction tc = this.CheckItemAutoCapture(itemsList);
 
-                    // Push an undo level
-                    this.PushUndoLevel(
-                        new AddMultipleStateChange<T>(
-                            itemsList,
-                            newIndex));
+                // Actually add the items
+                newIndex = this.InternalContainer.AddRange(itemsList);
 
-                    // Mark the transaction as successful
-                    tc.Success();
-                }
+                // Push an undo level
+                this.PushUndoLevel(
+                    new AddMultipleStateChange<T>(
+                        itemsList,
+                        newIndex));
+
+                // Mark the transaction as successful
+                tc.Success();
             }
 
             // NOTIFICATION
@@ -548,24 +545,23 @@ namespace IX.Observable
                 }
 
                 // Use an undo/redo transaction
-                using (OperationTransaction tc = this.CheckItemAutoRelease(itemsList))
+                using OperationTransaction tc = this.CheckItemAutoRelease(itemsList);
+
+                // Actually remove
+                for (var index = this.InternalContainer.Count - 1; index >= startIndex; index--)
                 {
-                    // Actually remove
-                    for (var index = this.InternalContainer.Count - 1; index >= startIndex; index--)
-                    {
-                        // Remove item (in reverse order)
-                        this.InternalContainer.RemoveAt(index);
-                    }
-
-                    // Push an undo level
-                    this.PushUndoLevel(
-                        new RemoveMultipleStateChange<T>(
-                            indexesList,
-                            itemsList));
-
-                    // Mark the transaction as successful
-                    tc.Success();
+                    // Remove item (in reverse order)
+                    this.InternalContainer.RemoveAt(index);
                 }
+
+                // Push an undo level
+                this.PushUndoLevel(
+                    new RemoveMultipleStateChange<T>(
+                        indexesList,
+                        itemsList));
+
+                // Mark the transaction as successful
+                tc.Success();
             }
 
             // NOTIFICATION
@@ -643,24 +639,23 @@ namespace IX.Observable
                 }
 
                 // Use an undo/redo transaction
-                using (OperationTransaction tc = this.CheckItemAutoRelease(itemsList))
+                using OperationTransaction tc = this.CheckItemAutoRelease(itemsList);
+
+                // Actually remove
+                for (var index = startIndex + length - 1; index >= startIndex; index--)
                 {
-                    // Actually remove
-                    for (var index = startIndex + length - 1; index >= startIndex; index--)
-                    {
-                        // Remove item (in reverse order)
-                        this.InternalContainer.RemoveAt(index);
-                    }
-
-                    // Push an undo level
-                    this.PushUndoLevel(
-                        new RemoveMultipleStateChange<T>(
-                            indexesList,
-                            itemsList));
-
-                    // Mark the transaction as successful
-                    tc.Success();
+                    // Remove item (in reverse order)
+                    this.InternalContainer.RemoveAt(index);
                 }
+
+                // Push an undo level
+                this.PushUndoLevel(
+                    new RemoveMultipleStateChange<T>(
+                        indexesList,
+                        itemsList));
+
+                // Mark the transaction as successful
+                tc.Success();
             }
 
             // NOTIFICATION
@@ -684,6 +679,14 @@ namespace IX.Observable
         /// <remarks>
         ///     <para>On concurrent collections, this method is write-synchronized.</para>
         /// </remarks>
+        [SuppressMessage(
+            "ReSharper",
+            "PossibleMultipleEnumeration",
+            Justification = "Multiple enumeration, should it happen, is acceptable in this case.")]
+        [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
         public virtual void RemoveRange(IEnumerable<T> items)
         {
             // PRECONDITIONS
@@ -726,26 +729,25 @@ namespace IX.Observable
                     .ToArray();
 
                 // Use an undo/redo transaction
-                using (OperationTransaction tc = this.CheckItemAutoRelease(items))
+                using OperationTransaction tc = this.CheckItemAutoRelease(items);
+
+                // Actually remove
+                foreach (var item in itemsToDelete)
                 {
-                    // Actually remove
-                    foreach (var item in itemsToDelete)
-                    {
-                        // Remove an item
-                        this.InternalContainer.RemoveAt(item.Index);
-                    }
-
-                    // Push undo transaction
-                    this.PushUndoLevel(
-                        new RemoveMultipleStateChange<T>(
-                            itemsToDelete.Select(p => p.Index)
-                                .ToArray(),
-                            itemsToDelete.Select(p => p.Item)
-                                .ToArray()));
-
-                    // Mark the transaction as successful
-                    tc.Success();
+                    // Remove an item
+                    this.InternalContainer.RemoveAt(item.Index);
                 }
+
+                // Push undo transaction
+                this.PushUndoLevel(
+                    new RemoveMultipleStateChange<T>(
+                        itemsToDelete.Select(p => p.Index)
+                            .ToArray(),
+                        itemsToDelete.Select(p => p.Item)
+                            .ToArray()));
+
+                // Mark the transaction as successful
+                tc.Success();
             }
 
             // NOTIFICATION
@@ -777,6 +779,10 @@ namespace IX.Observable
         /// <remarks>
         ///     <para>On concurrent collections, this method is write-synchronized.</para>
         /// </remarks>
+        [SuppressMessage(
+            "Performance",
+            "HAA0401:Possible allocation of reference type enumerator",
+            Justification = "Acceptable here.")]
         public virtual void InsertRange(
             int index,
             IEnumerable<T> items)
@@ -807,25 +813,24 @@ namespace IX.Observable
                 }
 
                 // Use an undo/redo transaction
-                using (OperationTransaction tc = this.CheckItemAutoCapture(itemsList))
+                using OperationTransaction tc = this.CheckItemAutoCapture(itemsList);
+
+                // Actually add the items
+                foreach (T item in Enumerable.Reverse(itemsList))
                 {
-                    // Actually add the items
-                    foreach (T item in Enumerable.Reverse(itemsList))
-                    {
-                        this.InternalContainer.Insert(
-                            index,
-                            item);
-                    }
-
-                    // Push an undo level
-                    this.PushUndoLevel(
-                        new AddMultipleStateChange<T>(
-                            itemsList,
-                            index));
-
-                    // Mark the transaction as successful
-                    tc.Success();
+                    this.InternalContainer.Insert(
+                        index,
+                        item);
                 }
+
+                // Push an undo level
+                this.PushUndoLevel(
+                    new AddMultipleStateChange<T>(
+                        itemsList,
+                        index));
+
+                // Mark the transaction as successful
+                tc.Success();
             }
 
             // NOTIFICATION
@@ -871,7 +876,7 @@ namespace IX.Observable
             }
             else
             {
-                T[]? ims = addedItems.ToArray();
+                T[] ims = addedItems.ToArray();
                 for (var i = 0; i < ixs.Length; i++)
                 {
                     this.RaiseCollectionAdd(
@@ -910,7 +915,7 @@ namespace IX.Observable
             }
             else
             {
-                T[]? ims = removedItems.ToArray();
+                T[] ims = removedItems.ToArray();
                 for (var i = 0; i < ixs.Length; i++)
                 {
                     this.RaiseCollectionRemove(
@@ -926,8 +931,8 @@ namespace IX.Observable
         /// <param name="actions">The actions to employ.</param>
         /// <param name="states">The state objects to send to the corresponding actions.</param>
         protected override void InterpretBlockStateChangesOutsideLock(
-            Action<object>[] actions,
-            object[] states)
+            Action<object?>?[] actions,
+            object?[] states)
         {
             this.RaiseCollectionReset();
             this.ContentsMayHaveChanged();
@@ -940,10 +945,14 @@ namespace IX.Observable
         /// <param name="toInvokeOutsideLock">An action to invoke outside of the lock.</param>
         /// <param name="state">The state object to pass to the invocation.</param>
         /// <returns><see langword="true" /> if the undo was successful, <see langword="false" /> otherwise.</returns>
+        [SuppressMessage(
+            "Performance",
+            "HAA0401:Possible allocation of reference type enumerator",
+            Justification = "Acceptable.")]
         protected override bool UndoInternally(
             StateChangeBase undoRedoLevel,
-            out Action<object> toInvokeOutsideLock,
-            out object state)
+            out Action<object?>? toInvokeOutsideLock,
+            out object? state)
         {
             if (base.UndoInternally(
                 undoRedoLevel,
@@ -955,13 +964,9 @@ namespace IX.Observable
 
             switch (undoRedoLevel)
             {
-                case AddStateChange<T> aul:
+                case AddStateChange<T>(var item, var index):
                 {
-                    var index = aul.Index;
-
                     this.InternalContainer.RemoveAt(index);
-
-                    T item = aul.AddedItem;
 
                     if (this.ItemsAreUndoable &&
                         this.AutomaticallyCaptureSubItems &&
@@ -976,13 +981,19 @@ namespace IX.Observable
 
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableListBase<T>, T, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaiseCollectionChangedRemove(
-                            convertedState.Item2,
-                            convertedState.Item3);
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.ContentsMayHaveChanged();
+                        (var observableListBase, T removedItem, var indexRemoved) =
+                            (Tuple<ObservableListBase<T>, T, int>)innerState;
+
+                        observableListBase.RaiseCollectionChangedRemove(
+                            removedItem,
+                            indexRemoved);
+                        observableListBase.RaisePropertyChanged(nameof(observableListBase.Count));
+                        observableListBase.ContentsMayHaveChanged();
                     };
 
                     state = new Tuple<ObservableListBase<T>, T, int>(
@@ -993,16 +1004,14 @@ namespace IX.Observable
                     break;
                 }
 
-                case AddMultipleStateChange<T> amul:
+                case AddMultipleStateChange<T>(var addedItems, var index):
                 {
-                    var index = amul.Index;
-
-                    for (var i = 0; i < amul.AddedItems.Length; i++)
+                    for (var i = 0; i < addedItems.Length; i++)
                     {
                         this.InternalContainer.RemoveAt(index);
                     }
 
-                    IEnumerable<T> items = amul.AddedItems;
+                    IEnumerable<T> items = addedItems;
 
                     if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
                     {
@@ -1019,13 +1028,19 @@ namespace IX.Observable
 
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableListBase<T>, IEnumerable<T>, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaiseCollectionChangedRemoveMultiple(
-                            convertedState.Item2,
-                            convertedState.Item3);
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.ContentsMayHaveChanged();
+                        var (observableListBase, enumerable, addedIndex) =
+                            (Tuple<ObservableListBase<T>, IEnumerable<T>, int>)innerState;
+
+                        observableListBase.RaiseCollectionChangedRemoveMultiple(
+                            enumerable,
+                            addedIndex);
+                        observableListBase.RaisePropertyChanged(nameof(observableListBase.Count));
+                        observableListBase.ContentsMayHaveChanged();
                     };
 
                     state = new Tuple<ObservableListBase<T>, IEnumerable<T>, int>(
@@ -1036,11 +1051,8 @@ namespace IX.Observable
                     break;
                 }
 
-                case RemoveStateChange<T> rul:
+                case RemoveStateChange<T>(var index, var item):
                 {
-                    T item = rul.RemovedItem;
-                    var index = rul.Index;
-
                     this.InternalContainer.Insert(
                         index,
                         item);
@@ -1057,13 +1069,19 @@ namespace IX.Observable
 
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableListBase<T>, T, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaiseCollectionChangedAdd(
-                            convertedState.Item2,
-                            convertedState.Item3);
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.ContentsMayHaveChanged();
+                        (var observableListBase, T removedItem, var removedIndex) =
+                            (Tuple<ObservableListBase<T>, T, int>)innerState;
+
+                        observableListBase.RaiseCollectionChangedAdd(
+                            removedItem,
+                            removedIndex);
+                        observableListBase.RaisePropertyChanged(nameof(observableListBase.Count));
+                        observableListBase.ContentsMayHaveChanged();
                     };
 
                     state = new Tuple<ObservableListBase<T>, T, int>(
@@ -1074,11 +1092,8 @@ namespace IX.Observable
                     break;
                 }
 
-                case RemoveMultipleStateChange<T> rmul:
+                case RemoveMultipleStateChange<T>(var indexes, var items):
                 {
-                    T[] items = rmul.RemovedItems;
-                    int[] indexes = rmul.Indexes;
-
                     for (var i = items.Length - 1; i >= 0; i--)
                     {
                         this.InternalContainer.Insert(
@@ -1097,13 +1112,19 @@ namespace IX.Observable
 
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableListBase<T>, IEnumerable<T>, IEnumerable<int>>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaiseCollectionChangedAddMultiple(
-                            convertedState.Item2,
-                            convertedState.Item3);
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.ContentsMayHaveChanged();
+                        var (observableListBase, enumerable, indexesInternal) =
+                            (Tuple<ObservableListBase<T>, IEnumerable<T>, IEnumerable<int>>)innerState;
+
+                        observableListBase.RaiseCollectionChangedAddMultiple(
+                            enumerable,
+                            indexesInternal);
+                        observableListBase.RaisePropertyChanged(nameof(observableListBase.Count));
+                        observableListBase.ContentsMayHaveChanged();
                     };
 
                     state = new Tuple<ObservableListBase<T>, IEnumerable<T>, IEnumerable<int>>(
@@ -1114,16 +1135,16 @@ namespace IX.Observable
                     break;
                 }
 
-                case ClearStateChange<T> cul:
+                case ClearStateChange<T>(var originalItems):
                 {
-                    foreach (T t in cul.OriginalItems)
+                    foreach (T t in originalItems)
                     {
                         this.InternalContainer.Add(t);
                     }
 
                     if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
                     {
-                        foreach (IUndoableItem ul in cul.OriginalItems.Cast<IUndoableItem>()
+                        foreach (IUndoableItem ul in originalItems.Cast<IUndoableItem>()
                             .Where(p => !p.IsCapturedIntoUndoContext))
                         {
                             ul.CaptureIntoUndoContext(this);
@@ -1132,6 +1153,11 @@ namespace IX.Observable
 
                     toInvokeOutsideLock = innerState =>
                     {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         var convertedState = (ObservableListBase<T>)innerState;
 
                         convertedState.RaiseCollectionReset();
@@ -1144,12 +1170,8 @@ namespace IX.Observable
                     break;
                 }
 
-                case ChangeAtStateChange<T> caul:
+                case ChangeAtStateChange<T>(var index, var oldItem, var newItem):
                 {
-                    T oldItem = caul.NewValue;
-                    T newItem = caul.OldValue;
-                    var index = caul.Index;
-
                     this.InternalContainer[index] = newItem;
 
                     if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
@@ -1168,14 +1190,20 @@ namespace IX.Observable
 
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableListBase<T>, T, T, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaiseCollectionChangedChanged(
-                            convertedState.Item2,
-                            convertedState.Item3,
-                            convertedState.Item4);
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.ContentsMayHaveChanged();
+                        (var observableListBase, T oldItemInternal, T newItemInternal, var indexInternal) =
+                            (Tuple<ObservableListBase<T>, T, T, int>)innerState;
+
+                        observableListBase.RaiseCollectionChangedChanged(
+                            oldItemInternal,
+                            newItemInternal,
+                            indexInternal);
+                        observableListBase.RaisePropertyChanged(nameof(observableListBase.Count));
+                        observableListBase.ContentsMayHaveChanged();
                     };
 
                     state = new Tuple<ObservableListBase<T>, T, T, int>(
@@ -1206,10 +1234,14 @@ namespace IX.Observable
         /// <param name="toInvokeOutsideLock">An action to invoke outside of the lock.</param>
         /// <param name="state">The state object to pass to the invocation.</param>
         /// <returns><see langword="true" /> if the redo was successful, <see langword="false" /> otherwise.</returns>
+        [SuppressMessage(
+            "Performance",
+            "HAA0401:Possible allocation of reference type enumerator",
+            Justification = "Acceptable.")]
         protected override bool RedoInternally(
             StateChangeBase undoRedoLevel,
-            out Action<object> toInvokeOutsideLock,
-            out object state)
+            out Action<object?>? toInvokeOutsideLock,
+            out object? state)
         {
             if (base.RedoInternally(
                 undoRedoLevel,
@@ -1221,45 +1253,47 @@ namespace IX.Observable
 
             switch (undoRedoLevel)
             {
-                case AddStateChange<T> aul:
+                case AddStateChange<T>(var addedItem, var index):
                 {
-                    var index = aul.Index;
-                    T item = aul.AddedItem;
-
                     this.InternalContainer.Insert(
                         index,
-                        item);
+                        addedItem);
 
                     if (this.ItemsAreUndoable &&
                         this.AutomaticallyCaptureSubItems &&
-                        item is IUndoableItem { IsCapturedIntoUndoContext: false } ul)
+                        addedItem is IUndoableItem { IsCapturedIntoUndoContext: false } ul)
                     {
                         ul.CaptureIntoUndoContext(this);
                     }
 
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableListBase<T>, T, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaiseCollectionChangedAdd(
-                            convertedState.Item2,
-                            convertedState.Item3);
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.ContentsMayHaveChanged();
+                        (var observableListBase, T itemInternal, var indexInternal) =
+                            (Tuple<ObservableListBase<T>, T, int>)innerState;
+
+                        observableListBase.RaiseCollectionChangedAdd(
+                            itemInternal,
+                            indexInternal);
+                        observableListBase.RaisePropertyChanged(nameof(observableListBase.Count));
+                        observableListBase.ContentsMayHaveChanged();
                     };
 
                     state = new Tuple<ObservableListBase<T>, T, int>(
                         this,
-                        item,
+                        addedItem,
                         index);
 
                     break;
                 }
 
-                case AddMultipleStateChange<T> amul:
+                case AddMultipleStateChange<T>(var addedItems, var index):
                 {
-                    var index = amul.Index;
-                    IEnumerable<T> items = amul.AddedItems;
+                    IEnumerable<T> items = addedItems;
 
                     items.Reverse()
                         .ForEach(
@@ -1274,7 +1308,7 @@ namespace IX.Observable
 
                     if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
                     {
-                        foreach (IUndoableItem ul in amul.AddedItems.Cast<IUndoableItem>()
+                        foreach (IUndoableItem ul in addedItems.Cast<IUndoableItem>()
                             .Where(p => !p.IsCapturedIntoUndoContext))
                         {
                             ul.CaptureIntoUndoContext(this);
@@ -1283,13 +1317,19 @@ namespace IX.Observable
 
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableListBase<T>, IEnumerable<T>, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaiseCollectionChangedAddMultiple(
-                            convertedState.Item2,
-                            convertedState.Item3);
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.ContentsMayHaveChanged();
+                        var (observableListBase, enumerable, indexInternal) =
+                            (Tuple<ObservableListBase<T>, IEnumerable<T>, int>)innerState;
+
+                        observableListBase.RaiseCollectionChangedAddMultiple(
+                            enumerable,
+                            indexInternal);
+                        observableListBase.RaisePropertyChanged(nameof(observableListBase.Count));
+                        observableListBase.ContentsMayHaveChanged();
                     };
 
                     state = new Tuple<ObservableListBase<T>, IEnumerable<T>, int>(
@@ -1300,16 +1340,13 @@ namespace IX.Observable
                     break;
                 }
 
-                case RemoveStateChange<T> rul:
+                case RemoveStateChange<T>(var index, var removedItem):
                 {
-                    T item = rul.RemovedItem;
-                    var index = rul.Index;
-
                     this.InternalContainer.RemoveAt(index);
 
                     if (this.ItemsAreUndoable &&
                         this.AutomaticallyCaptureSubItems &&
-                        item is IUndoableItem { IsCapturedIntoUndoContext: true } ul &&
+                        removedItem is IUndoableItem { IsCapturedIntoUndoContext: true } ul &&
                         ul.ParentUndoContext == this)
                     {
                         ul.ReleaseFromUndoContext();
@@ -1317,33 +1354,39 @@ namespace IX.Observable
 
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableListBase<T>, T, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaiseCollectionChangedRemove(
-                            convertedState.Item2,
-                            convertedState.Item3);
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.ContentsMayHaveChanged();
+                        (var observableListBase, T itemInternal, var indexInternal) =
+                            (Tuple<ObservableListBase<T>, T, int>)innerState;
+
+                        observableListBase.RaiseCollectionChangedRemove(
+                            itemInternal,
+                            indexInternal);
+                        observableListBase.RaisePropertyChanged(nameof(observableListBase.Count));
+                        observableListBase.ContentsMayHaveChanged();
                     };
 
                     state = new Tuple<ObservableListBase<T>, T, int>(
                         this,
-                        item,
+                        removedItem,
                         index);
 
                     break;
                 }
 
-                case RemoveMultipleStateChange<T> rmul:
+                case RemoveMultipleStateChange<T>(var indexes, var removedItems):
                 {
-                    foreach (var t in rmul.Indexes)
+                    foreach (var t in indexes)
                     {
                         this.InternalContainer.RemoveAt(t);
                     }
 
                     if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
                     {
-                        foreach (IUndoableItem ul in rmul.RemovedItems.Cast<IUndoableItem>()
+                        foreach (IUndoableItem ul in removedItems.Cast<IUndoableItem>()
                             .Where(
                                 (
                                     p,
@@ -1356,30 +1399,36 @@ namespace IX.Observable
 
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableListBase<T>, IEnumerable<T>, IEnumerable<int>>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaiseCollectionChangedRemoveMultiple(
-                            convertedState.Item2,
-                            convertedState.Item3);
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.ContentsMayHaveChanged();
+                        var (observableListBase, enumerable, indexesInternal) =
+                            (Tuple<ObservableListBase<T>, IEnumerable<T>, IEnumerable<int>>)innerState;
+
+                        observableListBase.RaiseCollectionChangedRemoveMultiple(
+                            enumerable,
+                            indexesInternal);
+                        observableListBase.RaisePropertyChanged(nameof(observableListBase.Count));
+                        observableListBase.ContentsMayHaveChanged();
                     };
 
                     state = new Tuple<ObservableListBase<T>, IEnumerable<T>, IEnumerable<int>>(
                         this,
-                        rmul.RemovedItems,
-                        rmul.Indexes);
+                        removedItems,
+                        indexes);
 
                     break;
                 }
 
-                case ClearStateChange<T> cul:
+                case ClearStateChange<T>(var originalItems):
                 {
                     this.InternalContainer.Clear();
 
                     if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
                     {
-                        foreach (IUndoableItem ul in cul.OriginalItems.Cast<IUndoableItem>()
+                        foreach (IUndoableItem ul in originalItems.Cast<IUndoableItem>()
                             .Where(
                                 (
                                     p,
@@ -1392,6 +1441,11 @@ namespace IX.Observable
 
                     toInvokeOutsideLock = innerState =>
                     {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         var convertedState = (ObservableListBase<T>)innerState;
 
                         convertedState.RaiseCollectionReset();
@@ -1404,12 +1458,8 @@ namespace IX.Observable
                     break;
                 }
 
-                case ChangeAtStateChange<T> caul:
+                case ChangeAtStateChange<T>(var index, var newItem, var oldItem):
                 {
-                    T oldItem = caul.OldValue;
-                    T newItem = caul.NewValue;
-                    var index = caul.Index;
-
                     this.InternalContainer[index] = newItem;
 
                     if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
@@ -1428,14 +1478,20 @@ namespace IX.Observable
 
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableListBase<T>, T, T, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaiseCollectionChangedChanged(
-                            convertedState.Item2,
-                            convertedState.Item3,
-                            convertedState.Item4);
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.ContentsMayHaveChanged();
+                        (var observableListBase, T oldItemInternal, T newItemInternal, var indexInternal) =
+                            (Tuple<ObservableListBase<T>, T, T, int>)innerState;
+
+                        observableListBase.RaiseCollectionChangedChanged(
+                            oldItemInternal,
+                            newItemInternal,
+                            indexInternal);
+                        observableListBase.RaisePropertyChanged(nameof(observableListBase.Count));
+                        observableListBase.ContentsMayHaveChanged();
                     };
                     state = new Tuple<ObservableListBase<T>, T, T, int>(
                         this,

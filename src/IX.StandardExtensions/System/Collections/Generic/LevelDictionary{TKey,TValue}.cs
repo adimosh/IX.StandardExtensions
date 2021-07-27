@@ -5,6 +5,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using IX.StandardExtensions;
 using IX.StandardExtensions.ComponentModel;
@@ -183,7 +184,7 @@ namespace IX.System.Collections.Generic
 
             return this.internalDictionary.TryGetValue(
                 key,
-                out value);
+                out value!);
         }
 
         /// <summary>
@@ -257,12 +258,20 @@ namespace IX.System.Collections.Generic
         ///     Gets the enumerator.
         /// </summary>
         /// <returns>IEnumerator.</returns>
+        [SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "Implementing an interface.")]
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         /// <summary>
         ///     Gets the enumerator.
         /// </summary>
         /// <returns>The dictionary enumerator.</returns>
+        [SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "Implementing an interface.")]
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() =>
             this.GetEnumerator();
 
@@ -358,6 +367,18 @@ namespace IX.System.Collections.Generic
         /// Enumerates values based on key levels.
         /// </summary>
         /// <returns>A values enumerable that enumerates based on key levels.</returns>
+        [SuppressMessage(
+            "Performance",
+            "HAA0401:Possible allocation of reference type enumerator",
+            Justification = "Not necessary.")]
+        [SuppressMessage(
+            "ReSharper",
+            "LoopCanBeConvertedToQuery",
+            Justification = "Not necessary.")]
+        [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "We use ReSharper.")]
         public IEnumerable<TValue> EnumerateValuesOnLevelKeys()
         {
             foreach (var keyList in this.keyLevels.OrderBy(p => p.Key)

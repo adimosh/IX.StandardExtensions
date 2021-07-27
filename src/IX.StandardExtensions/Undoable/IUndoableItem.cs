@@ -2,7 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
 
@@ -46,8 +45,8 @@ namespace IX.Undoable
         /// <summary>
         ///     Gets the parent undo context.
         /// </summary>
-        /// <value>The parent undo context.</value>
-        IUndoableItem ParentUndoContext { get; }
+        /// <value>The parent undo context. Can be <c>null</c> (<c>Nothing</c> in Visual Basic).</value>
+        IUndoableItem? ParentUndoContext { get; }
 
         /// <summary>
         ///     Gets or sets the number of levels to keep undo or redo information.

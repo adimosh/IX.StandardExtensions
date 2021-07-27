@@ -180,23 +180,7 @@ namespace IX.Observable
 
 #region Methods
 
-        /// <summary>
-        ///     Interprets the block state changes outside the write lock.
-        /// </summary>
-        /// <param name="actions">The actions to employ.</param>
-        /// <param name="states">The state objects to send to the corresponding actions.</param>
-        protected override void InterpretBlockStateChangesOutsideLock(
-            Action<object>[] actions,
-            object[] states)
-        {
-            this.RaisePropertyChanged(nameof(this.Count));
-            this.RaisePropertyChanged(Constants.ItemsName);
-            this.RaiseCollectionReset();
-        }
-
-#endregion
-
-#region Stack methods
+#region Interface implementations
 
         /// <summary>
         ///     Peeks in the stack to view the topmost item, without removing it.
@@ -209,35 +193,6 @@ namespace IX.Observable
             using (this.ReadLock())
             {
                 return ((StackCollectionAdapter<T>)this.InternalContainer).Peek();
-            }
-        }
-
-        /// <summary>
-        ///     Attempts to peek at the topmost item from the stack, without removing it.
-        /// </summary>
-        /// <param name="item">The topmost element in the stack, default if unsuccessful.</param>
-        /// <returns>
-        ///     <see langword="true" /> if an item is peeked at successfully, <see langword="false" /> otherwise, or if the
-        ///     stack is empty.
-        /// </returns>
-        public bool TryPeek(out T item)
-        {
-            this.RequiresNotDisposed();
-
-            using (this.ReadLock())
-            {
-                var container = (StackCollectionAdapter<T>)this.InternalContainer;
-
-                if (container.Count == 0)
-                {
-                    item = default;
-
-                    return false;
-                }
-
-                item = container.Peek();
-
-                return true;
             }
         }
 
@@ -266,53 +221,6 @@ namespace IX.Observable
                 index);
 
             return item;
-        }
-
-        /// <summary>
-        ///     Attempts to pop the topmost item from the stack, and remove it if successful.
-        /// </summary>
-        /// <param name="item">The topmost element in the stack, default if unsuccessful.</param>
-        /// <returns>
-        ///     <see langword="true" /> if an item is popped successfully, <see langword="false" /> otherwise, or if the
-        ///     stack is empty.
-        /// </returns>
-        public bool TryPop(out T item)
-        {
-            this.RequiresNotDisposed();
-
-            int index;
-
-            using (ReadWriteSynchronizationLocker? @lock = this.ReadWriteLock())
-            {
-                var container = (StackCollectionAdapter<T>)this.InternalContainer;
-
-                if (container.Count == 0)
-                {
-                    item = default;
-
-                    return false;
-                }
-
-                @lock.Upgrade();
-
-                if (container.Count == 0)
-                {
-                    item = default;
-
-                    return false;
-                }
-
-                item = container.Pop();
-                index = container.Count;
-            }
-
-            this.RaisePropertyChanged(nameof(this.Count));
-            this.RaisePropertyChanged(Constants.ItemsName);
-            this.RaiseCollectionChangedRemove(
-                item,
-                index);
-
-            return true;
         }
 
         /// <summary>
@@ -413,6 +321,98 @@ namespace IX.Observable
             }
         }
 
+        /// <summary>
+        ///     Attempts to peek at the topmost item from the stack, without removing it.
+        /// </summary>
+        /// <param name="item">The topmost element in the stack, default if unsuccessful.</param>
+        /// <returns>
+        ///     <see langword="true" /> if an item is peeked at successfully, <see langword="false" /> otherwise, or if the
+        ///     stack is empty.
+        /// </returns>
+        public bool TryPeek(out T item)
+        {
+            this.RequiresNotDisposed();
+
+            using (this.ReadLock())
+            {
+                var container = (StackCollectionAdapter<T>)this.InternalContainer;
+
+                if (container.Count == 0)
+                {
+                    item = default!;
+
+                    return false;
+                }
+
+                item = container.Peek();
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        ///     Attempts to pop the topmost item from the stack, and remove it if successful.
+        /// </summary>
+        /// <param name="item">The topmost element in the stack, default if unsuccessful.</param>
+        /// <returns>
+        ///     <see langword="true" /> if an item is popped successfully, <see langword="false" /> otherwise, or if the
+        ///     stack is empty.
+        /// </returns>
+        public bool TryPop(out T item)
+        {
+            this.RequiresNotDisposed();
+
+            int index;
+
+            using (ReadWriteSynchronizationLocker @lock = this.ReadWriteLock())
+            {
+                var container = (StackCollectionAdapter<T>)this.InternalContainer;
+
+                if (container.Count == 0)
+                {
+                    item = default!;
+
+                    return false;
+                }
+
+                @lock.Upgrade();
+
+                if (container.Count == 0)
+                {
+                    item = default!;
+
+                    return false;
+                }
+
+                item = container.Pop();
+                index = container.Count;
+            }
+
+            this.RaisePropertyChanged(nameof(this.Count));
+            this.RaisePropertyChanged(Constants.ItemsName);
+            this.RaiseCollectionChangedRemove(
+                item,
+                index);
+
+            return true;
+        }
+
+#endregion
+
+        /// <summary>
+        ///     Interprets the block state changes outside the write lock.
+        /// </summary>
+        /// <param name="actions">The actions to employ.</param>
+        /// <param name="states">The state objects to send to the corresponding actions.</param>
+        protected override void InterpretBlockStateChangesOutsideLock(
+            Action<object?>?[] actions,
+            object?[] states)
+        {
+            this.RaisePropertyChanged(nameof(this.Count));
+            this.RaisePropertyChanged(Constants.ItemsName);
+            this.RaiseCollectionReset();
+        }
+
 #endregion
 
 #region Undo/Redo
@@ -426,8 +426,8 @@ namespace IX.Observable
         /// <returns><see langword="true" /> if the redo was successful, <see langword="false" /> otherwise.</returns>
         protected override bool RedoInternally(
             StateChangeBase undoRedoLevel,
-            out Action<object> toInvokeOutsideLock,
-            out object state)
+            out Action<object?>? toInvokeOutsideLock,
+            out object? state)
         {
             if (base.UndoInternally(
                 undoRedoLevel,
@@ -439,23 +439,27 @@ namespace IX.Observable
 
             switch (undoRedoLevel)
             {
-                case AddStateChange<T> aul:
+                case AddStateChange<T>(var item, var index):
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
 
-                    container.Push(aul.AddedItem);
+                    container.Push(item);
 
-                    var index = aul.Index;
-                    T item = aul.AddedItem;
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableStack<T>, T, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.RaisePropertyChanged(Constants.ItemsName);
-                        convertedState.Item1.RaiseCollectionChangedAdd(
-                            convertedState.Item2,
-                            convertedState.Item3);
+                        (var observableStack, T itemInternal, var indexInternal) =
+                            (Tuple<ObservableStack<T>, T, int>)innerState;
+
+                        observableStack.RaisePropertyChanged(nameof(observableStack.Count));
+                        observableStack.RaisePropertyChanged(Constants.ItemsName);
+                        observableStack.RaiseCollectionChangedAdd(
+                            itemInternal,
+                            indexInternal);
                     };
 
                     state = new Tuple<ObservableStack<T>, T, int>(
@@ -466,34 +470,39 @@ namespace IX.Observable
                     break;
                 }
 
-                case EnqueueStateChange<T> eul:
+                case EnqueueStateChange<T>(var enqueuedItem):
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
 
-                    container.Push(eul.EnqueuedItem);
+                    container.Push(enqueuedItem);
 
                     var index = container.Count - 1;
-                    T item = eul.EnqueuedItem;
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableStack<T>, T, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.RaisePropertyChanged(Constants.ItemsName);
-                        convertedState.Item1.RaiseCollectionChangedAdd(
-                            convertedState.Item2,
-                            convertedState.Item3);
+                        (var observableStack, T itemInternal, var indexInternal) =
+                            (Tuple<ObservableStack<T>, T, int>)innerState;
+
+                        observableStack.RaisePropertyChanged(nameof(observableStack.Count));
+                        observableStack.RaisePropertyChanged(Constants.ItemsName);
+                        observableStack.RaiseCollectionChangedAdd(
+                            itemInternal,
+                            indexInternal);
                     };
 
                     state = new Tuple<ObservableStack<T>, T, int>(
                         this,
-                        item,
+                        enqueuedItem,
                         index);
 
                     break;
                 }
 
-                case DequeueStateChange<T> _:
+                case DequeueStateChange<T>:
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
 
@@ -501,13 +510,19 @@ namespace IX.Observable
                     var index = container.Count;
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableStack<T>, T, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.RaisePropertyChanged(Constants.ItemsName);
-                        convertedState.Item1.RaiseCollectionChangedRemove(
-                            convertedState.Item2,
-                            convertedState.Item3);
+                        (var observableStack, T itemInternal, var indexInternal) =
+                            (Tuple<ObservableStack<T>, T, int>)innerState;
+
+                        observableStack.RaisePropertyChanged(nameof(observableStack.Count));
+                        observableStack.RaisePropertyChanged(Constants.ItemsName);
+                        observableStack.RaiseCollectionChangedRemove(
+                            itemInternal,
+                            indexInternal);
                     };
 
                     state = new Tuple<ObservableStack<T>, T, int>(
@@ -518,7 +533,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case RemoveStateChange<T> _:
+                case RemoveStateChange<T>:
                 {
                     toInvokeOutsideLock = null;
                     state = null;
@@ -526,12 +541,17 @@ namespace IX.Observable
                     break;
                 }
 
-                case ClearStateChange<T> _:
+                case ClearStateChange<T>:
                 {
                     this.InternalContainer.Clear();
 
                     toInvokeOutsideLock = innerState =>
                     {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         var convertedState = (ObservableStack<T>)innerState;
 
                         convertedState.RaisePropertyChanged(nameof(convertedState.Count));
@@ -565,8 +585,8 @@ namespace IX.Observable
         /// <returns><see langword="true" /> if the undo was successful, <see langword="false" /> otherwise.</returns>
         protected override bool UndoInternally(
             StateChangeBase undoRedoLevel,
-            out Action<object> toInvokeOutsideLock,
-            out object state)
+            out Action<object?>? toInvokeOutsideLock,
+            out object? state)
         {
             if (base.RedoInternally(
                 undoRedoLevel,
@@ -578,7 +598,7 @@ namespace IX.Observable
 
             switch (undoRedoLevel)
             {
-                case AddStateChange<T> _:
+                case AddStateChange<T>:
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
 
@@ -586,13 +606,19 @@ namespace IX.Observable
                     var index = container.Count;
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableStack<T>, T, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.RaisePropertyChanged(Constants.ItemsName);
-                        convertedState.Item1.RaiseCollectionChangedRemove(
-                            convertedState.Item2,
-                            convertedState.Item3);
+                        (var observableStack, T itemInternal, var indexInternal) =
+                            (Tuple<ObservableStack<T>, T, int>)innerState;
+
+                        observableStack.RaisePropertyChanged(nameof(observableStack.Count));
+                        observableStack.RaisePropertyChanged(Constants.ItemsName);
+                        observableStack.RaiseCollectionChangedRemove(
+                            itemInternal,
+                            indexInternal);
                     };
 
                     state = new Tuple<ObservableStack<T>, T, int>(
@@ -603,7 +629,7 @@ namespace IX.Observable
                     break;
                 }
 
-                case EnqueueStateChange<T> _:
+                case EnqueueStateChange<T>:
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
 
@@ -611,13 +637,19 @@ namespace IX.Observable
                     var index = container.Count;
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableStack<T>, T, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.RaisePropertyChanged(Constants.ItemsName);
-                        convertedState.Item1.RaiseCollectionChangedRemove(
-                            convertedState.Item2,
-                            convertedState.Item3);
+                        (var observableStack, T itemInternal, var indexInternal) =
+                            (Tuple<ObservableStack<T>, T, int>)innerState;
+
+                        observableStack.RaisePropertyChanged(nameof(observableStack.Count));
+                        observableStack.RaisePropertyChanged(Constants.ItemsName);
+                        observableStack.RaiseCollectionChangedRemove(
+                            itemInternal,
+                            indexInternal);
                     };
 
                     state = new Tuple<ObservableStack<T>, T, int>(
@@ -628,34 +660,39 @@ namespace IX.Observable
                     break;
                 }
 
-                case DequeueStateChange<T> dul:
+                case DequeueStateChange<T>(var dequeuedItem):
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
 
-                    container.Push(dul.DequeuedItem);
+                    container.Push(dequeuedItem);
 
                     var index = container.Count - 1;
-                    T item = dul.DequeuedItem;
                     toInvokeOutsideLock = innerState =>
                     {
-                        var convertedState = (Tuple<ObservableStack<T>, T, int>)innerState;
+                        if (innerState == null)
+                        {
+                            return;
+                        }
 
-                        convertedState.Item1.RaisePropertyChanged(nameof(convertedState.Item1.Count));
-                        convertedState.Item1.RaisePropertyChanged(Constants.ItemsName);
-                        convertedState.Item1.RaiseCollectionChangedAdd(
-                            convertedState.Item2,
-                            convertedState.Item3);
+                        (var observableStack, T itemInternal, var indexInternal) =
+                            (Tuple<ObservableStack<T>, T, int>)innerState;
+
+                        observableStack.RaisePropertyChanged(nameof(observableStack.Count));
+                        observableStack.RaisePropertyChanged(Constants.ItemsName);
+                        observableStack.RaiseCollectionChangedAdd(
+                            itemInternal,
+                            indexInternal);
                     };
 
                     state = new Tuple<ObservableStack<T>, T, int>(
                         this,
-                        item,
+                        dequeuedItem,
                         index);
 
                     break;
                 }
 
-                case RemoveStateChange<T> _:
+                case RemoveStateChange<T>:
                 {
                     toInvokeOutsideLock = null;
                     state = null;
@@ -663,16 +700,21 @@ namespace IX.Observable
                     break;
                 }
 
-                case ClearStateChange<T> cul:
+                case ClearStateChange<T>(var originalItems):
                 {
                     var container = (StackCollectionAdapter<T>)this.InternalContainer;
-                    for (var i = 0; i < cul.OriginalItems.Length - 1; i++)
+                    for (var i = 0; i < originalItems.Length - 1; i++)
                     {
-                        container.Push(cul.OriginalItems[i]);
+                        container.Push(originalItems[i]);
                     }
 
                     toInvokeOutsideLock = innerState =>
                     {
+                        if (innerState == null)
+                        {
+                            return;
+                        }
+
                         var convertedState = (ObservableStack<T>)innerState;
 
                         convertedState.RaisePropertyChanged(nameof(convertedState.Count));
