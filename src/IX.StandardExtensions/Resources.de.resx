@@ -267,4 +267,7 @@
   <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
     <value>Der Versuch, auf einen Rückgängig/Wiederholen-Stack zuzugreifen, während das Rückgängigmachen deaktiviert ist, ist nicht zulässig.</value>
   </data>
+  <data name="TheLevelDictionaryHasNoMoreItems" xml:space="preserve">
+    <value>Das Niveauwörterbuch enthält keine Elemente mehr.</value>
+  </data>
 </root>

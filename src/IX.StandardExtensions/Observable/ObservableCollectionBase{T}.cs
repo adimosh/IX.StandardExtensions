@@ -880,13 +880,7 @@ namespace IX.Observable
             Justification = "We're OK with this, the cost of the allocation is too small.")]
         protected virtual bool UndoInternally(
             StateChangeBase undoRedoLevel,
-            #if FRAMEWORK_ADVANCED
-            [MaybeNullWhen(false)]
-            #endif
             out Action<object?>? toInvokeOutsideLock,
-            #if FRAMEWORK_ADVANCED
-            [MaybeNullWhen(false)]
-            #endif
             out object? state)
         {
             switch (undoRedoLevel)
@@ -977,13 +971,7 @@ namespace IX.Observable
         /// <returns><see langword="true" /> if the redo was successful, <see langword="false" /> otherwise.</returns>
         protected virtual bool RedoInternally(
             StateChangeBase undoRedoLevel,
-            #if FRAMEWORK_ADVANCED
-            [MaybeNullWhen(false)]
-            #endif
             out Action<object?>? toInvokeOutsideLock,
-            #if FRAMEWORK_ADVANCED
-            [MaybeNullWhen(false)]
-            #endif
             out object? state)
         {
             switch (undoRedoLevel)

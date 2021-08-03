@@ -4,9 +4,7 @@
 
 using System;
 using JetBrains.Annotations;
-#if FRAMEWORK_ADVANCED
 using System.Diagnostics.CodeAnalysis;
-#endif
 
 namespace IX.StandardExtensions.ComponentModel
 {
@@ -68,9 +66,7 @@ namespace IX.StandardExtensions.ComponentModel
         ///     otherwise.
         /// </returns>
         public bool TryGetTarget(
-            #if FRAMEWORK_ADVANCED
             [MaybeNullWhen(false)] [NotNullWhen(true)]
-            #endif
             out T target)
         {
             if (!this.reference.TryGetTarget(out T? intermediateTarget))

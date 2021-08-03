@@ -267,4 +267,7 @@
   <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
     <value>Toute tentative d’accès à une pile d’annulation/de réenrobation alors que l’annulation est désactivée n’est pas autorisée.</value>
   </data>
+  <data name="TheLevelDictionaryHasNoMoreItems" xml:space="preserve">
+    <value>Le dictionnaire de niveau n’a plus d’éléments.</value>
+  </data>
 </root>

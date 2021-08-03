@@ -7,11 +7,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 using IX.StandardExtensions;
 using IX.StandardExtensions.ComponentModel;
 using JetBrains.Annotations;
 
-// ReSharper disable once CheckNamespace
 namespace IX.System.Collections.Generic
 {
     /// <summary>
@@ -258,20 +258,12 @@ namespace IX.System.Collections.Generic
         ///     Gets the enumerator.
         /// </summary>
         /// <returns>IEnumerator.</returns>
-        [SuppressMessage(
-            "Performance",
-            "HAA0601:Value type to reference type conversion causing boxing allocation",
-            Justification = "Implementing an interface.")]
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         /// <summary>
         ///     Gets the enumerator.
         /// </summary>
         /// <returns>The dictionary enumerator.</returns>
-        [SuppressMessage(
-            "Performance",
-            "HAA0601:Value type to reference type conversion causing boxing allocation",
-            Justification = "Implementing an interface.")]
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() =>
             this.GetEnumerator();
 
@@ -364,7 +356,7 @@ namespace IX.System.Collections.Generic
         }
 
         /// <summary>
-        /// Enumerates values based on key levels.
+        ///     Enumerates values based on key levels.
         /// </summary>
         /// <returns>A values enumerable that enumerates based on key levels.</returns>
         [SuppressMessage(
@@ -384,7 +376,7 @@ namespace IX.System.Collections.Generic
             foreach (var keyList in this.keyLevels.OrderBy(p => p.Key)
                 .Select(p => p.Value))
             {
-                foreach (var key in keyList)
+                foreach (TKey key in keyList)
                 {
                     yield return this.internalDictionary[key];
                 }
@@ -406,6 +398,120 @@ namespace IX.System.Collections.Generic
         }
 
 #endregion
+
+#endregion
+
+#region Nested types and delegates
+
+        /// <summary>
+        ///     An enumerable wrapper that holds values.
+        /// </summary>
+        [PublicAPI]
+        public readonly struct KeyLevelEnumerable : IEnumerable<TValue>
+        {
+            private readonly TValue[] values;
+
+            internal KeyLevelEnumerable(LevelDictionary<TKey, TValue> instance)
+            {
+                this.values = (
+                    from p in instance.keyLevels.OrderBy(p => p.Key)
+                        .SelectMany(p => p.Value)
+                    join q in instance.internalDictionary.AsEnumerable() on p equals q.Key
+                    select q.Value).ToArray();
+            }
+
+            /// <summary>
+            ///     Gets an enumerator for this enumerable
+            /// </summary>
+            /// <returns></returns>
+            public KeyLevelEnumerator GetEnumerator() => new(this.values);
+
+            IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator() => this.GetEnumerator();
+
+            IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+            /// <summary>
+            ///     An enumerator for the <see cref="LevelDictionary{TKey,TValue}" />, so that it can enumerate on level keys.
+            /// </summary>
+            public struct KeyLevelEnumerator : IEnumerator<TValue>
+            {
+                private readonly TValue[] values;
+
+                private int index;
+
+                internal KeyLevelEnumerator(TValue[] values)
+                {
+                    this.values = values;
+
+                    this.index = 0;
+                }
+
+                /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+                public void Dispose() =>
+                    Interlocked.Exchange(
+                        ref this.index,
+                        -1);
+
+                /// <summary>Advances the enumerator to the next element of the collection.</summary>
+                /// <returns>
+                ///     <see langword="true" /> if the enumerator was successfully advanced to the next element; <see langword="false" />
+                ///     if the enumerator has passed the end of the collection.
+                /// </returns>
+                /// <exception cref="T:System.InvalidOperationException">The collection was modified after the enumerator was created.</exception>
+                public bool MoveNext()
+                {
+                    if (this.index == -1)
+                    {
+                        throw new ObjectDisposedException(nameof(KeyLevelEnumerator));
+                    }
+
+                    if (this.index == this.values.Length)
+                    {
+                        return false;
+                    }
+
+                    Interlocked.Increment(ref this.index);
+
+                    return true;
+                }
+
+                /// <summary>Sets the enumerator to its initial position, which is before the first element in the collection.</summary>
+                /// <exception cref="T:System.InvalidOperationException">The collection was modified after the enumerator was created.</exception>
+                public void Reset()
+                {
+                    if (this.index == -1)
+                    {
+                        throw new ObjectDisposedException(nameof(KeyLevelEnumerator));
+                    }
+
+                    this.index = 0;
+                }
+
+                /// <summary>Gets the element in the collection at the current position of the enumerator.</summary>
+                /// <returns>The element in the collection at the current position of the enumerator.</returns>
+                public TValue Current
+                {
+                    get
+                    {
+                        if (this.index == -1)
+                        {
+                            throw new ObjectDisposedException(nameof(KeyLevelEnumerator));
+                        }
+
+                        if (this.index >= this.values.Length)
+                        {
+                            throw new IndexOutOfRangeException(Resources.TheLevelDictionaryHasNoMoreItems);
+                        }
+
+                        return this.values[this.index];
+                    }
+                }
+
+                /// <summary>Gets the element in the collection at the current position of the enumerator.</summary>
+                /// <returns>The element in the collection at the current position of the enumerator.</returns>
+                object? IEnumerator.Current => this.Current;
+            }
+        }
 
 #endregion
     }

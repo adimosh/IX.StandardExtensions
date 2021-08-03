@@ -3,9 +3,7 @@
 // </copyright>
 
 using System.Collections.Generic;
-#if NETSTANDARD21_OR_GREATER
 using System.Diagnostics.CodeAnalysis;
-#endif
 using JetBrains.Annotations;
 
 namespace IX.System
@@ -244,18 +242,14 @@ namespace IX.System
         /// Exits using the specified exit code.
         /// </summary>
         /// <param name="exitCode">The exit code.</param>
-        #if NETSTANDARD21_OR_GREATER
         [DoesNotReturn]
-        #endif
         void Exit(int exitCode);
 
         /// <summary>
         /// Fails the current process fast.
         /// </summary>
         /// <param name="message">The message to fail with.</param>
-        #if NETSTANDARD21_OR_GREATER
         [DoesNotReturn]
-        #endif
         void FailFast(string? message);
 
         /// <summary>
@@ -263,9 +257,7 @@ namespace IX.System
         /// </summary>
         /// <param name="message">The message to fail with.</param>
         /// <param name="exception">The exception to fail with.</param>
-        #if NETSTANDARD21_OR_GREATER
         [DoesNotReturn]
-        #endif
         void FailFast(
             string? message,
             global::System.Exception? exception);

@@ -18,12 +18,12 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Merged IX.Observable
-- Many records and init-only properties</PackageReleaseNotes>
+    <PackageReleaseNotes>- LevelDictionary now has a level enumerator that no longer throws fits.
+- DoesNotReturn, NotNull and MaybeNullWhen attributes in lower frameworks.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.7.11</VersionPrefix>
+    <VersionPrefix>0.7.12</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>

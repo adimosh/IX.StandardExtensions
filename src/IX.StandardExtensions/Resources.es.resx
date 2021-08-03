@@ -267,4 +267,7 @@
   <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
     <value>No se permite intentar acceder a una pila de deshacer/rehacer mientras deshacer está deshabilitado.</value>
   </data>
+  <data name="TheLevelDictionaryHasNoMoreItems" xml:space="preserve">
+    <value>El diccionario de nivel no tiene más elementos.</value>
+  </data>
 </root>

@@ -267,4 +267,7 @@
   <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
     <value>Încercarea de a accesa o stivă de anulare/refacere în timp ce anularea este dezactivată nu este permisă.</value>
   </data>
+  <data name="TheLevelDictionaryHasNoMoreItems" xml:space="preserve">
+    <value>Dicționarul de nivel nu mai are elemente.</value>
+  </data>
 </root>

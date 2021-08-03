@@ -267,4 +267,7 @@
   <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
     <value>पूर्ववत/रीडो स्टैक तक पहुंचने का प्रयास करते हुए पूर्ववत अक्षम होने की अनुमति नहीं है ।</value>
   </data>
+  <data name="TheLevelDictionaryHasNoMoreItems" xml:space="preserve">
+    <value>स्तर शब्दकोश में कोई और आइटम नहीं है।</value>
+  </data>
 </root>

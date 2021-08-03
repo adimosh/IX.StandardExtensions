@@ -267,4 +267,7 @@
   <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
     <value>元に戻す/やり直しスタックにアクセスしようとしても、元に戻す操作が無効になっていません。</value>
   </data>
+  <data name="TheLevelDictionaryHasNoMoreItems" xml:space="preserve">
+    <value>レベルディクショナリに項目がなくなります。</value>
+  </data>
 </root>

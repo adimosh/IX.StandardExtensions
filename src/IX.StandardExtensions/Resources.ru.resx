@@ -267,4 +267,7 @@
   <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
     <value>Попытка получить доступ к стеку отмены/повтора при отключенной отмене не допускается.</value>
   </data>
+  <data name="TheLevelDictionaryHasNoMoreItems" xml:space="preserve">
+    <value>В словаре уровней больше нет элементов.</value>
+  </data>
 </root>

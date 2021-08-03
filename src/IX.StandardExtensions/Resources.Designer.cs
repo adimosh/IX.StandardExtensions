@@ -484,6 +484,15 @@ namespace IX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The level dictionary has no more items..
+        /// </summary>
+        internal static string TheLevelDictionaryHasNoMoreItems {
+            get {
+                return ResourceManager.GetString("TheLevelDictionaryHasNoMoreItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The provided arguments do not form a valid range of values. Arguments: {0}.
         /// </summary>
         internal static string TheProvidedArgumentsDoNotFormAValidRangeOfValuesArguments {

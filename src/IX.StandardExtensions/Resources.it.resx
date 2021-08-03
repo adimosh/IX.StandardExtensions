@@ -267,4 +267,7 @@
   <data name="AttemptingToAccessAnUndoRedoStackWhileUndoIsDisabledIsNotAllowed" xml:space="preserve">
     <value>Il tentativo di accedere a uno stack di annullamento/ro mentre l'annullamento è disabilitato non è consentito.</value>
   </data>
+  <data name="TheLevelDictionaryHasNoMoreItems" xml:space="preserve">
+    <value>Il dizionario di livello non ha più elementi.</value>
+  </data>
 </root>

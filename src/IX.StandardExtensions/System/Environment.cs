@@ -287,34 +287,48 @@ namespace IX.System
         /// Exits using the specified exit code.
         /// </summary>
         /// <param name="exitCode">The exit code.</param>
-#if NETSTANDARD21_OR_GREATER
         [DoesNotReturn]
+        public void Exit(int exitCode)
+        {
+            GlobalSystem.Environment.Exit(exitCode);
+
+#if !FRAMEWORK_ADVANCED
+            throw new global::System.InvalidOperationException();
 #endif
-        public void Exit(int exitCode) => GlobalSystem.Environment.Exit(exitCode);
+        }
 
         /// <summary>
         /// Fails the current process fast.
         /// </summary>
         /// <param name="message">The message to fail with.</param>
-#if NETSTANDARD21_OR_GREATER
         [DoesNotReturn]
+        public void FailFast(string? message)
+        {
+            GlobalSystem.Environment.FailFast(message);
+
+#if !FRAMEWORK_ADVANCED
+            throw new global::System.InvalidOperationException();
 #endif
-        public void FailFast(string? message) => GlobalSystem.Environment.FailFast(message);
+        }
 
         /// <summary>
         /// Fails the current process fast.
         /// </summary>
         /// <param name="message">The message to fail with.</param>
         /// <param name="exception">The exception to fail with.</param>
-#if NETSTANDARD21_OR_GREATER
         [DoesNotReturn]
-#endif
         public void FailFast(
             string? message,
-            GlobalSystem.Exception? exception) =>
+            GlobalSystem.Exception? exception)
+        {
             GlobalSystem.Environment.FailFast(
                 message,
                 exception);
+
+#if !FRAMEWORK_ADVANCED
+            throw new global::System.InvalidOperationException();
+#endif
+        }
 
         /// <summary>
         /// Gets the command line arguments.
