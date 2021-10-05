@@ -277,6 +277,15 @@ namespace IX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The identifier corresponds to no item..
+        /// </summary>
+        internal static string ErrorIdCorrespondsToNoItem {
+            get {
+                return ResourceManager.GetString("ErrorIdCorrespondsToNoItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The given key was already present in the dictionary..
         /// </summary>
         internal static string ErrorKeyFoundInDictionary {

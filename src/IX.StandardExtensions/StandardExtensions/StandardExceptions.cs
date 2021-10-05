@@ -2309,4 +2309,119 @@ namespace IX.StandardExtensions
         {
         }
     }
+
+    /// <summary>
+    ///     An argument exception representing an identifier based on which no item is found.
+    /// </summary>
+    /// <seealso cref="ArgumentException" />
+    [Serializable]
+    [PublicAPI]
+    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.DocumentationRules",
+        "SA1649:File name should match first type name",
+        Justification = "Auto-generated file.")]
+    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.MaintainabilityRules",
+        "SA1402:File may only contain a single type",
+        Justification = "Auto-generated file.")]
+    public class IdCorrespondsToNoItemException : ArgumentException
+    {
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="IdCorrespondsToNoItemException" /> class.
+        /// </summary>
+        public IdCorrespondsToNoItemException()
+            : base(Resources.ErrorIdCorrespondsToNoItem)
+        {
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="IdCorrespondsToNoItemException" /> class.
+        /// </summary>
+        /// <param name="argumentName">The name of the argument.</param>
+        public IdCorrespondsToNoItemException(string argumentName)
+            : base(
+                Resources.ErrorIdCorrespondsToNoItem,
+                argumentName)
+        {
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="IdCorrespondsToNoItemException" /> class.
+        /// </summary>
+        /// <param name="message">A custom message for the thrown exception.</param>
+        /// <param name="argumentName">The name of the argument.</param>
+        public IdCorrespondsToNoItemException(
+            string message,
+            string argumentName)
+            : base(
+                message,
+                argumentName)
+        {
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="IdCorrespondsToNoItemException" /> class.
+        /// </summary>
+        /// <param name="internalException">The internal exception, if any.</param>
+        public IdCorrespondsToNoItemException(Exception internalException)
+            : base(
+                Resources.ErrorIdCorrespondsToNoItem,
+                internalException)
+        {
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="IdCorrespondsToNoItemException" /> class.
+        /// </summary>
+        /// <param name="argumentName">The name of the argument.</param>
+        /// <param name="internalException">The internal exception, if any.</param>
+        public IdCorrespondsToNoItemException(
+            string argumentName,
+            Exception internalException)
+            : base(
+                Resources.ErrorIdCorrespondsToNoItem,
+                argumentName,
+                internalException)
+        {
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="IdCorrespondsToNoItemException" /> class.
+        /// </summary>
+        /// <param name="message">A custom message for the thrown exception.</param>
+        /// <param name="argumentName">The name of the argument.</param>
+        /// <param name="internalException">The internal exception, if any.</param>
+        public IdCorrespondsToNoItemException(
+            string message,
+            string argumentName,
+            Exception internalException)
+            : base(
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    message,
+                    argumentName),
+                internalException)
+        {
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="IdCorrespondsToNoItemException" /> class.
+        /// </summary>
+        /// <param name="info">
+        ///     The <see cref="SerializationInfo" /> that holds the serialized object
+        ///     data about the exception being thrown.
+        /// </param>
+        /// <param name="context">
+        ///     The <see cref="StreamingContext" /> that contains contextual
+        ///     information about the source or destination.
+        /// </param>
+        protected IdCorrespondsToNoItemException(
+            SerializationInfo info,
+            StreamingContext context)
+            : base(
+                info,
+                context)
+        {
+        }
+    }
 }

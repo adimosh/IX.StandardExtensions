@@ -18,8 +18,7 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- LevelDictionary now has a level enumerator that no longer throws fits.
-- DoesNotReturn, NotNull and MaybeNullWhen attributes in lower frameworks.</PackageReleaseNotes>
+    <PackageReleaseNotes>- New requirements.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -73,6 +72,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Requires.NumericTypesLtGt.tt</DependentUpon>
+    </Compile>
+    <Compile Update="StandardExtensions\Contracts\Requires.NumericTypesItemFoundById.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Requires.NumericTypesItemFoundById.tt</DependentUpon>
     </Compile>
     <Compile Update="StandardExtensions\Contracts\Requires.NumericTypesRangeValidation.cs">
       <DesignTime>True</DesignTime>
@@ -211,6 +215,10 @@
     <None Update="StandardExtensions\ComponentModel\SynchronizationContextInvokerBase.InvokeActionsAndFuncs.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SynchronizationContextInvokerBase.InvokeActionsAndFuncs.cs</LastGenOutput>
+    </None>
+    <None Update="StandardExtensions\Contracts\Requires.NumericTypesItemFoundById.tt">
+      <LastGenOutput>Requires.NumericTypesItemFoundById.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
     </None>
     <None Update="StandardExtensions\Contracts\Requires.NumericTypesLtGt.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

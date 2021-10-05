@@ -270,4 +270,7 @@
   <data name="TheLevelDictionaryHasNoMoreItems" xml:space="preserve">
     <value>The level dictionary has no more items.</value>
   </data>
+  <data name="ErrorIdCorrespondsToNoItem" xml:space="preserve">
+    <value>The identifier corresponds to no item.</value>
+  </data>
 </root>

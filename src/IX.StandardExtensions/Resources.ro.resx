@@ -270,4 +270,7 @@
   <data name="TheLevelDictionaryHasNoMoreItems" xml:space="preserve">
     <value>Dicționarul de nivel nu mai are elemente.</value>
   </data>
+  <data name="ErrorIdCorrespondsToNoItem" xml:space="preserve">
+    <value>Identificatorul nu corespunde cu nici un element.</value>
+  </data>
 </root>

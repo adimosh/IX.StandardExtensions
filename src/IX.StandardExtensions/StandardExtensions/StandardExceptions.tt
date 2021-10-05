@@ -48,6 +48,8 @@
         (Name: "ArgumentNullOrWhiteSpaceString",
          Description: @"An argument exception representing a string argument being <c>null</c> (<c>Nothing</c> in Visual Basic), empty or
     ///     whitespace-only."),
+        (Name: "IdCorrespondsToNoItem",
+            Description: "An argument exception representing an identifier based on which no item is found."),
     };
 #>
 // <copyright file="StandardExceptions.cs" company="Adrian Mos">

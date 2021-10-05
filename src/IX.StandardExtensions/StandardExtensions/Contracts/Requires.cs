@@ -4,10 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using IX.Abstractions.Entities;
 using IX.StandardExtensions.ComponentModel;
 using IX.StandardExtensions.Efficiency;
+using IX.StandardExtensions.Extensions;
 using JetBrains.Annotations;
 using DiagCA = System.Diagnostics.CodeAnalysis;
 
@@ -1760,5 +1763,49 @@ namespace IX.StandardExtensions.Contracts
                 .ThrowIfCurrentObjectDisposed();
 
         #endregion
+
+        #region Found by ID
+
+        /// <summary>
+        ///     Called when a contract requires that an item is found by its identifier.
+        /// </summary>
+        /// <param name="source">The items source.</param>
+        /// <param name="id">The identifier to seek.</param>
+        /// <param name="sourceName">The name of the source collection to seek in.</param>
+        /// <param name="idName">The name of the identifier parameter.</param>
+        /// <typeparam name="TItem">The type of keyed item in the collection.</typeparam>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <returns>The item that was found.</returns>
+        /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
+        /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TItem ItemFoundById<TItem, TKey>(
+            IEnumerable<TItem> source,
+            TKey id,
+            string sourceName,
+            string idName)
+            where TItem : IKeyedEntity<TKey>
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(sourceName);
+            }
+
+            if (id == null)
+            {
+                throw new ArgumentNullException(idName);
+            }
+
+            var item = source.FirstOrDefault(p => EqualityComparer<TKey>.Default.Equals(p.Id, id));
+
+            if (item is null || EqualityComparer<TItem>.Default.Equals(item, default!))
+            {
+                throw new IdCorrespondsToNoItemException(idName);
+            }
+
+            return item;
+        }
+
+#endregion
     }
 }
