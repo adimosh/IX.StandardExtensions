@@ -22,5 +22,16 @@ namespace IX.StandardExtensions
         public static Action<Exception>? DefaultFireAndForgetUnhandledExceptionHandler { get; set; }
 
 #endregion
+
+        /// <summary>
+        /// Environment settings for pagination extensions.
+        /// </summary>
+        public static class Pagination
+        {
+            /// <summary>
+            /// Gets or sets a default page size for pagination scenarios.
+            /// </summary>
+            public static int DefaultPageSize { get; set; } = 10;
+        }
     }
 }
