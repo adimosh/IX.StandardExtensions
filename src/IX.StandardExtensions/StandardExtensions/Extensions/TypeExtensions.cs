@@ -17,10 +17,10 @@ namespace IX.StandardExtensions.Extensions
     public static class TypeExtensions
     {
         /// <summary>
-        ///     Determines whether a type has a public parameterless constructor.
+        ///     Determines whether a type has a public parameter-less constructor.
         /// </summary>
         /// <param name="type">The type.</param>
-        /// <returns><see langword="true" /> if there is a parameterless constructor; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true" /> if there is a parameter-less constructor; otherwise, <see langword="false" />.</returns>
         public static bool HasPublicParameterlessConstructor(this Type type) =>
             type.GetTypeInfo().HasPublicParameterlessConstructor();
 
@@ -29,7 +29,7 @@ namespace IX.StandardExtensions.Extensions
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>An instance of the object to instantiate.</returns>
-        public static object Instantiate(this Type type) => Activator.CreateInstance(type);
+        public static object? Instantiate(this Type type) => Activator.CreateInstance(type);
 
         /// <summary>
         ///     Instantiates an object of the specified type.
@@ -37,7 +37,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="type">The type.</param>
         /// <param name="parameters">The parameters to pass through to the constructor.</param>
         /// <returns>An instance of the object to instantiate.</returns>
-        public static object Instantiate(
+        public static object? Instantiate(
             this Type type,
             params object[] parameters) => Activator.CreateInstance(
             type,
@@ -130,7 +130,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>System.Boolean.</returns>
         public static bool GetAttributeDataByTypeWithoutVersionBinding<TAttribute, TReturn>(
             this Type typeInfo,
-            out TReturn value) => typeInfo.GetTypeInfo()
+            out TReturn? value) => typeInfo.GetTypeInfo()
             .GetAttributeDataByTypeWithoutVersionBinding<TAttribute, TReturn>(out value);
     }
 }

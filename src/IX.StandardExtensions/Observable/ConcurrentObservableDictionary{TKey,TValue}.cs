@@ -437,7 +437,7 @@ namespace IX.Observable
 
             // ACTION
             int newIndex;
-            TValue value;
+            TValue? value;
 
             // Under read/write lock
             using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
@@ -515,7 +515,7 @@ namespace IX.Observable
 
             // ACTION
             int newIndex;
-            TValue value;
+            TValue? value;
 
             // Under read/write lock
             using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
@@ -595,7 +595,7 @@ namespace IX.Observable
 
             // ACTION
             int oldIndex;
-            TValue value;
+            TValue? value;
 
             // Under read/write lock
             using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())

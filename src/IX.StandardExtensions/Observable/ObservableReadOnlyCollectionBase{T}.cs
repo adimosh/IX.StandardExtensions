@@ -393,7 +393,7 @@ namespace IX.Observable
         protected virtual void ContentsMayHaveChanged() { }
 
         private void InternalContainer_MustReset(
-            object sender,
+            object? sender,
             EventArgs e) =>
             this.Invoke(
                 thisL1 =>

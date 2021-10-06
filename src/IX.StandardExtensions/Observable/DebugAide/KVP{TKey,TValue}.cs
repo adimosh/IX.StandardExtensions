@@ -26,7 +26,7 @@ namespace IX.Observable.DebugAide
         /// </value>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         [UsedImplicitly]
-        public TKey Key { get; internal set; }
+        public TKey Key { get; internal set; } = default!;
 
         /// <summary>
         ///     Gets the value.
@@ -36,7 +36,7 @@ namespace IX.Observable.DebugAide
         /// </value>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         [UsedImplicitly]
-        public TValue Value { get; internal set; }
+        public TValue Value { get; internal set; } = default!;
 
 #endregion
     }

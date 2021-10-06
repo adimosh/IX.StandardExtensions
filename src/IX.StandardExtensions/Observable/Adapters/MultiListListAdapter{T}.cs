@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using IX.StandardExtensions.Extensions;
 
@@ -81,17 +82,15 @@ namespace IX.Observable.Adapters
             int arrayIndex)
         {
             var totalCount = this.Count + arrayIndex;
-            using (IEnumerator<T> enumerator = this.GetEnumerator())
+            using IEnumerator<T> enumerator = this.GetEnumerator();
+            for (var i = arrayIndex; i < totalCount; i++)
             {
-                for (var i = arrayIndex; i < totalCount; i++)
+                if (!enumerator.MoveNext())
                 {
-                    if (!enumerator.MoveNext())
-                    {
-                        break;
-                    }
-
-                    array[i] = enumerator.Current;
+                    break;
                 }
+
+                array[i] = enumerator.Current;
             }
         }
 
@@ -140,22 +139,26 @@ namespace IX.Observable.Adapters
             list.CollectionChanged += this.List_CollectionChanged;
         }
 
+        [SuppressMessage(
+            "ReSharper",
+            "EmptyGeneralCatchClause",
+            Justification = "This is of no consequence.")]
         internal void RemoveList<TList>(TList list)
             where TList : class, IEnumerable<T>, INotifyCollectionChanged
         {
-#pragma warning disable ERP022 // Catching everything considered harmful. - It is of no consequence
             try
             {
                 list.CollectionChanged -= this.List_CollectionChanged;
             }
-            catch { }
-#pragma warning restore ERP022 // Catching everything considered harmful.
+            catch
+            {
+            }
 
             this.lists.Remove(list ?? throw new ArgumentNullException(nameof(list)));
         }
 
         private void List_CollectionChanged(
-            object sender,
+            object? sender,
             NotifyCollectionChangedEventArgs e) =>
             this.TriggerReset();
 

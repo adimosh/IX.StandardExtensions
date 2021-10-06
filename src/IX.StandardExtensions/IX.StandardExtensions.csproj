@@ -18,7 +18,8 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- New requirements.</PackageReleaseNotes>
+    <PackageReleaseNotes>- New requirements.
+- Minor nullability and annotation improvements.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

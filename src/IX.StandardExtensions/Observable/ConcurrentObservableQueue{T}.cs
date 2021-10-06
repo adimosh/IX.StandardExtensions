@@ -225,7 +225,7 @@ namespace IX.Observable
         {
             Lazy<ReaderWriterLockSlim> l = GlobalThreading.Interlocked.Exchange(
                 ref this.locker,
-                null);
+                null!);
             if (l?.IsValueCreated ?? false)
             {
                 l.Value.Dispose();
@@ -241,7 +241,7 @@ namespace IX.Observable
         {
             GlobalThreading.Interlocked.Exchange(
                 ref this.locker,
-                null);
+                null!);
 
             base.DisposeGeneralContext();
         }

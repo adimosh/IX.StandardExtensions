@@ -366,7 +366,7 @@ namespace IX.Observable
         /// </summary>
         /// <param name="value">The object to add to the <see cref="ObservableListBase{T}" />.</param>
         /// <returns>The index at which the item was added.</returns>
-        int IList.Add(object value)
+        int IList.Add(object? value)
         {
             if (value is not T v)
             {
@@ -385,7 +385,7 @@ namespace IX.Observable
         /// <returns>
         ///     true if <paramref name="value" /> is found in the <see cref="ObservableListBase{T}" />; otherwise, false.
         /// </returns>
-        bool IList.Contains(object value)
+        bool IList.Contains(object? value)
         {
             if (value is T v)
             {
@@ -400,7 +400,7 @@ namespace IX.Observable
         /// </summary>
         /// <param name="value">The item value.</param>
         /// <returns>The index of the item, or <c>-1</c> if not found.</returns>
-        int IList.IndexOf(object value)
+        int IList.IndexOf(object? value)
         {
             if (value is T v)
             {
@@ -417,7 +417,7 @@ namespace IX.Observable
         /// <param name="value">The item value.</param>
         void IList.Insert(
             int index,
-            object value)
+            object? value)
         {
             if (value is not T v)
             {
@@ -433,7 +433,7 @@ namespace IX.Observable
         ///     Removes the first occurrence of a specific object from the <see cref="ObservableListBase{T}" />.
         /// </summary>
         /// <param name="value">The object value to remove from the <see cref="ObservableListBase{T}" />.</param>
-        void IList.Remove(object value)
+        void IList.Remove(object? value)
         {
             if (value is T v)
             {
@@ -788,15 +788,8 @@ namespace IX.Observable
             IEnumerable<T> items)
         {
             // PRECONDITIONS
-            if (index < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
-
-            if (items == null)
-            {
-                throw new ArgumentNullException(nameof(items));
-            }
+            Requires.NonNegative(index, nameof(index));
+            Requires.NotNull(items, nameof(items));
 
             // Current object not disposed
             this.RequiresNotDisposed();

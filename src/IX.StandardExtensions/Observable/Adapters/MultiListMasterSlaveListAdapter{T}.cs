@@ -2,10 +2,10 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 
 namespace IX.Observable.Adapters
@@ -15,7 +15,7 @@ namespace IX.Observable.Adapters
 #region Internal state
 
         private readonly List<IEnumerable<T>> slaves;
-        private IList<T> master;
+        private IList<T>? master;
 
 #endregion
 
@@ -34,7 +34,7 @@ namespace IX.Observable.Adapters
         {
             get
             {
-                this.InitializeMissingMaster();
+                this.master ??= new ObservableList<T>();
 
                 return this.master.Count + this.slaves.Sum(p => p.Count());
             }
@@ -44,7 +44,7 @@ namespace IX.Observable.Adapters
         {
             get
             {
-                this.InitializeMissingMaster();
+                this.master ??= new ObservableList<T>();
 
                 return this.master.IsReadOnly;
             }
@@ -56,7 +56,7 @@ namespace IX.Observable.Adapters
         {
             get
             {
-                this.InitializeMissingMaster();
+                this.master ??= new ObservableList<T>();
 
                 return this.master.Count;
             }
@@ -66,7 +66,7 @@ namespace IX.Observable.Adapters
         {
             get
             {
-                this.InitializeMissingMaster();
+                this.master ??= new ObservableList<T>();
 
                 if (index < this.master.Count)
                 {
@@ -91,7 +91,7 @@ namespace IX.Observable.Adapters
 
             set
             {
-                this.InitializeMissingMaster();
+                this.master ??= new ObservableList<T>();
 
                 this.master[index] = value;
             }
@@ -103,7 +103,7 @@ namespace IX.Observable.Adapters
 
         public override int Add(T item)
         {
-            this.InitializeMissingMaster();
+            this.master ??= new ObservableList<T>();
 
             this.master.Add(item);
 
@@ -112,7 +112,7 @@ namespace IX.Observable.Adapters
 
         public override int AddRange(IEnumerable<T> items)
         {
-            this.InitializeMissingMaster();
+            this.master ??= new ObservableList<T>();
 
             var index = this.master.Count;
             items.ForEach(
@@ -126,14 +126,14 @@ namespace IX.Observable.Adapters
 
         public override void Clear()
         {
-            this.InitializeMissingMaster();
+            this.master ??= new ObservableList<T>();
 
             this.master.Clear();
         }
 
         public override bool Contains(T item)
         {
-            this.InitializeMissingMaster();
+            this.master ??= new ObservableList<T>();
 
             return this.master.Contains(item) ||
             this.slaves.Any(
@@ -147,7 +147,7 @@ namespace IX.Observable.Adapters
             T[] array,
             int arrayIndex)
         {
-            this.InitializeMissingMaster();
+            this.master ??= new ObservableList<T>();
 
             this.master.CopyTo(
                 array,
@@ -158,7 +158,7 @@ namespace IX.Observable.Adapters
             T[] array,
             int arrayIndex)
         {
-            this.InitializeMissingMaster();
+            this.master ??= new ObservableList<T>();
 
             var totalCount = this.Count + arrayIndex;
             using (IEnumerator<T> enumerator = this.GetEnumerator())
@@ -177,7 +177,7 @@ namespace IX.Observable.Adapters
 
         public override IEnumerator<T> GetEnumerator()
         {
-            this.InitializeMissingMaster();
+            this.master ??= new ObservableList<T>();
 
             foreach (T var in this.master)
             {
@@ -195,7 +195,7 @@ namespace IX.Observable.Adapters
 
         public override int Remove(T item)
         {
-            this.InitializeMissingMaster();
+            this.master ??= new ObservableList<T>();
 
             var index = this.master.IndexOf(item);
 
@@ -208,7 +208,7 @@ namespace IX.Observable.Adapters
             int index,
             T item)
         {
-            this.InitializeMissingMaster();
+            this.master ??= new ObservableList<T>();
 
             this.master.Insert(
                 index,
@@ -217,7 +217,7 @@ namespace IX.Observable.Adapters
 
         public override int IndexOf(T item)
         {
-            this.InitializeMissingMaster();
+            this.master ??= new ObservableList<T>();
 
             var offset = 0;
 
@@ -248,7 +248,7 @@ namespace IX.Observable.Adapters
         /// <param name="index">The index at which to remove from.</param>
         public override void RemoveAt(int index)
         {
-            this.InitializeMissingMaster();
+            this.master ??= new ObservableList<T>();
 
             this.master.RemoveAt(index);
         }
@@ -256,8 +256,8 @@ namespace IX.Observable.Adapters
         internal void SetMaster<TList>(TList masterList)
             where TList : class, IList<T>, INotifyCollectionChanged
         {
-            TList newMaster = masterList ?? throw new ArgumentNullException(nameof(masterList));
-            IList<T> oldMaster = this.master;
+            TList newMaster = Requires.NotNull(masterList, nameof(masterList));
+            IList<T>? oldMaster = this.master;
 
             if (oldMaster != null)
             {
@@ -278,37 +278,33 @@ namespace IX.Observable.Adapters
         internal void SetSlave<TList>(TList slaveList)
             where TList : class, IEnumerable<T>, INotifyCollectionChanged
         {
-            this.slaves.Add(slaveList ?? throw new ArgumentNullException(nameof(slaveList)));
+            this.slaves.Add(Requires.NotNull(slaveList, nameof(slaveList)));
             slaveList.CollectionChanged += this.List_CollectionChanged;
         }
 
         internal void RemoveSlave<TList>(TList slaveList)
             where TList : class, IEnumerable<T>, INotifyCollectionChanged
         {
+            var localSlaveList = Requires.NotNull(
+                slaveList,
+                nameof(slaveList));
+
             try
             {
-                slaveList.CollectionChanged -= this.List_CollectionChanged;
+                localSlaveList.CollectionChanged -= this.List_CollectionChanged;
             }
             catch
             {
                 // We need to do nothing here. Inability to remove the event delegate reference is of no consequence.
             }
 
-            this.slaves.Remove(slaveList ?? throw new ArgumentNullException(nameof(slaveList)));
+            this.slaves.Remove(localSlaveList);
         }
 
         private void List_CollectionChanged(
-            object sender,
+            object? sender,
             NotifyCollectionChangedEventArgs e) =>
             this.TriggerReset();
-
-        private void InitializeMissingMaster()
-        {
-            if (this.master == null)
-            {
-                this.master = new ObservableList<T>();
-            }
-        }
 
 #endregion
     }

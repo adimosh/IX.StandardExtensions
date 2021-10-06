@@ -83,7 +83,7 @@ for (int i = 1; i <= 8; i++)
 
             // ACTION
             int newIndex;
-            TValue value;
+            TValue? value;
 
             // Under read/write lock
             using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
@@ -166,7 +166,7 @@ for (int i = 1; i <= 8; i++)
 
             // ACTION
             int newIndex;
-            TValue value;
+            TValue? value;
 
             // Under read/write lock
             using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
@@ -249,7 +249,7 @@ for (int i = 1; i <= 8; i++)
 
             // ACTION
             int oldIndex;
-            TValue value;
+            TValue? value;
 
             // Under read/write lock
             using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())

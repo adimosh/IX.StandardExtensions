@@ -1,9 +1,10 @@
-// <copyright file="Requires.NumericTypesLtGt.cs" company="Adrian Mos">
+// <copyright file="Requires.NumericTypesItemFoundById.cs" company="Adrian Mos">
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using IX.Abstractions.Entities;
@@ -27,6 +28,18 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "LINQ is fast enough for our purposes here.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             byte id,
@@ -66,6 +79,18 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "LINQ is fast enough for our purposes here.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             sbyte id,
@@ -105,6 +130,18 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "LINQ is fast enough for our purposes here.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             short id,
@@ -144,6 +181,18 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "LINQ is fast enough for our purposes here.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             ushort id,
@@ -183,6 +232,18 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "LINQ is fast enough for our purposes here.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             char id,
@@ -222,6 +283,18 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "LINQ is fast enough for our purposes here.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             int id,
@@ -261,6 +334,18 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "LINQ is fast enough for our purposes here.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             uint id,
@@ -300,6 +385,18 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "LINQ is fast enough for our purposes here.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             long id,
@@ -339,6 +436,18 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "LINQ is fast enough for our purposes here.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             ulong id,
@@ -378,6 +487,18 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "LINQ is fast enough for our purposes here.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             float id,
@@ -417,6 +538,18 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "LINQ is fast enough for our purposes here.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             double id,
@@ -456,6 +589,18 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "LINQ is fast enough for our purposes here.")]
+        [SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "LINQ is fast enough for our purposes here.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             decimal id,

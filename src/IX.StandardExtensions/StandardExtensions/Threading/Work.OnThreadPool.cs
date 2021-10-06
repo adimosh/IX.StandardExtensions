@@ -39,9 +39,8 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task OnThreadPoolAsync(
-            [NotNull] this Func<CancellationToken, Task> methodToInvoke,
+            this Func<CancellationToken, Task> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<int>();
@@ -137,9 +136,8 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TResult>(
-            [NotNull] this Func<CancellationToken, Task<TResult>> methodToInvoke,
+            this Func<CancellationToken, Task<TResult>> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<TResult>();
@@ -154,7 +152,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Func<CancellationToken, Task<TResult>> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs, CancellationToken ct) =
@@ -236,10 +234,9 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task OnThreadPoolAsync<TState>(
-            [NotNull] this Func<TState, CancellationToken, Task> methodToInvoke,
-            [CanBeNull] TState state,
+            this Func<TState, CancellationToken, Task> methodToInvoke,
+            TState state,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<int>();
@@ -254,7 +251,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, state, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Func<TState, CancellationToken, Task> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<int> tcs, TState payload,
@@ -340,10 +337,9 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TState, TResult>(
-            [NotNull] this Func<TState, CancellationToken, Task<TResult>> methodToInvoke,
-            [CanBeNull] TState state,
+            this Func<TState, CancellationToken, Task<TResult>> methodToInvoke,
+            TState state,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<TResult>();
@@ -358,7 +354,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, state, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Func<TState, CancellationToken, Task<TResult>> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs, TState payload,
@@ -442,9 +438,8 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TResult>(
-            [NotNull] this Func<CancellationToken, TResult> methodToInvoke,
+            this Func<CancellationToken, TResult> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<TResult>();
@@ -459,7 +454,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Func<CancellationToken, TResult> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs,
@@ -522,10 +517,9 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TState, TResult>(
-            [NotNull] this Func<TState, CancellationToken, TResult> methodToInvoke,
-            [CanBeNull] TState state,
+            this Func<TState, CancellationToken, TResult> methodToInvoke,
+            TState state,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<TResult>();
@@ -540,7 +534,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, state, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Func<TState, CancellationToken, TResult> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs, TState payload,
@@ -602,9 +596,8 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task OnThreadPoolAsync(
-            [NotNull] this Func<Task> methodToInvoke,
+            this Func<Task> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<int>();
@@ -619,7 +612,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Func<Task> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<int> tcs, CancellationToken ct) =
@@ -700,9 +693,8 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TResult>(
-            [NotNull] this Func<Task<TResult>> methodToInvoke,
+            this Func<Task<TResult>> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<TResult>();
@@ -717,7 +709,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Func<Task<TResult>> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs, CancellationToken ct) =
@@ -799,10 +791,9 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task OnThreadPoolAsync<TState>(
-            [NotNull] this Func<TState, Task> methodToInvoke,
-            [CanBeNull] TState state,
+            this Func<TState, Task> methodToInvoke,
+            TState state,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<int>();
@@ -817,7 +808,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, state, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Func<TState, Task> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<int> tcs, TState payload,
@@ -901,10 +892,9 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TState, TResult>(
-            [NotNull] this Func<TState, Task<TResult>> methodToInvoke,
-            [CanBeNull] TState state,
+            this Func<TState, Task<TResult>> methodToInvoke,
+            TState state,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<TResult>();
@@ -919,7 +909,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, state, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Func<TState, Task<TResult>> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs, TState payload,
@@ -1001,9 +991,8 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TResult>(
-            [NotNull] this Func<TResult> methodToInvoke,
+            this Func<TResult> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<TResult>();
@@ -1018,7 +1007,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Func<TResult> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs,
@@ -1081,10 +1070,9 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task<TResult> OnThreadPoolAsync<TState, TResult>(
-            [NotNull] this Func<TState, TResult> methodToInvoke,
-            [CanBeNull] TState state,
+            this Func<TState, TResult> methodToInvoke,
+            TState state,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<TResult>();
@@ -1099,7 +1087,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, state, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Func<TState, TResult> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<TResult> tcs, TState payload,
@@ -1161,10 +1149,9 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task OnThreadPoolAsync<TState>(
-            [NotNull] this Action<TState, CancellationToken> methodToInvoke,
-            [CanBeNull] TState state,
+            this Action<TState, CancellationToken> methodToInvoke,
+            TState state,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<int>();
@@ -1179,7 +1166,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, state, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Action<TState, CancellationToken> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<int> tcs, TState payload,
@@ -1241,9 +1228,8 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task OnThreadPoolAsync(
-            [NotNull] this Action<CancellationToken> methodToInvoke,
+            this Action<CancellationToken> methodToInvoke,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<int>();
@@ -1258,7 +1244,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Action<CancellationToken> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<int> tcs,
@@ -1320,10 +1306,9 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task OnThreadPoolAsync<TState>(
-            [NotNull] this Action<TState> methodToInvoke,
-            [CanBeNull] TState state,
+            this Action<TState> methodToInvoke,
+            TState state,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<int>();
@@ -1338,7 +1323,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, state, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Action<TState> func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<int> tcs, TState payload,
@@ -1398,9 +1383,8 @@ namespace IX.StandardExtensions.Threading
             "Design",
             "CA1031:Do not catch general exception types",
             Justification = "It is OK to catch, as we're setting it in the task.")]
-        [NotNull]
         public static Task OnThreadPoolAsync(
-            [NotNull] this Action methodToInvoke,
+            this Action methodToInvoke,
             CancellationToken cancellationToken = default)
         {
             var taskCompletionSource = new TaskCompletionSource<int>();
@@ -1415,7 +1399,7 @@ namespace IX.StandardExtensions.Threading
                 WorkItem,
                 (methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, taskCompletionSource, cancellationToken));
 
-            static void WorkItem(object rawState)
+            static void WorkItem(object? rawState)
             {
                 (Action func, CultureInfo currentCulture,
                         CultureInfo currentUiCulture, TaskCompletionSource<int> tcs,

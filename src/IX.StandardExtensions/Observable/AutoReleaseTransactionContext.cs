@@ -20,8 +20,8 @@ namespace IX.Observable
 #region Internal state
 
         private readonly EventHandler<EditCommittedEventArgs> editableHandler;
-        private readonly IUndoableItem item;
-        private readonly IUndoableItem[] items;
+        private readonly IUndoableItem? item;
+        private readonly IUndoableItem[]? items;
         private readonly IUndoableItem parentContext;
 
 #endregion
@@ -109,8 +109,8 @@ namespace IX.Observable
             IUndoableItem[] itemsArray = items.ToArray();
             if (itemsArray.Any(
                 (
-                    item,
-                    pc) => !item.IsCapturedIntoUndoContext || item.ParentUndoContext != pc,
+                    undoableItem,
+                    pc) => !undoableItem.IsCapturedIntoUndoContext || undoableItem.ParentUndoContext != pc,
                 parentContext))
             {
                 throw new ItemNotCapturedIntoUndoContextException();

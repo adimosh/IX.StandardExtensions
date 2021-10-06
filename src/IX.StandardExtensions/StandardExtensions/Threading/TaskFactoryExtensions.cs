@@ -52,10 +52,9 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action to start on a new thread.</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task" /> that represents the started long-running task.</returns>
-        [NotNull]
         public static Task StartLongRunningOnDefaultTaskSchedulerAsync(
-            [NotNull] this TaskFactory taskFactory,
-            [NotNull] Action action,
+            this TaskFactory taskFactory,
+            Action action,
             CancellationToken cancellationToken = default)
         {
             var localTaskFactory = Requires.NotNull(
@@ -81,10 +80,9 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action to start on a new thread.</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task" /> that represents the started task.</returns>
-        [NotNull]
         public static Task<TResult> StartOnDefaultTaskSchedulerAsync<TResult>(
-            [NotNull] this TaskFactory taskFactory,
-            [NotNull] Func<TResult> action,
+            this TaskFactory taskFactory,
+            Func<TResult> action,
             CancellationToken cancellationToken = default)
         {
             var localTaskFactory = Requires.NotNull(
@@ -110,10 +108,9 @@ namespace IX.StandardExtensions.Threading
         /// <param name="action">The action to start on a new thread.</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task" /> that represents the started long-running task.</returns>
-        [NotNull]
         public static Task<TResult> StartLongRunningOnDefaultTaskSchedulerAsync<TResult>(
-            [NotNull] this TaskFactory taskFactory,
-            [NotNull] Func<TResult> action,
+            this TaskFactory taskFactory,
+            Func<TResult> action,
             CancellationToken cancellationToken = default)
         {
             var localTaskFactory = Requires.NotNull(
@@ -131,14 +128,13 @@ namespace IX.StandardExtensions.Threading
                 cancellationToken);
         }
 
-        [NotNull]
         [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Performance",
             "HAA0603:Delegate allocation from a method group",
             Justification = "Unavoidable here.")]
         internal static Task StartWithStateOnDefaultTaskSchedulerAsync<TState>(
-            [NotNull] TaskFactory taskFactory,
-            [NotNull] Action<TState> action,
+            TaskFactory taskFactory,
+            Action<TState> action,
             TState state,
             bool longRunning,
             CancellationToken cancellationToken = default)
@@ -166,9 +162,9 @@ namespace IX.StandardExtensions.Threading
                 creationOptions,
                 TaskScheduler.Default);
 
-            static void StartAction(object rawState)
+            static void StartAction(object? rawState)
             {
-                var innerState = (Tuple<Action<TState>, CultureInfo, CultureInfo, TState>)rawState;
+                var innerState = (Tuple<Action<TState>, CultureInfo, CultureInfo, TState>)rawState!;
 
                 CultureInfo.CurrentCulture = innerState.Item2;
                 CultureInfo.CurrentUICulture = innerState.Item3;
@@ -177,7 +173,6 @@ namespace IX.StandardExtensions.Threading
             }
         }
 
-        [NotNull]
         [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Performance",
             "HAA0603:Delegate allocation from a method group",
@@ -212,9 +207,9 @@ namespace IX.StandardExtensions.Threading
                 creationOptions,
                 TaskScheduler.Default);
 
-            static TResult StartAction(object rawState)
+            static TResult StartAction(object? rawState)
             {
-                var innerState = (Tuple<Func<TState, TResult>, CultureInfo, CultureInfo, TState>)rawState;
+                var innerState = (Tuple<Func<TState, TResult>, CultureInfo, CultureInfo, TState>)rawState!;
 
                 CultureInfo.CurrentCulture = innerState.Item2;
                 CultureInfo.CurrentUICulture = innerState.Item3;

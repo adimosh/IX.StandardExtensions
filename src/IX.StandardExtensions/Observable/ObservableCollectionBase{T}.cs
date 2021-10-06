@@ -1275,11 +1275,11 @@ namespace IX.Observable
         }
 
         private void Tei_EditCommitted(
-            object sender,
+            object? sender,
             EditCommittedEventArgs e) =>
             this.PushUndoLevel(
                 new SubItemStateChange(
-                    (IUndoableItem)sender,
+                    Requires.ArgumentOfType<IUndoableItem>(sender, nameof(sender)),
                     e.StateChanges));
 
         private UndoableInnerContext InnerContextFactory() =>

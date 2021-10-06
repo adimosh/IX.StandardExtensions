@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using IX.Observable.DebugAide;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.Observable
@@ -26,8 +27,8 @@ namespace IX.Observable
     {
 #region Internal state
 
-        private TFilter filter;
-        private IList<TItem> filteredElements;
+        private TFilter? filter;
+        private IList<TItem>? filteredElements;
 
 #endregion
 
@@ -43,7 +44,7 @@ namespace IX.Observable
         /// </exception>
         public FilterableObservableMasterSlaveCollection(Func<TItem, TFilter, bool> filteringPredicate)
         {
-            this.FilteringPredicate = filteringPredicate ?? throw new ArgumentNullException(nameof(filteringPredicate));
+            this.FilteringPredicate = Requires.NotNull(filteringPredicate, nameof(filteringPredicate));
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace IX.Observable
             SynchronizationContext context)
             : base(context)
         {
-            this.FilteringPredicate = filteringPredicate ?? throw new ArgumentNullException(nameof(filteringPredicate));
+            this.FilteringPredicate = Requires.NotNull(filteringPredicate, nameof(filteringPredicate));
         }
 
 #endregion
@@ -87,7 +88,7 @@ namespace IX.Observable
                     this.FillCachedList();
                 }
 
-                return this.filteredElements.Count;
+                return this.filteredElements!.Count;
             }
         }
 
@@ -105,7 +106,7 @@ namespace IX.Observable
         /// <value>
         ///     The filter value.
         /// </value>
-        public TFilter Filter
+        public TFilter? Filter
         {
             get => this.filter;
             set
@@ -223,18 +224,28 @@ namespace IX.Observable
             Justification = "This cannot be avoidable.")]
         private IEnumerator<TItem> EnumerateFiltered()
         {
-            TFilter localFilter = this.Filter;
+            TFilter? localFilter = this.Filter;
 
             using IEnumerator<TItem> enumerator = base.GetEnumerator();
 
-            while (enumerator.MoveNext())
+            if (localFilter is null)
             {
-                TItem current = enumerator.Current;
-                if (this.FilteringPredicate(
-                    current,
-                    localFilter))
+                while (enumerator.MoveNext())
                 {
-                    yield return current;
+                    yield return enumerator.Current;
+                }
+            }
+            else
+            {
+                while (enumerator.MoveNext())
+                {
+                    TItem current = enumerator.Current;
+                    if (this.FilteringPredicate(
+                        current,
+                        localFilter))
+                    {
+                        yield return current;
+                    }
                 }
             }
         }

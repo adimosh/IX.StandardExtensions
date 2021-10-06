@@ -30,9 +30,14 @@ namespace IX.Observable
 #region Internal state
 
         private IList<TItem>? cachedFilteredElements;
+
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "IDisposableAnalyzers.Correctness",
+            "IDISP006:Implement IDisposable.",
+            Justification = "It is, but the analyzer can't tell.")]
         private IReaderWriterLock cacheLocker;
 
-        private TFilter filter;
+        private TFilter? filter;
 
 #endregion
 
@@ -152,7 +157,7 @@ namespace IX.Observable
         /// <value>
         ///     The filter value.
         /// </value>
-        public TFilter Filter
+        public TFilter? Filter
         {
             get => this.filter;
             set
@@ -177,6 +182,10 @@ namespace IX.Observable
         /// <returns>
         ///     An enumerator that can be used to iterate through the collection.
         /// </returns>
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0401:Possible allocation of reference type enumerator",
+            Justification = "We have to allocate an atomic enumerator.")]
         public override IEnumerator<TItem> GetEnumerator()
         {
             if (this.IsFilter())
@@ -199,7 +208,7 @@ namespace IX.Observable
 
             GlobalThreading.Interlocked.Exchange(
                     ref this.cacheLocker,
-                    null)
+                    null!)
                 ?.Dispose();
         }
 
@@ -271,24 +280,42 @@ namespace IX.Observable
             }
         }
 
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0401:Possible allocation of reference type enumerator",
+            Justification = "We have to allocate an atomic enumerator.")]
         private IEnumerator<TItem> EnumerateFiltered()
         {
-            TFilter filter = this.Filter;
+            TFilter? internalFilter = this.Filter;
 
             using IEnumerator<TItem> enumerator = base.GetEnumerator();
 
-            while (enumerator.MoveNext())
+            if (internalFilter is null)
             {
-                TItem current = enumerator.Current;
-                if (this.FilteringPredicate(
-                    current,
-                    filter))
+                while (enumerator.MoveNext())
                 {
-                    yield return current;
+                    yield return enumerator.Current;
+                }
+            }
+            else
+            {
+                while (enumerator.MoveNext())
+                {
+                    TItem current = enumerator.Current;
+                    if (this.FilteringPredicate(
+                        current,
+                        internalFilter))
+                    {
+                        yield return current;
+                    }
                 }
             }
         }
 
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0401:Possible allocation of reference type enumerator",
+            Justification = "We have to allocate an atomic enumerator.")]
         private IList<TItem> CheckAndCache()
         {
             using var locker = new ReadWriteSynchronizationLocker(this.cacheLocker);
@@ -328,6 +355,7 @@ namespace IX.Observable
         }
 
         private bool IsFilter() =>
+            this.Filter is not null &&
             !EqualityComparer<TFilter>.Default.Equals(
                 this.Filter,
                 default!);

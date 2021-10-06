@@ -21,7 +21,7 @@ namespace IX.Observable.Adapters
         /// <summary>
         ///     Occurs when the owner of this list adapter must reset.
         /// </summary>
-        public event EventHandler MustReset;
+        public event EventHandler? MustReset;
 
 #endregion
 

@@ -258,12 +258,20 @@ namespace IX.System.Collections.Generic
         ///     Gets the enumerator.
         /// </summary>
         /// <returns>IEnumerator.</returns>
+        [SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "Explicit interface implementation.")]
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         /// <summary>
         ///     Gets the enumerator.
         /// </summary>
         /// <returns>The dictionary enumerator.</returns>
+        [SuppressMessage(
+            "Performance",
+            "HAA0601:Value type to reference type conversion causing boxing allocation",
+            Justification = "Explicit interface implementation.")]
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() =>
             this.GetEnumerator();
 
@@ -421,13 +429,29 @@ namespace IX.System.Collections.Generic
             }
 
             /// <summary>
-            ///     Gets an enumerator for this enumerable
+            ///     Gets an enumerator for this level dictionary.
             /// </summary>
-            /// <returns></returns>
+            /// <returns>An enumerator that enumerates by key levels.</returns>
             public KeyLevelEnumerator GetEnumerator() => new(this.values);
 
+            /// <summary>
+            ///     Gets an enumerator for this level dictionary.
+            /// </summary>
+            /// <returns>An enumerator that enumerates by key levels.</returns>
+            [SuppressMessage(
+                "Performance",
+                "HAA0601:Value type to reference type conversion causing boxing allocation",
+                Justification = "Explicit interface implementation.")]
             IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator() => this.GetEnumerator();
 
+            /// <summary>
+            ///     Gets an enumerator for this level dictionary.
+            /// </summary>
+            /// <returns>An enumerator that enumerates by key levels.</returns>
+            [SuppressMessage(
+                "Performance",
+                "HAA0601:Value type to reference type conversion causing boxing allocation",
+                Justification = "Explicit interface implementation.")]
             IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
             /// <summary>

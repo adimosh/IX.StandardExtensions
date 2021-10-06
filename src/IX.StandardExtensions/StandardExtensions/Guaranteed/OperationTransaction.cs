@@ -37,7 +37,7 @@ namespace IX.Guaranteed
         public bool Successful { get; private set; }
 
         /// <summary>
-        /// Declares this operation transaction a succes.
+        /// Declares this operation transaction a success.
         /// </summary>
         public void Success() => this.Successful = true;
 
