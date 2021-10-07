@@ -27,6 +27,7 @@ namespace IX.StandardExtensions.Contracts
         /// <returns>The item that was found.</returns>
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
+        /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [SuppressMessage(
             "Performance",
@@ -78,6 +79,7 @@ namespace IX.StandardExtensions.Contracts
         /// <returns>The item that was found.</returns>
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
+        /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [SuppressMessage(
             "Performance",
@@ -129,6 +131,7 @@ namespace IX.StandardExtensions.Contracts
         /// <returns>The item that was found.</returns>
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
+        /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [SuppressMessage(
             "Performance",
@@ -180,6 +183,7 @@ namespace IX.StandardExtensions.Contracts
         /// <returns>The item that was found.</returns>
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
+        /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [SuppressMessage(
             "Performance",
@@ -231,6 +235,7 @@ namespace IX.StandardExtensions.Contracts
         /// <returns>The item that was found.</returns>
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
+        /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [SuppressMessage(
             "Performance",
@@ -282,6 +287,7 @@ namespace IX.StandardExtensions.Contracts
         /// <returns>The item that was found.</returns>
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
+        /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [SuppressMessage(
             "Performance",
@@ -333,6 +339,7 @@ namespace IX.StandardExtensions.Contracts
         /// <returns>The item that was found.</returns>
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
+        /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [SuppressMessage(
             "Performance",
@@ -384,6 +391,7 @@ namespace IX.StandardExtensions.Contracts
         /// <returns>The item that was found.</returns>
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
+        /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [SuppressMessage(
             "Performance",
@@ -435,6 +443,7 @@ namespace IX.StandardExtensions.Contracts
         /// <returns>The item that was found.</returns>
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
+        /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [SuppressMessage(
             "Performance",
@@ -486,6 +495,7 @@ namespace IX.StandardExtensions.Contracts
         /// <returns>The item that was found.</returns>
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
+        /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [SuppressMessage(
             "Performance",
@@ -537,6 +547,7 @@ namespace IX.StandardExtensions.Contracts
         /// <returns>The item that was found.</returns>
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
+        /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [SuppressMessage(
             "Performance",
@@ -588,6 +599,7 @@ namespace IX.StandardExtensions.Contracts
         /// <returns>The item that was found.</returns>
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
+        /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [SuppressMessage(
             "Performance",
