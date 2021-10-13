@@ -1,5 +1,11 @@
+// <copyright file="DelayedDisposer.cs" company="Adrian Mos">
+// Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
+// </copyright>
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using IX.Abstractions.Logging;
@@ -29,9 +35,9 @@ namespace IX.StandardExtensions.Threading
         /// <summary>
         ///     Atomically exchanges an old disposable reference with a new one, and adds the old one to the delayed disposer.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="oldReference"></param>
-        /// <param name="newReference"></param>
+        /// <typeparam name="T">The type of item to exchange.</typeparam>
+        /// <param name="oldReference">The old reference, that will be disposed and replaced.</param>
+        /// <param name="newReference">The new reference, which will atomically take the old reference's place.</param>
         public static void AtomicExchange<T>(
             ref T oldReference,
             T newReference)
@@ -47,8 +53,77 @@ namespace IX.StandardExtensions.Threading
         /// <summary>
         ///     Adds a disposable object to the delayed disposer, to dispose them after the allotted timeout.
         /// </summary>
+        /// <param name="objectsToDispose">A collection containing the objects to dispose.</param>
+        public static void SafelyDispose(IEnumerable<IDisposable?>? objectsToDispose)
+        {
+            if (objectsToDispose == null)
+            {
+                return;
+            }
+
+            lock (DisposablesGeneration1)
+            {
+                DisposablesGeneration1.AddRange(
+                    objectsToDispose.Where(p => p is not null)
+                        .Select(p => p!));
+            }
+
+            EnsureProcessingThreadStarted();
+        }
+
+        /// <summary>
+        ///     Adds a disposable object to the delayed disposer, to dispose them after the allotted timeout.
+        /// </summary>
+        /// <typeparam name="T">The type of item to add.</typeparam>
+        /// <param name="objectsToDispose">A collection containing the objects to dispose.</param>
+        [SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "Not possible.")]
+        public static void SafelyDispose<T>(IEnumerable<T?>? objectsToDispose)
+            where T : class, IDisposable
+        {
+            if (objectsToDispose == null)
+            {
+                return;
+            }
+
+            lock (DisposablesGeneration1)
+            {
+                DisposablesGeneration1.AddRange(
+                    objectsToDispose.Where(p => p is not null)
+                        .Select(p => p!));
+            }
+
+            EnsureProcessingThreadStarted();
+        }
+
+        /// <summary>
+        ///     Adds a disposable object to the delayed disposer, to dispose them after the allotted timeout.
+        /// </summary>
         /// <param name="objectToDispose">The object to dispose.</param>
         public static void SafelyDispose(IDisposable? objectToDispose)
+        {
+            if (objectToDispose == null)
+            {
+                return;
+            }
+
+            lock (DisposablesGeneration1)
+            {
+                DisposablesGeneration1.Add(objectToDispose);
+            }
+
+            EnsureProcessingThreadStarted();
+        }
+
+        /// <summary>
+        ///     Adds a disposable object to the delayed disposer, to dispose them after the allotted timeout.
+        /// </summary>
+        /// <typeparam name="T">The type of item to add.</typeparam>
+        /// <param name="objectToDispose">The object to dispose.</param>
+        public static void SafelyDispose<T>(T? objectToDispose)
+            where T : class, IDisposable
         {
             if (objectToDispose == null)
             {
@@ -119,6 +194,10 @@ namespace IX.StandardExtensions.Threading
             }
         }
 
+        [SuppressMessage(
+            "Performance",
+            "HAA0603:Delegate allocation from a method group",
+            Justification = "Required.")]
         private static void EnsureProcessingThreadStarted()
         {
             lock (Locker)
