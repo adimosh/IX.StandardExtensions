@@ -30,6 +30,7 @@ namespace IX.Observable
         ValueName = "Value")]
     [PublicAPI]
     public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDictionary<TKey, TValue>
+        where TKey : notnull
     {
 #region Internal state
 

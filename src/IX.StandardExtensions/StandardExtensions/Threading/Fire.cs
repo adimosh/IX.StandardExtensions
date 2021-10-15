@@ -13,6 +13,10 @@ namespace IX.StandardExtensions.Threading
     [PublicAPI]
     public static class Fire
     {
+#region Methods
+
+#region Static methods
+
         /// <summary>
         ///     Runs the specified ticker delegate periodically.
         /// </summary>
@@ -21,10 +25,11 @@ namespace IX.StandardExtensions.Threading
         /// <returns>An interruptible handle for external control of the ticker.</returns>
         public static IInterruptible Periodically(
             FirePeriodicallyTicker tickerDelegate,
-            int milliseconds) => new FirePeriodicallyContext(
-            tickerDelegate,
-            null,
-            milliseconds);
+            int milliseconds) =>
+            new FirePeriodicallyContext(
+                tickerDelegate,
+                null,
+                milliseconds);
 
         /// <summary>
         ///     Runs the specified ticker delegate periodically.
@@ -34,10 +39,11 @@ namespace IX.StandardExtensions.Threading
         /// <returns>An interruptible handle for external control of the ticker.</returns>
         public static IInterruptible Periodically(
             FirePeriodicallyTicker tickerDelegate,
-            TimeSpan timeSpan) => new FirePeriodicallyContext(
-            tickerDelegate,
-            null,
-            timeSpan);
+            TimeSpan timeSpan) =>
+            new FirePeriodicallyContext(
+                tickerDelegate,
+                null,
+                timeSpan);
 
         /// <summary>
         ///     Runs the specified ticker delegate periodically.
@@ -49,11 +55,12 @@ namespace IX.StandardExtensions.Threading
         public static IInterruptible Periodically(
             FirePeriodicallyTicker tickerDelegate,
             TimeSpan initialDelay,
-            TimeSpan timeSpan) => new FirePeriodicallyContext(
-            tickerDelegate,
-            null,
-            initialDelay,
-            timeSpan);
+            TimeSpan timeSpan) =>
+            new FirePeriodicallyContext(
+                tickerDelegate,
+                null,
+                initialDelay,
+                timeSpan);
 
         /// <summary>
         ///     Runs the specified ticker delegate periodically.
@@ -65,10 +72,11 @@ namespace IX.StandardExtensions.Threading
         public static IInterruptible Periodically(
             FirePeriodicallyTicker tickerDelegate,
             object payload,
-            int milliseconds) => new FirePeriodicallyContext(
-            tickerDelegate,
-            payload,
-            milliseconds);
+            int milliseconds) =>
+            new FirePeriodicallyContext(
+                tickerDelegate,
+                payload,
+                milliseconds);
 
         /// <summary>
         ///     Runs the specified ticker delegate periodically.
@@ -80,10 +88,11 @@ namespace IX.StandardExtensions.Threading
         public static IInterruptible Periodically(
             FirePeriodicallyTicker tickerDelegate,
             object payload,
-            TimeSpan timeSpan) => new FirePeriodicallyContext(
-            tickerDelegate,
-            payload,
-            timeSpan);
+            TimeSpan timeSpan) =>
+            new FirePeriodicallyContext(
+                tickerDelegate,
+                payload,
+                timeSpan);
 
         /// <summary>
         ///     Runs the specified ticker delegate periodically.
@@ -97,10 +106,15 @@ namespace IX.StandardExtensions.Threading
             FirePeriodicallyTicker tickerDelegate,
             object payload,
             TimeSpan initialDelay,
-            TimeSpan timeSpan) => new FirePeriodicallyContext(
-            tickerDelegate,
-            payload,
-            initialDelay,
-            timeSpan);
+            TimeSpan timeSpan) =>
+            new FirePeriodicallyContext(
+                tickerDelegate,
+                payload,
+                initialDelay,
+                timeSpan);
+
+#endregion
+
+#endregion
     }
 }

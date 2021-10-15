@@ -54,7 +54,7 @@ namespace IX.Observable.Adapters
                     idx -= count;
                 }
 
-                return default;
+                throw new IndexOutOfRangeException();
             }
 
             set => throw new InvalidOperationException();

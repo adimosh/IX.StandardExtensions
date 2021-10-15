@@ -2,6 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -86,7 +87,7 @@ namespace IX.Observable.Adapters
                     idx -= count;
                 }
 
-                return default;
+                throw new IndexOutOfRangeException();
             }
 
             set
@@ -154,6 +155,10 @@ namespace IX.Observable.Adapters
                 arrayIndex);
         }
 
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0401:Possible allocation of reference type enumerator",
+            Justification = "We can't avoid this here.")]
         public override void CopyTo(
             T[] array,
             int arrayIndex)
@@ -161,20 +166,22 @@ namespace IX.Observable.Adapters
             this.master ??= new ObservableList<T>();
 
             var totalCount = this.Count + arrayIndex;
-            using (IEnumerator<T> enumerator = this.GetEnumerator())
+            using IEnumerator<T> enumerator = this.GetEnumerator();
+            for (var i = arrayIndex; i < totalCount; i++)
             {
-                for (var i = arrayIndex; i < totalCount; i++)
+                if (!enumerator.MoveNext())
                 {
-                    if (!enumerator.MoveNext())
-                    {
-                        break;
-                    }
-
-                    array[i] = enumerator.Current;
+                    break;
                 }
+
+                array[i] = enumerator.Current;
             }
         }
 
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0401:Possible allocation of reference type enumerator",
+            Justification = "We can't avoid this here.")]
         public override IEnumerator<T> GetEnumerator()
         {
             this.master ??= new ObservableList<T>();
@@ -215,6 +222,10 @@ namespace IX.Observable.Adapters
                 item);
         }
 
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Performance",
+            "HAA0401:Possible allocation of reference type enumerator",
+            Justification = "We can't avoid this here.")]
         public override int IndexOf(T item)
         {
             this.master ??= new ObservableList<T>();

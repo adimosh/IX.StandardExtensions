@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using IX.StandardExtensions.ComponentModel;
 using IX.StandardExtensions.Contracts;
@@ -14,33 +15,37 @@ namespace IX.StandardExtensions.Threading
     ///     A ticker delegate.
     /// </summary>
     /// <param name="tick">The tick index.</param>
-    /// <param name="interruptor">
-    ///     The interruptor object, should the periodical firing mechanism be requested to be
+    /// <param name="interrupter">
+    ///     The interrupter object, should the periodical firing mechanism be requested to be
     ///     interrupted.
     /// </param>
     /// <param name="state">The state.</param>
     [PublicAPI]
     public delegate void FirePeriodicallyTicker(
         int tick,
-        IInterruptible interruptor,
+        IInterruptible interrupter,
         object? state);
 
-    internal sealed class FirePeriodicallyContext : DisposableBase, IInterruptible
+    internal sealed class FirePeriodicallyContext : DisposableBase,
+        IInterruptible
     {
-        private readonly object? state;
-        private readonly TimeSpan timeSpan;
+#region Internal state
 
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "IDisposableAnalyzers.Correctness",
-            "IDISP002:Dispose member.",
-            Justification = "It is disposed.")]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        private readonly object? state;
+
+        [SuppressMessage(
             "IDisposableAnalyzers.Correctness",
             "IDISP006:Implement IDisposable.",
             Justification = "It is implemented, the analyzer cannot figure it out automatically.")]
         private readonly Timer timer;
 
+        private readonly TimeSpan timeSpan;
+
         private int iteration;
+
+#endregion
+
+#region Constructors and destructors
 
         internal FirePeriodicallyContext(
             FirePeriodicallyTicker tickerDelegate,
@@ -49,9 +54,7 @@ namespace IX.StandardExtensions.Threading
             : this(
                 tickerDelegate,
                 state,
-                TimeSpan.FromMilliseconds(milliseconds))
-        {
-        }
+                TimeSpan.FromMilliseconds(milliseconds)) { }
 
         internal FirePeriodicallyContext(
             FirePeriodicallyTicker tickerDelegate,
@@ -61,9 +64,7 @@ namespace IX.StandardExtensions.Threading
                 tickerDelegate,
                 state,
                 TimeSpan.Zero,
-                timeSpan)
-        {
-        }
+                timeSpan) { }
 
         internal FirePeriodicallyContext(
             FirePeriodicallyTicker tickerDelegate,
@@ -75,24 +76,38 @@ namespace IX.StandardExtensions.Threading
             this.timeSpan = timeSpan;
             this.timer = new Timer(
                 this.TimerTick,
-                Requires.NotNull(tickerDelegate, nameof(tickerDelegate)),
+                Requires.NotNull(
+                    tickerDelegate,
+                    nameof(tickerDelegate)),
                 initialDelay,
                 timeSpan);
         }
 
+#endregion
+
+#region Methods
+
+#region Interface implementations
+
         /// <summary>
         ///     Interrupts this instance.
         /// </summary>
-        public void Interrupt() => this.timer.Change(
-            Timeout.Infinite,
-            Timeout.Infinite);
+        public void Interrupt() =>
+            this.timer.Change(
+                Timeout.Infinite,
+                Timeout.Infinite);
 
         /// <summary>
         ///     Resumes this instance.
         /// </summary>
-        public void Resume() => this.timer.Change(
-            TimeSpan.Zero,
-            this.timeSpan);
+        public void Resume() =>
+            this.timer.Change(
+                TimeSpan.Zero,
+                this.timeSpan);
+
+#endregion
+
+#region Disposable
 
         /// <summary>
         ///     Disposes in the general (managed and unmanaged) context.
@@ -103,6 +118,8 @@ namespace IX.StandardExtensions.Threading
 
             this.timer.Dispose();
         }
+
+#endregion
 
         private void TimerTick(object stateObject)
         {
@@ -115,5 +132,7 @@ namespace IX.StandardExtensions.Threading
                 this,
                 this.state);
         }
+
+#endregion
     }
 }

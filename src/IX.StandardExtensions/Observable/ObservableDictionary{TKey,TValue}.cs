@@ -35,6 +35,7 @@ namespace IX.Observable
     public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyValuePair<TKey, TValue>>,
         IDictionary<TKey, TValue>,
         IReadOnlyDictionary<TKey, TValue>
+        where TKey : notnull
     {
 #region Constructors and destructors
 

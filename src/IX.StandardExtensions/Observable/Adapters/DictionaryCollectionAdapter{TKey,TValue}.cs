@@ -16,6 +16,7 @@ namespace IX.Observable.Adapters
         ValueName = "Value")]
     internal class DictionaryCollectionAdapter<TKey, TValue> : CollectionAdapter<KeyValuePair<TKey, TValue>>,
         IDictionaryCollectionAdapter<TKey, TValue>
+        where TKey : notnull
     {
 #region Internal state
 
