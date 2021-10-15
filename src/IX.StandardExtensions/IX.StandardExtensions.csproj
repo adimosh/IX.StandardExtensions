@@ -18,12 +18,11 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- IQueryable pagination extensions
-- Delayed disposer implemented</PackageReleaseNotes>
+    <PackageReleaseNotes>- More entity abstractions</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.7.14</VersionPrefix>
+    <VersionPrefix>0.7.15</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
