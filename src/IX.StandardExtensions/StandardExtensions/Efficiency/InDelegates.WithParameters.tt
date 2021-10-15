@@ -8,6 +8,8 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using JetBrains.Annotations;
+
 namespace IX.StandardExtensions.Efficiency
 {<#
 for (int i = 1; i <= 8; i++)
@@ -50,6 +52,7 @@ for (int i = 1; i <= 8; i++)
     }
 #>
     /// <returns>The result of the method.</returns>
+    [PublicAPI]
     public delegate TResult InFunc<<#= paramTypes #>, out TResult>(<#= paramNameTypes #>);
 
     /// <summary>
@@ -71,6 +74,7 @@ for (int i = 1; i <= 8; i++)
 <#
     }
 #>
+    [PublicAPI]
     public delegate void InAction<<#= paramTypes #>>(<#= paramNameTypes #>);
 <#
 }

@@ -25,10 +25,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "byte is a primitive type that the compiler can handle.")]
         public static void Positive(
             in byte argument,
             string argumentName)
@@ -56,10 +52,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "byte is a primitive type that the compiler can handle.")]
         public static void Positive(
             out byte field,
             in byte argument,
@@ -87,10 +79,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "sbyte is a primitive type that the compiler can handle.")]
         public static void Positive(
             in sbyte argument,
             string argumentName)
@@ -115,10 +103,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "sbyte is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             in sbyte argument,
             string argumentName)
@@ -146,10 +130,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "sbyte is a primitive type that the compiler can handle.")]
         public static void Positive(
             out sbyte field,
             in sbyte argument,
@@ -180,10 +160,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "sbyte is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             out sbyte field,
             in sbyte argument,
@@ -211,10 +187,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "short is a primitive type that the compiler can handle.")]
         public static void Positive(
             in short argument,
             string argumentName)
@@ -239,10 +211,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "short is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             in short argument,
             string argumentName)
@@ -270,10 +238,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "short is a primitive type that the compiler can handle.")]
         public static void Positive(
             out short field,
             in short argument,
@@ -304,10 +268,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "short is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             out short field,
             in short argument,
@@ -335,10 +295,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "ushort is a primitive type that the compiler can handle.")]
         public static void Positive(
             in ushort argument,
             string argumentName)
@@ -366,10 +322,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "ushort is a primitive type that the compiler can handle.")]
         public static void Positive(
             out ushort field,
             in ushort argument,
@@ -397,10 +349,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "char is a primitive type that the compiler can handle.")]
         public static void Positive(
             in char argument,
             string argumentName)
@@ -428,10 +376,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "char is a primitive type that the compiler can handle.")]
         public static void Positive(
             out char field,
             in char argument,
@@ -459,10 +403,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "int is a primitive type that the compiler can handle.")]
         public static void Positive(
             in int argument,
             string argumentName)
@@ -487,10 +427,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "int is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             in int argument,
             string argumentName)
@@ -518,10 +454,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "int is a primitive type that the compiler can handle.")]
         public static void Positive(
             out int field,
             in int argument,
@@ -552,10 +484,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "int is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             out int field,
             in int argument,
@@ -583,10 +511,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "uint is a primitive type that the compiler can handle.")]
         public static void Positive(
             in uint argument,
             string argumentName)
@@ -614,10 +538,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "uint is a primitive type that the compiler can handle.")]
         public static void Positive(
             out uint field,
             in uint argument,
@@ -645,10 +565,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "long is a primitive type that the compiler can handle.")]
         public static void Positive(
             in long argument,
             string argumentName)
@@ -673,10 +589,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "long is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             in long argument,
             string argumentName)
@@ -704,10 +616,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "long is a primitive type that the compiler can handle.")]
         public static void Positive(
             out long field,
             in long argument,
@@ -738,10 +646,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "long is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             out long field,
             in long argument,
@@ -769,10 +673,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "ulong is a primitive type that the compiler can handle.")]
         public static void Positive(
             in ulong argument,
             string argumentName)
@@ -800,10 +700,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "ulong is a primitive type that the compiler can handle.")]
         public static void Positive(
             out ulong field,
             in ulong argument,
@@ -831,10 +727,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "float is a primitive type that the compiler can handle.")]
         public static void Positive(
             in float argument,
             string argumentName)
@@ -859,10 +751,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "float is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             in float argument,
             string argumentName)
@@ -890,10 +778,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "float is a primitive type that the compiler can handle.")]
         public static void Positive(
             out float field,
             in float argument,
@@ -924,10 +808,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "float is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             out float field,
             in float argument,
@@ -955,10 +835,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "double is a primitive type that the compiler can handle.")]
         public static void Positive(
             in double argument,
             string argumentName)
@@ -983,10 +859,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "double is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             in double argument,
             string argumentName)
@@ -1014,10 +886,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "double is a primitive type that the compiler can handle.")]
         public static void Positive(
             out double field,
             in double argument,
@@ -1048,10 +916,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "double is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             out double field,
             in double argument,
@@ -1079,10 +943,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "decimal is a primitive type that the compiler can handle.")]
         public static void Positive(
             in decimal argument,
             string argumentName)
@@ -1107,10 +967,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "decimal is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             in decimal argument,
             string argumentName)
@@ -1138,10 +994,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than or equal to 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "decimal is a primitive type that the compiler can handle.")]
         public static void Positive(
             out decimal field,
             in decimal argument,
@@ -1172,10 +1024,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is less than 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "decimal is a primitive type that the compiler can handle.")]
         public static void NonNegative(
             out decimal field,
             in decimal argument,

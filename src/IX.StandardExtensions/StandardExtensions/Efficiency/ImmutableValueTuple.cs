@@ -58,15 +58,8 @@ namespace IX.StandardExtensions.Efficiency
         /// </summary>
         /// <param name="other">The other object to equate to.</param>
         /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
-        public override bool Equals(object? other)
-        {
-            if (!(other is ImmutableValueTuple<TItem1> otherTuple))
-            {
-                return false;
-            }
-
-            return this.Equals(otherTuple);
-        }
+        public override bool Equals(object? other) =>
+            other is ImmutableValueTuple<TItem1> otherTuple && this.Equals(otherTuple);
 
         /// <summary>
         /// Equates this tuple to another tuple.
@@ -146,15 +139,8 @@ namespace IX.StandardExtensions.Efficiency
         /// </summary>
         /// <param name="other">The other object to equate to.</param>
         /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
-        public override bool Equals(object? other)
-        {
-            if (!(other is ImmutableValueTuple<TItem1, TItem2> otherTuple))
-            {
-                return false;
-            }
-
-            return this.Equals(otherTuple);
-        }
+        public override bool Equals(object? other) =>
+            other is ImmutableValueTuple<TItem1, TItem2> otherTuple && this.Equals(otherTuple);
 
         /// <summary>
         /// Equates this tuple to another tuple.
@@ -246,15 +232,8 @@ namespace IX.StandardExtensions.Efficiency
         /// </summary>
         /// <param name="other">The other object to equate to.</param>
         /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
-        public override bool Equals(object? other)
-        {
-            if (!(other is ImmutableValueTuple<TItem1, TItem2, TItem3> otherTuple))
-            {
-                return false;
-            }
-
-            return this.Equals(otherTuple);
-        }
+        public override bool Equals(object? other) =>
+            other is ImmutableValueTuple<TItem1, TItem2, TItem3> otherTuple && this.Equals(otherTuple);
 
         /// <summary>
         /// Equates this tuple to another tuple.
@@ -358,15 +337,8 @@ namespace IX.StandardExtensions.Efficiency
         /// </summary>
         /// <param name="other">The other object to equate to.</param>
         /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
-        public override bool Equals(object? other)
-        {
-            if (!(other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4> otherTuple))
-            {
-                return false;
-            }
-
-            return this.Equals(otherTuple);
-        }
+        public override bool Equals(object? other) =>
+            other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4> otherTuple && this.Equals(otherTuple);
 
         /// <summary>
         /// Equates this tuple to another tuple.
@@ -482,15 +454,8 @@ namespace IX.StandardExtensions.Efficiency
         /// </summary>
         /// <param name="other">The other object to equate to.</param>
         /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
-        public override bool Equals(object? other)
-        {
-            if (!(other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5> otherTuple))
-            {
-                return false;
-            }
-
-            return this.Equals(otherTuple);
-        }
+        public override bool Equals(object? other) =>
+            other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5> otherTuple && this.Equals(otherTuple);
 
         /// <summary>
         /// Equates this tuple to another tuple.
@@ -618,15 +583,8 @@ namespace IX.StandardExtensions.Efficiency
         /// </summary>
         /// <param name="other">The other object to equate to.</param>
         /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
-        public override bool Equals(object? other)
-        {
-            if (!(other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6> otherTuple))
-            {
-                return false;
-            }
-
-            return this.Equals(otherTuple);
-        }
+        public override bool Equals(object? other) =>
+            other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6> otherTuple && this.Equals(otherTuple);
 
         /// <summary>
         /// Equates this tuple to another tuple.
@@ -766,15 +724,8 @@ namespace IX.StandardExtensions.Efficiency
         /// </summary>
         /// <param name="other">The other object to equate to.</param>
         /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
-        public override bool Equals(object? other)
-        {
-            if (!(other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7> otherTuple))
-            {
-                return false;
-            }
-
-            return this.Equals(otherTuple);
-        }
+        public override bool Equals(object? other) =>
+            other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7> otherTuple && this.Equals(otherTuple);
 
         /// <summary>
         /// Equates this tuple to another tuple.
@@ -926,15 +877,8 @@ namespace IX.StandardExtensions.Efficiency
         /// </summary>
         /// <param name="other">The other object to equate to.</param>
         /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
-        public override bool Equals(object? other)
-        {
-            if (!(other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7, TItem8> otherTuple))
-            {
-                return false;
-            }
-
-            return this.Equals(otherTuple);
-        }
+        public override bool Equals(object? other) =>
+            other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7, TItem8> otherTuple && this.Equals(otherTuple);
 
         /// <summary>
         /// Equates this tuple to another tuple.

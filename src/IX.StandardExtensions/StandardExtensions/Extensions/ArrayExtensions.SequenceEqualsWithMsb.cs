@@ -9,13 +9,19 @@ namespace IX.StandardExtensions.Extensions
     /// </summary>
     public static partial class ArrayExtensions
     {
+#region Methods
+
+#region Static methods
+
         /// <summary>
-        /// Compares two arrays to one another sequentially with regard to the most significant byte.
+        ///     Compares two arrays to one another sequentially with regard to the most significant byte.
         /// </summary>
         /// <param name="left">The left operand array.</param>
         /// <param name="right">The right operand array.</param>
         /// <returns>The result of the comparison.</returns>
-        public static bool SequenceEqualsWithMsb(this byte[] left, byte[] right)
+        public static bool SequenceEqualsWithMsb(
+            this byte[]? left,
+            byte[]? right)
         {
             if (left == null)
             {
@@ -34,20 +40,25 @@ namespace IX.StandardExtensions.Extensions
             if (left.Length < length)
             {
                 var newLeft = new byte[length];
-                left.CopyTo(newLeft, 0);
+                left.CopyTo(
+                    newLeft,
+                    0);
                 left = newLeft;
             }
 
             if (right.Length < length)
             {
                 var newRight = new byte[length];
-                right.CopyTo(newRight, 0);
+                right.CopyTo(
+                    newRight,
+                    0);
                 right = newRight;
             }
 
             for (var i = length - 1; i >= 0; i--)
             {
-                var cr = left[i].Equals(right[i]);
+                var cr = left[i]
+                    .Equals(right[i]);
 
                 if (!cr)
                 {
@@ -57,5 +68,9 @@ namespace IX.StandardExtensions.Extensions
 
             return true;
         }
+
+#endregion
+
+#endregion
     }
 }

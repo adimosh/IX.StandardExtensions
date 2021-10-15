@@ -92,10 +92,6 @@ for (int i = 0; i < types.Length; i++)
 #>
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "<#= fullTypeName #> is a primitive type that the compiler can handle.")]
         public static void <#= isNotInRange ? "NotInRange" : "InRange" #>(
 <#
         if (isReferencing)

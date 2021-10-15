@@ -88,11 +88,11 @@ namespace IX.UnitTests.Observable
 
             using (var list = new ObservableList<CapturedItem>
             {
-                new CapturedItem { TestProperty = "1" },
-                new CapturedItem { TestProperty = "2" },
-                new CapturedItem { TestProperty = "3" },
-                new CapturedItem { TestProperty = "4" },
-                new CapturedItem { TestProperty = "5" },
+                new() { TestProperty = "1" },
+                new() { TestProperty = "2" },
+                new() { TestProperty = "3" },
+                new() { TestProperty = "4" },
+                new() { TestProperty = "5" },
             })
             {
                 list.AutomaticallyCaptureSubItems = true;
@@ -110,12 +110,12 @@ namespace IX.UnitTests.Observable
 
                 // ACT
                 list.AddRange(
-                    new[]
+                    new CapturedItem[]
                     {
-                        new CapturedItem { TestProperty = "6" },
-                        new CapturedItem { TestProperty = "7" },
-                        new CapturedItem { TestProperty = "8" },
-                        new CapturedItem { TestProperty = "9" },
+                        new() { TestProperty = "6" },
+                        new() { TestProperty = "7" },
+                        new() { TestProperty = "8" },
+                        new() { TestProperty = "9" },
                     });
 
                 // ASSERT
@@ -214,8 +214,8 @@ namespace IX.UnitTests.Observable
                 cca = NotifyCollectionChangedAction.Add;
                 CapturedItem[] items =
                 {
-                    new CapturedItem { TestProperty = "a" },
-                    new CapturedItem { TestProperty = "b" },
+                    new() { TestProperty = "a" },
+                    new() { TestProperty = "b" },
                 };
 
                 list.InsertRange(

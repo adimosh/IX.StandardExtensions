@@ -16,8 +16,8 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="right">The right operand array.</param>
         /// <returns>The result of the comparison.</returns>
         public static int SequenceCompareWithMsb(
-            this byte[] left,
-            byte[] right)
+            this byte[]? left,
+            byte[]? right)
         {
             if (left == null)
             {

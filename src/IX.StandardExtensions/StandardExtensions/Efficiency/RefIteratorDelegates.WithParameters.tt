@@ -8,6 +8,8 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using JetBrains.Annotations;
+
 namespace IX.StandardExtensions.Efficiency
 {<#
 for (int i = 1; i <= 8; i++)
@@ -23,7 +25,16 @@ for (int i = 1; i <= 8; i++)
             int idx = j - 1;
             types[idx] = $"TParam{j}";
             names[idx] = $"param{j}";
-            nameTypes[idx] = j <= z ? $"ref TParam{j} param{j}" : $"TParam{j} param{j}";
+            nameTypes[idx] = $"TParam{j} param{j}";
+
+            if (j <= z)
+            {
+                nameTypes[idx] = "ref " + nameTypes[idx];
+            }
+            else
+            {
+                types[idx] = "in " + types[idx];
+            }
         }
 
         string paramTypes = string.Join(", ", types);
@@ -67,13 +78,15 @@ for (int i = 1; i <= 8; i++)
         if (z != i)
         {
 #>
-    public delegate TResult RefIteratorFunc<#= i - z #><TIteratorItem, <#= paramTypes #>, out TResult>(TIteratorItem iteratorItem, <#= paramNameTypes #>);
+    [PublicAPI]
+    public delegate TResult RefIteratorFunc<#= i - z #><in TIteratorItem, <#= paramTypes #>, out TResult>(TIteratorItem iteratorItem, <#= paramNameTypes #>);
 <#
         }
         else
         {
 #>
-    public delegate TResult RefIteratorFunc<TIteratorItem, <#= paramTypes #>, out TResult>(TIteratorItem iteratorItem, <#= paramNameTypes #>);
+    [PublicAPI]
+    public delegate TResult RefIteratorFunc<in TIteratorItem, <#= paramTypes #>, out TResult>(TIteratorItem iteratorItem, <#= paramNameTypes #>);
 <#
         }
 #>
@@ -111,13 +124,15 @@ for (int i = 1; i <= 8; i++)
         if (z != i)
         {
 #>
-    public delegate void RefIteratorAction<#= i - z #><TIteratorItem, <#= paramTypes #>>(TIteratorItem iteratorItem, <#= paramNameTypes #>);
+    [PublicAPI]
+    public delegate void RefIteratorAction<#= i - z #><TIteratorItem, <#= paramTypes #>>(in TIteratorItem iteratorItem, <#= paramNameTypes #>);
 <#
         }
         else
         {
 #>
-    public delegate void RefIteratorAction<TIteratorItem, <#= paramTypes #>>(TIteratorItem iteratorItem, <#= paramNameTypes #>);
+    [PublicAPI]
+    public delegate void RefIteratorAction<TIteratorItem, <#= paramTypes #>>(in TIteratorItem iteratorItem, <#= paramNameTypes #>);
 <#
         }
     }

@@ -4,7 +4,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Extensions
 {
@@ -23,13 +22,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this byte[]? left,
-            [CanBeNull]
             byte[]? right)
         {
             if (left == null)
@@ -68,13 +69,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this sbyte[]? left,
-            [CanBeNull]
             sbyte[]? right)
         {
             if (left == null)
@@ -113,13 +116,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this short[]? left,
-            [CanBeNull]
             short[]? right)
         {
             if (left == null)
@@ -158,13 +163,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this ushort[]? left,
-            [CanBeNull]
             ushort[]? right)
         {
             if (left == null)
@@ -203,13 +210,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this char[]? left,
-            [CanBeNull]
             char[]? right)
         {
             if (left == null)
@@ -248,13 +257,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this int[]? left,
-            [CanBeNull]
             int[]? right)
         {
             if (left == null)
@@ -293,13 +304,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this uint[]? left,
-            [CanBeNull]
             uint[]? right)
         {
             if (left == null)
@@ -338,13 +351,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this long[]? left,
-            [CanBeNull]
             long[]? right)
         {
             if (left == null)
@@ -383,13 +398,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this ulong[]? left,
-            [CanBeNull]
             ulong[]? right)
         {
             if (left == null)
@@ -428,6 +445,10 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
@@ -436,9 +457,7 @@ namespace IX.StandardExtensions.Extensions
             "CompareOfFloatsByEqualityOperator",
             Justification = "This is raw comparison and equation, we're not interested in the results of possible tolerance.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this float[]? left,
-            [CanBeNull]
             float[]? right)
         {
             if (left == null)
@@ -478,13 +497,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is within tolerance to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this float[]? left,
-            [CanBeNull]
             float[]? right,
             float tolerance)
         {
@@ -526,6 +547,10 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
@@ -534,9 +559,7 @@ namespace IX.StandardExtensions.Extensions
             "CompareOfFloatsByEqualityOperator",
             Justification = "This is raw comparison and equation, we're not interested in the results of possible tolerance.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this double[]? left,
-            [CanBeNull]
             double[]? right)
         {
             if (left == null)
@@ -576,13 +599,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is within tolerance to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this double[]? left,
-            [CanBeNull]
             double[]? right,
             double tolerance)
         {
@@ -624,13 +649,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this decimal[]? left,
-            [CanBeNull]
             decimal[]? right)
         {
             if (left == null)
@@ -669,13 +696,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this DateTime[]? left,
-            [CanBeNull]
             DateTime[]? right)
         {
             if (left == null)
@@ -714,13 +743,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this bool[]? left,
-            [CanBeNull]
             bool[]? right)
         {
             if (left == null)
@@ -759,13 +790,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this TimeSpan[]? left,
-            [CanBeNull]
             TimeSpan[]? right)
         {
             if (left == null)
@@ -804,13 +837,15 @@ namespace IX.StandardExtensions.Extensions
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this string[]? left,
-            [CanBeNull]
             string[]? right)
         {
             if (left == null)

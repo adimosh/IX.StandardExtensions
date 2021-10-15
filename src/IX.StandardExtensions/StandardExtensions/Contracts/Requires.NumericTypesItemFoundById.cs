@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using IX.Abstractions.Entities;
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Contracts
 {
@@ -29,18 +30,20 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("source:null => halt; id:null => halt")]
+        [AssertionMethod]
         [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             byte id,
@@ -81,18 +84,20 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("source:null => halt; id:null => halt")]
+        [AssertionMethod]
         [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             sbyte id,
@@ -133,18 +138,20 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("source:null => halt; id:null => halt")]
+        [AssertionMethod]
         [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             short id,
@@ -185,18 +192,20 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("source:null => halt; id:null => halt")]
+        [AssertionMethod]
         [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             ushort id,
@@ -237,18 +246,20 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("source:null => halt; id:null => halt")]
+        [AssertionMethod]
         [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             char id,
@@ -289,18 +300,20 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("source:null => halt; id:null => halt")]
+        [AssertionMethod]
         [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             int id,
@@ -341,18 +354,20 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("source:null => halt; id:null => halt")]
+        [AssertionMethod]
         [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             uint id,
@@ -393,18 +408,20 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("source:null => halt; id:null => halt")]
+        [AssertionMethod]
         [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             long id,
@@ -445,18 +462,20 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("source:null => halt; id:null => halt")]
+        [AssertionMethod]
         [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             ulong id,
@@ -497,18 +516,20 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("source:null => halt; id:null => halt")]
+        [AssertionMethod]
         [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             float id,
@@ -549,18 +570,20 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("source:null => halt; id:null => halt")]
+        [AssertionMethod]
         [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             double id,
@@ -601,18 +624,20 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNotPositiveException">The supplied identifier is not, as convention dictates, a positive number.</exception>
         /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("source:null => halt; id:null => halt")]
+        [AssertionMethod]
         [SuppressMessage(
             "Performance",
             "HAA0301:Closure Allocation Source",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         [SuppressMessage(
             "Performance",
             "HAA0302:Display class allocation to capture closure",
-            Justification = "LINQ is fast enough for our purposes here.")]
+            Justification = "LINQ used, unavoidable.")]
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             decimal id,

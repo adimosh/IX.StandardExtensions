@@ -3,7 +3,6 @@
 // </copyright>
 
 using System;
-using System.IO;
 using JetBrains.Annotations;
 
 namespace IX.System.IO

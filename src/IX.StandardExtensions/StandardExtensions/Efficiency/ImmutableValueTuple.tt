@@ -122,15 +122,8 @@ for (int i = 1; i <= 8; i++)
         /// </summary>
         /// <param name="other">The other object to equate to.</param>
         /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
-        public override bool Equals(object? other)
-        {
-            if (!(other is ImmutableValueTuple<<#= paramTypes #>> otherTuple))
-            {
-                return false;
-            }
-
-            return this.Equals(otherTuple);
-        }
+        public override bool Equals(object? other) =>
+            other is ImmutableValueTuple<<#= paramTypes #>> otherTuple && this.Equals(otherTuple);
 
         /// <summary>
         /// Equates this tuple to another tuple.

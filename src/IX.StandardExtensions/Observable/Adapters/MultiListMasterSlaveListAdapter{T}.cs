@@ -16,6 +16,10 @@ namespace IX.Observable.Adapters
 #region Internal state
 
         private readonly List<IEnumerable<T>> slaves;
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "IDisposableAnalyzers.Correctness",
+            "IDISP006:Implement IDisposable.",
+            Justification = "We cannot. The purpose here is not to dispose.")]
         private IList<T>? master;
 
 #endregion

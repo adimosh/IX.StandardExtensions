@@ -10,7 +10,6 @@ using System.Text.RegularExpressions;
 using IX.Abstractions.Entities;
 using IX.StandardExtensions.ComponentModel;
 using IX.StandardExtensions.Efficiency;
-using IX.StandardExtensions.Extensions;
 using JetBrains.Annotations;
 using DiagCA = System.Diagnostics.CodeAnalysis;
 
@@ -369,10 +368,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("array:null => halt")]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static T[] FixedLength<T>(
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
@@ -394,7 +389,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyArrayException(argumentName);
             }
 
-            return array!;
+            return array;
         }
 
         /// <summary>Called when a contract requires that an array is of a specific length.</summary>
@@ -411,10 +406,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("array:null => halt")]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void FixedLength<T>(
             out T[] field,
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
@@ -437,7 +428,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyArrayException(argumentName);
             }
 
-            field = array!;
+            field = array;
         }
 
         /// <summary>Called when a contract requires that an array is of a specific length.</summary>
@@ -452,10 +443,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("array:null => halt")]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static T[] FixedLength<T>(
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
@@ -477,7 +464,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyArrayException(argumentName);
             }
 
-            return array!;
+            return array;
         }
 
         /// <summary>Called when a contract requires that an array is of a specific length.</summary>
@@ -494,10 +481,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("array:null => halt")]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void FixedLength<T>(
             out T[] field,
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
@@ -520,7 +503,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyArrayException(argumentName);
             }
 
-            field = array!;
+            field = array;
         }
 
         #endregion
@@ -539,10 +522,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("array:null => halt")]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static T[] LengthAtLeast<T>(
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
@@ -564,7 +543,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyArrayException(argumentName);
             }
 
-            return array!;
+            return array;
         }
 
         /// <summary>Called when a contract requires that an array's length is at least a specific value.</summary>
@@ -581,10 +560,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("array:null => halt")]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void LengthAtLeast<T>(
             out T[] field,
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
@@ -607,7 +582,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyArrayException(argumentName);
             }
 
-            field = array!;
+            field = array;
         }
 
         /// <summary>Called when a contract requires that an array's length is at least a specific value.</summary>
@@ -622,10 +597,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("array:null => halt")]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static T[] LengthAtLeast<T>(
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
@@ -647,7 +618,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyArrayException(argumentName);
             }
 
-            return array!;
+            return array;
         }
 
         /// <summary>Called when a contract requires that an array's length is at least a specific value.</summary>
@@ -664,10 +635,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("array:null => halt")]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void LengthAtLeast<T>(
             out T[] field,
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
@@ -690,7 +657,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyArrayException(argumentName);
             }
 
-            field = array!;
+            field = array;
         }
 
         #endregion
@@ -709,10 +676,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("array:null => halt")]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static T[] LengthAtMost<T>(
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
@@ -734,7 +697,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyArrayException(argumentName);
             }
 
-            return array!;
+            return array;
         }
 
         /// <summary>Called when a contract requires that an array's length is at most a specific value.</summary>
@@ -751,10 +714,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("array:null => halt")]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void LengthAtMost<T>(
             out T[] field,
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
@@ -777,7 +736,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyArrayException(argumentName);
             }
 
-            field = array!;
+            field = array;
         }
 
         /// <summary>Called when a contract requires that an array's length is at most a specific value.</summary>
@@ -792,10 +751,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("array:null => halt")]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static T[] LengthAtMost<T>(
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
@@ -817,7 +772,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyArrayException(argumentName);
             }
 
-            return array!;
+            return array;
         }
 
         /// <summary>Called when a contract requires that an array's length is at most a specific value.</summary>
@@ -834,10 +789,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ContractAnnotation("array:null => halt")]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void LengthAtMost<T>(
             out T[] field,
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
@@ -860,7 +811,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentNullOrEmptyArrayException(argumentName);
             }
 
-            field = array!;
+            field = array;
         }
 
         #endregion
@@ -910,7 +861,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentDoesNotMatchException(argumentName);
             }
 
-            return argument!;
+            return argument;
         }
 
         /// <summary>
@@ -953,7 +904,7 @@ namespace IX.StandardExtensions.Contracts
                 throw new ArgumentDoesNotMatchException(argumentName);
             }
 
-            field = argument!;
+            field = argument;
         }
 
         #endregion
@@ -976,10 +927,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type, the compiler can handle it.")]
         public static TimeSpan Positive(
             in TimeSpan argument,
             string argumentName)
@@ -1006,10 +953,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type, the compiler can handle it.")]
         public static void Positive(
             out TimeSpan field,
             in TimeSpan argument,
@@ -1042,10 +985,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type, the compiler can handle it.")]
         public static TimeSpan NonNegative(
             in TimeSpan argument,
             string argumentName)
@@ -1072,10 +1011,6 @@ namespace IX.StandardExtensions.Contracts
         ///     The argument is 0.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type, the compiler can handle it.")]
         public static void NonNegative(
             out TimeSpan field,
             in TimeSpan argument,
@@ -1102,10 +1037,6 @@ namespace IX.StandardExtensions.Contracts
         ///     array.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayIndex<T>(
             in int argument,
             T[] array,
@@ -1133,10 +1064,6 @@ namespace IX.StandardExtensions.Contracts
         ///     array.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayIndex<T>(
             out int field,
             in int argument,
@@ -1166,10 +1093,6 @@ namespace IX.StandardExtensions.Contracts
         ///     array.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayIndex<T>(
             in long argument,
             T[] array,
@@ -1197,10 +1120,6 @@ namespace IX.StandardExtensions.Contracts
         ///     array.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayIndex<T>(
             out long field,
             in long argument,
@@ -1231,10 +1150,6 @@ namespace IX.StandardExtensions.Contracts
         ///     array.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayRange<T>(
             in int indexArgument,
             in int lengthArgument,
@@ -1272,10 +1187,6 @@ namespace IX.StandardExtensions.Contracts
         ///     array.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayRange<T>(
             out int fieldIndex,
             out int fieldLength,
@@ -1316,10 +1227,6 @@ namespace IX.StandardExtensions.Contracts
         ///     array.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayRange<T>(
             in long indexArgument,
             in long lengthArgument,
@@ -1357,10 +1264,6 @@ namespace IX.StandardExtensions.Contracts
         ///     array.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayRange<T>(
             out long fieldIndex,
             out long fieldLength,
@@ -1400,10 +1303,6 @@ namespace IX.StandardExtensions.Contracts
         ///     array.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayLength<T>(
             in int argument,
             T[] array,
@@ -1431,10 +1330,6 @@ namespace IX.StandardExtensions.Contracts
         ///     array.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayLength<T>(
             out int field,
             in int argument,
@@ -1464,10 +1359,6 @@ namespace IX.StandardExtensions.Contracts
         ///     array.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayLength<T>(
             in long argument,
             in T[] array,
@@ -1495,10 +1386,6 @@ namespace IX.StandardExtensions.Contracts
         ///     array.
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void ValidArrayLength<T>(
             out long field,
             in long argument,
@@ -1539,10 +1426,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [AssertionMethod]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static bool True(
             [AssertionCondition(AssertionConditionType.IS_TRUE)]
             bool condition,
@@ -1573,10 +1456,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [AssertionMethod]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void True(
             out bool field,
             [AssertionCondition(AssertionConditionType.IS_TRUE)]
@@ -1610,10 +1489,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [AssertionMethod]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static bool False(
             [AssertionCondition(AssertionConditionType.IS_FALSE)]
             bool condition,
@@ -1644,10 +1519,6 @@ namespace IX.StandardExtensions.Contracts
         /// </exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [AssertionMethod]
-        [DiagCA.SuppressMessage(
-            "Performance",
-            "EPS02:Non-readonly struct used as in-parameter",
-            Justification = "This is a primitive type that the compiler can handle.")]
         public static void False(
             out bool field,
             [AssertionCondition(AssertionConditionType.IS_FALSE)]
@@ -1689,7 +1560,7 @@ namespace IX.StandardExtensions.Contracts
         [ContractAnnotation("argument:null => halt")]
         [AssertionMethod]
         public static T ArgumentOfType<T>(
-            [CanBeNull, NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object? argument,
+            [NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object? argument,
             string argumentName)
         {
             if (argument is not T convertedValue)
@@ -1721,7 +1592,7 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static void ArgumentOfType<T>(
             out T field,
-            [CanBeNull, NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object? argument,
+            [NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object? argument,
             string argumentName)
         {
             if (argument is not T convertedValue)
@@ -1779,6 +1650,20 @@ namespace IX.StandardExtensions.Contracts
         /// <exception cref="ArgumentNullException">Either the source collection or the identifier are <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
         /// <exception cref="IdCorrespondsToNoItemException">There is no usable item in the source collection that can be fetched by the supplied identifier.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ContractAnnotation("source:null => halt; id:null => halt")]
+        [AssertionMethod]
+        [DiagCA.SuppressMessage(
+            "Performance",
+            "HAA0301:Closure Allocation Source",
+            Justification = "LINQ used, unavoidable.")]
+        [DiagCA.SuppressMessage(
+            "Performance",
+            "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+            Justification = "LINQ used, unavoidable.")]
+        [DiagCA.SuppressMessage(
+            "Performance",
+            "HAA0302:Display class allocation to capture closure",
+            Justification = "LINQ used, unavoidable.")]
         public static TItem ItemFoundById<TItem, TKey>(
             IEnumerable<TItem> source,
             TKey id,

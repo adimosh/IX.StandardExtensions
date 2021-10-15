@@ -11,7 +11,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Extensions
 {
@@ -37,6 +36,10 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
         ///     in one array is equal to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
@@ -48,9 +51,7 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
             Justification = "This is raw comparison and equation, we're not interested in the results of possible tolerance.")]
 <# } #>
         public static bool SequenceEquals(
-            [CanBeNull]
             this <#= fullTypeName #>[]? left,
-            [CanBeNull]
             <#= fullTypeName #>[]? right)
         {
             if (left == null)
@@ -92,13 +93,15 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
         ///     in one array is within tolerance to the equivalent in the other, <see langword="false"/> otherwise.
         /// </returns>
         [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "Some developers use ReSharper.")]
+        [SuppressMessage(
             "ReSharper",
             "LoopCanBeConvertedToQuery",
             Justification = "We don't want this. Instead, we want maximum performance out of the array.")]
         public static bool SequenceEquals(
-            [CanBeNull]
             this <#= fullTypeName #>[]? left,
-            [CanBeNull]
             <#= fullTypeName #>[]? right,
             <#= fullTypeName #> tolerance)
         {

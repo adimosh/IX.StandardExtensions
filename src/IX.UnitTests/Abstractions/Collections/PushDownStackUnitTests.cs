@@ -126,7 +126,7 @@ namespace IX.UnitTests.Abstractions.Collections
             // Arrange
             using (var pds = new PushDownStack<int>(12))
             {
-                var items = new int[]
+                var items = new[]
                 {
                     DataGenerator.RandomInteger(),
                     DataGenerator.RandomInteger(),

@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 namespace IX.StandardExtensions.Extensions
 {
     /// <summary>
-    /// Extensions for <see cref="IQueryable"/>.
+    ///     Extensions for <see cref="IQueryable" />.
     /// </summary>
     [PublicAPI]
     [SuppressMessage(
@@ -23,8 +23,12 @@ namespace IX.StandardExtensions.Extensions
         Justification = "Some team members use ReSharper.")]
     public static class IQueryableExtensions
     {
+#region Methods
+
+#region Static methods
+
         /// <summary>
-        /// Paginates a query with either page number and size semantics, or skip/take semantics.
+        ///     Paginates a query with either page number and size semantics, or skip/take semantics.
         /// </summary>
         /// <typeparam name="TEntity">The type of entity in the queried collection.</typeparam>
         /// <param name="query">The query object.</param>
@@ -34,9 +38,12 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="take">The number of items to take.</param>
         /// <returns>A query that is paginated or has skip/take semantics, or the original query if no semantics are defined.</returns>
         /// <remarks>
-        /// <para>The skip/take semantics take precedence over the page number and size semantics.</para>
-        /// <para>The page size uses a default value expressed at <see cref="EnvironmentSettings.Pagination.DefaultPageSize"/>.</para>
-        /// <para>If no pagination is specified, the query is returned as-is.</para>
+        ///     <para>The skip/take semantics take precedence over the page number and size semantics.</para>
+        ///     <para>
+        ///         The page size uses a default value expressed at <see cref="EnvironmentSettings.Pagination.DefaultPageSize" />
+        ///         .
+        ///     </para>
+        ///     <para>If no pagination is specified, the query is returned as-is.</para>
         /// </remarks>
         public static IQueryable<TEntity> Paginate<TEntity>(
             this IQueryable<TEntity> query,
@@ -45,7 +52,9 @@ namespace IX.StandardExtensions.Extensions
             int? skip = default,
             int? take = default)
         {
-            Requires.NotNull(query, nameof(query));
+            Requires.NotNull(
+                query,
+                nameof(query));
 
             if (skip != null)
             {
@@ -74,5 +83,9 @@ namespace IX.StandardExtensions.Extensions
             return query.Skip(skip2)
                 .Take(take2);
         }
+
+#endregion
+
+#endregion
     }
 }

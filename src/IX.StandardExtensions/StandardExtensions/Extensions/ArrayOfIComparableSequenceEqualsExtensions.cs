@@ -27,9 +27,7 @@ namespace IX.StandardExtensions.Extensions
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "This is how IComparable works.")]
         public static bool SequenceEquals<T>(
-            [CanBeNull]
             this T[]? left,
-            [CanBeNull]
             T[]? right)
         where T : IComparable
         {

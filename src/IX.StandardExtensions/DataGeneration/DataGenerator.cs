@@ -101,7 +101,7 @@ namespace IX.DataGeneration
             int limit,
             Random random)
         {
-            Random? localRandom = Requires.NotNull(
+            Random localRandom = Requires.NotNull(
                 random,
                 nameof(random));
             Requires.Positive(

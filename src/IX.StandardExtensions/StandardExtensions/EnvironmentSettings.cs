@@ -28,6 +28,7 @@ namespace IX.StandardExtensions
         /// <summary>
         ///     Environment settings for pagination extensions.
         /// </summary>
+        [PublicAPI]
         public static class Pagination
         {
 #region Properties and indexers
@@ -43,6 +44,7 @@ namespace IX.StandardExtensions
         /// <summary>
         ///     Environmental settings for delayed disposal.
         /// </summary>
+        [PublicAPI]
         public static class DelayedDisposal
         {
 #region Properties and indexers

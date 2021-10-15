@@ -122,7 +122,6 @@ namespace IX.StandardExtensions.ComponentModel
         ///     synchronization context.
         /// </summary>
         /// <returns>The currently usable synchronization context, according to the framework rules.</returns>
-        [CanBeNull]
         public static SynchronizationContext? GetUsableSynchronizationContext()
         {
             if (AlwaysSuppressCurrentSynchronizationContext)

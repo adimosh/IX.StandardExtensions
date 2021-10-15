@@ -16,6 +16,7 @@ namespace IX.Observable.DebugAide
     /// <typeparam name="TValue">The type of the value.</typeparam>
     [UsedImplicitly]
     public sealed class DictionaryDebugView<TKey, TValue>
+        where TKey : notnull
     {
 #region Internal state
 

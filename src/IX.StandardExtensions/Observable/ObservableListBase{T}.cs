@@ -93,7 +93,7 @@ namespace IX.Observable
         public virtual bool IsFixedSize =>
             this.InvokeIfNotDisposed(
                 thisL1 => thisL1.ReadLock(
-                    thisL2 => thisL2.InternalContainer?.IsFixedSize ?? false,
+                    thisL2 => thisL2.InternalContainer.IsFixedSize,
                     thisL1),
                 this);
 

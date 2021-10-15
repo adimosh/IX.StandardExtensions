@@ -137,7 +137,7 @@ namespace IX.UnitTests.StandardExtensions.Contracts
             Justification = "This is the purpose of the test.")]
         public void Test6()
         {
-            string? x = "alabala";
+            string x = "alabala";
             try
             {
                 Requires.NotNull(x, nameof(x));

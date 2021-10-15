@@ -10,7 +10,7 @@ using GlobalCollectionsGeneric = System.Collections.Generic;
 namespace IX.UnitTests.Abstractions.Collections
 {
     /// <summary>
-    /// Unit tests for <see cref="System.Collections.Generic.RepeatableQueue{T}"/> and <see cref="System.Collections.Generic.RepeatableStack{T}"/>.
+    /// Unit tests for <see cref="RepeatableQueue{T}"/> and <see cref="RepeatableStack{T}"/>.
     /// </summary>
     public class RepeatableCollectionsUnitTests
     {
