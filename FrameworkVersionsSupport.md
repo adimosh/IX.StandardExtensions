@@ -14,6 +14,9 @@ IX.Framework versions support older, out-of-support frameworks or not.
 NuGet packages for frameworks that have ended support are marked obsolete. If you find one
 that is not marked obsolete, please let me know by opening an issue here.
 
+For every version of the below framework versions that become unsupported, the next release of
+any library in the framework will remove support for it.
+
 ## .NET Version lifecycle
 
 ### Symbols legend
@@ -55,11 +58,44 @@ Windows Server 2022, which is the farthest in time, is presumed.
 
 ### .NET Standard
 
+The .NET Standard, as a stepping stone for truly unifying the .NET platform, was intended as a way
+to standardize the common features guaranteed to be available on supported platforms. As such, the
+concept of "support" is not really applicable, but can be a good indicator to whether or not the
+standard in question may or may not have already lost traction, and shuld be abandoned.
+
+| Version | IX Support | MS Support |
+|:-------:|:----------:|:----------:|
+| 1.0 | :x: | :x: (12th January, 2016) |
+| 1.1 | :x: | :x: (12th January, 2016) |
+| 1.2 | :x: | :x: (12th January, 2016) |
+| 1.3 | :x: | :warning: (26th April, 2022) |
+| 1.4 | :x: | :warning: (26th April, 2022) |
+| 1.5 | :x: | :warning: (26th April, 2022) |
+| 1.6 | :x: | :warning: (26th April, 2022) |
+| 2.0 | :warning: | :warning: (26th April, 2022) |
+| 2.1 | :warning: | :warning: (26th April, 2022) |
+
+
 ### .NET Core
+
+| Version | IX Support | MS Support |
+|:-------:|:----------:|:----------:|
+| 1.0 | :x: | :x: (27th June, 2019) |
+| 1.1 | :x: | :x: (27th June, 2019) |
+| 2.0 | :x: | :x: (1st October, 2018) |
+| 2.1 | :x: | :x: (21st August, 2021) |
+| 2.2 | :x: | :x: (23rd December, 2019) |
+| 3.0 | :x: | :x: (3rd March, 2020) |
+| 3.1 | :heavy_check_mark: | :heavy_check_mark: (3rd December, 2022) |
 
 ### .NET
 
-## Source lifecycle table
+| Version | IX Support | MS Support |
+|:-------:|:----------:|:----------:|
+| 5 | :heavy_check_mark: | :heavy_check_mark: (8th May, 2022) |
+| 6 | :heavy_check_mark: | :heavy_check_mark: (8th November, 2024) |
+
+## Source Windows OS lifecycle table
 
 This table shows estimated Microsoft Windows estimated support dates, onto which .NET versions are
 based.
@@ -101,3 +137,28 @@ an official Microsoft support document.
 | Windows Server Version 20H2 | :heavy_check_mark: 2022.08.11 | - |
 | Windows Server 2022 | :heavy_check_mark: 2031.10.14 | - |
 | Windows 11 21H2 | :heavy_check_mark: 2024.10.08 | - |
+
+## References
+
+Last update: 13th November, 2021
+
+- [Lifecycle FAQ - .NET Framework](https://docs.microsoft.com/en-us/lifecycle/faq/dotnet-framework)
+- [Windows 11 Enterprise and Education (Version 21H2)](https://docs.microsoft.com/en-us/lifecycle/products/windows-11-enterprise-and-education-version-21h2)
+- [Windows 11 Home and Pro (Version 21H2)](https://docs.microsoft.com/en-us/lifecycle/products/windows-11-home-and-pro-version-21h2)
+- [Windows 10 Enterprise and Education](https://docs.microsoft.com/en-us/lifecycle/products/windows-10-enterprise-and-education)
+- [Windows 10 Home and Pro](https://docs.microsoft.com/en-us/lifecycle/products/windows-10-home-and-pro)
+- [Windows 10 2015 LTSB](https://docs.microsoft.com/en-us/lifecycle/products/windows-10-2015-ltsb)
+- [Windows 10 2016 LTSB](https://docs.microsoft.com/en-us/lifecycle/products/windows-10-2016-ltsb)
+- [Windows 10 LTSC 2019](https://docs.microsoft.com/en-us/lifecycle/products/windows-10-ltsc-2019)
+- [Windows Server 2022](https://docs.microsoft.com/en-us/lifecycle/products/windows-server-2022)
+- [Windows Server 2019](https://docs.microsoft.com/en-us/lifecycle/products/windows-server-2019)
+- [Windows Server 2016](https://docs.microsoft.com/en-us/lifecycle/products/windows-server-2016)
+- [Windows Server](https://docs.microsoft.com/en-us/lifecycle/products/windows-server)
+- [Windows Server 2012 R2](https://docs.microsoft.com/en-us/lifecycle/products/windows-server-2012-r2)
+- [Windows Server 2012](https://docs.microsoft.com/en-us/lifecycle/products/windows-server-2012)
+- [Windows Server 2008 R2](https://docs.microsoft.com/en-us/lifecycle/products/windows-server-2008-r2)
+- [Windows 8.1](https://docs.microsoft.com/en-us/lifecycle/products/windows-81)
+- [Windows 7](https://docs.microsoft.com/en-us/lifecycle/products/windows-7)
+- [Microsoft .NET Framework](https://docs.microsoft.com/en-us/lifecycle/products/microsoft-net-framework)
+- [.NET Standard](https://docs.microsoft.com/en-us/dotnet/standard/net-standard)
+- [.NET and .NET Core Support Policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core)
