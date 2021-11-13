@@ -34,6 +34,10 @@ Install-Package IX.StandardExtensions
 
 Releases: [![IX.StandardExtensions NuGet](https://img.shields.io/nuget/v/IX.StandardExtensions.svg)](https://www.nuget.org/packages/IX.StandardExtensions/)
 
+## Support
+
+Please read [this page](FrameworkVersionsSupport.md) for estimative framework version support information.
+
 ## Contributing
 
 ### Guidelines
