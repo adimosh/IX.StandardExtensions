@@ -2,17 +2,25 @@
 
 ## Introduction
 
-IX.StandardExtensions is a .NET library that seeks to implement various extensions in order to standardize access to some functionality.
+IX.StandardExtensions is a .NET library that seeks to implement various extensions in order to
+standardize access to some functionality.
 
-The motivation behind this library was introduced in .NET 4 where the [`List<T>`](https://msdn.microsoft.com/en-us/library/6sh2ey19.aspx) class introduced the ForEach method. Arrays have their own static ForEach method (which turns out to be extremely slow compared to the foreach cycle), whereas IEnumerable do not have a ForEach at all.
+The motivation behind this library was introduced in .NET 4 where the
+[`List<T>`](https://msdn.microsoft.com/en-us/library/6sh2ey19.aspx) class introduced the ForEach
+method. Arrays have their own static ForEach method (which turns out to be extremely slow compared
+to the foreach cycle), whereas IEnumerable do not have a ForEach at all.
 
-Then came the Task Parallel Library which introduced Parallel.ForEach, which uses IEnumerable as a parameter.
+Then came the Task Parallel Library which introduced Parallel.ForEach, which uses IEnumerable as a
+parameter.
 
-So we came up with this library that exposes extension methods which give the same ForEach approach to enumerable and to array.
+So I came up with this library that exposes extension methods which give the same ForEach approach
+to enumerable and to array.
 
-Furthermore, the ICloneable interface is recommended by MSDN to not be used at all, leaving us with no baked-in way to define an object which can have shallow clones or an object which can have deep clones. We had to make our own.
+Furthermore, the ICloneable interface is recommended by MSDN to not be used at all, leaving us with
+no baked-in way to define an object which can have shallow clones or an object which can have deep
+clones. I had to make my own.
 
-This is, in a nutshell, how we came up with this library.
+This is, in a nutshell, how I came up with this library.
 
 ## How to get
 
@@ -33,13 +41,6 @@ Releases: [![IX.StandardExtensions NuGet](https://img.shields.io/nuget/v/IX.Stan
 Contributing can be done by anyone, at any time and in any form, as long as the
 contributor has read the [contributing guidelines](https://adimosh.github.io/contributingguidelines)
 beforehand and tries their best to abide by them.
-
-### Code health checks
-
-| Build | Status |
-|:-----:|:------:|
-| Master branch | [![Build Status](https://dev.azure.com/adimosh/IX.Framework/_apis/build/status/Master%20CI%20for%20IX.StandardExtensions?branchName=master)](https://dev.azure.com/adimosh/IX.Framework/_build/latest?definitionId=10&branchName=master) |
-| Continuous integration | [![Build Status](https://dev.azure.com/adimosh/IX.Framework/_apis/build/status/Dev%20CI%20for%20IX.StandardExtensions?branchName=master)](https://dev.azure.com/adimosh/IX.Framework/_build/latest?definitionId=12&branchName=master) |
 
 ## Licenses and structure
 
