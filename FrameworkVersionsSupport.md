@@ -33,9 +33,9 @@ any library in the framework will remove support for it.
 | Version | IX Support | MS Support |
 |:-------:|:----------:|:----------:|
 | <= 1.1 SP1 | :x: | :x: (14th July, 2015) |
-| 2.0 SP2 | :x: | :heavy_exclamation_mark:_1_ (9th January, 2029) |
-| 3.0 SP2 | :x: | :heavy_exclamation_mark:_1_ (9th January, 2029) |
-| 3.5 SP1 | :x: | :heavy_check_mark: (9th January, 2029) |
+| 2.0 SP2 | :x: | :heavy_exclamation_mark: (9th January, 2029)_1_ |
+| 3.0 SP2 | :x: | :heavy_exclamation_mark: (9th January, 2029)_1_ |
+| 3.5 SP1 | :x: | :heavy_check_mark: (9th January, 2029)_1_ |
 | 4.0 | :x: | :x: (12th January, 2016) |
 | 4.5 | :x: | :x: (12th January, 2016) |
 | 4.5.1 | :x: | :x: (12th January, 2016) |
