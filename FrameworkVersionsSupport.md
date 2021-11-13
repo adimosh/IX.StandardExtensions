@@ -42,18 +42,20 @@ any library in the framework will remove support for it.
 | 4.5.2 | :x: | :warning: (26th April, 2022) |
 | 4.6 | :warning: | :warning: (26th April, 2022) |
 | 4.6.1 | :warning: | :warning: (26th April, 2022) |
-| 4.6.2 | :heavy_check_mark: | :heavy_check_mark: (12th January, 2027) |
-| 4.7 | :heavy_check_mark: | :heavy_check_mark: (12th January, 2027) |
-| 4.7.1 | :heavy_check_mark: | :heavy_check_mark: (12th January, 2027) |
-| 4.7.2 | :heavy_check_mark: | :heavy_check_mark: (9th January, 2029) |
-| 4.8 | :heavy_check_mark: | :heavy_check_mark: (14th October, 2031)_2_ |
+| 4.6.2 | :heavy_check_mark: | :heavy_check_mark: (12th January, 2027)_2_ |
+| 4.7 | :heavy_check_mark: | :heavy_check_mark: (12th January, 2027)_2_ |
+| 4.7.1 | :heavy_check_mark: | :heavy_check_mark: (12th January, 2027)_2_ |
+| 4.7.2 | :heavy_check_mark: | :heavy_check_mark: (9th January, 2029)_2_ |
+| 4.8 | :heavy_check_mark: | :heavy_check_mark: (14th October, 2031)_3_ |
 
 _1_ - .NET Framework versions 2.0 and 3.0 are noted to be an integral part of .NET 3.5, and are supported
 under a single lifecycle policy, and Microsoft stated that their components will continue to be supported
 for as long as .NET 3. SP1 remains in support; full statement can be found
 [on this page](https://docs.microsoft.com/en-us/lifecycle/faq/dotnet-framework).
 
-_2_ - Support for .NET Framework 4.8 doesn't have a definitive ending date yet, so the ending date of
+_2_ - Estimated date based on available information at the time of last references update
+
+_3_ - Support for .NET Framework 4.8 doesn't have a definitive ending date yet, so the ending date of
 Windows Server 2022, which is the farthest in time, is presumed.
 
 ### .NET Standard
@@ -68,13 +70,14 @@ standard in question may or may not have already lost traction, and shuld be aba
 | 1.0 | :x: | :x: (12th January, 2016) |
 | 1.1 | :x: | :x: (12th January, 2016) |
 | 1.2 | :x: | :x: (12th January, 2016) |
-| 1.3 | :x: | :warning: (26th April, 2022) |
-| 1.4 | :x: | :warning: (26th April, 2022) |
-| 1.5 | :x: | :warning: (26th April, 2022) |
-| 1.6 | :x: | :warning: (26th April, 2022) |
-| 2.0 | :warning: | :warning: (26th April, 2022) |
-| 2.1 | :warning: | :warning: (26th April, 2022) |
+| 1.3 | :x: | :warning: (26th April, 2022)_1_ |
+| 1.4 | :x: | :warning: (26th April, 2022)_1_ |
+| 1.5 | :x: | :warning: (26th April, 2022)_1_ |
+| 1.6 | :x: | :warning: (26th April, 2022)_1_ |
+| 2.0 | :warning: | :warning: (26th April, 2022)_1_ |
+| 2.1 | :warning: | :warning: (26th April, 2022)_1_ |
 
+_1_ - Estimated date based on available information at the time of last references update
 
 ### .NET Core
 
