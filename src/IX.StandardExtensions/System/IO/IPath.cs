@@ -176,6 +176,14 @@ namespace IX.System.IO
         /// <returns><see langword="true" /> if path contains a root; otherwise, <see langword="false" />.</returns>
         bool IsPathRooted(string path);
 
+        /// <summary>
+        ///     Escapes the illegal characters from the given string, by eliminating them out, in order to render a proper file name.
+        /// </summary>
+        /// <param name="stringToEscape">The input string, to escape.</param>
+        /// <returns>The escaped string.</returns>
+        /// <exception cref="InvalidOperationException">The string to escape is made entirely out of whitespace and illegal characters.</exception>
+        string EscapeFileName(string stringToEscape);
+
 #endregion
     }
 }

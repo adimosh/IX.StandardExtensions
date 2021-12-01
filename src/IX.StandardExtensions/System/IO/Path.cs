@@ -3,7 +3,9 @@
 // </copyright>
 
 using System;
+using System.Linq;
 using System.Security;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 using FS = System.IO;
 
@@ -241,5 +243,51 @@ namespace IX.System.IO
         ///     <see cref="GetInvalidPathChars" />.
         /// </exception>
         public bool IsPathRooted(string path) => FS.Path.IsPathRooted(path);
+
+        /// <summary>
+        ///     Escapes the illegal characters from the given string, by eliminating them out, in order to render a proper file name.
+        /// </summary>
+        /// <param name="stringToEscape">The input string, to escape.</param>
+        /// <returns>The escaped string.</returns>
+        /// <exception cref="InvalidOperationException">The string to escape is made entirely out of whitespace and illegal characters.</exception>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="stringToEscape"/> is <c>null</c> (<c>Nothing</c> in Visual Basic).
+        /// </exception>
+        public string EscapeFileName(string stringToEscape)
+        {
+            Requires.NotNullOrWhiteSpace(
+                stringToEscape,
+                nameof(stringToEscape));
+
+            var invalidChars = this.GetInvalidFileNameChars();
+            var newString = new char[stringToEscape.Length];
+            var oldString = stringToEscape.AsSpan();
+
+            int oldIndex = 0, newIndex = 0;
+
+            while (oldIndex < oldString.Length)
+            {
+                char currentChar = oldString[oldIndex];
+                if (!invalidChars.Contains(currentChar))
+                {
+                    newString[newIndex] = currentChar;
+                    newIndex++;
+                }
+
+                oldIndex++;
+            }
+
+            string resultingString = new(
+                newString,
+                0,
+                newIndex);
+
+            if (string.IsNullOrWhiteSpace(resultingString))
+            {
+                throw new InvalidOperationException();
+            }
+
+            return resultingString;
+        }
     }
 }
