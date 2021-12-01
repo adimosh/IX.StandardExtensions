@@ -46,6 +46,12 @@
     <PackageReference Include="Moq" Version="4.16.1" />
   </ItemGroup>
 
+  <!-- Security mitigation for package xunit@2.4.1 - re-check when necessary -->
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+  </ItemGroup>
+
   <!--<ItemGroup Condition="'$(TargetFramework)'!='net46'">
     <ProjectReference Include="..\IX.StandardExtensions.SourceGeneration\IX.StandardExtensions.SourceGeneration.csproj" OutputItemType="Analyzer" PrivateAssets="all" ReferenceOutputAssembly="false" />
   </ItemGroup>-->
