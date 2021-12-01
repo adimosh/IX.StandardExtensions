@@ -101,12 +101,8 @@ namespace IX.DataGeneration
             int limit,
             Random random)
         {
-            Random localRandom = Requires.NotNull(
-                random,
-                nameof(random));
-            Requires.Positive(
-                in limit,
-                nameof(limit));
+            Random localRandom = Requires.NotNull(random);
+            Requires.Positive(in limit);
 
             var array = new int[limit];
 

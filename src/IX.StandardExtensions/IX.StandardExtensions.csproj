@@ -21,7 +21,9 @@
     <PackageReleaseNotes>- .NET 6 support
 - C# 10 implemented
 - Language mitigation of missing C# 10 attribute
-- Array contract requires reworked with C# 10 help</PackageReleaseNotes>
+- Array contract requires reworked with C# 10 help
+- Requires class improvements
+- Some more extensions</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

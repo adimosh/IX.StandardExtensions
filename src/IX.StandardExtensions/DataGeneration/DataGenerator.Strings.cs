@@ -12,7 +12,7 @@ namespace IX.DataGeneration
     /// </summary>
     public static partial class DataGenerator
     {
-#region Internal state
+        #region Internal state
 
         private static readonly char[] AllCharacters;
 
@@ -62,11 +62,11 @@ namespace IX.DataGeneration
 
         private static readonly char[] UpperCaseAlphaCharacters;
 
-#endregion
+        #endregion
 
-#region Methods
+        #region Methods
 
-#region Static methods
+        #region Static methods
 
         /// <summary>
         ///     Generates a random string.
@@ -94,9 +94,7 @@ namespace IX.DataGeneration
         /// <returns>A random string.</returns>
         public static string RandomAlphanumericString(Random random)
         {
-            Random localRandom = Requires.NotNull(
-                random,
-                nameof(random));
+            Random localRandom = Requires.NotNull(random);
             int length;
 
             lock (localRandom)
@@ -161,9 +159,7 @@ namespace IX.DataGeneration
         /// <returns>A random string.</returns>
         public static string RandomAlphaString(Random random)
         {
-            Random localRandom = Requires.NotNull(
-                random,
-                nameof(random));
+            Random localRandom = Requires.NotNull(random);
             int length;
 
             lock (localRandom)
@@ -597,8 +593,8 @@ namespace IX.DataGeneration
                 length,
                 UpperCaseAlphaCharacters);
 
-#endregion
+        #endregion
 
-#endregion
+        #endregion
     }
 }

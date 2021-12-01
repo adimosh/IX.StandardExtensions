@@ -410,9 +410,7 @@ namespace IX.Abstractions.Logging
                 throw new InvalidOperationException();
             }
 
-            CurrentContext.Value = Requires.NotNull(
-                customLogger,
-                nameof(customLogger));
+            CurrentContext.Value = Requires.NotNull(customLogger);
 
             return new SpecialLoggerContext();
         }
