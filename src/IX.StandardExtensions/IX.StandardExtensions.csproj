@@ -3,10 +3,10 @@
 
   <!-- Build configuration -->
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-    <TargetFrameworks>net46;net472;netstandard2.0;netstandard2.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>net46;net472;netstandard2.0;netstandard2.1;net5.0;net6.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0;net6.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -18,13 +18,14 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- More entity abstractions
-- Some delegate parameters made contravariant
-- Many code improvements</PackageReleaseNotes>
+    <PackageReleaseNotes>- .NET 6 support
+- C# 10 implemented
+- Language mitigation of missing C# 10 attribute
+- Array contract requires reworked with C# 10 help</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.7.15</VersionPrefix>
+    <VersionPrefix>0.7.16</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
@@ -42,6 +43,27 @@
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
+
+  <!-- References -->
+  <ItemGroup Condition="'$(TargetFrameworkIsFramework)'=='true'">
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net46'">
+    <PackageReference Include="System.ValueTuple" Version="[4.5.0,5)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFrameworkAdvanced)'!='true'">
+    <PackageReference Include="System.Memory" Version="[4.5.4,5)" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="[4.5.4,5)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFrameworkIsFramework)'!='true'">
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
 
   <!-- Text templates -->
   <ItemGroup>
@@ -320,27 +342,6 @@
     </None>
   </ItemGroup>
 
-  <!-- References -->
-  <ItemGroup Condition="'$(TargetFrameworkIsFramework)'=='true'">
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)'=='net46'">
-    <PackageReference Include="System.ValueTuple" Version="[4.5.0,5)" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFrameworkAdvanced)'!='true'">
-    <PackageReference Include="System.Memory" Version="[4.5.4,5)" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" Version="[4.5.4,5)" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFrameworkIsFramework)'!='true'">
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-  </ItemGroup>
-
   <!-- Resources -->
   <ItemGroup>
     <EmbeddedResource Update="Resources.de.resx">
@@ -375,9 +376,6 @@
     <EmbeddedResource Update="Resources.hi.resx">
       <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
 </Project>
