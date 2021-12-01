@@ -1829,6 +1829,124 @@ namespace IX.StandardExtensions.Contracts
             return item;
         }
 
-#endregion
+        #endregion
+
+        #region Valid entity ID
+
+        /// <summary>
+        ///     Called when a contract requires that a value is a valid identifier for an entity.
+        /// </summary>
+        /// <param name="argument">
+        ///     The argument.
+        /// </param>
+        /// <param name="argumentName">
+        ///     The argument name.
+        /// </param>
+        /// <returns>The value given as input.</returns>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is not a valid entity identifier.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int ValidEntityId(
+            in int argument,
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
+        {
+            if (argument <= 0)
+            {
+                throw new ArgumentNotPositiveIntegerException(argumentName);
+            }
+
+            return argument;
+        }
+
+        /// <summary>
+        ///     Called when a contract requires that a value is a valid identifier for an entity.
+        /// </summary>
+        /// <param name="field">
+        ///     The field value to set to the correct identifier.
+        /// </param>
+        /// <param name="argument">
+        ///     The argument.
+        /// </param>
+        /// <param name="argumentName">
+        ///     The argument name.
+        /// </param>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is not a valid entity identifier.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ValidEntityId(
+            out int field,
+            in int argument,
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
+        {
+            if (argument <= 0)
+            {
+                throw new ArgumentNotPositiveIntegerException(argumentName);
+            }
+
+            field = argument;
+        }
+
+        /// <summary>
+        ///     Called when a contract requires that a value is a valid identifier for an entity.
+        /// </summary>
+        /// <param name="argument">
+        ///     The argument.
+        /// </param>
+        /// <param name="argumentName">
+        ///     The argument name.
+        /// </param>
+        /// <returns>The value given as input.</returns>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is not a valid entity identifier.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long ValidEntityId(
+            in long argument,
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
+        {
+            if (argument <= 0L)
+            {
+                throw new ArgumentNotPositiveIntegerException(argumentName);
+            }
+
+            return argument;
+        }
+
+        /// <summary>
+        ///     Called when a contract requires that a value is a valid identifier for an entity.
+        /// </summary>
+        /// <param name="field">
+        ///     The field value to set to the correct identifier.
+        /// </param>
+        /// <param name="argument">
+        ///     The argument.
+        /// </param>
+        /// <param name="argumentName">
+        ///     The argument name.
+        /// </param>
+        /// <exception cref="ArgumentNotPositiveIntegerException">
+        ///     The argument is not a valid entity identifier.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ValidEntityId(
+            out long field,
+            in long argument,
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
+        {
+            if (argument <= 0L)
+            {
+                throw new ArgumentNotPositiveIntegerException(argumentName);
+            }
+
+            field = argument;
+        }
+
+        #endregion
     }
 }
