@@ -140,7 +140,8 @@ for (int i = 0; i < types.Length; i++)
 #>
             in <#= fullTypeName #> argument,
             in <#= fullTypeName #> desiredComparisonValue,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <#= lessThan ? ">" : "<" #><#= isEqual ? string.Empty : "=" #> desiredComparisonValue)
             {

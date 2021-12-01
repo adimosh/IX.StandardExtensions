@@ -104,7 +104,8 @@ for (int i = 0; i < types.Length; i++)
             in <#= fullTypeName #> argument,
             in <#= fullTypeName #> lowerBound,
             in <#= fullTypeName #> upperBound,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (lowerBound > upperBound)
             {

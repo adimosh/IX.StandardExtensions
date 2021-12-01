@@ -47,8 +47,10 @@ namespace IX.StandardExtensions.Contracts
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             byte id,
-            string sourceName,
-            string idName)
+            [CallerArgumentExpression("source")]
+            string sourceName = "source",
+            [CallerArgumentExpression("id")]
+            string idName = "id")
             where TItem : IKeyedEntity<byte>
         {
             if (source == null)
@@ -101,8 +103,10 @@ namespace IX.StandardExtensions.Contracts
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             sbyte id,
-            string sourceName,
-            string idName)
+            [CallerArgumentExpression("source")]
+            string sourceName = "source",
+            [CallerArgumentExpression("id")]
+            string idName = "id")
             where TItem : IKeyedEntity<sbyte>
         {
             if (source == null)
@@ -155,8 +159,10 @@ namespace IX.StandardExtensions.Contracts
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             short id,
-            string sourceName,
-            string idName)
+            [CallerArgumentExpression("source")]
+            string sourceName = "source",
+            [CallerArgumentExpression("id")]
+            string idName = "id")
             where TItem : IKeyedEntity<short>
         {
             if (source == null)
@@ -209,8 +215,10 @@ namespace IX.StandardExtensions.Contracts
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             ushort id,
-            string sourceName,
-            string idName)
+            [CallerArgumentExpression("source")]
+            string sourceName = "source",
+            [CallerArgumentExpression("id")]
+            string idName = "id")
             where TItem : IKeyedEntity<ushort>
         {
             if (source == null)
@@ -263,8 +271,10 @@ namespace IX.StandardExtensions.Contracts
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             char id,
-            string sourceName,
-            string idName)
+            [CallerArgumentExpression("source")]
+            string sourceName = "source",
+            [CallerArgumentExpression("id")]
+            string idName = "id")
             where TItem : IKeyedEntity<char>
         {
             if (source == null)
@@ -317,8 +327,10 @@ namespace IX.StandardExtensions.Contracts
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             int id,
-            string sourceName,
-            string idName)
+            [CallerArgumentExpression("source")]
+            string sourceName = "source",
+            [CallerArgumentExpression("id")]
+            string idName = "id")
             where TItem : IKeyedEntity<int>
         {
             if (source == null)
@@ -371,8 +383,10 @@ namespace IX.StandardExtensions.Contracts
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             uint id,
-            string sourceName,
-            string idName)
+            [CallerArgumentExpression("source")]
+            string sourceName = "source",
+            [CallerArgumentExpression("id")]
+            string idName = "id")
             where TItem : IKeyedEntity<uint>
         {
             if (source == null)
@@ -425,8 +439,10 @@ namespace IX.StandardExtensions.Contracts
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             long id,
-            string sourceName,
-            string idName)
+            [CallerArgumentExpression("source")]
+            string sourceName = "source",
+            [CallerArgumentExpression("id")]
+            string idName = "id")
             where TItem : IKeyedEntity<long>
         {
             if (source == null)
@@ -479,8 +495,10 @@ namespace IX.StandardExtensions.Contracts
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             ulong id,
-            string sourceName,
-            string idName)
+            [CallerArgumentExpression("source")]
+            string sourceName = "source",
+            [CallerArgumentExpression("id")]
+            string idName = "id")
             where TItem : IKeyedEntity<ulong>
         {
             if (source == null)
@@ -533,8 +551,10 @@ namespace IX.StandardExtensions.Contracts
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             float id,
-            string sourceName,
-            string idName)
+            [CallerArgumentExpression("source")]
+            string sourceName = "source",
+            [CallerArgumentExpression("id")]
+            string idName = "id")
             where TItem : IKeyedEntity<float>
         {
             if (source == null)
@@ -587,8 +607,10 @@ namespace IX.StandardExtensions.Contracts
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             double id,
-            string sourceName,
-            string idName)
+            [CallerArgumentExpression("source")]
+            string sourceName = "source",
+            [CallerArgumentExpression("id")]
+            string idName = "id")
             where TItem : IKeyedEntity<double>
         {
             if (source == null)
@@ -641,8 +663,10 @@ namespace IX.StandardExtensions.Contracts
         public static TItem ItemFoundById<TItem>(
             IEnumerable<TItem> source,
             decimal id,
-            string sourceName,
-            string idName)
+            [CallerArgumentExpression("source")]
+            string sourceName = "source",
+            [CallerArgumentExpression("id")]
+            string idName = "id")
             where TItem : IKeyedEntity<decimal>
         {
             if (source == null)

@@ -106,7 +106,8 @@ for (int i = 0; i < types.Length; i++)
         }
 #>
             in <#= fullTypeName #> argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <#= isTypeUnsigned ? "==" : (isNonNegative ? "<" : "<=") #> 0)
             {

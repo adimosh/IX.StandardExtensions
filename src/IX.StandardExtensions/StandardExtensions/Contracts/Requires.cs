@@ -47,7 +47,8 @@ namespace IX.StandardExtensions.Contracts
         public static T NotNull<T>(
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T? argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument is null)
             {
@@ -80,7 +81,8 @@ namespace IX.StandardExtensions.Contracts
             out T field,
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T? argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument is null)
             {
@@ -111,7 +113,8 @@ namespace IX.StandardExtensions.Contracts
         public static string NotNullOrEmpty(
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (string.IsNullOrEmpty(argument))
             {
@@ -143,7 +146,8 @@ namespace IX.StandardExtensions.Contracts
             out string field,
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (string.IsNullOrEmpty(argument))
             {
@@ -174,7 +178,8 @@ namespace IX.StandardExtensions.Contracts
         public static string NotNullOrWhiteSpace(
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (string.IsNullOrWhiteSpace(argument))
             {
@@ -206,7 +211,8 @@ namespace IX.StandardExtensions.Contracts
             out string field,
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             string? argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (string.IsNullOrWhiteSpace(argument))
             {
@@ -245,7 +251,8 @@ namespace IX.StandardExtensions.Contracts
         public static TCollection NotEmpty<TCollection, T>(
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             TCollection? argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
             where TCollection : class, ICollection<T>
         {
             if ((argument?.Count ?? 0) == 0)
@@ -272,7 +279,8 @@ namespace IX.StandardExtensions.Contracts
             out TCollection field,
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             TCollection? argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
             where TCollection : class, ICollection<T>
         {
             if ((argument?.Count ?? 0) == 0)
@@ -307,7 +315,8 @@ namespace IX.StandardExtensions.Contracts
         public static T[] NotEmpty<T>(
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if ((argument?.Length ?? 0) == 0)
             {
@@ -340,7 +349,8 @@ namespace IX.StandardExtensions.Contracts
             out T[] field,
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if ((argument?.Length ?? 0) == 0)
             {
@@ -361,6 +371,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="length">The exact length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="lengthArgumentName">The name for the length argument.</param>
         /// <returns>The validated argument.</returns>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
@@ -372,7 +383,10 @@ namespace IX.StandardExtensions.Contracts
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
-            string argumentName)
+            [CallerArgumentExpression("array")]
+            string argumentName = "array",
+            [CallerArgumentExpression("length")]
+            string lengthArgumentName = "length")
         {
             if (array == null)
             {
@@ -381,12 +395,12 @@ namespace IX.StandardExtensions.Contracts
 
             if (length < 0)
             {
-                throw new ArgumentNotValidLengthException(nameof(length));
+                throw new ArgumentNotValidLengthException(lengthArgumentName);
             }
 
             if (array.Length != length)
             {
-                throw new ArgumentNullOrEmptyArrayException(argumentName);
+                throw new ArgumentOutOfRangeException(lengthArgumentName);
             }
 
             return array;
@@ -400,6 +414,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="length">The exact length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="lengthArgumentName">The name for the length argument.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -411,7 +426,10 @@ namespace IX.StandardExtensions.Contracts
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
-            string argumentName)
+            [CallerArgumentExpression("array")]
+            string argumentName = "array",
+            [CallerArgumentExpression("length")]
+            string lengthArgumentName = "length")
         {
             if (array == null)
             {
@@ -420,12 +438,12 @@ namespace IX.StandardExtensions.Contracts
 
             if (length < 0)
             {
-                throw new ArgumentNotValidLengthException(nameof(length));
+                throw new ArgumentNotValidLengthException(lengthArgumentName);
             }
 
             if (array.Length != length)
             {
-                throw new ArgumentNullOrEmptyArrayException(argumentName);
+                throw new ArgumentOutOfRangeException(lengthArgumentName);
             }
 
             field = array;
@@ -436,6 +454,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="length">The exact length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="lengthArgumentName">The name for the length argument.</param>
         /// <returns>The validated argument.</returns>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
@@ -447,7 +466,10 @@ namespace IX.StandardExtensions.Contracts
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
-            string argumentName)
+            [CallerArgumentExpression("array")]
+            string argumentName = "array",
+            [CallerArgumentExpression("length")]
+            string lengthArgumentName = "length")
         {
             if (array == null)
             {
@@ -456,12 +478,12 @@ namespace IX.StandardExtensions.Contracts
 
             if (length < 0)
             {
-                throw new ArgumentNotValidLengthException(nameof(length));
+                throw new ArgumentNotValidLengthException(lengthArgumentName);
             }
 
             if (array.LongLength != length)
             {
-                throw new ArgumentNullOrEmptyArrayException(argumentName);
+                throw new ArgumentOutOfRangeException(argumentName);
             }
 
             return array;
@@ -475,6 +497,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="length">The exact length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="lengthArgumentName">The name for the length argument.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -486,7 +509,10 @@ namespace IX.StandardExtensions.Contracts
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
-            string argumentName)
+            [CallerArgumentExpression("array")]
+            string argumentName = "array",
+            [CallerArgumentExpression("length")]
+            string lengthArgumentName = "length")
         {
             if (array == null)
             {
@@ -495,12 +521,12 @@ namespace IX.StandardExtensions.Contracts
 
             if (length < 0)
             {
-                throw new ArgumentNotValidLengthException(nameof(length));
+                throw new ArgumentNotValidLengthException(lengthArgumentName);
             }
 
             if (array.LongLength != length)
             {
-                throw new ArgumentNullOrEmptyArrayException(argumentName);
+                throw new ArgumentOutOfRangeException(argumentName);
             }
 
             field = array;
@@ -515,6 +541,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="length">The exact length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="lengthArgumentName">The name for the length argument.</param>
         /// <returns>The validated argument.</returns>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
@@ -526,7 +553,10 @@ namespace IX.StandardExtensions.Contracts
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
-            string argumentName)
+            [CallerArgumentExpression("array")]
+            string argumentName = "array",
+            [CallerArgumentExpression("length")]
+            string lengthArgumentName = "length")
         {
             if (array == null)
             {
@@ -535,12 +565,12 @@ namespace IX.StandardExtensions.Contracts
 
             if (length < 0)
             {
-                throw new ArgumentNotValidLengthException(nameof(length));
+                throw new ArgumentNotValidLengthException(lengthArgumentName);
             }
 
             if (array.Length < length)
             {
-                throw new ArgumentNullOrEmptyArrayException(argumentName);
+                throw new ArgumentOutOfRangeException(argumentName);
             }
 
             return array;
@@ -554,6 +584,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="length">The exact length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="lengthArgumentName">The name for the length argument.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -565,7 +596,10 @@ namespace IX.StandardExtensions.Contracts
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
-            string argumentName)
+            [CallerArgumentExpression("array")]
+            string argumentName = "array",
+            [CallerArgumentExpression("length")]
+            string lengthArgumentName = "length")
         {
             if (array == null)
             {
@@ -574,12 +608,12 @@ namespace IX.StandardExtensions.Contracts
 
             if (length < 0)
             {
-                throw new ArgumentNotValidLengthException(nameof(length));
+                throw new ArgumentNotValidLengthException(lengthArgumentName);
             }
 
             if (array.Length < length)
             {
-                throw new ArgumentNullOrEmptyArrayException(argumentName);
+                throw new ArgumentOutOfRangeException(argumentName);
             }
 
             field = array;
@@ -590,6 +624,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="length">The exact length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="lengthArgumentName">The name for the length argument.</param>
         /// <returns>The validated argument.</returns>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
@@ -601,7 +636,10 @@ namespace IX.StandardExtensions.Contracts
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
-            string argumentName)
+            [CallerArgumentExpression("array")]
+            string argumentName = "array",
+            [CallerArgumentExpression("length")]
+            string lengthArgumentName = "length")
         {
             if (array == null)
             {
@@ -610,12 +648,12 @@ namespace IX.StandardExtensions.Contracts
 
             if (length < 0)
             {
-                throw new ArgumentNotValidLengthException(nameof(length));
+                throw new ArgumentNotValidLengthException(lengthArgumentName);
             }
 
             if (array.LongLength < length)
             {
-                throw new ArgumentNullOrEmptyArrayException(argumentName);
+                throw new ArgumentOutOfRangeException(argumentName);
             }
 
             return array;
@@ -629,6 +667,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="length">The exact length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="lengthArgumentName">The name for the length argument.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -640,7 +679,10 @@ namespace IX.StandardExtensions.Contracts
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
-            string argumentName)
+            [CallerArgumentExpression("array")]
+            string argumentName = "array",
+            [CallerArgumentExpression("length")]
+            string lengthArgumentName = "length")
         {
             if (array == null)
             {
@@ -649,12 +691,12 @@ namespace IX.StandardExtensions.Contracts
 
             if (length < 0)
             {
-                throw new ArgumentNotValidLengthException(nameof(length));
+                throw new ArgumentNotValidLengthException(lengthArgumentName);
             }
 
             if (array.LongLength < length)
             {
-                throw new ArgumentNullOrEmptyArrayException(argumentName);
+                throw new ArgumentOutOfRangeException(argumentName);
             }
 
             field = array;
@@ -669,6 +711,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="length">The exact length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="lengthArgumentName">The name for the length argument.</param>
         /// <returns>The validated argument.</returns>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
@@ -680,7 +723,10 @@ namespace IX.StandardExtensions.Contracts
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
-            string argumentName)
+            [CallerArgumentExpression("array")]
+            string argumentName = "array",
+            [CallerArgumentExpression("length")]
+            string lengthArgumentName = "length")
         {
             if (array == null)
             {
@@ -689,12 +735,12 @@ namespace IX.StandardExtensions.Contracts
 
             if (length < 1)
             {
-                throw new ArgumentNotValidLengthException(nameof(length));
+                throw new ArgumentNotValidLengthException(lengthArgumentName);
             }
 
             if (array.Length > length)
             {
-                throw new ArgumentNullOrEmptyArrayException(argumentName);
+                throw new ArgumentOutOfRangeException(argumentName);
             }
 
             return array;
@@ -708,6 +754,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="length">The exact length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="lengthArgumentName">The name for the length argument.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -719,7 +766,10 @@ namespace IX.StandardExtensions.Contracts
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in int length,
-            string argumentName)
+            [CallerArgumentExpression("array")]
+            string argumentName = "array",
+            [CallerArgumentExpression("length")]
+            string lengthArgumentName = "length")
         {
             if (array == null)
             {
@@ -728,12 +778,12 @@ namespace IX.StandardExtensions.Contracts
 
             if (length > 1)
             {
-                throw new ArgumentNotValidLengthException(nameof(length));
+                throw new ArgumentNotValidLengthException(lengthArgumentName);
             }
 
             if (array.Length < length)
             {
-                throw new ArgumentNullOrEmptyArrayException(argumentName);
+                throw new ArgumentOutOfRangeException(argumentName);
             }
 
             field = array;
@@ -744,6 +794,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="length">The exact length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="lengthArgumentName">The name for the length argument.</param>
         /// <returns>The validated argument.</returns>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
@@ -755,7 +806,10 @@ namespace IX.StandardExtensions.Contracts
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
-            string argumentName)
+            [CallerArgumentExpression("array")]
+            string argumentName = "array",
+            [CallerArgumentExpression("length")]
+            string lengthArgumentName = "length")
         {
             if (array == null)
             {
@@ -764,12 +818,12 @@ namespace IX.StandardExtensions.Contracts
 
             if (length > 1)
             {
-                throw new ArgumentNotValidLengthException(nameof(length));
+                throw new ArgumentNotValidLengthException(lengthArgumentName);
             }
 
             if (array.LongLength < length)
             {
-                throw new ArgumentNullOrEmptyArrayException(argumentName);
+                throw new ArgumentOutOfRangeException(argumentName);
             }
 
             return array;
@@ -783,6 +837,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="length">The exact length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="lengthArgumentName">The name for the length argument.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -794,7 +849,10 @@ namespace IX.StandardExtensions.Contracts
             [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
             T[]? array,
             in long length,
-            string argumentName)
+            [CallerArgumentExpression("array")]
+            string argumentName = "array",
+            [CallerArgumentExpression("length")]
+            string lengthArgumentName = "length")
         {
             if (array == null)
             {
@@ -803,12 +861,12 @@ namespace IX.StandardExtensions.Contracts
 
             if (length < 1)
             {
-                throw new ArgumentNotValidLengthException(nameof(length));
+                throw new ArgumentNotValidLengthException(lengthArgumentName);
             }
 
             if (array.LongLength > length)
             {
-                throw new ArgumentNullOrEmptyArrayException(argumentName);
+                throw new ArgumentOutOfRangeException(argumentName);
             }
 
             field = array;
@@ -830,21 +888,25 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argument">The string to validate.</param>
         /// <param name="pattern">The pattern to match.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="patternArgumentName">The argument name for the pattern argument.</param>
         /// <returns>The validated argument.</returns>
         /// <exception cref="ArgumentNullOrEmptyStringException">The pattern is <c>null</c> (<c>Nothing in Visual Basic</c>) or empty.</exception>
         /// <exception cref="ArgumentNullException">The argument is <c>null</c> (<c>Nothing in Visual Basic</c>).</exception>
         /// <exception cref="ArgumentDoesNotMatchException">The argument does not match the pattern.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [ContractAnnotation("argument:null => halt")]
+        [ContractAnnotation("argument:null => halt; pattern:null => halt")]
         [AssertionMethod]
         public static string Matches(
             string? argument,
             string pattern,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument",
+            [CallerArgumentExpression("pattern")]
+            string patternArgumentName = "pattern")
         {
             if (string.IsNullOrEmpty(pattern))
             {
-                throw new ArgumentNullOrEmptyStringException(nameof(pattern));
+                throw new ArgumentNullOrEmptyStringException(patternArgumentName);
             }
 
             if (argument == null)
@@ -873,21 +935,25 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argument">The string to validate.</param>
         /// <param name="pattern">The pattern to match.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="patternArgumentName">The argument name for the pattern argument.</param>
         /// <exception cref="ArgumentNullOrEmptyStringException">The pattern is <c>null</c> (<c>Nothing in Visual Basic</c>) or empty.</exception>
         /// <exception cref="ArgumentNullException">The argument is <c>null</c> (<c>Nothing in Visual Basic</c>).</exception>
         /// <exception cref="ArgumentDoesNotMatchException">The argument does not match the pattern.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [ContractAnnotation("argument:null => halt")]
+        [ContractAnnotation("argument:null => halt; pattern:null => halt")]
         [AssertionMethod]
         public static void Matches(
             out string field,
             string? argument,
             string pattern,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument",
+            [CallerArgumentExpression("pattern")]
+            string patternArgumentName = "pattern")
         {
             if (string.IsNullOrEmpty(pattern))
             {
-                throw new ArgumentNullOrEmptyStringException(nameof(pattern));
+                throw new ArgumentNullOrEmptyStringException(patternArgumentName);
             }
 
             if (argument == null)
@@ -929,7 +995,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TimeSpan Positive(
             in TimeSpan argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= TimeSpan.Zero)
             {
@@ -956,7 +1023,8 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out TimeSpan field,
             in TimeSpan argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= TimeSpan.Zero)
             {
@@ -987,7 +1055,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TimeSpan NonNegative(
             in TimeSpan argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < TimeSpan.Zero)
             {
@@ -1014,7 +1083,8 @@ namespace IX.StandardExtensions.Contracts
         public static void NonNegative(
             out TimeSpan field,
             in TimeSpan argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < TimeSpan.Zero)
             {
@@ -1032,6 +1102,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argument">The numeric argument to validate.</param>
         /// <param name="array">The array for which we are validating the index.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="arrayName">The array argument name.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -1040,11 +1111,14 @@ namespace IX.StandardExtensions.Contracts
         public static void ValidArrayIndex<T>(
             in int argument,
             T[] array,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument",
+            [CallerArgumentExpression("array")]
+            string arrayName = "array")
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(arrayName);
             }
 
             if (argument < 0 || argument >= array.Length)
@@ -1059,6 +1133,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argument">The numeric argument to validate.</param>
         /// <param name="array">The array for which we are validating the index.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="arrayName">The array argument name.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -1068,11 +1143,14 @@ namespace IX.StandardExtensions.Contracts
             out int field,
             in int argument,
             T[] array,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument",
+            [CallerArgumentExpression("array")]
+            string arrayName = "array")
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(arrayName);
             }
 
             if (argument < 0 || argument >= array.Length)
@@ -1088,6 +1166,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argument">The numeric argument to validate.</param>
         /// <param name="array">The array for which we are validating the index.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="arrayName">The array argument name.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -1096,11 +1175,14 @@ namespace IX.StandardExtensions.Contracts
         public static void ValidArrayIndex<T>(
             in long argument,
             T[] array,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument",
+            [CallerArgumentExpression("array")]
+            string arrayName = "array")
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(arrayName);
             }
 
             if (argument < 0 || argument >= array.LongLength)
@@ -1115,6 +1197,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argument">The numeric argument to validate.</param>
         /// <param name="array">The array for which we are validating the index.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="arrayName">The array argument name.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -1124,11 +1207,14 @@ namespace IX.StandardExtensions.Contracts
             out long field,
             in long argument,
             T[] array,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument",
+            [CallerArgumentExpression("array")]
+            string arrayName = "array")
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(arrayName);
             }
 
             if (argument < 0 || argument >= array.LongLength)
@@ -1144,7 +1230,9 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="indexArgument">The numeric index argument to validate.</param>
         /// <param name="lengthArgument">The numeric length argument to validate.</param>
         /// <param name="array">The array for which we are validating the range.</param>
-        /// <param name="argumentName">The argument name.</param>
+        /// <param name="indexArgumentName">The index argument name.</param>
+        /// <param name="lengthArgumentName">The length argument name.</param>
+        /// <param name="arrayArgumentName">The array argument name.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -1154,23 +1242,28 @@ namespace IX.StandardExtensions.Contracts
             in int indexArgument,
             in int lengthArgument,
             T[] array,
-            string argumentName)
+            [CallerArgumentExpression("indexArgument")]
+            string indexArgumentName = "indexArgument",
+            [CallerArgumentExpression("lengthArgument")]
+            string lengthArgumentName = "lengthArgument",
+            [CallerArgumentExpression("array")]
+            string arrayArgumentName = "array")
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(arrayArgumentName);
             }
 
             if (indexArgument < 0 || indexArgument >= array.Length)
             {
-                throw new ArgumentNotValidIndexException(argumentName);
+                throw new ArgumentNotValidIndexException(indexArgumentName);
             }
 
             if (lengthArgument <= 0 || indexArgument + lengthArgument > array.Length)
             {
                 throw new ArgumentsNotValidRangeException(
-                    nameof(indexArgument),
-                    nameof(lengthArgument));
+                    indexArgumentName,
+                    lengthArgumentName);
             }
         }
 
@@ -1181,7 +1274,9 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="indexArgument">The numeric index argument to validate.</param>
         /// <param name="lengthArgument">The numeric length argument to validate.</param>
         /// <param name="array">The array for which we are validating the range.</param>
-        /// <param name="argumentName">The argument name.</param>
+        /// <param name="indexArgumentName">The index argument name.</param>
+        /// <param name="lengthArgumentName">The length argument name.</param>
+        /// <param name="arrayArgumentName">The array argument name.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -1193,23 +1288,28 @@ namespace IX.StandardExtensions.Contracts
             in int indexArgument,
             in int lengthArgument,
             T[] array,
-            string argumentName)
+            [CallerArgumentExpression("indexArgument")]
+            string indexArgumentName = "indexArgument",
+            [CallerArgumentExpression("lengthArgument")]
+            string lengthArgumentName = "lengthArgument",
+            [CallerArgumentExpression("array")]
+            string arrayArgumentName = "array")
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(arrayArgumentName);
             }
 
             if (indexArgument < 0 || indexArgument >= array.Length)
             {
-                throw new ArgumentNotValidIndexException(argumentName);
+                throw new ArgumentNotValidIndexException(indexArgumentName);
             }
 
             if (lengthArgument <= 0 || indexArgument + lengthArgument > array.Length)
             {
                 throw new ArgumentsNotValidRangeException(
-                    nameof(indexArgument),
-                    nameof(lengthArgument));
+                    indexArgumentName,
+                    lengthArgumentName);
             }
 
             fieldIndex = indexArgument;
@@ -1221,7 +1321,9 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="indexArgument">The numeric index argument to validate.</param>
         /// <param name="lengthArgument">The numeric length argument to validate.</param>
         /// <param name="array">The array for which we are validating the range.</param>
-        /// <param name="argumentName">The argument name.</param>
+        /// <param name="indexArgumentName">The index argument name.</param>
+        /// <param name="lengthArgumentName">The length argument name.</param>
+        /// <param name="arrayArgumentName">The array argument name.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -1231,23 +1333,28 @@ namespace IX.StandardExtensions.Contracts
             in long indexArgument,
             in long lengthArgument,
             T[] array,
-            string argumentName)
+            [CallerArgumentExpression("indexArgument")]
+            string indexArgumentName = "indexArgument",
+            [CallerArgumentExpression("lengthArgument")]
+            string lengthArgumentName = "lengthArgument",
+            [CallerArgumentExpression("array")]
+            string arrayArgumentName = "array")
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(arrayArgumentName);
             }
 
             if (indexArgument < 0 || indexArgument >= array.LongLength)
             {
-                throw new ArgumentNotValidIndexException(argumentName);
+                throw new ArgumentNotValidIndexException(indexArgumentName);
             }
 
             if (lengthArgument <= 0 || indexArgument + lengthArgument > array.LongLength)
             {
                 throw new ArgumentsNotValidRangeException(
-                    nameof(indexArgument),
-                    nameof(lengthArgument));
+                    indexArgumentName,
+                    lengthArgumentName);
             }
         }
 
@@ -1258,7 +1365,9 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="indexArgument">The numeric index argument to validate.</param>
         /// <param name="lengthArgument">The numeric length argument to validate.</param>
         /// <param name="array">The array for which we are validating the range.</param>
-        /// <param name="argumentName">The argument name.</param>
+        /// <param name="indexArgumentName">The index argument name.</param>
+        /// <param name="lengthArgumentName">The length argument name.</param>
+        /// <param name="arrayArgumentName">The array argument name.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -1270,23 +1379,28 @@ namespace IX.StandardExtensions.Contracts
             in long indexArgument,
             in long lengthArgument,
             T[] array,
-            string argumentName)
+            [CallerArgumentExpression("indexArgument")]
+            string indexArgumentName = "indexArgument",
+            [CallerArgumentExpression("lengthArgument")]
+            string lengthArgumentName = "lengthArgument",
+            [CallerArgumentExpression("array")]
+            string arrayArgumentName = "array")
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(arrayArgumentName);
             }
 
             if (indexArgument < 0 || indexArgument >= array.LongLength)
             {
-                throw new ArgumentNotValidIndexException(argumentName);
+                throw new ArgumentNotValidIndexException(indexArgumentName);
             }
 
             if (lengthArgument <= 0 || indexArgument + lengthArgument > array.LongLength)
             {
                 throw new ArgumentsNotValidRangeException(
-                    nameof(indexArgument),
-                    nameof(lengthArgument));
+                    indexArgumentName,
+                    lengthArgumentName);
             }
 
             fieldIndex = indexArgument;
@@ -1298,6 +1412,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argument">The numeric argument to validate.</param>
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="arrayArgumentName">The array argument name.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -1306,11 +1421,14 @@ namespace IX.StandardExtensions.Contracts
         public static void ValidArrayLength<T>(
             in int argument,
             T[] array,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument",
+            [CallerArgumentExpression("array")]
+            string arrayArgumentName = "array")
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(arrayArgumentName);
             }
 
             if (argument <= 0 || argument > array.Length)
@@ -1325,6 +1443,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argument">The numeric argument to validate.</param>
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="arrayArgumentName">The array argument name.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -1334,11 +1453,14 @@ namespace IX.StandardExtensions.Contracts
             out int field,
             in int argument,
             T[] array,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument",
+            [CallerArgumentExpression("array")]
+            string arrayArgumentName = "array")
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(arrayArgumentName);
             }
 
             if (argument <= 0 || argument > array.Length)
@@ -1354,6 +1476,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argument">The numeric argument to validate.</param>
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="arrayArgumentName">The array argument name.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -1362,11 +1485,14 @@ namespace IX.StandardExtensions.Contracts
         public static void ValidArrayLength<T>(
             in long argument,
             in T[] array,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument",
+            [CallerArgumentExpression("array")]
+            string arrayArgumentName = "array")
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(arrayArgumentName);
             }
 
             if (argument <= 0 || argument > array.LongLength)
@@ -1381,6 +1507,7 @@ namespace IX.StandardExtensions.Contracts
         /// <param name="argument">The numeric argument to validate.</param>
         /// <param name="array">The array for which we are validating the length.</param>
         /// <param name="argumentName">The argument name.</param>
+        /// <param name="arrayArgumentName">The array argument name.</param>
         /// <exception cref="ArgumentNotPositiveIntegerException">
         ///     The argument is either negative or exceeds the bounds of the
         ///     array.
@@ -1390,11 +1517,14 @@ namespace IX.StandardExtensions.Contracts
             out long field,
             in long argument,
             in T[] array,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument",
+            [CallerArgumentExpression("array")]
+            string arrayArgumentName = "array")
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException(arrayArgumentName);
             }
 
             if (argument <= 0 || argument > array.LongLength)
@@ -1429,7 +1559,8 @@ namespace IX.StandardExtensions.Contracts
         public static bool True(
             [AssertionCondition(AssertionConditionType.IS_TRUE)]
             bool condition,
-            string argumentName)
+            [CallerArgumentExpression("condition")]
+            string argumentName = "condition")
         {
             if (!condition)
             {
@@ -1460,7 +1591,8 @@ namespace IX.StandardExtensions.Contracts
             out bool field,
             [AssertionCondition(AssertionConditionType.IS_TRUE)]
             bool condition,
-            string argumentName)
+            [CallerArgumentExpression("condition")]
+            string argumentName = "condition")
         {
             if (!condition)
             {
@@ -1492,7 +1624,8 @@ namespace IX.StandardExtensions.Contracts
         public static bool False(
             [AssertionCondition(AssertionConditionType.IS_FALSE)]
             bool condition,
-            string argumentName)
+            [CallerArgumentExpression("condition")]
+            string argumentName = "condition")
         {
             if (condition)
             {
@@ -1523,7 +1656,8 @@ namespace IX.StandardExtensions.Contracts
             out bool field,
             [AssertionCondition(AssertionConditionType.IS_FALSE)]
             bool condition,
-            string argumentName)
+            [CallerArgumentExpression("condition")]
+            string argumentName = "condition")
         {
             if (condition)
             {
@@ -1561,7 +1695,8 @@ namespace IX.StandardExtensions.Contracts
         [AssertionMethod]
         public static T ArgumentOfType<T>(
             [NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object? argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument is not T convertedValue)
             {
@@ -1593,7 +1728,8 @@ namespace IX.StandardExtensions.Contracts
         public static void ArgumentOfType<T>(
             out T field,
             [NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object? argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument is not T convertedValue)
             {
@@ -1667,8 +1803,10 @@ namespace IX.StandardExtensions.Contracts
         public static TItem ItemFoundById<TItem, TKey>(
             IEnumerable<TItem> source,
             TKey id,
-            string sourceName,
-            string idName)
+            [CallerArgumentExpression("source")]
+            string sourceName = "source",
+            [CallerArgumentExpression("id")]
+            string idName = "id")
             where TItem : IKeyedEntity<TKey>
         {
             if (source == null)

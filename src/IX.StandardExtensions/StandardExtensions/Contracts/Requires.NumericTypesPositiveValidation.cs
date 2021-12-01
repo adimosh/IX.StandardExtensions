@@ -27,7 +27,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Positive(
             in byte argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument == 0)
             {
@@ -55,7 +56,8 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out byte field,
             in byte argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument == 0)
             {
@@ -81,7 +83,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Positive(
             in sbyte argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -105,7 +108,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void NonNegative(
             in sbyte argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
@@ -133,7 +137,8 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out sbyte field,
             in sbyte argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -163,7 +168,8 @@ namespace IX.StandardExtensions.Contracts
         public static void NonNegative(
             out sbyte field,
             in sbyte argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
@@ -189,7 +195,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Positive(
             in short argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -213,7 +220,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void NonNegative(
             in short argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
@@ -241,7 +249,8 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out short field,
             in short argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -271,7 +280,8 @@ namespace IX.StandardExtensions.Contracts
         public static void NonNegative(
             out short field,
             in short argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
@@ -297,7 +307,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Positive(
             in ushort argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument == 0)
             {
@@ -325,7 +336,8 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out ushort field,
             in ushort argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument == 0)
             {
@@ -351,7 +363,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Positive(
             in char argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument == 0)
             {
@@ -379,7 +392,8 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out char field,
             in char argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument == 0)
             {
@@ -405,7 +419,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Positive(
             in int argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -429,7 +444,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void NonNegative(
             in int argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
@@ -457,7 +473,8 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out int field,
             in int argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -487,7 +504,8 @@ namespace IX.StandardExtensions.Contracts
         public static void NonNegative(
             out int field,
             in int argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
@@ -513,7 +531,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Positive(
             in uint argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument == 0)
             {
@@ -541,7 +560,8 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out uint field,
             in uint argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument == 0)
             {
@@ -567,7 +587,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Positive(
             in long argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -591,7 +612,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void NonNegative(
             in long argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
@@ -619,7 +641,8 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out long field,
             in long argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -649,7 +672,8 @@ namespace IX.StandardExtensions.Contracts
         public static void NonNegative(
             out long field,
             in long argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
@@ -675,7 +699,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Positive(
             in ulong argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument == 0)
             {
@@ -703,7 +728,8 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out ulong field,
             in ulong argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument == 0)
             {
@@ -729,7 +755,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Positive(
             in float argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -753,7 +780,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void NonNegative(
             in float argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
@@ -781,7 +809,8 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out float field,
             in float argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -811,7 +840,8 @@ namespace IX.StandardExtensions.Contracts
         public static void NonNegative(
             out float field,
             in float argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
@@ -837,7 +867,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Positive(
             in double argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -861,7 +892,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void NonNegative(
             in double argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
@@ -889,7 +921,8 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out double field,
             in double argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -919,7 +952,8 @@ namespace IX.StandardExtensions.Contracts
         public static void NonNegative(
             out double field,
             in double argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
@@ -945,7 +979,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Positive(
             in decimal argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -969,7 +1004,8 @@ namespace IX.StandardExtensions.Contracts
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void NonNegative(
             in decimal argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
@@ -997,7 +1033,8 @@ namespace IX.StandardExtensions.Contracts
         public static void Positive(
             out decimal field,
             in decimal argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument <= 0)
             {
@@ -1027,7 +1064,8 @@ namespace IX.StandardExtensions.Contracts
         public static void NonNegative(
             out decimal field,
             in decimal argument,
-            string argumentName)
+            [CallerArgumentExpression("argument")]
+            string argumentName = "argument")
         {
             if (argument < 0)
             {
