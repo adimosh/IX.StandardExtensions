@@ -42,13 +42,8 @@ namespace IX.StandardExtensions.Extensions
             this TypeInfo typeInfo,
             out TReturn? value)
         {
-            Requires.NotNull(
-                typeInfo,
-                nameof(typeInfo));
-
             CustomAttributeData? attributeData = Requires.NotNull(
-                    typeInfo,
-                    nameof(typeInfo))
+                    typeInfo)
                 .CustomAttributes.FirstOrDefault(
                     attribute => attribute.AttributeType.FullName == typeof(TAttribute).FullName);
 
@@ -113,8 +108,7 @@ namespace IX.StandardExtensions.Extensions
             string name,
             params Type[] parameters) =>
             Requires.NotNull(
-                    typeInfo,
-                    nameof(typeInfo))
+                    typeInfo)
                 .AsType()
                 .GetMethodWithExactParameters(
                     name,
@@ -139,8 +133,7 @@ namespace IX.StandardExtensions.Extensions
             string name,
             params TypeInfo[] parameters) =>
             Requires.NotNull(
-                    typeInfo,
-                    nameof(typeInfo))
+                    typeInfo)
                 .AsType()
                 .GetMethodWithExactParameters(
                     name,
@@ -154,8 +147,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns><see langword="true" /> if there is a parameter-less constructor; otherwise, <see langword="false" />.</returns>
         public static bool HasPublicParameterlessConstructor(this TypeInfo info) =>
             !Requires.NotNull(
-                    info,
-                    nameof(info))
+                    info)
                 .IsInterface &&
             !info.IsAbstract &&
             !info.IsGenericTypeDefinition &&
@@ -175,8 +167,7 @@ namespace IX.StandardExtensions.Extensions
         public static object Instantiate(this TypeInfo info) =>
             Activator.CreateInstance(
                 Requires.NotNull(
-                        info,
-                        nameof(info))
+                        info)
                     .AsType()) ?? throw new InvalidOperationException("Could not instantiate the object.");
 
         /// <summary>
@@ -190,8 +181,7 @@ namespace IX.StandardExtensions.Extensions
             params object[] parameters) =>
             Activator.CreateInstance(
                 Requires.NotNull(
-                        info,
-                        nameof(info))
+                        info)
                     .AsType(),
                 parameters) ??
             throw new InvalidOperationException("Could not instantiate the object.");

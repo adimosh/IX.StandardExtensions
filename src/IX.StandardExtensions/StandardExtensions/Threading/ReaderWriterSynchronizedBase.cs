@@ -55,8 +55,7 @@ namespace IX.StandardExtensions.Threading
         {
             Requires.NotNull(
                 out this.locker,
-                locker,
-                nameof(locker));
+                locker);
             this.lockInherited = true;
             this.lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
         }
@@ -86,8 +85,7 @@ namespace IX.StandardExtensions.Threading
         {
             Requires.NotNull(
                 out this.locker,
-                locker,
-                nameof(locker));
+                locker);
             this.lockInherited = true;
             this.lockerTimeout = timeout;
         }
@@ -144,8 +142,7 @@ namespace IX.StandardExtensions.Threading
         {
             this.RequiresNotDisposed();
             Action localAction = Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             using (new ReadOnlySynchronizationLocker(
                 this.locker,
@@ -165,8 +162,7 @@ namespace IX.StandardExtensions.Threading
         {
             this.RequiresNotDisposed();
             Func<T> localAction = Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             using (new ReadOnlySynchronizationLocker(
                 this.locker,
@@ -197,8 +193,7 @@ namespace IX.StandardExtensions.Threading
         {
             this.RequiresNotDisposed();
             Action localAction = Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             using (new WriteOnlySynchronizationLocker(
                 this.locker,
@@ -218,8 +213,7 @@ namespace IX.StandardExtensions.Threading
         {
             this.RequiresNotDisposed();
             Func<T> localAction = Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             using (new WriteOnlySynchronizationLocker(
                 this.locker,

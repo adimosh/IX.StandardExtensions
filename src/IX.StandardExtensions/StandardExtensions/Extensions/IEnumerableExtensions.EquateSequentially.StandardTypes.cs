@@ -57,9 +57,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<byte>? left, IEnumerable<byte>? right, Func<byte, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -144,9 +142,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<sbyte>? left, IEnumerable<sbyte>? right, Func<sbyte, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -231,9 +227,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<short>? left, IEnumerable<short>? right, Func<short, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -318,9 +312,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<ushort>? left, IEnumerable<ushort>? right, Func<ushort, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -405,9 +397,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<char>? left, IEnumerable<char>? right, Func<char, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -492,9 +482,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<int>? left, IEnumerable<int>? right, Func<int, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -579,9 +567,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<uint>? left, IEnumerable<uint>? right, Func<uint, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -666,9 +652,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<long>? left, IEnumerable<long>? right, Func<long, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -753,9 +737,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<ulong>? left, IEnumerable<ulong>? right, Func<ulong, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -840,9 +822,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<float>? left, IEnumerable<float>? right, Func<float, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -927,9 +907,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<double>? left, IEnumerable<double>? right, Func<double, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -1014,9 +992,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<decimal>? left, IEnumerable<decimal>? right, Func<decimal, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -1101,9 +1077,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<DateTime>? left, IEnumerable<DateTime>? right, Func<DateTime, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -1188,9 +1162,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<bool>? left, IEnumerable<bool>? right, Func<bool, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -1275,9 +1247,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<TimeSpan>? left, IEnumerable<TimeSpan>? right, Func<TimeSpan, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {
@@ -1362,9 +1332,7 @@ namespace IX.StandardExtensions.Extensions
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<string>? left, IEnumerable<string>? right, Func<string, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {

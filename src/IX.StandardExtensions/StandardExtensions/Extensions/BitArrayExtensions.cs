@@ -24,9 +24,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="source">The source bit array.</param>
         public static void AddOne(this BitArray source)
         {
-            BitArray ba = Requires.NotNull(
-                source,
-                nameof(source));
+            BitArray ba = Requires.NotNull(source);
 
             for (var i = 0; i < ba.Length; i++)
             {

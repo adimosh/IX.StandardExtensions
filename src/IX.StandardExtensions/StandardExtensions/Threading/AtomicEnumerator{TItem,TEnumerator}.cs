@@ -58,8 +58,7 @@ namespace IX.StandardExtensions.Threading
 
             Requires.NotNull(
                 out this.readLock,
-                readLock,
-                nameof(readLock));
+                readLock);
         }
 
 #endregion

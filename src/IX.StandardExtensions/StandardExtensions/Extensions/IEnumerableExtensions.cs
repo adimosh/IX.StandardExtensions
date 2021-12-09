@@ -45,11 +45,9 @@ namespace IX.StandardExtensions.Extensions
             Action<int, T> action)
         {
             Requires.NotNull(
-                source,
-                nameof(source));
+                source);
             Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             var i = 0;
             foreach (T item in source)
@@ -75,11 +73,9 @@ namespace IX.StandardExtensions.Extensions
             Action<int, object> action)
         {
             Requires.NotNull(
-                source,
-                nameof(source));
+                source);
             Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             var i = 0;
             foreach (var item in source)
@@ -106,11 +102,9 @@ namespace IX.StandardExtensions.Extensions
             Action<T> action)
         {
             Requires.NotNull(
-                source,
-                nameof(source));
+                source);
             Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             foreach (T item in source)
             {
@@ -132,11 +126,9 @@ namespace IX.StandardExtensions.Extensions
             Action<object> action)
         {
             Requires.NotNull(
-                source,
-                nameof(source));
+                source);
             Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             foreach (var item in source)
             {
@@ -163,11 +155,9 @@ namespace IX.StandardExtensions.Extensions
             Action<int, T> action)
         {
             Requires.NotNull(
-                source,
-                nameof(source));
+                source);
             Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             Parallel.ForEach(
                 EnumerateWithIndex(
@@ -210,11 +200,9 @@ namespace IX.StandardExtensions.Extensions
             Action<T> action)
         {
             Requires.NotNull(
-                source,
-                nameof(source));
+                source);
             Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             Parallel.ForEach(
                 source,

@@ -691,8 +691,7 @@ namespace IX.Observable
         {
             // PRECONDITIONS
             Requires.NotNull(
-                items,
-                nameof(items));
+                items);
 
             // Current object not disposed
             this.RequiresNotDisposed();
@@ -788,8 +787,8 @@ namespace IX.Observable
             IEnumerable<T> items)
         {
             // PRECONDITIONS
-            Requires.NonNegative(index, nameof(index));
-            Requires.NotNull(items, nameof(items));
+            Requires.NonNegative(index);
+            Requires.NotNull(items);
 
             // Current object not disposed
             this.RequiresNotDisposed();

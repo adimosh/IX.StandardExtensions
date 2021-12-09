@@ -66,12 +66,8 @@ namespace IX.StandardExtensions.Extensions
             string name,
             params Type[] parameters)
         {
-            Requires.NotNull(
-                typeInfo,
-                nameof(typeInfo));
-
             MethodInfo? mi = null;
-            foreach (MethodInfo p in (typeInfo ?? throw new ArgumentNullException(nameof(typeInfo)))
+            foreach (MethodInfo p in Requires.NotNull(typeInfo)
                 .GetRuntimeMethods())
             {
                 if (p.Name != name)

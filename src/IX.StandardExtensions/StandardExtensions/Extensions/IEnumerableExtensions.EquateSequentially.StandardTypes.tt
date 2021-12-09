@@ -71,9 +71,7 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
         /// <returns>A sequence of comparison results.</returns>
         public static IEnumerable<bool> EquateSequentially(this IEnumerable<<#= fullTypeName #>>? left, IEnumerable<<#= fullTypeName #>>? right, Func<<#= fullTypeName #>, bool> determineEmpty)
         {
-            var localDetermineEmpty = Requires.NotNull(
-                determineEmpty,
-                nameof(determineEmpty));
+            var localDetermineEmpty = Requires.NotNull(determineEmpty);
 
             if ((left == null) && (right == null))
             {

@@ -93,12 +93,8 @@ namespace IX.StandardExtensions.Threading
             where TCollection : class, IEnumerable<TItem>
         {
             // Validate arguments
-            Requires.NotNull(
-                collection,
-                nameof(collection));
-            Requires.NotNull(
-                readLock,
-                nameof(readLock));
+            Requires.NotNull(collection);
+            Requires.NotNull(readLock);
 
             Delegate initializer = ConstructionDelegates.GetOrAdd(
                 typeof(TCollection),
@@ -170,14 +166,8 @@ namespace IX.StandardExtensions.Threading
             Func<ReadOnlySynchronizationLocker> readLock)
             where TEnumerator : IEnumerator<TItem>
         {
-            if (enumerator == null)
-            {
-                throw new ArgumentNullException(nameof(enumerator));
-            }
-
-            Requires.NotNull(
-                readLock,
-                nameof(readLock));
+            Requires.NotNull(enumerator);
+            Requires.NotNull(readLock);
 
             return new AtomicEnumerator<TItem, TEnumerator>(
                 enumerator,

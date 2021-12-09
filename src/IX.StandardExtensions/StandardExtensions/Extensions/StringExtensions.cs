@@ -44,12 +44,9 @@ namespace IX.StandardExtensions.Extensions
             this string source,
             string attributeName)
         {
+            Requires.NotNullOrEmpty(source);
             Requires.NotNullOrEmpty(
-                source,
-                nameof(source));
-            Requires.NotNullOrEmpty(
-                attributeName,
-                nameof(attributeName));
+                attributeName);
 
             return source.Equals(
                        attributeName,
@@ -80,12 +77,10 @@ namespace IX.StandardExtensions.Extensions
             char replacementCharacter)
         {
             Requires.NotEmpty(
-                charactersToReplace,
-                nameof(charactersToReplace));
+                charactersToReplace);
 
             var array = Requires.NotNull(
-                    source,
-                    nameof(source))
+                    source)
                 .ToCharArray();
 
             for (var i = 0; i < array.Length; i++)

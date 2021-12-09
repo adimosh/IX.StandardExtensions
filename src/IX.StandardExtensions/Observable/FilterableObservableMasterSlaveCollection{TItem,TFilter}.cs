@@ -44,7 +44,7 @@ namespace IX.Observable
         /// </exception>
         public FilterableObservableMasterSlaveCollection(Func<TItem, TFilter, bool> filteringPredicate)
         {
-            this.FilteringPredicate = Requires.NotNull(filteringPredicate, nameof(filteringPredicate));
+            this.FilteringPredicate = Requires.NotNull(filteringPredicate);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace IX.Observable
             SynchronizationContext context)
             : base(context)
         {
-            this.FilteringPredicate = Requires.NotNull(filteringPredicate, nameof(filteringPredicate));
+            this.FilteringPredicate = Requires.NotNull(filteringPredicate);
         }
 
 #endregion

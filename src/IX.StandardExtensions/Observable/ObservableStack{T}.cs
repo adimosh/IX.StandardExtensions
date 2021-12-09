@@ -254,8 +254,7 @@ namespace IX.Observable
         public void PushRange(T[] items)
         {
             Requires.NotNull(
-                items,
-                nameof(items));
+                items);
 
             foreach (T item in items)
             {
@@ -275,13 +274,11 @@ namespace IX.Observable
             int count)
         {
             Requires.NotNull(
-                items,
-                nameof(items));
+                items);
             Requires.ValidArrayRange(
                 in startIndex,
                 in count,
-                items,
-                nameof(count));
+                items);
 
             var itemsSpan = new ReadOnlySpan<T>(
                 items,

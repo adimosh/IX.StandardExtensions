@@ -26,12 +26,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1>(this IEnumerable<TItem> source, Func<TItem, TParam1, bool> action, TParam1 param1)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -56,12 +52,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1>(this IEnumerable<TItem> source, Func<TItem, TParam1, bool> action, TParam1 param1)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -84,12 +76,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1>(this IEnumerable<TItem> source, Func<TItem, TParam1, bool> action, TParam1 param1)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -116,12 +104,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, bool> action, TParam1 param1, TParam2 param2)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -148,12 +132,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, bool> action, TParam1 param1, TParam2 param2)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -178,12 +158,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, bool> action, TParam1 param1, TParam2 param2)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -212,12 +188,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, bool> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -246,12 +218,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, bool> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -278,12 +246,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, bool> action, TParam1 param1, TParam2 param2, TParam3 param3)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -314,12 +278,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -350,12 +310,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -384,12 +340,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -422,12 +374,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -460,12 +408,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -496,12 +440,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -536,12 +476,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -576,12 +512,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -614,12 +546,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -656,12 +584,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -698,12 +622,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -738,12 +658,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -782,12 +698,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -826,12 +738,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -868,12 +776,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, Func<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, bool> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {

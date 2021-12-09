@@ -65,12 +65,8 @@ for (int i = 1; i <= 8; i++)
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, <#= paramTypes #>>(this IEnumerable<TItem> source, Action<TItem, <#= paramTypes #>> action, <#= paramNameTypes #>)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {

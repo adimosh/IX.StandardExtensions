@@ -27,12 +27,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1>(this IEnumerable<TItem> source, RefIteratorAction<TItem, TParam1> action, ref TParam1 param1)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -53,12 +49,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2>(this IEnumerable<TItem> source, RefIteratorAction1<TItem, TParam1, TParam2> action, ref TParam1 param1, TParam2 param2)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -79,12 +71,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2>(this IEnumerable<TItem> source, RefIteratorAction<TItem, TParam1, TParam2> action, ref TParam1 param1, ref TParam2 param2)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -107,12 +95,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3>(this IEnumerable<TItem> source, RefIteratorAction2<TItem, TParam1, TParam2, TParam3> action, ref TParam1 param1, TParam2 param2, TParam3 param3)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -135,12 +119,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3>(this IEnumerable<TItem> source, RefIteratorAction1<TItem, TParam1, TParam2, TParam3> action, ref TParam1 param1, ref TParam2 param2, TParam3 param3)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -163,12 +143,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3>(this IEnumerable<TItem> source, RefIteratorAction<TItem, TParam1, TParam2, TParam3> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -193,12 +169,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, RefIteratorAction3<TItem, TParam1, TParam2, TParam3, TParam4> action, ref TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -223,12 +195,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, RefIteratorAction2<TItem, TParam1, TParam2, TParam3, TParam4> action, ref TParam1 param1, ref TParam2 param2, TParam3 param3, TParam4 param4)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -253,12 +221,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, RefIteratorAction1<TItem, TParam1, TParam2, TParam3, TParam4> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, TParam4 param4)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -283,12 +247,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4>(this IEnumerable<TItem> source, RefIteratorAction<TItem, TParam1, TParam2, TParam3, TParam4> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -315,12 +275,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, RefIteratorAction4<TItem, TParam1, TParam2, TParam3, TParam4, TParam5> action, ref TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -347,12 +303,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, RefIteratorAction3<TItem, TParam1, TParam2, TParam3, TParam4, TParam5> action, ref TParam1 param1, ref TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -379,12 +331,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, RefIteratorAction2<TItem, TParam1, TParam2, TParam3, TParam4, TParam5> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, TParam4 param4, TParam5 param5)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -411,12 +359,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, RefIteratorAction1<TItem, TParam1, TParam2, TParam3, TParam4, TParam5> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, TParam5 param5)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -443,12 +387,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5>(this IEnumerable<TItem> source, RefIteratorAction<TItem, TParam1, TParam2, TParam3, TParam4, TParam5> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, ref TParam5 param5)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -477,12 +417,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, RefIteratorAction5<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action, ref TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -511,12 +447,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, RefIteratorAction4<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action, ref TParam1 param1, ref TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -545,12 +477,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, RefIteratorAction3<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -579,12 +507,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, RefIteratorAction2<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, TParam5 param5, TParam6 param6)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -613,12 +537,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, RefIteratorAction1<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, ref TParam5 param5, TParam6 param6)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -647,12 +567,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(this IEnumerable<TItem> source, RefIteratorAction<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, ref TParam5 param5, ref TParam6 param6)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -683,12 +599,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, RefIteratorAction6<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action, ref TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -719,12 +631,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, RefIteratorAction5<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action, ref TParam1 param1, ref TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -755,12 +663,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, RefIteratorAction4<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -791,12 +695,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, RefIteratorAction3<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -827,12 +727,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, RefIteratorAction2<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, ref TParam5 param5, TParam6 param6, TParam7 param7)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -863,12 +759,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, RefIteratorAction1<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, ref TParam5 param5, ref TParam6 param6, TParam7 param7)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -899,12 +791,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(this IEnumerable<TItem> source, RefIteratorAction<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, ref TParam5 param5, ref TParam6 param6, ref TParam7 param7)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -937,12 +825,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, RefIteratorAction7<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action, ref TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -975,12 +859,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, RefIteratorAction6<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action, ref TParam1 param1, ref TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -1013,12 +893,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, RefIteratorAction5<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -1051,12 +927,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, RefIteratorAction4<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -1089,12 +961,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, RefIteratorAction3<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, ref TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -1127,12 +995,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, RefIteratorAction2<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, ref TParam5 param5, ref TParam6 param6, TParam7 param7, TParam8 param8)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -1165,12 +1029,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, RefIteratorAction1<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, ref TParam5 param5, ref TParam6 param6, ref TParam7 param7, TParam8 param8)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {
@@ -1203,12 +1063,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(this IEnumerable<TItem> source, RefIteratorAction<TItem, TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action, ref TParam1 param1, ref TParam2 param2, ref TParam3 param3, ref TParam4 param4, ref TParam5 param5, ref TParam6 param6, ref TParam7 param7, ref TParam8 param8)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             foreach (TItem item in source)
             {

@@ -42,7 +42,7 @@ namespace IX.Observable
         /// <param name="internalContainer">The internal container of items.</param>
         protected ObservableReadOnlyCollectionBase(ICollectionAdapter<T> internalContainer)
         {
-            Requires.NotNull(out this.internalContainer, internalContainer, nameof(internalContainer));
+            Requires.NotNull(out this.internalContainer, internalContainer);
             this.internalContainer.MustReset -= this.InternalContainer_MustReset;
             this.internalContainer.MustReset += this.InternalContainer_MustReset;
         }
@@ -57,7 +57,7 @@ namespace IX.Observable
             SynchronizationContext context)
             : base(context)
         {
-            Requires.NotNull(out this.internalContainer, internalContainer, nameof(internalContainer));
+            Requires.NotNull(out this.internalContainer, internalContainer);
             this.internalContainer.MustReset -= this.InternalContainer_MustReset;
             this.internalContainer.MustReset += this.InternalContainer_MustReset;
         }

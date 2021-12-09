@@ -130,7 +130,7 @@ namespace IX.StandardExtensions.ComponentModel
         /// <returns>The validation errors for the property or entity.</returns>
         public IEnumerable GetErrors(string? propertyName) =>
             this.entityErrors.Value.TryGetValue(
-                Requires.NotNull(propertyName, nameof(propertyName)),
+                Requires.NotNull(propertyName),
                 out List<string>? propertyErrors)
                 ? propertyErrors.ToArray()
                 : Array.Empty<string>();

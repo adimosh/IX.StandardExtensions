@@ -77,8 +77,7 @@ namespace IX.StandardExtensions.Threading
             this.timer = new Timer(
                 this.TimerTick,
                 Requires.NotNull(
-                    tickerDelegate,
-                    nameof(tickerDelegate)),
+                    tickerDelegate),
                 initialDelay,
                 timeSpan);
         }

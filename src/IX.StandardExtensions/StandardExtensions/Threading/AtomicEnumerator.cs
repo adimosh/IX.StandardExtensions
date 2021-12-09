@@ -65,12 +65,8 @@ namespace IX.StandardExtensions.Threading
             where TCollection : class, IEnumerable<TItem>
         {
             // Validate arguments
-            Requires.NotNull(
-                collection,
-                nameof(collection));
-            Requires.NotNull(
-                readLock,
-                nameof(readLock));
+            Requires.NotNull(collection);
+            Requires.NotNull(readLock);
 
             Delegate initializer = ConstructionDelegates.GetOrAdd(
                 typeof(TCollection),

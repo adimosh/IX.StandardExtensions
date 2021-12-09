@@ -271,7 +271,7 @@ namespace IX.Observable.Adapters
         internal void SetMaster<TList>(TList masterList)
             where TList : class, IList<T>, INotifyCollectionChanged
         {
-            TList newMaster = Requires.NotNull(masterList, nameof(masterList));
+            TList newMaster = Requires.NotNull(masterList);
             IList<T>? oldMaster = this.master;
 
             if (oldMaster != null)
@@ -293,7 +293,7 @@ namespace IX.Observable.Adapters
         internal void SetSlave<TList>(TList slaveList)
             where TList : class, IEnumerable<T>, INotifyCollectionChanged
         {
-            this.slaves.Add(Requires.NotNull(slaveList, nameof(slaveList)));
+            this.slaves.Add(Requires.NotNull(slaveList));
             slaveList.CollectionChanged += this.List_CollectionChanged;
         }
 
@@ -301,8 +301,7 @@ namespace IX.Observable.Adapters
             where TList : class, IEnumerable<T>, INotifyCollectionChanged
         {
             var localSlaveList = Requires.NotNull(
-                slaveList,
-                nameof(slaveList));
+                slaveList);
 
             try
             {

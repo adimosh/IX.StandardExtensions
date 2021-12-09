@@ -40,8 +40,7 @@ namespace IX.StandardExtensions.Debugging
         {
             Requires.NotNull(
                 out this.collection,
-                collection,
-                nameof(collection));
+                collection);
         }
 
 #endregion

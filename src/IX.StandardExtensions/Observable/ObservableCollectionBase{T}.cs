@@ -1279,7 +1279,7 @@ namespace IX.Observable
             EditCommittedEventArgs e) =>
             this.PushUndoLevel(
                 new SubItemStateChange(
-                    Requires.ArgumentOfType<IUndoableItem>(sender, nameof(sender)),
+                    Requires.ArgumentOfType<IUndoableItem>(sender),
                     e.StateChanges));
 
         private UndoableInnerContext InnerContextFactory() =>

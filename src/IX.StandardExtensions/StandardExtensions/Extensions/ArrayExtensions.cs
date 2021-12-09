@@ -29,8 +29,7 @@ namespace IX.StandardExtensions.Extensions
             where T : IDeepCloneable<T>
         {
             Requires.NotNull(
-                source,
-                nameof(source));
+                source);
 
             var length = source.Length;
 
@@ -58,8 +57,7 @@ namespace IX.StandardExtensions.Extensions
             where T : IShallowCloneable<T>
         {
             Requires.NotNull(
-                source,
-                nameof(source));
+                source);
 
             var length = source.Length;
 
@@ -94,8 +92,7 @@ namespace IX.StandardExtensions.Extensions
         public static T[] Copy<T>(this T[] source)
         {
             Requires.NotNull(
-                source,
-                nameof(source));
+                source);
 
             var length = source.Length;
 
@@ -138,8 +135,7 @@ namespace IX.StandardExtensions.Extensions
             int length)
         {
             Requires.NotNull(
-                source,
-                nameof(source));
+                source);
             Requires.ValidArrayLength(
                 in length,
                 source,
@@ -188,8 +184,7 @@ namespace IX.StandardExtensions.Extensions
             int length)
         {
             Requires.NotNull(
-                source,
-                nameof(source));
+                source);
             Requires.ValidArrayRange(
                 in sourceIndex,
                 in length,
@@ -227,11 +222,9 @@ namespace IX.StandardExtensions.Extensions
             Action<T> action)
         {
             Requires.NotNull(
-                source,
-                nameof(source));
+                source);
             Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             for (var i = 0; i < source.Length; i++)
             {

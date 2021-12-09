@@ -50,15 +50,12 @@ namespace IX.Observable
             // Contract validation
             Requires.NotNull(
                 out this.item,
-                item,
-                nameof(item));
+                item);
             Requires.NotNull(
-                parentContext,
-                nameof(parentContext));
+                parentContext);
             Requires.NotNull(
                 out this.editableHandler,
-                editableHandler,
-                nameof(editableHandler));
+                editableHandler);
 
             // Data validation
             if (item.IsCapturedIntoUndoContext && item.ParentUndoContext != parentContext)
@@ -92,15 +89,12 @@ namespace IX.Observable
         {
             // Contract validation
             Requires.NotNull(
-                items,
-                nameof(items));
+                items);
             Requires.NotNull(
-                parentContext,
-                nameof(parentContext));
+                parentContext);
             Requires.NotNull(
                 out this.editableHandler,
-                editableHandler,
-                nameof(editableHandler));
+                editableHandler);
 
             // Data validation
             // Multiple enumeration warning: this has to be done, as there is no efficient way to do a transactional capturing otherwise

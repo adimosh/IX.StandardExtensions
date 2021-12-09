@@ -33,6 +33,9 @@ namespace IX.Observable
         /// </summary>
         public AutoReleaseTransactionContext()
         {
+            this.editableHandler = null!;
+            this.parentContext = null!;
+
             this.Success();
         }
 
@@ -50,16 +53,13 @@ namespace IX.Observable
             // Contract validation
             Requires.NotNull(
                 out this.item,
-                item,
-                nameof(item));
+                item);
             Requires.NotNull(
                 out this.parentContext,
-                parentContext,
-                nameof(parentContext));
+                parentContext);
             Requires.NotNull(
                 out this.editableHandler,
-                editableHandler,
-                nameof(editableHandler));
+                editableHandler);
 
             // Data validation
             if (!item.IsCapturedIntoUndoContext || item.ParentUndoContext != parentContext)
@@ -93,16 +93,13 @@ namespace IX.Observable
         {
             // Contract validation
             Requires.NotNull(
-                items,
-                nameof(items));
+                items);
             Requires.NotNull(
                 out this.parentContext,
-                parentContext,
-                nameof(parentContext));
+                parentContext);
             Requires.NotNull(
                 out this.editableHandler,
-                editableHandler,
-                nameof(editableHandler));
+                editableHandler);
 
             // Data validation
             // Multiple enumeration warning: this has to be done, as there is no efficient way to do a transactional capturing otherwise

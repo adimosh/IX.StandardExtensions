@@ -66,7 +66,7 @@ for (int i = 1; i <= 8; i++)
             Action<<#= paramTypes #>> action,
             <#= paramNameTypes #>)
         {
-            Requires.NotNull(action, nameof(action));
+            Requires.NotNull(action);
 
             this.ThrowIfCurrentObjectDisposed();
 
@@ -104,7 +104,7 @@ for (int i = 1; i <= 8; i++)
             Func<<#= paramTypes #>, TReturn> func,
             <#= paramNameTypes #>)
         {
-            Requires.NotNull(func, nameof(func));
+            Requires.NotNull(func);
 
             this.ThrowIfCurrentObjectDisposed();
 

@@ -92,9 +92,7 @@ namespace IX.StandardExtensions.Globalization
         public static bool OrdinalEndsWith(
             this string source,
             string value) =>
-            Requires.NotNull(
-                    source,
-                    nameof(source))
+            Requires.NotNull(source)
                 .EndsWith(
                     value,
                     StringComparison.Ordinal);
@@ -111,9 +109,7 @@ namespace IX.StandardExtensions.Globalization
         public static bool OrdinalEndsWithInsensitive(
             this string source,
             string value) =>
-            Requires.NotNull(
-                    source,
-                    nameof(source))
+            Requires.NotNull(source)
                 .EndsWith(
                     value,
                     StringComparison.OrdinalIgnoreCase);
@@ -158,9 +154,7 @@ namespace IX.StandardExtensions.Globalization
         public static int OrdinalIndexOf(
             this string source,
             string value) =>
-            Requires.NotNull(
-                    source,
-                    nameof(source))
+            Requires.NotNull(source)
                 .IndexOf(
                     value,
                     StringComparison.Ordinal);
@@ -177,9 +171,7 @@ namespace IX.StandardExtensions.Globalization
             this string source,
             string value,
             int startIndex) =>
-            Requires.NotNull(
-                    source,
-                    nameof(source))
+            Requires.NotNull(source)
                 .IndexOf(
                     value,
                     startIndex,
@@ -199,9 +191,7 @@ namespace IX.StandardExtensions.Globalization
             string value,
             int startIndex,
             int count) =>
-            Requires.NotNull(
-                    source,
-                    nameof(source))
+            Requires.NotNull(source)
                 .IndexOf(
                     value,
                     startIndex,
@@ -220,9 +210,7 @@ namespace IX.StandardExtensions.Globalization
         public static int OrdinalIndexOfInsensitive(
             this string source,
             string value) =>
-            Requires.NotNull(
-                    source,
-                    nameof(source))
+            Requires.NotNull(source)
                 .IndexOf(
                     value,
                     StringComparison.OrdinalIgnoreCase);
@@ -239,9 +227,7 @@ namespace IX.StandardExtensions.Globalization
             this string source,
             string value,
             int startIndex) =>
-            Requires.NotNull(
-                    source,
-                    nameof(source))
+            Requires.NotNull(source)
                 .IndexOf(
                     value,
                     startIndex,
@@ -261,9 +247,7 @@ namespace IX.StandardExtensions.Globalization
             string value,
             int startIndex,
             int count) =>
-            Requires.NotNull(
-                    source,
-                    nameof(source))
+            Requires.NotNull(source)
                 .IndexOf(
                     value,
                     startIndex,
@@ -282,9 +266,7 @@ namespace IX.StandardExtensions.Globalization
         public static bool OrdinalStartsWith(
             this string source,
             string value) =>
-            Requires.NotNull(
-                    source,
-                    nameof(source))
+            Requires.NotNull(source)
                 .StartsWith(
                     value,
                     StringComparison.Ordinal);
@@ -301,9 +283,7 @@ namespace IX.StandardExtensions.Globalization
         public static bool OrdinalStartsWithInsensitive(
             this string source,
             string value) =>
-            Requires.NotNull(
-                    source,
-                    nameof(source))
+            Requires.NotNull(source)
                 .StartsWith(
                     value,
                     StringComparison.OrdinalIgnoreCase);

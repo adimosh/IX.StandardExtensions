@@ -110,8 +110,7 @@ namespace IX.StandardExtensions.Efficiency
             Func<KeyValuePair<TKey, TValue>, bool> action)
         {
             Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             if (!this.innerDictionary.TryGetValue(
                     key,
@@ -146,8 +145,7 @@ namespace IX.StandardExtensions.Efficiency
             Func<TKey, TValue, bool> action)
         {
             Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             if (!this.innerDictionary.TryGetValue(
                     key,
@@ -181,8 +179,7 @@ namespace IX.StandardExtensions.Efficiency
             Func<KeyValuePair<TKey, TValue>, Task<bool>> action)
         {
             Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             if (!this.innerDictionary.TryGetValue(
                     key,
@@ -218,8 +215,7 @@ namespace IX.StandardExtensions.Efficiency
             Func<TKey, TValue, Task<bool>> action)
         {
             Requires.NotNull(
-                action,
-                nameof(action));
+                action);
 
             if (!this.innerDictionary.TryGetValue(
                     key,

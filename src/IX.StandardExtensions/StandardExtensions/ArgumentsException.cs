@@ -32,7 +32,7 @@ namespace IX.StandardExtensions
                     Resources.AnInvalidSetOfArgumentsWasSpecifiedArgumentNames,
                     string.Join(
                         ", ",
-                        Requires.NotNull(argumentNames, nameof(argumentNames)))))
+                        Requires.NotNull(argumentNames))))
         {
             this.ArgumentNames = argumentNames;
         }
@@ -51,7 +51,7 @@ namespace IX.StandardExtensions
                     Resources.AnInvalidSetOfArgumentsWasSpecifiedArgumentNames,
                     string.Join(
                         ", ",
-                        Requires.NotNull(argumentNames, nameof(argumentNames)))),
+                        Requires.NotNull(argumentNames))),
                 innerException)
         {
             this.ArgumentNames = argumentNames;
@@ -73,7 +73,7 @@ namespace IX.StandardExtensions
                     message,
                     string.Join(
                         ", ",
-                        Requires.NotNull(argumentNames, nameof(argumentNames)))),
+                        Requires.NotNull(argumentNames))),
                 innerException)
         {
             this.ArgumentNames = argumentNames;
@@ -93,7 +93,7 @@ namespace IX.StandardExtensions
                     message,
                     string.Join(
                         ", ",
-                        Requires.NotNull(argumentNames, nameof(argumentNames)))))
+                        Requires.NotNull(argumentNames))))
         {
             this.ArgumentNames = argumentNames;
         }

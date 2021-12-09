@@ -35,9 +35,7 @@ namespace IX.StandardExtensions.Extensions
             this BitArray data,
             int howManyBits)
         {
-            BitArray localData = Requires.NotNull(
-                data,
-                nameof(data));
+            BitArray localData = Requires.NotNull(data);
 
             BitArray? result = Shift(
                 localData,
@@ -79,10 +77,7 @@ namespace IX.StandardExtensions.Extensions
             this byte[] data,
             int howManyBits)
         {
-            var ba = new BitArray(
-                Requires.NotNull(
-                    data,
-                    nameof(data)));
+            var ba = new BitArray(Requires.NotNull(data));
 
             ba = LeftShift(
                 ba,
@@ -112,9 +107,7 @@ namespace IX.StandardExtensions.Extensions
             this BitArray data,
             int howManyBits)
         {
-            BitArray localData = Requires.NotNull(
-                data,
-                nameof(data));
+            BitArray localData = Requires.NotNull(data);
 
             BitArray? result = Shift(
                 localData,
@@ -156,10 +149,7 @@ namespace IX.StandardExtensions.Extensions
             this byte[] data,
             int howManyBits)
         {
-            var ba = new BitArray(
-                Requires.NotNull(
-                    data,
-                    nameof(data)));
+            var ba = new BitArray(Requires.NotNull(data));
 
             ba = RightShift(
                 ba,

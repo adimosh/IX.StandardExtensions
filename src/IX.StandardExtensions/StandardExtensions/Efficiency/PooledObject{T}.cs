@@ -61,8 +61,7 @@ namespace IX.StandardExtensions.Efficiency
         /// <returns>The result of the conversion.</returns>
         public static implicit operator T(PooledObject<T> source) =>
             Requires.NotNull(
-                    source,
-                    nameof(source))
+                    source)
                 .Value;
 
 #endregion

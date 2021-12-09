@@ -44,8 +44,7 @@ namespace IX.StandardExtensions.Efficiency
         {
             Requires.NotNull(
                 out this.objectFactory,
-                objectFactory,
-                nameof(objectFactory));
+                objectFactory);
 
             this.locker = new object();
             this.availableObjects = new Queue<T>();
@@ -67,12 +66,10 @@ namespace IX.StandardExtensions.Efficiency
         public ObjectPool(Func<T> objectFactory, int initialNumberOfObjects)
         {
             Requires.Positive(
-                in initialNumberOfObjects,
-                nameof(initialNumberOfObjects));
+                in initialNumberOfObjects);
             Requires.NotNull(
                 out this.objectFactory,
-                objectFactory,
-                nameof(objectFactory));
+                objectFactory);
 
             this.locker = new object();
             this.availableObjects = new Queue<T>();

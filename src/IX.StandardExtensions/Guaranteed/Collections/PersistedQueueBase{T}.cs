@@ -99,25 +99,20 @@ namespace IX.Guaranteed.Collections
             // Dependency validation
             Requires.NotNull(
                 out this.fileShim,
-                fileShim,
-                nameof(fileShim));
+                fileShim);
             Requires.NotNull(
                 out this.pathShim,
-                pathShim,
-                nameof(pathShim));
+                pathShim);
             Requires.NotNull(
                 out this.directoryShim,
-                directoryShim,
-                nameof(directoryShim));
+                directoryShim);
             Requires.NotNull(
                 out this.serializer,
-                serializer,
-                nameof(serializer));
+                serializer);
 
             // Parameter validation
             Requires.NotNullOrWhiteSpace(
-                persistenceFolderPath,
-                nameof(persistenceFolderPath));
+                persistenceFolderPath);
 
             if (!directoryShim.Exists(persistenceFolderPath))
             {
@@ -271,8 +266,7 @@ namespace IX.Guaranteed.Collections
         public void EnqueueRange(T[] items)
         {
             Requires.NotNull(
-                items,
-                nameof(items));
+                items);
 
             foreach (T item in items)
             {
@@ -292,13 +286,11 @@ namespace IX.Guaranteed.Collections
             int count)
         {
             Requires.NotNull(
-                items,
-                nameof(items));
+                items);
             Requires.ValidArrayRange(
                 in startIndex,
                 in count,
-                items,
-                nameof(items));
+                items);
 
             var itemsRange = new ReadOnlySpan<T>(
                 items,
@@ -438,8 +430,7 @@ namespace IX.Guaranteed.Collections
             TState state)
         {
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             this.RequiresNotDisposed();
 
@@ -567,8 +558,7 @@ namespace IX.Guaranteed.Collections
             CancellationToken cancellationToken = default)
         {
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             this.RequiresNotDisposed();
 
@@ -677,11 +667,9 @@ namespace IX.Guaranteed.Collections
             TState state)
         {
             Requires.NotNull(
-                predicate,
-                nameof(predicate));
+                predicate);
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             this.RequiresNotDisposed();
 
@@ -844,11 +832,9 @@ namespace IX.Guaranteed.Collections
             CancellationToken cancellationToken = default)
         {
             Requires.NotNull(
-                predicate,
-                nameof(predicate));
+                predicate);
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             this.RequiresNotDisposed();
 
@@ -1028,11 +1014,9 @@ namespace IX.Guaranteed.Collections
             CancellationToken cancellationToken = default)
         {
             Requires.NotNull(
-                predicate,
-                nameof(predicate));
+                predicate);
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             this.RequiresNotDisposed();
 
@@ -1221,11 +1205,9 @@ namespace IX.Guaranteed.Collections
             CancellationToken cancellationToken = default)
         {
             Requires.NotNull(
-                predicate,
-                nameof(predicate));
+                predicate);
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             this.RequiresNotDisposed();
 

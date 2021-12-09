@@ -73,12 +73,8 @@ for (int i = 1; i <= 8; i++)
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
-            var localTaskFactory = Requires.NotNull(
-                taskFactory,
-                nameof(taskFactory));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localTaskFactory = Requires.NotNull(taskFactory);
+            var localAction = Requires.NotNull(action);
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
                 localTaskFactory,
@@ -140,12 +136,8 @@ for (int i = 1; i <= 8; i++)
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
-            var localTaskFactory = Requires.NotNull(
-                taskFactory,
-                nameof(taskFactory));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localTaskFactory = Requires.NotNull(taskFactory);
+            var localAction = Requires.NotNull(action);
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
                 localTaskFactory,
@@ -208,12 +200,8 @@ for (int i = 1; i <= 8; i++)
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
-            var localTaskFactory = Requires.NotNull(
-                taskFactory,
-                nameof(taskFactory));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localTaskFactory = Requires.NotNull(taskFactory);
+            var localAction = Requires.NotNull(action);
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
                 localTaskFactory,
@@ -276,12 +264,8 @@ for (int i = 1; i <= 8; i++)
             <#= paramNameTypes #>,
             CancellationToken cancellationToken = default)
         {
-            var localTaskFactory = Requires.NotNull(
-                taskFactory,
-                nameof(taskFactory));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localTaskFactory = Requires.NotNull(taskFactory);
+            var localAction = Requires.NotNull(action);
 
             return StartWithStateOnDefaultTaskSchedulerAsync(
                 localTaskFactory,

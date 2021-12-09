@@ -24,9 +24,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<byte> DeepClone(this List<byte> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<byte>(localList);
         }
@@ -41,9 +39,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<sbyte> DeepClone(this List<sbyte> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<sbyte>(localList);
         }
@@ -58,9 +54,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<short> DeepClone(this List<short> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<short>(localList);
         }
@@ -75,9 +69,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<ushort> DeepClone(this List<ushort> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<ushort>(localList);
         }
@@ -92,9 +84,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<char> DeepClone(this List<char> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<char>(localList);
         }
@@ -109,9 +99,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<int> DeepClone(this List<int> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<int>(localList);
         }
@@ -126,9 +114,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<uint> DeepClone(this List<uint> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<uint>(localList);
         }
@@ -143,9 +129,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<long> DeepClone(this List<long> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<long>(localList);
         }
@@ -160,9 +144,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<ulong> DeepClone(this List<ulong> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<ulong>(localList);
         }
@@ -177,9 +159,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<float> DeepClone(this List<float> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<float>(localList);
         }
@@ -194,9 +174,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<double> DeepClone(this List<double> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<double>(localList);
         }
@@ -211,9 +189,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<decimal> DeepClone(this List<decimal> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<decimal>(localList);
         }
@@ -228,9 +204,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<DateTime> DeepClone(this List<DateTime> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<DateTime>(localList);
         }
@@ -245,9 +219,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<bool> DeepClone(this List<bool> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<bool>(localList);
         }
@@ -262,9 +234,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<TimeSpan> DeepClone(this List<TimeSpan> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<TimeSpan>(localList);
         }
@@ -279,9 +249,7 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static List<string> DeepClone(this List<string> list)
         {
-            var localList = Requires.NotNull(
-                list,
-                nameof(list));
+            var localList = Requires.NotNull(list);
 
             return new List<string>(localList);
         }

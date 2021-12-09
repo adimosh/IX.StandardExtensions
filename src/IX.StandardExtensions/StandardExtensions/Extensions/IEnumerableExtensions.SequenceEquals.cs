@@ -165,7 +165,7 @@ namespace IX.StandardExtensions.Extensions
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals<T>(this IEnumerable<T>? left, IEnumerable<T>? right, IEqualityComparer<T> comparer)
         {
-            Requires.NotNull(comparer, nameof(comparer));
+            Requires.NotNull(comparer);
 
             if (left == null)
             {
@@ -215,7 +215,7 @@ namespace IX.StandardExtensions.Extensions
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals<T>(this IEnumerable<T>? left, IEnumerable<T>? right, IComparer<T> comparer)
         {
-            Requires.NotNull(comparer, nameof(comparer));
+            Requires.NotNull(comparer);
 
             if (left == null)
             {
@@ -265,7 +265,7 @@ namespace IX.StandardExtensions.Extensions
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals<T>(this IEnumerable<T>? left, IEnumerable<T>? right, Func<T, T, bool> comparer)
         {
-            Requires.NotNull(comparer, nameof(comparer));
+            Requires.NotNull(comparer);
 
             if (left == null)
             {
@@ -315,7 +315,7 @@ namespace IX.StandardExtensions.Extensions
         /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
         public static bool SequenceEquals<T>(this IEnumerable<T>? left, IEnumerable<T>? right, Func<T, T, int> comparer)
         {
-            Requires.NotNull(comparer, nameof(comparer));
+            Requires.NotNull(comparer);
 
             if (left == null)
             {

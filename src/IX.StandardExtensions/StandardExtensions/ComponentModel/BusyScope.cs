@@ -43,8 +43,7 @@ namespace IX.StandardExtensions.ComponentModel
         {
             Requires.NotNull<string>(
                 out this.initialDescription,
-                description,
-                nameof(description));
+                description);
         }
 
         /// <summary>
@@ -56,8 +55,7 @@ namespace IX.StandardExtensions.ComponentModel
         {
             Requires.NonNegative(
                 out this.busyCount,
-                in initialBusyCount,
-                nameof(initialBusyCount));
+                in initialBusyCount);
         }
 
         /// <summary>
@@ -73,12 +71,10 @@ namespace IX.StandardExtensions.ComponentModel
         {
             Requires.NonNegative(
                 out this.busyCount,
-                in initialBusyCount,
-                nameof(initialBusyCount));
+                in initialBusyCount);
             Requires.NotNull<string>(
                 out this.initialDescription,
-                description,
-                nameof(description));
+                description);
         }
 
 #endregion

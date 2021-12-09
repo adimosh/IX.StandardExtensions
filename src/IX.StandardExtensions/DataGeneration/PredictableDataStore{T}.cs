@@ -139,8 +139,7 @@ namespace IX.DataGeneration
             bool parallelGenerate = false)
         {
             Func<object, T> localGenerator = Requires.NotNull(
-                generator,
-                nameof(generator));
+                generator);
 
             this.items = new T[capacity];
 

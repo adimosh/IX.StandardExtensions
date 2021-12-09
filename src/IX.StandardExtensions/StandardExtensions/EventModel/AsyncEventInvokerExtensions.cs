@@ -31,9 +31,7 @@ namespace IX.StandardExtensions.EventModel
             this AsyncEventHandler? handler,
             object sender)
         {
-            Requires.NotNull(
-                sender,
-                nameof(sender));
+            Requires.NotNull(sender);
 
             Delegate[]? invocationList = handler?.GetInvocationList();
 
@@ -80,12 +78,8 @@ namespace IX.StandardExtensions.EventModel
             TEventArgs e)
             where TEventArgs : EventArgs
         {
-            Requires.NotNull(
-                sender,
-                nameof(sender));
-            Requires.NotNull(
-                e,
-                nameof(e));
+            Requires.NotNull(sender);
+            Requires.NotNull(e);
 
             Delegate[]? invocationList = handler?.GetInvocationList();
 
@@ -126,12 +120,8 @@ namespace IX.StandardExtensions.EventModel
             object sender,
             EventArgs e)
         {
-            Requires.NotNull(
-                sender,
-                nameof(sender));
-            Requires.NotNull(
-                e,
-                nameof(e));
+            Requires.NotNull(sender);
+            Requires.NotNull(e);
 
             Delegate[]? invocationList = handler?.GetInvocationList();
 

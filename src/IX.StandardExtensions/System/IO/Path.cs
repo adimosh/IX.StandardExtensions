@@ -255,9 +255,7 @@ namespace IX.System.IO
         /// </exception>
         public string EscapeFileName(string stringToEscape)
         {
-            Requires.NotNullOrWhiteSpace(
-                stringToEscape,
-                nameof(stringToEscape));
+            Requires.NotNullOrWhiteSpace(stringToEscape);
 
             var invalidChars = this.GetInvalidFileNameChars();
             var newString = new char[stringToEscape.Length];

@@ -74,12 +74,8 @@ for (int i = 1; i <= 8; i++)
             RefIteratorAction<TItem, <#= paramTypes #>> action,
             <#= paramNameTypes #>)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             for (var i = 0; i < source.Length; i++)
             {

@@ -111,8 +111,7 @@ namespace IX.StandardExtensions.ComponentModel
             this.RequiresNotDisposed();
 
             Requires.NotNull(
-                action,
-                nameof(action))();
+                action)();
         }
 
         /// <summary>
@@ -130,8 +129,7 @@ namespace IX.StandardExtensions.ComponentModel
             this.ThrowIfCurrentObjectDisposed();
 
             return Requires.NotNull(
-                func,
-                nameof(func))();
+                func)();
         }
 
         /// <summary>

@@ -84,22 +84,18 @@ namespace IX.Guaranteed.Collections
             // External state
             Requires.NotNullOrWhiteSpace(
                 out this.persistenceFolderPath,
-                persistenceFolderPath,
-                nameof(persistenceFolderPath));
+                persistenceFolderPath);
 
             // Dependencies
             Requires.NotNull(
                 out this.fileShim,
-                fileShim,
-                nameof(fileShim));
+                fileShim);
             Requires.NotNull(
                 out this.directoryShim,
-                directoryShim,
-                nameof(directoryShim));
+                directoryShim);
             Requires.NotNull(
                 out this.pathShim,
-                pathShim,
-                nameof(pathShim));
+                pathShim);
 
             // Automatic disaster detection logic
             AppDomain.CurrentDomain.UnhandledException += this.CurrentDomainOnUnhandledException;
@@ -202,11 +198,9 @@ namespace IX.Guaranteed.Collections
             int index)
         {
             Requires.NotNull(
-                array,
-                nameof(array));
+                array);
             Requires.NonNegative(
-                index,
-                nameof(index));
+                index);
 
             using (this.ReadLock())
             {
@@ -281,11 +275,9 @@ namespace IX.Guaranteed.Collections
             TState state)
         {
             Requires.NotNull(
-                predicate,
-                nameof(predicate));
+                predicate);
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             using (this.WriteLock())
             {
@@ -367,11 +359,9 @@ namespace IX.Guaranteed.Collections
             CancellationToken cancellationToken = default)
         {
             Requires.NotNull(
-                predicate,
-                nameof(predicate));
+                predicate);
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             using (this.WriteLock())
             {
@@ -501,11 +491,9 @@ namespace IX.Guaranteed.Collections
             CancellationToken cancellationToken = default)
         {
             Requires.NotNull(
-                predicate,
-                nameof(predicate));
+                predicate);
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             using (this.WriteLock())
             {
@@ -635,11 +623,9 @@ namespace IX.Guaranteed.Collections
             CancellationToken cancellationToken = default)
         {
             Requires.NotNull(
-                predicate,
-                nameof(predicate));
+                predicate);
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             using (this.WriteLock())
             {
@@ -779,11 +765,9 @@ namespace IX.Guaranteed.Collections
             CancellationToken cancellationToken = default)
         {
             Requires.NotNull(
-                predicate,
-                nameof(predicate));
+                predicate);
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             using (this.WriteLock())
             {
@@ -861,8 +845,7 @@ namespace IX.Guaranteed.Collections
             TState state)
         {
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             using (this.WriteLock())
             {
@@ -917,8 +900,7 @@ namespace IX.Guaranteed.Collections
         {
             // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             using (this.WriteLock())
             {
@@ -1012,8 +994,7 @@ namespace IX.Guaranteed.Collections
             CancellationToken cancellationToken = default)
         {
             Requires.NotNull(
-                actionToInvoke,
-                nameof(actionToInvoke));
+                actionToInvoke);
 
             using (this.WriteLock())
             {

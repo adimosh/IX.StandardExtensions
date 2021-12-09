@@ -62,8 +62,7 @@ namespace IX.StandardExtensions.Threading
                     Requires.ArgumentOfType<(Func<CancellationToken, Task>, CultureInfo,
                             CultureInfo,
                             TaskCompletionSource<int>, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -159,8 +158,7 @@ namespace IX.StandardExtensions.Threading
                     Requires.ArgumentOfType<(Func<CancellationToken, Task<TResult>>, CultureInfo,
                             CultureInfo,
                             TaskCompletionSource<TResult>, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -259,8 +257,7 @@ namespace IX.StandardExtensions.Threading
                     Requires.ArgumentOfType<(Func<TState, CancellationToken, Task>, CultureInfo,
                             CultureInfo,
                             TaskCompletionSource<int>, TState, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -362,8 +359,7 @@ namespace IX.StandardExtensions.Threading
                     Requires.ArgumentOfType<(Func<TState, CancellationToken, Task<TResult>>, CultureInfo,
                             CultureInfo,
                             TaskCompletionSource<TResult>, TState, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -461,8 +457,7 @@ namespace IX.StandardExtensions.Threading
                         CancellationToken ct) =
                     Requires.ArgumentOfType<(Func<CancellationToken, TResult>, CultureInfo, CultureInfo,
                             TaskCompletionSource<TResult>, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -541,8 +536,7 @@ namespace IX.StandardExtensions.Threading
                         CancellationToken ct) =
                     Requires.ArgumentOfType<(Func<TState, CancellationToken, TResult>, CultureInfo, CultureInfo,
                             TaskCompletionSource<TResult>, TState, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -619,8 +613,7 @@ namespace IX.StandardExtensions.Threading
                     Requires.ArgumentOfType<(Func<Task>, CultureInfo,
                             CultureInfo,
                             TaskCompletionSource<int>, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -716,8 +709,7 @@ namespace IX.StandardExtensions.Threading
                     Requires.ArgumentOfType<(Func<Task<TResult>>, CultureInfo,
                             CultureInfo,
                             TaskCompletionSource<TResult>, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -816,8 +808,7 @@ namespace IX.StandardExtensions.Threading
                     Requires.ArgumentOfType<(Func<TState, Task>, CultureInfo,
                             CultureInfo,
                             TaskCompletionSource<int>, TState, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -917,8 +908,7 @@ namespace IX.StandardExtensions.Threading
                     Requires.ArgumentOfType<(Func<TState, Task<TResult>>, CultureInfo,
                             CultureInfo,
                             TaskCompletionSource<TResult>, TState, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -1014,8 +1004,7 @@ namespace IX.StandardExtensions.Threading
                         CancellationToken ct) =
                     Requires.ArgumentOfType<(Func<TResult>, CultureInfo, CultureInfo,
                             TaskCompletionSource<TResult>, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -1094,8 +1083,7 @@ namespace IX.StandardExtensions.Threading
                         CancellationToken ct) =
                     Requires.ArgumentOfType<(Func<TState, TResult>, CultureInfo, CultureInfo,
                             TaskCompletionSource<TResult>, TState, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -1173,8 +1161,7 @@ namespace IX.StandardExtensions.Threading
                         CancellationToken ct) =
                     Requires.ArgumentOfType<(Action<TState, CancellationToken>, CultureInfo, CultureInfo,
                             TaskCompletionSource<int>, TState, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -1251,8 +1238,7 @@ namespace IX.StandardExtensions.Threading
                         CancellationToken ct) =
                     Requires.ArgumentOfType<(Action<CancellationToken>, CultureInfo, CultureInfo,
                             TaskCompletionSource<int>, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -1330,8 +1316,7 @@ namespace IX.StandardExtensions.Threading
                         CancellationToken ct) =
                     Requires.ArgumentOfType<(Action<TState>, CultureInfo, CultureInfo,
                             TaskCompletionSource<int>, TState, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {
@@ -1406,8 +1391,7 @@ namespace IX.StandardExtensions.Threading
                         CancellationToken ct) =
                     Requires.ArgumentOfType<(Action, CultureInfo, CultureInfo,
                             TaskCompletionSource<int>, CancellationToken)>(
-                            rawState,
-                            nameof(rawState));
+                            rawState);
 
                 if (ct.IsCancellationRequested)
                 {

@@ -29,12 +29,8 @@ namespace IX.StandardExtensions.Extensions
             Action<TItem, TParam1> action,
             TParam1 param1)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             for (var i = 0; i < source.Length; i++)
             {
@@ -62,12 +58,8 @@ namespace IX.StandardExtensions.Extensions
             TParam1 param1,
             TParam2 param2)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             for (var i = 0; i < source.Length; i++)
             {
@@ -98,12 +90,8 @@ namespace IX.StandardExtensions.Extensions
             TParam2 param2,
             TParam3 param3)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             for (var i = 0; i < source.Length; i++)
             {
@@ -137,12 +125,8 @@ namespace IX.StandardExtensions.Extensions
             TParam3 param3,
             TParam4 param4)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             for (var i = 0; i < source.Length; i++)
             {
@@ -179,12 +163,8 @@ namespace IX.StandardExtensions.Extensions
             TParam4 param4,
             TParam5 param5)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             for (var i = 0; i < source.Length; i++)
             {
@@ -224,12 +204,8 @@ namespace IX.StandardExtensions.Extensions
             TParam5 param5,
             TParam6 param6)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             for (var i = 0; i < source.Length; i++)
             {
@@ -272,12 +248,8 @@ namespace IX.StandardExtensions.Extensions
             TParam6 param6,
             TParam7 param7)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             for (var i = 0; i < source.Length; i++)
             {
@@ -323,12 +295,8 @@ namespace IX.StandardExtensions.Extensions
             TParam7 param7,
             TParam8 param8)
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
-            Requires.NotNull(
-                action,
-                nameof(action));
+            Requires.NotNull(source);
+            Requires.NotNull(action);
 
             for (var i = 0; i < source.Length; i++)
             {

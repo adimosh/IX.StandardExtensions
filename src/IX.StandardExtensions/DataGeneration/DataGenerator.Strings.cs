@@ -224,9 +224,7 @@ namespace IX.DataGeneration
         /// <returns>A random string.</returns>
         public static string RandomLowercaseString(Random random)
         {
-            Random localRandom = Requires.NotNull(
-                random,
-                nameof(random));
+            Random localRandom = Requires.NotNull(random);
             int length;
 
             lock (localRandom)
@@ -292,8 +290,7 @@ namespace IX.DataGeneration
         public static string RandomNumericString(Random random)
         {
             Random localRandom = Requires.NotNull(
-                random,
-                nameof(random));
+                random);
             int length;
 
             lock (localRandom)
@@ -359,8 +356,7 @@ namespace IX.DataGeneration
         public static string RandomString(Random random)
         {
             Random localRandom = Requires.NotNull(
-                random,
-                nameof(random));
+                random);
             int length;
 
             lock (localRandom)
@@ -410,8 +406,7 @@ namespace IX.DataGeneration
             char[] fromCharacters)
         {
             Random localRandom = Requires.NotNull(
-                random,
-                nameof(random));
+                random);
             int length;
 
             lock (localRandom)
@@ -438,11 +433,9 @@ namespace IX.DataGeneration
             char[] fromCharacters)
         {
             Random localRandom = Requires.NotNull(
-                random,
-                nameof(random));
+                random);
             var localFromCharacters = Requires.NotNull(
-                fromCharacters,
-                nameof(fromCharacters));
+                fromCharacters);
             var randomString = new char[length];
 
             for (var i = 0; i < length; i++)
@@ -486,8 +479,7 @@ namespace IX.DataGeneration
         public static string RandomSymbolString(Random random)
         {
             Random localRandom = Requires.NotNull(
-                random,
-                nameof(random));
+                random);
             int length;
 
             lock (localRandom)
@@ -553,8 +545,7 @@ namespace IX.DataGeneration
         public static string RandomUppercaseString(Random random)
         {
             Random localRandom = Requires.NotNull(
-                random,
-                nameof(random));
+                random);
             int length;
 
             lock (localRandom)

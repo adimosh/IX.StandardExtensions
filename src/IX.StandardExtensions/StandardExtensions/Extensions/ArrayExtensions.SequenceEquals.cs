@@ -27,9 +27,7 @@ namespace IX.StandardExtensions.Extensions
             T[]? right,
             IEqualityComparer<T> comparer)
         {
-            var localComparer = Requires.NotNull(
-                comparer,
-                nameof(comparer));
+            var localComparer = Requires.NotNull(comparer);
 
             if (left == null)
             {
@@ -71,9 +69,7 @@ namespace IX.StandardExtensions.Extensions
             T[]? right,
             InFunc<T, T, bool> comparer)
         {
-            var localComparer = Requires.NotNull(
-                comparer,
-                nameof(comparer));
+            var localComparer = Requires.NotNull(comparer);
 
             if (left == null)
             {

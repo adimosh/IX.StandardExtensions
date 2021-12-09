@@ -32,9 +32,7 @@ namespace IX.StandardExtensions.Extensions
             where TKey : notnull
             where TValue : IDeepCloneable<TValue>
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
+            Requires.NotNull(source);
 
             var destination = new Dictionary<TKey, TValue>();
 
@@ -63,9 +61,7 @@ namespace IX.StandardExtensions.Extensions
             where TKey : notnull
             where TValue : IShallowCloneable<TValue>
         {
-            Requires.NotNull(
-                source,
-                nameof(source));
+            Requires.NotNull(source);
 
             var destination = new Dictionary<TKey, TValue>();
 

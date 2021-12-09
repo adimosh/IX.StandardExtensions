@@ -65,12 +65,8 @@ for (int i = 1; i <= 8; i++)
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static bool Any<TItem, <#= paramTypes #>>(this IEnumerable<TItem> source, Func<TItem, <#= paramTypes #>, bool> action, <#= paramNameTypes #>)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -109,12 +105,8 @@ for (int i = 1; i <= 8; i++)
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static IEnumerable<TItem> Where<TItem, <#= paramTypes #>>(this IEnumerable<TItem> source, Func<TItem, <#= paramTypes #>, bool> action, <#= paramNameTypes #>)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {
@@ -151,12 +143,8 @@ for (int i = 1; i <= 8; i++)
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> are <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static TItem FirstOrDefault<TItem, <#= paramTypes #>>(this IEnumerable<TItem> source, Func<TItem, <#= paramTypes #>, bool> action, <#= paramNameTypes #>)
         {
-            var localSource = Requires.NotNull(
-                source,
-                nameof(source));
-            var localAction = Requires.NotNull(
-                action,
-                nameof(action));
+            var localSource = Requires.NotNull(source);
+            var localAction = Requires.NotNull(action);
 
             foreach (TItem item in localSource)
             {

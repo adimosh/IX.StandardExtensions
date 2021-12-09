@@ -33,9 +33,7 @@ namespace IX.StandardExtensions.Extensions
             Justification = "Unfortunately, this is not avoidable.")]
         public static IEnumerable<TypeInfo> GetTypesAssignableFrom<T>(this Assembly assembly)
         {
-            return Requires.NotNull(
-                    assembly,
-                    nameof(assembly))
+            return Requires.NotNull(assembly)
                 .DefinedTypes.Where(Filter);
 
             static bool Filter(TypeInfo p)
@@ -57,9 +55,7 @@ namespace IX.StandardExtensions.Extensions
             Justification = "Unfortunately, this is not avoidable.")]
         public static IEnumerable<TypeInfo> GetTypesAssignableFrom<T>(this IEnumerable<Assembly> assemblies)
         {
-            return Requires.NotNull(
-                    assemblies,
-                    nameof(assemblies))
+            return Requires.NotNull(assemblies)
                 .SelectMany(GetAssignableTypes);
 
             static IEnumerable<TypeInfo> GetAssignableTypes(Assembly p)

@@ -34,8 +34,7 @@ namespace IX.Observable.DebugAide
         {
             Requires.NotNull(
                 out this.dict,
-                dictionary,
-                nameof(dictionary));
+                dictionary);
         }
 
 #endregion
