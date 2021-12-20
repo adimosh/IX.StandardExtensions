@@ -4,6 +4,8 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
@@ -229,6 +231,162 @@ namespace IX.StandardExtensions.Extensions
             for (var i = 0; i < source.Length; i++)
             {
                 action(source[i]);
+            }
+        }
+
+        /// <summary>
+        ///     Asynchronously executes an action for each one of the elements of an array.
+        /// </summary>
+        /// <typeparam name="T">The array type.</typeparam>
+        /// <param name="source">The array to run on.</param>
+        /// <param name="action">The action to execute.</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
+        ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
+        /// </exception>
+        /// <remarks>
+        ///     <para>This method, due to multiple awaits, is considered to be very slow compared to its synchronous version.</para>
+        ///     <para>Please make sure to only use this where asynchronicity is required.</para>
+        ///     <para>In CPU-intensive operations, only its synchronous counterpart should be used.</para>
+        /// </remarks>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "Yes, but we don't want that to happen. We're interested in top performance in the loop.")]
+        public static async ValueTask ForEachAsync<T>(
+            this T[] source,
+            Func<T, Task> action,
+            CancellationToken cancellationToken = default)
+        {
+            Requires.NotNull(
+                source);
+            Requires.NotNull(
+                action);
+
+            if (cancellationToken.IsCancellationRequested) return;
+
+            for (var i = 0; i < source.Length; i++)
+            {
+                await action(source[i]);
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+        }
+
+        /// <summary>
+        ///     Asynchronously executes an action for each one of the elements of an array.
+        /// </summary>
+        /// <typeparam name="T">The array type.</typeparam>
+        /// <param name="source">The array to run on.</param>
+        /// <param name="action">The action to execute.</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
+        ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
+        /// </exception>
+        /// <remarks>
+        ///     <para>This method, due to multiple awaits, is considered to be very slow compared to its synchronous version.</para>
+        ///     <para>Please make sure to only use this where asynchronicity is required.</para>
+        ///     <para>In CPU-intensive operations, only its synchronous counterpart should be used.</para>
+        /// </remarks>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "Yes, but we don't want that to happen. We're interested in top performance in the loop.")]
+        public static async ValueTask ForEachAsync<T>(
+            this T[] source,
+            Func<T, ValueTask> action,
+            CancellationToken cancellationToken = default)
+        {
+            Requires.NotNull(
+                source);
+            Requires.NotNull(
+                action);
+
+            if (cancellationToken.IsCancellationRequested) return;
+
+            for (var i = 0; i < source.Length; i++)
+            {
+                await action(source[i]);
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+        }
+
+        /// <summary>
+        ///     Asynchronously executes an action for each one of the elements of an array.
+        /// </summary>
+        /// <typeparam name="T">The array type.</typeparam>
+        /// <param name="source">The array to run on.</param>
+        /// <param name="action">The action to execute.</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
+        ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
+        /// </exception>
+        /// <remarks>
+        ///     <para>This method, due to multiple awaits, is considered to be very slow compared to its synchronous version.</para>
+        ///     <para>Please make sure to only use this where asynchronicity is required.</para>
+        ///     <para>In CPU-intensive operations, only its synchronous counterpart should be used.</para>
+        /// </remarks>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "Yes, but we don't want that to happen. We're interested in top performance in the loop.")]
+        public static async ValueTask ForEachAsync<T>(
+            this T[] source,
+            Func<T, CancellationToken, Task> action,
+            CancellationToken cancellationToken = default)
+        {
+            Requires.NotNull(
+                source);
+            Requires.NotNull(
+                action);
+
+            if (cancellationToken.IsCancellationRequested) return;
+
+            for (var i = 0; i < source.Length; i++)
+            {
+                await action(source[i], cancellationToken);
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+        }
+
+        /// <summary>
+        ///     Asynchronously executes an action for each one of the elements of an array.
+        /// </summary>
+        /// <typeparam name="T">The array type.</typeparam>
+        /// <param name="source">The array to run on.</param>
+        /// <param name="action">The action to execute.</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
+        ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
+        /// </exception>
+        /// <remarks>
+        ///     <para>This method, due to multiple awaits, is considered to be very slow compared to its synchronous version.</para>
+        ///     <para>Please make sure to only use this where asynchronicity is required.</para>
+        ///     <para>In CPU-intensive operations, only its synchronous counterpart should be used.</para>
+        /// </remarks>
+        [SuppressMessage(
+            "ReSharper",
+            "ForCanBeConvertedToForeach",
+            Justification = "Yes, but we don't want that to happen. We're interested in top performance in the loop.")]
+        public static async ValueTask ForEachAsync<T>(
+            this T[] source,
+            Func<T, CancellationToken, ValueTask> action,
+            CancellationToken cancellationToken = default)
+        {
+            Requires.NotNull(
+                source);
+            Requires.NotNull(
+                action);
+
+            if (cancellationToken.IsCancellationRequested) return;
+
+            for (var i = 0; i < source.Length; i++)
+            {
+                await action(source[i], cancellationToken);
+                cancellationToken.ThrowIfCancellationRequested();
             }
         }
     }

@@ -9,6 +9,8 @@
 // </copyright>
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
 
 namespace IX.StandardExtensions.Extensions
@@ -74,6 +76,206 @@ for (int i = 1; i <= 8; i++)
             for (var i = 0; i < source.Length; i++)
             {
                 action(source[i], <#= paramNames #>);
+            }
+        }
+
+        /// <summary>
+        ///     Asynchronously executes an action for each one of the elements of an array.
+        /// </summary>
+        /// <typeparam name="TItem">The array type.</typeparam>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+<#
+    }
+#>
+        /// <param name="source">The enumerable source.</param>
+        /// <param name="action">The action to execute.</param>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+<#
+    }
+#>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
+        ///     <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
+        /// </exception>
+        /// <remarks>
+        ///     <para>This method, due to multiple awaits, is considered to be very slow compared to its synchronous version.</para>
+        ///     <para>Please make sure to only use this where asynchronicity is required.</para>
+        ///     <para>In CPU-intensive operations, only its synchronous counterpart should be used.</para>
+        /// </remarks>
+        public static async ValueTask ForEachAsync<TItem, <#= paramTypes #>>(
+            this TItem[] source,
+            Func<TItem, <#= paramTypes #>, Task> action,
+            <#= paramNameTypes #>,
+            CancellationToken cancellationToken = default)
+        {
+            Requires.NotNull(source);
+            Requires.NotNull(action);
+
+            if (cancellationToken.IsCancellationRequested) return;
+
+            for (var i = 0; i < source.Length; i++)
+            {
+                await action(source[i], <#= paramNames #>);
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+        }
+
+        /// <summary>
+        ///     Asynchronously executes an action for each one of the elements of an array.
+        /// </summary>
+        /// <typeparam name="TItem">The array type.</typeparam>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+<#
+    }
+#>
+        /// <param name="source">The enumerable source.</param>
+        /// <param name="action">The action to execute.</param>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+<#
+    }
+#>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
+        ///     <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
+        /// </exception>
+        /// <remarks>
+        ///     <para>This method, due to multiple awaits, is considered to be very slow compared to its synchronous version.</para>
+        ///     <para>Please make sure to only use this where asynchronicity is required.</para>
+        ///     <para>In CPU-intensive operations, only its synchronous counterpart should be used.</para>
+        /// </remarks>
+        public static async ValueTask ForEachAsync<TItem, <#= paramTypes #>>(
+            this TItem[] source,
+            Func<TItem, <#= paramTypes #>, ValueTask> action,
+            <#= paramNameTypes #>,
+            CancellationToken cancellationToken = default)
+        {
+            Requires.NotNull(source);
+            Requires.NotNull(action);
+
+            if (cancellationToken.IsCancellationRequested) return;
+
+            for (var i = 0; i < source.Length; i++)
+            {
+                await action(source[i], <#= paramNames #>);
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+        }
+
+        /// <summary>
+        ///     Asynchronously executes an action for each one of the elements of an array.
+        /// </summary>
+        /// <typeparam name="TItem">The array type.</typeparam>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+<#
+    }
+#>
+        /// <param name="source">The enumerable source.</param>
+        /// <param name="action">The action to execute.</param>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+<#
+    }
+#>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
+        ///     <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
+        /// </exception>
+        /// <remarks>
+        ///     <para>This method, due to multiple awaits, is considered to be very slow compared to its synchronous version.</para>
+        ///     <para>Please make sure to only use this where asynchronicity is required.</para>
+        ///     <para>In CPU-intensive operations, only its synchronous counterpart should be used.</para>
+        /// </remarks>
+        public static async ValueTask ForEachAsync<TItem, <#= paramTypes #>>(
+            this TItem[] source,
+            Func<TItem, <#= paramTypes #>, CancellationToken, Task> action,
+            <#= paramNameTypes #>,
+            CancellationToken cancellationToken = default)
+        {
+            Requires.NotNull(source);
+            Requires.NotNull(action);
+
+            if (cancellationToken.IsCancellationRequested) return;
+
+            for (var i = 0; i < source.Length; i++)
+            {
+                await action(source[i], <#= paramNames #>, cancellationToken);
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+        }
+
+        /// <summary>
+        ///     Asynchronously executes an action for each one of the elements of an array.
+        /// </summary>
+        /// <typeparam name="TItem">The array type.</typeparam>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+<#
+    }
+#>
+        /// <param name="source">The enumerable source.</param>
+        /// <param name="action">The action to execute.</param>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+<#
+    }
+#>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
+        ///     <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
+        /// </exception>
+        /// <remarks>
+        ///     <para>This method, due to multiple awaits, is considered to be very slow compared to its synchronous version.</para>
+        ///     <para>Please make sure to only use this where asynchronicity is required.</para>
+        ///     <para>In CPU-intensive operations, only its synchronous counterpart should be used.</para>
+        /// </remarks>
+        public static async ValueTask ForEachAsync<TItem, <#= paramTypes #>>(
+            this TItem[] source,
+            Func<TItem, <#= paramTypes #>, CancellationToken, ValueTask> action,
+            <#= paramNameTypes #>,
+            CancellationToken cancellationToken = default)
+        {
+            Requires.NotNull(source);
+            Requires.NotNull(action);
+
+            if (cancellationToken.IsCancellationRequested) return;
+
+            for (var i = 0; i < source.Length; i++)
+            {
+                await action(source[i], <#= paramNames #>, cancellationToken);
+                cancellationToken.ThrowIfCancellationRequested();
             }
         }
 <#
