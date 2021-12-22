@@ -18,7 +18,8 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Updated more Requires to new C# 6 usage</PackageReleaseNotes>
+    <PackageReleaseNotes>- Removed extra package dependency when targeting anything other than .NET Standard
+- </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -58,7 +59,7 @@
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="[4.5.4,5)" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFrameworkIsFramework)'!='true'">
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='netstandard2.1'">
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
 
