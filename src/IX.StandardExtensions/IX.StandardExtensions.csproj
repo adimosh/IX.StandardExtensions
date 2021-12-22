@@ -19,7 +19,7 @@
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
     <PackageReleaseNotes>- Removed extra package dependency when targeting anything other than .NET Standard
-- </PackageReleaseNotes>
+- Always suppress synchronization context now works as expected</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
