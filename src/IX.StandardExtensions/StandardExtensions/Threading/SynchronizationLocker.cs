@@ -6,37 +6,48 @@ using System;
 using IX.System.Threading;
 using JetBrains.Annotations;
 
-namespace IX.StandardExtensions.Threading
+namespace IX.StandardExtensions.Threading;
+
+/// <summary>
+///     A synchronization locker base class.
+/// </summary>
+/// <seealso cref="IDisposable" />
+[PublicAPI]
+public abstract class SynchronizationLocker : IDisposable
 {
+#region Constructors and destructors
+
     /// <summary>
-    ///     A synchronization locker base class.
+    ///     Initializes a new instance of the <see cref="SynchronizationLocker" /> class.
     /// </summary>
-    /// <seealso cref="IDisposable" />
-    [PublicAPI]
-    public abstract class SynchronizationLocker : IDisposable
+    /// <param name="locker">The locker.</param>
+    internal SynchronizationLocker(IReaderWriterLock? locker)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="SynchronizationLocker" /> class.
-        /// </summary>
-        /// <param name="locker">The locker.</param>
-        internal SynchronizationLocker(IReaderWriterLock? locker)
-        {
-            this.Locker = locker;
-        }
-
-        /// <summary>
-        ///     Gets the reader/writer lock to use. This property can be <see langword="null" /> (<see langword="Nothing" /> in
-        ///     Visual Basic).
-        /// </summary>
-        protected IReaderWriterLock? Locker { get; }
-
-        /// <summary>
-        ///     Releases the currently-held lock.
-        /// </summary>
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Design",
-            "CA1063:Implement IDisposable Correctly",
-            Justification = "This implementation is desired.")]
-        public abstract void Dispose();
+        this.Locker = locker;
     }
+
+#endregion
+
+#region Properties and indexers
+
+    /// <summary>
+    ///     Gets the reader/writer lock to use. This property can be <see langword="null" /> (<see langword="Nothing" /> in
+    ///     Visual Basic).
+    /// </summary>
+    protected IReaderWriterLock? Locker { get; }
+
+#endregion
+
+#region Methods
+
+#region Interface implementations
+
+    /// <summary>
+    ///     Releases the currently-held lock.
+    /// </summary>
+    public abstract void Dispose();
+
+#endregion
+
+#endregion
 }

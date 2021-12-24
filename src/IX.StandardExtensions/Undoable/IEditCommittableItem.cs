@@ -5,21 +5,20 @@
 using System;
 using JetBrains.Annotations;
 
-namespace IX.Undoable
+namespace IX.Undoable;
+
+/// <summary>
+///     Service contract for an object that supports advertising a commit of an edited set of changes.
+/// </summary>
+[PublicAPI]
+public interface IEditCommittableItem
 {
-    /// <summary>
-    ///     Service contract for an object that supports advertising a commit of an edited set of changes.
-    /// </summary>
-    [PublicAPI]
-    public interface IEditCommittableItem
-    {
 #region Events
 
-        /// <summary>
-        ///     Occurs when an edit on this item is committed.
-        /// </summary>
-        event EventHandler<EditCommittedEventArgs> EditCommitted;
+    /// <summary>
+    ///     Occurs when an edit on this item is committed.
+    /// </summary>
+    event EventHandler<EditCommittedEventArgs> EditCommitted;
 
 #endregion
-    }
 }

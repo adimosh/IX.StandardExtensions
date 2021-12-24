@@ -4,12 +4,15 @@
 
 #if !NET5_0_OR_GREATER
 using System;
+using JetBrains.Annotations;
 
+// ReSharper disable once CheckNamespace
 namespace System.Runtime.CompilerServices;
 
 /// <summary>
 /// Allows capturing of the expressions passed to a method.
 /// </summary>
+[PublicAPI]
 [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
 public sealed class CallerArgumentExpressionAttribute : Attribute
 {
@@ -30,12 +33,6 @@ public sealed class CallerArgumentExpressionAttribute : Attribute
     /// <value>
     /// The name of the targeted parameter of the CallerArgumentExpression.
     /// </value>
-    public string ParameterName
-    {
-        get
-        {
-            return this.parameterName;
-        }
-    }
+    public string ParameterName => this.parameterName;
 }
 #endif

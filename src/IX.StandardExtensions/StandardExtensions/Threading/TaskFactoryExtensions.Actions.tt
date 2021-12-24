@@ -9,19 +9,22 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
 
-namespace IX.StandardExtensions.Threading
-{
-    /// <summary>
-    ///     A class containing extension methods for <see cref="TaskFactory"/>, mostly intended for use with <see cref="Task.Factory"/>.
-    /// </summary>
-    public static partial class TaskFactoryExtensions
-    {
-#pragma warning disable HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance
-#pragma warning disable UseAsyncSuffix // Use Async suffix<#
+namespace IX.StandardExtensions.Threading;
+
+/// <summary>
+///     A class containing extension methods for <see cref="TaskFactory"/>, mostly intended for use with <see cref="Task.Factory"/>.
+/// </summary>
+[SuppressMessage(
+    "Performance",
+    "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
+    Justification = "This is not an issue.")]
+public static partial class TaskFactoryExtensions
+{<#
 for (int i = 1; i <= 8; i++)
 {
     string[] types = new string[i];
@@ -40,110 +43,47 @@ for (int i = 1; i <= 8; i++)
 
     string paramTypes = string.Join(", ", types);
     string paramNames = string.Join(", ", names);
-    string paramNameTypes = string.Join($",{Environment.NewLine}            ", nameTypes);
+    string paramNameTypes = string.Join($",{Environment.NewLine}        ", nameTypes);
     string paramParameters = string.Join(", ", parameters);
 #>
 
-        /// <summary>
-        ///     Starts a task on a new thread.
-        /// </summary>
+    /// <summary>
+    ///     Starts a task on a new thread.
+    /// </summary>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+    /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
 <#
     }
 #>
-        /// <param name="taskFactory">The task factory to extend.</param>
-        /// <param name="action">The action to start on a new thread.</param>
+    /// <param name="taskFactory">The task factory to extend.</param>
+    /// <param name="action">The action to start on a new thread.</param>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+    /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
 <#
     }
 #>
-        /// <param name="cancellationToken">The cancellation token for this operation.</param>
-        /// <returns>A <see cref="Task"/> that represents the started task.</returns>
-        public static Task StartOnDefaultTaskScheduler<<#= paramTypes #>>(
-            this TaskFactory taskFactory,
-            Action<<#= paramTypes #>> action,
-            <#= paramNameTypes #>,
-            CancellationToken cancellationToken = default)
-        {
-            var localTaskFactory = Requires.NotNull(taskFactory);
-            var localAction = Requires.NotNull(action);
-
-            return StartWithStateOnDefaultTaskSchedulerAsync(
-                localTaskFactory,
-                rawState =>
-                {
-                    var (innerAction, innerState) = rawState;
-
-<#
-    for (int j = 1; j <= i; j++)
+    /// <param name="cancellationToken">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> that represents the started task.</returns>
+    public static Task StartOnDefaultTaskScheduler<<#= paramTypes #>>(
+        this TaskFactory taskFactory,
+        Action<<#= paramTypes #>> action,
+        <#= paramNameTypes #>,
+        CancellationToken cancellationToken = default)
     {
-        if (j == 8)
-        {
-#>
-                    var item<#= j #> = innerState.Rest;
-<#
-        }
-        else
-        {
-#>
-                    var item<#= j #> = innerState.Item<#= j #>;
-<#
-        }
-    }
-#>
+        var localTaskFactory = Requires.NotNull(taskFactory);
+        var localAction = Requires.NotNull(action);
 
-                    innerAction(<#= paramParameters #>);
-                },
-                (localAction, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
-                false,
-                cancellationToken);
-        }
-
-        /// <summary>
-        ///     Starts a long-running task on a new thread.
-        /// </summary>
-<#
-    for (int j = 1; j <= i; j++)
-    {
-#>
-        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
-<#
-    }
-#>
-        /// <param name="taskFactory">The task factory to extend.</param>
-        /// <param name="action">The action to start on a new thread.</param>
-<#
-    for (int j = 1; j <= i; j++)
-    {
-#>
-        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
-<#
-    }
-#>
-        /// <param name="cancellationToken">The cancellation token for this operation.</param>
-        /// <returns>A <see cref="Task"/> that represents the started task.</returns>
-        public static Task StartLongRunningOnDefaultTaskScheduler<<#= paramTypes #>>(
-            this TaskFactory taskFactory,
-            Action<<#= paramTypes #>> action,
-            <#= paramNameTypes #>,
-            CancellationToken cancellationToken = default)
-        {
-            var localTaskFactory = Requires.NotNull(taskFactory);
-            var localAction = Requires.NotNull(action);
-
-            return StartWithStateOnDefaultTaskSchedulerAsync(
-                localTaskFactory,
-                rawState =>
-                {
-                    var (innerAction, innerState) = rawState;
+        return StartWithStateOnDefaultTaskSchedulerAsync(
+            localTaskFactory,
+            rawState =>
+            {
+                var (innerAction, innerState) = rawState;
 
 <#
     for (int j = 1; j <= i; j++)
@@ -151,63 +91,62 @@ for (int i = 1; i <= 8; i++)
         if (j == 8)
         {
 #>
-                    var item<#= j #> = innerState.Rest;
+                var item<#= j #> = innerState.Rest;
 <#
         }
         else
         {
 #>
-                    var item<#= j #> = innerState.Item<#= j #>;
+                var item<#= j #> = innerState.Item<#= j #>;
 <#
         }
     }
 #>
 
-                    innerAction(<#= paramParameters #>);
-                },
-                (localAction, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
-                true,
-                cancellationToken);
-        }
+                innerAction(<#= paramParameters #>);
+            },
+            (LocalAction: localAction, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
+            false,
+            cancellationToken);
+    }
 
-        /// <summary>
-        ///     Starts a task on a new thread.
-        /// </summary>
+    /// <summary>
+    ///     Starts a long-running task on a new thread.
+    /// </summary>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+    /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
 <#
     }
 #>
-        /// <typeparam name="TResult">The type of the return value.</typeparam>
-        /// <param name="taskFactory">The task factory to extend.</param>
-        /// <param name="action">The action to start on a new thread.</param>
+    /// <param name="taskFactory">The task factory to extend.</param>
+    /// <param name="action">The action to start on a new thread.</param>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+    /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
 <#
     }
 #>
-        /// <param name="cancellationToken">The cancellation token for this operation.</param>
-        /// <returns>A <see cref="Task"/> that represents the started task.</returns>
-        public static Task<TResult> StartOnDefaultTaskScheduler<<#= paramTypes #>, TResult>(
-            this TaskFactory taskFactory,
-            Func<<#= paramTypes #>, TResult> action,
-            <#= paramNameTypes #>,
-            CancellationToken cancellationToken = default)
-        {
-            var localTaskFactory = Requires.NotNull(taskFactory);
-            var localAction = Requires.NotNull(action);
+    /// <param name="cancellationToken">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> that represents the started task.</returns>
+    public static Task StartLongRunningOnDefaultTaskScheduler<<#= paramTypes #>>(
+        this TaskFactory taskFactory,
+        Action<<#= paramTypes #>> action,
+        <#= paramNameTypes #>,
+        CancellationToken cancellationToken = default)
+    {
+        var localTaskFactory = Requires.NotNull(taskFactory);
+        var localAction = Requires.NotNull(action);
 
-            return StartWithStateOnDefaultTaskSchedulerAsync(
-                localTaskFactory,
-                rawState =>
-                {
-                    var (innerAction, innerState) = rawState;
+        return StartWithStateOnDefaultTaskSchedulerAsync(
+            localTaskFactory,
+            rawState =>
+            {
+                var (innerAction, innerState) = rawState;
 
 <#
     for (int j = 1; j <= i; j++)
@@ -215,63 +154,63 @@ for (int i = 1; i <= 8; i++)
         if (j == 8)
         {
 #>
-                    var item<#= j #> = innerState.Rest;
+                var item<#= j #> = innerState.Rest;
 <#
         }
         else
         {
 #>
-                    var item<#= j #> = innerState.Item<#= j #>;
+                var item<#= j #> = innerState.Item<#= j #>;
 <#
         }
     }
 #>
 
-                    return innerAction(<#= paramParameters #>);
-                },
-                (localAction, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
-                false,
-                cancellationToken);
-        }
+                innerAction(<#= paramParameters #>);
+            },
+            (LocalAction: localAction, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
+            true,
+            cancellationToken);
+    }
 
-        /// <summary>
-        ///     Starts a long-running task on a new thread.
-        /// </summary>
+    /// <summary>
+    ///     Starts a task on a new thread.
+    /// </summary>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+    /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
 <#
     }
 #>
-        /// <typeparam name="TResult">The type of the return value.</typeparam>
-        /// <param name="taskFactory">The task factory to extend.</param>
-        /// <param name="action">The action to start on a new thread.</param>
+    /// <typeparam name="TResult">The type of the return value.</typeparam>
+    /// <param name="taskFactory">The task factory to extend.</param>
+    /// <param name="action">The action to start on a new thread.</param>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+    /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
 <#
     }
 #>
-        /// <param name="cancellationToken">The cancellation token for this operation.</param>
-        /// <returns>A <see cref="Task"/> that represents the started task.</returns>
-        public static Task<TResult> StartLongRunningOnDefaultTaskScheduler<<#= paramTypes #>, TResult>(
-            this TaskFactory taskFactory,
-            Func<<#= paramTypes #>, TResult> action,
-            <#= paramNameTypes #>,
-            CancellationToken cancellationToken = default)
-        {
-            var localTaskFactory = Requires.NotNull(taskFactory);
-            var localAction = Requires.NotNull(action);
+    /// <param name="cancellationToken">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> that represents the started task.</returns>
+    public static Task<TResult> StartOnDefaultTaskScheduler<<#= paramTypes #>, TResult>(
+        this TaskFactory taskFactory,
+        Func<<#= paramTypes #>, TResult> action,
+        <#= paramNameTypes #>,
+        CancellationToken cancellationToken = default)
+    {
+        var localTaskFactory = Requires.NotNull(taskFactory);
+        var localAction = Requires.NotNull(action);
 
-            return StartWithStateOnDefaultTaskSchedulerAsync(
-                localTaskFactory,
-                rawState =>
-                {
-                    var (innerAction, innerState) = rawState;
+        return StartWithStateOnDefaultTaskSchedulerAsync(
+            localTaskFactory,
+            rawState =>
+            {
+                var (innerAction, innerState) = rawState;
 
 <#
     for (int j = 1; j <= i; j++)
@@ -279,28 +218,89 @@ for (int i = 1; i <= 8; i++)
         if (j == 8)
         {
 #>
-                    var item<#= j #> = innerState.Rest;
+                var item<#= j #> = innerState.Rest;
 <#
         }
         else
         {
 #>
-                    var item<#= j #> = innerState.Item<#= j #>;
+                var item<#= j #> = innerState.Item<#= j #>;
 <#
         }
     }
 #>
 
-                    return innerAction(<#= paramParameters #>);
-                },
-                (localAction, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
-                true,
-                cancellationToken);
+                return innerAction(<#= paramParameters #>);
+            },
+            (LocalAction: localAction, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
+            false,
+            cancellationToken);
+    }
+
+    /// <summary>
+    ///     Starts a long-running task on a new thread.
+    /// </summary>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+    /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+<#
+    }
+#>
+    /// <typeparam name="TResult">The type of the return value.</typeparam>
+    /// <param name="taskFactory">The task factory to extend.</param>
+    /// <param name="action">The action to start on a new thread.</param>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+    /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+<#
+    }
+#>
+    /// <param name="cancellationToken">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> that represents the started task.</returns>
+    public static Task<TResult> StartLongRunningOnDefaultTaskScheduler<<#= paramTypes #>, TResult>(
+        this TaskFactory taskFactory,
+        Func<<#= paramTypes #>, TResult> action,
+        <#= paramNameTypes #>,
+        CancellationToken cancellationToken = default)
+    {
+        var localTaskFactory = Requires.NotNull(taskFactory);
+        var localAction = Requires.NotNull(action);
+
+        return StartWithStateOnDefaultTaskSchedulerAsync(
+            localTaskFactory,
+            rawState =>
+            {
+                var (innerAction, innerState) = rawState;
+
+<#
+    for (int j = 1; j <= i; j++)
+    {
+        if (j == 8)
+        {
+#>
+                var item<#= j #> = innerState.Rest;
+<#
         }
+        else
+        {
+#>
+                var item<#= j #> = innerState.Item<#= j #>;
+<#
+        }
+    }
+#>
+
+                return innerAction(<#= paramParameters #>);
+            },
+            (LocalAction: localAction, new Tuple<<#= paramTypes #>>(<#= paramNames #>)),
+            true,
+            cancellationToken);
+    }
 <#
 }
 #>
-#pragma warning restore UseAsyncSuffix // Use Async suffix
-#pragma warning restore HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance
-    }
 }

@@ -61,122 +61,112 @@ using System.Globalization;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
-namespace IX.StandardExtensions
-{<# foreach (var item in argumentExceptions) { #>
+namespace IX.StandardExtensions;<# foreach (var item in argumentExceptions) { #>
+
+
+/// <summary>
+///     <#= item.Description #>
+/// </summary>
+/// <seealso cref="ArgumentException" />
+[Serializable]
+[PublicAPI]
+public class <#= item.Name #>Exception : ArgumentException
+{
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
+    /// </summary>
+    public <#= item.Name #>Exception()
+        : base(Resources.Error<#= item.Name #>)
+    {
+    }
 
     /// <summary>
-    ///     <#= item.Description #>
+    ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
     /// </summary>
-    /// <seealso cref="ArgumentException" />
-    [Serializable]
-    [PublicAPI]
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "StyleCop.CSharp.DocumentationRules",
-        "SA1649:File name should match first type name",
-        Justification = "Auto-generated file.")]
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "StyleCop.CSharp.MaintainabilityRules",
-        "SA1402:File may only contain a single type",
-        Justification = "Auto-generated file.")]
-    public class <#= item.Name #>Exception : ArgumentException
+    /// <param name="argumentName">The name of the argument.</param>
+    public <#= item.Name #>Exception(string argumentName)
+        : base(
+            Resources.Error<#= item.Name #>,
+            argumentName)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
-        /// </summary>
-        public <#= item.Name #>Exception()
-            : base(Resources.Error<#= item.Name #>)
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
-        /// </summary>
-        /// <param name="argumentName">The name of the argument.</param>
-        public <#= item.Name #>Exception(string argumentName)
-            : base(
-                Resources.Error<#= item.Name #>,
-                argumentName)
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
-        /// </summary>
-        /// <param name="message">A custom message for the thrown exception.</param>
-        /// <param name="argumentName">The name of the argument.</param>
-        public <#= item.Name #>Exception(
-            string message,
-            string argumentName)
-            : base(
-                message,
-                argumentName)
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
-        /// </summary>
-        /// <param name="internalException">The internal exception, if any.</param>
-        public <#= item.Name #>Exception(Exception internalException)
-            : base(
-                Resources.Error<#= item.Name #>,
-                internalException)
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
-        /// </summary>
-        /// <param name="argumentName">The name of the argument.</param>
-        /// <param name="internalException">The internal exception, if any.</param>
-        public <#= item.Name #>Exception(
-            string argumentName,
-            Exception internalException)
-            : base(
-                Resources.Error<#= item.Name #>,
-                argumentName,
-                internalException)
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
-        /// </summary>
-        /// <param name="message">A custom message for the thrown exception.</param>
-        /// <param name="argumentName">The name of the argument.</param>
-        /// <param name="internalException">The internal exception, if any.</param>
-        public <#= item.Name #>Exception(
-            string message,
-            string argumentName,
-            Exception internalException)
-            : base(
-                string.Format(
-                    CultureInfo.CurrentCulture,
-                    message,
-                    argumentName),
-                internalException)
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
-        /// </summary>
-        /// <param name="info">
-        ///     The <see cref="SerializationInfo" /> that holds the serialized object
-        ///     data about the exception being thrown.
-        /// </param>
-        /// <param name="context">
-        ///     The <see cref="StreamingContext" /> that contains contextual
-        ///     information about the source or destination.
-        /// </param>
-        protected <#= item.Name #>Exception(
-            SerializationInfo info,
-            StreamingContext context)
-            : base(
-                info,
-                context)
-        {
-        }
     }
-<# } #>
-}
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
+    /// </summary>
+    /// <param name="message">A custom message for the thrown exception.</param>
+    /// <param name="argumentName">The name of the argument.</param>
+    public <#= item.Name #>Exception(
+        string message,
+        string argumentName)
+        : base(
+            message,
+            argumentName)
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
+    /// </summary>
+    /// <param name="internalException">The internal exception, if any.</param>
+    public <#= item.Name #>Exception(Exception internalException)
+        : base(
+            Resources.Error<#= item.Name #>,
+            internalException)
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
+    /// </summary>
+    /// <param name="argumentName">The name of the argument.</param>
+    /// <param name="internalException">The internal exception, if any.</param>
+    public <#= item.Name #>Exception(
+        string argumentName,
+        Exception internalException)
+        : base(
+            Resources.Error<#= item.Name #>,
+            argumentName,
+            internalException)
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
+    /// </summary>
+    /// <param name="message">A custom message for the thrown exception.</param>
+    /// <param name="argumentName">The name of the argument.</param>
+    /// <param name="internalException">The internal exception, if any.</param>
+    public <#= item.Name #>Exception(
+        string message,
+        string argumentName,
+        Exception internalException)
+        : base(
+            string.Format(
+                CultureInfo.CurrentCulture,
+                message,
+                argumentName),
+            internalException)
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="<#= item.Name #>Exception" /> class.
+    /// </summary>
+    /// <param name="info">
+    ///     The <see cref="SerializationInfo" /> that holds the serialized object
+    ///     data about the exception being thrown.
+    /// </param>
+    /// <param name="context">
+    ///     The <see cref="StreamingContext" /> that contains contextual
+    ///     information about the source or destination.
+    /// </param>
+    protected <#= item.Name #>Exception(
+        SerializationInfo info,
+        StreamingContext context)
+        : base(
+            info,
+            context)
+    {
+    }
+}<# } #>

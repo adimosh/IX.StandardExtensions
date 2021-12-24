@@ -4,11 +4,10 @@
 
 using JetBrains.Annotations;
 
-namespace IX.Undoable.StateChanges
-{
-    /// <summary>
-    /// The base record for state changes.
-    /// </summary>
-    [PublicAPI]
-    public abstract record StateChangeBase;
-}
+namespace IX.Undoable.StateChanges;
+
+/// <summary>
+///     The base record for state changes.
+/// </summary>
+[PublicAPI]
+public abstract record StateChangeBase;

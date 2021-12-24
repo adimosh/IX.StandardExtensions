@@ -15,163 +15,154 @@ using JetBrains.Annotations;
 using Constants = IX.Abstractions.Collections.Constants;
 
 // ReSharper disable once CheckNamespace
-namespace IX.System.Collections.Generic
+namespace IX.System.Collections.Generic;
+
+/// <summary>
+///     A base class for pushing collections.
+/// </summary>
+/// <typeparam name="T">The type of item in the pushing collection.</typeparam>
+/// <seealso cref="ReaderWriterSynchronizedBase" />
+/// <seealso cref="ICollection" />
+[DataContract(
+    Namespace = Constants.DataContractNamespace,
+    Name = "PushOutQueueOf{0}")]
+[PublicAPI]
+[SuppressMessage(
+    "Design",
+    "CA1010:Generic interface should also be implemented",
+    Justification = "This is not needed, as we expect derived classes to implement it according to their own needs.")]
+[SuppressMessage(
+    "Naming",
+    "CA1710:Identifiers should have correct suffix",
+    Justification = "Analyzer misidentified issue.")]
+public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
+    ICollection
 {
-    /// <summary>
-    ///     A base class for pushing collections.
-    /// </summary>
-    /// <typeparam name="T">The type of item in the pushing collection.</typeparam>
-    /// <seealso cref="ReaderWriterSynchronizedBase" />
-    /// <seealso cref="ICollection" />
-    [DataContract(
-        Namespace = Constants.DataContractNamespace,
-        Name = "PushOutQueueOf{0}")]
-    [PublicAPI]
-    [SuppressMessage(
-        "Design",
-        "CA1010:Generic interface should also be implemented",
-        Justification = "This is not needed, as we expect derived classes to implement it according to their own needs.")]
-    [SuppressMessage(
-        "Naming",
-        "CA1710:Identifiers should have correct suffix",
-        Justification = "Analyzer misidentified issue.")]
-    public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
-        ICollection
-    {
 #region Internal state
 
-        /// <summary>
-        ///     The internal container.
-        /// </summary>
-        [DataMember(Name = "Items")]
-        private List<T> internalContainer;
+    /// <summary>
+    ///     The internal container.
+    /// </summary>
+    [DataMember(Name = "Items")]
+    private List<T> internalContainer;
 
-        /// <summary>
-        ///     The limit.
-        /// </summary>
-        private int limit;
+    /// <summary>
+    ///     The limit.
+    /// </summary>
+    private int limit;
 
 #endregion
 
+#region Constructors and destructors
+
 #region Constructors
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="PushingCollectionBase{T}" /> class.
-        /// </summary>
-        /// <param name="limit">The limit.</param>
-        /// <exception cref="LimitArgumentNegativeException">
-        ///     <paramref name="limit" /> is a negative
-        ///     integer.
-        /// </exception>
-        protected PushingCollectionBase(int limit)
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="PushingCollectionBase{T}" /> class.
+    /// </summary>
+    /// <param name="limit">The limit.</param>
+    /// <exception cref="LimitArgumentNegativeException">
+    ///     <paramref name="limit" /> is a negative
+    ///     integer.
+    /// </exception>
+    protected PushingCollectionBase(int limit)
+    {
+        if (limit < 0)
         {
-            if (limit < 0)
-            {
-                throw new LimitArgumentNegativeException(nameof(limit));
-            }
-
-            this.limit = limit;
-
-            this.internalContainer = new List<T>();
+            throw new LimitArgumentNegativeException(nameof(limit));
         }
+
+        this.limit = limit;
+
+        this.internalContainer = new List<T>();
+    }
+
+#endregion
 
 #endregion
 
 #region Properties and indexers
 
-        /// <summary>
-        ///     Gets the number of elements in the push-out queue.
-        /// </summary>
-        /// <value>The current element count.</value>
-        public int Count
+    /// <summary>
+    ///     Gets the number of elements in the push-out queue.
+    /// </summary>
+    /// <value>The current element count.</value>
+    public int Count
+    {
+        get
         {
-            get
-            {
-                this.RequiresNotDisposed();
+            this.RequiresNotDisposed();
 
-                using (this.ReadLock())
+            using (this.ReadLock())
+            {
+                return this.internalContainer.Count;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Gets a value indicating whether this pushing collection is empty.
+    /// </summary>
+    /// <value>
+    ///     <c>true</c> if this pushing collection is empty; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsEmpty => this.Count == 0;
+
+    /// <summary>
+    ///     Gets a value indicating whether access to the <see cref="ICollection" /> is synchronized
+    ///     (thread safe).
+    /// </summary>
+    /// <value><see langword="true" /> if this instance is synchronized; otherwise, <see langword="false" />.</value>
+    bool ICollection.IsSynchronized => ((ICollection)this.internalContainer).IsSynchronized;
+
+    /// <summary>
+    ///     Gets an object that can be used to synchronize access to the <see cref="ICollection" />.
+    /// </summary>
+    /// <value>The synchronize root.</value>
+    object ICollection.SyncRoot => ((ICollection)this.internalContainer).SyncRoot;
+
+    /// <summary>
+    ///     Gets or sets the number of items in the push-down stack.
+    /// </summary>
+    [DataMember]
+    public int Limit
+    {
+        get => this.limit;
+        set
+        {
+            this.RequiresNotDisposed();
+
+            if (value < 0)
+            {
+                throw new LimitArgumentNegativeException();
+            }
+
+            using (this.WriteLock())
+            {
+                this.limit = value;
+
+                if (value != 0)
                 {
-                    return this.internalContainer.Count;
+                    while (this.internalContainer.Count > value)
+                    {
+                        this.internalContainer.RemoveAt(0);
+                    }
+                }
+                else
+                {
+                    this.internalContainer.Clear();
                 }
             }
         }
+    }
 
-        /// <summary>
-        ///     Gets a value indicating whether this pushing collection is empty.
-        /// </summary>
-        /// <value>
-        ///     <c>true</c> if this pushing collection is empty; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsEmpty =>
-            this.Count == 0;
-
-        /// <summary>
-        ///     Gets a value indicating whether access to the <see cref="ICollection" /> is synchronized
-        ///     (thread safe).
-        /// </summary>
-        /// <value><see langword="true" /> if this instance is synchronized; otherwise, <see langword="false" />.</value>
-        [SuppressMessage(
-            "Design",
-            "CA1033:Interface methods should be callable by child types",
-            Justification = "This is no longer recommended and will not ")]
-        bool ICollection.IsSynchronized =>
-            ((ICollection)this.internalContainer).IsSynchronized;
-
-        /// <summary>
-        ///     Gets an object that can be used to synchronize access to the <see cref="ICollection" />.
-        /// </summary>
-        /// <value>The synchronize root.</value>
-        [SuppressMessage(
-            "Design",
-            "CA1033:Interface methods should be callable by child types",
-            Justification = "This is no longer recommended and will not ")]
-        object ICollection.SyncRoot =>
-            ((ICollection)this.internalContainer).SyncRoot;
-
-        /// <summary>
-        ///     Gets or sets the number of items in the push-down stack.
-        /// </summary>
-        [DataMember]
-        public int Limit
-        {
-            get =>
-                this.limit;
-            set
-            {
-                this.RequiresNotDisposed();
-
-                if (value < 0)
-                {
-                    throw new LimitArgumentNegativeException();
-                }
-
-                using (this.WriteLock())
-                {
-                    this.limit = value;
-
-                    if (value != 0)
-                    {
-                        while (this.internalContainer.Count > value)
-                        {
-                            this.internalContainer.RemoveAt(0);
-                        }
-                    }
-                    else
-                    {
-                        this.internalContainer.Clear();
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Gets the internal container.
-        /// </summary>
-        /// <value>
-        ///     The internal container.
-        /// </value>
-        protected List<T> InternalContainer =>
-            this.internalContainer;
+    /// <summary>
+    ///     Gets the internal container.
+    /// </summary>
+    /// <value>
+    ///     The internal container.
+    /// </value>
+    protected List<T> InternalContainer => this.internalContainer;
 
 #endregion
 
@@ -179,227 +170,225 @@ namespace IX.System.Collections.Generic
 
 #region Interface implementations
 
-        /// <summary>
-        ///     Returns an enumerator that iterates through a collection.
-        /// </summary>
-        /// <returns>An <see cref="IEnumerator" /> object that can be used to iterate through the collection.</returns>
-        [SuppressMessage(
-            "Performance",
-            "HAA0401:Possible allocation of reference type enumerator",
-            Justification = "Unavoidable.")]
-        IEnumerator IEnumerable.GetEnumerator() =>
-            this.GetEnumerator();
+    /// <summary>
+    ///     Copies the elements of the <see cref="PushingCollectionBase{T}" /> to an <see cref="Array" />,
+    ///     starting at a particular <see cref="Array" /> index.
+    /// </summary>
+    /// <param name="array">
+    ///     The one-dimensional <see cref="Array" /> that is the destination of the elements copied
+    ///     from <see cref="PushingCollectionBase{T}" />. The <see cref="Array" /> must have zero-based
+    ///     indexing.
+    /// </param>
+    /// <param name="index">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+    public void CopyTo(
+        Array array,
+        int index)
+    {
+        this.RequiresNotDisposed();
 
-        /// <summary>
-        ///     Copies the elements of the <see cref="PushingCollectionBase{T}" /> to an <see cref="Array" />,
-        ///     starting at a particular <see cref="Array" /> index.
-        /// </summary>
-        /// <param name="array">
-        ///     The one-dimensional <see cref="Array" /> that is the destination of the elements copied
-        ///     from <see cref="PushingCollectionBase{T}" />. The <see cref="Array" /> must have zero-based
-        ///     indexing.
-        /// </param>
-        /// <param name="index">The zero-based index in <paramref name="array" /> at which copying begins.</param>
-        public void CopyTo(
-            Array array,
-            int index)
+        using (this.ReadLock())
         {
-            this.RequiresNotDisposed();
-
-            using (this.ReadLock())
-            {
-                ((ICollection)this.internalContainer).CopyTo(
-                    array,
-                    index);
-            }
+            ((ICollection)this.internalContainer).CopyTo(
+                array,
+                index);
         }
+    }
+
+    /// <summary>
+    ///     Returns an enumerator that iterates through a collection.
+    /// </summary>
+    /// <returns>An <see cref="IEnumerator" /> object that can be used to iterate through the collection.</returns>
+    [SuppressMessage(
+        "Performance",
+        "HAA0401:Possible allocation of reference type enumerator",
+        Justification = "Unavoidable.")]
+    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 #endregion
 
-        /// <summary>
-        ///     Clears the observable stack.
-        /// </summary>
-        public void Clear()
+    /// <summary>
+    ///     Clears the observable stack.
+    /// </summary>
+    public void Clear()
+    {
+        this.RequiresNotDisposed();
+
+        using (this.WriteLock())
         {
-            this.RequiresNotDisposed();
-
-            using (this.WriteLock())
-            {
-                this.internalContainer.Clear();
-            }
+            this.internalContainer.Clear();
         }
+    }
 
-        /// <summary>
-        ///     Checks whether or not a certain item is in the stack.
-        /// </summary>
-        /// <param name="item">The item to check for.</param>
-        /// <returns><see langword="true" /> if the item was found, <see langword="false" /> otherwise.</returns>
-        public bool Contains(T item)
+    /// <summary>
+    ///     Checks whether or not a certain item is in the stack.
+    /// </summary>
+    /// <param name="item">The item to check for.</param>
+    /// <returns><see langword="true" /> if the item was found, <see langword="false" /> otherwise.</returns>
+    public bool Contains(T item)
+    {
+        this.RequiresNotDisposed();
+
+        using (this.ReadLock())
         {
-            this.RequiresNotDisposed();
-
-            using (this.ReadLock())
-            {
-                return this.internalContainer.Contains(item);
-            }
+            return this.internalContainer.Contains(item);
         }
+    }
 
-        /// <summary>
-        ///     Returns an enumerator that iterates through the collection.
-        /// </summary>
-        /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        [SuppressMessage(
-            "Performance",
-            "HAA0603:Delegate allocation from a method group",
-            Justification = "We need this allocation here.")]
-        [SuppressMessage(
-            "Performance",
-            "HAA0401:Possible allocation of reference type enumerator",
-            Justification = "We're returning a class enumerator, so we're expecting an allocation anyway.")]
-        public IEnumerator<T> GetEnumerator() =>
-            AtomicEnumerator<T>.FromCollection(
-                this.internalContainer,
-                this.ReadLock);
+    /// <summary>
+    ///     Returns an enumerator that iterates through the collection.
+    /// </summary>
+    /// <returns>An enumerator that can be used to iterate through the collection.</returns>
+    [SuppressMessage(
+        "Performance",
+        "HAA0603:Delegate allocation from a method group",
+        Justification = "We need this allocation here.")]
+    [SuppressMessage(
+        "Performance",
+        "HAA0401:Possible allocation of reference type enumerator",
+        Justification = "We're returning a class enumerator, so we're expecting an allocation anyway.")]
+    public IEnumerator<T> GetEnumerator() =>
+        AtomicEnumerator<T>.FromCollection(
+            this.internalContainer,
+            this.ReadLock);
 
-        /// <summary>
-        ///     Copies all elements of the stack to a new array.
-        /// </summary>
-        /// <returns>An array containing all items in the stack.</returns>
-        public T[] ToArray()
+    /// <summary>
+    ///     Copies all elements of the stack to a new array.
+    /// </summary>
+    /// <returns>An array containing all items in the stack.</returns>
+    public T[] ToArray()
+    {
+        this.RequiresNotDisposed();
+
+        using (this.ReadLock())
         {
-            this.RequiresNotDisposed();
-
-            using (this.ReadLock())
-            {
-                return this.internalContainer.ToArray();
-            }
+            return this.internalContainer.ToArray();
         }
+    }
 
 #region Disposable
 
-        /// <summary>
-        ///     Disposes in the managed context.
-        /// </summary>
-        protected override void DisposeManagedContext()
-        {
-            base.DisposeManagedContext();
+    /// <summary>
+    ///     Disposes in the managed context.
+    /// </summary>
+    protected override void DisposeManagedContext()
+    {
+        base.DisposeManagedContext();
 
-            Interlocked.Exchange(
-                    ref this.internalContainer,
-                    null!)
-                ?.Clear();
-        }
+        Interlocked.Exchange(
+                ref this.internalContainer,
+                null!)
+            ?.Clear();
+    }
 
 #endregion
 
-        /// <summary>
-        ///     Appends the specified item to this pushing collection.
-        /// </summary>
-        /// <param name="item">The item to append.</param>
-        protected void Append(T item)
-        {
-            this.RequiresNotDisposed();
+    /// <summary>
+    ///     Appends the specified item to this pushing collection.
+    /// </summary>
+    /// <param name="item">The item to append.</param>
+    protected void Append(T item)
+    {
+        this.RequiresNotDisposed();
 
-            if (this.Limit == 0)
+        if (this.Limit == 0)
+        {
+            return;
+        }
+
+        using (this.WriteLock())
+        {
+            if (this.InternalContainer.Count == this.Limit)
             {
-                return;
+                this.InternalContainer.RemoveAt(0);
             }
 
-            using (this.WriteLock())
+            this.InternalContainer.Add(item);
+        }
+    }
+
+    /// <summary>
+    ///     Appends the specified items to this pushing collection.
+    /// </summary>
+    /// <param name="items">The items to append.</param>
+    protected void Append(T[] items)
+    {
+        // Validate input
+        this.RequiresNotDisposed();
+        Requires.NotNull(
+            items,
+            nameof(items));
+
+        // Check disabled collection
+        if (this.Limit == 0)
+        {
+            return;
+        }
+
+        // Lock on write
+        using (this.WriteLock())
+        {
+            foreach (T item in items)
             {
-                if (this.InternalContainer.Count == this.Limit)
+                this.InternalContainer.Add(item);
+
+                if (this.InternalContainer.Count == this.Limit + 1)
                 {
                     this.InternalContainer.RemoveAt(0);
                 }
-
-                this.InternalContainer.Add(item);
             }
         }
+    }
 
-        /// <summary>
-        ///     Appends the specified items to this pushing collection.
-        /// </summary>
-        /// <param name="items">The items to append.</param>
-        protected void Append(T[] items)
+    /// <summary>
+    ///     Appends the specified items to the pushing collection.
+    /// </summary>
+    /// <param name="items">The items to append.</param>
+    /// <param name="startIndex">The start index in the array to begin taking items from.</param>
+    /// <param name="count">The number of items to append.</param>
+    protected void Append(
+        T[] items,
+        int startIndex,
+        int count)
+    {
+        // Validate input
+        this.RequiresNotDisposed();
+        Requires.NotNull(
+            items,
+            nameof(items));
+        Requires.ValidArrayRange(
+            in startIndex,
+            in count,
+            items,
+            nameof(items));
+
+        // Check disabled collection
+        var innerLimit = this.Limit;
+        if (innerLimit == 0)
         {
-            // Validate input
-            this.RequiresNotDisposed();
-            Requires.NotNull(
-                items,
-                nameof(items));
+            return;
+        }
 
-            // Check disabled collection
-            if (this.Limit == 0)
-            {
-                return;
-            }
+        var copiedItems = new ReadOnlySpan<T>(
+            items,
+            startIndex,
+            count);
 
-            // Lock on write
-            using (this.WriteLock())
+        // Lock on write
+        using (this.WriteLock())
+        {
+            // Add all items
+            List<T> innerInternalContainer = this.InternalContainer;
+            foreach (T item in copiedItems)
             {
-                foreach (T item in items)
+                innerInternalContainer.Add(item);
+
+                if (innerInternalContainer.Count == innerLimit + 1)
                 {
-                    this.InternalContainer.Add(item);
-
-                    if (this.InternalContainer.Count == this.Limit + 1)
-                    {
-                        this.InternalContainer.RemoveAt(0);
-                    }
+                    innerInternalContainer.RemoveAt(0);
                 }
             }
         }
-
-        /// <summary>
-        ///     Appends the specified items to the pushing collection.
-        /// </summary>
-        /// <param name="items">The items to append.</param>
-        /// <param name="startIndex">The start index in the array to begin taking items from.</param>
-        /// <param name="count">The number of items to append.</param>
-        protected void Append(
-            T[] items,
-            int startIndex,
-            int count)
-        {
-            // Validate input
-            this.RequiresNotDisposed();
-            Requires.NotNull(
-                items,
-                nameof(items));
-            Requires.ValidArrayRange(
-                in startIndex,
-                in count,
-                items,
-                nameof(items));
-
-            // Check disabled collection
-            var innerLimit = this.Limit;
-            if (innerLimit == 0)
-            {
-                return;
-            }
-
-            var copiedItems = new ReadOnlySpan<T>(
-                items,
-                startIndex,
-                count);
-
-            // Lock on write
-            using (this.WriteLock())
-            {
-                // Add all items
-                List<T> innerInternalContainer = this.InternalContainer;
-                foreach (T item in copiedItems)
-                {
-                    innerInternalContainer.Add(item);
-
-                    if (innerInternalContainer.Count == innerLimit + 1)
-                    {
-                        innerInternalContainer.RemoveAt(0);
-                    }
-                }
-            }
-        }
+    }
 
 #endregion
-    }
 }

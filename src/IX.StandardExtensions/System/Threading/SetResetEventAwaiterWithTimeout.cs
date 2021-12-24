@@ -9,73 +9,73 @@ using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using JetBrains.Annotations;
 
-namespace IX.System.Threading
+namespace IX.System.Threading;
+
+/// <summary>
+///     A class that is used to await on <see cref="ISetResetEvent" /> instances with a specified timeout.
+/// </summary>
+public class SetResetEventAwaiterWithTimeout : IAwaiter<bool>
 {
-    /// <summary>
-    ///     A class that is used to await on <see cref="ISetResetEvent" /> instances with a specified timeout.
-    /// </summary>
-    public class SetResetEventAwaiterWithTimeout : IAwaiter<bool>
-    {
 #region Internal state
 
-        private readonly ISetResetEvent mre;
-        private readonly TimeSpan tsTimeout;
+    private readonly ISetResetEvent mre;
+    private readonly TimeSpan tsTimeout;
 
-        private int isCompleted;
-        private bool result;
+    private int isCompleted;
+    private bool result;
 
 #endregion
 
 #region Constructors and destructors
 
-        internal SetResetEventAwaiterWithTimeout(
-            ISetResetEvent mre,
-            int timeout)
-        {
-            Requires.NotNull(
-                out this.mre,
-                mre,
-                nameof(mre));
+    internal SetResetEventAwaiterWithTimeout(
+        ISetResetEvent mre,
+        int timeout)
+    {
+        Requires.NotNull(
+            out this.mre,
+            mre,
+            nameof(mre));
 
-            this.tsTimeout = TimeSpan.FromMilliseconds(timeout);
-        }
+        this.tsTimeout = TimeSpan.FromMilliseconds(timeout);
+    }
 
-        internal SetResetEventAwaiterWithTimeout(
-            ISetResetEvent mre,
-            TimeSpan timeout)
-        {
-            Requires.NotNull(
-                out this.mre,
-                mre,
-                nameof(mre));
+    internal SetResetEventAwaiterWithTimeout(
+        ISetResetEvent mre,
+        TimeSpan timeout)
+    {
+        Requires.NotNull(
+            out this.mre,
+            mre,
+            nameof(mre));
 
-            this.tsTimeout = timeout;
-        }
+        this.tsTimeout = timeout;
+    }
 
-        internal SetResetEventAwaiterWithTimeout(
-            ISetResetEvent mre,
-            double timeout)
-        {
-            Requires.NotNull(
-                out this.mre,
-                mre,
-                nameof(mre));
+    internal SetResetEventAwaiterWithTimeout(
+        ISetResetEvent mre,
+        double timeout)
+    {
+        Requires.NotNull(
+            out this.mre,
+            mre,
+            nameof(mre));
 
-            this.tsTimeout = TimeSpan.FromMilliseconds(timeout);
-        }
+        this.tsTimeout = TimeSpan.FromMilliseconds(timeout);
+    }
 
 #endregion
 
 #region Properties and indexers
 
-        /// <summary>
-        ///     Gets a value indicating whether this awaiter has completed.
-        /// </summary>
-        /// <value>
-        ///     <c>true</c> if this awaiter has completed; otherwise, <c>false</c>.
-        /// </value>
-        [UsedImplicitly]
-        public bool IsCompleted => this.isCompleted != 0;
+    /// <summary>
+    ///     Gets a value indicating whether this awaiter has completed.
+    /// </summary>
+    /// <value>
+    ///     <c>true</c> if this awaiter has completed; otherwise, <c>false</c>.
+    /// </value>
+    [UsedImplicitly]
+    public bool IsCompleted => this.isCompleted != 0;
 
 #endregion
 
@@ -83,43 +83,42 @@ namespace IX.System.Threading
 
 #region Interface implementations
 
-        /// <summary>
-        ///     Returns the current awaiter.
-        /// </summary>
-        /// <returns>The current awaiter.</returns>
-        public IAwaiter<bool> GetAwaiter() => this;
+    /// <summary>
+    ///     Returns the current awaiter.
+    /// </summary>
+    /// <returns>The current awaiter.</returns>
+    public IAwaiter<bool> GetAwaiter() => this;
 
-        /// <summary>
-        ///     Gets the result.
-        /// </summary>
-        /// <returns><c>true</c> if the wait didn't outrun the timeout, <c>false</c> if it did.</returns>
-        [UsedImplicitly]
-        public bool GetResult() => this.result;
+    /// <summary>
+    ///     Gets the result.
+    /// </summary>
+    /// <returns><c>true</c> if the wait didn't outrun the timeout, <c>false</c> if it did.</returns>
+    [UsedImplicitly]
+    public bool GetResult() => this.result;
 
-        /// <summary>Schedules the continuation action that's invoked when the instance completes.</summary>
-        /// <param name="continuation">The action to invoke when the operation completes.</param>
-        /// <exception cref="T:System.ArgumentNullException">
-        ///     The <paramref name="continuation" /> argument is null (Nothing in
-        ///     Visual Basic).
-        /// </exception>
-        public void OnCompleted(Action continuation) =>
-            _ = Work.OnThreadPoolAsync(
-                state =>
-                {
-                    var (internalContinuation, internalThis) = state;
+    /// <summary>Schedules the continuation action that's invoked when the instance completes.</summary>
+    /// <param name="continuation">The action to invoke when the operation completes.</param>
+    /// <exception cref="T:System.ArgumentNullException">
+    ///     The <paramref name="continuation" /> argument is null (Nothing in
+    ///     Visual Basic).
+    /// </exception>
+    public void OnCompleted(Action continuation) =>
+        _ = Work.OnThreadPoolAsync(
+            state =>
+            {
+                var (internalContinuation, internalThis) = state;
 
-                    internalThis.result = internalThis.mre.WaitOne(internalThis.tsTimeout);
+                internalThis.result = internalThis.mre.WaitOne(internalThis.tsTimeout);
 
-                    internalContinuation?.Invoke();
+                internalContinuation?.Invoke();
 
-                    Interlocked.Exchange(
-                        ref internalThis.isCompleted,
-                        1);
-                },
-                (continuation, this));
-
-#endregion
+                Interlocked.Exchange(
+                    ref internalThis.isCompleted,
+                    1);
+            },
+            (Continuation: continuation, this));
 
 #endregion
-    }
+
+#endregion
 }

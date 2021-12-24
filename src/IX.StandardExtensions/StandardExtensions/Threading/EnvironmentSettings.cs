@@ -5,22 +5,25 @@
 using System;
 using JetBrains.Annotations;
 
-namespace IX.StandardExtensions.Threading
+namespace IX.StandardExtensions.Threading;
+
+/// <summary>
+///     Environment settings for the standard extensions.
+/// </summary>
+[PublicAPI]
+public static class EnvironmentSettings
 {
+#region Properties and indexers
+
     /// <summary>
-    ///     Environment settings for the standard extensions.
+    ///     Gets or sets the lock acquisition timeout.
     /// </summary>
-    [PublicAPI]
-    public static class EnvironmentSettings
-    {
-        /// <summary>
-        ///     Gets or sets the lock acquisition timeout.
-        /// </summary>
-        /// <value>The lock acquisition timeout.</value>
-        /// <remarks>
-        ///     <para>This timeout is generally applied to synchronization lockers, in absence of a specified value.</para>
-        /// </remarks>
-        public static TimeSpan LockAcquisitionTimeout { get; set; } =
-            TimeSpan.FromMilliseconds(Constants.DefaultLockAcquisitionTimeout);
-    }
+    /// <value>The lock acquisition timeout.</value>
+    /// <remarks>
+    ///     <para>This timeout is generally applied to synchronization lockers, in absence of a specified value.</para>
+    /// </remarks>
+    public static TimeSpan LockAcquisitionTimeout { get; set; } =
+        TimeSpan.FromMilliseconds(Constants.DefaultLockAcquisitionTimeout);
+
+#endregion
 }

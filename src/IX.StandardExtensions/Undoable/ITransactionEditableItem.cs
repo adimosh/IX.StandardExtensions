@@ -4,47 +4,46 @@
 
 using JetBrains.Annotations;
 
-namespace IX.Undoable
+namespace IX.Undoable;
+
+/// <summary>
+///     A contract for an item that is editable in a transactional-style way.
+/// </summary>
+[PublicAPI]
+public interface ITransactionEditableItem : IEditCommittableItem
 {
-    /// <summary>
-    ///     A contract for an item that is editable in a transactional-style way.
-    /// </summary>
-    [PublicAPI]
-    public interface ITransactionEditableItem : IEditCommittableItem
-    {
 #region Properties and indexers
 
-        /// <summary>
-        ///     Gets a value indicating whether this instance is in edit mode.
-        /// </summary>
-        /// <value><see langword="true" /> if this instance is in edit mode; otherwise, <see langword="false" />.</value>
-        bool IsInEditMode { get; }
+    /// <summary>
+    ///     Gets a value indicating whether this instance is in edit mode.
+    /// </summary>
+    /// <value><see langword="true" /> if this instance is in edit mode; otherwise, <see langword="false" />.</value>
+    bool IsInEditMode { get; }
 
 #endregion
 
 #region Methods
 
-        /// <summary>
-        ///     Begins the editing of an item.
-        /// </summary>
-        void BeginEdit();
+    /// <summary>
+    ///     Begins the editing of an item.
+    /// </summary>
+    void BeginEdit();
 
-        /// <summary>
-        ///     Commits the changes to the item as they are, without ending the editing.
-        /// </summary>
-        void CommitEdit();
+    /// <summary>
+    ///     Commits the changes to the item as they are, without ending the editing.
+    /// </summary>
+    void CommitEdit();
 
-        /// <summary>
-        ///     Discards all changes to the item, reloading the state at the last commit or at the beginning of the edit
-        ///     transaction, whichever occurred last.
-        /// </summary>
-        void CancelEdit();
+    /// <summary>
+    ///     Discards all changes to the item, reloading the state at the last commit or at the beginning of the edit
+    ///     transaction, whichever occurred last.
+    /// </summary>
+    void CancelEdit();
 
-        /// <summary>
-        ///     Ends the editing of an item.
-        /// </summary>
-        void EndEdit();
+    /// <summary>
+    ///     Ends the editing of an item.
+    /// </summary>
+    void EndEdit();
 
 #endregion
-    }
 }

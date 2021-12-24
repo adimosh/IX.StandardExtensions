@@ -6,34 +6,33 @@ using System;
 using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
 
-namespace IX.Undoable
+namespace IX.Undoable;
+
+/// <summary>
+///     Event arguments for edit committed.
+/// </summary>
+[PublicAPI]
+public class EditCommittedEventArgs : EventArgs
 {
-    /// <summary>
-    ///     Event arguments for edit committed.
-    /// </summary>
-    [PublicAPI]
-    public class EditCommittedEventArgs : EventArgs
-    {
 #region Constructors and destructors
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="EditCommittedEventArgs" /> class.
-        /// </summary>
-        /// <param name="stateChanges">The state changes that have been committed.</param>
-        public EditCommittedEventArgs(StateChangeBase stateChanges)
-        {
-            this.StateChanges = stateChanges;
-        }
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="EditCommittedEventArgs" /> class.
+    /// </summary>
+    /// <param name="stateChanges">The state changes that have been committed.</param>
+    public EditCommittedEventArgs(StateChangeBase stateChanges)
+    {
+        this.StateChanges = stateChanges;
+    }
 
 #endregion
 
 #region Properties and indexers
 
-        /// <summary>
-        ///     Gets the state changes that have been committed.
-        /// </summary>
-        public StateChangeBase StateChanges { get; }
+    /// <summary>
+    ///     Gets the state changes that have been committed.
+    /// </summary>
+    public StateChangeBase StateChanges { get; }
 
 #endregion
-    }
 }

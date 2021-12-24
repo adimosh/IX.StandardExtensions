@@ -2,12 +2,15 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-namespace IX.StandardExtensions.Threading
-{
-    internal static class Constants
-    {
-        internal const string DataContractNamespace = "http://ns.ixiancorp.com/IX/IX.StandardExtensions.Threading";
+namespace IX.StandardExtensions.Threading;
 
-        internal const int DefaultLockAcquisitionTimeout = 100;
-    }
+internal static class Constants
+{
+#region Internal state
+
+    internal const string DataContractNamespace = "http://ns.ixiancorp.com/IX/IX.StandardExtensions.Threading";
+
+    internal const int DefaultLockAcquisitionTimeout = 100;
+
+#endregion
 }
