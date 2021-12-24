@@ -10,15 +10,14 @@
 // </copyright>
 
 using System;
-using JetBrains.Annotations;
 
-namespace IX.StandardExtensions.Extensions
-{
-    /// <summary>
-    ///     Extensions for array types.
-    /// </summary>
-    public static partial class ArrayExtensions
-    {<#
+namespace IX.StandardExtensions.Extensions;
+
+/// <summary>
+///     Extensions for array types.
+/// </summary>
+public static partial class ArrayExtensions
+{<#
 List<string> code = new List<string>();
 
 foreach (var typ in types.Where(p => p != typeof(byte[])))
@@ -26,63 +25,60 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
     string fullTypeName = GetTypeUsableName(typ);
 #>
 
-        /// <summary>
-        ///     Compares two arrays to one another sequentially.
-        /// </summary>
-        /// <param name="left">The left operand array.</param>
-        /// <param name="right">The right operand array.</param>
-        /// <returns>
-        ///     The result of the comparison.
-        /// </returns>
-        public static int SequenceCompare(
-            [CanBeNull]
-            this <#= fullTypeName #>[]? left,
-            [CanBeNull]
-            <#= fullTypeName #>[]? right)
+    /// <summary>
+    ///     Compares two arrays to one another sequentially.
+    /// </summary>
+    /// <param name="left">The left operand array.</param>
+    /// <param name="right">The right operand array.</param>
+    /// <returns>
+    ///     The result of the comparison.
+    /// </returns>
+    public static int SequenceCompare(
+        this <#= fullTypeName #>[]? left,
+        <#= fullTypeName #>[]? right)
+    {
+        if (left == null)
         {
-            if (left == null)
+            // Left is null, we return based on whether or not right is null as well
+            return right == null ? 0 : int.MinValue;
+        }
+
+        if (right == null)
+        {
+            // Right is null, but not left
+            return int.MaxValue;
+        }
+
+        var i = 0;
+        while (true)
+        {
+            var b1 = i < left.Length;
+            var b2 = i < right.Length;
+
+            if (!b1 && !b2)
             {
-                // Left is null, we return based on whether or not right is null as well
-                return right == null ? 0 : int.MinValue;
+                return 0;
             }
 
-            if (right == null)
-            {
-                // Right is null, but not left
-                return int.MaxValue;
-            }
-
-            var i = 0;
-            while (true)
-            {
-                var b1 = i < left.Length;
-                var b2 = i < right.Length;
-
-                if (!b1 && !b2)
-                {
-                    return 0;
-                }
-
-                var c1 = b1 ? left[i] : default;
-                var c2 = b2 ? right[i] : default;
+            var c1 = b1 ? left[i] : default;
+            var c2 = b2 ? right[i] : default;
 
 <# if (typ == typeof(string))
 { #>
-                var cr = string.Compare(c1, c2, StringComparison.CurrentCulture);
+            var cr = string.Compare(c1, c2, StringComparison.CurrentCulture);
 
 <# } else { #>
-                var cr = c1.CompareTo(c2);
+            var cr = c1.CompareTo(c2);
 <# } #>
-                if (cr != 0)
-                {
-                    return cr;
-                }
-
-                i++;
+            if (cr != 0)
+            {
+                return cr;
             }
+
+            i++;
         }
+    }
 <#
 }
 #>
-    }
 }

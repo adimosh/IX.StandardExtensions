@@ -5,6 +5,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Extensions
@@ -13,8 +15,14 @@ namespace IX.StandardExtensions.Extensions
     /// Extension methods for IEnumerator.
     /// </summary>
     [PublicAPI]
-
-    // ReSharper disable once InconsistentNaming
+    [SuppressMessage(
+        "ReSharper",
+        "InconsistentNaming",
+        Justification = "These are extensions for IEnumerable, so we must allow this.")]
+    [SuppressMessage(
+        "CodeQuality",
+        "IDE0079:Remove unnecessary suppression",
+        Justification = "ReSharper is used in this project.")]
     public static class IEnumeratorExtensions
     {
         /// <summary>
@@ -26,15 +34,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach<T>(this IEnumerator<T> source, Action<T> action)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action));
-            }
+            _ = Requires.NotNull(source);
+            _ = Requires.NotNull(action);
 
             while (source.MoveNext())
             {
@@ -50,15 +51,8 @@ namespace IX.StandardExtensions.Extensions
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
         public static void ForEach(this IEnumerator source, Action<object> action)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action));
-            }
+            _ = Requires.NotNull(source);
+            _ = Requires.NotNull(action);
 
             while (source.MoveNext())
             {

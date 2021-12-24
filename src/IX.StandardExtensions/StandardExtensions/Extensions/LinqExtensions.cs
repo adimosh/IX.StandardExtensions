@@ -4,13 +4,10 @@
 
 using JetBrains.Annotations;
 
-namespace IX.StandardExtensions.Extensions
-{
-    /// <summary>
-    /// Extension methods for LINQ.
-    /// </summary>
-    [PublicAPI]
-    public static partial class LinqExtensions
-    {
-    }
-}
+namespace IX.StandardExtensions.Extensions;
+
+/// <summary>
+///     Extension methods for LINQ.
+/// </summary>
+[PublicAPI]
+public static partial class LinqExtensions { }

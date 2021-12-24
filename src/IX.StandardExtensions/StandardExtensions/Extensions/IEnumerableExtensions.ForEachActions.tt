@@ -10,19 +10,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
 
-namespace IX.StandardExtensions.Extensions
-{
-    /// <summary>
-    ///     Extensions for IEnumerable.
-    /// </summary>
-    // ReSharper disable once InconsistentNaming - We're doing extensions for IEnumerable
-    public static partial class IEnumerableExtensions
-    {
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator - This is acceptable, as these are IEnumerable extensions<#
+namespace IX.StandardExtensions.Extensions;
+
+/// <summary>
+///     Extensions for IEnumerable.
+/// </summary>
+[SuppressMessage(
+    "ReSharper",
+    "InconsistentNaming",
+    Justification = "These are extensions for IEnumerable, so we must allow this.")]
+public static partial class IEnumerableExtensions
+{<#
 for (int i = 1; i <= 8; i++)
 {
     string[] types = new string[i];
@@ -39,217 +42,231 @@ for (int i = 1; i <= 8; i++)
 
     string paramTypes = string.Join(", ", types);
     string paramNames = string.Join(", ", names);
-    string paramNameTypes = string.Join($",{Environment.NewLine}            ", nameTypes);
+    string paramNameTypes = string.Join($",{Environment.NewLine}        ", nameTypes);
 #>
 
-        /// <summary>
-        ///     Executes an action for each one of the elements of an enumerable.
-        /// </summary>
-        /// <typeparam name="TItem">The enumerable item type.</typeparam>
+    /// <summary>
+    ///     Executes an action for each one of the elements of an enumerable.
+    /// </summary>
+    /// <typeparam name="TItem">The enumerable item type.</typeparam>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+    /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
 <#
     }
 #>
-        /// <param name="source">The enumerable source.</param>
-        /// <param name="action">The action to execute.</param>
+    /// <param name="source">The enumerable source.</param>
+    /// <param name="action">The action to execute.</param>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+    /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
 <#
     }
 #>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
-        public static void ForEach<TItem, <#= paramTypes #>>(
-            this IEnumerable<TItem> source,
-            Action<TItem,
-            <#= paramTypes #>> action,
-            <#= paramNameTypes #>)
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+    public static void ForEach<TItem, <#= paramTypes #>>(
+        this IEnumerable<TItem> source,
+        Action<TItem,
+        <#= paramTypes #>> action,
+        <#= paramNameTypes #>)
+    {
+        Requires.NotNull(source);
+        Requires.NotNull(action);
+
+        foreach (TItem item in source)
         {
-            Requires.NotNull(source);
-            Requires.NotNull(action);
+            action(item, <#= paramNames #>);
+        }
+    }
 
-            foreach (TItem item in source)
-            {
-                action(item, <#= paramNames #>);
-            }
+    /// <summary>
+    ///     Asynchronously executes an action for each one of the elements of an enumerable.
+    /// </summary>
+    /// <typeparam name="TItem">The enumerable item type.</typeparam>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+    /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+<#
+    }
+#>
+    /// <param name="source">The enumerable source.</param>
+    /// <param name="action">The action to execute.</param>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+    /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+<#
+    }
+#>
+    /// <param name="cancellationToken">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="ValueTask" /> representing the current operation.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+    public static async ValueTask ForEachAsync<TItem, <#= paramTypes #>>(
+        this IEnumerable<TItem> source,
+        Func<TItem, <#= paramTypes #>, Task> action,
+        <#= paramNameTypes #>,
+        CancellationToken cancellationToken = default)
+    {
+        Requires.NotNull(source);
+        Requires.NotNull(action);
+
+        if (cancellationToken.IsCancellationRequested)
+        {
+            return;
         }
 
-        /// <summary>
-        ///     Asynchronously executes an action for each one of the elements of an enumerable.
-        /// </summary>
-        /// <typeparam name="TItem">The enumerable item type.</typeparam>
-<#
-    for (int j = 1; j <= i; j++)
-    {
-#>
-        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
-<#
-    }
-#>
-        /// <param name="source">The enumerable source.</param>
-        /// <param name="action">The action to execute.</param>
-<#
-    for (int j = 1; j <= i; j++)
-    {
-#>
-        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
-<#
-    }
-#>
-        /// <param name="cancellationToken">The cancellation token for this operation.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
-        public static async ValueTask ForEachAsync<TItem, <#= paramTypes #>>(
-            this IEnumerable<TItem> source,
-            Func<TItem, <#= paramTypes #>, Task> action,
-            <#= paramNameTypes #>,
-            CancellationToken cancellationToken = default)
+        foreach (TItem item in source)
         {
-            Requires.NotNull(source);
-            Requires.NotNull(action);
+            await action(item, <#= paramNames #>);
+            cancellationToken.ThrowIfCancellationRequested();
+        }
+    }
 
-            if (cancellationToken.IsCancellationRequested) return;
+    /// <summary>
+    ///     Asynchronously executes an action for each one of the elements of an enumerable.
+    /// </summary>
+    /// <typeparam name="TItem">The enumerable item type.</typeparam>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+    /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+<#
+    }
+#>
+    /// <param name="source">The enumerable source.</param>
+    /// <param name="action">The action to execute.</param>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+    /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+<#
+    }
+#>
+    /// <param name="cancellationToken">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="ValueTask" /> representing the current operation.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+    public static async ValueTask ForEachAsync<TItem, <#= paramTypes #>>(
+        this IEnumerable<TItem> source,
+        Func<TItem, <#= paramTypes #>, ValueTask> action,
+        <#= paramNameTypes #>,
+        CancellationToken cancellationToken = default)
+    {
+        Requires.NotNull(source);
+        Requires.NotNull(action);
 
-            foreach (TItem item in source)
-            {
-                await action(item, <#= paramNames #>);
-                cancellationToken.ThrowIfCancellationRequested();
-            }
+        if (cancellationToken.IsCancellationRequested)
+        {
+            return;
         }
 
-        /// <summary>
-        ///     Asynchronously executes an action for each one of the elements of an enumerable.
-        /// </summary>
-        /// <typeparam name="TItem">The enumerable item type.</typeparam>
-<#
-    for (int j = 1; j <= i; j++)
-    {
-#>
-        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
-<#
-    }
-#>
-        /// <param name="source">The enumerable source.</param>
-        /// <param name="action">The action to execute.</param>
-<#
-    for (int j = 1; j <= i; j++)
-    {
-#>
-        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
-<#
-    }
-#>
-        /// <param name="cancellationToken">The cancellation token for this operation.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
-        public static async ValueTask ForEachAsync<TItem, <#= paramTypes #>>(
-            this IEnumerable<TItem> source,
-            Func<TItem, <#= paramTypes #>, ValueTask> action,
-            <#= paramNameTypes #>,
-            CancellationToken cancellationToken = default)
+        foreach (TItem item in source)
         {
-            Requires.NotNull(source);
-            Requires.NotNull(action);
+            await action(item, <#= paramNames #>);
+            cancellationToken.ThrowIfCancellationRequested();
+        }
+    }
 
-            if (cancellationToken.IsCancellationRequested) return;
+    /// <summary>
+    ///     Asynchronously executes an action for each one of the elements of an enumerable.
+    /// </summary>
+    /// <typeparam name="TItem">The enumerable item type.</typeparam>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+    /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+<#
+    }
+#>
+    /// <param name="source">The enumerable source.</param>
+    /// <param name="action">The action to execute.</param>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+    /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+<#
+    }
+#>
+    /// <param name="cancellationToken">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="ValueTask" /> representing the current operation.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+    public static async ValueTask ForEachAsync<TItem, <#= paramTypes #>>(
+        this IEnumerable<TItem> source,
+        Func<TItem, <#= paramTypes #>, CancellationToken, Task> action,
+        <#= paramNameTypes #>,
+        CancellationToken cancellationToken = default)
+    {
+        Requires.NotNull(source);
+        Requires.NotNull(action);
 
-            foreach (TItem item in source)
-            {
-                await action(item, <#= paramNames #>);
-                cancellationToken.ThrowIfCancellationRequested();
-            }
+        if (cancellationToken.IsCancellationRequested)
+        {
+            return;
         }
 
-        /// <summary>
-        ///     Asynchronously executes an action for each one of the elements of an enumerable.
-        /// </summary>
-        /// <typeparam name="TItem">The enumerable item type.</typeparam>
-<#
-    for (int j = 1; j <= i; j++)
-    {
-#>
-        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
-<#
-    }
-#>
-        /// <param name="source">The enumerable source.</param>
-        /// <param name="action">The action to execute.</param>
-<#
-    for (int j = 1; j <= i; j++)
-    {
-#>
-        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
-<#
-    }
-#>
-        /// <param name="cancellationToken">The cancellation token for this operation.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
-        public static async ValueTask ForEachAsync<TItem, <#= paramTypes #>>(
-            this IEnumerable<TItem> source,
-            Func<TItem, <#= paramTypes #>, CancellationToken, Task> action,
-            <#= paramNameTypes #>,
-            CancellationToken cancellationToken = default)
+        foreach (TItem item in source)
         {
-            Requires.NotNull(source);
-            Requires.NotNull(action);
+            await action(item, <#= paramNames #>, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+        }
+    }
 
-            if (cancellationToken.IsCancellationRequested) return;
+    /// <summary>
+    ///     Asynchronously executes an action for each one of the elements of an enumerable.
+    /// </summary>
+    /// <typeparam name="TItem">The enumerable item type.</typeparam>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+    /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+<#
+    }
+#>
+    /// <param name="source">The enumerable source.</param>
+    /// <param name="action">The action to execute.</param>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+    /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+<#
+    }
+#>
+    /// <param name="cancellationToken">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="ValueTask" /> representing the current operation.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+    public static async ValueTask ForEachAsync<TItem, <#= paramTypes #>>(
+        this IEnumerable<TItem> source,
+        Func<TItem, <#= paramTypes #>, CancellationToken, ValueTask> action,
+        <#= paramNameTypes #>,
+        CancellationToken cancellationToken = default)
+    {
+        Requires.NotNull(source);
+        Requires.NotNull(action);
 
-            foreach (TItem item in source)
-            {
-                await action(item, <#= paramNames #>, cancellationToken);
-                cancellationToken.ThrowIfCancellationRequested();
-            }
+        if (cancellationToken.IsCancellationRequested)
+        {
+            return;
         }
 
-        /// <summary>
-        ///     Asynchronously executes an action for each one of the elements of an enumerable.
-        /// </summary>
-        /// <typeparam name="TItem">The enumerable item type.</typeparam>
-<#
-    for (int j = 1; j <= i; j++)
-    {
-#>
-        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
-<#
-    }
-#>
-        /// <param name="source">The enumerable source.</param>
-        /// <param name="action">The action to execute.</param>
-<#
-    for (int j = 1; j <= i; j++)
-    {
-#>
-        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
-<#
-    }
-#>
-        /// <param name="cancellationToken">The cancellation token for this operation.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
-        public static async ValueTask ForEachAsync<TItem, <#= paramTypes #>>(
-            this IEnumerable<TItem> source,
-            Func<TItem, <#= paramTypes #>, CancellationToken, ValueTask> action,
-            <#= paramNameTypes #>,
-            CancellationToken cancellationToken = default)
+        foreach (TItem item in source)
         {
-            Requires.NotNull(source);
-            Requires.NotNull(action);
-
-            if (cancellationToken.IsCancellationRequested) return;
-
-            foreach (TItem item in source)
-            {
-                await action(item, <#= paramNames #>, cancellationToken);
-                cancellationToken.ThrowIfCancellationRequested();
-            }
+            await action(item, <#= paramNames #>, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
         }
+    }
 <#
 }
 #>
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
-    }
 }

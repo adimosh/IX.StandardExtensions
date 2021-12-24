@@ -11,18 +11,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using IX.StandardExtensions.Contracts;
 
-namespace IX.StandardExtensions.Extensions
-{
-    /// <summary>
-    /// Extensions for IEnumerable.
-    /// </summary>
-    // ReSharper disable once InconsistentNaming - We're doing extensions for IEnumerable
-    public static partial class IEnumerableExtensions
-    {
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator - This is acceptable, as these are IEnumerable extensions<#
+namespace IX.StandardExtensions.Extensions;
+
+/// <summary>
+/// Extensions for IEnumerable.
+/// </summary>
+[SuppressMessage(
+    "ReSharper",
+    "InconsistentNaming",
+    Justification = "These are extensions for IEnumerable, so we must allow this.")]
+public static partial class IEnumerableExtensions
+{<#
 List<string> code = new List<string>();
 
 foreach (var typ in types.Where(p => p != typeof(byte[])))
@@ -30,93 +33,91 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
     string fullTypeName = GetTypeUsableName(typ);
 #>
 
-        /// <summary>
-        /// Equates two enumerable collections sequentially.
-        /// </summary>
-        /// <param name="left">The left item of comparison.</param>
-        /// <param name="right">The right item of comparison.</param>
-        /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<<#= fullTypeName #>>? left, IEnumerable<<#= fullTypeName #>>? right)
+    /// <summary>
+    /// Equates two enumerable collections sequentially.
+    /// </summary>
+    /// <param name="left">The left item of comparison.</param>
+    /// <param name="right">The right item of comparison.</param>
+    /// <returns>A sequence of comparison results.</returns>
+    public static IEnumerable<bool> EquateSequentially(this IEnumerable<<#= fullTypeName #>>? left, IEnumerable<<#= fullTypeName #>>? right)
+    {
+        if ((left == null) && (right == null))
         {
-            if ((left == null) && (right == null))
-            {
-                yield return true;
-                yield break;
-            }
-
-            using IEnumerator<<#= fullTypeName #>> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<<#= fullTypeName #>>.Get();
-            using IEnumerator<<#= fullTypeName #>> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<<#= fullTypeName #>>.Get();
-
-            var leftBool = leftEnumerator.MoveNext();
-            var rightBool = rightEnumerator.MoveNext();
-
-            while (leftBool || rightBool)
-            {
-                var leftCompare = leftBool ? leftEnumerator.Current : default;
-                var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                yield return <#= typ == typeof(string) ? "string.Compare(leftCompare, rightCompare, CultureInfo.CurrentCulture, CompareOptions.None) == 0" : "leftCompare == rightCompare" #>;
-
-                leftBool = leftEnumerator.MoveNext();
-                rightBool = rightEnumerator.MoveNext();
-            }
+            yield return true;
+            yield break;
         }
 
-        /// <summary>
-        /// Equates two enumerable collections sequentially, skipping items defined as &quot;empty&quot;.
-        /// </summary>
-        /// <param name="left">The left item of comparison.</param>
-        /// <param name="right">The right item of comparison.</param>
-        /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
-        /// <returns>A sequence of comparison results.</returns>
-        public static IEnumerable<bool> EquateSequentially(this IEnumerable<<#= fullTypeName #>>? left, IEnumerable<<#= fullTypeName #>>? right, Func<<#= fullTypeName #>, bool> determineEmpty)
+        using IEnumerator<<#= fullTypeName #>> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<<#= fullTypeName #>>.Get();
+        using IEnumerator<<#= fullTypeName #>> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<<#= fullTypeName #>>.Get();
+
+        var leftBool = leftEnumerator.MoveNext();
+        var rightBool = rightEnumerator.MoveNext();
+
+        while (leftBool || rightBool)
         {
-            var localDetermineEmpty = Requires.NotNull(determineEmpty);
+            var leftCompare = leftBool ? leftEnumerator.Current : default;
+            var rightCompare = rightBool ? rightEnumerator.Current : default;
 
-            if ((left == null) && (right == null))
-            {
-                yield return true;
-                yield break;
-            }
+            yield return <#= typ == typeof(string) ? "string.Compare(leftCompare, rightCompare, CultureInfo.CurrentCulture, CompareOptions.None) == 0" : "leftCompare == rightCompare" #>;
 
-            using IEnumerator<<#= fullTypeName #>> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<<#= fullTypeName #>>.Get();
-            using IEnumerator<<#= fullTypeName #>> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<<#= fullTypeName #>>.Get();
-
-            var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-            var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-
-            while (leftBool || rightBool)
-            {
-                var leftCompare = leftBool ? leftEnumerator.Current : default;
-                var rightCompare = rightBool ? rightEnumerator.Current : default;
-
-                yield return leftCompare == rightCompare;
-
-                leftBool = EquateSequentiallyMoveNext(leftEnumerator);
-                rightBool = EquateSequentiallyMoveNext(rightEnumerator);
-            }
-
-            bool EquateSequentiallyMoveNext(IEnumerator<<#= fullTypeName #>> source)
-            {
-                init:
-                var moved = source.MoveNext();
-
-                if (!moved)
-                {
-                    return false;
-                }
-
-                if (localDetermineEmpty(source.Current))
-                {
-                    goto init;
-                }
-
-                return true;
-            }
+            leftBool = leftEnumerator.MoveNext();
+            rightBool = rightEnumerator.MoveNext();
         }
+    }
+
+    /// <summary>
+    /// Equates two enumerable collections sequentially, skipping items defined as &quot;empty&quot;.
+    /// </summary>
+    /// <param name="left">The left item of comparison.</param>
+    /// <param name="right">The right item of comparison.</param>
+    /// <param name="determineEmpty">A function that determines whether an item is &quot;empty&quot; or not.</param>
+    /// <returns>A sequence of comparison results.</returns>
+    public static IEnumerable<bool> EquateSequentially(this IEnumerable<<#= fullTypeName #>>? left, IEnumerable<<#= fullTypeName #>>? right, Func<<#= fullTypeName #>, bool> determineEmpty)
+    {
+        var localDetermineEmpty = Requires.NotNull(determineEmpty);
+
+        if ((left == null) && (right == null))
+        {
+            yield return true;
+            yield break;
+        }
+
+        using IEnumerator<<#= fullTypeName #>> leftEnumerator = left?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<<#= fullTypeName #>>.Get();
+        using IEnumerator<<#= fullTypeName #>> rightEnumerator = right?.GetEnumerator() ?? System.Collections.Generic.EmptyEnumerator<<#= fullTypeName #>>.Get();
+
+        var leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+        var rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+
+        while (leftBool || rightBool)
+        {
+            var leftCompare = leftBool ? leftEnumerator.Current : default;
+            var rightCompare = rightBool ? rightEnumerator.Current : default;
+
+            yield return leftCompare == rightCompare;
+
+            leftBool = EquateSequentiallyMoveNext(leftEnumerator);
+            rightBool = EquateSequentiallyMoveNext(rightEnumerator);
+        }
+
+        bool EquateSequentiallyMoveNext(IEnumerator<<#= fullTypeName #>> source)
+        {
+            init:
+            var moved = source.MoveNext();
+
+            if (!moved)
+            {
+                return false;
+            }
+
+            if (localDetermineEmpty(source.Current))
+            {
+                goto init;
+            }
+
+            return true;
+        }
+    }
 <#
 }
 #>
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
-    }
 }

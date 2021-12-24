@@ -12,13 +12,13 @@
 using System;
 using IX.StandardExtensions.Contracts;
 
-namespace IX.StandardExtensions.Extensions
-{
-    /// <summary>
-    ///     Extensions for array types.
-    /// </summary>
-    public static partial class ArrayExtensions
-    {<#
+namespace IX.StandardExtensions.Extensions;
+
+/// <summary>
+///     Extensions for array types.
+/// </summary>
+public static partial class ArrayExtensions
+{<#
 List<string> code = new List<string>();
 
 foreach (var typ in types.Where(p => p != typeof(byte[])))
@@ -26,31 +26,30 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
     string fullTypeName = GetTypeUsableName(typ);
 #>
 
-        /// <summary>
-        ///     Deep clones an array.
-        /// </summary>
-        /// <param name="source">The source array to deep clone.</param>
-        /// <returns>An array of deeply-copied elements from the original array.</returns>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="source" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
-        /// </exception>
-        public static <#= fullTypeName #>[] DeepClone(this <#= fullTypeName #>[] source)
+    /// <summary>
+    ///     Deep clones an array.
+    /// </summary>
+    /// <param name="source">The source array to deep clone.</param>
+    /// <returns>An array of deeply-copied elements from the original array.</returns>
+    /// <exception cref="ArgumentNullException">
+    ///     <paramref name="source" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).
+    /// </exception>
+    public static <#= fullTypeName #>[] DeepClone(this <#= fullTypeName #>[] source)
+    {
+        Requires.NotNull(source);
+
+        var length = source.Length;
+
+        var destination = new <#= fullTypeName #>[length];
+
+        for (var i = 0; i < length; i++)
         {
-            Requires.NotNull(source);
-
-            var length = source.Length;
-
-            var destination = new <#= fullTypeName #>[length];
-
-            for (var i = 0; i < length; i++)
-            {
-                destination[i] = source[i];
-            }
-
-            return destination;
+            destination[i] = source[i];
         }
+
+        return destination;
+    }
 <#
 }
 #>
-    }
 }

@@ -3,11 +3,8 @@
 // </copyright>
 
 #if !FRAMEWORK_ADVANCED
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IX.StandardExtensions.Extensions
 {
@@ -24,6 +21,14 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="keyValuePair">The key value pair.</param>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
+        [SuppressMessage(
+            "ReSharper",
+            "UseDeconstructionOnParameter",
+            Justification = "The point of this is to deconstruct the KeyValuePair")]
+        [SuppressMessage(
+            "CodeQuality",
+            "IDE0079:Remove unnecessary suppression",
+            Justification = "ReSharper is used in this project")]
         public static void Deconstruct<TKey, TValue>(
             this KeyValuePair<TKey, TValue> keyValuePair,
             out TKey key,

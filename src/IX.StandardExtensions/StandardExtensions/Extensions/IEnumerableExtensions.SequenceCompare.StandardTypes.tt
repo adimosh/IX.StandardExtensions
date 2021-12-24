@@ -11,17 +11,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-namespace IX.StandardExtensions.Extensions
-{
-    /// <summary>
-    /// Extensions for IEnumerable.
-    /// </summary>
-    // ReSharper disable once InconsistentNaming - We're doing extensions for IEnumerable
-    public static partial class IEnumerableExtensions
-    {
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator - This is acceptable, as these are IEnumerable extensions<#
+namespace IX.StandardExtensions.Extensions;
+
+/// <summary>
+/// Extensions for IEnumerable.
+/// </summary>
+[SuppressMessage(
+    "ReSharper",
+    "InconsistentNaming",
+    Justification = "These are extensions for IEnumerable, so we must allow this.")]
+public static partial class IEnumerableExtensions
+{<#
 List<string> code = new List<string>();
 
 foreach (var typ in types.Where(p => p != typeof(byte[])))
@@ -29,57 +32,55 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
     string fullTypeName = GetTypeUsableName(typ);
 #>
 
-        /// <summary>
-        /// Compares two enumerable sequences to one another.
-        /// </summary>
-        /// <param name="left">The left operand enumerable.</param>
-        /// <param name="right">The right operand enumerable.</param>
-        /// <returns>The result of the comparison.</returns>
-        public static int SequenceCompare(this IEnumerable<<#= fullTypeName #>>? left, IEnumerable<<#= fullTypeName #>>? right)
+    /// <summary>
+    /// Compares two enumerable sequences to one another.
+    /// </summary>
+    /// <param name="left">The left operand enumerable.</param>
+    /// <param name="right">The right operand enumerable.</param>
+    /// <returns>The result of the comparison.</returns>
+    public static int SequenceCompare(this IEnumerable<<#= fullTypeName #>>? left, IEnumerable<<#= fullTypeName #>>? right)
+    {
+        if (left == null)
         {
-            if (left == null)
-            {
-                if (right == null)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return -1;
-                }
-            }
-
             if (right == null)
             {
-                return 1;
+                return 0;
             }
-
-            using IEnumerator<<#= fullTypeName #>> e1 = left.GetEnumerator();
-            using IEnumerator<<#= fullTypeName #>> e2 = right.GetEnumerator();
-
-            while (true)
+            else
             {
-                var b1 = e1.MoveNext();
-                var b2 = e2.MoveNext();
-
-                if (!b1 && !b2)
-                {
-                    return 0;
-                }
-
-                var c1 = b1 ? e1.Current : default;
-                var c2 = b2 ? e2.Current : default;
-
-                var cr = <#= typ == typeof(string) ? "string.Compare(c1, c2, CultureInfo.CurrentCulture, CompareOptions.None);" : "c1.CompareTo(c2);" #>
-                if (cr != 0)
-                {
-                    return cr;
-                }
+                return -1;
             }
         }
+
+        if (right == null)
+        {
+            return 1;
+        }
+
+        using IEnumerator<<#= fullTypeName #>> e1 = left.GetEnumerator();
+        using IEnumerator<<#= fullTypeName #>> e2 = right.GetEnumerator();
+
+        while (true)
+        {
+            var b1 = e1.MoveNext();
+            var b2 = e2.MoveNext();
+
+            if (!b1 && !b2)
+            {
+                return 0;
+            }
+
+            var c1 = b1 ? e1.Current : default;
+            var c2 = b2 ? e2.Current : default;
+
+            var cr = <#= typ == typeof(string) ? "string.Compare(c1, c2, CultureInfo.CurrentCulture, CompareOptions.None);" : "c1.CompareTo(c2);" #>
+            if (cr != 0)
+            {
+                return cr;
+            }
+        }
+    }
 <#
 }
 #>
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
-    }
 }

@@ -11,16 +11,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-namespace IX.StandardExtensions.Extensions
-{
-    /// <summary>
-    /// Extensions for IEnumerable.
-    /// </summary>
-    // ReSharper disable once InconsistentNaming - We're doing extensions for IEnumerable
-    public static partial class IEnumerableExtensions
-    {
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator - This is acceptable, as these are IEnumerable extensions<#
+namespace IX.StandardExtensions.Extensions;
+
+/// <summary>
+/// Extensions for IEnumerable.
+/// </summary>
+[SuppressMessage(
+    "ReSharper",
+    "InconsistentNaming",
+    Justification = "These are extensions for IEnumerable, so we must allow this.")]
+public static partial class IEnumerableExtensions
+{<#
 List<string> code = new List<string>();
 
 foreach (var typ in types.Where(p => p != typeof(byte[])))
@@ -28,54 +31,52 @@ foreach (var typ in types.Where(p => p != typeof(byte[])))
     string fullTypeName = GetTypeUsableName(typ);
 #>
 
-        /// <summary>
-        /// Determines whether two enumerable objects have all members in sequence equal to one another.
-        /// </summary>
-        /// <param name="left">The left operand enumerable.</param>
-        /// <param name="right">The right operand enumerable.</param>
-        /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
-        /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
-        public static bool SequenceEquals(this IEnumerable<<#= fullTypeName #>> left, IEnumerable<<#= fullTypeName #>> right)
+    /// <summary>
+    /// Determines whether two enumerable objects have all members in sequence equal to one another.
+    /// </summary>
+    /// <param name="left">The left operand enumerable.</param>
+    /// <param name="right">The right operand enumerable.</param>
+    /// <returns><see langword="true"/> if the two enumerable objects have the same length and each element at each position
+    /// in one enumerable is equal to the equivalent in the other, <see langword="false"/> otherwise.</returns>
+    public static bool SequenceEquals(this IEnumerable<<#= fullTypeName #>>? left, IEnumerable<<#= fullTypeName #>>? right)
+    {
+        if (left == null)
         {
-            if (left == null)
-            {
-                return right == null;
-            }
+            return right == null;
+        }
 
-            if (right == null)
+        if (right == null)
+        {
+            return false;
+        }
+
+        using IEnumerator<<#= fullTypeName #>> e1 = left.GetEnumerator();
+        using IEnumerator<<#= fullTypeName #>> e2 = right.GetEnumerator();
+
+        while (true)
+        {
+            var b1 = e1.MoveNext();
+            var b2 = e2.MoveNext();
+
+            if (b1 != b2)
             {
                 return false;
             }
 
-            using IEnumerator<<#= fullTypeName #>> e1 = left.GetEnumerator();
-            using IEnumerator<<#= fullTypeName #>> e2 = right.GetEnumerator();
-
-            while (true)
+            if (b1)
             {
-                var b1 = e1.MoveNext();
-                var b2 = e2.MoveNext();
-
-                if (b1 != b2)
+                if (e1.Current != e2.Current)
                 {
                     return false;
                 }
-
-                if (b1)
-                {
-                    if (e1.Current != e2.Current)
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return true;
-                }
+            }
+            else
+            {
+                return true;
             }
         }
+    }
 <#
 }
 #>
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
-    }
 }
