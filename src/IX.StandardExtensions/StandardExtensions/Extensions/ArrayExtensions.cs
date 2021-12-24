@@ -241,6 +241,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="source">The array to run on.</param>
         /// <param name="action">The action to execute.</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>A <see cref="ValueTask" /> representing the current operation.</returns>
         /// <exception cref="ArgumentNullException">
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
@@ -264,7 +265,10 @@ namespace IX.StandardExtensions.Extensions
             Requires.NotNull(
                 action);
 
-            if (cancellationToken.IsCancellationRequested) return;
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
 
             for (var i = 0; i < source.Length; i++)
             {
@@ -280,6 +284,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="source">The array to run on.</param>
         /// <param name="action">The action to execute.</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>A <see cref="ValueTask" /> representing the current operation.</returns>
         /// <exception cref="ArgumentNullException">
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
@@ -303,7 +308,10 @@ namespace IX.StandardExtensions.Extensions
             Requires.NotNull(
                 action);
 
-            if (cancellationToken.IsCancellationRequested) return;
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
 
             for (var i = 0; i < source.Length; i++)
             {
@@ -319,6 +327,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="source">The array to run on.</param>
         /// <param name="action">The action to execute.</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>A <see cref="ValueTask" /> representing the current operation.</returns>
         /// <exception cref="ArgumentNullException">
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
@@ -342,7 +351,10 @@ namespace IX.StandardExtensions.Extensions
             Requires.NotNull(
                 action);
 
-            if (cancellationToken.IsCancellationRequested) return;
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
 
             for (var i = 0; i < source.Length; i++)
             {
@@ -358,6 +370,7 @@ namespace IX.StandardExtensions.Extensions
         /// <param name="source">The array to run on.</param>
         /// <param name="action">The action to execute.</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns>A <see cref="ValueTask" /> representing the current operation.</returns>
         /// <exception cref="ArgumentNullException">
         ///     Thrown when <paramref name="source" /> or <paramref name="action" /> is
         ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
@@ -381,7 +394,10 @@ namespace IX.StandardExtensions.Extensions
             Requires.NotNull(
                 action);
 
-            if (cancellationToken.IsCancellationRequested) return;
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
 
             for (var i = 0; i < source.Length; i++)
             {
