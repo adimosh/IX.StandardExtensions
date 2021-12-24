@@ -111,13 +111,7 @@ namespace IX.Guaranteed.Collections
                 serializer);
 
             // Parameter validation
-            Requires.NotNullOrWhiteSpace(
-                persistenceFolderPath);
-
-            if (!directoryShim.Exists(persistenceFolderPath))
-            {
-                throw new ArgumentInvalidPathException(nameof(persistenceFolderPath));
-            }
+            directoryShim.RequiresExists(persistenceFolderPath);
 
             // Internal state
             this.poisonedUnremovableFiles = new List<string>();

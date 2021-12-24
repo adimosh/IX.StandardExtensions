@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.Observable.DebugAide
@@ -31,7 +32,7 @@ namespace IX.Observable.DebugAide
         [UsedImplicitly]
         public CollectionDebugView(ObservableCollectionBase<T> collection)
         {
-            this.collection = collection ?? throw new ArgumentNullException(nameof(collection));
+            Requires.NotNull(out this.collection, collection);
         }
 
 #endregion

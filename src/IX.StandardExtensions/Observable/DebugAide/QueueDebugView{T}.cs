@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.Observable.DebugAide
@@ -31,7 +32,7 @@ namespace IX.Observable.DebugAide
         [UsedImplicitly]
         public QueueDebugView(ObservableQueue<T> queue)
         {
-            this.queue = queue ?? throw new ArgumentNullException(nameof(queue));
+            Requires.NotNull(out this.queue, queue);
         }
 
 #endregion

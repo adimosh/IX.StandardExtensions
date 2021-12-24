@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.Observable.DebugAide
@@ -31,7 +32,7 @@ namespace IX.Observable.DebugAide
         [UsedImplicitly]
         public StackDebugView(ObservableStack<T> stack)
         {
-            this.stack = stack ?? throw new ArgumentNullException(nameof(stack));
+            Requires.NotNull(out this.stack, stack);
         }
 
 #endregion

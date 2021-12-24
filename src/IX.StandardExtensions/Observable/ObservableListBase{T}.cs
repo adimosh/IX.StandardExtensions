@@ -368,10 +368,7 @@ namespace IX.Observable
         /// <returns>The index at which the item was added.</returns>
         int IList.Add(object? value)
         {
-            if (value is not T v)
-            {
-                throw new ArgumentInvalidTypeException(nameof(value));
-            }
+            T v = Requires.ArgumentOfType<T>(value);
 
             this.Add(v);
 
@@ -419,10 +416,7 @@ namespace IX.Observable
             int index,
             object? value)
         {
-            if (value is not T v)
-            {
-                throw new ArgumentInvalidTypeException(nameof(value));
-            }
+            T v = Requires.ArgumentOfType<T>(value);
 
             this.Insert(
                 index,
@@ -506,7 +500,7 @@ namespace IX.Observable
         ///     Removes a range of items from the <see cref="ObservableCollectionBase{T}" />.
         /// </summary>
         /// <param name="startIndex">The start index of the range to remove.</param>
-        /// <exception cref="ArgumentOutOfRangeException">
+        /// <exception cref="ArgumentNotValidIndexException">
         ///     <paramref name="startIndex" />
         ///     must be a non-negative integer, less than the size of the collection.
         /// </exception>
@@ -516,10 +510,7 @@ namespace IX.Observable
         public virtual void RemoveRange(int startIndex)
         {
             // PRECONDITIONS
-            if (startIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(startIndex));
-            }
+            Requires.ValidIndex(in startIndex);
 
             // Current object not disposed
             this.RequiresNotDisposed();
@@ -962,10 +953,7 @@ namespace IX.Observable
 
                     if (this.ItemsAreUndoable &&
                         this.AutomaticallyCaptureSubItems &&
-                        item is IUndoableItem
-                        {
-                            IsCapturedIntoUndoContext: true
-                        } ul &&
+                        item is IUndoableItem { IsCapturedIntoUndoContext: true } ul &&
                         ul.ParentUndoContext == this)
                     {
                         ul.ReleaseFromUndoContext();
@@ -1051,10 +1039,7 @@ namespace IX.Observable
 
                     if (this.ItemsAreUndoable &&
                         this.AutomaticallyCaptureSubItems &&
-                        item is IUndoableItem
-                        {
-                            IsCapturedIntoUndoContext: false
-                        } ul)
+                        item is IUndoableItem { IsCapturedIntoUndoContext: false } ul)
                     {
                         ul.CaptureIntoUndoContext(this);
                     }

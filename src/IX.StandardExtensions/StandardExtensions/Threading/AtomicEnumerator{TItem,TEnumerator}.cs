@@ -46,10 +46,7 @@ namespace IX.StandardExtensions.Threading
             TEnumerator existingEnumerator,
             Func<ReadOnlySynchronizationLocker> readLock)
         {
-            if (existingEnumerator == null)
-            {
-                throw new ArgumentNullException(nameof(existingEnumerator));
-            }
+            Requires.NotNull(existingEnumerator);
 
             this.existingEnumerator = existingEnumerator;
             this.current = default!; /* We forgive this possible null reference, as it should not be possible to

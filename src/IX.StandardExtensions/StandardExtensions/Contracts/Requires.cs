@@ -1095,6 +1095,48 @@ namespace IX.StandardExtensions.Contracts
         }
         #endregion
 
+        #region Generic index
+
+        /// <summary>
+        /// Called when a contract requires that a specific index is valid for any kind of collection.
+        /// </summary>
+        /// <param name="argument">The argument to validate.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <exception cref="ArgumentNotValidIndexException">The argument is not a valid index, possibly negative.</exception>
+        public static void ValidIndex(
+            in int argument,
+            [CallerArgumentExpression("argument")] string argumentName = "argument")
+        {
+            if (argument < 0)
+            {
+                throw new ArgumentNotValidIndexException(argumentName);
+            }
+        }
+
+        /// <summary>
+        /// Called when a contract requires that a specific index is valid for any kind of collection.
+        /// </summary>
+        /// <param name="field">
+        ///     The field that this argument is initializing.
+        /// </param>
+        /// <param name="argument">The argument to validate.</param>
+        /// <param name="argumentName">The argument name.</param>
+        /// <exception cref="ArgumentNotValidIndexException">The argument is not a valid index, possibly negative.</exception>
+        public static void ValidIndex(
+            out int field,
+            in int argument,
+            [CallerArgumentExpression("argument")] string argumentName = "argument")
+        {
+            if (argument < 0)
+            {
+                throw new ArgumentNotValidIndexException(argumentName);
+            }
+
+            field = argument;
+        }
+
+        #endregion
+
         #region Array index and range
 
         /// <summary>Called when a contract requires that a specific index is valid for an array.</summary>

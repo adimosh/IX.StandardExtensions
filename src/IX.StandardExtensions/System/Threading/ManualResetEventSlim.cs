@@ -69,8 +69,7 @@ namespace IX.System.Threading
         {
             Requires.NotNull(
                 out this.internalResetEvent,
-                manualResetEvent,
-                nameof(manualResetEvent));
+                manualResetEvent);
         }
 
 #endregion
@@ -86,9 +85,7 @@ namespace IX.System.Threading
         /// <param name="manualResetEvent">The manual reset event.</param>
         /// <returns>The result of the conversion.</returns>
         public static implicit operator GlobalThreading.ManualResetEventSlim(ManualResetEventSlim manualResetEvent) =>
-            Requires.NotNull(
-                    manualResetEvent,
-                    nameof(manualResetEvent))
+            Requires.NotNull(manualResetEvent)
                 .internalResetEvent;
 
         /// <summary>
