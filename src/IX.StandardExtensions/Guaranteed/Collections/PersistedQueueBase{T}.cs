@@ -551,8 +551,7 @@ namespace IX.Guaranteed.Collections
             TState state,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
-                actionToInvoke);
+            Requires.NotNull(actionToInvoke);
 
             this.RequiresNotDisposed();
 
@@ -825,10 +824,8 @@ namespace IX.Guaranteed.Collections
             TState state,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
-                predicate);
-            Requires.NotNull(
-                actionToInvoke);
+            Requires.NotNull(predicate);
+            Requires.NotNull(actionToInvoke);
 
             this.RequiresNotDisposed();
 
@@ -1007,10 +1004,8 @@ namespace IX.Guaranteed.Collections
             TState state,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
-                predicate);
-            Requires.NotNull(
-                actionToInvoke);
+            Requires.NotNull(predicate);
+            Requires.NotNull(actionToInvoke);
 
             this.RequiresNotDisposed();
 
@@ -1198,10 +1193,8 @@ namespace IX.Guaranteed.Collections
             TState state,
             CancellationToken cancellationToken = default)
         {
-            Requires.NotNull(
-                predicate);
-            Requires.NotNull(
-                actionToInvoke);
+            Requires.NotNull(predicate);
+            Requires.NotNull(actionToInvoke);
 
             this.RequiresNotDisposed();
 
