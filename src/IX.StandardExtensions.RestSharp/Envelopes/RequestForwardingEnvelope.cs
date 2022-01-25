@@ -2,6 +2,10 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System;
+using System.IO;
+using System.Linq;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 using RestSharp;
 
@@ -21,8 +25,62 @@ public record RequestForwardingEnvelope(
     string Resource,
     string? JsonBody,
     RequestForwardingEnvelope.RequestFileData[]? FileData,
-    RequestForwardingEnvelope.RequestAdditionalHeaders[]? AdditionalHeaders)
+    AdditionalHeaderEnvelope[]? AdditionalHeaders)
 {
+    /// <summary>
+    /// Initializes a new instance of <see cref="RequestForwardingEnvelope"/> by converting from a <see cref="RestRequest"/>.
+    /// </summary>
+    /// <param name="request">The request to convert from.</param>
+    /// <param name="jsonBodyConverter">The JSON body converter to use.</param>
+    /// <returns></returns>
+    public RequestForwardingEnvelope(
+        RestRequest request,
+        Func<object?, string> jsonBodyConverter)
+        : this(
+            request.Method,
+            request.Resource,
+            Requires.NotNull(jsonBodyConverter)(
+                Requires.NotNull(request)
+                    .Parameters.GetParameters(ParameterType.RequestBody)
+                    .Cast<BodyParameter>()
+                    .AsEnumerable()
+                    .FirstOrDefault()
+                    ?.Value),
+            request.Files.Any()
+                ? (request.Files.Select(
+                    p =>
+                    {
+                        var contentStream = p.GetFile();
+                        contentStream.Seek(
+                            0,
+                            SeekOrigin.Begin);
+                        var buffer = new byte[contentStream.Length];
+                        contentStream.Read(
+                            buffer,
+                            0,
+                            Convert.ToInt32(contentStream.Length));
+
+                        return new RequestFileData(
+                            p.Name,
+                            buffer,
+                            p.FileName);
+                    })).ToArray()
+                : null,
+            request.Parameters.GetParameters(ParameterType.HttpHeader)
+                .Cast<HeaderParameter>()
+                .Where(p => p.Name != null && p.Value != null)
+                .Select(
+                    p => new AdditionalHeaderEnvelope(
+                        p.Name!,
+                        p.Value!.ToString()))
+                .ToArray())
+    {
+        if (this.AdditionalHeaders?.Length == 0)
+        {
+            this.AdditionalHeaders = null;
+        }
+    }
+
     /// <summary>
     /// File data that is included in the request for RestSharp.
     /// </summary>
@@ -33,15 +91,14 @@ public record RequestForwardingEnvelope(
     public record RequestFileData(
         string Name,
         byte[] Data,
-        string FileName);
+        string FileName)
+    {
+        public RequestFileData(FileParameter parameter)
+            : this(Requires.NotNull(parameter).Name,
+                null,
+                parameter.FileName)
+        {
 
-    /// <summary>
-    /// Additional headers that are to be forwarded in the RestSharp request.
-    /// </summary>
-    /// <param name="Name">The name of the header.</param>
-    /// <param name="Value">The header of the value.</param>
-    [PublicAPI]
-    public record RequestAdditionalHeaders(
-        string Name,
-        string Value);
+        }
+    }
 }
