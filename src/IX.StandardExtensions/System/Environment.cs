@@ -94,24 +94,15 @@ public sealed class Environment : IEnvironment
     /// </value>
     public int CurrentManagedThreadId => GlobalSystem.Environment.CurrentManagedThreadId;
 
-    #if NETFRAMEWORK
     /// <summary>
     /// Gets a value indicating whether shutdown has started.
     /// </summary>
     /// <value>
     ///   <c>true</c> if shutdown has started; otherwise, <c>false</c>.
     /// </value>
-    #else
-    /// <summary>
-    ///     Gets a value indicating whether shutdown has started.
-    /// </summary>
-    /// <value>
-    ///     <c>true</c> if shutdown has started; otherwise, <c>false</c>.
-    /// </value>
     /// <remarks>
-    ///     <para>Unconditionally return false since .NET Core does not support object finalization during shutdown.</para>
+    ///     <para>On .NET Core, unconditionally returns false since .NET Core does not support object finalization during shutdown.</para>
     /// </remarks>
-    #endif
     public bool HasShutdownStarted => GlobalSystem.Environment.HasShutdownStarted;
 
     /// <summary>
