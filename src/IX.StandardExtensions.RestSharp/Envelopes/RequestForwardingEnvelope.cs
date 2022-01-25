@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using IX.StandardExtensions.Contracts;
+using IX.StandardExtensions.Extensions;
 using JetBrains.Annotations;
 using RestSharp;
 
@@ -93,12 +94,29 @@ public record RequestForwardingEnvelope(
         byte[] Data,
         string FileName)
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RequestFileData"/> class by copying from a <see cref="FileParameter"/> instance.
+        /// </summary>
+        /// <param name="parameter"></param>
         public RequestFileData(FileParameter parameter)
             : this(Requires.NotNull(parameter).Name,
-                null,
+                parameter.GetFile.Chain(
+                    contentStreamFunc =>
+                    {
+                        var contentStream = contentStreamFunc();
+                        contentStream.Seek(
+                            0,
+                            SeekOrigin.Begin);
+                        var buffer = new byte[contentStream.Length];
+                        contentStream.Read(
+                            buffer,
+                            0,
+                            Convert.ToInt32(contentStream.Length));
+
+                        return buffer;
+                    }),
                 parameter.FileName)
         {
-
         }
     }
 }
