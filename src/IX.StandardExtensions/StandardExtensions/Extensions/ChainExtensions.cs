@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
@@ -56,6 +57,8 @@ public static class ChainExtensions
     /// <param name="cancellationToken">The cancellation token for this operation.</param>
     /// <returns>The input object.</returns>
     /// <exception cref="ArgumentNullException">Either <paramref name="input"/> or <paramref name="chainDelegate"/> is <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
+    [SuppressMessage("Performance", "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance", Justification = "No, this is an integral part of the chain.")]
+    [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation", Justification = "We need boxing anyway, since we're spanning threads.")]
     public static Task<TInput> Chain<TInput>(
         this TInput input,
         Func<TInput, Task> chainDelegate,
@@ -66,12 +69,14 @@ public static class ChainExtensions
             return Task.FromCanceled<TInput>(cancellationToken);
         }
 
-        return Requires.NotNull(chainDelegate)(Requires.NotNull(input))
+        var localInput = Requires.NotNull(input);
+
+        return Requires.NotNull(chainDelegate)(localInput)
             .ContinueWith(
                 (
                     _,
-                    o) => (TInput)o,
-                input,
+                    o) => (TInput)o!,
+                localInput,
                 TaskContinuationOptions.OnlyOnRanToCompletion);
     }
 
@@ -107,6 +112,7 @@ public static class ChainExtensions
     /// <param name="cancellationToken">The cancellation token for this operation.</param>
     /// <returns>The input object.</returns>
     /// <exception cref="ArgumentNullException">Either <paramref name="input"/> or <paramref name="chainDelegate"/> is <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
+    [SuppressMessage("Performance", "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance", Justification = "No, this is an integral part of the chain.")]
     public static Task<TInput> Chain<TInput>(
         this Task<TInput> input,
         Func<TInput, Task> chainDelegate,
@@ -117,14 +123,15 @@ public static class ChainExtensions
             return Task.FromCanceled<TInput>(cancellationToken);
         }
 
-        return Requires.NotNull(input)
+        var localInput = Requires.NotNull(input);
+        return localInput
             .ContinueWith(
                 (
                     antecedent,
                     state) =>
                 {
                     var (innerChainDelegate, innerCancellationToken) =
-                        (Tuple<Func<TInput, Task>, CancellationToken>)state;
+                        (Tuple<Func<TInput, Task>, CancellationToken>)state!;
                     innerCancellationToken.ThrowIfCancellationRequested();
 
                     return innerChainDelegate(antecedent.Result);
@@ -137,8 +144,8 @@ public static class ChainExtensions
             .ContinueWith(
                 (
                     _,
-                    o) => (TInput)o,
-                input,
+                    o) => (TInput)o!,
+                localInput,
                 TaskContinuationOptions.OnlyOnRanToCompletion);
     }
 
@@ -152,6 +159,7 @@ public static class ChainExtensions
     /// <param name="cancellationToken">The cancellation token for this operation.</param>
     /// <returns>The output object, returned by the chain delegate.</returns>
     /// <exception cref="ArgumentNullException">Either <paramref name="input"/> or <paramref name="chainDelegate"/> is <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
+    [SuppressMessage("Performance", "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance", Justification = "No, this is an integral part of the chain.")]
     public static Task<TOutput> Chain<TInput, TOutput>(
         this Task<TInput> input,
         Func<TInput, Task<TOutput>> chainDelegate,
@@ -169,7 +177,7 @@ public static class ChainExtensions
                     state) =>
                 {
                     var (innerChainDelegate, innerCancellationToken) =
-                        (Tuple<Func<TInput, Task<TOutput>>, CancellationToken>)state;
+                        (Tuple<Func<TInput, Task<TOutput>>, CancellationToken>)state!;
                     innerCancellationToken.ThrowIfCancellationRequested();
 
                     return innerChainDelegate(antecedent.Result);
@@ -190,6 +198,8 @@ public static class ChainExtensions
     /// <param name="cancellationToken">The cancellation token for this operation.</param>
     /// <returns>The input object.</returns>
     /// <exception cref="ArgumentNullException">Either <paramref name="input"/> or <paramref name="chainDelegate"/> is <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
+    [SuppressMessage("Performance", "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance", Justification = "No, this is an integral part of the chain.")]
+    [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation", Justification = "We need boxing anyway, since we're spanning threads.")]
     public static ValueTask<TInput> Chain<TInput>(
         this TInput input,
         Func<TInput, ValueTask> chainDelegate,
@@ -212,7 +222,7 @@ public static class ChainExtensions
                 .ContinueWith(
                     (
                         _,
-                        o) => (TInput)o,
+                        o) => (TInput)o!,
                     input,
                     TaskContinuationOptions.OnlyOnRanToCompletion));
     }
@@ -249,6 +259,8 @@ public static class ChainExtensions
     /// <param name="cancellationToken">The cancellation token for this operation.</param>
     /// <returns>The input object.</returns>
     /// <exception cref="ArgumentNullException">Either <paramref name="input"/> or <paramref name="chainDelegate"/> is <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
+    [SuppressMessage("Performance", "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance", Justification = "No, this is an integral part of the chain.")]
+    [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation", Justification = "We need boxing anyway, since we're spanning threads.")]
     public static ValueTask<TInput> Chain<TInput>(
         this ValueTask<TInput> input,
         Func<TInput, ValueTask> chainDelegate,
@@ -274,8 +286,8 @@ public static class ChainExtensions
                     .ContinueWith(
                         (
                             _,
-                            o) => (TInput)o,
-                        input,
+                            o) => (TInput)o!,
+                        vt.Result,
                         TaskContinuationOptions.OnlyOnRanToCompletion));
         }
 
@@ -287,28 +299,27 @@ public static class ChainExtensions
                         state) =>
                     {
                         var (innerChainDelegate, innerCancellationToken) =
-                            (Tuple<Func<TInput, ValueTask>, CancellationToken>)state;
+                            (Tuple<Func<TInput, ValueTask>, CancellationToken>)state!;
                         innerCancellationToken.ThrowIfCancellationRequested();
                         var innerVt = innerChainDelegate(antecedent.Result);
 
                         if (innerVt.IsCompletedSuccessfully)
                         {
-                            return Task.CompletedTask;
+                            return Task.FromResult(antecedent.Result);
                         }
 
-                        return innerVt.AsTask();
+                        return innerVt.AsTask().ContinueWith(
+                            (
+                                _,
+                                o) => (TInput)o!,
+                            antecedent.Result,
+                            TaskContinuationOptions.OnlyOnRanToCompletion);
                     },
                     new Tuple<Func<TInput, ValueTask>, CancellationToken>(
                         Requires.NotNull(chainDelegate),
                         cancellationToken),
                     TaskContinuationOptions.OnlyOnRanToCompletion)
-                .Unwrap()
-                .ContinueWith(
-                    (
-                        _,
-                        o) => (TInput)o,
-                    input,
-                    TaskContinuationOptions.OnlyOnRanToCompletion));
+                .Unwrap());
     }
 
     /// <summary>
@@ -321,6 +332,7 @@ public static class ChainExtensions
     /// <param name="cancellationToken">The cancellation token for this operation.</param>
     /// <returns>The output object, returned by the chain delegate.</returns>
     /// <exception cref="ArgumentNullException">Either <paramref name="input"/> or <paramref name="chainDelegate"/> is <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
+    [SuppressMessage("Performance", "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance", Justification = "No, this is an integral part of the chain.")]
     public static ValueTask<TOutput> Chain<TInput, TOutput>(
         this ValueTask<TInput> input,
         Func<TInput, ValueTask<TOutput>> chainDelegate,
@@ -346,7 +358,7 @@ public static class ChainExtensions
                         state) =>
                     {
                         var (innerChainDelegate, innerCancellationToken) =
-                            (Tuple<Func<TInput, ValueTask<TOutput>>, CancellationToken>)state;
+                            (Tuple<Func<TInput, ValueTask<TOutput>>, CancellationToken>)state!;
                         innerCancellationToken.ThrowIfCancellationRequested();
                         var innerVt = innerChainDelegate(antecedent.Result);
 
