@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.7.18</VersionPrefix>
+    <VersionPrefix>0.7.19</VersionPrefix>
     <VersionSuffix>alpha3</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
@@ -36,14 +36,16 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
+  <!-- Dependencies -->
   <ItemGroup>
-    <PackageReference Include="RestSharp" Version="107.1.1" />
+    <PackageReference Include="RestSharp" Version="107.1.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\IX.StandardExtensions\IX.StandardExtensions.csproj" />
   </ItemGroup>
 
+  <!-- Resources -->
   <ItemGroup>
     <Compile Update="Resources.Designer.cs">
       <DesignTime>True</DesignTime>

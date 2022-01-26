@@ -4,16 +4,15 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using IX.Remote.Envelopes;
 using IX.StandardExtensions.ComponentModel;
 using IX.StandardExtensions.Contracts;
-using IX.StandardExtensions.RestSharp.Envelopes;
 using JetBrains.Annotations;
 using RestSharp;
 using RestSharp.Authenticators;
-using RestSharp.Serializers;
 
 namespace IX.StandardExtensions.RestSharp;
 
@@ -97,7 +96,7 @@ public class RestRemoteClient : DisposableBase
             throw new InvalidOperationException(Resources.YourRequestCannotContainBothARESTBodyAndFiles);
         }
 
-        if (envelope.Method is Method.Get or Method.Head or Method.Options &&
+        if ((envelope.Method == HttpMethod.Get || envelope.Method == HttpMethod.Head || envelope.Method == HttpMethod.Options) &&
             (envelope.JsonBody is not null || envelope.FileData is not null or { Length: 0 }))
         {
             // Methods incompatible with body or files
@@ -106,7 +105,7 @@ public class RestRemoteClient : DisposableBase
 
         RestRequest request = new RestRequest(
             envelope.Resource,
-            envelope.Method);
+            envelope.Method.ToRestMethod());
 
         if (!string.IsNullOrWhiteSpace(envelope.JsonBody))
         {
@@ -136,43 +135,9 @@ public class RestRemoteClient : DisposableBase
             }
         }
 
-        var response = await this.client.ExecuteAsync(
+        return (await this.client.ExecuteAsync(
             request,
-            cancellationToken);
-
-        return response switch
-        {
-            { IsSuccessful: false } => new ResponseForwardingEnvelope(response.ResponseStatus),
-            { ContentLength: > 0, ContentType: ContentType.Json } => new ResponseForwardingEnvelope(
-                response.ResponseStatus,
-                response.StatusCode,
-                response.Content,
-                AdditionalHeaders: response.Headers?.Where(p => p.Name is not null && p.Value is string)
-                    .Select(
-                        p => new AdditionalHeaderEnvelope(
-                            p.Name!,
-                            (string)p.Value!))
-                    .ToArray()),
-            { ContentLength: > 0 } => new ResponseForwardingEnvelope(
-                response.ResponseStatus,
-                response.StatusCode,
-                RawContent: response.RawBytes,
-                AdditionalHeaders: response.Headers?.Where(p => p.Name is not null && p.Value is string)
-                    .Select(
-                        p => new AdditionalHeaderEnvelope(
-                            p.Name!,
-                            (string)p.Value!))
-                    .ToArray()),
-            _ => new ResponseForwardingEnvelope(
-                response.ResponseStatus,
-                response.StatusCode,
-                AdditionalHeaders: response.Headers?.Where(p => p.Name is not null && p.Value is string)
-                    .Select(
-                        p => new AdditionalHeaderEnvelope(
-                            p.Name!,
-                            (string)p.Value!))
-                    .ToArray())
-        };
+            cancellationToken)).ToEnvelope();
     }
 
     /// <summary>
