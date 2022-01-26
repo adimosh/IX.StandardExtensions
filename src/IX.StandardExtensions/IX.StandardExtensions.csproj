@@ -18,7 +18,9 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Added possibility to chain delegates</PackageReleaseNotes>
+    <PackageReleaseNotes>- Added possibility to chain delegates
+- ReadAllBytes method for streams (WARNING !!!)
+- Remote envelope records added</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -51,6 +53,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)'=='net46'">
     <PackageReference Include="System.ValueTuple" Version="[4.5.0,5)" />
+    <PackageReference Include="System.Net.Http" Version="[4.3.4,5)" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFrameworkAdvanced)'!='true'">
