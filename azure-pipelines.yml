@@ -1,0 +1,72 @@
+trigger:
+- master
+
+stages:
+- stage: build_debug_stage
+  displayName: "Build and test in debug mode"
+  jobs:
+  - job:
+    strategy:
+      matrix:
+        Ubuntu18:
+          imageName: 'ubuntu-18.04'
+        Ubuntu20:
+          imageName: 'ubuntu-18.04'
+        MacOs10:
+          imageName: 'macOS-10.15'
+        MacOs11:
+          imageName: 'macOS-11'
+        Windows2019:
+          imageName: 'windows-2019'
+        Windows2022:
+          imageName: 'windows-2022'
+    pool:
+      vmImage: $(imageName)
+    steps:
+    - checkout: self
+      submodules: true
+    - task: UseDotNet@2
+      displayName: "Install .NET 6"
+      inputs:
+       version: 6.x
+    - task: DotNetCoreCLI@2
+      displayName: "Restore NuGet packages"
+      inputs:
+        command: 'restore'
+        projects: "**/*.csproj"
+        includeNuGetOrg: true
+    - task: DotNetCoreCLI@2
+      displayName: "Build in Debug"
+      inputs:
+        command: 'build'
+        projects: 'src/IX.StandardExtensions.sln'
+        arguments: '-c Debug'
+    - task: DotNetCoreCLI@2
+      displayName: "Run tests"
+      inputs:
+        command: 'test'
+        projects: 'src/IX.StandardExtensions.sln'
+        arguments: '-c Debug'
+      
+- stage: build_release_stage
+  dependsOn: build_debug_stage
+  displayName: "Build in release and create packages"
+  jobs:
+  - job:
+    pool:
+      vmImage: 'windows-2022'
+    steps:
+    - checkout: self
+      submodules: true
+    - task: DotNetCoreCLI@2
+      displayName: 'Build in Release'
+      inputs:
+        command: 'build'
+        projects: 'src/IX.StandardExtensions.sln'
+        arguments: '-c Release --version-suffix alpha.$(Build.BuildNumber)'
+    - task: ArtifactoryNuGet@2
+      inputs:
+        command: 'push'
+        artifactoryService: 'IX Artifactory Service'
+        targetDeployRepo: 'ix-nuget-local'
+        pathToNupkg: '*.nupkg'
