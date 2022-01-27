@@ -577,9 +577,10 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             try
             {
                 #if FRAMEWORK_ADVANCED
-                await
-                    #endif
-                    using Stream stream = this.FileShim.OpenRead(possibleFilePath);
+                await using Stream stream = this.FileShim.OpenRead(possibleFilePath);
+                #else
+                using Stream stream = this.FileShim.OpenRead(possibleFilePath);
+                #endif
 
                 obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
 
@@ -851,9 +852,10 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
                 T obj;
 
                 #if FRAMEWORK_ADVANCED
-                await
-                    #endif
-                    using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                await using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                #else
+                using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                #endif
                 {
                     obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
                 }
@@ -1031,9 +1033,10 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
                 T obj;
 
                 #if FRAMEWORK_ADVANCED
-                await
-                    #endif
-                    using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                await using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                #else
+                using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                #endif
                 {
                     obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
                 }
@@ -1220,9 +1223,10 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
                 T obj;
 
                 #if FRAMEWORK_ADVANCED
-                await
-                    #endif
-                    using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                await using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                #else
+                using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                #endif
                 {
                     obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
                 }

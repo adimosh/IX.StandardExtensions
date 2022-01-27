@@ -3,8 +3,8 @@
 // </copyright>
 
 using System;
-using JetBrains.Annotations;
 using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.ComponentModel;
 

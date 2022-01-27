@@ -141,6 +141,8 @@ namespace IX.UnitTests.StandardExtensions.Threading
             bool result;
             Exception ex = null;
 
+#pragma warning disable SA1114 // Parameter list should follow declaration
+
             // ACT
             using (var mre = new ManualResetEventSlim())
             {
@@ -186,6 +188,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
                 this.output.WriteLine($"Outer method unlocked after {(DateTime.UtcNow - dt).TotalMilliseconds} ms.");
 #endif
             }
+#pragma warning restore SA1114 // Parameter list should follow declaration
 
             // ASSERT
             try
