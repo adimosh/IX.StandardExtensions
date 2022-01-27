@@ -34,7 +34,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
             // ASSERT
             dt.CheckNegative();
 
-            await Task.Delay(1000);
+            await dt.WaitForDisposal();
 
             dt.Check();
         }
