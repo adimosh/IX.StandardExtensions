@@ -55,7 +55,7 @@ stages:
         command: 'test'
         projects: 'src/IX.StandardExtensions.sln'
         arguments: '-c Debug'
-      
+
 - stage: build_release_stage
   dependsOn: build_debug_stage
   displayName: "Build in release and create packages"
@@ -73,6 +73,7 @@ stages:
         projects: 'src/IX.StandardExtensions.sln'
         arguments: '-c Release --version-suffix alpha.$(Build.BuildNumber)'
     - task: ArtifactoryNuGet@2
+      displayName: "Push to Artifactory"
       inputs:
         command: 'push'
         artifactoryService: 'IX Artifactory Service'
