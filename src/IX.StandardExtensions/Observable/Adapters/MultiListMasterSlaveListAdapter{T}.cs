@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
@@ -16,10 +17,10 @@ internal class MultiListMasterSlaveListAdapter<T> : ListAdapter<T>
 #region Internal state
 
     private readonly List<IEnumerable<T>> slaves;
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "IDisposableAnalyzers.Correctness",
         "IDISP006:Implement IDisposable.",
-        Justification = "We cannot. The purpose here is not to dispose.")]
+        Justification = "We do not own this instance, disposing it is not advisable.")]
     private IList<T>? master;
 
 #endregion
@@ -67,6 +68,10 @@ internal class MultiListMasterSlaveListAdapter<T> : ListAdapter<T>
         }
     }
 
+    [SuppressMessage(
+        "ReSharper",
+        "PossibleMultipleEnumeration",
+        Justification = "Appears unavoidable at this time.")]
     public override T this[int index]
     {
         get
@@ -123,7 +128,7 @@ internal class MultiListMasterSlaveListAdapter<T> : ListAdapter<T>
         items.ForEach(
             (
                 p,
-                master) => master.Add(p),
+                masterL1) => masterL1.Add(p),
             this.master);
 
         return index;
@@ -159,7 +164,7 @@ internal class MultiListMasterSlaveListAdapter<T> : ListAdapter<T>
             arrayIndex);
     }
 
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "We can't avoid this here.")]
@@ -182,7 +187,7 @@ internal class MultiListMasterSlaveListAdapter<T> : ListAdapter<T>
         }
     }
 
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "We can't avoid this here.")]
@@ -226,7 +231,7 @@ internal class MultiListMasterSlaveListAdapter<T> : ListAdapter<T>
             item);
     }
 
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "We can't avoid this here.")]
@@ -268,6 +273,10 @@ internal class MultiListMasterSlaveListAdapter<T> : ListAdapter<T>
         this.master.RemoveAt(index);
     }
 
+    [SuppressMessage(
+        "IDisposableAnalyzers.Correctness",
+        "IDISP003:Dispose previous before re-assigning",
+        Justification = "We do not own this instance, disposing it is not advisable.")]
     internal void SetMaster<TList>(TList masterList)
         where TList : class, IList<T>, INotifyCollectionChanged
     {

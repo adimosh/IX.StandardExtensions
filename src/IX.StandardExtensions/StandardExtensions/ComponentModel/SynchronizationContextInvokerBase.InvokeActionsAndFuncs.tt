@@ -14,6 +14,8 @@ namespace IX.StandardExtensions.ComponentModel;
 
 #pragma warning disable HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance - nope, it is generic too
 #pragma warning disable SA1116 // Split parameters should start on line after declaration - we really don't care about this in auto-generated code
+#pragma warning disable CS8714 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'notnull' constraint.
+
 /// <summary>
 /// An abstract base class for a synchronization context invoker.
 /// </summary>
@@ -155,3 +157,4 @@ for (int i = 1; i <= 8; i++)
 }
 #pragma warning restore SA1116 // Split parameters should start on line after declaration
 #pragma warning restore HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance
+#pragma warning restore CS8714 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'notnull' constraint.

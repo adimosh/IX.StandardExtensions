@@ -114,7 +114,7 @@ public abstract class AtomicEnumerator : DisposableBase
 
         return (AtomicEnumerator<TItem>)initializer.DynamicInvoke(
             collection,
-            readLock);
+            readLock)!;
     }
 
 #endregion

@@ -278,10 +278,17 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
         coll.Clear();
     }
 
-    private bool IsFilter() =>
-        !EqualityComparer<TFilter>.Default.Equals(
-            this.Filter,
-            default);
+    private bool IsFilter()
+    {
+        if (this.filter == null)
+        {
+            return true;
+        }
+
+        return !EqualityComparer<TFilter>.Default.Equals(
+            this.filter,
+            default!);
+    }
 
 #endregion
 }

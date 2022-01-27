@@ -10,6 +10,8 @@ using IX.StandardExtensions.Contracts;
 
 namespace IX.StandardExtensions.Threading;
 
+#pragma warning disable CS8714 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'notnull' constraint.
+
 /// <summary>
 ///     A class containing extension methods for <see cref="TaskFactory"/>, mostly intended for use with <see cref="Task.Factory"/>.
 /// </summary>
@@ -1539,3 +1541,4 @@ public static partial class TaskFactoryExtensions
             cancellationToken);
     }
 }
+#pragma warning restore CS8714 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'notnull' constraint.

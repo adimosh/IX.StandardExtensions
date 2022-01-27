@@ -75,7 +75,7 @@ internal sealed class FirePeriodicallyContext : DisposableBase,
         this.state = state;
         this.timeSpan = timeSpan;
         this.timer = new Timer(
-            this.TimerTick,
+            this.TimerTick!,
             Requires.NotNull(tickerDelegate),
             initialDelay,
             timeSpan);

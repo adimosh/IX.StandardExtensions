@@ -140,7 +140,7 @@ public abstract class AtomicEnumerator<TItem> : AtomicEnumerator,
 
         return (AtomicEnumerator<TItem>)initializer.DynamicInvoke(
             collection,
-            readLock);
+            readLock)!;
     }
 
     /// <summary>

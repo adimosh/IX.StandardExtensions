@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using System.Threading;
 using IX.Observable.Adapters;
@@ -435,7 +436,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             {
                 if (dictionary.TryGetValue(
                         key,
-                        out TValue val))
+                        out TValue? val))
                 {
                     // Set the new item
                     dictionary[key] = value;
@@ -547,7 +548,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             // Find out if there's anything to remove
             if (!container.TryGetValue(
                     key,
-                    out TValue value))
+                    out TValue? value))
             {
                 return false;
             }
@@ -577,6 +578,27 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         return result;
     }
 
+    #if NET50_OR_GREATER
+    /// <summary>
+    ///     Attempts to fetch a value for a specific key, indicating whether it has been found or not.
+    /// </summary>
+    /// <param name="key">The key.</param>
+    /// <param name="value">The value.</param>
+    /// <returns><see langword="true" /> if the value was successfully fetched, <see langword="false" /> otherwise.</returns>
+    public bool TryGetValue(
+        TKey key,
+        [MaybeNullWhen(false)] out TValue value)
+    {
+        this.RequiresNotDisposed();
+
+        using (this.ReadLock())
+        {
+            return this.InternalContainer.TryGetValue(
+                key,
+                out value);
+        }
+    }
+    #else
     /// <summary>
     ///     Attempts to fetch a value for a specific key, indicating whether it has been found or not.
     /// </summary>
@@ -596,6 +618,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
                 out value);
         }
     }
+    #endif
 
 #endregion
 

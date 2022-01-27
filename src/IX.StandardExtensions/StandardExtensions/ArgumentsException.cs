@@ -114,8 +114,8 @@ public class ArgumentsException : Exception
             info,
             context)
     {
-        this.ArgumentNames = Requires.NotNull(
-            (string[])info.GetValue(
+        this.ArgumentNames = Requires.ArgumentOfType<string[]>(
+            info.GetValue(
                 nameof(this.ArgumentNames),
                 typeof(string[])),
             nameof(info));

@@ -32,6 +32,7 @@ public static class IEnumeratorExtensions
     /// <param name="source">The enumerator source.</param>
     /// <param name="action">The action to execute.</param>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="source" /> or <paramref name="action" /> is <see langword="null"/> (<see langword="Nothing"/> in Visual Basic).</exception>
+    [SuppressMessage("Performance", "HAA0401:Possible allocation of reference type enumerator", Justification = "Unavoidable.")]
     public static void ForEach<T>(this IEnumerator<T> source, Action<T> action)
     {
         _ = Requires.NotNull(source);

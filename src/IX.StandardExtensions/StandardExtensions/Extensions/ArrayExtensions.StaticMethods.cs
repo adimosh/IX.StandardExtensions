@@ -375,7 +375,7 @@ public static partial class ArrayExtensions
     ///     The first element that matches the conditions defined by the specified predicate,
     ///     if found; otherwise, the default value for type <typeparamref name="T" />.
     /// </returns>
-    public static T Find<T>(
+    public static T? Find<T>(
         this T[] array,
         Predicate<T> match) =>
         Array.Find(
@@ -478,7 +478,7 @@ public static partial class ArrayExtensions
     ///     The last element that matches the conditions defined by the specified predicate,
     ///     if found; otherwise, the default value for type <typeparamref name="T" />.
     /// </returns>
-    public static T FindLast<T>(
+    public static T? FindLast<T>(
         this T[] array,
         Predicate<T> match) =>
         Array.FindLast(
