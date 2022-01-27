@@ -224,7 +224,7 @@ public class RepeatableQueue<T> : IQueue<T>
     ///     <see langword="true" /> if an item is de-queued successfully, <see langword="false" /> otherwise, or if the
     ///     queue is empty.
     /// </returns>
-    public bool TryDequeue(out T item)
+    public bool TryDequeue([MaybeNullWhen(false)] out T item)
     {
         if (!this.internalQueue.TryDequeue(out item))
         {
@@ -243,7 +243,7 @@ public class RepeatableQueue<T> : IQueue<T>
     /// <returns>
     ///     <see langword="true" /> if an item is found, <see langword="false" /> otherwise, or if the queue is empty.
     /// </returns>
-    public bool TryPeek(out T item) => this.internalQueue.TryPeek(out item);
+    public bool TryPeek([MaybeNullWhen(false)] out T item) => this.internalQueue.TryPeek(out item);
 
     /// <summary>Returns an enumerator that iterates through a collection.</summary>
     /// <returns>An <see cref="IEnumerator" /> object that can be used to iterate through the collection.</returns>

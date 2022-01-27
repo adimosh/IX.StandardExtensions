@@ -133,11 +133,11 @@ public class Queue<T> : GlobalCollectionsGeneric.Queue<T>,
     ///     <see langword="true" /> if an item is de-queued successfully, <see langword="false" /> otherwise, or if the
     ///     queue is empty.
     /// </returns>
-    public bool TryDequeue(out T item)
+    public bool TryDequeue([MaybeNullWhen(false)] out T item)
     {
         if (this.Count == 0)
         {
-            item = default!;
+            item = default;
             return false;
         }
 
@@ -150,11 +150,11 @@ public class Queue<T> : GlobalCollectionsGeneric.Queue<T>,
     /// </summary>
     /// <param name="item">The item, or default if unsuccessful.</param>
     /// <returns><see langword="true" /> if an item is found, <see langword="false" /> otherwise, or if the queue is empty.</returns>
-    public bool TryPeek(out T item)
+    public bool TryPeek([MaybeNullWhen(false)] out T item)
     {
         if (this.Count == 0)
         {
-            item = default!;
+            item = default;
             return false;
         }
 

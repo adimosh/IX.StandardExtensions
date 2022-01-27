@@ -209,7 +209,7 @@ public class RepeatableStack<T> : IStack<T>
     ///     <see langword="true" /> if an item is peeked at successfully, <see langword="false" /> otherwise, or if the
     ///     stack is empty.
     /// </returns>
-    public bool TryPeek(out T item) => this.internalStack.TryPeek(out item);
+    public bool TryPeek([MaybeNullWhen(false)] out T item) => this.internalStack.TryPeek(out item);
 
     /// <summary>
     ///     Attempts to pop the topmost item from the stack, and remove it if successful.
@@ -219,11 +219,11 @@ public class RepeatableStack<T> : IStack<T>
     ///     <see langword="true" /> if an item is popped successfully, <see langword="false" /> otherwise, or if the
     ///     stack is empty.
     /// </returns>
-    public bool TryPop(out T item)
+    public bool TryPop([MaybeNullWhen(false)] out T item)
     {
-        if (!this.internalStack.TryPop(out T item2))
+        if (!this.internalStack.TryPop(out T? item2))
         {
-            item = default!;
+            item = default;
 
             return false;
         }

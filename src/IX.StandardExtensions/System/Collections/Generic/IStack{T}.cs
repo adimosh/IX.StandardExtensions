@@ -4,8 +4,8 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using DiagCA = System.Diagnostics.CodeAnalysis;
 
 namespace IX.System.Collections.Generic;
 
@@ -17,15 +17,15 @@ namespace IX.System.Collections.Generic;
 /// <seealso cref="ICollection" />
 /// <seealso cref="IReadOnlyCollection{T}" />
 [PublicAPI]
-[DiagCA.SuppressMessage(
+[SuppressMessage(
     "ReSharper",
     "PossibleInterfaceMemberAmbiguity",
     Justification = "Member ambiguity is unavoidable when implementing ICollection")]
-[DiagCA.SuppressMessage(
+[SuppressMessage(
     "Design",
     "CA1010:Generic interface should also be implemented",
     Justification = "This is not necessary.")]
-[DiagCA.SuppressMessage(
+[SuppressMessage(
     "Naming",
     "CA1710:Identifiers should have correct suffix",
     Justification = "This is not necessary.")]
@@ -78,7 +78,7 @@ public interface IStack<T> : ICollection,
     ///     <see langword="true" /> if an item is popped successfully, <see langword="false" /> otherwise, or if the
     ///     stack is empty.
     /// </returns>
-    bool TryPop(out T item);
+    bool TryPop([MaybeNullWhen(false)] out T item);
 
     /// <summary>
     ///     Attempts to peek at the topmost item from the stack, without removing it.
@@ -88,7 +88,7 @@ public interface IStack<T> : ICollection,
     ///     <see langword="true" /> if an item is peeked at successfully, <see langword="false" /> otherwise, or if the
     ///     stack is empty.
     /// </returns>
-    bool TryPeek(out T item);
+    bool TryPeek([MaybeNullWhen(false)] out T item);
 
     /// <summary>
     ///     Pushes an element to the top of the stack.
