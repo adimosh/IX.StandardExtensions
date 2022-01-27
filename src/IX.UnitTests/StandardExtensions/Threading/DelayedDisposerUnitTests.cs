@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using IX.StandardExtensions.Threading;
 using Xunit;
@@ -20,7 +21,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
         /// Tests DelayedDisposer one instance.
         /// </summary>
         /// <returns>The task representing this test.</returns>
-        [Fact(DisplayName = "DelayedDisposer one instance.")]
+        [Fact(DisplayName = "DelayedDisposer one instance.", Timeout = 3000)]
         public async Task Test1()
         {
             // ARRANGE
@@ -42,7 +43,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
         /// Tests DelayedDisposer one instance cast.
         /// </summary>
         /// <returns>The task representing this test.</returns>
-        [Fact(DisplayName = "DelayedDisposer one instance cast.")]
+        [Fact(DisplayName = "DelayedDisposer one instance cast.", Timeout = 3000)]
         public async Task Test2()
         {
             // ARRANGE
@@ -55,7 +56,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
             // ASSERT
             dt.CheckNegative();
 
-            await Task.Delay(1000);
+            await dt.WaitForDisposal();
 
             dt.Check();
         }
@@ -64,7 +65,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
         /// Tests DelayedDisposer multiple instances.
         /// </summary>
         /// <returns>The task representing this test.</returns>
-        [Fact(DisplayName = "DelayedDisposer multiple instances.")]
+        [Fact(DisplayName = "DelayedDisposer multiple instances.", Timeout = 3000)]
         public async Task Test3()
         {
             // ARRANGE
@@ -82,7 +83,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
             // ASSERT
             dt.ForEach(p => p.CheckNegative());
 
-            await Task.Delay(1000);
+            await Task.WhenAll(dt.Select(p => p.WaitForDisposal()));
 
             dt.ForEach(p => p.Check());
         }
@@ -91,7 +92,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
         /// Tests DelayedDisposer multiple instances cast.
         /// </summary>
         /// <returns>The task representing this test.</returns>
-        [Fact(DisplayName = "DelayedDisposer multiple instances cast.")]
+        [Fact(DisplayName = "DelayedDisposer multiple instances cast.", Timeout = 3000)]
         public async Task Test4()
         {
             // ARRANGE
@@ -109,7 +110,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
             // ASSERT
             dt.ForEach(p => ((DisposeTester)p).CheckNegative());
 
-            await Task.Delay(1000);
+            await Task.WhenAll(dt.Select(p => ((DisposeTester)p).WaitForDisposal()));
 
             dt.ForEach(p => ((DisposeTester)p).Check());
         }
@@ -118,7 +119,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
         /// Tests DelayedDisposer exchange.
         /// </summary>
         /// <returns>The task representing this test.</returns>
-        [Fact(DisplayName = "DelayedDisposer exchange.")]
+        [Fact(DisplayName = "DelayedDisposer exchange.", Timeout = 3000)]
         public async Task Test5()
         {
             // ARRANGE
@@ -135,7 +136,7 @@ namespace IX.UnitTests.StandardExtensions.Threading
             dt2.CheckNegative();
             dt.CheckNegative();
 
-            await Task.Delay(1000);
+            await dtt.WaitForDisposal();
 
             dtt.Check();
             dt2.CheckNegative();
@@ -145,10 +146,15 @@ namespace IX.UnitTests.StandardExtensions.Threading
 
         private class DisposeTester : IDisposable
         {
+            private TaskCompletionSource<bool> tcs = new();
             private bool disposed;
 
             /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-            public void Dispose() => this.disposed = true;
+            public void Dispose()
+            {
+                this.disposed = true;
+                this.tcs.SetResult(true);
+            }
 
             /// <summary>
             /// Checks whether this instance has been correctly disposed.
@@ -159,6 +165,8 @@ namespace IX.UnitTests.StandardExtensions.Threading
             /// Checks whether this instance has NOT been disposed.
             /// </summary>
             public void CheckNegative() => Assert.False(this.disposed, "The instance has been disposed.");
+
+            public Task WaitForDisposal() => this.tcs.Task;
         }
     }
 }
