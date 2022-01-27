@@ -11,12 +11,12 @@ namespace IX.Observable.Adapters;
 ///     A collection adapter for a queue.
 /// </summary>
 /// <typeparam name="T">The type of item in the queue.</typeparam>
-/// <seealso cref="IX.Observable.Adapters.CollectionAdapter{T}" />
+/// <seealso cref="ModernCollectionAdapter{TItem, TEnumerator}" />
 [CollectionDataContract(
     Namespace = Constants.DataContractNamespace,
     Name = "QueueAdapterOf{0}",
     ItemName = "Item")]
-internal class QueueCollectionAdapter<T> : CollectionAdapter<T>
+internal class QueueCollectionAdapter<T> : ModernCollectionAdapter<T, Queue<T>.Enumerator>
 {
 #region Internal state
 
@@ -33,7 +33,7 @@ internal class QueueCollectionAdapter<T> : CollectionAdapter<T>
     ///     Initializes a new instance of the <see cref="QueueCollectionAdapter{T}" /> class.
     /// </summary>
     /// <param name="queue">The queue.</param>
-    internal QueueCollectionAdapter(System.Collections.Generic.Queue<T> queue)
+    internal QueueCollectionAdapter(IEnumerable<T> queue)
     {
         this.queue = new System.Collections.Generic.Queue<T>(queue);
     }
@@ -105,12 +105,6 @@ internal class QueueCollectionAdapter<T> : CollectionAdapter<T>
     public override int Remove(T item) => -1;
 
     /// <summary>
-    ///     Returns an enumerator that iterates through the collection.
-    /// </summary>
-    /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-    public override IEnumerator<T> GetEnumerator() => this.queue.GetEnumerator();
-
-    /// <summary>
     ///     De-queues an item from the queue.
     /// </summary>
     /// <returns>An item.</returns>
@@ -138,6 +132,12 @@ internal class QueueCollectionAdapter<T> : CollectionAdapter<T>
     ///     Trims the excess space in the stack.
     /// </summary>
     public void TrimExcess() => this.queue.TrimExcess();
+
+    /// <summary>
+    ///     Returns an enumerator that iterates through the collection.
+    /// </summary>
+    /// <returns>An enumerator that can be used to iterate through the collection.</returns>
+    protected override Queue<T>.Enumerator GetEnumerator() => this.queue.GetEnumerator();
 
 #endregion
 }

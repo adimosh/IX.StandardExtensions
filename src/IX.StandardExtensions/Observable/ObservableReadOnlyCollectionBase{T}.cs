@@ -133,11 +133,11 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     /// </value>
     /// <remarks>
     ///     <para>
-    ///         If this count is any number greater than zero, the <see cref="CollectionAdapter{T}.MustReset" /> event will
+    ///         If this count is any number greater than zero, the <see cref="ICollectionAdapter{T}.MustReset" /> event will
     ///         be ignored.
     ///     </para>
     ///     <para>
-    ///         Each invocation of the collection adapter's <see cref="CollectionAdapter{T}.MustReset" /> event will decrease
+    ///         Each invocation of the collection adapter's <see cref="ICollectionAdapter{T}.MustReset" /> event will decrease
     ///         this counter by one until zero.
     ///     </para>
     /// </remarks>
@@ -185,7 +185,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
         }
 
         return AtomicEnumerator<T>.FromCollection(
-            (CollectionAdapter<T>)this.InternalContainer,
+            this.InternalContainer,
             this.ReadLock);
     }
 

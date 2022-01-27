@@ -11,12 +11,12 @@ namespace IX.Observable.Adapters;
 ///     A collection adapter for a stack.
 /// </summary>
 /// <typeparam name="T">The type of item in the stack.</typeparam>
-/// <seealso cref="IX.Observable.Adapters.CollectionAdapter{T}" />
+/// <seealso cref="ModernCollectionAdapter{TItem, TEnumerator}" />
 [CollectionDataContract(
     Namespace = Constants.DataContractNamespace,
     Name = "StackAdapterOf{0}",
     ItemName = "Item")]
-internal class StackCollectionAdapter<T> : CollectionAdapter<T>
+internal class StackCollectionAdapter<T> : ModernCollectionAdapter<T, System.Collections.Generic.Stack<T>.Enumerator>
 {
 #region Internal state
 
@@ -33,7 +33,7 @@ internal class StackCollectionAdapter<T> : CollectionAdapter<T>
     ///     Initializes a new instance of the <see cref="StackCollectionAdapter{T}" /> class.
     /// </summary>
     /// <param name="stack">The stack.</param>
-    internal StackCollectionAdapter(System.Collections.Generic.Stack<T> stack)
+    internal StackCollectionAdapter(IEnumerable<T> stack)
     {
         this.stack = new System.Collections.Generic.Stack<T>(stack);
     }
@@ -105,12 +105,6 @@ internal class StackCollectionAdapter<T> : CollectionAdapter<T>
     public override int Remove(T item) => -1;
 
     /// <summary>
-    ///     Returns an enumerator that iterates through the collection.
-    /// </summary>
-    /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-    public override IEnumerator<T> GetEnumerator() => this.stack.GetEnumerator();
-
-    /// <summary>
     ///     Pops an item in the stack.
     /// </summary>
     /// <returns>T.</returns>
@@ -138,6 +132,12 @@ internal class StackCollectionAdapter<T> : CollectionAdapter<T>
     ///     Trims the excess space in the stack.
     /// </summary>
     public void TrimExcess() => this.stack.TrimExcess();
+
+    /// <summary>
+    ///     Returns an enumerator that iterates through the collection.
+    /// </summary>
+    /// <returns>An enumerator that can be used to iterate through the collection.</returns>
+    protected override System.Collections.Generic.Stack<T>.Enumerator GetEnumerator() => this.stack.GetEnumerator();
 
 #endregion
 }

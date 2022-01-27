@@ -3,18 +3,25 @@
 // </copyright>
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using IX.StandardExtensions.Threading;
 
 namespace IX.Observable.Adapters;
 
+/// <summary>
+///     A collection adapter for a dictionary.
+/// </summary>
+/// <typeparam name="TKey">The type of key in the dictionary.</typeparam>
+/// <typeparam name="TValue">The type of value in the dictionary.</typeparam>
+/// <seealso cref="ModernCollectionAdapter{TItem, TEnumerator}" />
 [CollectionDataContract(
     Namespace = Constants.DataContractNamespace,
     Name = "DictionaryCollectionAdapterOf{1}By{0}",
     ItemName = "Item",
     KeyName = "Key",
     ValueName = "Value")]
-internal class DictionaryCollectionAdapter<TKey, TValue> : CollectionAdapter<KeyValuePair<TKey, TValue>>,
+internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapter<KeyValuePair<TKey, TValue>, Dictionary<TKey, TValue>.Enumerator>,
     IDictionaryCollectionAdapter<TKey, TValue>
     where TKey : notnull
 {
@@ -31,7 +38,7 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : CollectionAdapter<Key
         this.dictionary = new Dictionary<TKey, TValue>();
     }
 
-    internal DictionaryCollectionAdapter(Dictionary<TKey, TValue> dictionary)
+    internal DictionaryCollectionAdapter(IDictionary<TKey, TValue> dictionary)
     {
         this.dictionary = new Dictionary<TKey, TValue>(dictionary);
     }
@@ -62,12 +69,12 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : CollectionAdapter<Key
 
     public override void Clear()
     {
-        Dictionary<TKey, TValue> tempdict = this.dictionary;
+        Dictionary<TKey, TValue> tempDictionary = this.dictionary;
         this.dictionary = new Dictionary<TKey, TValue>();
 
         _ = Work.OnThreadPoolAsync(
             oldDictionary => oldDictionary.Clear(),
-            tempdict);
+            tempDictionary);
     }
 
     public override bool Contains(KeyValuePair<TKey, TValue> item) =>
@@ -98,12 +105,21 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : CollectionAdapter<Key
 
     public bool Remove(TKey item) => this.dictionary.Remove(item);
 
+    #if NET50_OR_GREATER
+    public bool TryGetValue(
+        TKey key,
+        [MaybeNullWhen(false)] out TValue value) =>
+        this.dictionary.TryGetValue(
+            key,
+            out value);
+    #else
     public bool TryGetValue(
         TKey key,
         out TValue value) =>
         this.dictionary.TryGetValue(
             key,
             out value);
+    #endif
 
     public int Add(
         TKey key,
@@ -116,8 +132,6 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : CollectionAdapter<Key
         return -1;
     }
 
-    public override IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => this.dictionary.GetEnumerator();
-
     void IDictionary<TKey, TValue>.Add(
         TKey key,
         TValue value) =>
@@ -126,6 +140,8 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : CollectionAdapter<Key
             value);
 
 #endregion
+
+    protected override Dictionary<TKey, TValue>.Enumerator GetEnumerator() => this.dictionary.GetEnumerator();
 
 #endregion
 }
