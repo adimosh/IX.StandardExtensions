@@ -7,59 +7,58 @@ using System.Diagnostics;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
-namespace IX.Observable.DebugAide
+namespace IX.Observable.DebugAide;
+
+/// <summary>
+///     A debug view class for an observable stack.
+/// </summary>
+/// <typeparam name="T">The type of object in the stack.</typeparam>
+[UsedImplicitly]
+public sealed class StackDebugView<T>
 {
-    /// <summary>
-    ///     A debug view class for an observable stack.
-    /// </summary>
-    /// <typeparam name="T">The type of object in the stack.</typeparam>
-    [UsedImplicitly]
-    public sealed class StackDebugView<T>
-    {
 #region Internal state
 
-        private readonly ObservableStack<T> stack;
+    private readonly ObservableStack<T> stack;
 
 #endregion
 
 #region Constructors and destructors
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="StackDebugView{T}" /> class.
-        /// </summary>
-        /// <param name="stack">The stack.</param>
-        /// <exception cref="ArgumentNullException">stack is null.</exception>
-        [UsedImplicitly]
-        public StackDebugView(ObservableStack<T> stack)
-        {
-            Requires.NotNull(out this.stack, stack);
-        }
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="StackDebugView{T}" /> class.
+    /// </summary>
+    /// <param name="stack">The stack.</param>
+    /// <exception cref="ArgumentNullException">stack is null.</exception>
+    [UsedImplicitly]
+    public StackDebugView(ObservableStack<T> stack)
+    {
+        Requires.NotNull(out this.stack, stack);
+    }
 
 #endregion
 
 #region Properties and indexers
 
-        /// <summary>
-        ///     Gets the items.
-        /// </summary>
-        /// <value>
-        ///     The items.
-        /// </value>
-        [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-        [UsedImplicitly]
-        public T[] Items
+    /// <summary>
+    ///     Gets the items.
+    /// </summary>
+    /// <value>
+    ///     The items.
+    /// </value>
+    [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+    [UsedImplicitly]
+    public T[] Items
+    {
+        get
         {
-            get
-            {
-                var items = new T[this.stack.InternalContainer.Count];
-                this.stack.InternalContainer.CopyTo(
-                    items,
-                    0);
+            var items = new T[this.stack.InternalContainer.Count];
+            this.stack.InternalContainer.CopyTo(
+                items,
+                0);
 
-                return items;
-            }
+            return items;
         }
+    }
 
 #endregion
-    }
 }

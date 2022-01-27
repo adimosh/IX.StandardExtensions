@@ -9,160 +9,158 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using IX.StandardExtensions.Extensions;
 
-namespace IX.Observable.Adapters
-{
+namespace IX.Observable.Adapters;
 #pragma warning disable HAA0401 // Possible allocation of reference type enumerator - Unavoidable right now
-    internal class MultiListListAdapter<T> : ListAdapter<T>
-    {
+internal class MultiListListAdapter<T> : ListAdapter<T>
+{
 #region Internal state
 
-        private readonly List<IEnumerable<T>> lists;
+    private readonly List<IEnumerable<T>> lists;
 
 #endregion
 
 #region Constructors and destructors
 
-        internal MultiListListAdapter()
-        {
-            this.lists = new List<IEnumerable<T>>();
-        }
+    internal MultiListListAdapter()
+    {
+        this.lists = new List<IEnumerable<T>>();
+    }
 
 #endregion
 
 #region Properties and indexers
 
-        public override int Count => this.lists.Sum(p => p.Count());
+    public override int Count => this.lists.Sum(p => p.Count());
 
-        public override bool IsReadOnly => true;
+    public override bool IsReadOnly => true;
 
-        public int SlavesCount => this.lists.Count;
+    public int SlavesCount => this.lists.Count;
 
-        public override T this[int index]
+    public override T this[int index]
+    {
+        get
         {
-            get
+            var idx = index;
+
+            foreach (IEnumerable<T> list in this.lists)
             {
-                var idx = index;
-
-                foreach (IEnumerable<T> list in this.lists)
+                var count = list.Count();
+                if (count > idx)
                 {
-                    var count = list.Count();
-                    if (count > idx)
-                    {
-                        return list.ElementAt(idx);
-                    }
-
-                    idx -= count;
+                    return list.ElementAt(idx);
                 }
 
-                throw new IndexOutOfRangeException();
+                idx -= count;
             }
 
-            set => throw new InvalidOperationException();
+            throw new IndexOutOfRangeException();
         }
+
+        set => throw new InvalidOperationException();
+    }
 
 #endregion
 
 #region Methods
 
-        public override int Add(T item) => throw new InvalidOperationException();
+    public override int Add(T item) => throw new InvalidOperationException();
 
-        public override int AddRange(IEnumerable<T> items) => throw new InvalidOperationException();
+    public override int AddRange(IEnumerable<T> items) => throw new InvalidOperationException();
 
-        public override void Clear() => throw new InvalidOperationException();
+    public override void Clear() => throw new InvalidOperationException();
 
-        public override bool Contains(T item) =>
-            this.lists.Any(
-                (
-                    p,
-                    itemL1) => p.Contains(itemL1),
-                item);
+    public override bool Contains(T item) =>
+        this.lists.Any(
+            (
+                p,
+                itemL1) => p.Contains(itemL1),
+            item);
 
-        public override void CopyTo(
-            T[] array,
-            int arrayIndex)
+    public override void CopyTo(
+        T[] array,
+        int arrayIndex)
+    {
+        var totalCount = this.Count + arrayIndex;
+        using IEnumerator<T> enumerator = this.GetEnumerator();
+        for (var i = arrayIndex; i < totalCount; i++)
         {
-            var totalCount = this.Count + arrayIndex;
-            using IEnumerator<T> enumerator = this.GetEnumerator();
-            for (var i = arrayIndex; i < totalCount; i++)
+            if (!enumerator.MoveNext())
             {
-                if (!enumerator.MoveNext())
-                {
-                    break;
-                }
-
-                array[i] = enumerator.Current;
-            }
-        }
-
-        public override IEnumerator<T> GetEnumerator()
-        {
-            foreach (IEnumerable<T> lst in this.lists)
-            {
-                foreach (T var in lst)
-                {
-                    yield return var;
-                }
-            }
-        }
-
-        public override int Remove(T item) => throw new InvalidOperationException();
-
-        public override void Insert(
-            int index,
-            T item) =>
-            throw new InvalidOperationException();
-
-        public override int IndexOf(T item)
-        {
-            var offset = 0;
-
-            foreach (List<T> list in this.lists.Select(p => p.ToList()))
-            {
-                int foundIndex;
-                if ((foundIndex = list.IndexOf(item)) != -1)
-                {
-                    return foundIndex + offset;
-                }
-
-                offset += list.Count;
+                break;
             }
 
-            return -1;
+            array[i] = enumerator.Current;
         }
+    }
 
-        public override void RemoveAt(int index) => throw new InvalidOperationException();
-
-        internal void SetList<TList>(TList list)
-            where TList : class, IEnumerable<T>, INotifyCollectionChanged
+    public override IEnumerator<T> GetEnumerator()
+    {
+        foreach (IEnumerable<T> lst in this.lists)
         {
-            this.lists.Add(list ?? throw new ArgumentNullException(nameof(list)));
-            list.CollectionChanged += this.List_CollectionChanged;
+            foreach (T var in lst)
+            {
+                yield return var;
+            }
         }
+    }
 
-        [SuppressMessage(
-            "ReSharper",
-            "EmptyGeneralCatchClause",
-            Justification = "This is of no consequence.")]
-        internal void RemoveList<TList>(TList list)
-            where TList : class, IEnumerable<T>, INotifyCollectionChanged
+    public override int Remove(T item) => throw new InvalidOperationException();
+
+    public override void Insert(
+        int index,
+        T item) =>
+        throw new InvalidOperationException();
+
+    public override int IndexOf(T item)
+    {
+        var offset = 0;
+
+        foreach (List<T> list in this.lists.Select(p => p.ToList()))
         {
-            try
+            int foundIndex;
+            if ((foundIndex = list.IndexOf(item)) != -1)
             {
-                list.CollectionChanged -= this.List_CollectionChanged;
-            }
-            catch
-            {
+                return foundIndex + offset;
             }
 
-            this.lists.Remove(list ?? throw new ArgumentNullException(nameof(list)));
+            offset += list.Count;
         }
 
-        private void List_CollectionChanged(
-            object? sender,
-            NotifyCollectionChangedEventArgs e) =>
-            this.TriggerReset();
+        return -1;
+    }
+
+    public override void RemoveAt(int index) => throw new InvalidOperationException();
+
+    internal void SetList<TList>(TList list)
+        where TList : class, IEnumerable<T>, INotifyCollectionChanged
+    {
+        this.lists.Add(list ?? throw new ArgumentNullException(nameof(list)));
+        list.CollectionChanged += this.List_CollectionChanged;
+    }
+
+    [SuppressMessage(
+        "ReSharper",
+        "EmptyGeneralCatchClause",
+        Justification = "This is of no consequence.")]
+    internal void RemoveList<TList>(TList list)
+        where TList : class, IEnumerable<T>, INotifyCollectionChanged
+    {
+        try
+        {
+            list.CollectionChanged -= this.List_CollectionChanged;
+        }
+        catch
+        {
+        }
+
+        this.lists.Remove(list ?? throw new ArgumentNullException(nameof(list)));
+    }
+
+    private void List_CollectionChanged(
+        object? sender,
+        NotifyCollectionChangedEventArgs e) =>
+        this.TriggerReset();
 
 #endregion
-    }
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
 }
+#pragma warning restore HAA0401 // Possible allocation of reference type enumerator

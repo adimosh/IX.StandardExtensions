@@ -4,13 +4,12 @@
 
 using JetBrains.Annotations;
 
-namespace IX.StandardExtensions.Contracts
+namespace IX.StandardExtensions.Contracts;
+
+/// <summary>
+/// Extensions for various objects that might aid with contract-based validation.
+/// </summary>
+[PublicAPI]
+public static partial class RequiresExtensions
 {
-    /// <summary>
-    /// Extensions for various objects that might aid with contract-based validation.
-    /// </summary>
-    [PublicAPI]
-    public static partial class RequiresExtensions
-    {
-    }
 }

@@ -5,34 +5,33 @@
 using System;
 using JetBrains.Annotations;
 
-namespace IX.Observable
+namespace IX.Observable;
+
+/// <summary>
+///     Event arguments for an exception that occurs during notification.
+/// </summary>
+[PublicAPI]
+public class ExceptionOccurredEventArgs : EventArgs
 {
-    /// <summary>
-    ///     Event arguments for an exception that occurs during notification.
-    /// </summary>
-    [PublicAPI]
-    public class ExceptionOccurredEventArgs : EventArgs
-    {
 #region Constructors and destructors
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="ExceptionOccurredEventArgs" /> class.
-        /// </summary>
-        /// <param name="exception">The exception that has occurred.</param>
-        public ExceptionOccurredEventArgs(Exception exception)
-        {
-            this.Exception = exception;
-        }
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ExceptionOccurredEventArgs" /> class.
+    /// </summary>
+    /// <param name="exception">The exception that has occurred.</param>
+    public ExceptionOccurredEventArgs(Exception exception)
+    {
+        this.Exception = exception;
+    }
 
 #endregion
 
 #region Properties and indexers
 
-        /// <summary>
-        ///     Gets the exception that has occurred.
-        /// </summary>
-        public Exception Exception { get; private set; }
+    /// <summary>
+    ///     Gets the exception that has occurred.
+    /// </summary>
+    public Exception Exception { get; private set; }
 
 #endregion
-    }
 }

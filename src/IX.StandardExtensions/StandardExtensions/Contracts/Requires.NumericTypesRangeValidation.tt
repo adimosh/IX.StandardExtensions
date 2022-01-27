@@ -11,13 +11,13 @@
 
 using System.Runtime.CompilerServices;
 
-namespace IX.StandardExtensions.Contracts
-{
-    /// <summary>
-    ///     Methods for approximating the works of contract-oriented programming.
-    /// </summary>
-    public static partial class Requires
-    {<#
+namespace IX.StandardExtensions.Contracts;
+
+/// <summary>
+///     Methods for approximating the works of contract-oriented programming.
+/// </summary>
+public static partial class Requires
+{<#
 /* STAGE DESCRIPTION:
  * 1. Requires.InRange
  * 2. Requires.NotInRange
@@ -36,96 +36,96 @@ for (int i = 0; i < types.Length; i++)
     bool isNotInRange = (stage == 2 || stage == 4);
 #>
 
-        /// <summary>
-        ///     Called when a <#= isReferencing ? "field initialization" : "contract" #> requires that a numeric argument of type <see cref="<#= fullTypeName #>" /> is
+    /// <summary>
+    ///     Called when a <#= isReferencing ? "field initialization" : "contract" #> requires that a numeric argument of type <see cref="<#= fullTypeName #>" /> is
 <#
         if (isNotInRange)
         {
 #>
-        ///     not located within an undesired range.
+    ///     not located within an undesired range.
 <#
         }
         else
         {
 #>
-        ///     located within a desired range.
+    ///     located within a desired range.
 <#
         }
 #>
-        /// </summary>
+    /// </summary>
 <#
         if (isReferencing)
         {
 #>
-        /// <param name="field">
-        ///     The field that the argument is initializing.
-        /// </param>
+    /// <param name="field">
+    ///     The field that the argument is initializing.
+    /// </param>
 <#
         }
 #>
-        /// <param name="argument">
-        ///     The numeric argument.
-        /// </param>
-        /// <param name="lowerBound">
-        ///     The lower bound of the range to validate against. Must be less than or equal to <paramref name="upperBound" />.
-        /// </param>
-        /// <param name="upperBound">
-        ///     The upper bound of the range to validate against. Must be greater than or equal to <paramref name="lowerBound" />.
-        /// </param>
-        /// <param name="argumentName">
-        ///     The argument name.
-        /// </param>
-        /// <exception cref="Argument<#= (!isNotInRange) ? "NotInRange" : "InRange" #>Exception">
+    /// <param name="argument">
+    ///     The numeric argument.
+    /// </param>
+    /// <param name="lowerBound">
+    ///     The lower bound of the range to validate against. Must be less than or equal to <paramref name="upperBound" />.
+    /// </param>
+    /// <param name="upperBound">
+    ///     The upper bound of the range to validate against. Must be greater than or equal to <paramref name="lowerBound" />.
+    /// </param>
+    /// <param name="argumentName">
+    ///     The argument name.
+    /// </param>
+    /// <exception cref="Argument<#= (!isNotInRange) ? "NotInRange" : "InRange" #>Exception">
 <#
         if (isNotInRange)
         {
 #>
-        ///     The argument is not within the desired range.
+    ///     The argument is not within the desired range.
 <#
         }
         else
         {
 #>
-        ///     The argument is within the undesired range.
+    ///     The argument is within the undesired range.
 <#
         }
 #>
-        /// </exception>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void <#= isNotInRange ? "NotInRange" : "InRange" #>(
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void <#= isNotInRange ? "NotInRange" : "InRange" #>(
 <#
         if (isReferencing)
         {
 #>
-            out <#= fullTypeName #> field,
+        out <#= fullTypeName #> field,
 <#
         }
 #>
-            in <#= fullTypeName #> argument,
-            in <#= fullTypeName #> lowerBound,
-            in <#= fullTypeName #> upperBound,
-            [CallerArgumentExpression("argument")]
-            string argumentName = "argument")
+        in <#= fullTypeName #> argument,
+        in <#= fullTypeName #> lowerBound,
+        in <#= fullTypeName #> upperBound,
+        [CallerArgumentExpression("argument")]
+        string argumentName = "argument")
+    {
+        if (lowerBound > upperBound)
         {
-            if (lowerBound > upperBound)
-            {
-                throw new ArgumentNotLessThanOrEqualToException(nameof(lowerBound));
-            }
+            throw new ArgumentNotLessThanOrEqualToException(nameof(lowerBound));
+        }
 
-            if (argument <#= (!isNotInRange) ? "<" : ">=" #> lowerBound || argument <#= (!isNotInRange) ? ">" : "<=" #> upperBound)
-            {
-                throw new Argument<#= (!isNotInRange) ? "NotInRange" : "InRange" #>Exception(argumentName);
-            }
+        if (argument <#= (!isNotInRange) ? "<" : ">=" #> lowerBound || argument <#= (!isNotInRange) ? ">" : "<=" #> upperBound)
+        {
+            throw new Argument<#= (!isNotInRange) ? "NotInRange" : "InRange" #>Exception(argumentName);
+        }
 <#
         if (isReferencing)
         {
 #>
 
-            field = argument;
+        field = argument;
 <#
         }
 #>
-        }
+    }
 <#
 
     stage++;
@@ -139,5 +139,4 @@ for (int i = 0; i < types.Length; i++)
     }
 }
 #>
-    }
 }

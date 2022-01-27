@@ -5,15 +5,14 @@
 using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
 
-namespace IX.Observable.StateChanges
-{
-    /// <summary>
-    ///     An undo step for when some items were removed.
-    /// </summary>
-    /// <typeparam name="T">The type of items.</typeparam>
-    /// <seealso cref="StateChangeBase" />
-    [PublicAPI]
-    public record RemoveMultipleStateChange<T>(
-        int[] Indexes,
-        T[] RemovedItems) : StateChangeBase;
-}
+namespace IX.Observable.StateChanges;
+
+/// <summary>
+///     An undo step for when some items were removed.
+/// </summary>
+/// <typeparam name="T">The type of items.</typeparam>
+/// <seealso cref="StateChangeBase" />
+[PublicAPI]
+public record RemoveMultipleStateChange<T>(
+    int[] Indexes,
+    T[] RemovedItems) : StateChangeBase;

@@ -10,162 +10,161 @@ using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 using IX.Undoable;
 
-namespace IX.Observable
+namespace IX.Observable;
+
+/// <summary>
+///     An auto-capturing class that captures in a transaction.
+/// </summary>
+/// <seealso cref="IX.Guaranteed.OperationTransaction" />
+internal class AutoCaptureTransactionContext : OperationTransaction
 {
-    /// <summary>
-    ///     An auto-capturing class that captures in a transaction.
-    /// </summary>
-    /// <seealso cref="IX.Guaranteed.OperationTransaction" />
-    internal class AutoCaptureTransactionContext : OperationTransaction
-    {
 #region Internal state
 
-        private readonly EventHandler<EditCommittedEventArgs>? editableHandler;
-        private readonly IUndoableItem? item;
-        private readonly IUndoableItem[]? items;
+    private readonly EventHandler<EditCommittedEventArgs>? editableHandler;
+    private readonly IUndoableItem? item;
+    private readonly IUndoableItem[]? items;
 
 #endregion
 
 #region Constructors and destructors
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="AutoCaptureTransactionContext" /> class.
-        /// </summary>
-        public AutoCaptureTransactionContext()
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="AutoCaptureTransactionContext" /> class.
+    /// </summary>
+    public AutoCaptureTransactionContext()
+    {
+        this.Success();
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="AutoCaptureTransactionContext" /> class.
+    /// </summary>
+    /// <param name="item">The item.</param>
+    /// <param name="parentContext">The parent context.</param>
+    /// <param name="editableHandler">The editable handler.</param>
+    public AutoCaptureTransactionContext(
+        IUndoableItem item,
+        IUndoableItem parentContext,
+        EventHandler<EditCommittedEventArgs> editableHandler)
+    {
+        // Contract validation
+        Requires.NotNull(
+            out this.item,
+            item);
+        Requires.NotNull(
+            parentContext);
+        Requires.NotNull(
+            out this.editableHandler,
+            editableHandler);
+
+        // Data validation
+        if (item.IsCapturedIntoUndoContext && item.ParentUndoContext != parentContext)
         {
-            this.Success();
+            throw new ItemAlreadyCapturedIntoUndoContextException();
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="AutoCaptureTransactionContext" /> class.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <param name="parentContext">The parent context.</param>
-        /// <param name="editableHandler">The editable handler.</param>
-        public AutoCaptureTransactionContext(
-            IUndoableItem item,
-            IUndoableItem parentContext,
-            EventHandler<EditCommittedEventArgs> editableHandler)
+        // State
+        this.items = null;
+
+        item.CaptureIntoUndoContext(parentContext);
+
+        if (item is IEditCommittableItem tei)
         {
-            // Contract validation
-            Requires.NotNull(
-                out this.item,
-                item);
-            Requires.NotNull(
-                parentContext);
-            Requires.NotNull(
-                out this.editableHandler,
-                editableHandler);
-
-            // Data validation
-            if (item.IsCapturedIntoUndoContext && item.ParentUndoContext != parentContext)
-            {
-                throw new ItemAlreadyCapturedIntoUndoContextException();
-            }
-
-            // State
-            this.items = null;
-
-            item.CaptureIntoUndoContext(parentContext);
-
-            if (item is IEditCommittableItem tei)
-            {
-                tei.EditCommitted += editableHandler;
-            }
-
-            this.AddFailure();
+            tei.EditCommitted += editableHandler;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="AutoCaptureTransactionContext" /> class.
-        /// </summary>
-        /// <param name="items">The items.</param>
-        /// <param name="parentContext">The parent context.</param>
-        /// <param name="editableHandler">The editable handler.</param>
-        public AutoCaptureTransactionContext(
-            IEnumerable<IUndoableItem> items,
-            IUndoableItem parentContext,
-            EventHandler<EditCommittedEventArgs> editableHandler)
-        {
-            // Contract validation
-            Requires.NotNull(
-                items);
-            Requires.NotNull(
-                parentContext);
-            Requires.NotNull(
-                out this.editableHandler,
-                editableHandler);
+        this.AddFailure();
+    }
 
-            // Data validation
-            // Multiple enumeration warning: this has to be done, as there is no efficient way to do a transactional capturing otherwise
-            IUndoableItem[] itemsArray = items.ToArray();
-            if (itemsArray.Any(
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="AutoCaptureTransactionContext" /> class.
+    /// </summary>
+    /// <param name="items">The items.</param>
+    /// <param name="parentContext">The parent context.</param>
+    /// <param name="editableHandler">The editable handler.</param>
+    public AutoCaptureTransactionContext(
+        IEnumerable<IUndoableItem> items,
+        IUndoableItem parentContext,
+        EventHandler<EditCommittedEventArgs> editableHandler)
+    {
+        // Contract validation
+        Requires.NotNull(
+            items);
+        Requires.NotNull(
+            parentContext);
+        Requires.NotNull(
+            out this.editableHandler,
+            editableHandler);
+
+        // Data validation
+        // Multiple enumeration warning: this has to be done, as there is no efficient way to do a transactional capturing otherwise
+        IUndoableItem[] itemsArray = items.ToArray();
+        if (itemsArray.Any(
                 (
                     internalItem,
                     pc) => internalItem.IsCapturedIntoUndoContext && internalItem.ParentUndoContext != pc,
                 parentContext))
-            {
-                throw new ItemAlreadyCapturedIntoUndoContextException();
-            }
-
-            // State
-            this.items = itemsArray;
-            this.item = null;
-
-            foreach (IUndoableItem undoableItem in itemsArray)
-            {
-                undoableItem.CaptureIntoUndoContext(parentContext);
-
-                if (undoableItem is IEditCommittableItem tei)
-                {
-                    tei.EditCommitted += editableHandler;
-                }
-            }
-
-            this.AddFailure();
+        {
+            throw new ItemAlreadyCapturedIntoUndoContextException();
         }
+
+        // State
+        this.items = itemsArray;
+        this.item = null;
+
+        foreach (IUndoableItem undoableItem in itemsArray)
+        {
+            undoableItem.CaptureIntoUndoContext(parentContext);
+
+            if (undoableItem is IEditCommittableItem tei)
+            {
+                tei.EditCommitted += editableHandler;
+            }
+        }
+
+        this.AddFailure();
+    }
 
 #endregion
 
 #region Methods
 
-        /// <summary>
-        ///     Gets invoked when the transaction commits and is successful.
-        /// </summary>
-        protected override void WhenSuccessful() { }
+    /// <summary>
+    ///     Gets invoked when the transaction commits and is successful.
+    /// </summary>
+    protected override void WhenSuccessful() { }
 
-        private void AddFailure() =>
-            this.AddRevertStep(
-                state =>
+    private void AddFailure() =>
+        this.AddRevertStep(
+            state =>
+            {
+                var thisL1 = (AutoCaptureTransactionContext)state;
+                if (thisL1.item != null)
                 {
-                    var thisL1 = (AutoCaptureTransactionContext)state;
-                    if (thisL1.item != null)
+                    thisL1.item.ReleaseFromUndoContext();
+
+                    if (thisL1.item is IEditCommittableItem tei)
                     {
-                        thisL1.item.ReleaseFromUndoContext();
-
-                        if (thisL1.item is IEditCommittableItem tei)
-                        {
-                            tei.EditCommitted -= thisL1.editableHandler;
-                        }
+                        tei.EditCommitted -= thisL1.editableHandler;
                     }
+                }
 
-                    if (thisL1.items == null)
+                if (thisL1.items == null)
+                {
+                    return;
+                }
+
+                foreach (IUndoableItem undoableItem in thisL1.items)
+                {
+                    undoableItem.ReleaseFromUndoContext();
+
+                    if (thisL1.item is IEditCommittableItem tei)
                     {
-                        return;
+                        tei.EditCommitted -= thisL1.editableHandler;
                     }
-
-                    foreach (IUndoableItem undoableItem in thisL1.items)
-                    {
-                        undoableItem.ReleaseFromUndoContext();
-
-                        if (thisL1.item is IEditCommittableItem tei)
-                        {
-                            tei.EditCommitted -= thisL1.editableHandler;
-                        }
-                    }
-                },
-                this);
+                }
+            },
+            this);
 
 #endregion
-    }
 }

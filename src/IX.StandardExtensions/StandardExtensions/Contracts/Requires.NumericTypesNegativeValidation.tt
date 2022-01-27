@@ -11,13 +11,13 @@
 
 using System.Runtime.CompilerServices;
 
-namespace IX.StandardExtensions.Contracts
-{
-    /// <summary>
-    ///     Methods for approximating the works of contract-oriented programming.
-    /// </summary>
-    public static partial class Requires
-    {<#
+namespace IX.StandardExtensions.Contracts;
+
+/// <summary>
+///     Methods for approximating the works of contract-oriented programming.
+/// </summary>
+public static partial class Requires
+{<#
 /* STAGE DESCRIPTION:
  * 1. Requires.Negative
  * 2. Requires.NonPositive
@@ -40,89 +40,89 @@ for (int i = 0; i < types.Length; i++)
     {
 #>
 
-        /// <summary>
-        ///     Called when a <#= isReferencing ? "field initialization" : "contract" #> requires that a numeric argument of type <see cref="<#= fullTypeName #>" /> is
+    /// <summary>
+    ///     Called when a <#= isReferencing ? "field initialization" : "contract" #> requires that a numeric argument of type <see cref="<#= fullTypeName #>" /> is
 <#
         if (isNonNegative)
         {
 #>
-        ///     non-positive (less than or equal to zero).
+    ///     non-positive (less than or equal to zero).
 <#
         }
         else
         {
 #>
-        ///     negative (less than zero).
+    ///     negative (less than zero).
 <#
         }
 #>
-        /// </summary>
+    /// </summary>
 <#
         if (isReferencing)
         {
 #>
-        /// <param name="field">
-        ///     The field that the argument is initializing.
-        /// </param>
+    /// <param name="field">
+    ///     The field that the argument is initializing.
+    /// </param>
 <#
         }
 #>
-        /// <param name="argument">
-        ///     The numeric argument.
-        /// </param>
-        /// <param name="argumentName">
-        ///     The argument name.
-        /// </param>
-        /// <exception cref="ArgumentNotPositive<#= isInteger ? "Integer" : string.Empty #>Exception">
+    /// <param name="argument">
+    ///     The numeric argument.
+    /// </param>
+    /// <param name="argumentName">
+    ///     The argument name.
+    /// </param>
+    /// <exception cref="ArgumentNotPositive<#= isInteger ? "Integer" : string.Empty #>Exception">
 <#
         if (isTypeUnsigned)
         {
 #>
-        ///     The argument is equal to 0.
+    ///     The argument is equal to 0.
 <#
         }
         else if (isNonNegative)
         {
 #>
-        ///     The argument is less than 0.
+    ///     The argument is less than 0.
 <#
         }
         else
         {
 #>
-        ///     The argument is less than or equal to 0.
+    ///     The argument is less than or equal to 0.
 <#
         }
 #>
-        /// </exception>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void <#= isNonNegative ? "NonPositive" : "Negative" #>(
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void <#= isNonNegative ? "NonPositive" : "Negative" #>(
 <#
         if (isReferencing)
         {
 #>
-            out <#= fullTypeName #> field,
+        out <#= fullTypeName #> field,
 <#
         }
 #>
-            in <#= fullTypeName #> argument,
-            [CallerArgumentExpression("argument")]
-            string argumentName = "argument")
+        in <#= fullTypeName #> argument,
+        [CallerArgumentExpression("argument")]
+        string argumentName = "argument")
+    {
+        if (argument <#= isTypeUnsigned ? "==" : (isNonNegative ? "<" : "<=") #> 0)
         {
-            if (argument <#= isTypeUnsigned ? "==" : (isNonNegative ? "<" : "<=") #> 0)
-            {
-                throw new ArgumentNotNegative<#= isInteger ? "Integer" : string.Empty #>Exception(argumentName);
-            }
+            throw new ArgumentNotNegative<#= isInteger ? "Integer" : string.Empty #>Exception(argumentName);
+        }
 <#
         if (isReferencing)
         {
 #>
 
-            field = argument;
+        field = argument;
 <#
         }
 #>
-        }
+    }
 <#
     }
 
@@ -137,5 +137,4 @@ for (int i = 0; i < types.Length; i++)
     }
 }
 #>
-    }
 }

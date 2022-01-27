@@ -11,13 +11,13 @@
 
 using System.Runtime.CompilerServices;
 
-namespace IX.StandardExtensions.Contracts
-{
-    /// <summary>
-    ///     Methods for approximating the works of contract-oriented programming.
-    /// </summary>
-    public static partial class Requires
-    {<#
+namespace IX.StandardExtensions.Contracts;
+
+/// <summary>
+///     Methods for approximating the works of contract-oriented programming.
+/// </summary>
+public static partial class Requires
+{<#
 /* STAGE DESCRIPTION:
  * 1. Requires.LessThan
  * 2. Requires.LessThanOrEqualTo
@@ -40,21 +40,21 @@ for (int i = 0; i < types.Length; i++)
     bool isEqual = (stage % 2 == 0);
 #>
 
-        /// <summary>
-        ///     Called when a <#= isReferencing ? "field initialization" : "contract" #> requires that a numeric argument of type <see cref="<#= fullTypeName #>" /> is
+    /// <summary>
+    ///     Called when a <#= isReferencing ? "field initialization" : "contract" #> requires that a numeric argument of type <see cref="<#= fullTypeName #>" /> is
 <#
         if (lessThan)
         {
             if (isEqual)
             {
 #>
-        ///     less than or equal to a desired value.
+    ///     less than or equal to a desired value.
 <#
             }
             else
             {
 #>
-        ///     less than a desired value.
+    ///     less than a desired value.
 <#
             }
         }
@@ -63,51 +63,51 @@ for (int i = 0; i < types.Length; i++)
             if (isEqual)
             {
 #>
-        ///     greater than or equal to a desired value.
+    ///     greater than or equal to a desired value.
 <#
             }
             else
             {
 #>
-        ///     greater than a desired value.
+    ///     greater than a desired value.
 <#
             }
         }
 #>
-        /// </summary>
+    /// </summary>
 <#
         if (isReferencing)
         {
 #>
-        /// <param name="field">
-        ///     The field that the argument is initializing.
-        /// </param>
+    /// <param name="field">
+    ///     The field that the argument is initializing.
+    /// </param>
 <#
         }
 #>
-        /// <param name="argument">
-        ///     The numeric argument.
-        /// </param>
-        /// <param name="desiredComparisonValue">
-        ///     The desired comparison value.
-        /// </param>
-        /// <param name="argumentName">
-        ///     The argument name.
-        /// </param>
-        /// <exception cref="ArgumentNot<#= lessThan ? "LessThan" : "GreaterThan" #><#= isEqual ? "OrEqualTo" : string.Empty #>Exception">
+    /// <param name="argument">
+    ///     The numeric argument.
+    /// </param>
+    /// <param name="desiredComparisonValue">
+    ///     The desired comparison value.
+    /// </param>
+    /// <param name="argumentName">
+    ///     The argument name.
+    /// </param>
+    /// <exception cref="ArgumentNot<#= lessThan ? "LessThan" : "GreaterThan" #><#= isEqual ? "OrEqualTo" : string.Empty #>Exception">
 <#
         if (lessThan)
         {
             if (isEqual)
             {
 #>
-        ///     The argument is not less than or equal to the desired comparison value.
+    ///     The argument is not less than or equal to the desired comparison value.
 <#
             }
             else
             {
 #>
-        ///     The argument is not less than to the desired comparison value.
+    ///     The argument is not less than to the desired comparison value.
 <#
             }
         }
@@ -116,47 +116,47 @@ for (int i = 0; i < types.Length; i++)
             if (isEqual)
             {
 #>
-        ///     The argument is not greater than or equal to the desired comparison value.
+    ///     The argument is not greater than or equal to the desired comparison value.
 <#
             }
             else
             {
 #>
-        ///     The argument is not greater than to the desired comparison value.
+    ///     The argument is not greater than to the desired comparison value.
 <#
             }
         }
 #>
-        /// </exception>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void <#= lessThan ? "LessThan" : "GreaterThan" #><#= isEqual ? "OrEqualTo" : string.Empty #>(
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void <#= lessThan ? "LessThan" : "GreaterThan" #><#= isEqual ? "OrEqualTo" : string.Empty #>(
 <#
         if (isReferencing)
         {
 #>
-            out <#= fullTypeName #> field,
+        out <#= fullTypeName #> field,
 <#
         }
 #>
-            in <#= fullTypeName #> argument,
-            in <#= fullTypeName #> desiredComparisonValue,
-            [CallerArgumentExpression("argument")]
-            string argumentName = "argument")
+        in <#= fullTypeName #> argument,
+        in <#= fullTypeName #> desiredComparisonValue,
+        [CallerArgumentExpression("argument")]
+        string argumentName = "argument")
+    {
+        if (argument <#= lessThan ? ">" : "<" #><#= isEqual ? string.Empty : "=" #> desiredComparisonValue)
         {
-            if (argument <#= lessThan ? ">" : "<" #><#= isEqual ? string.Empty : "=" #> desiredComparisonValue)
-            {
-                throw new ArgumentNot<#= lessThan ? "LessThan" : "GreaterThan" #><#= isEqual ? "OrEqualTo" : string.Empty #>Exception(argumentName);
-            }
+            throw new ArgumentNot<#= lessThan ? "LessThan" : "GreaterThan" #><#= isEqual ? "OrEqualTo" : string.Empty #>Exception(argumentName);
+        }
 <#
         if (isReferencing)
         {
 #>
 
-            field = argument;
+        field = argument;
 <#
         }
 #>
-        }
+    }
 <#
 
     stage++;
@@ -170,5 +170,4 @@ for (int i = 0; i < types.Length; i++)
     }
 }
 #>
-    }
 }

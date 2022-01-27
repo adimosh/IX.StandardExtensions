@@ -5,15 +5,15 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace IX.StandardExtensions.Efficiency
+namespace IX.StandardExtensions.Efficiency;
+
+[SuppressMessage(
+    "StyleCop.CSharp.DocumentationRules",
+    "SA1601:Partial elements should be documented",
+    Justification = "This conflicts with how XML documentation works.")]
+public partial class ConcurrentDictionary<TKey, TValue>
 {
-    [SuppressMessage(
-        "StyleCop.CSharp.DocumentationRules",
-        "SA1601:Partial elements should be documented",
-        Justification = "This conflicts with how XML documentation works.")]
-    public partial class ConcurrentDictionary<TKey, TValue>
-    {
-        #if !FRAMEWORK_ADVANCED && !FRAMEWORK_GT_471
+    #if !FRAMEWORK_ADVANCED && !FRAMEWORK_GT_471
         [ThreadStatic]
         [SuppressMessage(
             "ReSharper",
@@ -106,6 +106,5 @@ namespace IX.StandardExtensions.Efficiency
                 threadStaticUpdateFactory = null;
             }
         }
-        #endif
-    }
+    #endif
 }

@@ -7,59 +7,58 @@ using System.Diagnostics;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
-namespace IX.Observable.DebugAide
+namespace IX.Observable.DebugAide;
+
+/// <summary>
+///     A debug view class for an observable collection.
+/// </summary>
+/// <typeparam name="T">The type of the collection.</typeparam>
+[UsedImplicitly]
+public sealed class CollectionDebugView<T>
 {
-    /// <summary>
-    ///     A debug view class for an observable collection.
-    /// </summary>
-    /// <typeparam name="T">The type of the collection.</typeparam>
-    [UsedImplicitly]
-    public sealed class CollectionDebugView<T>
-    {
 #region Internal state
 
-        private readonly ObservableCollectionBase<T> collection;
+    private readonly ObservableCollectionBase<T> collection;
 
 #endregion
 
 #region Constructors and destructors
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="CollectionDebugView{T}" /> class.
-        /// </summary>
-        /// <param name="collection">The collection.</param>
-        /// <exception cref="ArgumentNullException">collection is null.</exception>
-        [UsedImplicitly]
-        public CollectionDebugView(ObservableCollectionBase<T> collection)
-        {
-            Requires.NotNull(out this.collection, collection);
-        }
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="CollectionDebugView{T}" /> class.
+    /// </summary>
+    /// <param name="collection">The collection.</param>
+    /// <exception cref="ArgumentNullException">collection is null.</exception>
+    [UsedImplicitly]
+    public CollectionDebugView(ObservableCollectionBase<T> collection)
+    {
+        Requires.NotNull(out this.collection, collection);
+    }
 
 #endregion
 
 #region Properties and indexers
 
-        /// <summary>
-        ///     Gets the items.
-        /// </summary>
-        /// <value>
-        ///     The items.
-        /// </value>
-        [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-        [UsedImplicitly]
-        public T[] Items
+    /// <summary>
+    ///     Gets the items.
+    /// </summary>
+    /// <value>
+    ///     The items.
+    /// </value>
+    [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+    [UsedImplicitly]
+    public T[] Items
+    {
+        get
         {
-            get
-            {
-                var items = new T[this.collection.InternalContainer.Count];
-                this.collection.InternalContainer.CopyTo(
-                    items,
-                    0);
+            var items = new T[this.collection.InternalContainer.Count];
+            this.collection.InternalContainer.CopyTo(
+                items,
+                0);
 
-                return items;
-            }
+            return items;
         }
+    }
 
 #endregion
-    }
 }

@@ -7,43 +7,42 @@ using IX.Guaranteed;
 using IX.StandardExtensions.Contracts;
 using IX.Undoable.StateChanges;
 
-namespace IX.Observable
+namespace IX.Observable;
+
+internal class UndoableUnitBlockTransaction<T> : OperationTransaction
 {
-    internal class UndoableUnitBlockTransaction<T> : OperationTransaction
-    {
 #region Internal state
 
-        private readonly ObservableCollectionBase<T> collectionBase;
+    private readonly ObservableCollectionBase<T> collectionBase;
 
 #endregion
 
 #region Constructors and destructors
 
-        internal UndoableUnitBlockTransaction(ObservableCollectionBase<T> collectionBase)
-        {
-            Requires.NotNull(collectionBase);
+    internal UndoableUnitBlockTransaction(ObservableCollectionBase<T> collectionBase)
+    {
+        Requires.NotNull(collectionBase);
 
-            this.collectionBase = collectionBase;
+        this.collectionBase = collectionBase;
 
-            this.AddRevertStep(
-                state => { ((ObservableCollectionBase<T>)state).FailExplicitUndoBlockTransaction(); },
-                collectionBase);
+        this.AddRevertStep(
+            state => { ((ObservableCollectionBase<T>)state).FailExplicitUndoBlockTransaction(); },
+            collectionBase);
 
-            this.StateChanges = new CompositeStateChange(new List<StateChangeBase>());
-        }
+        this.StateChanges = new CompositeStateChange(new List<StateChangeBase>());
+    }
 
 #endregion
 
 #region Properties and indexers
 
-        internal CompositeStateChange StateChanges { get; }
+    internal CompositeStateChange StateChanges { get; }
 
 #endregion
 
 #region Methods
 
-        protected override void WhenSuccessful() => this.collectionBase.FinishExplicitUndoBlockTransaction();
+    protected override void WhenSuccessful() => this.collectionBase.FinishExplicitUndoBlockTransaction();
 
 #endregion
-    }
 }

@@ -5,14 +5,13 @@
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
-namespace IX.Guaranteed.Collections
+namespace IX.Guaranteed.Collections;
+
+/// <summary>
+/// Collections that are guaranteed to execute and/or persist data, usable for operations that are critical for data security, integrity and safety.
+/// </summary>
+[CompilerGenerated]
+[UsedImplicitly]
+internal static class NamespaceDoc
 {
-    /// <summary>
-    /// Collections that are guaranteed to execute and/or persist data, usable for operations that are critical for data security, integrity and safety.
-    /// </summary>
-    [CompilerGenerated]
-    [UsedImplicitly]
-    internal static class NamespaceDoc
-    {
-    }
 }

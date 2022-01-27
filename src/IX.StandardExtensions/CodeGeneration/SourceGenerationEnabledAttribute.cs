@@ -5,15 +5,14 @@
 using System;
 using JetBrains.Annotations;
 
-namespace IX.CodeGeneration
+namespace IX.CodeGeneration;
+
+/// <summary>
+/// Attribute to mark classes that are candidates for code generation by the IX.StandardExtensions.SourceGeneration analyzer.
+/// </summary>
+/// <seealso cref="Attribute" />
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+[PublicAPI]
+public class SourceGenerationEnabledAttribute : Attribute
 {
-    /// <summary>
-    /// Attribute to mark classes that are candidates for code generation by the IX.StandardExtensions.SourceGeneration analyzer.
-    /// </summary>
-    /// <seealso cref="Attribute" />
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    [PublicAPI]
-    public class SourceGenerationEnabledAttribute : Attribute
-    {
-    }
 }

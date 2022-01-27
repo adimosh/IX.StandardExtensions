@@ -12,8 +12,8 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace IX.StandardExtensions.Efficiency
-{
+namespace IX.StandardExtensions.Efficiency;
+
 #pragma warning disable SA1402 // File may only contain a single type<#
 for (int i = 1; i <= 8; i++)
 {
@@ -45,105 +45,104 @@ for (int i = 1; i <= 8; i++)
         "(" + string.Join(", ", parametersHashCode) + ").GetHashCode()";
 #>
 
+/// <summary>
+/// An immutable value tuple.
+/// </summary>
+<#
+    for (int j = 1; j <= i; j++)
+    {
+#>
+/// <typeparam name="TItem<#= j #>">The type of the item at index <#= j #>.</typeparam>
+<#
+    }
+#>
+[PublicAPI]
+public readonly struct ImmutableValueTuple<<#= paramTypes #>> : IEquatable<ImmutableValueTuple<<#= paramTypes #>>>
+{
     /// <summary>
-    /// An immutable value tuple.
+    /// Initializes a new instance of the <see cref="ImmutableValueTuple{<#= paramTypes #>}"/> struct.
     /// </summary>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-    /// <typeparam name="TItem<#= j #>">The type of the item at index <#= j #>.</typeparam>
+    /// <param name="item<#= j #>">The value of the item at index <#= j #>.</param>
 <#
     }
 #>
-    [PublicAPI]
-    public readonly struct ImmutableValueTuple<<#= paramTypes #>> : IEquatable<ImmutableValueTuple<<#= paramTypes #>>>
+    public ImmutableValueTuple(<#= paramNameTypes #>)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImmutableValueTuple{<#= paramTypes #>}"/> struct.
-        /// </summary>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <param name="item<#= j #>">The value of the item at index <#= j #>.</param>
+        this.Item<#= j #> = item<#= j #>;
 <#
     }
 #>
-        public ImmutableValueTuple(<#= paramNameTypes #>)
-        {
-<#
-    for (int j = 1; j <= i; j++)
-    {
-#>
-            this.Item<#= j #> = item<#= j #>;
-<#
     }
-#>
-        }
 
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <summary>
-        /// Gets the item at index <#= j #>.
-        /// </summary>
-        public <#= types[j-1] #> Item<#= j #>
-        {
-            get;
-        }
+    /// <summary>
+    /// Gets the item at index <#= j #>.
+    /// </summary>
+    public <#= types[j-1] #> Item<#= j #>
+    {
+        get;
+    }
 
 <#
     }
 #>
-        /// <summary>
-        /// Implements the operator ==.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>
-        /// The result of the operator.
-        /// </returns>
-        public static bool operator ==(ImmutableValueTuple<<#= paramTypes #>> left, ImmutableValueTuple<<#= paramTypes #>> right) => left.Equals(right);
+    /// <summary>
+    /// Implements the operator ==.
+    /// </summary>
+    /// <param name="left">The left.</param>
+    /// <param name="right">The right.</param>
+    /// <returns>
+    /// The result of the operator.
+    /// </returns>
+    public static bool operator ==(ImmutableValueTuple<<#= paramTypes #>> left, ImmutableValueTuple<<#= paramTypes #>> right) => left.Equals(right);
 
-        /// <summary>
-        /// Implements the operator !=.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>
-        /// The result of the operator.
-        /// </returns>
-        public static bool operator !=(ImmutableValueTuple<<#= paramTypes #>> left, ImmutableValueTuple<<#= paramTypes #>> right) => !(left == right);
+    /// <summary>
+    /// Implements the operator !=.
+    /// </summary>
+    /// <param name="left">The left.</param>
+    /// <param name="right">The right.</param>
+    /// <returns>
+    /// The result of the operator.
+    /// </returns>
+    public static bool operator !=(ImmutableValueTuple<<#= paramTypes #>> left, ImmutableValueTuple<<#= paramTypes #>> right) => !(left == right);
 
-        /// <summary>
-        /// Equates this instance to another object.
-        /// </summary>
-        /// <param name="other">The other object to equate to.</param>
-        /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
-        public override bool Equals(object? other) =>
-            other is ImmutableValueTuple<<#= paramTypes #>> otherTuple && this.Equals(otherTuple);
+    /// <summary>
+    /// Equates this instance to another object.
+    /// </summary>
+    /// <param name="other">The other object to equate to.</param>
+    /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
+    public override bool Equals(object? other) =>
+        other is ImmutableValueTuple<<#= paramTypes #>> otherTuple && this.Equals(otherTuple);
 
-        /// <summary>
-        /// Equates this tuple to another tuple.
-        /// </summary>
-        /// <param name="other">The other tuple to equate to.</param>
-        /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
-        public bool Equals(ImmutableValueTuple<<#= paramTypes #>> other) =>
-            <#= paramParametersEquality #>;
+    /// <summary>
+    /// Equates this tuple to another tuple.
+    /// </summary>
+    /// <param name="other">The other tuple to equate to.</param>
+    /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
+    public bool Equals(ImmutableValueTuple<<#= paramTypes #>> other) =>
+        <#= paramParametersEquality #>;
 
-        /// <summary>
-        /// Returns a hash code for this instance.
-        /// </summary>
-        /// <returns>
-        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
-        /// </returns>
-        public override int GetHashCode() =>
-            <#= paramParametersHashCode #>;
-    }
+    /// <summary>
+    /// Returns a hash code for this instance.
+    /// </summary>
+    /// <returns>
+    /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
+    /// </returns>
+    public override int GetHashCode() =>
+        <#= paramParametersHashCode #>;
+}
 <#
 }
 #>
 #pragma warning restore SA1402 // File may only contain a single type
-}

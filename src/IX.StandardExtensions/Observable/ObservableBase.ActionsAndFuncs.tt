@@ -12,14 +12,14 @@ using System;
 using IX.StandardExtensions.ComponentModel;
 using IX.StandardExtensions.Threading;
 
-namespace IX.Observable
-{
-    /// <summary>
-    ///     A base class for collections that are observable.
-    /// </summary>
-    /// <seealso cref="NotifyCollectionChangedInvokerBase" />
-    public abstract partial class ObservableBase
-    {<#
+namespace IX.Observable;
+
+/// <summary>
+///     A base class for collections that are observable.
+/// </summary>
+/// <seealso cref="NotifyCollectionChangedInvokerBase" />
+public abstract partial class ObservableBase
+{<#
 for (int i = 1; i <= 8; i++)
 {
     string[] types = new string[i];
@@ -39,123 +39,122 @@ for (int i = 1; i <= 8; i++)
     string paramNameTypes = string.Join(", ", nameTypes);
 #>
 
-        /// <summary>
-        ///     Invokes using a reader lock.
-        /// </summary>
+    /// <summary>
+    ///     Invokes using a reader lock.
+    /// </summary>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+    /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
 <#
     }
 #>
-        /// <param name="action">The action.</param>
+    /// <param name="action">The action.</param>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+    /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
 <#
     }
 #>
-        protected void ReadLock<<#= paramTypes #>>(Action<<#= paramTypes #>> action, <#= paramNameTypes #>)
+    protected void ReadLock<<#= paramTypes #>>(Action<<#= paramTypes #>> action, <#= paramNameTypes #>)
+    {
+        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
         {
-            using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
-            {
-                action(<#= paramNames #>);
-            }
+            action(<#= paramNames #>);
         }
+    }
 
-        /// <summary>
-        ///     Gets a result from an invoker using a reader lock.
-        /// </summary>
+    /// <summary>
+    ///     Gets a result from an invoker using a reader lock.
+    /// </summary>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+    /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
 <#
     }
 #>
-        /// <typeparam name="TReturn">The return type of the invoked method.</typeparam>
-        /// <param name="action">The action.</param>
+    /// <typeparam name="TReturn">The return type of the invoked method.</typeparam>
+    /// <param name="action">The action.</param>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+    /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
 <#
     }
 #>
-        /// <returns>A disposable object representing the lock.</returns>
-        protected TReturn ReadLock<<#= paramTypes #>, TReturn>(Func<<#= paramTypes #>, TReturn> action, <#= paramNameTypes #>)
+    /// <returns>A disposable object representing the lock.</returns>
+    protected TReturn ReadLock<<#= paramTypes #>, TReturn>(Func<<#= paramTypes #>, TReturn> action, <#= paramNameTypes #>)
+    {
+        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
         {
-            using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
-            {
-                return action(<#= paramNames #>);
-            }
+            return action(<#= paramNames #>);
         }
+    }
 
-        /// <summary>
-        ///     Invokes using a writer lock.
-        /// </summary>
+    /// <summary>
+    ///     Invokes using a writer lock.
+    /// </summary>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+    /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
 <#
     }
 #>
-        /// <param name="action">The action.</param>
+    /// <param name="action">The action.</param>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+    /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
 <#
     }
 #>
-        protected void WriteLock<<#= paramTypes #>>(Action<<#= paramTypes #>> action, <#= paramNameTypes #>)
+    protected void WriteLock<<#= paramTypes #>>(Action<<#= paramTypes #>> action, <#= paramNameTypes #>)
+    {
+        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
         {
-            using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
-            {
-                action(<#= paramNames #>);
-            }
+            action(<#= paramNames #>);
         }
+    }
 
-        /// <summary>
-        ///     Gets a result from an invoker using a writer lock.
-        /// </summary>
+    /// <summary>
+    ///     Gets a result from an invoker using a writer lock.
+    /// </summary>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
+    /// <typeparam name="TParam<#= j #>">The type of parameter to be passed to the invoked method at index <#= j - 1 #>.</typeparam>
 <#
     }
 #>
-        /// <typeparam name="TReturn">The return type of the invoked method.</typeparam>
-        /// <param name="action">The action.</param>
+    /// <typeparam name="TReturn">The return type of the invoked method.</typeparam>
+    /// <param name="action">The action.</param>
 <#
     for (int j = 1; j <= i; j++)
     {
 #>
-        /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
+    /// <param name="param<#= j #>">A parameter of type <typeparamref name="TParam<#= j #>" /> to pass to the invoked method at index <#= j - 1 #>.</param>
 <#
     }
 #>
-        /// <returns>A disposable object representing the lock.</returns>
-        protected TReturn WriteLock<<#= paramTypes #>, TReturn>(Func<<#= paramTypes #>, TReturn> action, <#= paramNameTypes #>)
+    /// <returns>A disposable object representing the lock.</returns>
+    protected TReturn WriteLock<<#= paramTypes #>, TReturn>(Func<<#= paramTypes #>, TReturn> action, <#= paramNameTypes #>)
+    {
+        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
         {
-            using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
-            {
-                return action(<#= paramNames #>);
-            }
+            return action(<#= paramNames #>);
         }
+    }
 <#
 }
 #>
-    }
 }
