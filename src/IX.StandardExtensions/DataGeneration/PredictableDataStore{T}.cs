@@ -19,7 +19,7 @@ namespace IX.DataGeneration;
 /// </summary>
 /// <typeparam name="T">The type of items in the store.</typeparam>
 [PublicAPI]
-public class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
+public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
     IReadOnlyList<T>
 {
 #region Internal state
@@ -31,49 +31,6 @@ public class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
 #endregion
 
 #region Constructors and destructors
-
-    /// <summary>
-    ///     Initializes a new instance of the <see cref="PredictableDataStore{T}" /> class.
-    /// </summary>
-    /// <param name="capacity">The capacity.</param>
-    /// <param name="generator">The generator.</param>
-    // TODO BREAKING: Remove this in the next breaking changes release
-    [Obsolete(
-        "Please use the constructor with the default parameter, as this constructor will be removed in a later version.")]
-    [SuppressMessage(
-        "ReSharper",
-        "RedundantOverload.Global",
-        Justification = "Let's leave this in for now, as we'll remove this in a future version.")]
-    public PredictableDataStore(
-        int capacity,
-        Func<T> generator)
-        : this(
-            capacity,
-            generator,
-            false) { }
-
-    /// <summary>
-    ///     Initializes a new instance of the <see cref="PredictableDataStore{T}" /> class.
-    /// </summary>
-    /// <param name="capacity">The capacity.</param>
-    /// <param name="generator">The stateful generator.</param>
-    /// <param name="state">The state.</param>
-    // TODO BREAKING: Remove this in the next breaking changes release
-    [Obsolete(
-        "Please use the constructor with the default parameter, as this constructor will be removed in a later version.")]
-    [SuppressMessage(
-        "ReSharper",
-        "RedundantOverload.Global",
-        Justification = "Let's leave this in for now, as we'll remove this in a future version.")]
-    public PredictableDataStore(
-        int capacity,
-        Func<object, T> generator,
-        object state)
-        : this(
-            capacity,
-            generator,
-            state,
-            false) { }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="PredictableDataStore{T}" /> class.
