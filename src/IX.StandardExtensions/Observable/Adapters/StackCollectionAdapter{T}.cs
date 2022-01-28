@@ -137,7 +137,7 @@ internal class StackCollectionAdapter<T> : ModernCollectionAdapter<T, System.Col
     ///     Returns an enumerator that iterates through the collection.
     /// </summary>
     /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-    protected override System.Collections.Generic.Stack<T>.Enumerator GetEnumerator() => this.stack.GetEnumerator();
+    public override System.Collections.Generic.Stack<T>.Enumerator GetEnumerator() => this.stack.GetEnumerator();
 
 #endregion
 }

@@ -95,17 +95,14 @@ public abstract class AtomicEnumerator<TItem> : AtomicEnumerator,
         Requires.NotNull(readLock);
 
         Delegate initializer = ConstructionDelegates.GetOrAdd(
-            typeof(TCollection),
-            (
-                collectionType,
-                _) =>
+            collection.GetType(),
+            static (collectionType) =>
             {
                 // Get used types
                 MethodInfo getEnumeratorMethodInfo = collectionType.GetMethod(
-                    nameof(IEnumerable<TItem>.GetEnumerator),
+                    "GetEnumerator",
                     BindingFlags.Public | BindingFlags.Instance)!;
 
-                // ReSharper disable once PossibleNullReferenceException - We know this cannot be null, as we're interrogating the GetEnumerator method if an IEnumerable - there must be at least one
                 Type enumeratorType = getEnumeratorMethodInfo.ReturnType;
                 Type atomicEnumeratorType = typeof(AtomicEnumerator<,>).MakeGenericType(
                     typeof(TItem),
@@ -127,8 +124,7 @@ public abstract class AtomicEnumerator<TItem> : AtomicEnumerator,
                         parameter1,
                         parameter2)
                     .Compile();
-            },
-            collection);
+            });
 
         if (initializer is Func<TCollection, Func<ReadOnlySynchronizationLocker>, AtomicEnumerator<TItem>>
             typedInitializer)

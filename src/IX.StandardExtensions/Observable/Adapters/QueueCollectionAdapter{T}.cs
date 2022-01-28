@@ -137,7 +137,7 @@ internal class QueueCollectionAdapter<T> : ModernCollectionAdapter<T, Queue<T>.E
     ///     Returns an enumerator that iterates through the collection.
     /// </summary>
     /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-    protected override Queue<T>.Enumerator GetEnumerator() => this.queue.GetEnumerator();
+    public override Queue<T>.Enumerator GetEnumerator() => this.queue.GetEnumerator();
 
 #endregion
 }

@@ -98,5 +98,9 @@ internal abstract class ModernCollectionAdapter<TItem, TEnumerator> : ModernColl
     ///     Returns an enumerator that iterates through the collection.
     /// </summary>
     /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-    protected abstract TEnumerator GetEnumerator();
+    [SuppressMessage(
+        "ReSharper",
+        "MemberCanBeProtected.Global",
+        Justification = "Yeah, but we need it to be public for this to work efficiently.")]
+    public abstract TEnumerator GetEnumerator();
 }

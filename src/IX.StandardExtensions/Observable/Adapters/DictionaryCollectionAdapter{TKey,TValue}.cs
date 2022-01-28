@@ -141,7 +141,7 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapt
 
 #endregion
 
-    protected override Dictionary<TKey, TValue>.Enumerator GetEnumerator() => this.dictionary.GetEnumerator();
+    public override Dictionary<TKey, TValue>.Enumerator GetEnumerator() => this.dictionary.GetEnumerator();
 
 #endregion
 }
