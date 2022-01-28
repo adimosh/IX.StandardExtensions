@@ -11,7 +11,7 @@ using IX.StandardExtensions.Extensions;
 
 namespace IX.Observable.Adapters;
 #pragma warning disable HAA0401 // Possible allocation of reference type enumerator - Unavoidable right now
-internal class MultiListListAdapter<T> : ListAdapter<T>
+internal class MultiListListAdapter<T> : ModernListAdapter<T, IEnumerator<T>>
 {
 #region Internal state
 

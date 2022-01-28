@@ -11,7 +11,7 @@ namespace IX.Observable.Adapters;
     Namespace = Constants.DataContractNamespace,
     Name = "ListAdapterOf{0}",
     ItemName = "Item")]
-internal class ListListAdapter<T> : ListAdapter<T>
+internal class ListListAdapter<T> : ModernListAdapter<T, List<T>.Enumerator>
 {
 #region Internal state
 
@@ -75,9 +75,7 @@ internal class ListListAdapter<T> : ListAdapter<T>
             array,
             arrayIndex);
 
-#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation - Unavoidable here
-    public override IEnumerator<T> GetEnumerator() => this.list.GetEnumerator();
-#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
+    public override List<T>.Enumerator GetEnumerator() => this.list.GetEnumerator();
 
     public override int IndexOf(T item) => this.list.IndexOf(item);
 

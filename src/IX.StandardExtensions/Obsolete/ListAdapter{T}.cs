@@ -2,8 +2,10 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System;
 using System.Collections.Generic;
 
+// ReSharper disable once CheckNamespace
 namespace IX.Observable.Adapters;
 
 /// <summary>
@@ -12,6 +14,7 @@ namespace IX.Observable.Adapters;
 /// <typeparam name="T">The type of items in the adapter.</typeparam>
 /// <seealso cref="ListAdapter{T}" />
 /// <seealso cref="IListAdapter{T}" />
+[Obsolete("This type will no longer be exposed in the next major release. Please stop using it immediately. Use your own implementation of IListAdapter interface if you need it.")]
 public abstract class ListAdapter<T> : CollectionAdapter<T>,
     IListAdapter<T>
 {

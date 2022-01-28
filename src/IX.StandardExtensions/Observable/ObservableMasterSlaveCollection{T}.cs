@@ -83,7 +83,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     ///     The count after add.
     /// </value>
     protected override int CountAfterAdd =>
-        ((MultiListMasterSlaveListAdapter<T>)this.InternalContainer).MasterCount;
+        ((MultiListMasterSlaveListAdapter<T>)this.InternalListContainer).MasterCount;
 
 #endregion
 
@@ -101,7 +101,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
 
         using (this.WriteLock())
         {
-            ((MultiListMasterSlaveListAdapter<T>)this.InternalContainer).SetMaster(list);
+            ((MultiListMasterSlaveListAdapter<T>)this.InternalListContainer).SetMaster(list);
         }
 
         this.RaiseCollectionReset();
@@ -121,7 +121,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
 
         using (this.WriteLock())
         {
-            ((MultiListMasterSlaveListAdapter<T>)this.InternalContainer).SetSlave(list);
+            ((MultiListMasterSlaveListAdapter<T>)this.InternalListContainer).SetSlave(list);
         }
 
         this.RaiseCollectionReset();
@@ -141,7 +141,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
 
         using (this.WriteLock())
         {
-            ((MultiListMasterSlaveListAdapter<T>)this.InternalContainer).RemoveSlave(list);
+            ((MultiListMasterSlaveListAdapter<T>)this.InternalListContainer).RemoveSlave(list);
         }
 
         this.RaiseCollectionReset();
@@ -212,16 +212,16 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
 
         using (ReadWriteSynchronizationLocker lockContext = this.ReadWriteLock())
         {
-            if (index >= this.InternalContainer.Count)
+            if (index >= this.InternalListContainer.Count)
             {
                 return;
             }
 
             lockContext.Upgrade();
 
-            item = this.InternalContainer[index];
+            item = this.InternalListContainer[index];
             this.IncreaseIgnoreMustResetCounter();
-            this.InternalContainer.RemoveAt(index);
+            this.InternalListContainer.RemoveAt(index);
 
             this.PushUndoLevel(
                 new RemoveStateChange<T>(
@@ -249,7 +249,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
 
         using (this.WriteLock())
         {
-            var container = (MultiListMasterSlaveListAdapter<T>)this.InternalContainer;
+            var container = (MultiListMasterSlaveListAdapter<T>)this.InternalListContainer;
 
             this.IncreaseIgnoreMustResetCounter(container.SlavesCount + 1);
 
@@ -258,7 +258,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
                 originalArray,
                 0);
 
-            this.InternalContainer.Clear();
+            this.InternalListContainer.Clear();
 
             this.PushUndoLevel(new ClearStateChange<T>(originalArray));
         }

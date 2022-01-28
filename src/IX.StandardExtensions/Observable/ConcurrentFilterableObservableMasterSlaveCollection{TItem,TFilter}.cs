@@ -327,7 +327,7 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
 
         locker.Upgrade();
 
-        this.cachedFilteredElements = new List<TItem>(this.InternalContainer.Count);
+        this.cachedFilteredElements = new List<TItem>(this.InternalListContainer.Count);
 
         using IEnumerator<TItem> enumerator = this.EnumerateFiltered();
 

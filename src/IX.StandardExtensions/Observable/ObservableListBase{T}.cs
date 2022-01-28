@@ -30,7 +30,7 @@ namespace IX.Observable;
 /// <seealso cref="IList{T}" />
 /// <seealso cref="IReadOnlyList{T}" />
 [PublicAPI]
-public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
+public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T>,
     IList<T>,
     IReadOnlyList<T>,
     IList
@@ -93,7 +93,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
     public virtual bool IsFixedSize =>
         this.InvokeIfNotDisposed(
             thisL1 => thisL1.ReadLock(
-                thisL2 => thisL2.InternalContainer.IsFixedSize,
+                thisL2 => thisL2.InternalListContainer.IsFixedSize,
                 thisL1),
             this);
 
@@ -105,15 +105,13 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
     /// </value>
     protected virtual int CountAfterAdd => this.Count;
 
-    // TODO: In next breaking change release, change return type to IListAdapter
-
     /// <summary>
     ///     Gets the internal list container.
     /// </summary>
     /// <value>
     ///     The internal list container.
     /// </value>
-    protected new ListAdapter<T> InternalContainer => (ListAdapter<T>)base.InternalContainer;
+    protected IListAdapter<T> InternalListContainer => (IListAdapter<T>)base.InternalContainer;
 
     /// <summary>
     ///     Gets the item at the specified index.
@@ -135,7 +133,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
             // ACTION
             using (this.ReadLock())
             {
-                return this.InternalContainer[index];
+                return this.InternalListContainer[index];
             }
         }
 
@@ -153,7 +151,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
             using (ReadWriteSynchronizationLocker lockContext = this.ReadWriteLock())
             {
                 // Verify if we are within bounds in a read lock
-                if (index >= this.InternalContainer.Count)
+                if (index >= this.InternalListContainer.Count)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -162,7 +160,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
                 lockContext.Upgrade();
 
                 // Get the old value
-                oldValue = this.InternalContainer[index];
+                oldValue = this.InternalListContainer[index];
 
                 // Two undo/redo transactions
                 using (OperationTransaction tc1 = this.CheckItemAutoCapture(value))
@@ -170,7 +168,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
                     using (OperationTransaction tc2 = this.CheckItemAutoRelease(oldValue))
                     {
                         // Replace with new value
-                        this.InternalContainer[index] = value;
+                        this.InternalListContainer[index] = value;
 
                         // Push the undo level
                         this.PushUndoLevel(
@@ -247,7 +245,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
 
         using (this.ReadLock())
         {
-            return this.InternalContainer.IndexOf(item);
+            return this.InternalListContainer.IndexOf(item);
         }
     }
 
@@ -277,7 +275,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
             using OperationTransaction tc = this.CheckItemAutoCapture(item);
 
             // Actually insert
-            this.InternalContainer.Insert(
+            this.InternalListContainer.Insert(
                 index,
                 item);
 
@@ -323,7 +321,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
         using (ReadWriteSynchronizationLocker lockContext = this.ReadWriteLock())
         {
             // Check to see if we are in range
-            if (index >= this.InternalContainer.Count)
+            if (index >= this.InternalListContainer.Count)
             {
                 return;
             }
@@ -331,13 +329,13 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
             // Upgrade the lock to a write lock
             lockContext.Upgrade();
 
-            item = this.InternalContainer[index];
+            item = this.InternalListContainer[index];
 
             // Using an undo/redo transaction
             using OperationTransaction tc = this.CheckItemAutoRelease(item);
 
             // Actually do the removal
-            this.InternalContainer.RemoveAt(index);
+            this.InternalListContainer.RemoveAt(index);
 
             // Push an undo level
             this.PushUndoLevel(
@@ -465,7 +463,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
             using OperationTransaction tc = this.CheckItemAutoCapture(itemsList);
 
             // Actually add the items
-            newIndex = this.InternalContainer.AddRange(itemsList);
+            newIndex = this.InternalListContainer.AddRange(itemsList);
 
             // Push an undo level
             this.PushUndoLevel(
@@ -523,28 +521,28 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
         // Inside a write lock
         using (this.WriteLock())
         {
-            if (startIndex >= this.InternalContainer.Count)
+            if (startIndex >= this.InternalListContainer.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(startIndex));
             }
 
-            itemsList = this.InternalContainer.Skip(startIndex)
+            itemsList = this.InternalListContainer.Skip(startIndex)
                 .Reverse()
                 .ToArray();
             var indexesList = new int[itemsList.Length];
             for (var i = 0; i < indexesList.Length; i++)
             {
-                indexesList[i] = this.InternalContainer.Count - 1 - i;
+                indexesList[i] = this.InternalListContainer.Count - 1 - i;
             }
 
             // Use an undo/redo transaction
             using OperationTransaction tc = this.CheckItemAutoRelease(itemsList);
 
             // Actually remove
-            for (var index = this.InternalContainer.Count - 1; index >= startIndex; index--)
+            for (var index = this.InternalListContainer.Count - 1; index >= startIndex; index--)
             {
                 // Remove item (in reverse order)
-                this.InternalContainer.RemoveAt(index);
+                this.InternalListContainer.RemoveAt(index);
             }
 
             // Push an undo level
@@ -611,17 +609,17 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
         // Inside a write lock
         using (this.WriteLock())
         {
-            if (startIndex >= this.InternalContainer.Count)
+            if (startIndex >= this.InternalListContainer.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(startIndex));
             }
 
-            if (startIndex + length > this.InternalContainer.Count)
+            if (startIndex + length > this.InternalListContainer.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(length));
             }
 
-            itemsList = this.InternalContainer.Skip(startIndex)
+            itemsList = this.InternalListContainer.Skip(startIndex)
                 .Take(length)
                 .Reverse()
                 .ToArray();
@@ -638,7 +636,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
             for (var index = startIndex + length - 1; index >= startIndex; index--)
             {
                 // Remove item (in reverse order)
-                this.InternalContainer.RemoveAt(index);
+                this.InternalListContainer.RemoveAt(index);
             }
 
             // Push an undo level
@@ -697,14 +695,14 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
                     (
                         p,
                         coll) => !coll.Contains(p),
-                    this.InternalContainer))
+                    this.InternalListContainer))
             {
                 throw new ArgumentException(
                     Resources.TheGivenCollectionToRemoveIsNotContainedInTheInitialCollection,
                     nameof(items));
             }
 
-            var itemsToDelete = this.InternalContainer.Select(
+            var itemsToDelete = this.InternalListContainer.Select(
                     (
                         p,
                         index) => new
@@ -727,7 +725,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
             foreach (var item in itemsToDelete)
             {
                 // Remove an item
-                this.InternalContainer.RemoveAt(item.Index);
+                this.InternalListContainer.RemoveAt(item.Index);
             }
 
             // Push undo transaction
@@ -792,7 +790,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
         // Inside a write lock
         using (this.WriteLock())
         {
-            if (index > this.InternalContainer.Count)
+            if (index > this.InternalListContainer.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
@@ -803,7 +801,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
             // Actually add the items
             foreach (T item in Enumerable.Reverse(itemsList))
             {
-                this.InternalContainer.Insert(
+                this.InternalListContainer.Insert(
                     index,
                     item);
             }
@@ -951,7 +949,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
         {
             case AddStateChange<T>(var item, var index):
             {
-                this.InternalContainer.RemoveAt(index);
+                this.InternalListContainer.RemoveAt(index);
 
                 if (this.ItemsAreUndoable &&
                     this.AutomaticallyCaptureSubItems &&
@@ -990,7 +988,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
             {
                 for (var i = 0; i < addedItems.Length; i++)
                 {
-                    this.InternalContainer.RemoveAt(index);
+                    this.InternalListContainer.RemoveAt(index);
                 }
 
                 IEnumerable<T> items = addedItems;
@@ -1035,7 +1033,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
 
             case RemoveStateChange<T>(var index, var item):
             {
-                this.InternalContainer.Insert(
+                this.InternalListContainer.Insert(
                     index,
                     item);
 
@@ -1075,7 +1073,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
             {
                 for (var i = items.Length - 1; i >= 0; i--)
                 {
-                    this.InternalContainer.Insert(
+                    this.InternalListContainer.Insert(
                         indexes[i],
                         items[i]);
                 }
@@ -1118,7 +1116,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
             {
                 foreach (T t in originalItems)
                 {
-                    this.InternalContainer.Add(t);
+                    this.InternalListContainer.Add(t);
                 }
 
                 if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
@@ -1151,7 +1149,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
 
             case ChangeAtStateChange<T>(var index, var oldItem, var newItem):
             {
-                this.InternalContainer[index] = newItem;
+                this.InternalListContainer[index] = newItem;
 
                 if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
                 {
@@ -1234,7 +1232,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
         {
             case AddStateChange<T>(var addedItem, var index):
             {
-                this.InternalContainer.Insert(
+                this.InternalListContainer.Insert(
                     index,
                     addedItem);
 
@@ -1279,7 +1277,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
                         (
                             p,
                             thisL1,
-                            indexL1) => thisL1.InternalContainer.Insert(
+                            indexL1) => thisL1.InternalListContainer.Insert(
                             indexL1,
                             p),
                         this,
@@ -1321,7 +1319,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
 
             case RemoveStateChange<T>(var index, var removedItem):
             {
-                this.InternalContainer.RemoveAt(index);
+                this.InternalListContainer.RemoveAt(index);
 
                 if (this.ItemsAreUndoable &&
                     this.AutomaticallyCaptureSubItems &&
@@ -1360,7 +1358,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
             {
                 foreach (var t in indexes)
                 {
-                    this.InternalContainer.RemoveAt(t);
+                    this.InternalListContainer.RemoveAt(t);
                 }
 
                 if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
@@ -1403,7 +1401,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
 
             case ClearStateChange<T>(var originalItems):
             {
-                this.InternalContainer.Clear();
+                this.InternalListContainer.Clear();
 
                 if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
                 {
@@ -1439,7 +1437,7 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
 
             case ChangeAtStateChange<T>(var index, var newItem, var oldItem):
             {
-                this.InternalContainer[index] = newItem;
+                this.InternalListContainer[index] = newItem;
 
                 if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
                 {

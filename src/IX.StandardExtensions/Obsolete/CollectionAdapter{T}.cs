@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
+// ReSharper disable once CheckNamespace
 namespace IX.Observable.Adapters;
 
 /// <summary>
@@ -14,6 +15,7 @@ namespace IX.Observable.Adapters;
 /// </summary>
 /// <typeparam name="T">The type of items in the adapter.</typeparam>
 /// <seealso cref="IX.Observable.Adapters.ICollectionAdapter{T}" />
+[Obsolete("This type will no longer be exposed in the next major release. Please stop using it immediately. Use your own implementation of ICollectionAdapter interface if you need it.")]
 public abstract class CollectionAdapter<T> : ICollectionAdapter<T>
 {
 #region Events

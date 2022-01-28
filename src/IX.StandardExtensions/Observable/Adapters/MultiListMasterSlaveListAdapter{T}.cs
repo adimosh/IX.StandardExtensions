@@ -12,7 +12,7 @@ using IX.StandardExtensions.Extensions;
 
 namespace IX.Observable.Adapters;
 
-internal class MultiListMasterSlaveListAdapter<T> : ListAdapter<T>
+internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumerator<T>>
 {
 #region Internal state
 
