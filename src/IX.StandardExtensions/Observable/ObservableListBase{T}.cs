@@ -105,6 +105,8 @@ public abstract class ObservableListBase<T> : ObservableCollectionBase<T>,
     /// </value>
     protected virtual int CountAfterAdd => this.Count;
 
+    // TODO: In next breaking change release, change return type to IListAdapter
+
     /// <summary>
     ///     Gets the internal list container.
     /// </summary>

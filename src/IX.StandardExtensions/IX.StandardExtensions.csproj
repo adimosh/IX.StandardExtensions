@@ -20,7 +20,10 @@
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
     <PackageReleaseNotes>- Added possibility to chain delegates
 - ReadAllBytes method for streams (WARNING !!!)
-- Remote envelope records added</PackageReleaseNotes>
+- Remote envelope records added
+- Major warning removal work
+- Modern collection adapter
+- Fixed AtomicEnumerator actual enumerator type resolution</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
