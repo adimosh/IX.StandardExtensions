@@ -18,8 +18,22 @@
 
   <ItemGroup>
     <Compile Remove="SourceGeneration\**" />
+    <Compile Remove="StandardExtensions\Globalization\DataSource\**" />
+    <Compile Remove="StandardExtensions\Globalization\Data\**" />
     <EmbeddedResource Remove="SourceGeneration\**" />
+    <EmbeddedResource Remove="StandardExtensions\Globalization\DataSource\**" />
+    <EmbeddedResource Remove="StandardExtensions\Globalization\Data\**" />
     <None Remove="SourceGeneration\**" />
+    <None Remove="StandardExtensions\Globalization\DataSource\**" />
+    <None Remove="StandardExtensions\Globalization\Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="StandardExtensions\Globalization\data.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="StandardExtensions\Globalization\data.zip" />
   </ItemGroup>
 
   <ItemGroup>
