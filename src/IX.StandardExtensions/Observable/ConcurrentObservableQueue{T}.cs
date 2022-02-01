@@ -2,14 +2,11 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using IX.Observable.DebugAide;
 using IX.System.Threading;
 using JetBrains.Annotations;
-using GlobalThreading = System.Threading;
 
 namespace IX.Observable;
 
@@ -28,7 +25,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
 {
 #region Internal state
 
-    private Lazy<ReaderWriterLockSlim> locker;
+    private Lazy<System.Threading.ReaderWriterLockSlim> locker;
 
 #endregion
 
@@ -66,7 +63,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableQueue{T}" /> class.
     /// </summary>
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
-    public ConcurrentObservableQueue(GlobalThreading.SynchronizationContext context)
+    public ConcurrentObservableQueue(SynchronizationContext context)
         : base(context)
     {
         this.locker = EnvironmentSettings.GenerateDefaultLocker();
@@ -78,7 +75,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
     /// <param name="collection">A collection of items to copy from.</param>
     public ConcurrentObservableQueue(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         IEnumerable<T> collection)
         : base(
             context,
@@ -93,7 +90,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
     /// <param name="capacity">The initial capacity of the queue.</param>
     public ConcurrentObservableQueue(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         int capacity)
         : base(
             context,
@@ -148,7 +145,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableQueue(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         bool suppressUndoable)
         : base(
             context,
@@ -164,7 +161,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     /// <param name="collection">A collection of items to copy from.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableQueue(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         IEnumerable<T> collection,
         bool suppressUndoable)
         : base(
@@ -182,7 +179,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     /// <param name="capacity">The initial capacity of the queue.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableQueue(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         int capacity,
         bool suppressUndoable)
         : base(
@@ -212,7 +209,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     /// <param name="context">The streaming context.</param>
     [OnDeserializing]
     internal void OnDeserializingMethod(StreamingContext context) =>
-        GlobalThreading.Interlocked.Exchange(
+        Interlocked.Exchange(
             ref this.locker,
             EnvironmentSettings.GenerateDefaultLocker());
 
@@ -223,7 +220,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     /// </summary>
     protected override void DisposeManagedContext()
     {
-        Lazy<ReaderWriterLockSlim> l = GlobalThreading.Interlocked.Exchange(
+        Lazy<System.Threading.ReaderWriterLockSlim> l = Interlocked.Exchange(
             ref this.locker,
             null!);
         if (l?.IsValueCreated ?? false)
@@ -239,7 +236,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     /// </summary>
     protected override void DisposeGeneralContext()
     {
-        GlobalThreading.Interlocked.Exchange(
+        Interlocked.Exchange(
             ref this.locker,
             null!);
 

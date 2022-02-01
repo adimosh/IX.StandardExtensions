@@ -2,8 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using IX.Observable.DebugAide;
@@ -11,7 +9,6 @@ using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using IX.System.Threading;
 using JetBrains.Annotations;
-using GlobalThreading = System.Threading;
 
 namespace IX.Observable;
 
@@ -34,7 +31,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
 {
 #region Internal state
 
-    private Lazy<ReaderWriterLockSlim> locker;
+    private Lazy<System.Threading.ReaderWriterLockSlim> locker;
 
 #endregion
 
@@ -112,7 +109,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
     /// </summary>
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
-    public ConcurrentObservableDictionary(GlobalThreading.SynchronizationContext context)
+    public ConcurrentObservableDictionary(SynchronizationContext context)
         : base(context)
     {
         this.locker = EnvironmentSettings.GenerateDefaultLocker();
@@ -124,7 +121,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
     /// <param name="capacity">The initial capacity of the dictionary.</param>
     public ConcurrentObservableDictionary(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         int capacity)
         : base(
             context,
@@ -139,7 +136,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
     /// <param name="equalityComparer">A comparer object to use for equality comparison.</param>
     public ConcurrentObservableDictionary(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         IEqualityComparer<TKey> equalityComparer)
         : base(
             context,
@@ -155,7 +152,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <param name="capacity">The initial capacity of the dictionary.</param>
     /// <param name="equalityComparer">A comparer object to use for equality comparison.</param>
     public ConcurrentObservableDictionary(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         int capacity,
         IEqualityComparer<TKey> equalityComparer)
         : base(
@@ -172,7 +169,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
     /// <param name="dictionary">A dictionary of items to copy from.</param>
     public ConcurrentObservableDictionary(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         IDictionary<TKey, TValue> dictionary)
         : base(
             context,
@@ -188,7 +185,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <param name="dictionary">A dictionary of items to copy from.</param>
     /// <param name="comparer">A comparer object to use for equality comparison.</param>
     public ConcurrentObservableDictionary(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         IDictionary<TKey, TValue> dictionary,
         IEqualityComparer<TKey> comparer)
         : base(
@@ -296,7 +293,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableDictionary(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         bool suppressUndoable)
         : base(
             context,
@@ -312,7 +309,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <param name="capacity">The initial capacity of the dictionary.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableDictionary(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         int capacity,
         bool suppressUndoable)
         : base(
@@ -330,7 +327,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <param name="equalityComparer">A comparer object to use for equality comparison.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableDictionary(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         IEqualityComparer<TKey> equalityComparer,
         bool suppressUndoable)
         : base(
@@ -349,7 +346,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <param name="equalityComparer">A comparer object to use for equality comparison.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableDictionary(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         int capacity,
         IEqualityComparer<TKey> equalityComparer,
         bool suppressUndoable)
@@ -369,7 +366,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <param name="dictionary">A dictionary of items to copy from.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableDictionary(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         IDictionary<TKey, TValue> dictionary,
         bool suppressUndoable)
         : base(
@@ -388,7 +385,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <param name="comparer">A comparer object to use for equality comparison.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableDictionary(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         IDictionary<TKey, TValue> dictionary,
         IEqualityComparer<TKey> comparer,
         bool suppressUndoable)
@@ -663,7 +660,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <param name="context">The streaming context.</param>
     [OnDeserializing]
     internal void OnDeserializingMethod(StreamingContext context) =>
-        GlobalThreading.Interlocked.Exchange(
+        Interlocked.Exchange(
             ref this.locker,
             EnvironmentSettings.GenerateDefaultLocker());
 
@@ -674,7 +671,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// </summary>
     protected override void DisposeManagedContext()
     {
-        Lazy<ReaderWriterLockSlim>? l = GlobalThreading.Interlocked.Exchange(
+        Lazy<System.Threading.ReaderWriterLockSlim>? l = Interlocked.Exchange(
             ref this.locker!,
             null!);
         if (l?.IsValueCreated ?? false)
@@ -690,7 +687,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// </summary>
     protected override void DisposeGeneralContext()
     {
-        GlobalThreading.Interlocked.Exchange(
+        Interlocked.Exchange(
             ref this.locker!,
             null!);
 

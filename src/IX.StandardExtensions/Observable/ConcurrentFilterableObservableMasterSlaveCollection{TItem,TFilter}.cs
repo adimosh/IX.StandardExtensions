@@ -2,15 +2,14 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using IX.Observable.DebugAide;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using IX.System.Threading;
 using JetBrains.Annotations;
-using GlobalThreading = System.Threading;
+using ReaderWriterLockSlim = IX.System.Threading.ReaderWriterLockSlim;
 
 namespace IX.Observable;
 
@@ -31,7 +30,7 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
 
     private IList<TItem>? cachedFilteredElements;
 
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "IDisposableAnalyzers.Correctness",
         "IDISP006:Implement IDisposable.",
         Justification = "It is, but the analyzer can't tell.")]
@@ -55,7 +54,7 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
     public ConcurrentFilterableObservableMasterSlaveCollection(Func<TItem, TFilter, bool> filteringPredicate)
     {
         this.FilteringPredicate = Requires.NotNull(filteringPredicate);
-        this.cacheLocker = new ReaderWriterLockSlim(GlobalThreading.LockRecursionPolicy.NoRecursion);
+        this.cacheLocker = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
     }
 
     /// <summary>
@@ -70,11 +69,11 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
     /// </exception>
     public ConcurrentFilterableObservableMasterSlaveCollection(
         Func<TItem, TFilter, bool> filteringPredicate,
-        GlobalThreading.SynchronizationContext context)
+        SynchronizationContext context)
         : base(context)
     {
         this.FilteringPredicate = Requires.NotNull(filteringPredicate);
-        this.cacheLocker = new ReaderWriterLockSlim(GlobalThreading.LockRecursionPolicy.NoRecursion);
+        this.cacheLocker = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
     }
 
     /// <summary>
@@ -93,7 +92,7 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         : base(suppressUndoable)
     {
         this.FilteringPredicate = Requires.NotNull(filteringPredicate);
-        this.cacheLocker = new ReaderWriterLockSlim(GlobalThreading.LockRecursionPolicy.NoRecursion);
+        this.cacheLocker = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
     }
 
     /// <summary>
@@ -109,14 +108,14 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentFilterableObservableMasterSlaveCollection(
         Func<TItem, TFilter, bool> filteringPredicate,
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         bool suppressUndoable)
         : base(
             context,
             suppressUndoable)
     {
         this.FilteringPredicate = Requires.NotNull(filteringPredicate);
-        this.cacheLocker = new ReaderWriterLockSlim(GlobalThreading.LockRecursionPolicy.NoRecursion);
+        this.cacheLocker = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
     }
 
 #endregion
@@ -182,7 +181,7 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
     /// <returns>
     ///     An enumerator that can be used to iterate through the collection.
     /// </returns>
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "We have to allocate an atomic enumerator.")]
@@ -206,7 +205,7 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
     {
         base.DisposeManagedContext();
 
-        GlobalThreading.Interlocked.Exchange(
+        Interlocked.Exchange(
                 ref this.cacheLocker,
                 null!)
             ?.Dispose();
@@ -280,7 +279,7 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         }
     }
 
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "We have to allocate an atomic enumerator.")]
@@ -312,7 +311,7 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         }
     }
 
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "We have to allocate an atomic enumerator.")]

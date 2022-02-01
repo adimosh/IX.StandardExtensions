@@ -2,12 +2,10 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Diagnostics;
 using IX.Observable.DebugAide;
 using IX.System.Threading;
 using JetBrains.Annotations;
-using GlobalThreading = System.Threading;
 
 namespace IX.Observable;
 
@@ -24,7 +22,7 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
 {
 #region Internal state
 
-    private Lazy<ReaderWriterLockSlim> locker;
+    private Lazy<System.Threading.ReaderWriterLockSlim> locker;
 
 #endregion
 
@@ -42,7 +40,7 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
     ///     Initializes a new instance of the <see cref="ConcurrentObservableMasterSlaveCollection{T}" /> class.
     /// </summary>
     /// <param name="context">The synchronization context to use, if any.</param>
-    public ConcurrentObservableMasterSlaveCollection(GlobalThreading.SynchronizationContext context)
+    public ConcurrentObservableMasterSlaveCollection(SynchronizationContext context)
         : base(context)
     {
         this.locker = EnvironmentSettings.GenerateDefaultLocker();
@@ -64,7 +62,7 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
     /// <param name="context">The synchronization context to use, if any.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableMasterSlaveCollection(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         bool suppressUndoable)
         : base(
             context,
@@ -93,7 +91,7 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
     /// </summary>
     protected override void DisposeManagedContext()
     {
-        Lazy<ReaderWriterLockSlim>? l = GlobalThreading.Interlocked.Exchange(
+        Lazy<System.Threading.ReaderWriterLockSlim>? l = Interlocked.Exchange(
             ref this.locker!,
             null!);
         if (l?.IsValueCreated ?? false)
@@ -109,7 +107,7 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
     /// </summary>
     protected override void DisposeGeneralContext()
     {
-        GlobalThreading.Interlocked.Exchange(
+        Interlocked.Exchange(
             ref this.locker!,
             null!);
 

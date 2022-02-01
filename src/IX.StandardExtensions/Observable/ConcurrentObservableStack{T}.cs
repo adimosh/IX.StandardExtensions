@@ -2,14 +2,12 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using IX.Observable.DebugAide;
 using IX.System.Threading;
 using JetBrains.Annotations;
-using GlobalThreading = System.Threading;
+using ReaderWriterLockSlim = IX.System.Threading.ReaderWriterLockSlim;
 
 namespace IX.Observable;
 
@@ -72,7 +70,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableStack{T}" /> class.
     /// </summary>
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
-    public ConcurrentObservableStack(GlobalThreading.SynchronizationContext context)
+    public ConcurrentObservableStack(SynchronizationContext context)
         : base(context)
     {
         this.locker = EnvironmentSettings.GenerateDefaultLocker();
@@ -84,7 +82,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
     /// <param name="capacity">The initial capacity of the stack.</param>
     public ConcurrentObservableStack(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         int capacity)
         : base(
             context,
@@ -99,7 +97,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
     /// <param name="collection">A collection of items to copy into the stack.</param>
     public ConcurrentObservableStack(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         IEnumerable<T> collection)
         : base(
             context,
@@ -154,7 +152,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableStack(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         bool suppressUndoable)
         : base(
             context,
@@ -170,7 +168,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     /// <param name="capacity">The initial capacity of the stack.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableStack(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         int capacity,
         bool suppressUndoable)
         : base(
@@ -188,7 +186,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     /// <param name="collection">A collection of items to copy into the stack.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableStack(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         IEnumerable<T> collection,
         bool suppressUndoable)
         : base(
@@ -218,7 +216,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     /// <param name="context">The streaming context.</param>
     [OnDeserializing]
     internal void OnDeserializingMethod(StreamingContext context) =>
-        GlobalThreading.Interlocked.Exchange(
+        Interlocked.Exchange(
             ref this.locker,
             EnvironmentSettings.GenerateDefaultLocker());
 
@@ -229,7 +227,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     /// </summary>
     protected override void DisposeManagedContext()
     {
-        Lazy<ReaderWriterLockSlim>? l = GlobalThreading.Interlocked.Exchange(
+        Lazy<ReaderWriterLockSlim>? l = Interlocked.Exchange(
             ref this.locker,
             null!);
         if (l?.IsValueCreated ?? false)
@@ -245,7 +243,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     /// </summary>
     protected override void DisposeGeneralContext()
     {
-        GlobalThreading.Interlocked.Exchange(
+        Interlocked.Exchange(
             ref this.locker,
             null!);
 

@@ -2,14 +2,11 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using IX.Observable.DebugAide;
 using IX.System.Threading;
 using JetBrains.Annotations;
-using GlobalThreading = System.Threading;
 
 namespace IX.Observable;
 
@@ -29,7 +26,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
 {
 #region Internal state
 
-    private Lazy<ReaderWriterLockSlim> locker;
+    private Lazy<System.Threading.ReaderWriterLockSlim> locker;
 
 #endregion
 
@@ -57,7 +54,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableList{T}" /> class.
     /// </summary>
     /// <param name="context">The synchronization context to use, if any.</param>
-    public ConcurrentObservableList(GlobalThreading.SynchronizationContext context)
+    public ConcurrentObservableList(SynchronizationContext context)
         : base(context)
     {
         this.locker = EnvironmentSettings.GenerateDefaultLocker();
@@ -70,7 +67,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     /// <param name="context">The context.</param>
     public ConcurrentObservableList(
         IEnumerable<T> source,
-        GlobalThreading.SynchronizationContext context)
+        SynchronizationContext context)
         : base(
             source,
             context)
@@ -109,7 +106,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     /// <param name="context">The synchronization context to use, if any.</param>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableList(
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         bool suppressUndoable)
         : base(
             context,
@@ -126,7 +123,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableList(
         IEnumerable<T> source,
-        GlobalThreading.SynchronizationContext context,
+        SynchronizationContext context,
         bool suppressUndoable)
         : base(
             source,
@@ -155,7 +152,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     /// <param name="context">The streaming context.</param>
     [OnDeserializing]
     internal void OnDeserializingMethod(StreamingContext context) =>
-        GlobalThreading.Interlocked.Exchange(
+        Interlocked.Exchange(
             ref this.locker,
             EnvironmentSettings.GenerateDefaultLocker());
 
@@ -166,7 +163,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     /// </summary>
     protected override void DisposeManagedContext()
     {
-        Lazy<ReaderWriterLockSlim>? l = GlobalThreading.Interlocked.Exchange(
+        Lazy<System.Threading.ReaderWriterLockSlim>? l = Interlocked.Exchange(
             ref this.locker!,
             null!);
         if (l?.IsValueCreated ?? false)
@@ -182,7 +179,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     /// </summary>
     protected override void DisposeGeneralContext()
     {
-        GlobalThreading.Interlocked.Exchange(
+        Interlocked.Exchange(
             ref this.locker!,
             null!);
 

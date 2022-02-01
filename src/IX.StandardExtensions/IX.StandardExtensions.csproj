@@ -12,6 +12,7 @@
   <PropertyGroup>
     <FailObsoleteTargetFrameworks>true</FailObsoleteTargetFrameworks>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <!-- Package metadata -->

@@ -4,6 +4,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
+[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "These are unit tests, we don't really care about XML docs.", Scope = "module")]
 [assembly: SuppressMessage("Performance", "HAA0301:Closure Allocation Source", Justification = "We're not really interested in closures in unit tests.", Scope = "module")]
 [assembly: SuppressMessage("Performance", "HAA0302:Display class allocation to capture closure", Justification = "We're not really interested in closures in unit tests.", Scope = "module")]
 [assembly: SuppressMessage("Performance", "HAA0603:Delegate allocation from a method group", Justification = "Not a concern in unit tests.", Scope = "module")]
