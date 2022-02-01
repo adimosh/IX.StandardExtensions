@@ -50,6 +50,16 @@ beforehand and tries their best to abide by them.
 
 Please be aware that this project is a sub-project of [IX.Framework](https://github.com/adimosh/IX.Framework). All credits and license information should be taken from there.
 
+Additionally, the character set detection engine featured at _IX.StandardExtensions.Globalization_ takes bits and pieces from various other projects, and is licensed as such.
+You can find the additional licenses in [/src/IX.StandardExtensions/StandardExtensions/Globalization/CharsetDetection/Licenses](src/IX.StandardExtensions/StandardExtensions/Globalization/CharsetDetection/Licenses).
+The character set detector itself is based (and imports most of the code from) [Julian Verdurmen](https://github.com/304NotModified)'s [UTF-Unknown](https://github.com/CharsetDetector/UTF-unknown) project. All applicable licenses translate to this code.
+Changes from that project are:
+- public classes have been made internal
+- as much as possible, code has been formatted in a better way
+- as much as possible, long has been used instead of int
+
+I have made an effort to keep the original files (headers and license notice included) intact as much as possible, however, adaptations will have occurred. I do not take any credit for that part of the code, all of it goes to Julian and the respective contributors and original developers.
+
 ## Usage
 
 The library exposes a lot of methods in an attempt to standardize the approach to code, so we'll just take a few examples.
