@@ -2,9 +2,11 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
+using IX.StandardExtensions.Globalization.CharsetDetectionContrib;
 using JetBrains.Annotations;
 using UtfUnknown.Core;
 using UtfUnknown.Core.Probers;
@@ -29,12 +31,12 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     private static readonly Lazy<CharsetProber[]> UnicodeProbers = new(
         () => new CharsetProber[]
         {
+            new PureProber(),
+            new EscCharsetProber(),
             new MBCSGroupProber(),
             new SBCSGroupProber(),
             new Latin1Prober()
         });
-
-    private static readonly Lazy<CharsetProber> EscapedAsciiProber = new(() => new EscCharsetProber());
 
     /// <summary>
     /// Gets a compatible encoding (if any is applicable) based on its short name.
@@ -238,7 +240,8 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         return this.Interpret(
             buffer,
             0,
-            count);
+            count,
+            cancellationToken);
     }
 
     /// <summary>
@@ -256,15 +259,183 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         return this.Interpret(
             buffer,
             0,
-            buffer.LongLength);
+            buffer.LongLength,
+            cancellationToken);
     }
 
-    private (Encoding? Encoding, float Confidence) Interpret(byte[] input, long offset, long length)
+    private (Encoding? Encoding, float Confidence) Interpret(byte[] input, long offset, long length, CancellationToken cancellationToken = default)
     {
         Requires.ValidArrayRange(in offset, in length, input);
 
         #region Check for byte-order mark
 
+        var checkResult = CheckBOM(
+            input,
+            offset,
+            length,
+            out var possibleEncoding);
+
+        if (checkResult)
+        {
+            return (possibleEncoding, possibleEncoding == null ? 0f : 1f);
+        }
+
+        #endregion
+
+        lock (UnicodeProbers)
+        {
+            try
+            {
+                byte[]? chunk = null;
+                while (length != 0)
+                {
+                    long toRead = length > 1000 ? 1000 : length;
+
+                    chunk ??= new byte[toRead];
+
+                    Array.Copy(
+                        input,
+                        offset,
+                        chunk,
+                        0,
+                        toRead);
+
+                    if (this.CheckSmallBuffer(
+                            chunk,
+                            (int)toRead,
+                            out var immediateResult))
+                    {
+                        return immediateResult;
+                    }
+
+                    offset += toRead;
+                    length -= toRead;
+                }
+
+                Encoding? finalEncoding = null;
+                float finalConfidence = 0f;
+
+                var mostLikelyCharset = UnicodeProbers.Value.Where(p => p.GetState() != ProbingState.NotMe)
+                    .Select(
+                        p => new
+                        {
+                            Confidence = p.GetConfidence(),
+                            Detected = p.GetCharsetName()
+                        })
+                    .Where(p => p.Confidence > 0.2f)
+                    .OrderByDescending(result => result.Confidence)
+                    .FirstOrDefault();
+
+                if (mostLikelyCharset != null)
+                {
+                    finalEncoding = GetCompatibleEncodingByShortName(mostLikelyCharset.Detected ?? CodepageName.ASCII);
+                    finalConfidence = mostLikelyCharset.Confidence;
+                }
+
+                return finalEncoding == null
+                    ? (null, 0f)
+                    : (finalEncoding, finalConfidence >= 0.99f ? 1.0f : finalConfidence);
+            }
+            finally
+            {
+                if (UnicodeProbers.IsValueCreated)
+                {
+                    foreach (var prober in UnicodeProbers.Value)
+                    {
+                        prober.Reset();
+                    }
+                }
+            }
+        }
+    }
+
+    private bool CheckSmallBuffer(
+        byte[] input,
+        int length,
+        out (Encoding? Encoding, float Confidence) definitiveAnswerResult)
+    {
+        foreach (var prober in UnicodeProbers.Value.Where(p => p.GetState() != ProbingState.NotMe))
+        {
+            if (prober.HandleData(
+                    input,
+                    0,
+                    length) !=
+                ProbingState.FoundIt)
+            {
+                // Not a definitive answer yet, keep searching
+                continue;
+            }
+
+            var encoding = GetCompatibleEncodingByShortName(prober.GetCharsetName());
+
+            if (encoding == null)
+            {
+                // Encoding may not actually be supported, let's keep searching
+                continue;
+            }
+
+            var confidence = prober.GetConfidence();
+
+            if (confidence >= 0.99f)
+            {
+                confidence = 1.0f;
+            }
+
+            // We've got a definitive encoding, let's return
+            definitiveAnswerResult = (encoding, confidence);
+
+            return true;
+        }
+
+        definitiveAnswerResult = default;
+        return false;
+    }
+
+    //private static (Encoding? Encoding, float Confidence) CheckEscapedAscii(byte[] input, long offset, long length)
+    //{
+    //    lock (EscapedAsciiProber)
+    //    {
+    //        try
+    //        {
+    //            // TODO: Change from int to long
+    //            ProbingState state;
+    //            state = EscapedAsciiProber.Value.HandleData(
+    //                input,
+    //                (int)offset,
+    //                (int)length);
+
+    //            if (state == ProbingState.FoundIt)
+    //            {
+    //                var encoding = GetCompatibleEncodingByShortName(EscapedAsciiProber.Value.GetCharsetName());
+    //                if (encoding == null)
+    //                {
+    //                    return default;
+    //                }
+
+    //                return (encoding,
+    //                    EscapedAsciiProber.Value.GetConfidence());
+    //            }
+
+    //            // TODO: Bug in EscCharsetProber, but ASCII validation has passed nonetheless - return to this when original bug is fixed.
+    //            // https://github.com/CharsetDetector/UTF-unknown/blob/c24d58d286d1e9639611453f8055f5aa122c3c6b/src/CharsetDetector.cs#L470
+    //            return (Encoding.ASCII, 1.0f);
+    //        }
+    //        finally
+    //        {
+    //            if (EscapedAsciiProber.IsValueCreated)
+    //            {
+    //                EscapedAsciiProber.Value.Reset();
+    //            }
+    //        }
+    //    }
+    //}
+
+    private static bool CheckBOM(
+        byte[] input,
+        long offset,
+        long length,
+        out Encoding? encoding)
+    {
         switch (input[offset])
         {
             case 0xEF:
@@ -272,7 +443,9 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
                 if (length >= 3 && input[offset + 1] == 0xBB && input[offset + 2] == 0xBF)
                 {
                     // BOM recognized as UTF8
-                    return (Encoding.UTF8, 1f);
+                    encoding = Encoding.UTF8;
+
+                    return true;
                 }
 
                 break;
@@ -283,12 +456,16 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
                     if (length >= 4 && input[offset + 2] == 0x00 && input[offset + 3] == 0x00)
                     {
                         // UCS4 (3412) - UNSUPPORTED YET, probably never
-                        // return (Encoding.GetEncoding(CodepageName.X_ISO_10646_UCS_4_3412), 1.0f);
-                        return (null, 0f);
+                        // encoding = Encoding.GetEncoding(CodepageName.X_ISO_10646_UCS_4_3412);
+                        encoding = null;
+
+                        return true;
                     }
 
                     // UTF-16 big-endian
-                    return (Encoding.BigEndianUnicode, 1.0f);
+                    encoding = Encoding.BigEndianUnicode;
+
+                    return true;
                 }
 
                 break;
@@ -300,10 +477,14 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
                     if (length >= 4 && input[offset + 2] == 0x00 && input[offset + 3] == 0x00)
                     {
                         // UTF32 little-endian
-                        return (Encoding.UTF32, 1.0f);
+                        encoding = Encoding.UTF32;
+
+                        return true;
                     }
 
-                    return (Encoding.Unicode, 1.0f);
+                    encoding = Encoding.Unicode;
+
+                    return true;
                 }
 
                 break;
@@ -315,14 +496,18 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
                     if (input[offset + 2] == 0xFE && input[offset + 3] == 0xFF)
                     {
                         // UTF32 big-endian
-                        return (Encoding.GetEncoding(12001), 1.0f);
+                        encoding = Encoding.GetEncoding(12001);
+
+                        return true;
                     }
 
                     if (input[offset + 2] == 0xFF && input[offset + 3] == 0xFE)
                     {
                         // UCS4 (2143) - UNSUPPORTED YET, probably never
-                        // return (Encoding.GetEncoding(CodepageName.X_ISO_10646_UCS_4_2143), 1.0f);
-                        return (null, 0f);
+                        // encoding = Encoding.GetEncoding(CodepageName.X_ISO_10646_UCS_4_2143);
+                        encoding = null;
+
+                        return true;
                     }
                 }
 
@@ -333,9 +518,18 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
                 if (length >= 4 &&
                     input[offset + 1] == 0x2F &&
                     input[offset + 2] == 0x76 &&
-                    (input[offset + 3] == 0x38 || input[offset + 3] == 0x39 || input[offset + 3] == 0x2B || input[offset + 3] == 0x2F))
+                    (input[offset + 3] == 0x38 ||
+                     input[offset + 3] == 0x39 ||
+                     input[offset + 3] == 0x2B ||
+                     input[offset + 3] == 0x2F))
                 {
-                    return (Encoding.UTF7, 1.0f);
+#pragma warning disable SYSLIB0001 // Type or member is obsolete - it is still currently in use and can be recognized
+#pragma warning disable CS0618
+                    encoding = Encoding.UTF7;
+#pragma warning restore CS0618
+#pragma warning restore SYSLIB0001 // Type or member is obsolete
+
+                    return true;
                 }
 
                 break;
@@ -344,150 +538,16 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
                 // GB18030
                 if (length >= 4 && input[offset + 1] == 0x31 && input[offset + 2] == 0x95 && input[offset + 3] == 0x33)
                 {
-                    return (Encoding.GetEncoding(54936), 1.0f);
+                    encoding = Encoding.GetEncoding(54936);
+
+                    return true;
                 }
 
                 break;
         }
 
-        #endregion
+        encoding = null;
 
-        #region Initial probe for pure ASCII
-
-        bool? pureAscii = true; // NULL: high-byte, false: escaped ASCII, true: pure ASCII
-        byte lastByte = 0;
-
-        for (long i = offset; i < offset + length; i++)
-        {
-            if ((input[i] & 0x80) != 0 && input[i] != 0xA0)
-            {
-                // We found a non-ASCII byte (high-byte), let's not move on
-                pureAscii = null;
-
-                break;
-            }
-            else
-            {
-                if (pureAscii == true &&
-                    (input[i] == 0x1B || (input[i] == 0x7B && lastByte == 0x7E)))
-                {
-                    // We found escape character or HZ "~{" - Could be escaped ASCII, but we
-                    // should continue probing for high bytes
-                    pureAscii = false;
-                }
-
-                lastByte = input[i];
-            }
-        }
-
-        if (pureAscii == true)
-        {
-            return (Encoding.ASCII, 1.0f);
-        }
-
-        #endregion
-
-        #region Probe for escaped ASCII
-
-        if (pureAscii == false)
-        {
-            lock (EscapedAsciiProber)
-            {
-                try
-                {
-                    // TODO: Change from int to long
-                    ProbingState state;
-                    state = EscapedAsciiProber.Value.HandleData(
-                        input,
-                        (int)offset,
-                        (int)length);
-
-                    if (state == ProbingState.FoundIt)
-                    {
-                        return (GetCompatibleEncodingByShortName(EscapedAsciiProber.Value.GetCharsetName()),
-                            EscapedAsciiProber.Value.GetConfidence());
-                    }
-
-                    // TODO: Bug in EscCharsetProber, but ASCII validation has passed nonetheless - return to this when original bug is fixed.
-                    // https://github.com/CharsetDetector/UTF-unknown/blob/c24d58d286d1e9639611453f8055f5aa122c3c6b/src/CharsetDetector.cs#L470
-                    return (Encoding.ASCII, 1.0f);
-                }
-                finally
-                {
-                    if (EscapedAsciiProber.IsValueCreated)
-                    {
-                        EscapedAsciiProber.Value.Reset();
-                    }
-                }
-            }
-        }
-
-        #endregion
-
-        #region Probe for more complex charsets
-
-        Encoding? finalEncoding = null;
-        float finalConfidence = 0f;
-        lock (UnicodeProbers)
-        {
-            try
-            {
-                foreach (var prober in UnicodeProbers.Value)
-                {
-                    if (prober.HandleData(
-                            input,
-                            (int)offset,
-                            (int)length) ==
-                        ProbingState.FoundIt)
-                    {
-                        var encoding = GetCompatibleEncodingByShortName(prober.GetCharsetName());
-
-                        if (encoding != null)
-                        {
-                            var confidence = prober.GetConfidence();
-
-                            if (confidence >= 0.99f)
-                            {
-                                confidence = 1.0f;
-                            }
-
-                            return (encoding, confidence);
-                        }
-                    }
-                }
-
-                var probersArrangedList = UnicodeProbers.Value.Select(
-                        p => new
-                        {
-                            Confidence = p.GetConfidence(),
-                            Detected = p.GetCharsetName()
-                        })
-                    .Where(p => p.Confidence > 0.2f)
-                    .OrderByDescending(result => result.Confidence).ToArray();
-                var mostLikelyCharset = probersArrangedList
-                    .FirstOrDefault();
-
-                if (mostLikelyCharset != null)
-                {
-                    finalEncoding = GetCompatibleEncodingByShortName(mostLikelyCharset.Detected);
-                    finalConfidence = mostLikelyCharset.Confidence;
-                }
-            }
-            finally
-            {
-                // Let's reset every prober
-                if (UnicodeProbers.IsValueCreated)
-                {
-                    foreach (var prober in UnicodeProbers.Value)
-                    {
-                        prober.Reset();
-                    }
-                }
-            }
-        }
-
-        #endregion
-
-        return finalEncoding == null ? (null, 0f) : (finalEncoding, finalConfidence >= 0.99f ? 1.0f : finalConfidence);
+        return false;
     }
 }

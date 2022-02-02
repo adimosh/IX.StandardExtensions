@@ -86,6 +86,14 @@ internal class EscCharsetProber : CharsetProber
 
         for (var i = offset; i < max && this.state == ProbingState.Detecting; i++)
         {
+            if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
+            {
+                // High-byte found, let's get out of here
+                this.state = ProbingState.NotMe;
+
+                return this.state;
+            }
+
             for (var j = this.activeSM - 1; j >= 0; j--)
             {
                 // byte is feed to all active state machine
