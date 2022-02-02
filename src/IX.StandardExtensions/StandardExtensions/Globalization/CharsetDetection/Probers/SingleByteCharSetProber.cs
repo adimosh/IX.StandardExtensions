@@ -233,6 +233,7 @@ internal class SingleByteCharSetProber : CharsetProber
 
         this.totalSeqs = 0;
         this.totalChar = 0;
+        this.ctrlChar = 0;
         this.freqChar = 0;
     }
 

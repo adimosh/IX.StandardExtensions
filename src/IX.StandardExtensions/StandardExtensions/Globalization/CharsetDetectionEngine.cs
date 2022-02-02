@@ -2,13 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 using JetBrains.Annotations;
@@ -60,7 +54,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         }
         catch (ArgumentException)
         {
-            #if NETSTANDARD
+#if NETSTANDARD
             try
             {
                 return CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
@@ -69,9 +63,9 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
             {
                 return null;
             }
-            #else
-                return null;
-            #endif
+#else
+            return null;
+#endif
         }
     }
 
@@ -151,7 +145,6 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     /// Read data from a byte array and feed it into the recognition engine.
     /// </summary>
     /// <param name="buffer">The buffer to read from.</param>
-    /// <param name="count">The number of bytes to read.</param>
     /// <returns>The interpretation result.</returns>
     public (Encoding? Encoding, float Confidence) Read(
         byte[] buffer)
@@ -197,7 +190,8 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         await stream.ReadAsync(
             buffer,
             0,
-            limit);
+            limit,
+            cancellationToken);
 
         return this.Interpret(
             buffer,
@@ -397,79 +391,103 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
 
         if (pureAscii == false)
         {
-            // TODO: Change from int to long
-            ProbingState state;
             lock (EscapedAsciiProber)
             {
-                state = EscapedAsciiProber.Value.HandleData(
-                    input,
-                    (int)offset,
-                    (int)length);
-                EscapedAsciiProber.Value.Reset();
-            }
+                try
+                {
+                    // TODO: Change from int to long
+                    ProbingState state;
+                    state = EscapedAsciiProber.Value.HandleData(
+                        input,
+                        (int)offset,
+                        (int)length);
 
-            if (state == ProbingState.FoundIt)
-            {
-                return (Encoding.ASCII, 1.0f);
-            }
+                    if (state == ProbingState.FoundIt)
+                    {
+                        return (GetCompatibleEncodingByShortName(EscapedAsciiProber.Value.GetCharsetName()),
+                            EscapedAsciiProber.Value.GetConfidence());
+                    }
 
-            // TODO: Bug in EscCharsetProber, but ASCII validation has passed nonetheless - return to this when original bug is fixed.
-            // https://github.com/CharsetDetector/UTF-unknown/blob/c24d58d286d1e9639611453f8055f5aa122c3c6b/src/CharsetDetector.cs#L470
-            return (Encoding.ASCII, 1.0f);
+                    // TODO: Bug in EscCharsetProber, but ASCII validation has passed nonetheless - return to this when original bug is fixed.
+                    // https://github.com/CharsetDetector/UTF-unknown/blob/c24d58d286d1e9639611453f8055f5aa122c3c6b/src/CharsetDetector.cs#L470
+                    return (Encoding.ASCII, 1.0f);
+                }
+                finally
+                {
+                    if (EscapedAsciiProber.IsValueCreated)
+                    {
+                        EscapedAsciiProber.Value.Reset();
+                    }
+                }
+            }
         }
 
         #endregion
 
         #region Probe for more complex charsets
 
-        Encoding? finalEncoding;
-        float finalConfidence;
+        Encoding? finalEncoding = null;
+        float finalConfidence = 0f;
         lock (UnicodeProbers)
         {
-            foreach (var prober in UnicodeProbers.Value)
+            try
             {
-                if (prober.HandleData(
-                        input,
-                        (int)offset,
-                        (int)length) ==
-                    ProbingState.FoundIt)
+                foreach (var prober in UnicodeProbers.Value)
                 {
-                    var encoding = GetCompatibleEncodingByShortName(prober.GetCharsetName());
-
-                    if (encoding != null)
+                    if (prober.HandleData(
+                            input,
+                            (int)offset,
+                            (int)length) ==
+                        ProbingState.FoundIt)
                     {
-                        var confidence = prober.GetConfidence();
+                        var encoding = GetCompatibleEncodingByShortName(prober.GetCharsetName());
 
-                        if (confidence > 0.97f)
+                        if (encoding != null)
                         {
-                            confidence = 1.0f;
-                        }
+                            var confidence = prober.GetConfidence();
 
-                        return (encoding, confidence);
+                            if (confidence >= 0.99f)
+                            {
+                                confidence = 1.0f;
+                            }
+
+                            return (encoding, confidence);
+                        }
+                    }
+                }
+
+                var probersArrangedList = UnicodeProbers.Value.Select(
+                        p => new
+                        {
+                            Confidence = p.GetConfidence(),
+                            Detected = p.GetCharsetName()
+                        })
+                    .Where(p => p.Confidence > 0.2f)
+                    .OrderByDescending(result => result.Confidence).ToArray();
+                var mostLikelyCharset = probersArrangedList
+                    .FirstOrDefault();
+
+                if (mostLikelyCharset != null)
+                {
+                    finalEncoding = GetCompatibleEncodingByShortName(mostLikelyCharset.Detected);
+                    finalConfidence = mostLikelyCharset.Confidence;
+                }
+            }
+            finally
+            {
+                // Let's reset every prober
+                if (UnicodeProbers.IsValueCreated)
+                {
+                    foreach (var prober in UnicodeProbers.Value)
+                    {
+                        prober.Reset();
                     }
                 }
             }
-
-            var mostLikelyCharset = UnicodeProbers.Value.Select(
-                    p => new
-                    {
-                        Confidence = p.GetConfidence(),
-                        Detected = p.GetCharsetName()
-                    })
-                .Where(p => p.Confidence > 0.2f)
-                .OrderByDescending(result => result.Confidence)
-                .First();
-
-            foreach (var prober in UnicodeProbers.Value)
-            {
-                prober.Reset();
-            }
-
-            finalEncoding = GetCompatibleEncodingByShortName(mostLikelyCharset.Detected);
-            finalConfidence = mostLikelyCharset.Confidence;
         }
 
         #endregion
-        return finalEncoding == null ? (null, 0f) : (finalEncoding, finalConfidence);
+
+        return finalEncoding == null ? (null, 0f) : (finalEncoding, finalConfidence >= 0.99f ? 1.0f : finalConfidence);
     }
 }
