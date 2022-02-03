@@ -8,7 +8,10 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
+using IX.StandardExtensions.Extensions;
 using IX.StandardExtensions.Globalization;
 using JetBrains.Annotations;
 using Xunit;
@@ -47,9 +50,9 @@ public class CharsetDetectorDataUnitTests
             }).Select(p => new object[] { p }).ToList();
     }
 
-    [Theory]
+    [Theory(DisplayName = "Synchronous encoding stream tests")]
     [MemberData(nameof(AllTestFiles))]
-    public void TestFile(TestCase testCase)
+    public void TestStreamSync(TestCase testCase)
     {
         Encoding expectedEncoding = CharsetDetectionEngine.GetCompatibleEncodingByShortName(testCase.ExpectedEncoding);
 
@@ -62,6 +65,69 @@ public class CharsetDetectorDataUnitTests
             true);
 
         var result = new CharsetDetectionEngine().Read(za.Entries.First(p => p.FullName == testCase.InputFile).Open());
+
+        Assert.NotNull(result.Encoding);
+        this.outputHelper.WriteLine($"- {testCase.FileName} ({testCase.ExpectedEncoding}) -> {result.Encoding.WebName}");
+        Assert.Equal(expectedEncoding, result.Encoding);
+    }
+
+    [Theory(DisplayName = "Asynchronous encoding stream tests")]
+    [MemberData(nameof(AllTestFiles))]
+    public async Task TestStreamAsync(TestCase testCase, CancellationToken cancellationToken = default)
+    {
+        Encoding expectedEncoding = CharsetDetectionEngine.GetCompatibleEncodingByShortName(testCase.ExpectedEncoding);
+
+        var stream = Requires.NotNull(Assembly.GetExecutingAssembly()
+            .GetManifestResourceStream("IX.UnitTests.StandardExtensions.Globalization.data.zip"));
+
+        ZipArchive za = new ZipArchive(
+            stream,
+            ZipArchiveMode.Read,
+            true);
+
+        var result = await new CharsetDetectionEngine().ReadAsync(za.Entries.First(p => p.FullName == testCase.InputFile).Open(), cancellationToken);
+
+        Assert.NotNull(result.Encoding);
+        this.outputHelper.WriteLine($"- {testCase.FileName} ({testCase.ExpectedEncoding}) -> {result.Encoding.WebName}");
+        Assert.Equal(expectedEncoding, result.Encoding);
+    }
+
+    [Theory(DisplayName = "Synchronous encoding buffer tests")]
+    [MemberData(nameof(AllTestFiles))]
+    public void TestBufferSync(TestCase testCase)
+    {
+        Encoding expectedEncoding = CharsetDetectionEngine.GetCompatibleEncodingByShortName(testCase.ExpectedEncoding);
+
+        var stream = Requires.NotNull(Assembly.GetExecutingAssembly()
+            .GetManifestResourceStream("IX.UnitTests.StandardExtensions.Globalization.data.zip"));
+
+        ZipArchive za = new ZipArchive(
+            stream,
+            ZipArchiveMode.Read,
+            true);
+
+        var result = new CharsetDetectionEngine().Read(za.Entries.First(p => p.FullName == testCase.InputFile).Open().ReadAllBytes());
+
+        Assert.NotNull(result.Encoding);
+        this.outputHelper.WriteLine($"- {testCase.FileName} ({testCase.ExpectedEncoding}) -> {result.Encoding.WebName}");
+        Assert.Equal(expectedEncoding, result.Encoding);
+    }
+
+    [Theory(DisplayName = "Asynchronous encoding buffer tests")]
+    [MemberData(nameof(AllTestFiles))]
+    public async Task TestBufferAsync(TestCase testCase, CancellationToken cancellationToken = default)
+    {
+        Encoding expectedEncoding = CharsetDetectionEngine.GetCompatibleEncodingByShortName(testCase.ExpectedEncoding);
+
+        var stream = Requires.NotNull(Assembly.GetExecutingAssembly()
+            .GetManifestResourceStream("IX.UnitTests.StandardExtensions.Globalization.data.zip"));
+
+        ZipArchive za = new ZipArchive(
+            stream,
+            ZipArchiveMode.Read,
+            true);
+
+        var result = await new CharsetDetectionEngine().ReadAsync(await za.Entries.First(p => p.FullName == testCase.InputFile).Open().ReadAllBytesAsync(cancellationToken), cancellationToken);
 
         Assert.NotNull(result.Encoding);
         this.outputHelper.WriteLine($"- {testCase.FileName} ({testCase.ExpectedEncoding}) -> {result.Encoding.WebName}");
