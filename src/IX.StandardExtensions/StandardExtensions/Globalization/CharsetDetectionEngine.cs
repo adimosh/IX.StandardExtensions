@@ -4,7 +4,7 @@
 
 using System.Text;
 using IX.StandardExtensions.Contracts;
-using IX.StandardExtensions.Extensions;
+using IX.StandardExtensions.Efficiency;
 using IX.StandardExtensions.Globalization.CharsetDetectionContrib;
 using JetBrains.Annotations;
 using UtfUnknown.Core;
@@ -27,7 +27,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
             { CodepageName.ISO_2022_CN, CodepageName.X_CP50227 },
         };
 
-    private static readonly Lazy<CharsetProber[]> UnicodeProbers = new(
+    private static readonly ObjectPool<CharsetProber[]> UnicodeProbersPool = new(
         () => new CharsetProber[]
         {
             new PureProber(),
@@ -55,7 +55,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         }
         catch (ArgumentException)
         {
-            #if STANDARD_GT_20
+#if STANDARD_GT_20
             try
             {
                 return CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
@@ -64,9 +64,9 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
             {
                 return null;
             }
-            #else
+#else
             return null;
-            #endif
+#endif
         }
     }
 
@@ -196,15 +196,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     /// </summary>
     /// <param name="stream">The stream to read from.</param>
     /// <returns>The interpretation result.</returns>
-    public (Encoding? Encoding, float Confidence) Read(Stream stream)
-    {
-        var buffer = stream.ReadAllBytes();
-
-        return this.Interpret(
-            buffer,
-            0,
-            buffer.LongLength);
-    }
+    public (Encoding? Encoding, float Confidence) Read(Stream stream) => this.Interpret(stream);
 
     /// <summary>
     /// Read data from a stream and feed it into the recognition engine.
@@ -214,20 +206,23 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     /// <returns>The interpretation result.</returns>
     public (Encoding? Encoding, float Confidence) Read(
         Stream stream,
-        int limit)
-    {
-        byte[] buffer = new byte[limit];
-
-        _ = stream.Read(
-            buffer,
-            0,
+        int limit) =>
+        this.Interpret(
+            stream,
             limit);
 
-        return this.Interpret(
-            buffer,
-            0,
+    /// <summary>
+    /// Read data from a stream and feed it into the recognition engine.
+    /// </summary>
+    /// <param name="stream">The stream to read from.</param>
+    /// <param name="limit">The limit on the number of bytes to read, if available.</param>
+    /// <returns>The interpretation result.</returns>
+    public (Encoding? Encoding, float Confidence) Read(
+        Stream stream,
+        long limit) =>
+        this.Interpret(
+            stream,
             limit);
-    }
 
     /// <summary>
     /// Read data from a byte array and feed it into the recognition engine.
@@ -239,13 +234,11 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     public (Encoding? Encoding, float Confidence) Read(
         byte[] buffer,
         int offset,
-        int count)
-    {
-        return this.Interpret(
+        int count) =>
+        this.Interpret(
             buffer,
             offset,
             count);
-    }
 
     /// <summary>
     /// Read data from a byte array and feed it into the recognition engine.
@@ -255,13 +248,11 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     /// <returns>The interpretation result.</returns>
     public (Encoding? Encoding, float Confidence) Read(
         byte[] buffer,
-        int count)
-    {
-        return this.Interpret(
+        int count) =>
+        this.Interpret(
             buffer,
             0,
             count);
-    }
 
     /// <summary>
     /// Read data from a byte array and feed it into the recognition engine.
@@ -269,13 +260,11 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     /// <param name="buffer">The buffer to read from.</param>
     /// <returns>The interpretation result.</returns>
     public (Encoding? Encoding, float Confidence) Read(
-        byte[] buffer)
-    {
-        return this.Interpret(
+        byte[] buffer) =>
+        this.Interpret(
             buffer,
             0,
             buffer.LongLength);
-    }
 
     /// <summary>
     /// Asynchronously read data from a stream and feed it into the recognition engine.
@@ -283,17 +272,12 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     /// <param name="stream">The stream to read from.</param>
     /// <param name="cancellationToken">The cancellation token for this operation.</param>
     /// <returns>A task representing this asynchronous operation, containing the interpretation result.</returns>
-    public async Task<(Encoding? Encoding, float Confidence)> ReadAsync(
+    public Task<(Encoding? Encoding, float Confidence)> ReadAsync(
         Stream stream,
-        CancellationToken cancellationToken = default)
-    {
-        var buffer = await stream.ReadAllBytesAsync(cancellationToken);
-
-        return this.Interpret(
-            buffer,
-            0,
-            buffer.LongLength);
-    }
+        CancellationToken cancellationToken = default) =>
+        this.InterpretAsync(
+            stream,
+            cancellationToken: cancellationToken);
 
     /// <summary>
     /// Asynchronously read data from a stream and feed it into the recognition engine.
@@ -302,24 +286,30 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     /// <param name="limit">The limit on the number of bytes to read, if available.</param>
     /// <param name="cancellationToken">The cancellation token for this operation.</param>
     /// <returns>A task representing this asynchronous operation, containing the interpretation result.</returns>
-    public async Task<(Encoding? Encoding, float Confidence)> ReadAsync(
+    public Task<(Encoding? Encoding, float Confidence)> ReadAsync(
         Stream stream,
         int limit,
-        CancellationToken cancellationToken = default)
-    {
-        byte[] buffer = new byte[limit];
-
-        await stream.ReadAsync(
-            buffer,
-            0,
+        CancellationToken cancellationToken = default) =>
+        this.InterpretAsync(
+            stream,
             limit,
             cancellationToken);
 
-        return this.Interpret(
-            buffer,
-            0,
-            limit);
-    }
+    /// <summary>
+    /// Asynchronously read data from a stream and feed it into the recognition engine.
+    /// </summary>
+    /// <param name="stream">The stream to read from.</param>
+    /// <param name="limit">The limit on the number of bytes to read, if available.</param>
+    /// <param name="cancellationToken">The cancellation token for this operation.</param>
+    /// <returns>A task representing this asynchronous operation, containing the interpretation result.</returns>
+    public Task<(Encoding? Encoding, float Confidence)> ReadAsync(
+        Stream stream,
+        long limit,
+        CancellationToken cancellationToken = default) =>
+        this.InterpretAsync(
+            stream,
+            limit,
+            cancellationToken);
 
     /// <summary>
     /// Asynchronously read data from a byte array and feed it into the recognition engine.
@@ -436,81 +426,280 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        lock (UnicodeProbers)
+        using var probers = UnicodeProbersPool.Get();
+
+        try
         {
-            try
+            byte[]? chunk = null;
+            while (length != 0)
             {
-                byte[]? chunk = null;
-                while (length != 0)
+                long toRead = length > 1000 ? 1000 : length;
+
+                chunk ??= new byte[toRead];
+
+                Array.Copy(
+                    input,
+                    offset,
+                    chunk,
+                    0,
+                    toRead);
+
+                if (this.CheckSmallBuffer(
+                        probers.Value,
+                        chunk,
+                        (int)toRead,
+                        out var immediateResult))
                 {
-                    long toRead = length > 1000 ? 1000 : length;
+                    return immediateResult;
+                }
 
-                    chunk ??= new byte[toRead];
+                cancellationToken.ThrowIfCancellationRequested();
 
-                    Array.Copy(
-                        input,
-                        offset,
+                offset += toRead;
+                length -= toRead;
+            }
+
+            Encoding? finalEncoding = null;
+            float finalConfidence = 0f;
+
+            var mostLikelyCharset = probers.Value.Where(p => p.GetState() != ProbingState.NotMe)
+                .Select(
+                    p => new
+                    {
+                        Confidence = p.GetConfidence(),
+                        Detected = p.GetCharsetName()
+                    })
+                .Where(p => p.Confidence > 0.2f)
+                .OrderByDescending(result => result.Confidence)
+                .FirstOrDefault();
+
+            if (mostLikelyCharset != null)
+            {
+                finalEncoding = GetCompatibleEncodingByShortName(mostLikelyCharset.Detected);
+                finalConfidence = mostLikelyCharset.Confidence;
+            }
+
+            return finalEncoding == null
+                ? (null, 0f)
+                : (finalEncoding, finalConfidence >= 0.99f ? 1.0f : finalConfidence);
+        }
+        finally
+        {
+            foreach (var prober in probers.Value)
+            {
+                prober.Reset();
+            }
+        }
+    }
+
+    private (Encoding? Encoding, float Confidence) Interpret(Stream stream, long? length = null, CancellationToken cancellationToken = default)
+    {
+        if (length != null)
+        {
+            Requires.Positive(length.Value);
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+
+        bool firstTime = true;
+
+        using var probers = UnicodeProbersPool.Get();
+
+        try
+        {
+            byte[]? chunk = null;
+            while (length != 0)
+            {
+                int toRead = (length ?? 1001) > 1000 ? 1000 : (int)length!.Value;
+
+                chunk ??= new byte[toRead];
+
+                var readBytes = stream.Read(
+                    chunk,
+                    0,
+                    toRead);
+
+                if (readBytes == 0)
+                {
+                    break;
+                }
+
+                #region Check for byte-order mark
+
+                if (firstTime)
+                {
+                    var checkResult = CheckByteOrderMark(
                         chunk,
                         0,
-                        toRead);
+                        readBytes,
+                        out var possibleEncoding);
 
-                    if (this.CheckSmallBuffer(
-                            chunk,
-                            (int)toRead,
-                            out var immediateResult))
+                    if (checkResult)
                     {
-                        return immediateResult;
+                        return (possibleEncoding, possibleEncoding == null ? 0f : 1f);
                     }
 
-                    cancellationToken.ThrowIfCancellationRequested();
-
-                    offset += toRead;
-                    length -= toRead;
+                    firstTime = false;
                 }
 
-                Encoding? finalEncoding = null;
-                float finalConfidence = 0f;
+                #endregion
 
-                var mostLikelyCharset = UnicodeProbers.Value.Where(p => p.GetState() != ProbingState.NotMe)
-                    .Select(
-                        p => new
-                        {
-                            Confidence = p.GetConfidence(),
-                            Detected = p.GetCharsetName()
-                        })
-                    .Where(p => p.Confidence > 0.2f)
-                    .OrderByDescending(result => result.Confidence)
-                    .FirstOrDefault();
-
-                if (mostLikelyCharset != null)
+                if (this.CheckSmallBuffer(
+                        probers.Value,
+                        chunk,
+                        readBytes,
+                        out var immediateResult))
                 {
-                    finalEncoding = GetCompatibleEncodingByShortName(mostLikelyCharset.Detected);
-                    finalConfidence = mostLikelyCharset.Confidence;
+                    return immediateResult;
                 }
 
-                return finalEncoding == null
-                    ? (null, 0f)
-                    : (finalEncoding, finalConfidence >= 0.99f ? 1.0f : finalConfidence);
+                cancellationToken.ThrowIfCancellationRequested();
+
+                length -= readBytes;
             }
-            finally
-            {
-                if (UnicodeProbers.IsValueCreated)
-                {
-                    foreach (var prober in UnicodeProbers.Value)
+
+            Encoding? finalEncoding = null;
+            float finalConfidence = 0f;
+
+            var mostLikelyCharset = probers.Value.Where(p => p.GetState() != ProbingState.NotMe)
+                .Select(
+                    p => new
                     {
-                        prober.Reset();
-                    }
+                        Confidence = p.GetConfidence(),
+                        Detected = p.GetCharsetName()
+                    })
+                .Where(p => p.Confidence > 0.2f)
+                .OrderByDescending(result => result.Confidence)
+                .FirstOrDefault();
+
+            if (mostLikelyCharset != null)
+            {
+                finalEncoding = GetCompatibleEncodingByShortName(mostLikelyCharset.Detected);
+                finalConfidence = mostLikelyCharset.Confidence;
+            }
+
+            return finalEncoding == null
+                ? (null, 0f)
+                : (finalEncoding, finalConfidence >= 0.99f ? 1.0f : finalConfidence);
+        }
+        finally
+        {
+            foreach (var prober in probers.Value)
+            {
+                prober.Reset();
+            }
+        }
+    }
+
+    private async Task<(Encoding? Encoding, float Confidence)> InterpretAsync(Stream stream, long? length = null, CancellationToken cancellationToken = default)
+    {
+        if (length != null)
+        {
+            Requires.Positive(length.Value);
+        }
+
+        await Task.Yield();
+
+        cancellationToken.ThrowIfCancellationRequested();
+
+        bool firstTime = true;
+
+        using var probers = UnicodeProbersPool.Get();
+
+        try
+        {
+            byte[]? chunk = null;
+            while (length != 0)
+            {
+                int toRead = (length ?? 1001) > 1000 ? 1000 : (int)length!.Value;
+
+                chunk ??= new byte[toRead];
+
+                var readBytes = await stream.ReadAsync(
+                    chunk,
+                    0,
+                    toRead,
+                    cancellationToken);
+
+                if (readBytes == 0)
+                {
+                    break;
                 }
+
+                #region Check for byte-order mark
+
+                if (firstTime)
+                {
+                    var checkResult = CheckByteOrderMark(
+                        chunk,
+                        0,
+                        readBytes,
+                        out var possibleEncoding);
+
+                    if (checkResult)
+                    {
+                        return (possibleEncoding, possibleEncoding == null ? 0f : 1f);
+                    }
+
+                    firstTime = false;
+                }
+
+                #endregion
+
+                if (this.CheckSmallBuffer(
+                        probers.Value,
+                        chunk,
+                        readBytes,
+                        out var immediateResult))
+                {
+                    return immediateResult;
+                }
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                length -= readBytes;
+            }
+
+            Encoding? finalEncoding = null;
+            float finalConfidence = 0f;
+
+            var mostLikelyCharset = probers.Value.Where(p => p.GetState() != ProbingState.NotMe)
+                .Select(
+                    p => new
+                    {
+                        Confidence = p.GetConfidence(),
+                        Detected = p.GetCharsetName()
+                    })
+                .Where(p => p.Confidence > 0.2f)
+                .OrderByDescending(result => result.Confidence)
+                .FirstOrDefault();
+
+            if (mostLikelyCharset != null)
+            {
+                finalEncoding = GetCompatibleEncodingByShortName(mostLikelyCharset.Detected);
+                finalConfidence = mostLikelyCharset.Confidence;
+            }
+
+            return finalEncoding == null
+                ? (null, 0f)
+                : (finalEncoding, finalConfidence >= 0.99f ? 1.0f : finalConfidence);
+        }
+        finally
+        {
+            foreach (var prober in probers.Value)
+            {
+                prober.Reset();
             }
         }
     }
 
     private bool CheckSmallBuffer(
+        CharsetProber[] probers,
         byte[] input,
         int length,
         out (Encoding? Encoding, float Confidence) definitiveAnswerResult)
     {
-        foreach (var prober in UnicodeProbers.Value.Where(p => p.GetState() != ProbingState.NotMe))
+        foreach (var prober in probers.Where(p => p.GetState() != ProbingState.NotMe))
         {
             if (prober.HandleData(
                     input,
