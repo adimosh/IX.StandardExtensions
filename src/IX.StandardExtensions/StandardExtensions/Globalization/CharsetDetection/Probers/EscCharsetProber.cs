@@ -50,7 +50,7 @@ namespace UtfUnknown.Core.Probers;
 internal class EscCharsetProber : CharsetProber
 {
     private const int CHARSETS_NUM = 4;
-    private string detectedCharset;
+    private string? detectedCharset;
     private CodingStateMachine[] codingSM;
     private int activeSM;
 
@@ -130,7 +130,7 @@ internal class EscCharsetProber : CharsetProber
         return this.state;
     }
 
-    public override string GetCharsetName() => this.detectedCharset;
+    public override string GetCharsetName() => this.detectedCharset ?? CodepageName.ASCII;
 
     public override float GetConfidence(StringBuilder status = null) => 0.99f;
 }

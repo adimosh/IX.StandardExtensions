@@ -115,7 +115,7 @@ public class CharsetDetectorSimpleUnitTests
     {
         var bufferBytes = new byte[] { 0x84, 0x31, 0x95, 0x33 };
         var result = new CharsetDetectionEngine().Read(bufferBytes);
-        Assert.Equal(Encoding.GetEncoding(CodepageName.GB18030), result.Encoding);
+        Assert.Equal(CharsetDetectionEngine.GetCompatibleEncodingByShortName(CodepageName.GB18030), result.Encoding);
         Assert.Equal(1.0f, result.Confidence);
     }
 

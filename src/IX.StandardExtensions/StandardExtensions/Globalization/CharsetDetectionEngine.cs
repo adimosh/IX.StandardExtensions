@@ -2,7 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
@@ -56,7 +55,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         }
         catch (ArgumentException)
         {
-#if NETSTANDARD
+            #if STANDARD_GT_20
             try
             {
                 return CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
@@ -65,10 +64,131 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
             {
                 return null;
             }
-#else
+            #else
             return null;
-#endif
+            #endif
         }
+    }
+
+    private static bool CheckByteOrderMark(
+        byte[] input,
+        long offset,
+        long length,
+        out Encoding? encoding)
+    {
+        switch (input[offset])
+        {
+            case 0xEF:
+                // UTF8 with BOM
+                if (length >= 3 && input[offset + 1] == 0xBB && input[offset + 2] == 0xBF)
+                {
+                    // BOM recognized as UTF8
+                    encoding = Encoding.UTF8;
+
+                    return true;
+                }
+
+                break;
+            case 0xFE:
+                // Either UCS4 (3412) encoding, or UTF16 big-endian
+                if (length >= 2 && input[offset + 1] == 0xFF)
+                {
+                    if (length >= 4 && input[offset + 2] == 0x00 && input[offset + 3] == 0x00)
+                    {
+                        // UCS4 (3412) - UNSUPPORTED YET, probably never
+                        // encoding = GetCompatibleEncodingByShortName(CodepageName.X_ISO_10646_UCS_4_3412);
+                        encoding = null;
+
+                        return true;
+                    }
+
+                    // UTF-16 big-endian
+                    encoding = Encoding.BigEndianUnicode;
+
+                    return true;
+                }
+
+                break;
+
+            case 0xFF:
+                // UTF16 little-endian or UTF32 little-endian
+                if (length >= 2 && input[offset + 1] == 0xFE)
+                {
+                    if (length >= 4 && input[offset + 2] == 0x00 && input[offset + 3] == 0x00)
+                    {
+                        // UTF32 little-endian
+                        encoding = Encoding.UTF32;
+
+                        return true;
+                    }
+
+                    encoding = Encoding.Unicode;
+
+                    return true;
+                }
+
+                break;
+
+            case 0x00:
+                // UTF32 big-endian or UCS4 (2143)
+                if (length >= 4 && input[offset + 1] == 0x00)
+                {
+                    if (input[offset + 2] == 0xFE && input[offset + 3] == 0xFF)
+                    {
+                        // UTF32 big-endian
+                        encoding = GetCompatibleEncodingByShortName(CodepageName.UTF32_BE);
+
+                        return true;
+                    }
+
+                    if (input[offset + 2] == 0xFF && input[offset + 3] == 0xFE)
+                    {
+                        // UCS4 (2143) - UNSUPPORTED YET, probably never
+                        // encoding = GetCompatibleEncodingByShortName(CodepageName.X_ISO_10646_UCS_4_2143);
+                        encoding = null;
+
+                        return true;
+                    }
+                }
+
+                break;
+
+            case 0x2B:
+                // UTF7
+                if (length >= 4 &&
+                    input[offset + 1] == 0x2F &&
+                    input[offset + 2] == 0x76 &&
+                    (input[offset + 3] == 0x38 ||
+                     input[offset + 3] == 0x39 ||
+                     input[offset + 3] == 0x2B ||
+                     input[offset + 3] == 0x2F))
+                {
+#pragma warning disable SYSLIB0001 // Type or member is obsolete - it is still currently in use and can be recognized
+#pragma warning disable CS0618
+                    encoding = Encoding.UTF7;
+#pragma warning restore CS0618
+#pragma warning restore SYSLIB0001 // Type or member is obsolete
+
+                    return true;
+                }
+
+                break;
+
+            case 0x84:
+                // GB18030
+                if (length >= 4 && input[offset + 1] == 0x31 && input[offset + 2] == 0x95 && input[offset + 3] == 0x33)
+                {
+                    encoding = GetCompatibleEncodingByShortName(CodepageName.GB18030);
+
+                    return true;
+                }
+
+                break;
+        }
+
+        encoding = null;
+
+        return false;
     }
 
     /// <summary>
@@ -227,19 +347,21 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     /// Asynchronously read data from a byte array and feed it into the recognition engine.
     /// </summary>
     /// <param name="buffer">The buffer to read from.</param>
+    /// <param name="offset">The offset within the buffer to start reading from.</param>
     /// <param name="count">The number of bytes to read.</param>
     /// <param name="cancellationToken">The cancellation token for this operation.</param>
     /// <returns>A task representing this asynchronous operation, containing the interpretation result.</returns>
     public async Task<(Encoding? Encoding, float Confidence)> ReadAsync(
         byte[] buffer,
-        int count,
+        long offset,
+        long count,
         CancellationToken cancellationToken = default)
     {
         await Task.Yield();
 
         return this.Interpret(
             buffer,
-            0,
+            offset,
             count,
             cancellationToken);
     }
@@ -248,20 +370,50 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     /// Asynchronously read data from a byte array and feed it into the recognition engine.
     /// </summary>
     /// <param name="buffer">The buffer to read from.</param>
+    /// <param name="count">The number of bytes to read.</param>
     /// <param name="cancellationToken">The cancellation token for this operation.</param>
     /// <returns>A task representing this asynchronous operation, containing the interpretation result.</returns>
-    public async Task<(Encoding? Encoding, float Confidence)> ReadAsync(
+    public Task<(Encoding? Encoding, float Confidence)> ReadAsync(
         byte[] buffer,
-        CancellationToken cancellationToken = default)
-    {
-        await Task.Yield();
-
-        return this.Interpret(
+        int count,
+        CancellationToken cancellationToken = default) =>
+        this.ReadAsync(
             buffer,
             0,
+            count,
+            cancellationToken);
+
+    /// <summary>
+    /// Asynchronously read data from a byte array and feed it into the recognition engine.
+    /// </summary>
+    /// <param name="buffer">The buffer to read from.</param>
+    /// <param name="count">The number of bytes to read.</param>
+    /// <param name="cancellationToken">The cancellation token for this operation.</param>
+    /// <returns>A task representing this asynchronous operation, containing the interpretation result.</returns>
+    public Task<(Encoding? Encoding, float Confidence)> ReadAsync(
+        byte[] buffer,
+        long count,
+        CancellationToken cancellationToken = default) =>
+        this.ReadAsync(
+            buffer,
+            0L,
+            count,
+            cancellationToken);
+
+    /// <summary>
+    /// Asynchronously read data from a byte array and feed it into the recognition engine.
+    /// </summary>
+    /// <param name="buffer">The buffer to read from.</param>
+    /// <param name="cancellationToken">The cancellation token for this operation.</param>
+    /// <returns>A task representing this asynchronous operation, containing the interpretation result.</returns>
+    public Task<(Encoding? Encoding, float Confidence)> ReadAsync(
+        byte[] buffer,
+        CancellationToken cancellationToken = default) =>
+        this.ReadAsync(
+            buffer,
+            0L,
             buffer.LongLength,
             cancellationToken);
-    }
 
     private (Encoding? Encoding, float Confidence) Interpret(byte[] input, long offset, long length, CancellationToken cancellationToken = default)
     {
@@ -269,7 +421,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
 
         #region Check for byte-order mark
 
-        var checkResult = CheckBOM(
+        var checkResult = CheckByteOrderMark(
             input,
             offset,
             length,
@@ -281,6 +433,8 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         }
 
         #endregion
+
+        cancellationToken.ThrowIfCancellationRequested();
 
         lock (UnicodeProbers)
         {
@@ -308,6 +462,8 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
                         return immediateResult;
                     }
 
+                    cancellationToken.ThrowIfCancellationRequested();
+
                     offset += toRead;
                     length -= toRead;
                 }
@@ -328,7 +484,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
 
                 if (mostLikelyCharset != null)
                 {
-                    finalEncoding = GetCompatibleEncodingByShortName(mostLikelyCharset.Detected ?? CodepageName.ASCII);
+                    finalEncoding = GetCompatibleEncodingByShortName(mostLikelyCharset.Detected);
                     finalConfidence = mostLikelyCharset.Confidence;
                 }
 
@@ -388,166 +544,6 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         }
 
         definitiveAnswerResult = default;
-        return false;
-    }
-
-    //private static (Encoding? Encoding, float Confidence) CheckEscapedAscii(byte[] input, long offset, long length)
-    //{
-    //    lock (EscapedAsciiProber)
-    //    {
-    //        try
-    //        {
-    //            // TODO: Change from int to long
-    //            ProbingState state;
-    //            state = EscapedAsciiProber.Value.HandleData(
-    //                input,
-    //                (int)offset,
-    //                (int)length);
-
-    //            if (state == ProbingState.FoundIt)
-    //            {
-    //                var encoding = GetCompatibleEncodingByShortName(EscapedAsciiProber.Value.GetCharsetName());
-    //                if (encoding == null)
-    //                {
-    //                    return default;
-    //                }
-
-    //                return (encoding,
-    //                    EscapedAsciiProber.Value.GetConfidence());
-    //            }
-
-    //            // TODO: Bug in EscCharsetProber, but ASCII validation has passed nonetheless - return to this when original bug is fixed.
-    //            // https://github.com/CharsetDetector/UTF-unknown/blob/c24d58d286d1e9639611453f8055f5aa122c3c6b/src/CharsetDetector.cs#L470
-    //            return (Encoding.ASCII, 1.0f);
-    //        }
-    //        finally
-    //        {
-    //            if (EscapedAsciiProber.IsValueCreated)
-    //            {
-    //                EscapedAsciiProber.Value.Reset();
-    //            }
-    //        }
-    //    }
-    //}
-
-    private static bool CheckBOM(
-        byte[] input,
-        long offset,
-        long length,
-        out Encoding? encoding)
-    {
-        switch (input[offset])
-        {
-            case 0xEF:
-                // UTF8 with BOM
-                if (length >= 3 && input[offset + 1] == 0xBB && input[offset + 2] == 0xBF)
-                {
-                    // BOM recognized as UTF8
-                    encoding = Encoding.UTF8;
-
-                    return true;
-                }
-
-                break;
-            case 0xFE:
-                // Either UCS4 (3412) encoding, or UTF16 big-endian
-                if (length >= 2 && input[offset + 1] == 0xFF)
-                {
-                    if (length >= 4 && input[offset + 2] == 0x00 && input[offset + 3] == 0x00)
-                    {
-                        // UCS4 (3412) - UNSUPPORTED YET, probably never
-                        // encoding = Encoding.GetEncoding(CodepageName.X_ISO_10646_UCS_4_3412);
-                        encoding = null;
-
-                        return true;
-                    }
-
-                    // UTF-16 big-endian
-                    encoding = Encoding.BigEndianUnicode;
-
-                    return true;
-                }
-
-                break;
-
-            case 0xFF:
-                // UTF16 little-endian or UTF32 little-endian
-                if (length >= 2 && input[offset + 1] == 0xFE)
-                {
-                    if (length >= 4 && input[offset + 2] == 0x00 && input[offset + 3] == 0x00)
-                    {
-                        // UTF32 little-endian
-                        encoding = Encoding.UTF32;
-
-                        return true;
-                    }
-
-                    encoding = Encoding.Unicode;
-
-                    return true;
-                }
-
-                break;
-
-            case 0x00:
-                // UTF32 big-endian or UCS4 (2143)
-                if (length >= 4 && input[offset + 1] == 0x00)
-                {
-                    if (input[offset + 2] == 0xFE && input[offset + 3] == 0xFF)
-                    {
-                        // UTF32 big-endian
-                        encoding = Encoding.GetEncoding(12001);
-
-                        return true;
-                    }
-
-                    if (input[offset + 2] == 0xFF && input[offset + 3] == 0xFE)
-                    {
-                        // UCS4 (2143) - UNSUPPORTED YET, probably never
-                        // encoding = Encoding.GetEncoding(CodepageName.X_ISO_10646_UCS_4_2143);
-                        encoding = null;
-
-                        return true;
-                    }
-                }
-
-                break;
-
-            case 0x2B:
-                // UTF7
-                if (length >= 4 &&
-                    input[offset + 1] == 0x2F &&
-                    input[offset + 2] == 0x76 &&
-                    (input[offset + 3] == 0x38 ||
-                     input[offset + 3] == 0x39 ||
-                     input[offset + 3] == 0x2B ||
-                     input[offset + 3] == 0x2F))
-                {
-#pragma warning disable SYSLIB0001 // Type or member is obsolete - it is still currently in use and can be recognized
-#pragma warning disable CS0618
-                    encoding = Encoding.UTF7;
-#pragma warning restore CS0618
-#pragma warning restore SYSLIB0001 // Type or member is obsolete
-
-                    return true;
-                }
-
-                break;
-
-            case 0x84:
-                // GB18030
-                if (length >= 4 && input[offset + 1] == 0x31 && input[offset + 2] == 0x95 && input[offset + 3] == 0x33)
-                {
-                    encoding = Encoding.GetEncoding(54936);
-
-                    return true;
-                }
-
-                break;
-        }
-
-        encoding = null;
-
         return false;
     }
 }
