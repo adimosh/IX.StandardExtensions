@@ -1,4 +1,4 @@
-// <copyright file="RestSharpRemoteClient.cs" company="Adrian Mos">
+// <copyright file="RestRemoteClient.cs" company="Adrian Mos">
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 

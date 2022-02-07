@@ -2,7 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System.Net.Http;
 using JetBrains.Annotations;
 
 namespace IX.Remote.Envelopes;
@@ -19,9 +18,9 @@ namespace IX.Remote.Envelopes;
 public record RequestForwardingEnvelope(
     HttpMethod Method,
     string Resource,
-    string? JsonBody,
-    RequestForwardingEnvelope.RequestFileData[]? FileData,
-    AdditionalHeaderEnvelope[]? AdditionalHeaders)
+    string? JsonBody = null,
+    RequestForwardingEnvelope.RequestFileData[]? FileData = null,
+    AdditionalHeaderEnvelope[]? AdditionalHeaders = null)
 {
     /// <summary>
     /// File data that is included in the request for RestSharp.
