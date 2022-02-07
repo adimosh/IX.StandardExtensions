@@ -2,10 +2,12 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Globalization;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
+
+#pragma warning disable SA1649 // File name should match first type name
+#pragma warning disable SA1402 // File may only contain a single type
 
 namespace IX.StandardExtensions;
 
@@ -2256,3 +2258,5 @@ public class IdCorrespondsToNoItemException : ArgumentException
     {
     }
 }
+#pragma warning restore SA1402 // File may only contain a single type
+#pragma warning restore SA1649 // File name should match first type name
