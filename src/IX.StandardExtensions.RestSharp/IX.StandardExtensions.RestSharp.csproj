@@ -18,8 +18,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.7.19</VersionPrefix>
-    <VersionSuffix>alpha3</VersionSuffix>
+    <VersionPrefix>0.7.20</VersionPrefix>
+    <VersionSuffix>alpha1</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>../../opt/snk/ix.framework.strongname.snk</AssemblyOriginatorKeyFile>
