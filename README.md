@@ -22,21 +22,37 @@ clones. I had to make my own.
 
 This is, in a nutshell, how I came up with this library.
 
-## How to get
+## Requirements
 
-This project is primarily available through NuGet.
+Requirements for IX.StandardExtensions are the same across IX projects.
+[This page](https://adrianmos.eu/Pages/Projects/FrameworkVersionsSupport.md) lists estimative .NET
+version support information across various frameworks and OSes.
 
-The current version can be accessed by using NuGet commands:
+## Releases
 
-```powershell
-Install-Package IX.StandardExtensions
-```
+- NuGet: [![IX.StandardExtensions NuGet](https://img.shields.io/nuget/dt/IX.StandardExtensions.svg)](https://www.nuget.org/packages/IX.StandardExtensions/)
+- Latest stable: [![IX.StandardExtensions NuGet](https://img.shields.io/nuget/v/IX.StandardExtensions.svg)](https://www.nuget.org/packages/IX.StandardExtensions/)
+- Latest with pre-release: [![IX.StandardExtensions NuGet pre-release](https://img.shields.io/nuget/vpre/IX.StandardExtensions.svg)](https://www.nuget.org/packages/IX.StandardExtensions/)
 
-Releases: [![IX.StandardExtensions NuGet](https://img.shields.io/nuget/v/IX.StandardExtensions.svg)](https://www.nuget.org/packages/IX.StandardExtensions/)
 
-## Support
+## Highlights
 
-Please read [this page](FrameworkVersionsSupport.md) for estimative framework version support information.
+- Extension methods for arrays that aim to implement the same behavior as IEnumerable
+- Extension methods for string comparison (current/invariant culture, case sensitive/insensitive,
+ordinal, etc.), such as string.CurrentCultureEqualsInsensitive()
+- A character set detector at IX.StandardExtensions.Globalization.CharsetDetectionEngine
+- Observable and thread-safe observable collections at IX.Observable
+- Classes and extensions for undo/redo
+- Thread-safe and atomic classes in IX.System.Threading
+- Advanced locking and synchronization classes and extension methods in IX.System.Threading
+- Object pools, standardized concurrent dictionaries and invalidating lazy in IX.Efficiency
+- Busy UI scope and notification-related events and delegates in IX.StandardExtensions.ComponentModel
+- Contracts-oriented helper methods for requires in IX.StandardExtensions.Contracts
+- Abstractions for IO operations
+- Standardized entitiy interfaces
+- Asynchronous-related helper methods and classes
+
+...and many many extension methods, as well as other goodies.
 
 ## Contributing
 
@@ -46,9 +62,9 @@ Contributing can be done by anyone, at any time and in any form, as long as the
 contributor has read the [contributing guidelines](https://adimosh.github.io/contributingguidelines)
 beforehand and tries their best to abide by them.
 
-## Licenses and structure
+### Licenses and structure
 
-Please be aware that this project is a sub-project of [IX.Framework](https://github.com/adimosh/IX.Framework). All credits and license information should be taken from there.
+This project uses the MIT license. [![MIT license](https://img.shields.io/github/license/adimosh/ix.standardextensions)](LICENSE)
 
 Additionally, the character set detection engine featured at _IX.StandardExtensions.Globalization_ takes bits and pieces from various other projects, and is licensed as such.
 You can find the additional licenses in [/src/IX.StandardExtensions/StandardExtensions/Globalization/CharsetDetection/Licenses](src/IX.StandardExtensions/StandardExtensions/Globalization/CharsetDetection/Licenses).
