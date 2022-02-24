@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using IX.StandardExtensions;
 using IX.StandardExtensions.Contracts;
 using Xunit;
 
@@ -211,6 +212,54 @@ namespace IX.UnitTests.StandardExtensions.Contracts
             {
                 Assert.True(false, "An exception was thrown even if one was not expected.");
             }
+        }
+
+        [Theory(DisplayName = "Test e-mail validation")]
+        [InlineData("test@testerson.com", true)]
+        [InlineData("test@caractere-românești.com", true)]
+        [InlineData("/test@testerson.com", false)]
+        [InlineData("test/@testerson.com", false)]
+        [InlineData("test@/testerson.com", false)]
+        [InlineData("test@testerson/.com", false)]
+        [InlineData("test@testerson./com", false)]
+        [InlineData("t/est@testerson.com", true)]
+        public void Test10(string email, bool expectedResult)
+        {
+            try
+            {
+                Requires.ValidEmailAddress(email);
+            }
+            catch (ArgumentDoesNotMatchException)
+            {
+                Assert.False(expectedResult, "Expected validation to succeed, but it didn't.");
+
+                return;
+            }
+
+            Assert.True(expectedResult, "Expected validation to fail, but it didn't.");
+        }
+
+        [Theory(DisplayName = "Test e-mail strict validation")]
+        [InlineData("test@testerson.com", true)]
+        [InlineData("test@testerson.net", true)]
+        [InlineData("test@testerson.org", true)]
+        [InlineData("test@testerson.ro", true)]
+        [InlineData("test@testerson.co.uk", true)]
+        [InlineData("test@testerson.alabalaportocala", false)]
+        public void Test11(string email, bool expectedResult)
+        {
+            try
+            {
+                Requires.ValidEmailAddressStrict(email);
+            }
+            catch (ArgumentDoesNotMatchException)
+            {
+                Assert.False(expectedResult, "Expected validation to succeed, but it didn't.");
+
+                return;
+            }
+
+            Assert.True(expectedResult, "Expected validation to fail, but it didn't.");
         }
     }
 }

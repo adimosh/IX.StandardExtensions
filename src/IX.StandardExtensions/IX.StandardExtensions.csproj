@@ -20,12 +20,7 @@
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
     <PackageReleaseNotes>- Advanced string requires
-- ReadAllBytes method for streams (WARNING !!!)
-- Remote envelope records added
-- Major warning removal work
-- Modern collection adapter
-- Fixed AtomicEnumerator actual enumerator type resolution
-- Added character set recognition (credit to Julian Verdurmen for the implementation)</PackageReleaseNotes>
+- E-mail validation of strings, including IANA TLDs</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -79,6 +74,14 @@
 
   <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="StandardExtensions\Contracts\ValidationResources\tlds-alpha-by-domain.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="StandardExtensions\Contracts\ValidationResources\tlds-alpha-by-domain.txt" />
   </ItemGroup>
 
   <!-- Text templates -->

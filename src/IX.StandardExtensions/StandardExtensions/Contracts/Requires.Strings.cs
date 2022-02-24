@@ -3,9 +3,12 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using IX.StandardExtensions.Efficiency;
+using IX.StandardExtensions.Globalization;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Contracts;
@@ -572,6 +575,41 @@ public static partial class Requires
 
     private static readonly Lazy<Regex> EmailValidationRegex = new(() => new Regex(@"^[\w\d](?:[\w\d.!#$%&’*+/=?^_`{|}~-]*[\w\d])?@(?:[\w\d-]+\.)*(?<tld>[\w\d-]+)$"));
 
+    private static readonly Lazy<string[]> IanaTlds = new(
+        () =>
+        {
+            using StreamReader sr = new StreamReader(
+                Assembly.GetExecutingAssembly()
+                    .GetManifestResourceStream(
+                        "IX.StandardExtensions.Contracts.ValidationResources.tlds-alpha-by-domain.txt")!,
+                Encoding.ASCII,
+                false,
+                1000,
+                true);
+
+            List<string> tlds = new();
+
+            while (!sr.EndOfStream)
+            {
+                var line = sr.ReadLine()?
+                    .Trim() ?? string.Empty;
+
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+
+                if (line.StartsWith("#"))
+                {
+                    continue;
+                }
+
+                tlds.Add(line);
+            }
+
+            return tlds.ToArray();
+        });
+
     /// <summary>
     /// Called when a contract requires that a string is a valid email address.
     /// </summary>
@@ -624,6 +662,78 @@ public static partial class Requires
         var match = EmailValidationRegex.Value.Match(argument);
 
         if (!match.Success)
+        {
+            throw new ArgumentDoesNotMatchException(argumentName);
+        }
+
+        field = argument;
+    }
+
+    /// <summary>
+    /// Called when a contract requires that a string is a valid email address, including IANA TLDs.
+    /// </summary>
+    /// <param name="argument">The argument to validate.</param>
+    /// <param name="argumentName">The name of the argument.</param>
+    /// <returns>The validated argument.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [ContractAnnotation("argument:null => halt")]
+    [AssertionMethod]
+    public static string ValidEmailAddressStrict(
+        string argument,
+        [CallerArgumentExpression("argument")] string argumentName = "argument")
+    {
+        if (argument == null)
+        {
+            throw new ArgumentNullException(argumentName);
+        }
+
+        var match = EmailValidationRegex.Value.Match(argument);
+
+        if (!match.Success)
+        {
+            throw new ArgumentDoesNotMatchException(argumentName);
+        }
+
+        var tld = match.Groups["tld"]
+            .Value;
+
+        if (!IanaTlds.Value.Any(p => p.OrdinalEqualsInsensitive(tld)))
+        {
+            throw new ArgumentDoesNotMatchException(argumentName);
+        }
+
+        return argument;
+    }
+
+    /// <summary>
+    /// Called when a contract requires that a string is a valid email address, including IANA TLDs.
+    /// </summary>
+    /// <param name="field">
+    ///     The field that this argument is initializing.
+    /// </param>
+    /// <param name="argument">The argument to validate.</param>
+    /// <param name="argumentName">The name of the argument.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [ContractAnnotation("argument:null => halt")]
+    [AssertionMethod]
+    public static void ValidEmailAddressStrict(
+        out string field,
+        string argument,
+        [CallerArgumentExpression("argument")] string argumentName = "argument")
+    {
+        if (argument == null)
+        {
+            throw new ArgumentNullException(argumentName);
+        }
+
+        var match = EmailValidationRegex.Value.Match(argument);
+
+        if (!match.Success)
+        {
+            throw new ArgumentDoesNotMatchException(argumentName);
+        }
+
+        if (!IanaTlds.Value.Any(p => p.OrdinalEqualsInsensitive(p)))
         {
             throw new ArgumentDoesNotMatchException(argumentName);
         }
