@@ -19,7 +19,7 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Added possibility to chain delegates
+    <PackageReleaseNotes>- Advanced string requires
 - ReadAllBytes method for streams (WARNING !!!)
 - Remote envelope records added
 - Major warning removal work
