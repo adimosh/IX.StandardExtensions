@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using IX.StandardExtensions.Efficiency;
+using IX.StandardExtensions.Extensions;
 using IX.StandardExtensions.Globalization;
 using JetBrains.Annotations;
 
@@ -697,7 +698,7 @@ public static partial class Requires
         var tld = match.Groups["tld"]
             .Value;
 
-        if (!IanaTlds.Value.Any(p => p.OrdinalEqualsInsensitive(tld)))
+        if (!IanaTlds.Value.Any((p, innerTld) => p.OrdinalEqualsInsensitive(innerTld), tld))
         {
             throw new ArgumentDoesNotMatchException(argumentName);
         }
@@ -733,7 +734,10 @@ public static partial class Requires
             throw new ArgumentDoesNotMatchException(argumentName);
         }
 
-        if (!IanaTlds.Value.Any(p => p.OrdinalEqualsInsensitive(p)))
+        var tld = match.Groups["tld"]
+            .Value;
+
+        if (!IanaTlds.Value.Any((p, innerTld) => p.OrdinalEqualsInsensitive(innerTld), tld))
         {
             throw new ArgumentDoesNotMatchException(argumentName);
         }
