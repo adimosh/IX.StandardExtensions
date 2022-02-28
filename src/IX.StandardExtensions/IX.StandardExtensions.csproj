@@ -1,4 +1,4 @@
-<!--EXTERNAL_PROPERTIES: TargetFrameworkIsStandard;TargetFrameworkIsFramework;TargetFramework;TargetFramework-->
+﻿<!--EXTERNAL_PROPERTIES: TargetFrameworkIsStandard;TargetFrameworkIsFramework;TargetFramework;TargetFramework-->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <!-- Build configuration -->
@@ -25,7 +25,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.7.20</VersionPrefix>
+    <VersionPrefix>0.7.21</VersionPrefix>
     <VersionSuffix>alpha1</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
