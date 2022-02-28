@@ -2,10 +2,9 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-namespace IX.UnitTests.Observable
+namespace IX.UnitTests.Observable;
+
+internal static class UnitTestConstants
 {
-    internal static class UnitTestConstants
-    {
-        internal const int TestsGeneralMagnitude = 1000;
-    }
+    internal const int TestsGeneralMagnitude = 1000;
 }

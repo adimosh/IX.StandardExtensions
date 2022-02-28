@@ -5,12 +5,11 @@
 using System.Runtime.Serialization;
 using IX.StandardExtensions.Threading;
 
-namespace IX.UnitTests.StandardExtensions.Threading.Helpers
+namespace IX.UnitTests.StandardExtensions.Threading.Helpers;
+
+[DataContract(Namespace = "http://test.namespaces.org/butter")]
+internal class BasicSynchronizedSerializationClass : ReaderWriterSynchronizedBase
 {
-    [DataContract(Namespace = "http://test.namespaces.org/butter")]
-    internal class BasicSynchronizedSerializationClass : ReaderWriterSynchronizedBase
-    {
-        [DataMember]
-        public int Setty { get; set; }
-    }
+    [DataMember]
+    public int Setty { get; set; }
 }

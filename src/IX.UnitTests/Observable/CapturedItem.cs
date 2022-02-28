@@ -6,100 +6,99 @@ using System;
 using IX.Undoable;
 using IX.Undoable.StateChanges;
 
-namespace IX.UnitTests.Observable
+namespace IX.UnitTests.Observable;
+
+/// <summary>
+///     A test fixture for testing undo/redo stuff.
+/// </summary>
+/// <seealso cref="EditableItemBase" />
+public class CapturedItem : EditableItemBase
 {
+    private string testProperty;
+
     /// <summary>
-    ///     A test fixture for testing undo/redo stuff.
+    ///     Gets or sets the test property.
     /// </summary>
-    /// <seealso cref="EditableItemBase" />
-    public class CapturedItem : EditableItemBase
+    /// <value>The test property.</value>
+    public string TestProperty
     {
-        private string testProperty;
+        get => this.testProperty;
 
-        /// <summary>
-        ///     Gets or sets the test property.
-        /// </summary>
-        /// <value>The test property.</value>
-        public string TestProperty
+        set
         {
-            get => this.testProperty;
-
-            set
+            if (this.testProperty == value)
             {
-                if (this.testProperty == value)
-                {
-                    return;
-                }
-
-                this.AdvertisePropertyChange(
-                    nameof(this.TestProperty),
-                    this.testProperty,
-                    value);
-
-                this.testProperty = value;
-
-                this.RaisePropertyChanged(nameof(this.TestProperty));
+                return;
             }
+
+            this.AdvertisePropertyChange(
+                nameof(this.TestProperty),
+                this.testProperty,
+                value);
+
+            this.testProperty = value;
+
+            this.RaisePropertyChanged(nameof(this.TestProperty));
         }
+    }
 
-        /// <summary>
-        ///     Called when a list of state changes must be executed.
-        /// </summary>
-        /// <param name="stateChange">The state changes to execute.</param>
-        /// <exception cref="InvalidOperationException">
-        ///     Undo/Redo advertised a state change that is not for the only property, some state is leaking.
-        ///     or
-        ///     Undo/Redo advertised a state change that is of a different type than property, some state is leaking.
-        /// </exception>
-        protected override void DoChanges(StateChangeBase stateChange)
+    /// <summary>
+    ///     Called when a list of state changes must be executed.
+    /// </summary>
+    /// <param name="stateChange">The state changes to execute.</param>
+    /// <exception cref="InvalidOperationException">
+    ///     Undo/Redo advertised a state change that is not for the only property, some state is leaking.
+    ///     or
+    ///     Undo/Redo advertised a state change that is of a different type than property, some state is leaking.
+    /// </exception>
+    protected override void DoChanges(StateChangeBase stateChange)
+    {
+        if (stateChange is PropertyStateChange<string> psts)
         {
-            if (stateChange is PropertyStateChange<string> psts)
-            {
-                if (psts.PropertyName != nameof(this.TestProperty))
-                {
-                    throw new InvalidOperationException(
-                        "Undo/Redo advertised a state change that is not for the only property, some state is leaking.");
-                }
-
-                this.testProperty = psts.NewValue;
-
-                this.RaisePropertyChanged(nameof(this.TestProperty));
-            }
-            else
+            if (psts.PropertyName != nameof(this.TestProperty))
             {
                 throw new InvalidOperationException(
-                    "Undo/Redo advertised a state change that is of a different type than property, some state is leaking.");
+                    "Undo/Redo advertised a state change that is not for the only property, some state is leaking.");
             }
+
+            this.testProperty = psts.NewValue;
+
+            this.RaisePropertyChanged(nameof(this.TestProperty));
         }
-
-        /// <summary>
-        ///     Called when a list of state changes are canceled and must be reverted.
-        /// </summary>
-        /// <param name="stateChange">The state changes to revert.</param>
-        /// <exception cref="InvalidOperationException">
-        ///     Undo/Redo advertised a state change that is not for the only property, some state is leaking.
-        ///     or
-        ///     Undo/Redo advertised a state change that is of a different type than property, some state is leaking.
-        /// </exception>
-        protected override void RevertChanges(StateChangeBase stateChange)
+        else
         {
-            if (stateChange is PropertyStateChange<string> psts)
-            {
-                if (psts.PropertyName != nameof(this.TestProperty))
-                {
-                    throw new InvalidOperationException(
-                        "Undo/Redo advertised a state change that is not for the only property, some state is leaking.");
-                }
+            throw new InvalidOperationException(
+                "Undo/Redo advertised a state change that is of a different type than property, some state is leaking.");
+        }
+    }
 
-                this.testProperty = psts.OldValue;
-
-                this.RaisePropertyChanged(nameof(this.TestProperty));
-            }
-            else
+    /// <summary>
+    ///     Called when a list of state changes are canceled and must be reverted.
+    /// </summary>
+    /// <param name="stateChange">The state changes to revert.</param>
+    /// <exception cref="InvalidOperationException">
+    ///     Undo/Redo advertised a state change that is not for the only property, some state is leaking.
+    ///     or
+    ///     Undo/Redo advertised a state change that is of a different type than property, some state is leaking.
+    /// </exception>
+    protected override void RevertChanges(StateChangeBase stateChange)
+    {
+        if (stateChange is PropertyStateChange<string> psts)
+        {
+            if (psts.PropertyName != nameof(this.TestProperty))
             {
                 throw new InvalidOperationException(
-                    "Undo/Redo advertised a state change that is of a different type than property, some state is leaking.");
+                    "Undo/Redo advertised a state change that is not for the only property, some state is leaking.");
             }
+
+            this.testProperty = psts.OldValue;
+
+            this.RaisePropertyChanged(nameof(this.TestProperty));
+        }
+        else
+        {
+            throw new InvalidOperationException(
+                "Undo/Redo advertised a state change that is of a different type than property, some state is leaking.");
         }
     }
 }
