@@ -20,7 +20,8 @@
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
     <PackageReleaseNotes>- Advanced string requires
-- E-mail validation of strings, including IANA TLDs</PackageReleaseNotes>
+- E-mail validation of strings, including IANA TLDs
+- Many new LINQ extensions, including async ones</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

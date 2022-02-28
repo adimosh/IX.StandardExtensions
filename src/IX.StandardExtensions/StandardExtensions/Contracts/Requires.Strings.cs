@@ -3,13 +3,9 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
 using IX.StandardExtensions.Efficiency;
-using IX.StandardExtensions.Extensions;
-using IX.StandardExtensions.Globalization;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Contracts;
@@ -574,43 +570,6 @@ public static partial class Requires
 
     #region Web validation
 
-    private static readonly Lazy<Regex> EmailValidationRegex = new(() => new Regex(@"^[\w\d](?:[\w\d.!#$%&’*+/=?^_`{|}~-]*[\w\d])?@(?:[\w\d-]+\.)*(?<tld>[\w\d-]+)$"));
-
-    private static readonly Lazy<string[]> IanaTlds = new(
-        () =>
-        {
-            using StreamReader sr = new StreamReader(
-                Assembly.GetExecutingAssembly()
-                    .GetManifestResourceStream(
-                        "IX.StandardExtensions.Contracts.ValidationResources.tlds-alpha-by-domain.txt")!,
-                Encoding.ASCII,
-                false,
-                1000,
-                true);
-
-            List<string> tlds = new();
-
-            while (!sr.EndOfStream)
-            {
-                var line = sr.ReadLine()?
-                    .Trim() ?? string.Empty;
-
-                if (string.IsNullOrWhiteSpace(line))
-                {
-                    continue;
-                }
-
-                if (line.StartsWith("#"))
-                {
-                    continue;
-                }
-
-                tlds.Add(line);
-            }
-
-            return tlds.ToArray();
-        });
-
     /// <summary>
     /// Called when a contract requires that a string is a valid email address.
     /// </summary>
@@ -629,9 +588,7 @@ public static partial class Requires
             throw new ArgumentNullException(argumentName);
         }
 
-        var match = EmailValidationRegex.Value.Match(argument);
-
-        if (!match.Success)
+        if (!EmailValidationHelper.IsAddressValid(argument))
         {
             throw new ArgumentDoesNotMatchException(argumentName);
         }
@@ -660,9 +617,7 @@ public static partial class Requires
             throw new ArgumentNullException(argumentName);
         }
 
-        var match = EmailValidationRegex.Value.Match(argument);
-
-        if (!match.Success)
+        if (!EmailValidationHelper.IsAddressValid(argument))
         {
             throw new ArgumentDoesNotMatchException(argumentName);
         }
@@ -688,17 +643,7 @@ public static partial class Requires
             throw new ArgumentNullException(argumentName);
         }
 
-        var match = EmailValidationRegex.Value.Match(argument);
-
-        if (!match.Success)
-        {
-            throw new ArgumentDoesNotMatchException(argumentName);
-        }
-
-        var tld = match.Groups["tld"]
-            .Value;
-
-        if (!IanaTlds.Value.Any((p, innerTld) => p.OrdinalEqualsInsensitive(innerTld), tld))
+        if (!EmailValidationHelper.IsAddressValid(argument, true))
         {
             throw new ArgumentDoesNotMatchException(argumentName);
         }
@@ -727,17 +672,7 @@ public static partial class Requires
             throw new ArgumentNullException(argumentName);
         }
 
-        var match = EmailValidationRegex.Value.Match(argument);
-
-        if (!match.Success)
-        {
-            throw new ArgumentDoesNotMatchException(argumentName);
-        }
-
-        var tld = match.Groups["tld"]
-            .Value;
-
-        if (!IanaTlds.Value.Any((p, innerTld) => p.OrdinalEqualsInsensitive(innerTld), tld))
+        if (!EmailValidationHelper.IsAddressValid(argument, true))
         {
             throw new ArgumentDoesNotMatchException(argumentName);
         }

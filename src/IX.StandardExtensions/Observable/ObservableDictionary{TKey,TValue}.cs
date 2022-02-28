@@ -2,12 +2,9 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
-using System.Threading;
 using IX.Observable.Adapters;
 using IX.Observable.DebugAide;
 using IX.Observable.StateChanges;
@@ -578,13 +575,16 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         return result;
     }
 
-    #if NET50_OR_GREATER
     /// <summary>
     ///     Attempts to fetch a value for a specific key, indicating whether it has been found or not.
     /// </summary>
     /// <param name="key">The key.</param>
     /// <param name="value">The value.</param>
     /// <returns><see langword="true" /> if the value was successfully fetched, <see langword="false" /> otherwise.</returns>
+    [SuppressMessage(
+        "",
+        "CS8767:Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).",
+        Justification = "This is only valid for pre-.NET 5.0 due to the nullable differences.")]
     public bool TryGetValue(
         TKey key,
         [MaybeNullWhen(false)] out TValue value)
@@ -598,27 +598,6 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
                 out value);
         }
     }
-    #else
-    /// <summary>
-    ///     Attempts to fetch a value for a specific key, indicating whether it has been found or not.
-    /// </summary>
-    /// <param name="key">The key.</param>
-    /// <param name="value">The value.</param>
-    /// <returns><see langword="true" /> if the value was successfully fetched, <see langword="false" /> otherwise.</returns>
-    public bool TryGetValue(
-        TKey key,
-        out TValue value)
-    {
-        this.RequiresNotDisposed();
-
-        using (this.ReadLock())
-        {
-            return this.InternalContainer.TryGetValue(
-                key,
-                out value);
-        }
-    }
-    #endif
 
 #endregion
 

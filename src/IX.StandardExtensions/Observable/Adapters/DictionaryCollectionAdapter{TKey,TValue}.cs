@@ -105,21 +105,12 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapt
 
     public bool Remove(TKey item) => this.dictionary.Remove(item);
 
-    #if NET50_OR_GREATER
     public bool TryGetValue(
         TKey key,
         [MaybeNullWhen(false)] out TValue value) =>
         this.dictionary.TryGetValue(
             key,
             out value);
-    #else
-    public bool TryGetValue(
-        TKey key,
-        out TValue value) =>
-        this.dictionary.TryGetValue(
-            key,
-            out value);
-    #endif
 
     public int Add(
         TKey key,

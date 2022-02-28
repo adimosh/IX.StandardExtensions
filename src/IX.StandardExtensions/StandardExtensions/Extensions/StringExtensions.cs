@@ -2,8 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Linq;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
@@ -20,12 +18,30 @@ public static class StringExtensions
 #region Static methods
 
     /// <summary>
+    /// Determines whether or not a given string is a valid e-mail address.
+    /// </summary>
+    /// <param name="source">The source string.</param>
+    /// <returns>
+    ///     <c>true</c> if the source string is a valid e-mail address; otherwise, <c>false</c>.
+    /// </returns>
+    public static bool IsValidEmailAddress(this string source) => EmailValidationHelper.IsAddressValid(source);
+
+    /// <summary>
+    /// Determines whether or not a given string is a valid e-mail address strictly, according to ICANN rules and IANA list of valid TLDs.
+    /// </summary>
+    /// <param name="source">The source string.</param>
+    /// <returns>
+    ///     <c>true</c> if the source string is a strictly valid e-mail address; otherwise, <c>false</c>.
+    /// </returns>
+    public static bool IsValidEmailAddressStrict(this string source) => EmailValidationHelper.IsAddressValid(source, true);
+
+    /// <summary>
     ///     Determines whether the source string represents a given attribute name.
     /// </summary>
     /// <param name="source">The source string.</param>
     /// <param name="attributeName">Name of the attribute.</param>
     /// <returns>
-    ///     <c>true</c> if is an attribute name; otherwise, <c>false</c>.
+    ///     <c>true</c> if the source string is an attribute name; otherwise, <c>false</c>.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     ///     source
