@@ -1,4 +1,4 @@
-﻿<!--EXTERNAL_PROPERTIES: TargetFrameworkIsStandard;TargetFrameworkIsFramework;TargetFramework;TargetFramework-->
+<!--EXTERNAL_PROPERTIES: TargetFrameworkIsStandard;TargetFrameworkIsFramework;TargetFramework;TargetFramework-->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <!-- Build configuration -->
@@ -19,8 +19,8 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Advanced string requires
-- E-mail validation of strings, including IANA TLDs
+    <PackageReleaseNotes>- Began branding packages with icon
+- Started using Cobertura-format code coverage
 - Many new LINQ extensions, including async ones</PackageReleaseNotes>
   </PropertyGroup>
 
@@ -39,7 +39,7 @@
     <Company />
     <Product>IX Framework</Product>
     <Copyright>Adrian Mos, 2016</Copyright>
-    <PackageProjectUrl>https://github.com/adimosh/IX.Framework/</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/adimosh/IX.StandardExtensions/</PackageProjectUrl>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
