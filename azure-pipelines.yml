@@ -43,6 +43,7 @@ stages:
         command: 'restore'
         projects: "**/*.csproj"
         includeNuGetOrg: true
+        verbosityRestore: 'Minimal'
     - task: DotNetCoreCLI@2
       displayName: "Build in Debug"
       inputs:
@@ -54,7 +55,7 @@ stages:
       inputs:
         command: 'test'
         projects: 'src/IX.StandardExtensions.sln'
-        arguments: '-c Debug'
+        arguments: '-c Debug --collect "XPlat Code coverage" -- RunConfiguration.DisableAppDomain=true''
     - script: 'dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.0.4'
       displayName: 'Install ReportGenerator tool'
     - script: 'reportgenerator -reports:$(Agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura"'
