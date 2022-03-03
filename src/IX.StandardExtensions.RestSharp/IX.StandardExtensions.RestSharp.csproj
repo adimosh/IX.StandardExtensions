@@ -41,6 +41,11 @@
     <PackageReference Include="RestSharp" Version="107.1.2" />
   </ItemGroup>
 
+  <!-- Vulnerability fix in dependency - by Snyk -->
+  <ItemGroup Condition="'$(TargetFramework)'!='net6.0'">
+    <PackageReference Include="System.Text.Json" Version="5.0.2" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\IX.StandardExtensions\IX.StandardExtensions.csproj" />
   </ItemGroup>
