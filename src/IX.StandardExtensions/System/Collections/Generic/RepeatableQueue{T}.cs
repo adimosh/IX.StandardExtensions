@@ -2,9 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
@@ -251,6 +249,7 @@ public class RepeatableQueue<T> : IQueue<T>
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Unavoidable.")]
+    [ExcludeFromCodeCoverage]
     IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 #endregion

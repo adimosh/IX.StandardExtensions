@@ -2,13 +2,9 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading;
 using IX.Observable.Adapters;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
@@ -97,6 +93,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     /// </value>
     [Obsolete(
         "Please do not explicitly use these properties. The newest .NET Framework guidelines do not recommend doing collection synchronization using them.")]
+    [ExcludeFromCodeCoverage]
     public bool IsSynchronized => false;
 
     /// <summary>
@@ -115,6 +112,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     /// </remarks>
     [Obsolete(
         "Please do not explicitly use these properties. The newest .NET Framework guidelines do not recommend doing collection synchronization using them.")]
+    [ExcludeFromCodeCoverage]
     public object SyncRoot { get; } = new();
 
     /// <summary>
@@ -228,6 +226,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Unavoidable with this interface.")]
+    [ExcludeFromCodeCoverage]
     IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 #endregion

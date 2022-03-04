@@ -2,9 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace IX.Observable.Adapters;
@@ -92,6 +90,7 @@ internal abstract class ModernCollectionAdapter<TItem, TEnumerator> : ModernColl
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "Unavoidable due to interface implementation.")]
+    [ExcludeFromCodeCoverage]
     IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
     /// <summary>

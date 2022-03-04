@@ -2,15 +2,9 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Threading;
-using System.Threading.Tasks;
 using IX.StandardExtensions;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
@@ -331,13 +325,13 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     ///     <see langword="true" /> if an item is found, <see langword="false" /> otherwise, or if the queue is empty.
     /// </returns>
     public abstract bool TryPeek(out T item);
-#pragma warning disable HAA0401 // Possible allocation of reference type enumerator - Yeah, we know
+
     /// <summary>
     ///     Returns an enumerator that iterates through the queue.
     /// </summary>
     /// <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the queue.</returns>
+    [ExcludeFromCodeCoverage]
     IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
-#pragma warning restore HAA0401 // Possible allocation of reference type enumerator
 
 #endregion
 

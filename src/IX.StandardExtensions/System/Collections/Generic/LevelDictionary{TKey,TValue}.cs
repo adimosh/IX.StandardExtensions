@@ -2,12 +2,8 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading;
 using IX.StandardExtensions;
 using IX.StandardExtensions.ComponentModel;
 using JetBrains.Annotations;
@@ -195,6 +191,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     ///     This method is not implemented by design. Do not call it, as it will
     ///     always throw an exception.
     /// </exception>
+    [ExcludeFromCodeCoverage]
     void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item) =>
         throw new NotImplementedByDesignException();
 
@@ -203,6 +200,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     /// </summary>
     /// <param name="item">The item.</param>
     /// <returns><see langword="true" /> if the dictionary contains the specified item; otherwise, <see langword="false" />.</returns>
+    [ExcludeFromCodeCoverage]
     bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
     {
         this.ThrowIfCurrentObjectDisposed();
@@ -215,6 +213,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     /// </summary>
     /// <param name="array">The array.</param>
     /// <param name="arrayIndex">Index of the array.</param>
+    [ExcludeFromCodeCoverage]
     void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(
         KeyValuePair<TKey, TValue>[] array,
         int arrayIndex)
@@ -231,6 +230,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     /// </summary>
     /// <param name="item">The item.</param>
     /// <returns><see langword="true" /> if the removal was a success, <see langword="false" /> otherwise.</returns>
+    [ExcludeFromCodeCoverage]
     bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item) => this.Remove(item.Key);
 
     /// <summary>
@@ -242,6 +242,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     ///     This method is not implemented by design. Do not call it, as it will
     ///     always throw an exception.
     /// </exception>
+    [ExcludeFromCodeCoverage]
     void IDictionary<TKey, TValue>.Add(
         TKey key,
         TValue value) =>
@@ -252,6 +253,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     /// </summary>
     /// <param name="key">The key.</param>
     /// <returns><see langword="true" /> if the key has been removed, <see langword="false" /> otherwise.</returns>
+    [ExcludeFromCodeCoverage]
     bool IDictionary<TKey, TValue>.Remove(TKey key) => this.Remove(in key);
 
     /// <summary>
@@ -262,6 +264,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "Explicit interface implementation.")]
+    [ExcludeFromCodeCoverage]
     IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
     /// <summary>
@@ -272,6 +275,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "Explicit interface implementation.")]
+    [ExcludeFromCodeCoverage]
     IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() =>
         this.GetEnumerator();
 
@@ -446,6 +450,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "Explicit interface implementation.")]
+        [ExcludeFromCodeCoverage]
         IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator() => this.GetEnumerator();
 
         /// <summary>
@@ -456,6 +461,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
             "Performance",
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "Explicit interface implementation.")]
+        [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         /// <summary>

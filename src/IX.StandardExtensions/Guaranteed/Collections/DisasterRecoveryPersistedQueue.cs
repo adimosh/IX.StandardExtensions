@@ -2,13 +2,8 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using IX.System.IO;
@@ -1269,6 +1264,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Unavoidable.")]
+    [ExcludeFromCodeCoverage]
     IEnumerator IEnumerable.GetEnumerator() =>
         this.GetEnumerator();
 
