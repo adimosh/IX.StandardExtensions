@@ -2,7 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
@@ -15,6 +15,7 @@ namespace IX.Undoable;
 /// <seealso cref="IUndoableItem" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ItemNotCapturedIntoUndoContextException : InvalidOperationException
 {
 #region Constructors and destructors

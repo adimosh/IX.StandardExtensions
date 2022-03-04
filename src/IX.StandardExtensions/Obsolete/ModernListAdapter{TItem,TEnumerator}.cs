@@ -2,13 +2,13 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 // ReSharper disable once CheckNamespace
 namespace IX.Observable.Adapters;
 
 #pragma warning disable CS0618
+[ExcludeFromCodeCoverage]
 internal abstract partial class ModernListAdapter<TItem, TEnumerator>
 {
 #region Methods

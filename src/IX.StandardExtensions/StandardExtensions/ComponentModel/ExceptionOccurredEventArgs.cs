@@ -2,7 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.ComponentModel;
@@ -11,6 +11,7 @@ namespace IX.StandardExtensions.ComponentModel;
 ///     Event arguments for an event handler detailing exceptions occurring in different threads.
 /// </summary>
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ExceptionOccurredEventArgs : EventArgs
 {
 #region Constructors and destructors

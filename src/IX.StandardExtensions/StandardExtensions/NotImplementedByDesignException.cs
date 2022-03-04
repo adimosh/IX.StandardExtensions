@@ -2,7 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
@@ -14,6 +14,7 @@ namespace IX.StandardExtensions;
 /// <seealso cref="NotImplementedException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class NotImplementedByDesignException : NotImplementedException
 {
 #region Constructors

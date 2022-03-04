@@ -453,7 +453,7 @@ internal class Latin1Prober : CharsetProber
         return this.state;
     }
 
-    public override float GetConfidence(StringBuilder status = null)
+    public override float GetConfidence(StringBuilder? status = null)
     {
         if (this.state == ProbingState.NotMe)
         {

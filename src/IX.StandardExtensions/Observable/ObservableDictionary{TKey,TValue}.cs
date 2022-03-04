@@ -575,16 +575,13 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         return result;
     }
 
+#pragma warning disable CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
     /// <summary>
     ///     Attempts to fetch a value for a specific key, indicating whether it has been found or not.
     /// </summary>
     /// <param name="key">The key.</param>
     /// <param name="value">The value.</param>
     /// <returns><see langword="true" /> if the value was successfully fetched, <see langword="false" /> otherwise.</returns>
-    [SuppressMessage(
-        "",
-        "CS8767:Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).",
-        Justification = "This is only valid for pre-.NET 5.0 due to the nullable differences.")]
     public bool TryGetValue(
         TKey key,
         [MaybeNullWhen(false)] out TValue value)
@@ -598,6 +595,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
                 out value);
         }
     }
+#pragma warning restore CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
 
 #endregion
 

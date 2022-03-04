@@ -81,7 +81,7 @@ internal abstract class CharsetProber
 
     public abstract string GetCharsetName();
 
-    public abstract float GetConfidence(StringBuilder status = null);
+    public abstract float GetConfidence(StringBuilder? status = null);
 
     public virtual ProbingState GetState() => this.state;
 

@@ -2,7 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.Serialization;
 using IX.StandardExtensions.Contracts;
@@ -15,6 +15,7 @@ namespace IX.StandardExtensions;
 /// </summary>
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentsException : Exception
 {
 #region Constructors and destructors

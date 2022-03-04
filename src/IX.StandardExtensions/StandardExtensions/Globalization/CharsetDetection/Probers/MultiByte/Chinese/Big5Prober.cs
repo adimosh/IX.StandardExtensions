@@ -128,5 +128,5 @@ internal class Big5Prober : CharsetProber
 
     public override string GetCharsetName() => CodepageName.BIG5;
 
-    public override float GetConfidence(StringBuilder status = null) => this.distributionAnalyser.GetConfidence();
+    public override float GetConfidence(StringBuilder? status = null) => this.distributionAnalyser.GetConfidence();
 }

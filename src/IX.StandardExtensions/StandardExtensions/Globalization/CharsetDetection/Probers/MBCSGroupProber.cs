@@ -178,7 +178,7 @@ internal class MBCSGroupProber : CharsetProber
         return this.state;
     }
 
-    public override float GetConfidence(StringBuilder status = null)
+    public override float GetConfidence(StringBuilder? status = null)
     {
         var bestConf = 0.0f;
 

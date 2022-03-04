@@ -2,10 +2,8 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
@@ -15,6 +13,7 @@ namespace IX.Observable.DebugAide;
 /// <typeparam name="TKey">The type of the key.</typeparam>
 /// <typeparam name="TValue">The type of the value.</typeparam>
 [UsedImplicitly]
+[ExcludeFromCodeCoverage]
 public sealed class DictionaryDebugView<TKey, TValue>
     where TKey : notnull
 {

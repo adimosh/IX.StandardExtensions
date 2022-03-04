@@ -2,6 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
@@ -17,6 +18,7 @@ namespace IX.StandardExtensions;
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentInvalidPathException : ArgumentException
 {
     /// <summary>
@@ -124,6 +126,7 @@ public class ArgumentInvalidPathException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentDoesNotMatchException : ArgumentException
 {
     /// <summary>
@@ -231,6 +234,7 @@ public class ArgumentDoesNotMatchException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentInvalidTypeException : ArgumentException
 {
     /// <summary>
@@ -338,6 +342,7 @@ public class ArgumentInvalidTypeException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNotPositiveException : ArgumentException
 {
     /// <summary>
@@ -445,6 +450,7 @@ public class ArgumentNotPositiveException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNotNegativeException : ArgumentException
 {
     /// <summary>
@@ -552,6 +558,7 @@ public class ArgumentNotNegativeException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNotPositiveIntegerException : ArgumentException
 {
     /// <summary>
@@ -659,6 +666,7 @@ public class ArgumentNotPositiveIntegerException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNotNegativeIntegerException : ArgumentException
 {
     /// <summary>
@@ -766,6 +774,7 @@ public class ArgumentNotNegativeIntegerException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNotInRangeException : ArgumentException
 {
     /// <summary>
@@ -873,6 +882,7 @@ public class ArgumentNotInRangeException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentInRangeException : ArgumentException
 {
     /// <summary>
@@ -980,6 +990,7 @@ public class ArgumentInRangeException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNotLessThanException : ArgumentException
 {
     /// <summary>
@@ -1087,6 +1098,7 @@ public class ArgumentNotLessThanException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNotLessThanOrEqualToException : ArgumentException
 {
     /// <summary>
@@ -1194,6 +1206,7 @@ public class ArgumentNotLessThanOrEqualToException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNotGreaterThanException : ArgumentException
 {
     /// <summary>
@@ -1301,6 +1314,7 @@ public class ArgumentNotGreaterThanException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNotGreaterThanOrEqualToException : ArgumentException
 {
     /// <summary>
@@ -1408,6 +1422,7 @@ public class ArgumentNotGreaterThanOrEqualToException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNotValidIndexException : ArgumentException
 {
     /// <summary>
@@ -1515,6 +1530,7 @@ public class ArgumentNotValidIndexException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNotValidLengthException : ArgumentException
 {
     /// <summary>
@@ -1622,6 +1638,7 @@ public class ArgumentNotValidLengthException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNullOrEmptyArrayException : ArgumentException
 {
     /// <summary>
@@ -1729,6 +1746,7 @@ public class ArgumentNullOrEmptyArrayException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNullOrEmptyBinaryException : ArgumentException
 {
     /// <summary>
@@ -1836,6 +1854,7 @@ public class ArgumentNullOrEmptyBinaryException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNullOrEmptyCollectionException : ArgumentException
 {
     /// <summary>
@@ -1943,6 +1962,7 @@ public class ArgumentNullOrEmptyCollectionException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNullOrEmptyStringException : ArgumentException
 {
     /// <summary>
@@ -2051,6 +2071,7 @@ public class ArgumentNullOrEmptyStringException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentNullOrWhiteSpaceStringException : ArgumentException
 {
     /// <summary>
@@ -2158,6 +2179,7 @@ public class ArgumentNullOrWhiteSpaceStringException : ArgumentException
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class IdCorrespondsToNoItemException : ArgumentException
 {
     /// <summary>

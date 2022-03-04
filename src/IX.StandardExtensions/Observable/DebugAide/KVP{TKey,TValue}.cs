@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
 namespace IX.Observable.DebugAide;
@@ -14,6 +15,7 @@ namespace IX.Observable.DebugAide;
 /// <typeparam name="TValue">The type of the value.</typeparam>
 [DebuggerDisplay("[{Key}] = \"{Value}\"")]
 [UsedImplicitly]
+[ExcludeFromCodeCoverage]
 public sealed class Kvp<TKey, TValue>
 {
 #region Properties and indexers

@@ -105,12 +105,14 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapt
 
     public bool Remove(TKey item) => this.dictionary.Remove(item);
 
+#pragma warning disable CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
     public bool TryGetValue(
         TKey key,
         [MaybeNullWhen(false)] out TValue value) =>
         this.dictionary.TryGetValue(
             key,
             out value);
+#pragma warning restore CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
 
     public int Add(
         TKey key,

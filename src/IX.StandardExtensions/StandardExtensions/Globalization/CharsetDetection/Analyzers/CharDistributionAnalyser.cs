@@ -67,10 +67,12 @@ internal abstract class CharDistributionAnalyser
     // This constant value varies from language to language. It is used in calculating confidence.
     protected float typicalDistributionRatio;
 
+#pragma warning disable CS8618
     public CharDistributionAnalyser()
     {
         this.Reset();
     }
+#pragma warning restore CS8618
 
     /// <summary>
     /// Feed a block of data and do distribution analysis

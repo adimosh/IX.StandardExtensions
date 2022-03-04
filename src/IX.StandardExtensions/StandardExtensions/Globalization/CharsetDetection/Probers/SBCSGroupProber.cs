@@ -323,7 +323,7 @@ internal class SBCSGroupProber : CharsetProber
         return this.state;
     }
 
-    public override float GetConfidence(StringBuilder status = null)
+    public override float GetConfidence(StringBuilder? status = null)
     {
         float bestConf = 0.0f, cf;
 

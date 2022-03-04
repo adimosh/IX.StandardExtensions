@@ -113,7 +113,7 @@ internal class UTF8Prober : CharsetProber
         return this.state;
     }
 
-    public override float GetConfidence(StringBuilder status = null)
+    public override float GetConfidence(StringBuilder? status = null)
     {
         var unlike = 0.99f;
         float confidence;

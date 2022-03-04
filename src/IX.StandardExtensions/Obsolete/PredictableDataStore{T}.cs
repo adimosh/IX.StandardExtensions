@@ -2,7 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 // ReSharper disable once CheckNamespace
@@ -22,6 +21,7 @@ public partial class PredictableDataStore<T>
         "ReSharper",
         "RedundantOverload.Global",
         Justification = "Let's leave this in for now, as we'll remove this in a future version.")]
+    [ExcludeFromCodeCoverage]
     public PredictableDataStore(
         int capacity,
         Func<T> generator)
@@ -42,6 +42,7 @@ public partial class PredictableDataStore<T>
         "ReSharper",
         "RedundantOverload.Global",
         Justification = "Let's leave this in for now, as we'll remove this in a future version.")]
+    [ExcludeFromCodeCoverage]
     public PredictableDataStore(
         int capacity,
         Func<object, T> generator,

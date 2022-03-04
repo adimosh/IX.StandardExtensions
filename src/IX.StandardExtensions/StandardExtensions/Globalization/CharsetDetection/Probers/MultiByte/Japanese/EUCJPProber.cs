@@ -138,7 +138,7 @@ internal class EUCJPProber : CharsetProber
         this.distributionAnalyser.Reset();
     }
 
-    public override float GetConfidence(StringBuilder status = null)
+    public override float GetConfidence(StringBuilder? status = null)
     {
         var contxtCf = this.contextAnalyser.GetConfidence();
         var distribCf = this.distributionAnalyser.GetConfidence();

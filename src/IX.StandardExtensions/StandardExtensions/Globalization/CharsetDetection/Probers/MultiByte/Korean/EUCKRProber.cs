@@ -120,7 +120,7 @@ internal class EUCKRProber : CharsetProber
         return this.state;
     }
 
-    public override float GetConfidence(StringBuilder status = null) => this.distributionAnalyser.GetConfidence();
+    public override float GetConfidence(StringBuilder? status = null) => this.distributionAnalyser.GetConfidence();
 
     public override void Reset()
     {

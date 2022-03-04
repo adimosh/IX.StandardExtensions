@@ -178,10 +178,12 @@ internal class HebrewProber : CharsetProber
     // The two last bytes seen in the previous buffer.
     protected byte prev, beforePrev;
 
+#pragma warning disable CS8618
     public HebrewProber()
     {
         this.Reset();
     }
+#pragma warning restore CS8618
 
     public void SetModelProbers(
         CharsetProber logical,
@@ -335,7 +337,7 @@ internal class HebrewProber : CharsetProber
         return status.ToString();
     }
 
-    public override float GetConfidence(StringBuilder status = null) => 0.0f;
+    public override float GetConfidence(StringBuilder? status = null) => 0.0f;
 
     protected static bool IsFinal(byte b) =>
         b == FINAL_KAF || b == FINAL_MEM || b == FINAL_NUN || b == FINAL_PE || b == FINAL_TSADI;

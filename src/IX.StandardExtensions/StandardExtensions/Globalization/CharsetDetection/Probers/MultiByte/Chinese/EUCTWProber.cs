@@ -128,5 +128,5 @@ internal class EUCTWProber : CharsetProber
         this.distributionAnalyser.Reset();
     }
 
-    public override float GetConfidence(StringBuilder status = null) => this.distributionAnalyser.GetConfidence();
+    public override float GetConfidence(StringBuilder? status = null) => this.distributionAnalyser.GetConfidence();
 }

@@ -123,7 +123,7 @@ internal class GB18030Prober : CharsetProber
         return this.state;
     }
 
-    public override float GetConfidence(StringBuilder status = null) => this.analyser.GetConfidence();
+    public override float GetConfidence(StringBuilder? status = null) => this.analyser.GetConfidence();
 
     public override void Reset()
     {

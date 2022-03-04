@@ -76,7 +76,7 @@ internal class SingleByteCharSetProber : CharsetProber
     private int freqChar;
 
     // Optional auxiliary prober for name decision. created and destroyed by the GroupProber
-    private CharsetProber nameProber;
+    private CharsetProber? nameProber;
 
     public SingleByteCharSetProber(SequenceModel model)
         : this(
@@ -87,7 +87,7 @@ internal class SingleByteCharSetProber : CharsetProber
     public SingleByteCharSetProber(
         SequenceModel model,
         bool reversed,
-        CharsetProber nameProber)
+        CharsetProber? nameProber)
     {
         this.model = model;
         this.reversed = reversed;
@@ -180,7 +180,7 @@ internal class SingleByteCharSetProber : CharsetProber
         string v3) =>
         throw new NotImplementedException();
 
-    public override float GetConfidence(StringBuilder status = null)
+    public override float GetConfidence(StringBuilder? status = null)
     {
         /*
         NEGATIVE_APPROACH

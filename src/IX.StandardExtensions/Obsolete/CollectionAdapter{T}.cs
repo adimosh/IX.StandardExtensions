@@ -2,9 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 // ReSharper disable once CheckNamespace
@@ -16,6 +14,7 @@ namespace IX.Observable.Adapters;
 /// <typeparam name="T">The type of items in the adapter.</typeparam>
 /// <seealso cref="IX.Observable.Adapters.ICollectionAdapter{T}" />
 [Obsolete("This type will no longer be exposed in the next major release. Please stop using it immediately. Use your own implementation of ICollectionAdapter interface if you need it.")]
+[ExcludeFromCodeCoverage]
 public abstract class CollectionAdapter<T> : ICollectionAdapter<T>
 {
 #region Events

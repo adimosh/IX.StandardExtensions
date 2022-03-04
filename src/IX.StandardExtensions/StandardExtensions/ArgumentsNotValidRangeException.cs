@@ -2,7 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
@@ -13,6 +13,7 @@ namespace IX.StandardExtensions;
 /// </summary>
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class ArgumentsNotValidRangeException : ArgumentsException
 {
 #region Constructors and destructors

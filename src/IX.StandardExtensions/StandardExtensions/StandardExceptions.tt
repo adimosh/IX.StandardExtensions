@@ -56,6 +56,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
@@ -72,6 +73,7 @@ namespace IX.StandardExtensions;<# foreach (var item in argumentExceptions) { #>
 /// <seealso cref="ArgumentException" />
 [Serializable]
 [PublicAPI]
+[ExcludeFromCodeCoverage]
 public class <#= item.Name #>Exception : ArgumentException
 {
     /// <summary>

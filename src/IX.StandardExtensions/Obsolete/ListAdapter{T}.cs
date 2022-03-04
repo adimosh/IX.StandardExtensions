@@ -2,8 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 // ReSharper disable once CheckNamespace
 namespace IX.Observable.Adapters;
@@ -15,6 +14,7 @@ namespace IX.Observable.Adapters;
 /// <seealso cref="ListAdapter{T}" />
 /// <seealso cref="IListAdapter{T}" />
 [Obsolete("This type will no longer be exposed in the next major release. Please stop using it immediately. Use your own implementation of IListAdapter interface if you need it.")]
+[ExcludeFromCodeCoverage]
 public abstract class ListAdapter<T> : CollectionAdapter<T>,
     IListAdapter<T>
 {

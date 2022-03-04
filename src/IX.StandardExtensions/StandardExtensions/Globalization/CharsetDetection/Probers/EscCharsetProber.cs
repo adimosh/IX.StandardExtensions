@@ -132,5 +132,5 @@ internal class EscCharsetProber : CharsetProber
 
     public override string GetCharsetName() => this.detectedCharset ?? CodepageName.ASCII;
 
-    public override float GetConfidence(StringBuilder status = null) => 0.99f;
+    public override float GetConfidence(StringBuilder? status = null) => 0.99f;
 }
