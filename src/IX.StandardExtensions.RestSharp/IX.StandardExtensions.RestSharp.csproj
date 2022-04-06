@@ -38,7 +38,7 @@
 
   <!-- Dependencies -->
   <ItemGroup>
-    <PackageReference Include="RestSharp" Version="107.1.2" />
+    <PackageReference Include="RestSharp" Version="107.3.0" />
   </ItemGroup>
 
   <!-- Vulnerability fix in dependency - by Snyk -->
