@@ -21,7 +21,9 @@
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
     <PackageReleaseNotes>- Began branding packages with icon
 - Started using Cobertura-format code coverage
-- Many new LINQ extensions, including async ones</PackageReleaseNotes>
+- Code arrangement and cleanup
+- Started using dependabot
+- </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

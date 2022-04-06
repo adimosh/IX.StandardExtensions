@@ -11,7 +11,7 @@ stages:
         Ubuntu18:
           imageName: 'ubuntu-18.04'
         Ubuntu20:
-          imageName: 'ubuntu-18.04'
+          imageName: 'ubuntu-20.04'
         MacOs10:
           imageName: 'macOS-10.15'
         MacOs11:
@@ -82,10 +82,19 @@ stages:
         command: 'build'
         projects: 'src/IX.StandardExtensions.sln'
         arguments: '-c Release --version-suffix alpha.$(Build.BuildNumber)'
-    - task: ArtifactoryNuGet@2
-      displayName: "Push to Artifactory"
+    - task: CopyFiles@2
       inputs:
-        command: 'push'
-        artifactoryService: 'IX Artifactory Service'
-        targetDeployRepo: 'ix-nuget-local'
-        pathToNupkg: '*.nupkg'
+        contents: '**\*.nupkg'
+        targetFolder: '$(build.artifactstagingdirectory)'
+    - task: CopyFiles@2
+      inputs:
+        contents: '**\*.snupkg'
+        targetFolder: '$(build.artifactstagingdirectory)'
+    - task: NuGetAuthenticate@0
+      displayName: 'NuGet Authenticate'
+    - task: NuGetCommand@2
+      displayName: 'NuGet push'
+      inputs:
+        command: push
+        publishVstsFeed: 'IX.Framework/IX.Framework_Beta_Feed'
+        allowPackageConflicts: false
