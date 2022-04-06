@@ -76,7 +76,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFrameworkIsFramework)'!='true' and '$(TargetFramework)'!='net6.0'">
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
