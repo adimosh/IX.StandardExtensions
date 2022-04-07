@@ -4,7 +4,6 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.ComponentModel;

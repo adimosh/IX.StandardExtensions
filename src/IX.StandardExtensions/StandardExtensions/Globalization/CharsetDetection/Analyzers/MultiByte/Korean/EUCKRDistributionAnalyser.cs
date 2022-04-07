@@ -2,8 +2,6 @@
 
 // original header with license shall remain the same
 
-using UtfUnknown.Core.Analyzers;
-
 namespace UtfUnknown.Core.Analyzers.Korean;
 
 internal class EUCKRDistributionAnalyser : CharDistributionAnalyser

@@ -40,7 +40,6 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-using System.IO;
 using System.Text;
 
 namespace UtfUnknown.Core.Probers;

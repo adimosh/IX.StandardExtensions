@@ -40,8 +40,6 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte;
 
 internal class UTF8_SMModel : StateMachineModel

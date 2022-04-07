@@ -40,7 +40,6 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-using System;
 using System.Text;
 using UtfUnknown.Core.Probers.MultiByte;
 using UtfUnknown.Core.Probers.MultiByte.Chinese;

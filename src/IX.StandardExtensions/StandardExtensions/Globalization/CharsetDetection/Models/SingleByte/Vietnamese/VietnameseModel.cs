@@ -44,8 +44,6 @@
 * and adjusted to language specific support.
 */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.SingleByte.Vietnamese;
 
 internal abstract class VietnameseModel : SequenceModel

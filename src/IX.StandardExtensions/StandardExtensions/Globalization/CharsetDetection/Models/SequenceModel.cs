@@ -40,8 +40,6 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-using System;
-
 namespace UtfUnknown.Core.Models;
 
 internal abstract class SequenceModel

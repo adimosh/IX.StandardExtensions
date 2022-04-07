@@ -2,8 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-
 namespace IX.StandardExtensions.ComponentModel;
 
 #pragma warning disable HAA0303 // Lambda or anonymous method in a generic method allocates a delegate instance - nope, it is generic too

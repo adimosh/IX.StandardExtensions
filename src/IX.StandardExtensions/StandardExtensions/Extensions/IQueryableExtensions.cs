@@ -3,7 +3,6 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 

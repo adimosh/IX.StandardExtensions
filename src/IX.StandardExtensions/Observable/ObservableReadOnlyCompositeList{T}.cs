@@ -2,10 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Threading;
 using IX.Observable.Adapters;
 using JetBrains.Annotations;
 using ReaderWriterLockSlim = IX.System.Threading.ReaderWriterLockSlim;

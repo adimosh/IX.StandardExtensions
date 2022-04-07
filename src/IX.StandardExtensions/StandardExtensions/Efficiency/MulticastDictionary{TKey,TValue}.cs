@@ -2,9 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using IX.StandardExtensions.ComponentModel;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;

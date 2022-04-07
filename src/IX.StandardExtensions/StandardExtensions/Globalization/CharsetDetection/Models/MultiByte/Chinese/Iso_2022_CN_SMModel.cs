@@ -2,8 +2,6 @@
 
 // original header with license shall remain the same
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte.Chinese;
 
 internal class Iso_2022_CN_SMModel : StateMachineModel

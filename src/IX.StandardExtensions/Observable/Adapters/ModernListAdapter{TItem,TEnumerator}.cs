@@ -2,8 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System.Collections.Generic;
-
 namespace IX.Observable.Adapters;
 
 internal abstract partial class ModernListAdapter<TItem, TEnumerator> : ModernCollectionAdapter<TItem, TEnumerator>, IListAdapter<TItem>

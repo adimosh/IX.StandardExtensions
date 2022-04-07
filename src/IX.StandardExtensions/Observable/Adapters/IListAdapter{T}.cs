@@ -3,7 +3,6 @@
 // </copyright>
 
 using System.Collections;
-using System.Collections.Generic;
 
 namespace IX.Observable.Adapters;
 
