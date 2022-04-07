@@ -14,7 +14,7 @@
   <PropertyGroup>
     <Title>IX Standard Extensions for RestSharp</Title>
     <Description>A library containing several extensions for RestSharp.</Description>
-    <PackageReleaseNotes>- Updated System.Text.Json version due to a critical vulnerability issue</PackageReleaseNotes>
+    <PackageReleaseNotes>- Updated RestSharp to latest version to force out upgrades</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -2,11 +2,8 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 

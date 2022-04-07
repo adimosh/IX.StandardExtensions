@@ -331,6 +331,10 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     /// </summary>
     /// <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the queue.</returns>
     [ExcludeFromCodeCoverage]
+    [SuppressMessage(
+        "Performance",
+        "HAA0401:Possible allocation of reference type enumerator",
+        Justification = "We can't yet avoid this.")]
     IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 #endregion

@@ -2,9 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using JetBrains.Annotations;
@@ -256,11 +254,11 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
         Justification = "We specifically do not want to do that.")]
     private void SendOrPost(object? innerState)
     {
-        (Action<object> actionL1, object stateL1) = (Tuple<Action<object>, object>)Requires.NotNull(innerState);
+        (Action<object> action, object state) = Requires.ArgumentOfType<Tuple<Action<object>, object>>(innerState);
 
         try
         {
-            actionL1(stateL1);
+            action(state);
         }
         catch (Exception ex)
         {
