@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IX.Math\IX.Math.csproj" />
     <ProjectReference Include="..\IX.StandardExtensions\IX.StandardExtensions.csproj" />
   </ItemGroup>
 
@@ -70,6 +71,22 @@
   <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Math\TestData.BasicOperatorsWithRandomNumbers.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TestData.BasicOperatorsWithRandomNumbers.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Math\TestData.BasicOperatorsWithRandomNumbers.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TestData.BasicOperatorsWithRandomNumbers.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <!--<ItemGroup>
