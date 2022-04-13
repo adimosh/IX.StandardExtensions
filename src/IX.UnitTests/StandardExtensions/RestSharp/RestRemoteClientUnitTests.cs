@@ -2,7 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-#if !NET46
 using System.Net.Http;
 using System.Threading.Tasks;
 using IX.Remote.Envelopes;
@@ -31,4 +30,3 @@ namespace IX.UnitTests.StandardExtensions.RestSharp
         }
     }
 }
-#endif
