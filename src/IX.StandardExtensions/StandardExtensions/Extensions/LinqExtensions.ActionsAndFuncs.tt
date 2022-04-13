@@ -575,8 +575,6 @@ for (int i = 1; i <= 8; i++)
         }
     }
 
-    #if !NET46
-
     /// <summary>
     ///     Asynchronously filters a sequence of values based on a predicate.
     /// </summary>
@@ -768,8 +766,6 @@ for (int i = 1; i <= 8; i++)
             cancellationToken.ThrowIfCancellationRequested();
         }
     }
-
-    #endif
 
     #endregion
 

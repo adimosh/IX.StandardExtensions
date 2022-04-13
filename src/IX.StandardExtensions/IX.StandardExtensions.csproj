@@ -3,7 +3,7 @@
 
   <!-- Build configuration -->
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-    <TargetFrameworks>net46;net462;net47;netstandard2.0;netstandard2.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net462;net47;netstandard2.0;netstandard2.1;net5.0;net6.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
     <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0;net6.0</TargetFrameworks>
@@ -19,10 +19,7 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Began branding packages with icon
-- Started using Cobertura-format code coverage
-- Code arrangement and cleanup
-- Started using dependabot
+    <PackageReleaseNotes>- Removed .NET Framework &lt; 4.6.2
 - </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -54,7 +51,7 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='net46' or '$(TargetFramework)'=='net462'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net462'">
     <PackageReference Include="System.ValueTuple" Version="[4.5.0,5)" />
   </ItemGroup>
 
@@ -67,7 +64,7 @@
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="[4.5.4,5)" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFrameworkAdvanced)'!='true' and '$(TargetFramework)'!='net46'">
+  <ItemGroup Condition="'$(TargetFrameworkAdvanced)'!='true'">
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="[6.0.0,7)" />
   </ItemGroup>
 

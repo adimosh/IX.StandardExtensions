@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-    <TargetFrameworks>net46;net461;net462;net47;net471;net472;net48;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net462;net47;net471;net472;net48;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
     <TargetFrameworks>netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
@@ -72,7 +72,7 @@
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
 
-  <!--<ItemGroup Condition="'$(TargetFramework)'!='net46'">
+  <!--<ItemGroup>
     <ProjectReference Include="..\IX.StandardExtensions.SourceGeneration\IX.StandardExtensions.SourceGeneration.csproj" OutputItemType="Analyzer" PrivateAssets="all" ReferenceOutputAssembly="false" />
   </ItemGroup>-->
 

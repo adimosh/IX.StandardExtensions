@@ -396,8 +396,6 @@ public static partial class LinqExtensions
         }
     }
 
-    #if !NET46
-
     /// <summary>
     ///     Asynchronously filters a sequence of values based on a predicate.
     /// </summary>
@@ -533,8 +531,6 @@ public static partial class LinqExtensions
             cancellationToken.ThrowIfCancellationRequested();
         }
     }
-
-    #endif
 
     #endregion
 
@@ -1266,8 +1262,6 @@ public static partial class LinqExtensions
         }
     }
 
-    #if !NET46
-
     /// <summary>
     ///     Asynchronously filters a sequence of values based on a predicate.
     /// </summary>
@@ -1415,8 +1409,6 @@ public static partial class LinqExtensions
             cancellationToken.ThrowIfCancellationRequested();
         }
     }
-
-    #endif
 
     #endregion
 
@@ -2211,8 +2203,6 @@ public static partial class LinqExtensions
         }
     }
 
-    #if !NET46
-
     /// <summary>
     ///     Asynchronously filters a sequence of values based on a predicate.
     /// </summary>
@@ -2372,8 +2362,6 @@ public static partial class LinqExtensions
             cancellationToken.ThrowIfCancellationRequested();
         }
     }
-
-    #endif
 
     #endregion
 
@@ -3231,8 +3219,6 @@ public static partial class LinqExtensions
         }
     }
 
-    #if !NET46
-
     /// <summary>
     ///     Asynchronously filters a sequence of values based on a predicate.
     /// </summary>
@@ -3404,8 +3390,6 @@ public static partial class LinqExtensions
             cancellationToken.ThrowIfCancellationRequested();
         }
     }
-
-    #endif
 
     #endregion
 
@@ -4326,8 +4310,6 @@ public static partial class LinqExtensions
         }
     }
 
-    #if !NET46
-
     /// <summary>
     ///     Asynchronously filters a sequence of values based on a predicate.
     /// </summary>
@@ -4511,8 +4493,6 @@ public static partial class LinqExtensions
             cancellationToken.ThrowIfCancellationRequested();
         }
     }
-
-    #endif
 
     #endregion
 
@@ -5496,8 +5476,6 @@ public static partial class LinqExtensions
         }
     }
 
-    #if !NET46
-
     /// <summary>
     ///     Asynchronously filters a sequence of values based on a predicate.
     /// </summary>
@@ -5693,8 +5671,6 @@ public static partial class LinqExtensions
             cancellationToken.ThrowIfCancellationRequested();
         }
     }
-
-    #endif
 
     #endregion
 
@@ -6741,8 +6717,6 @@ public static partial class LinqExtensions
         }
     }
 
-    #if !NET46
-
     /// <summary>
     ///     Asynchronously filters a sequence of values based on a predicate.
     /// </summary>
@@ -6950,8 +6924,6 @@ public static partial class LinqExtensions
             cancellationToken.ThrowIfCancellationRequested();
         }
     }
-
-    #endif
 
     #endregion
 
@@ -8061,8 +8033,6 @@ public static partial class LinqExtensions
         }
     }
 
-    #if !NET46
-
     /// <summary>
     ///     Asynchronously filters a sequence of values based on a predicate.
     /// </summary>
@@ -8282,8 +8252,6 @@ public static partial class LinqExtensions
             cancellationToken.ThrowIfCancellationRequested();
         }
     }
-
-    #endif
 
     #endregion
 
