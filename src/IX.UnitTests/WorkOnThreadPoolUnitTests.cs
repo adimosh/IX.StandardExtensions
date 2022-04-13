@@ -149,7 +149,7 @@ public class WorkOnThreadPoolUnitTests
     }
 
     /// <summary>
-    /// Test Fire.AndForget eexception mechanism.
+    /// Test Fire.AndForget exception mechanism.
     /// </summary>
     [Fact(DisplayName = "Test Fire.AndForget exception mechanism")]
     public void Test4()

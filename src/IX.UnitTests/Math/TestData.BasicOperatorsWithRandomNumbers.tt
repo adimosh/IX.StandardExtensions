@@ -67,8 +67,7 @@ else
             return tests;
         }
     }
-}
-<#+
+}<#+
     IEnumerable<Tuple<string, string, string>> GenerateThreeFoldTestData(Dictionary<string, bool> operators)
     {
         List<Tuple<string, string, string, bool>> initialStage = new List<Tuple<string, string, string, bool>>();
