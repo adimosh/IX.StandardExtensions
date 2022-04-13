@@ -4,34 +4,32 @@
 
 using IX.Math.Nodes;
 using IX.Math.Registration;
-using JetBrains.Annotations;
 
-namespace IX.Math.Computation
+namespace IX.Math.Computation;
+
+internal readonly struct ComputationBody
 {
-    internal readonly struct ComputationBody
+    internal static readonly ComputationBody Empty = new ComputationBody(
+        null,
+        null);
+
+    internal readonly NodeBase BodyNode;
+
+    internal readonly IParameterRegistry ParameterRegistry;
+
+    internal ComputationBody(
+        NodeBase bodyNode,
+        IParameterRegistry parameterRegistry)
     {
-        internal static readonly ComputationBody Empty = new ComputationBody(
-            null,
-            null);
+        this.BodyNode = bodyNode;
+        this.ParameterRegistry = parameterRegistry;
+    }
 
-        internal readonly NodeBase BodyNode;
-
-        internal readonly IParameterRegistry ParameterRegistry;
-
-        internal ComputationBody(
-            NodeBase bodyNode,
-            IParameterRegistry parameterRegistry)
-        {
-            this.BodyNode = bodyNode;
-            this.ParameterRegistry = parameterRegistry;
-        }
-
-        internal void Deconstruct(
-            out NodeBase bodyNode,
-            out IParameterRegistry parameterRegistry)
-        {
-            bodyNode = this.BodyNode;
-            parameterRegistry = this.ParameterRegistry;
-        }
+    internal void Deconstruct(
+        out NodeBase bodyNode,
+        out IParameterRegistry parameterRegistry)
+    {
+        bodyNode = this.BodyNode;
+        parameterRegistry = this.ParameterRegistry;
     }
 }

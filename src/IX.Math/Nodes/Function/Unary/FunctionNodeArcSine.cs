@@ -9,75 +9,74 @@ using IX.Math.Nodes.Constants;
 using JetBrains.Annotations;
 using GlobalSystem = System;
 
-namespace IX.Math.Nodes.Function.Unary
+namespace IX.Math.Nodes.Function.Unary;
+
+/// <summary>
+///     A node representing the <see cref="GlobalSystem.Math.Asin(double)" /> function.
+/// </summary>
+/// <seealso cref="NumericUnaryFunctionNodeBase" />
+[DebuggerDisplay("asin({" + nameof(Parameter) + "})")]
+[CallableMathematicsFunction(
+    "asin",
+    "arcsin",
+    "arcsine")]
+[UsedImplicitly]
+internal sealed class FunctionNodeArcSine : NumericUnaryFunctionNodeBase
 {
     /// <summary>
-    ///     A node representing the <see cref="GlobalSystem.Math.Asin(double)" /> function.
+    ///     Initializes a new instance of the <see cref="FunctionNodeArcSine" /> class.
     /// </summary>
-    /// <seealso cref="NumericUnaryFunctionNodeBase" />
-    [DebuggerDisplay("asin({" + nameof(Parameter) + "})")]
-    [CallableMathematicsFunction(
-        "asin",
-        "arcsin",
-        "arcsine")]
-    [UsedImplicitly]
-    internal sealed class FunctionNodeArcSine : NumericUnaryFunctionNodeBase
+    /// <param name="parameter">The parameter.</param>
+    public FunctionNodeArcSine(NodeBase parameter)
+        : base(parameter)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="FunctionNodeArcSine" /> class.
-        /// </summary>
-        /// <param name="parameter">The parameter.</param>
-        public FunctionNodeArcSine(NodeBase parameter)
-            : base(parameter)
-        {
-        }
-
-        /// <summary>
-        ///     Simplifies this node, if possible, reflexively returns otherwise.
-        /// </summary>
-        /// <returns>
-        ///     A simplified node, or this instance.
-        /// </returns>
-        public override NodeBase Simplify()
-        {
-            if (this.Parameter is NumericNode numericParam)
-            {
-                return new NumericNode(GlobalSystem.Math.Asin(numericParam.ExtractFloat()));
-            }
-
-            return this;
-        }
-
-        /// <summary>
-        ///     Creates a deep clone of the source object.
-        /// </summary>
-        /// <param name="context">The deep cloning context.</param>
-        /// <returns>
-        ///     A deep clone.
-        /// </returns>
-        public override NodeBase DeepClone(NodeCloningContext context) =>
-            new FunctionNodeArcSine(this.Parameter.DeepClone(context));
-
-        /// <summary>
-        ///     Generates the expression that will be compiled into code.
-        /// </summary>
-        /// <returns>
-        ///     The expression.
-        /// </returns>
-        protected override Expression GenerateExpressionInternal() =>
-            this.GenerateStaticUnaryFunctionCall(
-                typeof(GlobalSystem.Math),
-                nameof(GlobalSystem.Math.Asin));
-
-        /// <summary>
-        ///     Generates the expression with tolerance that will be compiled into code.
-        /// </summary>
-        /// <param name="tolerance">The tolerance.</param>
-        /// <returns>The expression.</returns>
-        protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
-            this.GenerateStaticUnaryFunctionCall(
-                typeof(GlobalSystem.Math),
-                nameof(GlobalSystem.Math.Asin),
-                tolerance);
     }
+
+    /// <summary>
+    ///     Simplifies this node, if possible, reflexively returns otherwise.
+    /// </summary>
+    /// <returns>
+    ///     A simplified node, or this instance.
+    /// </returns>
+    public override NodeBase Simplify()
+    {
+        if (this.Parameter is NumericNode numericParam)
+        {
+            return new NumericNode(GlobalSystem.Math.Asin(numericParam.ExtractFloat()));
+        }
+
+        return this;
+    }
+
+    /// <summary>
+    ///     Creates a deep clone of the source object.
+    /// </summary>
+    /// <param name="context">The deep cloning context.</param>
+    /// <returns>
+    ///     A deep clone.
+    /// </returns>
+    public override NodeBase DeepClone(NodeCloningContext context) =>
+        new FunctionNodeArcSine(this.Parameter.DeepClone(context));
+
+    /// <summary>
+    ///     Generates the expression that will be compiled into code.
+    /// </summary>
+    /// <returns>
+    ///     The expression.
+    /// </returns>
+    protected override Expression GenerateExpressionInternal() =>
+        this.GenerateStaticUnaryFunctionCall(
+            typeof(GlobalSystem.Math),
+            nameof(GlobalSystem.Math.Asin));
+
+    /// <summary>
+    ///     Generates the expression with tolerance that will be compiled into code.
+    /// </summary>
+    /// <param name="tolerance">The tolerance.</param>
+    /// <returns>The expression.</returns>
+    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+        this.GenerateStaticUnaryFunctionCall(
+            typeof(GlobalSystem.Math),
+            nameof(GlobalSystem.Math.Asin),
+            tolerance);
 }

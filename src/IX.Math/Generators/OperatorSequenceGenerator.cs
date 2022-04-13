@@ -2,47 +2,42 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
+namespace IX.Math.Generators;
 
-namespace IX.Math.Generators
+internal static class OperatorSequenceGenerator
 {
-    internal static class OperatorSequenceGenerator
+
+    internal static List<Tuple<int, int, string>> GetOperatorsInOrderInExpression(
+        string expression,
+        IEnumerable<KeyValuePair<int, string[]>> operators)
     {
+        var indexes = new List<Tuple<int, int, string>>();
 
-        internal static List<Tuple<int, int, string>> GetOperatorsInOrderInExpression(
-             string expression,
-             IEnumerable<KeyValuePair<int, string[]>> operators)
+        foreach (KeyValuePair<int, string[]> level in operators)
         {
-            var indexes = new List<Tuple<int, int, string>>();
-
-            foreach (KeyValuePair<int, string[]> level in operators)
+            foreach (var op in level.Value)
             {
-                foreach (var op in level.Value)
+                var index = 0 - op.Length;
+
+                restartFindProcess:
+                index = expression.IndexOf(
+                    op,
+                    index + op.Length,
+                    StringComparison.Ordinal);
+
+                if (index != -1)
                 {
-                    var index = 0 - op.Length;
+                    indexes.Add(
+                        new Tuple<int, int, string>(
+                            level.Key,
+                            index,
+                            op));
 
-                    restartFindProcess:
-                    index = expression.IndexOf(
-                        op,
-                        index + op.Length,
-                        StringComparison.Ordinal);
-
-                    if (index != -1)
-                    {
-                        indexes.Add(
-                            new Tuple<int, int, string>(
-                                level.Key,
-                                index,
-                                op));
-
-                        goto restartFindProcess;
-                    }
+                    goto restartFindProcess;
                 }
             }
-
-            return indexes;
         }
+
+        return indexes;
     }
 }
