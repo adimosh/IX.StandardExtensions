@@ -43,7 +43,7 @@
 
   <!-- Vulnerability fix in dependency - by Snyk -->
   <ItemGroup Condition="'$(TargetFramework)'!='net6.0'">
-    <PackageReference Include="System.Text.Json" Version="5.0.2" />
+    <PackageReference Include="System.Text.Json" Version="6.0.4" />
   </ItemGroup>
 
   <ItemGroup>
