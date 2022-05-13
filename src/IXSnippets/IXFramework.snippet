@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>IX Surround-with Null-check</Title>
+            <Author>Adrian Mos</Author>
+            <SnippetTypes>
+                <SnippetType>SurroundsWith</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Code Language="CSharp" Kind="method body">
+                <![CDATA[Requires.NotNull($selected$$end$)]]>
+            </Code>
+            <Imports>
+                <Import>
+                    <Namespace>IX.StandardExtensions.Contracts</Namespace>
+                </Import>
+            </Imports>
+        </Snippet>
+    </CodeSnippet>
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>IX Expansion Null-check</Title>
+            <Author>Adrian Mos</Author>
+            <Shortcut>notnull</Shortcut>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Code Language="CSharp" Kind="method body">
+                <![CDATA[Requires.NotNull($expression$)$end$]]>
+            </Code>
+            <Imports>
+                <Import>
+                    <Namespace>IX.StandardExtensions.Contracts</Namespace>
+                </Import>
+            </Imports>
+            <Declarations>
+                <Literal Editable="true">
+                    <ID>expression</ID>
+                    <ToolTip>The expression to null-check.</ToolTip>
+                    <Default>argument</Default>
+                </Literal>
+            </Declarations>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>
