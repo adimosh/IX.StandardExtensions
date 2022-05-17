@@ -16,8 +16,6 @@ using IX.StandardExtensions.Threading;
 using IX.System.Collections.Generic;
 using JetBrains.Annotations;
 using DiagCA = System.Diagnostics.CodeAnalysis;
-using IConstantPassThroughExtractor = IX.Math.Extensibility.IConstantPassThroughExtractor;
-using IConstantsExtractor = IX.Math.Extensibility.IConstantsExtractor;
 
 namespace IX.Math;
 
@@ -30,23 +28,29 @@ namespace IX.Math;
 public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBase,
     IExpressionParsingService
 {
+#region Internal state
+
     private readonly List<Assembly> assembliesToRegister;
+    private readonly Dictionary<string, Type> binaryFunctions;
 
     private readonly LevelDictionary<Type, IConstantsExtractor> constantExtractors;
     private readonly LevelDictionary<Type, IConstantInterpreter> constantInterpreters;
     private readonly LevelDictionary<Type, IConstantPassThroughExtractor> constantPassThroughExtractors;
-    private readonly List<IStringFormatter> stringFormatters;
 
     private readonly Dictionary<string, Type> nonaryFunctions;
-    private readonly Dictionary<string, Type> unaryFunctions;
-    private readonly Dictionary<string, Type> binaryFunctions;
+    private readonly List<IStringFormatter> stringFormatters;
     private readonly Dictionary<string, Type> ternaryFunctions;
+    private readonly Dictionary<string, Type> unaryFunctions;
 
     private readonly MathDefinition workingDefinition;
 
+    private int interpretationDone;
+
     private bool isInitialized;
 
-    private int interpretationDone;
+#endregion
+
+#region Constructors and destructors
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ExpressionParsingServiceBase" /> class with a specified math
@@ -80,6 +84,93 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
         };
     }
 
+#endregion
+
+#region Methods
+
+#region Interface implementations
+
+    /// <summary>
+    ///     Returns the prototypes of all registered functions.
+    /// </summary>
+    /// <returns>All function names, with all possible combinations of input and output data.</returns>
+    public string[] GetRegisteredFunctions()
+    {
+        this.ThrowIfCurrentObjectDisposed();
+
+        using SynchronizationLocker innerLock = this.EnsureInitialization();
+
+        // Capacity is sum of all, times 3; the "3" number was chosen as a good-enough average of how many overloads are defined, on average
+        var bldr = new List<string>(
+            (this.nonaryFunctions.Count +
+             this.unaryFunctions.Count +
+             this.binaryFunctions.Count +
+             this.ternaryFunctions.Count) *
+            3);
+
+        bldr.AddRange(this.nonaryFunctions.Select(function => $"{function.Key}()"));
+
+        (
+            from KeyValuePair<string, Type> function in this.unaryFunctions
+            from ConstructorInfo constructor in function.Value.GetTypeInfo()
+                .DeclaredConstructors
+            let parameters = constructor.GetParameters()
+            where parameters.Length == 1
+            let parameterName = parameters[0]
+                .Name
+            where parameterName != null
+            let functionName = function.Key
+            select (FunctionName: functionName, ParameterName: parameterName)).ForEach(
+            (
+                parameter,
+                bldrL1) => bldrL1.Add($"{parameter.FunctionName}({parameter.ParameterName})"),
+            bldr);
+
+        (
+            from KeyValuePair<string, Type> function in this.binaryFunctions
+            from ConstructorInfo constructor in function.Value.GetTypeInfo()
+                .DeclaredConstructors
+            let parameters = constructor.GetParameters()
+            where parameters.Length == 2
+            let parameterNameLeft = parameters[0]
+                .Name
+            let parameterNameRight = parameters[1]
+                .Name
+            where parameterNameLeft != null && parameterNameRight != null
+            let functionName = function.Key
+            select (FunctionName: functionName, ParameterNameLeft: parameterNameLeft,
+                ParameterNameRight: parameterNameRight)).ForEach(
+            (
+                parameter,
+                bldrL1) => bldrL1.Add(
+                $"{parameter.FunctionName}({parameter.ParameterNameLeft}, {parameter.ParameterNameRight})"),
+            bldr);
+
+        (
+            from KeyValuePair<string, Type> function in this.ternaryFunctions
+            from ConstructorInfo constructor in function.Value.GetTypeInfo()
+                .DeclaredConstructors
+            let parameters = constructor.GetParameters()
+            where parameters.Length == 3
+            let parameterNameLeft = parameters[0]
+                .Name
+            let parameterNameMiddle = parameters[1]
+                .Name
+            let parameterNameRight = parameters[2]
+                .Name
+            where parameterNameLeft != null && parameterNameMiddle != null && parameterNameRight != null
+            let functionName = function.Key
+            select (FunctionName: functionName, ParameterNameLeft: parameterNameLeft,
+                ParameterNameMiddle: parameterNameMiddle, ParameterNameRight: parameterNameRight)).ForEach(
+            (
+                parameter,
+                bldrL1) => bldrL1.Add(
+                $"{parameter.FunctionName}({parameter.ParameterNameLeft}, {parameter.ParameterNameMiddle}, {parameter.ParameterNameRight})"),
+            bldr);
+
+        return bldr.ToArray();
+    }
+
     /// <summary>
     ///     Interprets the mathematical expression and returns a container that can be invoked for solving using specific
     ///     mathematical types.
@@ -90,6 +181,86 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
     public abstract ComputedExpression Interpret(
         string expression,
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    ///     Registers an assembly to extract compatible functions from.
+    /// </summary>
+    /// <param name="assembly">The assembly to register.</param>
+    public void RegisterFunctionsAssembly(Assembly assembly)
+    {
+        Requires.NotNull(
+            assembly,
+            nameof(assembly));
+
+        this.ThrowIfCurrentObjectDisposed();
+
+        using ReadWriteSynchronizationLocker innerLocker = this.ReadWriteLock();
+
+        if (this.isInitialized)
+        {
+            throw new InvalidOperationException(
+                "Initialization has already completed, so you cannot register any more assemblies for this service.");
+        }
+
+        if (this.assembliesToRegister.Contains(assembly))
+        {
+            return;
+        }
+
+        innerLocker.Upgrade();
+
+        this.assembliesToRegister.Add(assembly);
+    }
+
+    /// <summary>
+    ///     Registers type formatters.
+    /// </summary>
+    /// <param name="formatter">The formatter to register.</param>
+    /// <exception cref="InvalidOperationException">
+    ///     This method was called after having called <see cref="Interpret" />
+    ///     successfully for the first time.
+    /// </exception>
+    public void RegisterTypeFormatter(IStringFormatter formatter)
+    {
+        Requires.NotNull(
+            formatter,
+            nameof(formatter));
+
+        if (this.interpretationDone != 0)
+        {
+            throw new InvalidOperationException(
+                Resources
+                    .TheExpressionParsingServiceHasAlreadyDoneInterpretationAndCannotHaveAnyMoreFormattersRegistered);
+        }
+
+        this.stringFormatters.Add(formatter);
+    }
+
+#endregion
+
+#region Disposable
+
+    /// <summary>
+    ///     Disposes in the managed context.
+    /// </summary>
+    protected override void DisposeManagedContext()
+    {
+        this.nonaryFunctions.Clear();
+        this.unaryFunctions.Clear();
+        this.binaryFunctions.Clear();
+        this.ternaryFunctions.Clear();
+
+        this.stringFormatters.Clear();
+        this.constantExtractors.Clear();
+        this.constantInterpreters.Clear();
+        this.constantPassThroughExtractors.Clear();
+
+        this.assembliesToRegister.Clear();
+
+        base.DisposeManagedContext();
+    }
+
+#endregion
 
     /// <summary>
     ///     Interprets the mathematical expression and returns a container that can be invoked for solving using specific
@@ -182,161 +353,6 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
             1);
 
         return result;
-    }
-
-    /// <summary>
-    ///     Returns the prototypes of all registered functions.
-    /// </summary>
-    /// <returns>All function names, with all possible combinations of input and output data.</returns>
-    public string[] GetRegisteredFunctions()
-    {
-        this.ThrowIfCurrentObjectDisposed();
-
-        using SynchronizationLocker innerLock = this.EnsureInitialization();
-
-        // Capacity is sum of all, times 3; the "3" number was chosen as a good-enough average of how many overloads are defined, on average
-        var bldr = new List<string>(
-            (this.nonaryFunctions.Count +
-             this.unaryFunctions.Count +
-             this.binaryFunctions.Count +
-             this.ternaryFunctions.Count) *
-            3);
-
-        bldr.AddRange(this.nonaryFunctions.Select(function => $"{function.Key}()"));
-
-        (
-            from KeyValuePair<string, Type> function in this.unaryFunctions
-            from ConstructorInfo constructor in function.Value.GetTypeInfo()
-                .DeclaredConstructors
-            let parameters = constructor.GetParameters()
-            where parameters.Length == 1
-            let parameterName = parameters[0]
-                .Name
-            where parameterName != null
-            let functionName = function.Key
-            select (FunctionName: functionName, ParameterName: parameterName)).ForEach(
-            (
-                parameter,
-                bldrL1) => bldrL1.Add($"{parameter.FunctionName}({parameter.ParameterName})"),
-            bldr);
-
-        (
-            from KeyValuePair<string, Type> function in this.binaryFunctions
-            from ConstructorInfo constructor in function.Value.GetTypeInfo()
-                .DeclaredConstructors
-            let parameters = constructor.GetParameters()
-            where parameters.Length == 2
-            let parameterNameLeft = parameters[0]
-                .Name
-            let parameterNameRight = parameters[1]
-                .Name
-            where parameterNameLeft != null && parameterNameRight != null
-            let functionName = function.Key
-            select (FunctionName: functionName, ParameterNameLeft: parameterNameLeft,
-                ParameterNameRight: parameterNameRight)).ForEach(
-            (
-                parameter,
-                bldrL1) => bldrL1.Add(
-                $"{parameter.FunctionName}({parameter.ParameterNameLeft}, {parameter.ParameterNameRight})"),
-            bldr);
-
-        (
-            from KeyValuePair<string, Type> function in this.ternaryFunctions
-            from ConstructorInfo constructor in function.Value.GetTypeInfo()
-                .DeclaredConstructors
-            let parameters = constructor.GetParameters()
-            where parameters.Length == 3
-            let parameterNameLeft = parameters[0]
-                .Name
-            let parameterNameMiddle = parameters[1]
-                .Name
-            let parameterNameRight = parameters[2]
-                .Name
-            where parameterNameLeft != null && parameterNameMiddle != null && parameterNameRight != null
-            let functionName = function.Key
-            select (FunctionName: functionName, ParameterNameLeft: parameterNameLeft,
-                ParameterNameMiddle: parameterNameMiddle, ParameterNameRight: parameterNameRight)).ForEach(
-            (
-                parameter,
-                bldrL1) => bldrL1.Add(
-                $"{parameter.FunctionName}({parameter.ParameterNameLeft}, {parameter.ParameterNameMiddle}, {parameter.ParameterNameRight})"),
-            bldr);
-
-        return bldr.ToArray();
-    }
-
-    /// <summary>
-    ///     Registers an assembly to extract compatible functions from.
-    /// </summary>
-    /// <param name="assembly">The assembly to register.</param>
-    public void RegisterFunctionsAssembly(Assembly assembly)
-    {
-        Requires.NotNull(
-            assembly,
-            nameof(assembly));
-
-        this.ThrowIfCurrentObjectDisposed();
-
-        using ReadWriteSynchronizationLocker innerLocker = this.ReadWriteLock();
-
-        if (this.isInitialized)
-        {
-            throw new InvalidOperationException(
-                "Initialization has already completed, so you cannot register any more assemblies for this service.");
-        }
-
-        if (this.assembliesToRegister.Contains(assembly))
-        {
-            return;
-        }
-
-        innerLocker.Upgrade();
-
-        this.assembliesToRegister.Add(assembly);
-    }
-
-    /// <summary>
-    ///     Registers type formatters.
-    /// </summary>
-    /// <param name="formatter">The formatter to register.</param>
-    /// <exception cref="InvalidOperationException">
-    ///     This method was called after having called <see cref="Interpret" />
-    ///     successfully for the first time.
-    /// </exception>
-    public void RegisterTypeFormatter(IStringFormatter formatter)
-    {
-        Requires.NotNull(
-            formatter,
-            nameof(formatter));
-
-        if (this.interpretationDone != 0)
-        {
-            throw new InvalidOperationException(
-                Resources
-                    .TheExpressionParsingServiceHasAlreadyDoneInterpretationAndCannotHaveAnyMoreFormattersRegistered);
-        }
-
-        this.stringFormatters.Add(formatter);
-    }
-
-    /// <summary>
-    ///     Disposes in the managed context.
-    /// </summary>
-    protected override void DisposeManagedContext()
-    {
-        this.nonaryFunctions.Clear();
-        this.unaryFunctions.Clear();
-        this.binaryFunctions.Clear();
-        this.ternaryFunctions.Clear();
-
-        this.stringFormatters.Clear();
-        this.constantExtractors.Clear();
-        this.constantInterpreters.Clear();
-        this.constantPassThroughExtractors.Clear();
-
-        this.assembliesToRegister.Clear();
-
-        base.DisposeManagedContext();
     }
 
     [DiagCA.SuppressMessage(
@@ -511,4 +527,6 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
                 ref incrementer,
                 this);
     }
+
+#endregion
 }

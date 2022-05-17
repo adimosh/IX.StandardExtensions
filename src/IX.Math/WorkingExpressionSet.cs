@@ -18,34 +18,21 @@ using SubtractNode = IX.Math.Nodes.Operations.Binary.SubtractNode;
 
 namespace IX.Math;
 
-[DiagCA.SuppressMessage(
-    "IDisposableAnalyzers.Correctness",
-    "IDISP008:Don't assign member with injected and created disposables.",
-    Justification = "It is OK, but the analyzer can't tell.")]
 internal class WorkingExpressionSet : DisposableBase
 {
+#region Internal state
+
     // Constants
-    private readonly Dictionary<string, ConstantNodeBase> constantsTable;
-    private readonly Dictionary<string, string> reverseConstantsTable;
 
     // Symbols
-    private readonly Dictionary<string, ExpressionSymbol> symbolTable;
-    private readonly Dictionary<string, string> reverseSymbolTable;
 
     // Operators
-    [DiagCA.SuppressMessage(
-        "IDisposableAnalyzers.Correctness",
-        "IDISP006:Implement IDisposable.",
-        Justification = "This is correct, but the analyzer can't tell.")]
-    private LevelDictionary<string, Func<MathDefinition, NodeBase, NodeBase, BinaryOperatorNodeBase>> binaryOperators;
-
-    [DiagCA.SuppressMessage(
-        "IDisposableAnalyzers.Correctness",
-        "IDISP006:Implement IDisposable.",
-        Justification = "This is correct, but the analyzer can't tell.")]
-    private LevelDictionary<string, Func<MathDefinition, NodeBase, UnaryOperatorNodeBase>> unaryOperators;
 
     private bool initialized;
+
+#endregion
+
+#region Constructors and destructors
 
     internal WorkingExpressionSet(
         string expression,
@@ -103,6 +90,10 @@ internal class WorkingExpressionSet : DisposableBase
             $@"(?'functionName'.*?){Regex.Escape(mathDefinition.Parentheses.Left)}(?'expression'.*?){Regex.Escape(mathDefinition.Parentheses.Right)}");
     }
 
+#endregion
+
+#region Properties and indexers
+
     /// <summary>
     ///     Gets all operators in order.
     /// </summary>
@@ -110,6 +101,14 @@ internal class WorkingExpressionSet : DisposableBase
     ///     All operators in order.
     /// </value>
     internal string[] AllOperatorsInOrder { get; }
+
+    /// <summary>
+    ///     Gets the binary functions.
+    /// </summary>
+    /// <value>
+    ///     The binary functions.
+    /// </value>
+    internal Dictionary<string, Type> BinaryFunctions { get; }
 
     /// <summary>
     ///     Gets the cancellation token.
@@ -136,6 +135,14 @@ internal class WorkingExpressionSet : DisposableBase
     internal LevelDictionary<Type, IConstantsExtractor> Extractors { get; }
 
     /// <summary>
+    ///     Gets the function regex.
+    /// </summary>
+    /// <value>
+    ///     The function regex.
+    /// </value>
+    internal Regex FunctionRegex { get; }
+
+    /// <summary>
     ///     Gets the constant interpreters.
     /// </summary>
     /// <value>
@@ -144,12 +151,12 @@ internal class WorkingExpressionSet : DisposableBase
     internal LevelDictionary<Type, IConstantInterpreter> Interpreters { get; }
 
     /// <summary>
-    ///     Gets the function regex.
+    ///     Gets the nonary functions.
     /// </summary>
     /// <value>
-    ///     The function regex.
+    ///     The nonary functions.
     /// </value>
-    internal Regex FunctionRegex { get; }
+    internal Dictionary<string, Type> NonaryFunctions { get; }
 
     /// <summary>
     ///     Gets the parameter registry.
@@ -160,12 +167,12 @@ internal class WorkingExpressionSet : DisposableBase
     internal IParameterRegistry ParameterRegistry { get; }
 
     /// <summary>
-    ///     Gets the nonary functions.
+    ///     Gets the string formatters.
     /// </summary>
     /// <value>
-    ///     The nonary functions.
+    ///     The string formatters.
     /// </value>
-    internal Dictionary<string, Type> NonaryFunctions { get; }
+    internal List<IStringFormatter> StringFormatters { get; }
 
     /// <summary>
     ///     Gets the ternary functions.
@@ -182,22 +189,6 @@ internal class WorkingExpressionSet : DisposableBase
     ///     The unary functions.
     /// </value>
     internal Dictionary<string, Type> UnaryFunctions { get; }
-
-    /// <summary>
-    ///     Gets the binary functions.
-    /// </summary>
-    /// <value>
-    ///     The binary functions.
-    /// </value>
-    internal Dictionary<string, Type> BinaryFunctions { get; }
-
-    /// <summary>
-    /// Gets the string formatters.
-    /// </summary>
-    /// <value>
-    /// The string formatters.
-    /// </value>
-    internal List<IStringFormatter> StringFormatters { get; }
 
     /// <summary>
     ///     Gets all symbols.
@@ -221,10 +212,14 @@ internal class WorkingExpressionSet : DisposableBase
         "IDisposableAnalyzers.Correctness",
         "IDISP006:Implement IDisposable.",
         Justification = "This is correct, but the analyzer can't tell.")]
+    [field: DiagCA.SuppressMessage(
+        "IDisposableAnalyzers.Correctness",
+        "IDISP006:Implement IDisposable.",
+        Justification = "This is correct, but the analyzer can't tell.")]
     internal LevelDictionary<string, Func<MathDefinition, NodeBase, NodeBase, BinaryOperatorNodeBase>> BinaryOperators
     {
-        get => this.binaryOperators;
-        private set => this.binaryOperators = value;
+        get;
+        private set;
     }
 
     /// <summary>
@@ -233,11 +228,7 @@ internal class WorkingExpressionSet : DisposableBase
     /// <value>
     ///     The constants table.
     /// </value>
-    internal Dictionary<string, ConstantNodeBase> ConstantsTable
-    {
-        get => this.constantsTable;
-        private init => this.constantsTable = value;
-    }
+    internal Dictionary<string, ConstantNodeBase> ConstantsTable { get; private init; }
 
     /// <summary>
     ///     Gets or sets the expression.
@@ -253,11 +244,7 @@ internal class WorkingExpressionSet : DisposableBase
     /// <value>
     ///     The reverse constants table.
     /// </value>
-    internal Dictionary<string, string> ReverseConstantsTable
-    {
-        get => this.reverseConstantsTable;
-        private init => this.reverseConstantsTable = value;
-    }
+    internal Dictionary<string, string> ReverseConstantsTable { get; private init; }
 
     /// <summary>
     ///     Gets the reverse symbol table.
@@ -265,11 +252,7 @@ internal class WorkingExpressionSet : DisposableBase
     /// <value>
     ///     The reverse symbol table.
     /// </value>
-    internal Dictionary<string, string> ReverseSymbolTable
-    {
-        get => this.reverseSymbolTable;
-        private init => this.reverseSymbolTable = value;
-    }
+    internal Dictionary<string, string> ReverseSymbolTable { get; private init; }
 
     /// <summary>
     ///     Gets or sets a value indicating whether this <see cref="WorkingExpressionSet" /> is success.
@@ -285,11 +268,7 @@ internal class WorkingExpressionSet : DisposableBase
     /// <value>
     ///     The symbol table.
     /// </value>
-    internal Dictionary<string, ExpressionSymbol> SymbolTable
-    {
-        get => this.symbolTable;
-        private init => this.symbolTable = value;
-    }
+    internal Dictionary<string, ExpressionSymbol> SymbolTable { get; private init; }
 
     /// <summary>
     ///     Gets the unary operators.
@@ -305,14 +284,22 @@ internal class WorkingExpressionSet : DisposableBase
         "IDisposableAnalyzers.Correctness",
         "IDISP006:Implement IDisposable.",
         Justification = "This is correct, but the analyzer can't tell.")]
+    [field: DiagCA.SuppressMessage(
+        "IDisposableAnalyzers.Correctness",
+        "IDISP006:Implement IDisposable.",
+        Justification = "This is correct, but the analyzer can't tell.")]
     internal LevelDictionary<string, Func<MathDefinition, NodeBase, UnaryOperatorNodeBase>> UnaryOperators
     {
-        get => this.unaryOperators;
-        private set => this.unaryOperators = value;
+        get;
+        private set;
     }
 
+#endregion
+
+#region Methods
+
     /// <summary>
-    /// Offers a reserved object type.
+    ///     Offers a reserved object type.
     /// </summary>
     /// <param name="type">The type.</param>
     /// <returns>An instance of a reserved type, if one exists.</returns>
@@ -366,19 +353,19 @@ internal class WorkingExpressionSet : DisposableBase
 
         var i = 1;
         var allOperatorsInOrder = this.AllOperatorsInOrder;
-        var definition = this.Definition;
+        MathDefinition definition = this.Definition;
 
         foreach (var op in allOperatorsInOrder.OrderByDescending(p => p.Length)
-            .Where(
-                (
-                    p,
-                    allOperatorsInOrderL1) => allOperatorsInOrderL1.Any(
-                    (
-                            q,
-                            pL2) => q.Length < pL2.Length && pL2.Contains(q),
-                    p),
-                allOperatorsInOrder)
-            .OrderByDescending(p => p.Length))
+                     .Where(
+                         (
+                             p,
+                             allOperatorsInOrderL1) => allOperatorsInOrderL1.Any(
+                             (
+                                 q,
+                                 pL2) => q.Length < pL2.Length && pL2.Contains(q),
+                             p),
+                         allOperatorsInOrder)
+                     .OrderByDescending(p => p.Length))
         {
             var s = $"@op{i}@";
 
@@ -486,7 +473,8 @@ internal class WorkingExpressionSet : DisposableBase
         // ======================================
 
         // Binary operators
-        this.BinaryOperators = new LevelDictionary<string, Func<MathDefinition, NodeBase, NodeBase, BinaryOperatorNodeBase>>
+        this.BinaryOperators =
+            new LevelDictionary<string, Func<MathDefinition, NodeBase, NodeBase, BinaryOperatorNodeBase>>
             {
                 // First tier - Comparison and equation operators
                 {
@@ -647,30 +635,30 @@ internal class WorkingExpressionSet : DisposableBase
 
         // Unary operators
         this.UnaryOperators = new LevelDictionary<string, Func<MathDefinition, NodeBase, UnaryOperatorNodeBase>>
+        {
+            // First tier - Negation and inversion
             {
-                // First tier - Negation and inversion
-                {
-                    definition.SubtractSymbol, (
-                        _,
-                        operand) => new Nodes.Operations.Unary.SubtractNode(operand),
-                    1
-                },
-                {
-                    definition.NotSymbol, (
-                        _,
-                        operand) => new NotNode(operand),
-                    1
-                }
-            };
+                definition.SubtractSymbol, (
+                    _,
+                    operand) => new Nodes.Operations.Unary.SubtractNode(operand),
+                1
+            },
+            {
+                definition.NotSymbol, (
+                    _,
+                    operand) => new NotNode(operand),
+                1
+            }
+        };
 
         // All symbols
         this.AllSymbols = allOperatorsInOrder.Union(
-            new[]
-            {
+                new[]
+                {
                     definition.ParameterSeparator,
                     definition.Parentheses.Left,
                     definition.Parentheses.Right
-            })
+                })
             .ToArray();
 
         // Special symbols
@@ -723,8 +711,10 @@ internal class WorkingExpressionSet : DisposableBase
             $"{definition.SpecialSymbolIndicators.Begin}lambda{definition.SpecialSymbolIndicators.End}");
     }
 
+#region Disposable
+
     /// <summary>
-    /// Disposes in the managed context.
+    ///     Disposes in the managed context.
     /// </summary>
     [DiagCA.SuppressMessage(
         "IDisposableAnalyzers.Correctness",
@@ -734,11 +724,15 @@ internal class WorkingExpressionSet : DisposableBase
     {
         base.DisposeManagedContext();
 
-        this.constantsTable.Clear();
-        this.reverseConstantsTable.Clear();
-        this.symbolTable.Clear();
-        this.reverseSymbolTable.Clear();
-        this.unaryOperators.Dispose();
-        this.binaryOperators.Dispose();
+        this.ConstantsTable.Clear();
+        this.ReverseConstantsTable.Clear();
+        this.SymbolTable.Clear();
+        this.ReverseSymbolTable.Clear();
+        this.UnaryOperators.Dispose();
+        this.BinaryOperators.Dispose();
     }
+
+#endregion
+
+#endregion
 }

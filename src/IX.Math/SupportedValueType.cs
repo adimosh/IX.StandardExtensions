@@ -40,5 +40,5 @@ public enum SupportedValueType
     /// <summary>
     ///     Byte array (pass as array of <see cref="byte" />).
     /// </summary>
-    ByteArray = 8,
+    ByteArray = 8
 }
