@@ -35,7 +35,7 @@ public abstract class OperationNodeBase : CachedExpressionNodeBase, ISpecialRequ
     /// <value>
     /// The special object request function.
     /// </value>
-    protected Func<Type, object> SpecialObjectRequestFunction { get; private set; }
+    protected Func<Type, object>? SpecialObjectRequestFunction { get; private set; }
 
     /// <summary>
     /// Generates an expression that will be cached before being compiled.
@@ -160,5 +160,5 @@ public abstract class OperationNodeBase : CachedExpressionNodeBase, ISpecialRequ
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected virtual Expression GenerateExpressionInternal(Tolerance tolerance) => this.GenerateExpressionInternal();
+    protected virtual Expression GenerateExpressionInternal(Tolerance? tolerance) => this.GenerateExpressionInternal();
 }

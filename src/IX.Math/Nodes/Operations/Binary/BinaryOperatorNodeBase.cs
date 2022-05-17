@@ -32,12 +32,8 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
         NodeBase left,
         NodeBase right)
     {
-        Requires.NotNull(
-            left,
-            nameof(left));
-        Requires.NotNull(
-            right,
-            nameof(right));
+        Requires.NotNull(left);
+        Requires.NotNull(right);
 
         this.EnsureCompatibleOperands(
             left,
@@ -101,14 +97,14 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
     /// <param name="func">The function.</param>
     protected override void SetSpecialObjectRequestFunctionForSubObjects(Func<Type, object> func)
     {
-        if (this.Left is ISpecialRequestNode srnl)
+        if (this.Left is ISpecialRequestNode specialRequestNodeLeft)
         {
-            srnl.SetRequestSpecialObjectFunction(func);
+            specialRequestNodeLeft.SetRequestSpecialObjectFunction(func);
         }
 
-        if (this.Right is ISpecialRequestNode srnr)
+        if (this.Right is ISpecialRequestNode specialRequestNodeRight)
         {
-            srnr.SetRequestSpecialObjectFunction(func);
+            specialRequestNodeRight.SetRequestSpecialObjectFunction(func);
         }
     }
 
@@ -129,21 +125,21 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
 
         if (le.Type == typeof(double) && re.Type == typeof(long))
         {
-            return (le,
-                Expression.Convert(
+            return (Left: le,
+                Right: Expression.Convert(
                     re,
                     typeof(double)));
         }
 
         if (le.Type == typeof(long) && re.Type == typeof(double))
         {
-            return (Expression.Convert(
+            return (Left: Expression.Convert(
                     le,
                     typeof(double)),
-                re);
+                Right: re);
         }
 
-        return (le, re);
+        return (Left: le, Right: re);
     }
 
     /// <summary>
@@ -151,7 +147,7 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The left and right operand expressions.</returns>
-    protected (Expression Left, Expression Right) GetExpressionsOfSameTypeFromOperands(Tolerance tolerance)
+    protected (Expression Left, Expression Right) GetExpressionsOfSameTypeFromOperands(Tolerance? tolerance)
     {
         if (this.Left.ReturnType == SupportedValueType.String || this.Right.ReturnType == SupportedValueType.String)
         {
@@ -164,20 +160,20 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
 
         if (le.Type == typeof(double) && re.Type == typeof(long))
         {
-            return (le,
-                Expression.Convert(
+            return (Left: le,
+                Right: Expression.Convert(
                     re,
                     typeof(double)));
         }
 
         if (le.Type == typeof(long) && re.Type == typeof(double))
         {
-            return (Expression.Convert(
+            return (Left: Expression.Convert(
                     le,
                     typeof(double)),
-                re);
+                Right: re);
         }
 
-        return (le, re);
+        return (Left: le, Right: re);
     }
 }

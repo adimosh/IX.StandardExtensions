@@ -15,11 +15,11 @@ namespace IX.Math.Nodes.Constants;
 /// A numeric node. This class cannot be inherited.
 /// </summary>
 /// <seealso cref="ConstantNodeBase" />
-[DebuggerDisplay("{" + nameof(Value) + "}")]
+[DebuggerDisplay($"{{{nameof(Value)}}}")]
 [PublicAPI]
 public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
 {
-    private Func<Type, object> specialObjectRequestFunction;
+    private Func<Type, object>? specialObjectRequestFunction;
 
     /// <summary>
     /// The integer value.
@@ -97,7 +97,6 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
         Justification = "This is desired.")]
     public object Value
     {
-
         get
         {
             if (this.IsFloat)

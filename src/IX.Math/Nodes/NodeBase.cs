@@ -62,7 +62,7 @@ public abstract class NodeBase : IContextAwareDeepCloneable<NodeCloningContext, 
     /// <returns>
     ///     The generated <see cref="Expression" />.
     /// </returns>
-    public virtual Expression GenerateExpression(Tolerance tolerance) => this.GenerateExpression();
+    public virtual Expression GenerateExpression(Tolerance? tolerance) => this.GenerateExpression();
 
     /// <summary>
     ///     Generates the expression that will be compiled into code as a string expression.
@@ -75,7 +75,7 @@ public abstract class NodeBase : IContextAwareDeepCloneable<NodeCloningContext, 
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The generated <see cref="Expression" /> that gives the values as a string.</returns>
-    public virtual Expression GenerateStringExpression(Tolerance tolerance) => this.GenerateStringExpression();
+    public virtual Expression GenerateStringExpression(Tolerance? tolerance) => this.GenerateStringExpression();
 
     /// <summary>
     ///     Simplifies this node, if possible, reflexively returns otherwise.

@@ -31,7 +31,7 @@ public interface IExpressionParsingService : IDisposable
     ///     This method was called after having called <see cref="Interpret" />
     ///     successfully for the first time.
     /// </exception>
-    void RegisterTypeFormatter([NotNull] IStringFormatter formatter);
+    void RegisterTypeFormatter(IStringFormatter formatter);
 
     /// <summary>
     /// Registers an assembly to extract compatible functions from.

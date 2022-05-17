@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 using JetBrains.Annotations;
 
@@ -17,7 +18,7 @@ namespace IX.Math.Nodes.Function.Binary;
 ///     A node representing a function.
 /// </summary>
 /// <seealso cref="BinaryFunctionNodeBase" />
-[DebuggerDisplay("trimbody({" + nameof(FirstParameter) + "}, {" + nameof(SecondParameter) + "})")]
+[DebuggerDisplay($"trimbody({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}})")]
 [CallableMathematicsFunction("trimbody")]
 [UsedImplicitly]
 internal sealed class FunctionNodeTrimBody : BinaryFunctionNodeBase
@@ -26,8 +27,8 @@ internal sealed class FunctionNodeTrimBody : BinaryFunctionNodeBase
         NodeBase stringParameter,
         NodeBase numericParameter)
         : base(
-            stringParameter?.Simplify(),
-            numericParameter?.Simplify())
+            Requires.NotNull(stringParameter).Simplify(),
+            Requires.NotNull(numericParameter).Simplify())
     {
     }
 
@@ -62,7 +63,7 @@ internal sealed class FunctionNodeTrimBody : BinaryFunctionNodeBase
                 stringParam.Value.Replace(
                     charParam.Value,
                     string.Empty))
-            : (NodeBase)this;
+            : this;
 
     /// <summary>
     ///     Strongly determines the node's type, if possible.
@@ -124,12 +125,12 @@ internal sealed class FunctionNodeTrimBody : BinaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance)
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         MethodInfo mi = typeof(string).GetMethodWithExactParameters(
             nameof(string.Replace),
             typeof(string),
-            typeof(string));
+            typeof(string))!;
 
         if (mi == null)
         {

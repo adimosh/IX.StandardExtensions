@@ -5,6 +5,7 @@
 using System.Diagnostics;
 using System.Linq.Expressions;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 
 namespace IX.Math.Nodes.Operations.Binary;
 
@@ -12,7 +13,7 @@ namespace IX.Math.Nodes.Operations.Binary;
 ///     A node representing a logical and operation.
 /// </summary>
 /// <seealso cref="LogicalOperationNodeBase" />
-[DebuggerDisplay("{" + nameof(Left) + "} & {" + nameof(Right) + "}")]
+[DebuggerDisplay($"{{{nameof(Left)}}} & {{{nameof(Right)}}}")]
 internal sealed class AndNode : LogicalOperationNodeBase
 {
     /// <summary>
@@ -24,8 +25,8 @@ internal sealed class AndNode : LogicalOperationNodeBase
         NodeBase left,
         NodeBase right)
         : base(
-            left?.Simplify(),
-            right?.Simplify())
+            Requires.NotNull(left).Simplify(),
+            Requires.NotNull(right).Simplify())
     {
     }
 
@@ -70,7 +71,7 @@ internal sealed class AndNode : LogicalOperationNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         Expression.And(
             this.Left.GenerateExpression(tolerance),
             this.Right.GenerateExpression(tolerance));

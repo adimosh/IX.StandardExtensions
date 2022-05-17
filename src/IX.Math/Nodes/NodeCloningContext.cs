@@ -25,5 +25,5 @@ public class NodeCloningContext
     /// <value>
     /// The special request function.
     /// </value>
-    public Func<Type, object> SpecialRequestFunction { get; set; }
+    public Func<Type, object>? SpecialRequestFunction { get; set; }
 }

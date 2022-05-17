@@ -2,6 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using IX.StandardExtensions.Globalization;
@@ -23,6 +24,7 @@ internal static class ParsingFormatter
 
     internal static bool ParseNumeric(
         string expression,
+        [NotNullWhen(true)]
         out object? result)
     {
         var eSpan = expression.AsSpan();
@@ -49,7 +51,7 @@ internal static class ParsingFormatter
 
         return ParseSpecific(
             #if FRAMEWORK_ADVANCED
-                in eSpan,
+            in eSpan,
             #else
             expression,
             #endif
@@ -79,7 +81,7 @@ internal static class ParsingFormatter
 
         static bool ParseSpecific(
             #if FRAMEWORK_ADVANCED
-                in ReadOnlySpan<char> specificExpression,
+            in ReadOnlySpan<char> specificExpression,
             #else
             string specificExpression,
             #endif
@@ -114,13 +116,14 @@ internal static class ParsingFormatter
 
     internal static bool ParseByteArray(
         string expression,
-        out byte[] result)
+        [NotNullWhen(true)]
+        out byte[]? result)
     {
         if (expression.CurrentCultureStartsWithInsensitive("0b"))
         {
             if (expression.Length > 2)
             {
-                return ParseByteArray(
+                return ParseByteArrayLocal(
                     expression.Substring(2),
                     out result);
             }
@@ -132,9 +135,9 @@ internal static class ParsingFormatter
         result = null;
         return false;
 
-        bool ParseByteArray(
+        bool ParseByteArrayLocal(
             string byteArrayExpression,
-            out byte[] byteArrayResult)
+            out byte[]? byteArrayResult)
         {
             byteArrayExpression = byteArrayExpression.Replace(
                 "_",

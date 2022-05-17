@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 using JetBrains.Annotations;
 
@@ -17,14 +18,7 @@ namespace IX.Math.Nodes.Function.Ternary;
 ///     A node representing the string replace function.
 /// </summary>
 /// <seealso cref="TernaryFunctionNodeBase" />
-[DebuggerDisplay(
-    "replace({" +
-    nameof(FirstParameter) +
-    "}, {" +
-    nameof(SecondParameter) +
-    "}, {" +
-    nameof(ThirdParameter) +
-    "})")]
+[DebuggerDisplay($"replace({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}}, {{{nameof(ThirdParameter)}}})")]
 [CallableMathematicsFunction(
     "repl",
     "replace")]
@@ -42,9 +36,9 @@ internal sealed class FunctionNodeReplace : TernaryFunctionNodeBase
         NodeBase numericParameter,
         NodeBase secondNumericParameter)
         : base(
-            stringParameter?.Simplify(),
-            numericParameter?.Simplify(),
-            secondNumericParameter?.Simplify())
+            Requires.NotNull(stringParameter).Simplify(),
+            Requires.NotNull(numericParameter).Simplify(),
+            Requires.NotNull(secondNumericParameter).Simplify())
     {
     }
 
@@ -83,7 +77,7 @@ internal sealed class FunctionNodeReplace : TernaryFunctionNodeBase
                 stringParam.Value.Replace(
                     numericParam.Value,
                     secondNumericParam.Value))
-            : (NodeBase)this;
+            : this;
 
     /// <summary>
     ///     Strongly determines the node's type, if possible.
@@ -146,12 +140,12 @@ internal sealed class FunctionNodeReplace : TernaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance)
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         MethodInfo mi = typeof(string).GetMethodWithExactParameters(
             nameof(string.Replace),
             typeof(string),
-            typeof(string));
+            typeof(string))!;
 
         if (mi == null)
         {

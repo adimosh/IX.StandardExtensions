@@ -14,7 +14,7 @@ namespace IX.Math.Extraction;
 /// <seealso cref="Extensibility.IConstantsExtractor" />
 internal sealed class ScientificFormatNumberExtractor : Extensibility.IConstantsExtractor
 {
-    private readonly Regex exponentialNotationRegex = new Regex(@"[0-9.,]+(?:e\+|E\+|e\-|E\-|e|E)[0-9]+");
+    private readonly Regex exponentialNotationRegex = new(@"[0-9.,]+(?:e\+|E\+|e\-|E\-|e|E)[0-9]+");
 
     /// <summary>
     ///     Extracts the scientific notations constants and replaces them with expression placeholders.

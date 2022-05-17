@@ -24,11 +24,15 @@ namespace IX.Math;
     Justification = "It is OK, but the analyzer can't tell.")]
 internal class WorkingExpressionSet : DisposableBase
 {
+    // Constants
+    private readonly Dictionary<string, ConstantNodeBase> constantsTable;
+    private readonly Dictionary<string, string> reverseConstantsTable;
+
+    // Symbols
+    private readonly Dictionary<string, ExpressionSymbol> symbolTable;
+    private readonly Dictionary<string, string> reverseSymbolTable;
+
     // Operators
-    [DiagCA.SuppressMessage(
-        "IDisposableAnalyzers.Correctness",
-        "IDISP002:Dispose member.",
-        Justification = "This is correct, but the analyzer can't tell.")]
     [DiagCA.SuppressMessage(
         "IDisposableAnalyzers.Correctness",
         "IDISP006:Implement IDisposable.",
@@ -37,21 +41,9 @@ internal class WorkingExpressionSet : DisposableBase
 
     [DiagCA.SuppressMessage(
         "IDisposableAnalyzers.Correctness",
-        "IDISP002:Dispose member.",
-        Justification = "This is correct, but the analyzer can't tell.")]
-    [DiagCA.SuppressMessage(
-        "IDisposableAnalyzers.Correctness",
         "IDISP006:Implement IDisposable.",
         Justification = "This is correct, but the analyzer can't tell.")]
     private LevelDictionary<string, Func<MathDefinition, NodeBase, UnaryOperatorNodeBase>> unaryOperators;
-
-    // Constants
-    private Dictionary<string, ConstantNodeBase> constantsTable;
-    private Dictionary<string, string> reverseConstantsTable;
-
-    // Symbols
-    private Dictionary<string, ExpressionSymbol> symbolTable;
-    private Dictionary<string, string> reverseSymbolTable;
 
     private bool initialized;
 
@@ -244,7 +236,7 @@ internal class WorkingExpressionSet : DisposableBase
     internal Dictionary<string, ConstantNodeBase> ConstantsTable
     {
         get => this.constantsTable;
-        private set => this.constantsTable = value;
+        private init => this.constantsTable = value;
     }
 
     /// <summary>
@@ -264,7 +256,7 @@ internal class WorkingExpressionSet : DisposableBase
     internal Dictionary<string, string> ReverseConstantsTable
     {
         get => this.reverseConstantsTable;
-        private set => this.reverseConstantsTable = value;
+        private init => this.reverseConstantsTable = value;
     }
 
     /// <summary>
@@ -276,7 +268,7 @@ internal class WorkingExpressionSet : DisposableBase
     internal Dictionary<string, string> ReverseSymbolTable
     {
         get => this.reverseSymbolTable;
-        private set => this.reverseSymbolTable = value;
+        private init => this.reverseSymbolTable = value;
     }
 
     /// <summary>
@@ -296,7 +288,7 @@ internal class WorkingExpressionSet : DisposableBase
     internal Dictionary<string, ExpressionSymbol> SymbolTable
     {
         get => this.symbolTable;
-        private set => this.symbolTable = value;
+        private init => this.symbolTable = value;
     }
 
     /// <summary>
@@ -341,7 +333,7 @@ internal class WorkingExpressionSet : DisposableBase
     }
 
     /// <summary>
-    ///     Initializes this instance. This method shuld be called after initialization and extraction of major constants.
+    ///     Initializes this instance. This method should be called after initialization and extraction of major constants.
     /// </summary>
     [DiagCA.SuppressMessage(
         "Performance",
@@ -499,7 +491,7 @@ internal class WorkingExpressionSet : DisposableBase
                 // First tier - Comparison and equation operators
                 {
                     definition.GreaterThanOrEqualSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new GreaterThanOrEqualNode(
                         leftOperand,
@@ -508,7 +500,7 @@ internal class WorkingExpressionSet : DisposableBase
                 },
                 {
                     definition.LessThanOrEqualSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new LessThanOrEqualNode(
                         leftOperand,
@@ -517,7 +509,7 @@ internal class WorkingExpressionSet : DisposableBase
                 },
                 {
                     definition.GreaterThanSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new GreaterThanNode(
                         leftOperand,
@@ -526,7 +518,7 @@ internal class WorkingExpressionSet : DisposableBase
                 },
                 {
                     definition.LessThanSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new LessThanNode(
                         leftOperand,
@@ -535,7 +527,7 @@ internal class WorkingExpressionSet : DisposableBase
                 },
                 {
                     definition.NotEqualsSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new NotEqualsNode(
                         leftOperand,
@@ -544,7 +536,7 @@ internal class WorkingExpressionSet : DisposableBase
                 },
                 {
                     definition.EqualsSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new EqualsNode(
                         leftOperand,
@@ -555,7 +547,7 @@ internal class WorkingExpressionSet : DisposableBase
                 // Second tier - Logical operators
                 {
                     definition.OrSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new OrNode(
                         leftOperand,
@@ -564,7 +556,7 @@ internal class WorkingExpressionSet : DisposableBase
                 },
                 {
                     definition.XorSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new XorNode(
                         leftOperand,
@@ -573,7 +565,7 @@ internal class WorkingExpressionSet : DisposableBase
                 },
                 {
                     definition.AndSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new AndNode(
                         leftOperand,
@@ -584,7 +576,7 @@ internal class WorkingExpressionSet : DisposableBase
                 // Third tier - Arithmetic second-rank operators
                 {
                     definition.AddSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new AddNode(
                         leftOperand,
@@ -593,7 +585,7 @@ internal class WorkingExpressionSet : DisposableBase
                 },
                 {
                     definition.SubtractSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new SubtractNode(
                         leftOperand,
@@ -604,7 +596,7 @@ internal class WorkingExpressionSet : DisposableBase
                 // Fourth tier - Arithmetic first-rank operators
                 {
                     definition.DivideSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new DivideNode(
                         leftOperand,
@@ -613,7 +605,7 @@ internal class WorkingExpressionSet : DisposableBase
                 },
                 {
                     definition.MultiplySymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new MultiplyNode(
                         leftOperand,
@@ -624,7 +616,7 @@ internal class WorkingExpressionSet : DisposableBase
                 // Fifth tier - Power operator
                 {
                     definition.PowerSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new PowerNode(
                         leftOperand,
@@ -635,7 +627,7 @@ internal class WorkingExpressionSet : DisposableBase
                 // Sixth tier - Bitwise shift operators
                 {
                     definition.LeftShiftSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new LeftShiftNode(
                         leftOperand,
@@ -644,7 +636,7 @@ internal class WorkingExpressionSet : DisposableBase
                 },
                 {
                     definition.RightShiftSymbol, (
-                        definitionL1,
+                        _,
                         leftOperand,
                         rightOperand) => new RightShiftNode(
                         leftOperand,
@@ -659,13 +651,13 @@ internal class WorkingExpressionSet : DisposableBase
                 // First tier - Negation and inversion
                 {
                     definition.SubtractSymbol, (
-                        definitionL1,
+                        _,
                         operand) => new Nodes.Operations.Unary.SubtractNode(operand),
                     1
                 },
                 {
                     definition.NotSymbol, (
-                        definitionL1,
+                        _,
                         operand) => new NotNode(operand),
                     1
                 }

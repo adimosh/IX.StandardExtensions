@@ -15,7 +15,7 @@ namespace IX.Math.Nodes.Function.Unary;
 ///     A node representing the <see cref="GlobalSystem.Math.Cos(double)" /> function.
 /// </summary>
 /// <seealso cref="NumericUnaryFunctionNodeBase" />
-[DebuggerDisplay("cos({" + nameof(Parameter) + "})")]
+[DebuggerDisplay($"cos({{{nameof(Parameter)}}})")]
 [CallableMathematicsFunction(
     "cos",
     "cosine")]
@@ -73,7 +73,7 @@ internal sealed class FunctionNodeCosine : NumericUnaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         this.GenerateStaticUnaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Cos),

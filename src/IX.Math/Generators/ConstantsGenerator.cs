@@ -84,7 +84,7 @@ public static class ConstantsGenerator
     /// <param name="originalExpression">The original expression.</param>
     /// <param name="content">The content.</param>
     /// <returns>The name of the new constant.</returns>
-    public static string GenerateNumericConstant(
+    public static string? GenerateNumericConstant(
         IDictionary<string, ConstantNodeBase> constantsTable,
         IDictionary<string, string> reverseConstantsTable,
         string originalExpression,
@@ -193,7 +193,7 @@ public static class ConstantsGenerator
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "We're cool with this.")]
-    internal static string CheckAndAdd(
+    internal static string? CheckAndAdd(
         IDictionary<string, ConstantNodeBase> constantsTable,
         IDictionary<string, string> reverseConstantsTable,
         LevelDictionary<Type, IConstantInterpreter> interpreters,
@@ -214,7 +214,7 @@ public static class ConstantsGenerator
             return key;
         }
 
-        ConstantNodeBase node = null;
+        ConstantNodeBase? node = null;
 
         // Go through each interpreter
         foreach (var interpreter in interpreters.KeysByLevel.SelectMany(p => p.Value))
@@ -232,13 +232,13 @@ public static class ConstantsGenerator
         {
             if (ParsingFormatter.ParseNumeric(
                     content,
-                    out object n))
+                    out object? n))
             {
                 node = new NumericNode(n);
             }
             else if (ParsingFormatter.ParseByteArray(
                          content,
-                         out byte[] ba))
+                         out byte[]? ba))
             {
                 node = new ByteArrayNode(ba);
             }

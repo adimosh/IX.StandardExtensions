@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using IX.Math.Extensibility;
 using IX.Math.Generators;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes.Function.Binary;
@@ -14,7 +15,7 @@ namespace IX.Math.Nodes.Function.Binary;
 ///     A node representing the random integer function.
 /// </summary>
 /// <seealso cref="NumericBinaryFunctionNodeBase" />
-[DebuggerDisplay("randomint({" + nameof(FirstParameter) + "}, {" + nameof(SecondParameter) + "})")]
+[DebuggerDisplay($"randomint({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}})")]
 [CallableMathematicsFunction("randomint")]
 [UsedImplicitly]
 internal sealed class FunctionNodeRandomInt : NumericBinaryFunctionNodeBase
@@ -28,8 +29,8 @@ internal sealed class FunctionNodeRandomInt : NumericBinaryFunctionNodeBase
         NodeBase firstParameter,
         NodeBase secondParameter)
         : base(
-            firstParameter?.Simplify(),
-            secondParameter?.Simplify())
+            Requires.NotNull(firstParameter).Simplify(),
+            Requires.NotNull(secondParameter).Simplify())
     {
         if (firstParameter is ParameterNode up1)
         {
@@ -90,7 +91,7 @@ internal sealed class FunctionNodeRandomInt : NumericBinaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         this.GenerateStaticBinaryFunctionCall<FunctionNodeRandomInt>(
             nameof(GenerateRandom),
             tolerance);

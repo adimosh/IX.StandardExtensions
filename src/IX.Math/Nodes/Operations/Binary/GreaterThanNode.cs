@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 using IX.StandardExtensions.Globalization;
 using SuppressMessage = System.Diagnostics.CodeAnalysis.SuppressMessageAttribute;
@@ -17,7 +18,7 @@ namespace IX.Math.Nodes.Operations.Binary;
 ///     A node representing the greater than operation.
 /// </summary>
 /// <seealso cref="ComparisonOperationNodeBase" />
-[DebuggerDisplay("{" + nameof(Left) + "} > {" + nameof(Right) + "}")]
+[DebuggerDisplay($"{{{nameof(Left)}}} > {{{nameof(Right)}}}")]
 internal sealed class GreaterThanNode : ComparisonOperationNodeBase
 {
     /// <summary>
@@ -29,8 +30,8 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
         NodeBase left,
         NodeBase right)
         : base(
-            left?.Simplify(),
-            right?.Simplify())
+            Requires.NotNull(left).Simplify(),
+            Requires.NotNull(right).Simplify())
     {
     }
 
@@ -75,13 +76,13 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
         Justification = "We want it this way.")]
     protected override Expression GenerateExpressionInternal()
     {
-        (Expression leftExpression, Expression rightExpression) = this.GetExpressionsOfSameTypeFromOperands();
+        var (leftExpression, rightExpression) = this.GetExpressionsOfSameTypeFromOperands();
         if (leftExpression.Type == typeof(string))
         {
             MethodInfo mi = typeof(string).GetMethodWithExactParameters(
                 nameof(string.Compare),
                 typeof(string),
-                typeof(string));
+                typeof(string))!;
             return Expression.GreaterThan(
                 Expression.Call(
                     mi,
@@ -115,7 +116,7 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
                     typeof(ArrayExtensions).GetMethodWithExactParameters(
                         nameof(ArrayExtensions.SequenceCompareWithMsb),
                         typeof(byte[]),
-                        typeof(byte[])),
+                        typeof(byte[]))!,
                     leftExpression,
                     rightExpression),
                 Expression.Constant(
@@ -137,9 +138,9 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "We want it this way.")]
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance)
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
-        (Expression leftExpression, Expression rightExpression) = this.GetExpressionsOfSameTypeFromOperands(tolerance);
+        var (leftExpression, rightExpression) = this.GetExpressionsOfSameTypeFromOperands(tolerance);
         if (leftExpression.Type == typeof(string))
         {
             MethodInfo mi = typeof(string).GetMethodWithExactParameters(
@@ -147,7 +148,7 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
                 typeof(string),
                 typeof(string),
                 typeof(bool),
-                typeof(CultureInfo));
+                typeof(CultureInfo))!;
             return Expression.GreaterThan(
                 Expression.Call(
                     mi,
@@ -183,7 +184,7 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
                     typeof(ArrayExtensions).GetMethodWithExactParameters(
                         nameof(ArrayExtensions.SequenceCompareWithMsb),
                         typeof(byte[]),
-                        typeof(byte[])),
+                        typeof(byte[]))!,
                     leftExpression,
                     rightExpression),
                 Expression.Constant(
@@ -212,16 +213,16 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
     }
 
     [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation", Justification = "We want it this way.")]
-    private Expression PossibleToleranceExpression(Expression leftExpression, Expression rightExpression, Tolerance tolerance)
+    private Expression? PossibleToleranceExpression(Expression leftExpression, Expression rightExpression, Tolerance? tolerance)
     {
-        if (tolerance.IntegerToleranceRangeLowerBound != null)
+        if (tolerance?.IntegerToleranceRangeLowerBound != null)
         {
             // Integer tolerance
             MethodInfo mi = typeof(ToleranceFunctions).GetMethodWithExactParameters(
                 nameof(ToleranceFunctions.GreaterThanRangeTolerant),
                 leftExpression.Type,
                 rightExpression.Type,
-                typeof(long));
+                typeof(long))!;
 
             return Expression.Call(
                 mi,
@@ -232,14 +233,14 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
                     typeof(long)));
         }
 
-        if (tolerance.ToleranceRangeLowerBound != null)
+        if (tolerance?.ToleranceRangeLowerBound != null)
         {
             // Floating-point tolerance
             MethodInfo mi = typeof(ToleranceFunctions).GetMethodWithExactParameters(
                 nameof(ToleranceFunctions.GreaterThanRangeTolerant),
                 leftExpression.Type,
                 rightExpression.Type,
-                typeof(double));
+                typeof(double))!;
 
             return Expression.Call(
                 mi,
@@ -250,7 +251,7 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
                     typeof(double)));
         }
 
-        if (tolerance.ProportionalTolerance != null)
+        if (tolerance?.ProportionalTolerance != null)
         {
             if (tolerance.ProportionalTolerance.Value > 1D)
             {
@@ -259,7 +260,7 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
                     nameof(ToleranceFunctions.GreaterThanProportionTolerant),
                     leftExpression.Type,
                     rightExpression.Type,
-                    typeof(double));
+                    typeof(double))!;
 
                 return Expression.Call(
                     mi,
@@ -277,7 +278,7 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
                     nameof(ToleranceFunctions.GreaterThanPercentageTolerant),
                     leftExpression.Type,
                     rightExpression.Type,
-                    typeof(double));
+                    typeof(double))!;
 
                 return Expression.Call(
                     mi,

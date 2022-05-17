@@ -15,7 +15,7 @@ namespace IX.Math.Nodes.Function.Unary;
 ///     A node representing the <see cref="GlobalSystem.Math.Tan(double)" /> function.
 /// </summary>
 /// <seealso cref="NumericUnaryFunctionNodeBase" />
-[DebuggerDisplay("tan({" + nameof(Parameter) + "})")]
+[DebuggerDisplay($"tan({{{nameof(Parameter)}}})")]
 [CallableMathematicsFunction(
     "tan",
     "tangent")]
@@ -73,7 +73,7 @@ internal sealed class FunctionNodeTangent : NumericUnaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         this.GenerateStaticUnaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Tan),

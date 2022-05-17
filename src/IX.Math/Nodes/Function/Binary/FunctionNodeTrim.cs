@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 using JetBrains.Annotations;
 
@@ -17,7 +18,7 @@ namespace IX.Math.Nodes.Function.Binary;
 ///     A node representing the trim function.
 /// </summary>
 /// <seealso cref="BinaryFunctionNodeBase" />
-[DebuggerDisplay("trim({" + nameof(FirstParameter) + "}, {" + nameof(SecondParameter) + "})")]
+[DebuggerDisplay($"trim({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}})")]
 [CallableMathematicsFunction("trim")]
 [UsedImplicitly]
 internal sealed class FunctionNodeTrim : BinaryFunctionNodeBase
@@ -26,8 +27,8 @@ internal sealed class FunctionNodeTrim : BinaryFunctionNodeBase
         NodeBase stringParameter,
         NodeBase numericParameter)
         : base(
-            stringParameter?.Simplify(),
-            numericParameter?.Simplify())
+            Requires.NotNull(stringParameter).Simplify(),
+            Requires.NotNull(numericParameter).Simplify())
     {
     }
 
@@ -58,7 +59,7 @@ internal sealed class FunctionNodeTrim : BinaryFunctionNodeBase
     /// </returns>
     public override NodeBase Simplify() =>
         this.FirstParameter is StringNode stringParam && this.SecondParameter is StringNode charParam
-            ? (NodeBase)new StringNode(stringParam.Value.Trim(charParam.Value.ToCharArray()))
+            ? new StringNode(stringParam.Value.Trim(charParam.Value.ToCharArray()))
             : this;
 
     /// <summary>
@@ -121,11 +122,11 @@ internal sealed class FunctionNodeTrim : BinaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance)
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         MethodInfo mia = typeof(string).GetMethodWithExactParameters(
             nameof(string.ToCharArray),
-            Type.EmptyTypes);
+            Type.EmptyTypes)!;
 
         if (mia == null)
         {
@@ -138,7 +139,7 @@ internal sealed class FunctionNodeTrim : BinaryFunctionNodeBase
 
         MethodInfo mi = typeof(string).GetMethodWithExactParameters(
             nameof(string.Trim),
-            typeof(char[]));
+            typeof(char[]))!;
 
         if (mi == null)
         {

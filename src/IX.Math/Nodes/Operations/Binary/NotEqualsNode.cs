@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 
 namespace IX.Math.Nodes.Operations.Binary;
@@ -14,7 +15,7 @@ namespace IX.Math.Nodes.Operations.Binary;
 ///     A node representing a not equal operation.
 /// </summary>
 /// <seealso cref="ComparisonOperationNodeBase" />
-[DebuggerDisplay("{" + nameof(Left) + "} != {" + nameof(Right) + "}")]
+[DebuggerDisplay($"{{{nameof(Left)}}} != {{{nameof(Right)}}}")]
 internal sealed class NotEqualsNode : ComparisonOperationNodeBase
 {
     /// <summary>
@@ -26,8 +27,8 @@ internal sealed class NotEqualsNode : ComparisonOperationNodeBase
         NodeBase left,
         NodeBase right)
         : base(
-            left?.Simplify(),
-            right?.Simplify())
+            Requires.NotNull(left).Simplify(),
+            Requires.NotNull(right).Simplify())
     {
     }
 
@@ -71,7 +72,7 @@ internal sealed class NotEqualsNode : ComparisonOperationNodeBase
         Justification = "We actually want this")]
     protected override Expression GenerateExpressionInternal()
     {
-        (Expression leftExpression, Expression rightExpression) = this.GetExpressionsOfSameTypeFromOperands();
+        var (leftExpression, rightExpression) = this.GetExpressionsOfSameTypeFromOperands();
 
         if (this.Left.ReturnType == SupportedValueType.ByteArray ||
             this.Right.ReturnType == SupportedValueType.ByteArray)
@@ -81,7 +82,7 @@ internal sealed class NotEqualsNode : ComparisonOperationNodeBase
                     typeof(ArrayExtensions).GetMethodWithExactParameters(
                         nameof(ArrayExtensions.SequenceEqualsWithMsb),
                         typeof(byte[]),
-                        typeof(byte[])),
+                        typeof(byte[]))!,
                     leftExpression,
                     rightExpression),
                 Expression.Constant(
@@ -103,9 +104,9 @@ internal sealed class NotEqualsNode : ComparisonOperationNodeBase
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "We actually want this")]
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance)
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
-        (Expression leftExpression, Expression rightExpression) =
+        var (leftExpression, rightExpression) =
             this.GetExpressionsOfSameTypeFromOperands(tolerance);
 
         if (this.Left.ReturnType == SupportedValueType.ByteArray ||
@@ -116,7 +117,7 @@ internal sealed class NotEqualsNode : ComparisonOperationNodeBase
                     typeof(ArrayExtensions).GetMethodWithExactParameters(
                         nameof(ArrayExtensions.SequenceEqualsWithMsb),
                         typeof(byte[]),
-                        typeof(byte[])),
+                        typeof(byte[]))!,
                     leftExpression,
                     rightExpression),
                 Expression.Constant(

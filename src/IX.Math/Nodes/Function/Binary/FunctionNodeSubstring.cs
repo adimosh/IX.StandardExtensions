@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 using JetBrains.Annotations;
 
@@ -17,7 +18,7 @@ namespace IX.Math.Nodes.Function.Binary;
 ///     A node representing the substring function.
 /// </summary>
 /// <seealso cref="BinaryFunctionNodeBase" />
-[DebuggerDisplay("substring({" + nameof(FirstParameter) + "}, {" + nameof(SecondParameter) + "})")]
+[DebuggerDisplay($"substring({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}})")]
 [CallableMathematicsFunction("substr", "substring")]
 [UsedImplicitly]
 internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
@@ -31,8 +32,8 @@ internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
         NodeBase stringParameter,
         NodeBase numericParameter)
         : base(
-            stringParameter?.Simplify(),
-            numericParameter?.Simplify())
+            Requires.NotNull(stringParameter).Simplify(),
+            Requires.NotNull(numericParameter).Simplify())
     {
     }
 
@@ -64,7 +65,7 @@ internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
     public override NodeBase Simplify() =>
         this.FirstParameter is StringNode stringParam && this.SecondParameter is NumericNode numericParam
             ? new StringNode(stringParam.Value.Substring(numericParam.ExtractInt()))
-            : (NodeBase)this;
+            : this;
 
     /// <summary>
     ///     Strongly determines the node's type, if possible.
@@ -131,7 +132,7 @@ internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance)
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         Type firstParameterType = typeof(string);
         Type secondParameterType = typeof(int);
@@ -139,7 +140,7 @@ internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
 
         MethodInfo mi = typeof(string).GetMethodWithExactParameters(
             functionName,
-            secondParameterType);
+            secondParameterType)!;
 
         if (mi == null)
         {

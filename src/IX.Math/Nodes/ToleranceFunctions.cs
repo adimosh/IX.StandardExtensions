@@ -2,6 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
@@ -11,6 +12,10 @@ namespace IX.Math.Nodes;
 /// Contains functions related to tolerance.
 /// </summary>
 [PublicAPI]
+[SuppressMessage(
+    "ReSharper",
+    "RedundantCast",
+    Justification = "We will be using a lot of explicit casts to force variables to behave exactly as we want them to.")]
 public static class ToleranceFunctions
 {
 #region Equation
@@ -137,7 +142,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double percentage)
     {
-        Requires.True(percentage < 1 && percentage > 0, nameof(percentage));
+        Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -164,7 +169,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double percentage)
     {
-        Requires.True(percentage < 1 && percentage > 0, nameof(percentage));
+        Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -292,7 +297,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double percentage)
     {
-        Requires.True(percentage < 1 && percentage > 0, nameof(percentage));
+        Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -315,7 +320,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double percentage)
     {
-        Requires.True(percentage < 1 && percentage > 0, nameof(percentage));
+        Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -439,7 +444,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double percentage)
     {
-        Requires.True(percentage < 1 && percentage > 0, nameof(percentage));
+        Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -462,7 +467,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double percentage)
     {
-        Requires.True(percentage < 1 && percentage > 0, nameof(percentage));
+        Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -586,7 +591,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double percentage)
     {
-        Requires.True(percentage < 1 && percentage > 0, nameof(percentage));
+        Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -609,7 +614,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double percentage)
     {
-        Requires.True(percentage < 1 && percentage > 0, nameof(percentage));
+        Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -733,7 +738,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double percentage)
     {
-        Requires.True(percentage < 1 && percentage > 0, nameof(percentage));
+        Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -756,7 +761,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double percentage)
     {
-        Requires.True(percentage < 1 && percentage > 0, nameof(percentage));
+        Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);

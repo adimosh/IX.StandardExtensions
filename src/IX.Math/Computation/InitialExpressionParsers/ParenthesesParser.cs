@@ -12,7 +12,6 @@ namespace IX.Math.Computation.InitialExpressionParsers;
 
 internal static class ParenthesesParser
 {
-#pragma warning disable HAA0603 // Delegate allocation from a method group - unavoidable
     internal static void FormatParentheses(
         string openParenthesis,
         string closeParenthesis,
@@ -70,7 +69,7 @@ internal static class ParenthesesParser
             {
                 symbolTableL1[key].Expression = replaced;
                 replacedPreviously = replaced;
-                replaced = ReplaceParanthesis(
+                replaced = ReplaceParenthesis(
                     replaced,
                     openParenthesisL1,
                     closeParenthesisL1,
@@ -80,8 +79,8 @@ internal static class ParenthesesParser
                     reverseSymbolTableL1);
             }
 
-            string ReplaceParanthesis(
-                string source,
+            string ReplaceParenthesis(
+                string? source,
                 string openParenthesisL2,
                 string closeParenthesisL2,
                 string parameterSeparatorSymbolL2,
@@ -94,25 +93,25 @@ internal static class ParenthesesParser
                     return string.Empty;
                 }
 
-                var src = source;
+                var src = source!;
 
-                var openingParanthesisLocation = src.InvariantCultureIndexOf(
+                var openingParenthesisLocation = src.InvariantCultureIndexOf(
                     openParenthesisL2);
-                var closingParanthesisLocation = src.InvariantCultureIndexOf(
+                var closingParenthesisLocation = src.InvariantCultureIndexOf(
                     closeParenthesisL2);
 
                 beginning:
-                if (openingParanthesisLocation != -1)
+                if (openingParenthesisLocation != -1)
                 {
-                    if (closingParanthesisLocation == -1)
+                    if (closingParenthesisLocation == -1)
                     {
                         throw new InvalidOperationException();
                     }
 
-                    if (openingParanthesisLocation < closingParanthesisLocation)
+                    if (openingParenthesisLocation < closingParenthesisLocation)
                     {
-                        var resultingSubExpression = ReplaceParanthesis(
-                            src.Substring(openingParanthesisLocation + openParenthesisL2.Length),
+                        var resultingSubExpression = ReplaceParenthesis(
+                            src.Substring(openingParenthesisLocation + openParenthesisL2.Length),
                             openParenthesisL2,
                             closeParenthesisL2,
                             parameterSeparatorSymbolL2,
@@ -120,31 +119,33 @@ internal static class ParenthesesParser
                             symbolTableL2,
                             reverseSymbolTableL2);
 
-                        if (openingParanthesisLocation == 0)
+                        if (openingParenthesisLocation == 0)
                         {
                             src = resultingSubExpression;
                         }
                         else
                         {
-                            var expr4 = openingParanthesisLocation == 0
-                                ? string.Empty
-                                : src.Substring(
+                            var expr4 = src.Substring(
                                     0,
-                                    openingParanthesisLocation);
+                                    openingParenthesisLocation);
 
                             if (!allOperatorsInOrderSymbolsL2.Any(
                                     (
                                         p,
-                                        expr4L1) => expr4L1.InvariantCultureEndsWith(p), expr4))
+                                        expr4L1) => expr4L1.InvariantCultureEndsWith(p),
+                                    expr4))
                             {
                                 // We have a function call
+#pragma warning disable HAA0603 // Delegate allocation from a method group - Unavoidable
                                 var inx = allOperatorsInOrderSymbolsL2.Max(expr4.LastIndexOf);
+#pragma warning restore HAA0603 // Delegate allocation from a method group
                                 var expr5 = inx == -1 ? expr4 : expr4.Substring(inx);
                                 var op1 = allOperatorsInOrderSymbolsL2.OrderByDescending(p => p.Length)
                                     .FirstOrDefault(
                                         (
                                             p,
-                                            expr5L1) => expr5L1.InvariantCultureStartsWith(p), expr5);
+                                            expr5L1) => expr5L1.InvariantCultureStartsWith(p),
+                                        expr5);
                                 var expr6 = op1 == null ? expr5 : expr5.Substring(op1.Length);
 
                                 // ReSharper disable once AssignmentIsFullyDiscarded - We're interested only in having the symbol in the table, and nothing more
@@ -168,16 +169,16 @@ internal static class ParenthesesParser
                             src = $"{expr4}{resultingSubExpression}";
                         }
 
-                        openingParanthesisLocation = src.InvariantCultureIndexOf(
+                        openingParenthesisLocation = src.InvariantCultureIndexOf(
                             openParenthesisL2);
-                        closingParanthesisLocation = src.InvariantCultureIndexOf(
+                        closingParenthesisLocation = src.InvariantCultureIndexOf(
                             closeParenthesisL2);
 
                         goto beginning;
                     }
 
                     return ProcessSubExpression(
-                        closingParanthesisLocation,
+                        closingParenthesisLocation,
                         closeParenthesisL2,
                         src,
                         parameterSeparatorSymbolL2,
@@ -185,13 +186,13 @@ internal static class ParenthesesParser
                         reverseSymbolTableL2);
                 }
 
-                if (closingParanthesisLocation == -1)
+                if (closingParenthesisLocation == -1)
                 {
                     return src;
                 }
 
                 return ProcessSubExpression(
-                    closingParanthesisLocation,
+                    closingParenthesisLocation,
                     closeParenthesisL2,
                     src,
                     parameterSeparatorSymbolL2,
@@ -234,5 +235,4 @@ internal static class ParenthesesParser
             }
         }
     }
-#pragma warning restore HAA0603 // Delegate allocation from a method group
 }

@@ -2,11 +2,14 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using JetBrains.Annotations;
+
 namespace IX.Math;
 
 /// <summary>
 /// A contract for an external service that fetches data based on data keys.
 /// </summary>
+[PublicAPI]
 public interface IDataFinder
 {
     /// <summary>

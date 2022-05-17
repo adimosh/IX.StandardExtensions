@@ -12,7 +12,7 @@ namespace IX.Math.Nodes.Constants;
 /// A string node. This class cannot be inherited.
 /// </summary>
 /// <seealso cref="ConstantNodeBase" />
-[DebuggerDisplay("{" + nameof(Value) + "}")]
+[DebuggerDisplay($"{{{nameof(Value)}}}")]
 [PublicAPI]
 public sealed class StringNode : ConstantNodeBase
 {

@@ -14,7 +14,7 @@ namespace IX.Math.ExpressionState;
 [PublicAPI]
 public class ExpressionSymbol
 {
-    private string expression;
+    private string? expression;
 
     private ExpressionSymbol()
     {
@@ -24,10 +24,10 @@ public class ExpressionSymbol
     ///     Gets or sets the expression.
     /// </summary>
     /// <value>The name.</value>
-    public string Expression
+    public string? Expression
     {
         get => this.expression;
-        set => this.expression = string.IsNullOrWhiteSpace(value) ? null : value.Trim();
+        set => this.expression = string.IsNullOrWhiteSpace(value) ? null : value?.Trim();
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class ExpressionSymbol
 
     internal static ExpressionSymbol GenerateSymbol(
         string name,
-        string expression) => new ExpressionSymbol
+        string expression) => new()
     {
         Name = name,
         Expression = expression

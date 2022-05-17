@@ -121,12 +121,12 @@ internal abstract class ComparisonOperationNodeBase : BinaryOperatorNodeBase
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "We want it this way.")]
-    protected Expression GenerateNumericalToleranceEquateExpression(
+    protected Expression? GenerateNumericalToleranceEquateExpression(
         Expression leftExpression,
         Expression rightExpression,
-        Tolerance tolerance)
+        Tolerance? tolerance)
     {
-        if (tolerance.IntegerToleranceRangeLowerBound != null || tolerance.IntegerToleranceRangeUpperBound != null)
+        if (tolerance?.IntegerToleranceRangeLowerBound != null || tolerance?.IntegerToleranceRangeUpperBound != null)
         {
             // Integer tolerance
             MethodInfo mi = typeof(ToleranceFunctions).GetMethodWithExactParameters(
@@ -134,7 +134,7 @@ internal abstract class ComparisonOperationNodeBase : BinaryOperatorNodeBase
                 leftExpression.Type,
                 rightExpression.Type,
                 typeof(long),
-                typeof(long));
+                typeof(long))!;
 
             return Expression.Call(
                 mi,
@@ -148,7 +148,7 @@ internal abstract class ComparisonOperationNodeBase : BinaryOperatorNodeBase
                     typeof(long)));
         }
 
-        if (tolerance.ToleranceRangeLowerBound != null || tolerance.ToleranceRangeUpperBound != null)
+        if (tolerance?.ToleranceRangeLowerBound != null || tolerance?.ToleranceRangeUpperBound != null)
         {
             // Floating-point tolerance
             MethodInfo mi = typeof(ToleranceFunctions).GetMethodWithExactParameters(
@@ -156,7 +156,7 @@ internal abstract class ComparisonOperationNodeBase : BinaryOperatorNodeBase
                 leftExpression.Type,
                 rightExpression.Type,
                 typeof(double),
-                typeof(double));
+                typeof(double))!;
 
             return Expression.Call(
                 mi,
@@ -170,45 +170,48 @@ internal abstract class ComparisonOperationNodeBase : BinaryOperatorNodeBase
                     typeof(double)));
         }
 
-        if (tolerance.ProportionalTolerance != null)
+        switch (tolerance?.ProportionalTolerance)
         {
-            if (tolerance.ProportionalTolerance.Value > 1D)
+            case > 1D:
             {
                 // Proportional tolerance
                 MethodInfo mi = typeof(ToleranceFunctions).GetMethodWithExactParameters(
                     nameof(ToleranceFunctions.EquateProportionTolerant),
                     leftExpression.Type,
                     rightExpression.Type,
-                    typeof(double));
+                    typeof(double))!;
 
                 return Expression.Call(
                     mi,
                     leftExpression,
                     rightExpression,
                     Expression.Constant(
-                        tolerance.ProportionalTolerance ?? 0D,
+                        tolerance.ProportionalTolerance,
                         typeof(double)));
             }
 
-            if (tolerance.ProportionalTolerance.Value < 1D && tolerance.ProportionalTolerance.Value > 0D)
+            case < 1D and > 0D:
             {
                 // Percentage tolerance
                 MethodInfo mi = typeof(ToleranceFunctions).GetMethodWithExactParameters(
                     nameof(ToleranceFunctions.EquatePercentageTolerant),
                     leftExpression.Type,
                     rightExpression.Type,
-                    typeof(double));
+                    typeof(double))!;
 
                 return Expression.Call(
                     mi,
                     leftExpression,
                     rightExpression,
                     Expression.Constant(
-                        tolerance.ProportionalTolerance ?? 0D,
+                        tolerance.ProportionalTolerance,
                         typeof(double)));
             }
-        }
 
-        return null;
+            default:
+            {
+                return null;
+            }
+        }
     }
 }

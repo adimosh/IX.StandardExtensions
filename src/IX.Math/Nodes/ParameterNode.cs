@@ -5,6 +5,7 @@
 using System.Linq.Expressions;
 using IX.Math.Registration;
 using IX.StandardExtensions.Contracts;
+using JetBrains.Annotations;
 
 namespace IX.Math.Nodes;
 
@@ -12,6 +13,7 @@ namespace IX.Math.Nodes;
 /// A node representing a parameter.
 /// </summary>
 /// <seealso cref="NodeBase" />
+[PublicAPI]
 public class ParameterNode : NodeBase
 {
     private readonly IParameterRegistry parametersRegistry;
@@ -24,14 +26,9 @@ public class ParameterNode : NodeBase
     /// <exception cref="ArgumentNullException">parameterName.</exception>
     internal ParameterNode(string parameterName, IParameterRegistry parametersRegistry)
     {
-        if (string.IsNullOrWhiteSpace(parameterName))
-        {
-            throw new ArgumentNullException(nameof(parameterName));
-        }
+        this.Name = Requires.NotNullOrWhiteSpace(parameterName);
 
-        this.Name = parameterName;
-
-        this.parametersRegistry = parametersRegistry ?? throw new ArgumentNullException(nameof(parametersRegistry));
+        this.parametersRegistry = Requires.NotNull(parametersRegistry);
 
         this.parametersRegistry.AdvertiseParameter(parameterName);
     }

@@ -9,6 +9,7 @@ using System.Reflection;
 using IX.Math.Extensibility;
 using IX.Math.Formatters;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 
 namespace IX.Math.Nodes.Operations.Binary;
@@ -17,7 +18,7 @@ namespace IX.Math.Nodes.Operations.Binary;
 ///     A node representing an addition operation.
 /// </summary>
 /// <seealso cref="BinaryOperatorNodeBase" />
-[DebuggerDisplay("{" + nameof(Left) + "} + {" + nameof(Right) + "}")]
+[DebuggerDisplay($"{{{nameof(Left)}}} + {{{nameof(Right)}}}")]
 internal sealed class AddNode : BinaryOperatorNodeBase
 {
     /// <summary>
@@ -29,8 +30,8 @@ internal sealed class AddNode : BinaryOperatorNodeBase
         NodeBase left,
         NodeBase right)
         : base(
-            left?.Simplify(),
-            right?.Simplify())
+            Requires.NotNull(left).Simplify(),
+            Requires.NotNull(right).Simplify())
     {
     }
 
@@ -138,60 +139,52 @@ internal sealed class AddNode : BinaryOperatorNodeBase
                 return new StringNode(sn1Left.Value + sn1Right.Value);
             case NumericNode nn2Left when this.Right is StringNode sn2Right:
             {
-                string stringValue;
-                if (!(this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is List<IStringFormatter> formatters))
-                {
-                    stringValue = nn2Left.Value.ToString();
-                }
-                else
-                {
-                    stringValue = StringFormatter.FormatIntoString(nn2Left.Value, formatters);
-                }
+                var stringValue =
+                    this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is not List<IStringFormatter>
+                        formatters
+                        ? nn2Left.Value.ToString()
+                        : StringFormatter.FormatIntoString(
+                            nn2Left.Value,
+                            formatters);
 
                 return new StringNode($"{stringValue}{sn2Right.Value}");
             }
 
             case StringNode sn3Left when this.Right is NumericNode nn3Right:
             {
-                string stringValue;
-                if (!(this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is List<IStringFormatter> formatters))
-                {
-                    stringValue = nn3Right.Value.ToString();
-                }
-                else
-                {
-                    stringValue = StringFormatter.FormatIntoString(nn3Right.Value, formatters);
-                }
+                var stringValue =
+                    this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is not List<IStringFormatter>
+                        formatters
+                        ? nn3Right.Value.ToString()
+                        : StringFormatter.FormatIntoString(
+                            nn3Right.Value,
+                            formatters);
 
                 return new StringNode($"{sn3Left.Value}{stringValue}");
             }
 
             case BoolNode bn4Left when this.Right is StringNode sn4Right:
             {
-                string stringValue;
-                if (!(this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is List<IStringFormatter> formatters))
-                {
-                    stringValue = bn4Left.Value.ToString(CultureInfo.CurrentCulture);
-                }
-                else
-                {
-                    stringValue = StringFormatter.FormatIntoString(bn4Left.Value, formatters);
-                }
+                var stringValue =
+                    this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is not List<IStringFormatter>
+                        formatters
+                        ? bn4Left.Value.ToString(CultureInfo.CurrentCulture)
+                        : StringFormatter.FormatIntoString(
+                            bn4Left.Value,
+                            formatters);
 
                 return new StringNode($"{stringValue}{sn4Right.Value}");
             }
 
             case StringNode sn5Left when this.Right is BoolNode bn5Right:
             {
-                string stringValue;
-                if (!(this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is List<IStringFormatter> formatters))
-                {
-                    stringValue = bn5Right.Value.ToString(CultureInfo.CurrentCulture);
-                }
-                else
-                {
-                    stringValue = StringFormatter.FormatIntoString(bn5Right.Value, formatters);
-                }
+                var stringValue =
+                    this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is not List<IStringFormatter>
+                        formatters
+                        ? bn5Right.Value.ToString(CultureInfo.CurrentCulture)
+                        : StringFormatter.FormatIntoString(
+                            bn5Right.Value,
+                            formatters);
 
                 return new StringNode($"{sn5Left.Value}{stringValue}");
             }
@@ -362,7 +355,7 @@ internal sealed class AddNode : BinaryOperatorNodeBase
     /// </returns>
     protected override Expression GenerateExpressionInternal()
     {
-        (Expression leftExpression, Expression rightExpression) = this.GetExpressionsOfSameTypeFromOperands();
+        var (leftExpression, rightExpression) = this.GetExpressionsOfSameTypeFromOperands();
 
         switch (this.ReturnType)
         {
@@ -370,7 +363,7 @@ internal sealed class AddNode : BinaryOperatorNodeBase
                 MethodInfo mi1 = typeof(string).GetMethodWithExactParameters(
                     nameof(string.Concat),
                     typeof(string),
-                    typeof(string));
+                    typeof(string))!;
                 return Expression.Call(
                     mi1,
                     leftExpression,
@@ -379,7 +372,7 @@ internal sealed class AddNode : BinaryOperatorNodeBase
                 MethodInfo mi2 = typeof(AddNode).GetMethodWithExactParameters(
                     nameof(Stitch),
                     typeof(byte[]),
-                    typeof(byte[]));
+                    typeof(byte[]))!;
                 return Expression.Call(
                     mi2,
                     leftExpression,
@@ -396,9 +389,9 @@ internal sealed class AddNode : BinaryOperatorNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance)
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
-        (Expression leftExpression, Expression rightExpression) =
+        var (leftExpression, rightExpression) =
             this.GetExpressionsOfSameTypeFromOperands(tolerance);
 
         switch (this.ReturnType)
@@ -407,7 +400,7 @@ internal sealed class AddNode : BinaryOperatorNodeBase
                 MethodInfo mi1 = typeof(string).GetMethodWithExactParameters(
                     nameof(string.Concat),
                     typeof(string),
-                    typeof(string));
+                    typeof(string))!;
                 return Expression.Call(
                     mi1,
                     leftExpression,
@@ -416,7 +409,7 @@ internal sealed class AddNode : BinaryOperatorNodeBase
                 MethodInfo mi2 = typeof(AddNode).GetMethodWithExactParameters(
                     nameof(Stitch),
                     typeof(byte[]),
-                    typeof(byte[]));
+                    typeof(byte[]))!;
                 return Expression.Call(
                     mi2,
                     leftExpression,

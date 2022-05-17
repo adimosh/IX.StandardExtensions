@@ -15,7 +15,7 @@ namespace IX.Math.Nodes.Function.Unary;
 ///     A node representing the <see cref="GlobalSystem.Math.Asin(double)" /> function.
 /// </summary>
 /// <seealso cref="NumericUnaryFunctionNodeBase" />
-[DebuggerDisplay("asin({" + nameof(Parameter) + "})")]
+[DebuggerDisplay($"asin({{{nameof(Parameter)}}})")]
 [CallableMathematicsFunction(
     "asin",
     "arcsin",
@@ -74,7 +74,7 @@ internal sealed class FunctionNodeArcSine : NumericUnaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         this.GenerateStaticUnaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Asin),

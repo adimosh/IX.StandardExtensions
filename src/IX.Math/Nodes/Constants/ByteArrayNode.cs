@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using IX.Math.Extensibility;
 using IX.Math.Formatters;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes.Constants;
@@ -14,12 +15,12 @@ namespace IX.Math.Nodes.Constants;
 ///     A binary value node. This class cannot be inherited.
 /// </summary>
 /// <seealso cref="ConstantNodeBase" />
-[DebuggerDisplay("{" + nameof(DisplayValue) + "}")]
+[DebuggerDisplay($"{{{nameof(DisplayValue)}}}")]
 [PublicAPI]
 public class ByteArrayNode : ConstantNodeBase, ISpecialRequestNode
 {
-    private string cachedDistilledStringValue;
-    private Func<Type, object> specialObjectRequestFunction;
+    private string? cachedDistilledStringValue;
+    private Func<Type, object>? specialObjectRequestFunction;
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ByteArrayNode" /> class.
@@ -27,7 +28,7 @@ public class ByteArrayNode : ConstantNodeBase, ISpecialRequestNode
     /// <param name="value">The value of the constant.</param>
     public ByteArrayNode(byte[] value)
     {
-        this.Value = value ?? throw new ArgumentNullException(nameof(value));
+        this.Value = Requires.NotNull(value);
     }
 
     /// <summary>

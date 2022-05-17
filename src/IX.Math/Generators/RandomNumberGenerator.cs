@@ -2,7 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using IX.StandardExtensions;
+using IX.StandardExtensions.Contracts;
 
 namespace IX.Math.Generators;
 
@@ -11,7 +11,7 @@ namespace IX.Math.Generators;
 /// </summary>
 internal static class RandomNumberGenerator
 {
-    private static readonly Random RandomGenerator = new Random();
+    private static readonly Random RandomGenerator = new();
 
     public static double Generate() => Generate(
         0D,
@@ -25,22 +25,7 @@ internal static class RandomNumberGenerator
         double min,
         double max)
     {
-        if (max <= min)
-        {
-            throw new ArgumentsNotValidRangeException(
-                nameof(min),
-                nameof(max));
-        }
-
-        if (max <= 0D)
-        {
-            throw new ArgumentNotPositiveException(nameof(max));
-        }
-
-        if (min < 0D)
-        {
-            throw new ArgumentNotPositiveException(nameof(min));
-        }
+        Requires.ValidNumericNonNegativeRange(min, max);
 
         return min + (max - min) * RandomGenerator.NextDouble();
     }
@@ -57,22 +42,7 @@ internal static class RandomNumberGenerator
         long min,
         long max)
     {
-        if (max <= min)
-        {
-            throw new ArgumentsNotValidRangeException(
-                nameof(min),
-                nameof(max));
-        }
-
-        if (max <= 0L)
-        {
-            throw new ArgumentNotPositiveException(nameof(max));
-        }
-
-        if (min < 0L)
-        {
-            throw new ArgumentNotPositiveException(nameof(min));
-        }
+        Requires.ValidNumericNonNegativeRange(min, max);
 
         return min + (long)(((double)max - min) * RandomGenerator.NextDouble());
     }

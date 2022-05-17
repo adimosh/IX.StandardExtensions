@@ -15,7 +15,7 @@ namespace IX.Math.Nodes.Function.Unary;
 ///     A node representing the <see cref="GlobalSystem.Math.Ceiling(double)" /> function.
 /// </summary>
 /// <seealso cref="NumericUnaryFunctionNodeBase" />
-[DebuggerDisplay("sqrt({" + nameof(Parameter) + "})")]
+[DebuggerDisplay($"sqrt({{{nameof(Parameter)}}})")]
 [CallableMathematicsFunction(
     "sqrt",
     "squareroot")]
@@ -67,7 +67,7 @@ internal sealed class FunctionNodeSquareRoot : NumericUnaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         this.GenerateStaticUnaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Sqrt),

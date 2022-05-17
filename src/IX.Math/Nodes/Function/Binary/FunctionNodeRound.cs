@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 using GlobalSystem = System;
 
@@ -15,7 +16,7 @@ namespace IX.Math.Nodes.Function.Binary;
 ///     A node representing the <see cref="GlobalSystem.Math.Round(double, int)" /> function.
 /// </summary>
 /// <seealso cref="NumericBinaryFunctionNodeBase" />
-[DebuggerDisplay("round({" + nameof(FirstParameter) + "}, {" + nameof(SecondParameter) + "})")]
+[DebuggerDisplay($"round({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}})")]
 [CallableMathematicsFunction("round")]
 [UsedImplicitly]
 internal sealed class FunctionNodeRound : NumericBinaryFunctionNodeBase
@@ -24,8 +25,8 @@ internal sealed class FunctionNodeRound : NumericBinaryFunctionNodeBase
         NodeBase floatNode,
         NodeBase intNode)
         : base(
-            floatNode?.Simplify(),
-            intNode?.Simplify())
+            Requires.NotNull(floatNode).Simplify(),
+            Requires.NotNull(intNode).Simplify())
     {
     }
 
@@ -69,7 +70,7 @@ internal sealed class FunctionNodeRound : NumericBinaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         this.GenerateStaticBinaryFunctionCall<double, int>(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Round),

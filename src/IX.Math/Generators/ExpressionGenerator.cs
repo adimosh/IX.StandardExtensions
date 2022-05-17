@@ -173,9 +173,15 @@ internal static class ExpressionGenerator
         "ERP022:Unobserved exception in generic exception handler",
         Justification = "We want that.")]
     private static NodeBase? GenerateExpression(
-        string expression,
+        string? expression,
         WorkingExpressionSet workingSet)
     {
+        if (expression == null)
+        {
+            // Expression could most likely not be computed
+            return null;
+        }
+
         if (workingSet.CancellationToken.IsCancellationRequested)
         {
             // Cancellation requested, let's exit gracefully
@@ -323,7 +329,9 @@ internal static class ExpressionGenerator
                     innerWorkingSet.Definition,
                     left,
                     right);
+#pragma warning disable HAA0603 // Delegate allocation from a method group - Unavoidable
                 ((ISpecialRequestNode)resultingNode).SetRequestSpecialObjectFunction(innerWorkingSet.OfferReservedType);
+#pragma warning restore HAA0603 // Delegate allocation from a method group
                 return resultingNode.Simplify();
             }
 
@@ -384,7 +392,9 @@ internal static class ExpressionGenerator
                 var resultingNode = t(
                     innerWorkingSet.Definition,
                     expr);
+#pragma warning disable HAA0603 // Delegate allocation from a method group - Unavoidable
                 ((ISpecialRequestNode)resultingNode).SetRequestSpecialObjectFunction(innerWorkingSet.OfferReservedType);
+#pragma warning restore HAA0603 // Delegate allocation from a method group
                 return resultingNode.Simplify();
             }
 
@@ -416,7 +426,7 @@ internal static class ExpressionGenerator
                     var functionName = match.Groups["functionName"].Value;
                     var expressionValue = match.Groups["expression"].Value;
 
-                    string[] parameterExpressions;
+                    string?[] parameterExpressions;
 
                     if (string.IsNullOrWhiteSpace(expressionValue))
                     {
@@ -467,7 +477,8 @@ internal static class ExpressionGenerator
                                     t2,
                                     GenerateExpression(
                                         parameterExpressions[0],
-                                        innerWorkingSet), GenerateExpression(
+                                        innerWorkingSet),
+                                    GenerateExpression(
                                         parameterExpressions[1],
                                         innerWorkingSet))).Simplify();
                             }
@@ -487,9 +498,11 @@ internal static class ExpressionGenerator
                                     t3,
                                     GenerateExpression(
                                         parameterExpressions[0],
-                                        innerWorkingSet), GenerateExpression(
+                                        innerWorkingSet),
+                                    GenerateExpression(
                                         parameterExpressions[1],
-                                        innerWorkingSet), GenerateExpression(
+                                        innerWorkingSet),
+                                    GenerateExpression(
                                         parameterExpressions[2],
                                         innerWorkingSet))).Simplify();
                             }
@@ -507,7 +520,9 @@ internal static class ExpressionGenerator
 
                     if (returnValue is ISpecialRequestNode srn)
                     {
+#pragma warning disable HAA0603 // Delegate allocation from a method group - Unavoidable
                         srn.SetRequestSpecialObjectFunction(innerWorkingSet.OfferReservedType);
+#pragma warning restore HAA0603 // Delegate allocation from a method group
                     }
 
                     return returnValue;

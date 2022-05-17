@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 using JetBrains.Annotations;
 
@@ -17,14 +18,7 @@ namespace IX.Math.Nodes.Function.Ternary;
 ///     A node representing the substring function.
 /// </summary>
 /// <seealso cref="TernaryFunctionNodeBase" />
-[DebuggerDisplay(
-    "substring({" +
-    nameof(FirstParameter) +
-    "}, {" +
-    nameof(SecondParameter) +
-    "}, {" +
-    nameof(ThirdParameter) +
-    "})")]
+[DebuggerDisplay($"substring({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}}, {{{nameof(ThirdParameter)}}})")]
 [CallableMathematicsFunction(
     "substr",
     "substring")]
@@ -42,9 +36,9 @@ internal sealed class FunctionNodeSubstring : TernaryFunctionNodeBase
         NodeBase numericParameter,
         NodeBase secondNumericParameter)
         : base(
-            stringParameter?.Simplify(),
-            numericParameter?.Simplify(),
-            secondNumericParameter?.Simplify())
+            Requires.NotNull(stringParameter).Simplify(),
+            Requires.NotNull(numericParameter).Simplify(),
+            Requires.NotNull(secondNumericParameter).Simplify())
     {
     }
 
@@ -161,7 +155,7 @@ internal sealed class FunctionNodeSubstring : TernaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance)
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         Type firstParameterType = typeof(string);
         Type secondParameterType = typeof(int);
@@ -171,7 +165,7 @@ internal sealed class FunctionNodeSubstring : TernaryFunctionNodeBase
         MethodInfo mi = typeof(string).GetMethodWithExactParameters(
             functionName,
             secondParameterType,
-            thirdParameterType);
+            thirdParameterType)!;
 
         if (mi == null)
         {

@@ -9,25 +9,25 @@ namespace IX.Math.Computation;
 
 internal readonly struct ComputationBody
 {
-    internal static readonly ComputationBody Empty = new ComputationBody(
+    internal static readonly ComputationBody Empty = new(
         null,
         null);
 
-    internal readonly NodeBase BodyNode;
+    internal readonly NodeBase? BodyNode;
 
-    internal readonly IParameterRegistry ParameterRegistry;
+    internal readonly IParameterRegistry? ParameterRegistry;
 
     internal ComputationBody(
-        NodeBase bodyNode,
-        IParameterRegistry parameterRegistry)
+        NodeBase? bodyNode,
+        IParameterRegistry? parameterRegistry)
     {
         this.BodyNode = bodyNode;
         this.ParameterRegistry = parameterRegistry;
     }
 
     internal void Deconstruct(
-        out NodeBase bodyNode,
-        out IParameterRegistry parameterRegistry)
+        out NodeBase? bodyNode,
+        out IParameterRegistry? parameterRegistry)
     {
         bodyNode = this.BodyNode;
         parameterRegistry = this.ParameterRegistry;

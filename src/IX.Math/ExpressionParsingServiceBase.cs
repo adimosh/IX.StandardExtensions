@@ -152,7 +152,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
                    this.stringFormatters,
                    cancellationToken))
         {
-            (NodeBase node, IParameterRegistry parameterRegistry) = ExpressionGenerator.CreateBody(workingSet);
+            var (node, parameterRegistry) = ExpressionGenerator.CreateBody(workingSet);
 
             result = !workingSet.Success
                 ? new ComputedExpression(

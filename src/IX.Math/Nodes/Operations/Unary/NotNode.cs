@@ -5,6 +5,7 @@
 using System.Diagnostics;
 using System.Linq.Expressions;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 
 namespace IX.Math.Nodes.Operations.Unary;
 
@@ -12,7 +13,7 @@ namespace IX.Math.Nodes.Operations.Unary;
 ///     A node for a binary negation operation.
 /// </summary>
 /// <seealso cref="UnaryOperatorNodeBase" />
-[DebuggerDisplay("!{" + nameof(Operand) + "}")]
+[DebuggerDisplay($"!{{{nameof(Operand)}}}")]
 internal sealed class NotNode : UnaryOperatorNodeBase
 {
     /// <summary>
@@ -20,7 +21,7 @@ internal sealed class NotNode : UnaryOperatorNodeBase
     /// </summary>
     /// <param name="operand">The operand.</param>
     public NotNode(NodeBase operand)
-        : base(operand.Simplify())
+        : base(Requires.NotNull(operand).Simplify())
     {
         operand.DetermineWeakly(SupportableValueType.Boolean | SupportableValueType.Numeric);
 
@@ -48,9 +49,7 @@ internal sealed class NotNode : UnaryOperatorNodeBase
     /// <exception cref="ExpressionNotValidLogicallyException">The expression is not logically valid.</exception>
     private static void EnsureCompatibleOperand(NodeBase operand)
     {
-        if (operand.ReturnType == SupportedValueType.Numeric ||
-            operand.ReturnType == SupportedValueType.Boolean ||
-            operand.ReturnType == SupportedValueType.Unknown)
+        if (operand.ReturnType is SupportedValueType.Numeric or SupportedValueType.Boolean or SupportedValueType.Unknown)
         {
             return;
         }
@@ -126,6 +125,6 @@ internal sealed class NotNode : UnaryOperatorNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         Expression.Not(this.Operand.GenerateExpression(tolerance));
 }

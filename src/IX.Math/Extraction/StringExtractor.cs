@@ -39,14 +39,14 @@ internal sealed class StringExtractor : Extensibility.IConstantsExtractor
         IDictionary<string, string> reverseConstantsTable,
         MathDefinition mathDefinition)
     {
-        var stringIndicagtorString = mathDefinition.StringIndicator;
+        var stringIndicatorString = mathDefinition.StringIndicator;
         var stringIndicator = mathDefinition.StringIndicator.AsSpan();
         var stringIndicatorLength = stringIndicator.Length;
         var escapeCharacter = mathDefinition.EscapeCharacter.AsSpan();
         var escapeCharacterLength = escapeCharacter.Length;
 
         var process = originalExpression.AsSpan();
-        StringBuilder sb = null;
+        StringBuilder? sb = null;
 
         while (true)
         {
@@ -114,16 +114,13 @@ internal sealed class StringExtractor : Extensibility.IConstantsExtractor
                 constantsTable,
                 reverseConstantsTable,
                 originalExpression,
-                stringIndicagtorString,
+                stringIndicatorString,
                 body.ToString());
 
-            if (sb == null)
-            {
-                sb = new StringBuilder(originalExpression.Length);
-            }
+            sb ??= new StringBuilder(originalExpression.Length);
 
-            #if NETSTANDARD2_1
-                sb.Append(header);
+            #if NETSTANDARD21_OR_GREATER
+            sb.Append(header);
             #else
             sb.Append(header.ToString());
             #endif
@@ -138,8 +135,8 @@ internal sealed class StringExtractor : Extensibility.IConstantsExtractor
             return originalExpression;
         }
 
-        #if NETSTANDARD2_1
-            sb.Append(process);
+        #if NETSTANDARD21_OR_GREATER
+        sb.Append(process);
         #else
         sb.Append(process.ToString());
         #endif

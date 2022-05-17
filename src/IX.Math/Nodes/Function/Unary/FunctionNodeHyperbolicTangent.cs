@@ -15,7 +15,7 @@ namespace IX.Math.Nodes.Function.Unary;
 ///     A node representing the <see cref="GlobalSystem.Math.Tanh(double)" /> function.
 /// </summary>
 /// <seealso cref="NumericUnaryFunctionNodeBase" />
-[DebuggerDisplay("tanh({" + nameof(Parameter) + "})")]
+[DebuggerDisplay($"tanh({{{nameof(Parameter)}}})")]
 [CallableMathematicsFunction("tanh")]
 [UsedImplicitly]
 internal sealed class FunctionNodeHyperbolicTangent : NumericUnaryFunctionNodeBase
@@ -71,7 +71,7 @@ internal sealed class FunctionNodeHyperbolicTangent : NumericUnaryFunctionNodeBa
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         this.GenerateStaticUnaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Tanh),

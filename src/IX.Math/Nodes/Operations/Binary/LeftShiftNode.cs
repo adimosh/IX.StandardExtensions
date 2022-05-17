@@ -5,6 +5,7 @@
 using System.Diagnostics;
 using System.Linq.Expressions;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 
 namespace IX.Math.Nodes.Operations.Binary;
@@ -13,15 +14,15 @@ namespace IX.Math.Nodes.Operations.Binary;
 ///     A node representing a bitwise left shift operation.
 /// </summary>
 /// <seealso cref="ByteShiftOperationNodeBase" />
-[DebuggerDisplay("{" + nameof(Left) + "} << {" + nameof(Right) + "}")]
+[DebuggerDisplay($"{{{nameof(Left)}}} << {{{nameof(Right)}}}")]
 internal sealed class LeftShiftNode : ByteShiftOperationNodeBase
 {
     public LeftShiftNode(
         NodeBase left,
         NodeBase right)
         : base(
-            left?.Simplify(),
-            right?.Simplify())
+            Requires.NotNull(left).Simplify(),
+            Requires.NotNull(right).Simplify())
     {
     }
 
@@ -62,6 +63,7 @@ internal sealed class LeftShiftNode : ByteShiftOperationNodeBase
         Expression rightExpression = Expression.Convert(
             this.Right.GenerateExpression(),
             typeof(int));
+
         return this.Left.ReturnType switch
         {
             SupportedValueType.Numeric => Expression.LeftShift(
@@ -71,7 +73,7 @@ internal sealed class LeftShiftNode : ByteShiftOperationNodeBase
                 typeof(BitwiseExtensions).GetMethodWithExactParameters(
                     nameof(BitwiseExtensions.LeftShift),
                     typeof(byte[]),
-                    typeof(int)),
+                    typeof(int))!,
                 this.Left.GenerateExpression(),
                 rightExpression),
             _ => throw new ExpressionNotValidLogicallyException()
@@ -83,7 +85,7 @@ internal sealed class LeftShiftNode : ByteShiftOperationNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance)
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         Expression rightExpression = Expression.Convert(
             this.Right.GenerateExpression(tolerance),
@@ -97,7 +99,7 @@ internal sealed class LeftShiftNode : ByteShiftOperationNodeBase
                 typeof(BitwiseExtensions).GetMethodWithExactParameters(
                     nameof(BitwiseExtensions.LeftShift),
                     typeof(byte[]),
-                    typeof(int)),
+                    typeof(int))!,
                 this.Left.GenerateExpression(tolerance),
                 rightExpression),
             _ => throw new ExpressionNotValidLogicallyException()

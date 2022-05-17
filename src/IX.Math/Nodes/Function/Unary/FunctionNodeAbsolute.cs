@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 using GlobalSystem = System;
 
@@ -15,7 +16,7 @@ namespace IX.Math.Nodes.Function.Unary;
 ///     A node representing the <see cref="GlobalSystem.Math.Abs(double)" /> function.
 /// </summary>
 /// <seealso cref="NumericUnaryFunctionNodeBase" />
-[DebuggerDisplay("abs({" + nameof(Parameter) + "})")]
+[DebuggerDisplay($"abs({{{nameof(Parameter)}}})")]
 [CallableMathematicsFunction(
     "abs",
     "absolute")]
@@ -27,7 +28,7 @@ internal sealed class FunctionNodeAbsolute : NumericUnaryFunctionNodeBase
     /// </summary>
     /// <param name="parameter">The parameter.</param>
     public FunctionNodeAbsolute(NodeBase parameter)
-        : base(parameter?.Simplify())
+        : base(Requires.NotNull(parameter).Simplify())
     {
     }
 
@@ -79,7 +80,7 @@ internal sealed class FunctionNodeAbsolute : NumericUnaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         this.GenerateStaticUnaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Abs),

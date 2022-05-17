@@ -60,7 +60,7 @@ internal static class NumericTypeHelper
                 return l;
             case double d:
             {
-                if (global::System.Math.Floor(d) != d || d > long.MaxValue || d < long.MinValue)
+                if (global::System.Math.Floor(d) != d || d is > long.MaxValue or < long.MinValue)
                 {
                     return d;
                 }
@@ -84,6 +84,10 @@ internal static class NumericTypeHelper
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "This is essentially what we're aiming for in the end.")]
+    [SuppressMessage(
+        "ReSharper",
+        "RedundantCast",
+        Justification = "These casts need to be kept in place!")]
     internal static (object LeftOperand, object RightOperand, bool IsInteger) DistillLowestCommonType(
         object left,
         object right) => left switch

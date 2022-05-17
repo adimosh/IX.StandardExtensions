@@ -22,7 +22,7 @@ namespace IX.Math;
 [PublicAPI]
 public sealed class ComputedExpression : DisposableBase, IDeepCloneable<ComputedExpression>
 {
-    private readonly IParameterRegistry parametersRegistry;
+    private readonly IParameterRegistry? parametersRegistry;
     private readonly List<IStringFormatter> stringFormatters;
     private readonly Func<Type, object>? specialObjectRequestFunc;
 
@@ -33,7 +33,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
         string initialExpression,
         NodeBase? body,
         bool isRecognized,
-        IParameterRegistry parameterRegistry,
+        IParameterRegistry? parameterRegistry,
         List<IStringFormatter> stringFormatters,
         Func<Type, object>? specialObjectRequestFunc)
     {
@@ -80,7 +80,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     /// Gets a value indicating whether or not the expression has undefined parameters.
     /// </summary>
     /// <value><see langword="true"/> if the expression has undefined parameters, <see langword="false"/> otherwise.</value>
-    public bool HasUndefinedParameters => this.parametersRegistry.Dump().Any(p => p.ReturnType == SupportedValueType.Unknown);
+    public bool HasUndefinedParameters => this.parametersRegistry?.Dump().Any(p => p.ReturnType == SupportedValueType.Unknown) ?? false;
 
     /// <summary>
     /// Gets the names of the parameters this expression requires, if any. This property is obsolete and should not be used anymore.
@@ -105,9 +105,9 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     /// </summary>
     /// <returns>An array of required parameter names.</returns>
     public string[] GetParameterNames() =>
-        this.parametersRegistry.Dump()
+        this.parametersRegistry?.Dump()
             .Select(p => p.Name)
-            .ToArray();
+            .ToArray() ?? Array.Empty<string>();
 
     /// <summary>
     /// Computes the expression and returns a result.
@@ -140,7 +140,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
             return this.initialExpression;
         }
 
-        var convertedArguments = FormatArgumentsAccordingToParameters(arguments, this.parametersRegistry.Dump());
+        var convertedArguments = FormatArgumentsAccordingToParameters(arguments, this.parametersRegistry?.Dump() ?? Array.Empty<ParameterContext>());
 
         object[]? FormatArgumentsAccordingToParameters(
             object[] parameterValues,
@@ -162,10 +162,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                 ParameterContext paraContext = parameters[i];
 
                 // If there was no continuation, initialize parameter with value.
-                if (paramValue == null)
-                {
-                    paramValue = parameterValues[i];
-                }
+                paramValue ??= parameterValues[i];
 
                 // Initial filtration
                 switch (paramValue)
@@ -399,43 +396,43 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                                 break;
 
                             case SupportedValueType.ByteArray:
-                            {
-                                if (ParsingFormatter.ParseByteArray(convertedParam, out var byteArrayResult))
                                 {
-                                    paramValue = CreateValue(paraContext, byteArrayResult);
+                                    if (ParsingFormatter.ParseByteArray(convertedParam, out var byteArrayResult))
+                                    {
+                                        paramValue = CreateValue(paraContext, byteArrayResult);
+                                    }
+                                    else
+                                    {
+                                        // Cannot parse byte array.
+                                        return null;
+                                    }
                                 }
-                                else
-                                {
-                                    // Cannot parse byte array.
-                                    return null;
-                                }
-                            }
 
                                 break;
 
                             case SupportedValueType.Numeric:
-                            {
-                                if (ParsingFormatter.ParseNumeric(convertedParam, out var numericResult))
                                 {
-                                    switch (numericResult)
+                                    if (ParsingFormatter.ParseNumeric(convertedParam, out var numericResult))
                                     {
-                                        case long integerResult:
-                                            paramValue = CreateValue(paraContext, integerResult);
-                                            break;
-                                        case double floatResult:
-                                            paramValue = CreateValue(paraContext, floatResult);
-                                            break;
-                                        default:
-                                            // Numeric type unknown.
-                                            return null;
+                                        switch (numericResult)
+                                        {
+                                            case long integerResult:
+                                                paramValue = CreateValue(paraContext, integerResult);
+                                                break;
+                                            case double floatResult:
+                                                paramValue = CreateValue(paraContext, floatResult);
+                                                break;
+                                            default:
+                                                // Numeric type unknown.
+                                                return null;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // Cannot parse numeric type.
+                                        return null;
                                     }
                                 }
-                                else
-                                {
-                                    // Cannot parse numeric type.
-                                    return null;
-                                }
-                            }
 
                                 break;
 
@@ -723,17 +720,26 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
             return this.initialExpression;
         }
 
-        Delegate del;
-        try
+        Delegate? del;
+
+        if (this.body == null)
         {
-            del = Expression.Lambda(
-                tolerance == null ? this.body.GenerateExpression() : this.body.GenerateExpression(tolerance),
-                this.parametersRegistry.Dump().Select(p => p.ParameterExpression)).Compile();
-        }
-        catch
-        {
-            // Expression is somehow not valid
             del = null;
+        }
+        else
+        {
+            try
+            {
+                del = Expression.Lambda(
+                        tolerance == null ? this.body.GenerateExpression() : this.body.GenerateExpression(tolerance),
+                        this.parametersRegistry?.Dump().Select(p => p.ParameterExpression) ?? Array.Empty<ParameterExpression>())
+                    .Compile();
+            }
+            catch
+            {
+                // Expression is somehow not valid
+                del = null;
+            }
         }
 
         if (del == null)
@@ -779,7 +785,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     /// <returns>
     /// The computed result, or, if the expression is not recognized correctly, the expression as a <see cref="string" />.
     /// </returns>
-    public object Compute( Tolerance tolerance, IDataFinder dataFinder)
+    public object Compute(Tolerance? tolerance, IDataFinder dataFinder)
     {
         this.RequiresNotDisposed();
 
@@ -794,7 +800,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
             dataFinder,
             nameof(dataFinder));
 
-        foreach (ParameterContext p in this.parametersRegistry.Dump())
+        foreach (ParameterContext p in this.parametersRegistry?.Dump() ?? Array.Empty<ParameterContext>())
         {
             if (!dataFinder.TryGetData(p.Name, out var data))
             {
@@ -816,7 +822,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
         var registry = new StandardParameterRegistry(this.stringFormatters);
         var context = new NodeCloningContext { ParameterRegistry = registry, SpecialRequestFunction = this.specialObjectRequestFunc };
 
-        return new ComputedExpression(this.initialExpression, this.body.DeepClone(context), this.RecognizedCorrectly, registry, this.stringFormatters, this.specialObjectRequestFunc);
+        return new ComputedExpression(this.initialExpression, this.body?.DeepClone(context), this.RecognizedCorrectly, registry, this.stringFormatters, this.specialObjectRequestFunc);
     }
 
     /// <summary>

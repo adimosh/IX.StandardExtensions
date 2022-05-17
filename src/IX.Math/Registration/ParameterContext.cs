@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using IX.Math.Extensibility;
 using IX.Math.Formatters;
+using IX.StandardExtensions.Contracts;
 
 namespace IX.Math.Registration;
 
@@ -29,10 +30,7 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
     /// <exception cref="ArgumentNullException"><paramref name="name"/> is either <c>null</c>, empty or whitespace-only.</exception>
     public ParameterContext(string name, List<IStringFormatter> stringFormatters)
     {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentNullException(nameof(name));
-        }
+        Requires.NotNullOrWhiteSpace(name);
 
         this.Name = name;
         this.stringFormatters = stringFormatters;
@@ -340,7 +338,7 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
     /// <para>Warning! This method does not copy the compilation result.</para>
     /// <para>When called on a compiled expression, the resulting context will not be itself compiled.</para>
     /// </remarks>
-    public ParameterContext DeepClone() => new ParameterContext(this.Name, this.stringFormatters)
+    public ParameterContext DeepClone() => new(this.Name, this.stringFormatters)
     {
         IsFloat = this.IsFloat,
         ReturnType = this.ReturnType,
@@ -353,7 +351,7 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
     /// </summary>
     /// <param name="other">A parameter context to compare with this context.</param>
     /// <returns>true if the current context is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
-    public bool Equals(ParameterContext other)
+    public bool Equals(ParameterContext? other)
     {
         if (other == null)
         {

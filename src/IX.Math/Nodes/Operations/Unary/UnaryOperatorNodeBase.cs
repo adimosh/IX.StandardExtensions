@@ -3,6 +3,7 @@
 // </copyright>
 
 using IX.Math.Extensibility;
+using IX.StandardExtensions.Contracts;
 
 namespace IX.Math.Nodes.Operations.Unary;
 
@@ -20,7 +21,7 @@ internal abstract class UnaryOperatorNodeBase : OperationNodeBase
     /// is <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
     protected private UnaryOperatorNodeBase(NodeBase operand)
     {
-        this.Operand = operand ?? throw new ArgumentNullException(nameof(operand));
+        this.Operand = Requires.NotNull(operand);
     }
 
     /// <summary>
@@ -59,9 +60,9 @@ internal abstract class UnaryOperatorNodeBase : OperationNodeBase
     /// <param name="func">The function.</param>
     protected override void SetSpecialObjectRequestFunctionForSubObjects(Func<Type, object> func)
     {
-        if (this.Operand is ISpecialRequestNode srnl)
+        if (this.Operand is ISpecialRequestNode specialRequestNode)
         {
-            srnl.SetRequestSpecialObjectFunction(func);
+            specialRequestNode.SetRequestSpecialObjectFunction(func);
         }
     }
 }

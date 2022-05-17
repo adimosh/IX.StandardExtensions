@@ -25,7 +25,7 @@ public static class StringFormatter
     /// <returns>A formatted string, if the input type is supported.</returns>
     public static string FormatIntoString<T>(
         T value,
-        List<IStringFormatter> formatters)
+        List<IStringFormatter>? formatters)
     {
         if (formatters == null)
         {
@@ -80,7 +80,7 @@ public static class StringFormatter
         Justification = "We don't care about inverting ifs here.")]
     public static Expression CreateStringConversionExpression(
         Expression expression,
-        List<IStringFormatter> stringFormatters)
+        List<IStringFormatter>? stringFormatters)
     {
         Requires.NotNull(
             expression,

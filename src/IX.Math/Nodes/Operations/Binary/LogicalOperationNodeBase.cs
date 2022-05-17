@@ -63,7 +63,7 @@ internal abstract class LogicalOperationNodeBase : BinaryOperatorNodeBase
     /// <param name="type">The type to determine to.</param>
     public override void DetermineStrongly(SupportedValueType type)
     {
-        if (type == SupportedValueType.Boolean || type == SupportedValueType.Numeric)
+        if (type is SupportedValueType.Boolean or SupportedValueType.Numeric)
         {
             this.Left.DetermineStrongly(type);
             this.Right.DetermineStrongly(type);

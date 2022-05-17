@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 using IX.Math.Extensibility;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 using JetBrains.Annotations;
 
@@ -29,7 +30,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
         Justification = "This is OK and expected at this point.")]
     protected UnaryFunctionNodeBase(NodeBase parameter)
     {
-        NodeBase parameterTemp = parameter ?? throw new ArgumentNullException(nameof(parameter));
+        NodeBase parameterTemp = Requires.NotNull(parameter);
 
         // ReSharper disable once VirtualMemberCallInConstructor - We want this to happen
         this.EnsureCompatibleParameter(parameterTemp);
@@ -57,9 +58,9 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     /// <param name="func">The function.</param>
     protected override void SetSpecialObjectRequestFunctionForSubObjects(Func<Type, object> func)
     {
-        if (this.Parameter is ISpecialRequestNode srnl)
+        if (this.Parameter is ISpecialRequestNode specialRequestNode)
         {
-            srnl.SetRequestSpecialObjectFunction(func);
+            specialRequestNode.SetRequestSpecialObjectFunction(func);
         }
     }
 
@@ -93,7 +94,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     /// <exception cref="ArgumentException"><paramref name="functionName" /> represents a function that cannot be found.</exception>
     protected Expression GenerateStaticUnaryFunctionCall<T>(
         string functionName,
-        Tolerance tolerance) =>
+        Tolerance? tolerance) =>
         this.GenerateStaticUnaryFunctionCall(
             typeof(T),
             functionName,
@@ -127,7 +128,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     protected Expression GenerateStaticUnaryFunctionCall(
         Type t,
         string functionName,
-        Tolerance tolerance)
+        Tolerance? tolerance)
     {
         if (string.IsNullOrWhiteSpace(functionName))
         {
@@ -141,7 +142,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
 
         Type parameterType = ParameterTypeFromParameter(this.Parameter);
 
-        MethodInfo mi = t.GetMethodWithExactParameters(
+        MethodInfo? mi = t.GetMethodWithExactParameters(
             functionName,
             parameterType);
 
@@ -216,7 +217,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     /// <exception cref="ArgumentException"><paramref name="propertyName" /> represents a property that cannot be found.</exception>
     protected Expression GenerateParameterPropertyCall<T>(
         string propertyName,
-        Tolerance tolerance)
+        Tolerance? tolerance)
     {
         if (string.IsNullOrWhiteSpace(propertyName))
         {
@@ -263,7 +264,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     /// <exception cref="ArgumentException"><paramref name="methodName" /> represents a property that cannot be found.</exception>
     protected Expression GenerateParameterMethodCall<T>(
         string methodName,
-        Tolerance tolerance)
+        Tolerance? tolerance)
     {
         if (string.IsNullOrWhiteSpace(methodName))
         {

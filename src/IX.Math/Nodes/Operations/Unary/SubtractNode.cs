@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 
 namespace IX.Math.Nodes.Operations.Unary;
 
@@ -13,7 +14,7 @@ namespace IX.Math.Nodes.Operations.Unary;
 ///     A node for negation operations.
 /// </summary>
 /// <seealso cref="UnaryOperatorNodeBase" />
-[DebuggerDisplay("-{" + nameof(Operand) + "}")]
+[DebuggerDisplay($"-{{{nameof(Operand)}}}")]
 internal sealed class SubtractNode : UnaryOperatorNodeBase
 {
     /// <summary>
@@ -21,8 +22,8 @@ internal sealed class SubtractNode : UnaryOperatorNodeBase
     /// </summary>
     /// <param name="operand">The operand.</param>
     /// <exception cref="ExpressionNotValidLogicallyException">The expression is not logically valid.</exception>
-    public SubtractNode([JetBrains.Annotations.NotNull] NodeBase operand)
-        : base(operand.Simplify())
+    public SubtractNode(NodeBase operand)
+        : base(Requires.NotNull(operand).Simplify())
     {
         operand.DetermineStrongly(SupportedValueType.Numeric);
 
@@ -114,7 +115,7 @@ internal sealed class SubtractNode : UnaryOperatorNodeBase
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "We want this to happen.")]
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         Expression.Subtract(
             Expression.Constant(
                 0L,

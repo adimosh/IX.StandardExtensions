@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 using GlobalSystem = System;
 
@@ -15,7 +16,7 @@ namespace IX.Math.Nodes.Function.Binary;
 ///     A node representing the <see cref="GlobalSystem.Math.Log(double, double)" /> function.
 /// </summary>
 /// <seealso cref="NumericBinaryFunctionNodeBase" />
-[DebuggerDisplay("log({" + nameof(FirstParameter) + "}, {" + nameof(SecondParameter) + "})")]
+[DebuggerDisplay($"log({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}})")]
 [CallableMathematicsFunction("log", "logarithm")]
 [UsedImplicitly]
 internal sealed class FunctionNodeLogarithm : NumericBinaryFunctionNodeBase
@@ -29,8 +30,8 @@ internal sealed class FunctionNodeLogarithm : NumericBinaryFunctionNodeBase
         NodeBase firstParameter,
         NodeBase secondParameter)
         : base(
-            firstParameter?.Simplify(),
-            secondParameter?.Simplify())
+            Requires.NotNull(firstParameter).Simplify(),
+            Requires.NotNull(secondParameter).Simplify())
     {
     }
 
@@ -57,7 +58,7 @@ internal sealed class FunctionNodeLogarithm : NumericBinaryFunctionNodeBase
                 GlobalSystem.Math.Log(
                     firstParam.ExtractFloat(),
                     secondParam.ExtractFloat()))
-            : (NodeBase)this;
+            : this;
 
     /// <summary>
     /// Generates the expression that will be compiled into code.
@@ -74,7 +75,7 @@ internal sealed class FunctionNodeLogarithm : NumericBinaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) => this.GenerateStaticBinaryFunctionCall(
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) => this.GenerateStaticBinaryFunctionCall(
         typeof(GlobalSystem.Math),
         nameof(GlobalSystem.Math.Log),
         tolerance);

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 using GlobalSystem = System;
 
@@ -15,7 +16,7 @@ namespace IX.Math.Nodes.Function.Binary;
 ///     A node representing the <see cref="GlobalSystem.Math.Pow(double, double)" /> function.
 /// </summary>
 /// <seealso cref="NumericBinaryFunctionNodeBase" />
-[DebuggerDisplay("pow({" + nameof(FirstParameter) + "}, {" + nameof(SecondParameter) + "})")]
+[DebuggerDisplay($"pow({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}})")]
 [CallableMathematicsFunction("pow", "power")]
 [UsedImplicitly]
 internal sealed class FunctionNodePower : NumericBinaryFunctionNodeBase
@@ -29,8 +30,8 @@ internal sealed class FunctionNodePower : NumericBinaryFunctionNodeBase
         NodeBase firstParameter,
         NodeBase secondParameter)
         : base(
-            firstParameter?.Simplify(),
-            secondParameter?.Simplify())
+            Requires.NotNull(firstParameter).Simplify(),
+            Requires.NotNull(secondParameter).Simplify())
     {
     }
 
@@ -57,7 +58,7 @@ internal sealed class FunctionNodePower : NumericBinaryFunctionNodeBase
                 GlobalSystem.Math.Pow(
                     firstParam.ExtractFloat(),
                     secondParam.ExtractFloat()))
-            : (NodeBase)this;
+            : this;
 
     /// <summary>
     /// Generates the expression that will be compiled into code.
@@ -74,7 +75,7 @@ internal sealed class FunctionNodePower : NumericBinaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) => this.GenerateStaticBinaryFunctionCall(
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) => this.GenerateStaticBinaryFunctionCall(
         typeof(GlobalSystem.Math),
         nameof(GlobalSystem.Math.Pow),
         tolerance);

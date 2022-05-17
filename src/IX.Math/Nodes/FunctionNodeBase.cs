@@ -27,35 +27,19 @@ public abstract class FunctionNodeBase : OperationNodeBase
     /// <param name="parameter">The parameter.</param>
     /// <returns>The parameter type.</returns>
     /// <exception cref="InvalidOperationException">The parameter could not be correctly recognized, or is undefined.</exception>
-    protected static Type ParameterTypeFromParameter(NodeBase parameter)
+    protected static Type ParameterTypeFromParameter(NodeBase parameter) => parameter.ReturnType switch
     {
-        Type parameterType;
-        switch (parameter.ReturnType)
+        SupportedValueType.Boolean => typeof(bool),
+        SupportedValueType.ByteArray => typeof(byte[]),
+        SupportedValueType.String => typeof(string),
+        SupportedValueType.Numeric => parameter switch
         {
-            case SupportedValueType.Boolean:
-                parameterType = typeof(bool);
-                break;
-            case SupportedValueType.ByteArray:
-                parameterType = typeof(byte[]);
-                break;
-            case SupportedValueType.String:
-                parameterType = typeof(string);
-                break;
-            case SupportedValueType.Numeric:
-                parameterType = parameter switch
-                {
-                    ParameterNode nn => nn.IsFloat == false ? typeof(long) : typeof(double),
-                    NumericNode cn => cn.IsFloat == false ? typeof(long) : typeof(double),
-                    _ => typeof(double)
-                };
-                break;
-
-            default:
-                throw new InvalidOperationException();
-        }
-
-        return parameterType;
-    }
+            ParameterNode nn => nn.IsFloat == false ? typeof(long) : typeof(double),
+            NumericNode cn => cn.IsFloat == false ? typeof(long) : typeof(double),
+            _ => typeof(double)
+        },
+        _ => throw new InvalidOperationException()
+    };
 
     /// <summary>
     ///     Creates a deep clone of the source object.

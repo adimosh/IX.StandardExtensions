@@ -14,7 +14,7 @@ namespace IX.Math.Nodes.Function.Unary;
 ///     A node representing the <see cref="string.Length" /> property.
 /// </summary>
 /// <seealso cref="UnaryFunctionNodeBase" />
-[DebuggerDisplay("strlen({" + nameof(Parameter) + "})")]
+[DebuggerDisplay($"strlen({{{nameof(Parameter)}}})")]
 [CallableMathematicsFunction("strlen")]
 [UsedImplicitly]
 internal sealed class FunctionNodeStringLength : UnaryFunctionNodeBase
@@ -119,7 +119,7 @@ internal sealed class FunctionNodeStringLength : UnaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         Expression.Convert(
             this.GenerateParameterPropertyCall<string>(
                 nameof(string.Length),

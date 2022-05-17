@@ -81,13 +81,13 @@ internal static class FunctionsExtractor
 
         static void ReplaceOneFunction(
             string key,
-            string outerOpenParanthesisSymbol,
-            string outerCloseParanthesisSymbol,
+            string outerOpenParenthesisSymbol,
+            string outerCloseParenthesisSymbol,
             string outerParameterSeparatorSymbol,
             Dictionary<string, ConstantNodeBase> outerConstantsTableReference,
             Dictionary<string, string> outerReverseConstantsTableReference,
             Dictionary<string, ExpressionSymbol> outerSymbolTableReference,
-            Dictionary<string, string> outerReverseSymbolTableRefeerence,
+            Dictionary<string, string> outerReverseSymbolTableReference,
             LevelDictionary<Type, IConstantInterpreter> interpreters,
             IParameterRegistry outerParametersTableReference,
             string outerExpressionSymbol,
@@ -103,25 +103,25 @@ internal static class FunctionsExtractor
             while (replaced != null)
             {
                 outerSymbolTableReference[key].Expression = replaced;
-                replaced = ReplaceFunctions(
+                replaced = ReplaceFunctionsLocal(
                     replaced,
-                    outerOpenParanthesisSymbol,
-                    outerCloseParanthesisSymbol,
+                    outerOpenParenthesisSymbol,
+                    outerCloseParenthesisSymbol,
                     outerParameterSeparatorSymbol,
                     outerConstantsTableReference,
                     outerReverseConstantsTableReference,
                     outerSymbolTableReference,
-                    outerReverseSymbolTableRefeerence,
+                    outerReverseSymbolTableReference,
                     interpreters,
                     outerParametersTableReference,
                     outerExpressionSymbol,
                     outerAllSymbolsSymbols);
             }
 
-            static string ReplaceFunctions(
+            static string? ReplaceFunctionsLocal(
                 string source,
-                string openParanthesisSymbol,
-                string closeParanthesisSymbol,
+                string openParenthesisSymbol,
+                string closeParenthesisSymbol,
                 string parameterSeparatorSymbol,
                 Dictionary<string, ConstantNodeBase> constantsTableReference,
                 Dictionary<string, string> reverseConstantsTableReference,
@@ -133,13 +133,13 @@ internal static class FunctionsExtractor
                 string[] allSymbolsSymbols)
             {
                 var op = -1;
-                var opl = openParanthesisSymbol.Length;
-                var cpl = closeParanthesisSymbol.Length;
+                var opl = openParenthesisSymbol.Length;
+                var cpl = closeParenthesisSymbol.Length;
 
                 while (true)
                 {
                     op = source.InvariantCultureIndexOf(
-                        openParanthesisSymbol,
+                        openParenthesisSymbol,
                         op + opl);
 
                     if (op == -1)
@@ -159,7 +159,8 @@ internal static class FunctionsExtractor
                     if (allSymbolsSymbols.Any(
                             (
                                 p,
-                                check) => check.InvariantCultureEndsWith(p), functionHeaderCheck))
+                                check) => check.InvariantCultureEndsWith(p),
+                            functionHeaderCheck))
                     {
                         continue;
                     }
@@ -169,19 +170,19 @@ internal static class FunctionsExtractor
                         StringSplitOptions.None).Last();
 
                     var oop = source.InvariantCultureIndexOf(
-                        openParanthesisSymbol,
+                        openParenthesisSymbol,
                         op + opl);
                     var cp = source.InvariantCultureIndexOf(
-                        closeParanthesisSymbol,
+                        closeParenthesisSymbol,
                         op + cpl);
 
                     while (oop < cp && oop != -1 && cp != -1)
                     {
                         oop = source.InvariantCultureIndexOf(
-                            openParanthesisSymbol,
+                            openParenthesisSymbol,
                             oop + opl);
                         cp = source.InvariantCultureIndexOf(
-                            closeParanthesisSymbol,
+                            closeParenthesisSymbol,
                             cp + cpl);
                     }
 
@@ -199,10 +200,10 @@ internal static class FunctionsExtractor
                     while (q != null)
                     {
                         arguments = q;
-                        q = ReplaceFunctions(
+                        q = ReplaceFunctionsLocal(
                             q,
-                            openParanthesisSymbol,
-                            closeParanthesisSymbol,
+                            openParenthesisSymbol,
+                            closeParenthesisSymbol,
                             parameterSeparatorSymbol,
                             constantsTableReference,
                             reverseConstantsTableReference,
@@ -228,7 +229,7 @@ internal static class FunctionsExtractor
                             parametersTableReference,
                             interpretersReference,
                             expressionSymbol,
-                            openParanthesisSymbol,
+                            openParenthesisSymbol,
                             allSymbolsSymbols);
 
                         // We check whether or not this is actually a constant
@@ -248,9 +249,9 @@ internal static class FunctionsExtractor
                     }
 
                     var functionCallBody =
-                        $"{functionHeader}{openParanthesisSymbol}{string.Join(parameterSeparatorSymbol, argPlaceholders)}{closeParanthesisSymbol}";
+                        $"{functionHeader}{openParenthesisSymbol}{string.Join(parameterSeparatorSymbol, argPlaceholders)}{closeParenthesisSymbol}";
                     var functionCallToReplace =
-                        $"{functionHeader}{openParanthesisSymbol}{originalArguments}{closeParanthesisSymbol}";
+                        $"{functionHeader}{openParenthesisSymbol}{originalArguments}{closeParenthesisSymbol}";
                     var functionCallItem = SymbolExpressionGenerator.GenerateSymbolExpression(
                         symbolTableReference,
                         reverseSymbolTableReference,

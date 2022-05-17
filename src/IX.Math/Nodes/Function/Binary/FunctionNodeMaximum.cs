@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
 using IX.Math.TypeHelpers;
+using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 using GlobalSystem = System;
 
@@ -16,7 +17,7 @@ namespace IX.Math.Nodes.Function.Binary;
 ///     A node representing the <see cref="GlobalSystem.Math.Max(double, double)" /> function.
 /// </summary>
 /// <seealso cref="NumericBinaryFunctionNodeBase" />
-[DebuggerDisplay("max({" + nameof(FirstParameter) + "}, {" + nameof(SecondParameter) + "})")]
+[DebuggerDisplay($"max({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}})")]
 [CallableMathematicsFunction(
     "max",
     "maximum")]
@@ -32,8 +33,8 @@ internal sealed class FunctionNodeMaximum : NumericBinaryFunctionNodeBase
         NodeBase firstParameter,
         NodeBase secondParameter)
         : base(
-            firstParameter?.Simplify(),
-            secondParameter?.Simplify())
+            Requires.NotNull(firstParameter).Simplify(),
+            Requires.NotNull(secondParameter).Simplify())
     {
     }
 
@@ -57,13 +58,13 @@ internal sealed class FunctionNodeMaximum : NumericBinaryFunctionNodeBase
     /// </returns>
     public override NodeBase Simplify()
     {
-        if (!(this.FirstParameter is NumericNode firstParam) || !(this.SecondParameter is NumericNode secondParam))
+        if (this.FirstParameter is not NumericNode firstParam || this.SecondParameter is not NumericNode secondParam)
         {
-            // Not simplifyable
+            // Cannot be simplified
             return this;
         }
 
-        (object left, object right, bool isInteger) = NumericTypeHelper.DistillLowestCommonType(
+        var (left, right, isInteger) = NumericTypeHelper.DistillLowestCommonType(
             firstParam.Value,
             secondParam.Value);
 
@@ -99,7 +100,7 @@ internal sealed class FunctionNodeMaximum : NumericBinaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance tolerance) =>
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         this.GenerateStaticBinaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Max),

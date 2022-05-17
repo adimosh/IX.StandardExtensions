@@ -1,4 +1,4 @@
-﻿// <copyright file="IVariableNode.cs" company="Adrian Mos">
+// <copyright file="IVariableNode.cs" company="Adrian Mos">
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
@@ -9,6 +9,7 @@ namespace IX.Math.Nodes;
 /// <summary>
 /// A service contract for a parameter node that is, in fact, a variable.
 /// </summary>
+[Obsolete("This interface will not be used anymore.")]
 public interface IVariableNode
 {
     /// <summary>
