@@ -824,6 +824,844 @@ public static partial class Requires
         field = argument;
     }
 
+    /// <summary>
+    /// Called when a contract requires that a specific index is valid for any kind of collection.
+    /// </summary>
+    /// <param name="argument">The argument to validate.</param>
+    /// <param name="argumentName">The argument name.</param>
+    /// <exception cref="ArgumentNotValidIndexException">The argument is not a valid index, possibly negative.</exception>
+    public static void ValidIndex(
+        in long argument,
+        [CallerArgumentExpression("argument")] string argumentName = "argument")
+    {
+        if (argument < 0)
+        {
+            throw new ArgumentNotValidIndexException(argumentName);
+        }
+    }
+
+    /// <summary>
+    /// Called when a contract requires that a specific index is valid for any kind of collection.
+    /// </summary>
+    /// <param name="field">
+    ///     The field that this argument is initializing.
+    /// </param>
+    /// <param name="argument">The argument to validate.</param>
+    /// <param name="argumentName">The argument name.</param>
+    /// <exception cref="ArgumentNotValidIndexException">The argument is not a valid index, possibly negative.</exception>
+    public static void ValidIndex(
+        out long field,
+        in long argument,
+        [CallerArgumentExpression("argument")] string argumentName = "argument")
+    {
+        if (argument < 0)
+        {
+            throw new ArgumentNotValidIndexException(argumentName);
+        }
+
+        field = argument;
+    }
+
+#endregion
+
+#region Generic range
+
+    /// <summary>Called when a contract requires that a specific index and length, constituting a range, is valid.</summary>
+    /// <param name="indexArgument">The numeric index argument to validate.</param>
+    /// <param name="lengthArgument">The numeric length argument to validate.</param>
+    /// <param name="indexArgumentName">The index argument name.</param>
+    /// <param name="lengthArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     The argument is either negative or exceeds the bounds of the
+    ///     array.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidRange(
+        in int indexArgument,
+        in int lengthArgument,
+        [CallerArgumentExpression("indexArgument")]
+        string indexArgumentName = "indexArgument",
+        [CallerArgumentExpression("lengthArgument")]
+        string lengthArgumentName = "lengthArgument")
+    {
+        if (indexArgument < 0)
+        {
+            throw new ArgumentNotValidIndexException(indexArgumentName);
+        }
+
+        if (lengthArgument <= 0)
+        {
+            throw new ArgumentsNotValidRangeException(
+                indexArgumentName,
+                lengthArgumentName);
+        }
+    }
+
+    /// <summary>Called when a contract requires that a specific index and length, constituting a range, is valid.</summary>
+    /// <param name="fieldIndex">The index field that this argument is initializing.</param>
+    /// <param name="fieldLength">The length field that this argument is initializing.</param>
+    /// <param name="indexArgument">The numeric index argument to validate.</param>
+    /// <param name="lengthArgument">The numeric length argument to validate.</param>
+    /// <param name="indexArgumentName">The index argument name.</param>
+    /// <param name="lengthArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     The argument is either negative or exceeds the bounds of the
+    ///     array.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidRange(
+        out int fieldIndex,
+        out int fieldLength,
+        in int indexArgument,
+        in int lengthArgument,
+        [CallerArgumentExpression("indexArgument")]
+        string indexArgumentName = "indexArgument",
+        [CallerArgumentExpression("lengthArgument")]
+        string lengthArgumentName = "lengthArgument")
+    {
+        if (indexArgument < 0)
+        {
+            throw new ArgumentNotValidIndexException(indexArgumentName);
+        }
+
+        if (lengthArgument <= 0)
+        {
+            throw new ArgumentsNotValidRangeException(
+                indexArgumentName,
+                lengthArgumentName);
+        }
+
+        fieldIndex = indexArgument;
+        fieldLength = lengthArgument;
+    }
+
+    /// <summary>Called when a contract requires that a specific index and length, constituting a range, is valid.</summary>
+    /// <param name="indexArgument">The numeric index argument to validate.</param>
+    /// <param name="lengthArgument">The numeric length argument to validate.</param>
+    /// <param name="indexArgumentName">The index argument name.</param>
+    /// <param name="lengthArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     The argument is either negative or exceeds the bounds of the
+    ///     array.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidRange(
+        in long indexArgument,
+        in long lengthArgument,
+        [CallerArgumentExpression("indexArgument")]
+        string indexArgumentName = "indexArgument",
+        [CallerArgumentExpression("lengthArgument")]
+        string lengthArgumentName = "lengthArgument")
+    {
+        if (indexArgument < 0)
+        {
+            throw new ArgumentNotValidIndexException(indexArgumentName);
+        }
+
+        if (lengthArgument <= 0)
+        {
+            throw new ArgumentsNotValidRangeException(
+                indexArgumentName,
+                lengthArgumentName);
+        }
+    }
+
+    /// <summary>Called when a contract requires that a specific index and length, constituting a range, is valid.</summary>
+    /// <param name="fieldIndex">The index field that this argument is initializing.</param>
+    /// <param name="fieldLength">The length field that this argument is initializing.</param>
+    /// <param name="indexArgument">The numeric index argument to validate.</param>
+    /// <param name="lengthArgument">The numeric length argument to validate.</param>
+    /// <param name="indexArgumentName">The index argument name.</param>
+    /// <param name="lengthArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     The argument is either negative or exceeds the bounds of the
+    ///     array.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidRange(
+        out long fieldIndex,
+        out long fieldLength,
+        in long indexArgument,
+        in long lengthArgument,
+        [CallerArgumentExpression("indexArgument")]
+        string indexArgumentName = "indexArgument",
+        [CallerArgumentExpression("lengthArgument")]
+        string lengthArgumentName = "lengthArgument")
+    {
+        if (indexArgument < 0)
+        {
+            throw new ArgumentNotValidIndexException(indexArgumentName);
+        }
+
+        if (lengthArgument <= 0)
+        {
+            throw new ArgumentsNotValidRangeException(
+                indexArgumentName,
+                lengthArgumentName);
+        }
+
+        fieldIndex = indexArgument;
+        fieldLength = lengthArgument;
+    }
+
+#endregion
+
+#region Generic non-negative numeric range
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid and non-negative.</summary>
+    /// <param name="minimumArgument">The numeric minimum argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The minimum argument name.</param>
+    /// <param name="maximumArgumentName">The maximum argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     At least one of the arguments is negative.
+    /// </exception>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericNonNegativeRange(
+        in short minimumArgument,
+        in short maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (minimumArgument < 0 || maximumArgument < 0)
+        {
+            throw new ArgumentNotPositiveIntegerException(minimumArgumentName);
+        }
+
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid and non-negative.</summary>
+    /// <param name="fieldMinimum">The index field that this argument is initializing.</param>
+    /// <param name="fieldMaximum">The length field that this argument is initializing.</param>
+    /// <param name="minimumArgument">The numeric index argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The index argument name.</param>
+    /// <param name="maximumArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     At least one of the arguments is negative.
+    /// </exception>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericNonNegativeRange(
+        out short fieldMinimum,
+        out short fieldMaximum,
+        in short minimumArgument,
+        in short maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (minimumArgument < 0 || maximumArgument < 0)
+        {
+            throw new ArgumentNotPositiveIntegerException(minimumArgumentName);
+        }
+
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+
+        fieldMinimum = minimumArgument;
+        fieldMaximum = maximumArgument;
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid and non-negative.</summary>
+    /// <param name="minimumArgument">The numeric minimum argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The minimum argument name.</param>
+    /// <param name="maximumArgumentName">The maximum argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     At least one of the arguments is negative.
+    /// </exception>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericNonNegativeRange(
+        in int minimumArgument,
+        in int maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (minimumArgument < 0 || maximumArgument < 0)
+        {
+            throw new ArgumentNotPositiveIntegerException(minimumArgumentName);
+        }
+
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid and non-negative.</summary>
+    /// <param name="fieldMinimum">The index field that this argument is initializing.</param>
+    /// <param name="fieldMaximum">The length field that this argument is initializing.</param>
+    /// <param name="minimumArgument">The numeric index argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The index argument name.</param>
+    /// <param name="maximumArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     At least one of the arguments is negative.
+    /// </exception>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericNonNegativeRange(
+        out int fieldMinimum,
+        out int fieldMaximum,
+        in int minimumArgument,
+        in int maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (minimumArgument < 0 || maximumArgument < 0)
+        {
+            throw new ArgumentNotPositiveIntegerException(minimumArgumentName);
+        }
+
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+
+        fieldMinimum = minimumArgument;
+        fieldMaximum = maximumArgument;
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid and non-negative.</summary>
+    /// <param name="minimumArgument">The numeric index argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The index argument name.</param>
+    /// <param name="maximumArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     At least one of the arguments is negative.
+    /// </exception>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericNonNegativeRange(
+        in long minimumArgument,
+        in long maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (minimumArgument < 0 || maximumArgument < 0)
+        {
+            throw new ArgumentNotPositiveIntegerException(minimumArgumentName);
+        }
+
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid and non-negative.</summary>
+    /// <param name="fieldMinimum">The index field that this argument is initializing.</param>
+    /// <param name="fieldMaximum">The length field that this argument is initializing.</param>
+    /// <param name="minimumArgument">The numeric index argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The index argument name.</param>
+    /// <param name="maximumArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     At least one of the arguments is negative.
+    /// </exception>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericNonNegativeRange(
+        out long fieldMinimum,
+        out long fieldMaximum,
+        in long minimumArgument,
+        in long maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (minimumArgument < 0 || maximumArgument < 0)
+        {
+            throw new ArgumentNotPositiveIntegerException(minimumArgumentName);
+        }
+
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+
+        fieldMinimum = minimumArgument;
+        fieldMaximum = maximumArgument;
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid and non-negative.</summary>
+    /// <param name="minimumArgument">The numeric minimum argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The minimum argument name.</param>
+    /// <param name="maximumArgumentName">The maximum argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     At least one of the arguments is negative.
+    /// </exception>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericNonNegativeRange(
+        in float minimumArgument,
+        in float maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (minimumArgument < 0 || maximumArgument < 0)
+        {
+            throw new ArgumentNotPositiveIntegerException(minimumArgumentName);
+        }
+
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid and non-negative.</summary>
+    /// <param name="fieldMinimum">The index field that this argument is initializing.</param>
+    /// <param name="fieldMaximum">The length field that this argument is initializing.</param>
+    /// <param name="minimumArgument">The numeric index argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The index argument name.</param>
+    /// <param name="maximumArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     At least one of the arguments is negative.
+    /// </exception>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericNonNegativeRange(
+        out float fieldMinimum,
+        out float fieldMaximum,
+        in float minimumArgument,
+        in float maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (minimumArgument < 0 || maximumArgument < 0)
+        {
+            throw new ArgumentNotPositiveIntegerException(minimumArgumentName);
+        }
+
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+
+        fieldMinimum = minimumArgument;
+        fieldMaximum = maximumArgument;
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid and non-negative.</summary>
+    /// <param name="minimumArgument">The numeric minimum argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The minimum argument name.</param>
+    /// <param name="maximumArgumentName">The maximum argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     At least one of the arguments is negative.
+    /// </exception>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericNonNegativeRange(
+        in double minimumArgument,
+        in double maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (minimumArgument < 0 || maximumArgument < 0)
+        {
+            throw new ArgumentNotPositiveIntegerException(minimumArgumentName);
+        }
+
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid and non-negative.</summary>
+    /// <param name="fieldMinimum">The index field that this argument is initializing.</param>
+    /// <param name="fieldMaximum">The length field that this argument is initializing.</param>
+    /// <param name="minimumArgument">The numeric index argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The index argument name.</param>
+    /// <param name="maximumArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentNotPositiveIntegerException">
+    ///     At least one of the arguments is negative.
+    /// </exception>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericNonNegativeRange(
+        out double fieldMinimum,
+        out double fieldMaximum,
+        in double minimumArgument,
+        in double maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (minimumArgument < 0 || maximumArgument < 0)
+        {
+            throw new ArgumentNotPositiveIntegerException(minimumArgumentName);
+        }
+
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+
+        fieldMinimum = minimumArgument;
+        fieldMaximum = maximumArgument;
+    }
+
+#endregion
+
+#region Generic numeric range
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid.</summary>
+    /// <param name="minimumArgument">The numeric minimum argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The minimum argument name.</param>
+    /// <param name="maximumArgumentName">The maximum argument name.</param>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericRange(
+        in short minimumArgument,
+        in short maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid.</summary>
+    /// <param name="fieldMinimum">The index field that this argument is initializing.</param>
+    /// <param name="fieldMaximum">The length field that this argument is initializing.</param>
+    /// <param name="minimumArgument">The numeric index argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The index argument name.</param>
+    /// <param name="maximumArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericRange(
+        out short fieldMinimum,
+        out short fieldMaximum,
+        in short minimumArgument,
+        in short maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+
+        fieldMinimum = minimumArgument;
+        fieldMaximum = maximumArgument;
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid.</summary>
+    /// <param name="minimumArgument">The numeric minimum argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The minimum argument name.</param>
+    /// <param name="maximumArgumentName">The maximum argument name.</param>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericRange(
+        in int minimumArgument,
+        in int maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid.</summary>
+    /// <param name="fieldMinimum">The index field that this argument is initializing.</param>
+    /// <param name="fieldMaximum">The length field that this argument is initializing.</param>
+    /// <param name="minimumArgument">The numeric index argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The index argument name.</param>
+    /// <param name="maximumArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericRange(
+        out int fieldMinimum,
+        out int fieldMaximum,
+        in int minimumArgument,
+        in int maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+
+        fieldMinimum = minimumArgument;
+        fieldMaximum = maximumArgument;
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid.</summary>
+    /// <param name="minimumArgument">The numeric index argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The index argument name.</param>
+    /// <param name="maximumArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericRange(
+        in long minimumArgument,
+        in long maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid.</summary>
+    /// <param name="fieldMinimum">The index field that this argument is initializing.</param>
+    /// <param name="fieldMaximum">The length field that this argument is initializing.</param>
+    /// <param name="minimumArgument">The numeric index argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The index argument name.</param>
+    /// <param name="maximumArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericRange(
+        out long fieldMinimum,
+        out long fieldMaximum,
+        in long minimumArgument,
+        in long maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+
+        fieldMinimum = minimumArgument;
+        fieldMaximum = maximumArgument;
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid.</summary>
+    /// <param name="minimumArgument">The numeric minimum argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The minimum argument name.</param>
+    /// <param name="maximumArgumentName">The maximum argument name.</param>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericRange(
+        in float minimumArgument,
+        in float maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid.</summary>
+    /// <param name="fieldMinimum">The index field that this argument is initializing.</param>
+    /// <param name="fieldMaximum">The length field that this argument is initializing.</param>
+    /// <param name="minimumArgument">The numeric index argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The index argument name.</param>
+    /// <param name="maximumArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericRange(
+        out float fieldMinimum,
+        out float fieldMaximum,
+        in float minimumArgument,
+        in float maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+
+        fieldMinimum = minimumArgument;
+        fieldMaximum = maximumArgument;
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid.</summary>
+    /// <param name="minimumArgument">The numeric minimum argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The minimum argument name.</param>
+    /// <param name="maximumArgumentName">The maximum argument name.</param>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericRange(
+        in double minimumArgument,
+        in double maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+    }
+
+    /// <summary>Called when a contract requires that a specific numeric range is valid.</summary>
+    /// <param name="fieldMinimum">The index field that this argument is initializing.</param>
+    /// <param name="fieldMaximum">The length field that this argument is initializing.</param>
+    /// <param name="minimumArgument">The numeric index argument to validate.</param>
+    /// <param name="maximumArgument">The numeric length argument to validate.</param>
+    /// <param name="minimumArgumentName">The index argument name.</param>
+    /// <param name="maximumArgumentName">The length argument name.</param>
+    /// <exception cref="ArgumentsNotValidRangeException">
+    ///     The maximum argument is smaller than the minimum argument.
+    /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void ValidNumericRange(
+        out double fieldMinimum,
+        out double fieldMaximum,
+        in double minimumArgument,
+        in double maximumArgument,
+        [CallerArgumentExpression("minimumArgument")]
+        string minimumArgumentName = "minimumArgument",
+        [CallerArgumentExpression("maximumArgument")]
+        string maximumArgumentName = "maximumArgument")
+    {
+        if (maximumArgument < minimumArgument)
+        {
+            throw new ArgumentsNotValidRangeException(
+                minimumArgumentName,
+                maximumArgumentName);
+        }
+
+        fieldMinimum = minimumArgument;
+        fieldMaximum = maximumArgument;
+    }
+
 #endregion
 
 #region Array index and range
