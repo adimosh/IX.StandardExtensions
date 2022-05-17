@@ -55,6 +55,7 @@ public class DelayedDisposerUnitTests
 
         this.output.WriteLine("Checking positive...");
         dt.Check();
+        this.output.WriteLine("All done. Test should not hang anymore.");
     }
 
     /// <summary>
