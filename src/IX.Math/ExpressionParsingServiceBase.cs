@@ -27,7 +27,8 @@ namespace IX.Math;
 /// <seealso cref="DisposableBase" />
 /// <seealso cref="IExpressionParsingService" />
 [PublicAPI]
-public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBase, IExpressionParsingService
+public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBase,
+    IExpressionParsingService
 {
     private readonly List<Assembly> assembliesToRegister;
 
@@ -43,7 +44,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
 
     private readonly MathDefinition workingDefinition;
 
-    private bool isInitialized = false;
+    private bool isInitialized;
 
     private int interpretationDone;
 
@@ -56,7 +57,10 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
     protected private ExpressionParsingServiceBase(MathDefinition definition)
     {
         // Preconditions
-        Requires.NotNull(out this.workingDefinition, definition, nameof(definition));
+        Requires.NotNull(
+            out this.workingDefinition,
+            definition,
+            nameof(definition));
 
         // Initialized internal state
         this.constantExtractors = new LevelDictionary<Type, IConstantsExtractor>();
@@ -112,7 +116,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
 
         this.ThrowIfCurrentObjectDisposed();
 
-        using var innerLock = this.EnsureInitialization();
+        using SynchronizationLocker innerLock = this.EnsureInitialization();
 
         // Check expression through pass-through extractors
         if (this.constantPassThroughExtractors.KeysByLevel.SelectMany(p => p.Value)
@@ -152,7 +156,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
                    this.stringFormatters,
                    cancellationToken))
         {
-            var (node, parameterRegistry) = ExpressionGenerator.CreateBody(workingSet);
+            (NodeBase? node, IParameterRegistry? parameterRegistry) = ExpressionGenerator.CreateBody(workingSet);
 
             result = !workingSet.Success
                 ? new ComputedExpression(
@@ -176,6 +180,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
         Interlocked.Exchange(
             ref this.interpretationDone,
             1);
+
         return result;
     }
 
@@ -187,7 +192,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
     {
         this.ThrowIfCurrentObjectDisposed();
 
-        using var innerLock = this.EnsureInitialization();
+        using SynchronizationLocker innerLock = this.EnsureInitialization();
 
         // Capacity is sum of all, times 3; the "3" number was chosen as a good-enough average of how many overloads are defined, on average
         var bldr = new List<string>(
@@ -199,7 +204,8 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
 
         bldr.AddRange(this.nonaryFunctions.Select(function => $"{function.Key}()"));
 
-        (from KeyValuePair<string, Type> function in this.unaryFunctions
+        (
+            from KeyValuePair<string, Type> function in this.unaryFunctions
             from ConstructorInfo constructor in function.Value.GetTypeInfo()
                 .DeclaredConstructors
             let parameters = constructor.GetParameters()
@@ -208,13 +214,14 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
                 .Name
             where parameterName != null
             let functionName = function.Key
-            select (functionName, parameterName)).ForEach(
+            select (FunctionName: functionName, ParameterName: parameterName)).ForEach(
             (
                 parameter,
-                bldrL1) => bldrL1.Add($"{parameter.functionName}({parameter.parameterName})"),
+                bldrL1) => bldrL1.Add($"{parameter.FunctionName}({parameter.ParameterName})"),
             bldr);
 
-        (from KeyValuePair<string, Type> function in this.binaryFunctions
+        (
+            from KeyValuePair<string, Type> function in this.binaryFunctions
             from ConstructorInfo constructor in function.Value.GetTypeInfo()
                 .DeclaredConstructors
             let parameters = constructor.GetParameters()
@@ -225,14 +232,16 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
                 .Name
             where parameterNameLeft != null && parameterNameRight != null
             let functionName = function.Key
-            select (functionName, parameterNameLeft, parameterNameRight)).ForEach(
+            select (FunctionName: functionName, ParameterNameLeft: parameterNameLeft,
+                ParameterNameRight: parameterNameRight)).ForEach(
             (
                 parameter,
                 bldrL1) => bldrL1.Add(
-                $"{parameter.functionName}({parameter.parameterNameLeft}, {parameter.parameterNameRight})"),
+                $"{parameter.FunctionName}({parameter.ParameterNameLeft}, {parameter.ParameterNameRight})"),
             bldr);
 
-        (from KeyValuePair<string, Type> function in this.ternaryFunctions
+        (
+            from KeyValuePair<string, Type> function in this.ternaryFunctions
             from ConstructorInfo constructor in function.Value.GetTypeInfo()
                 .DeclaredConstructors
             let parameters = constructor.GetParameters()
@@ -245,11 +254,12 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
                 .Name
             where parameterNameLeft != null && parameterNameMiddle != null && parameterNameRight != null
             let functionName = function.Key
-            select (functionName, parameterNameLeft, parameterNameMiddle, parameterNameRight)).ForEach(
+            select (FunctionName: functionName, ParameterNameLeft: parameterNameLeft,
+                ParameterNameMiddle: parameterNameMiddle, ParameterNameRight: parameterNameRight)).ForEach(
             (
                 parameter,
                 bldrL1) => bldrL1.Add(
-                $"{parameter.functionName}({parameter.parameterNameLeft}, {parameter.parameterNameMiddle}, {parameter.parameterNameRight})"),
+                $"{parameter.FunctionName}({parameter.ParameterNameLeft}, {parameter.ParameterNameMiddle}, {parameter.ParameterNameRight})"),
             bldr);
 
         return bldr.ToArray();
@@ -267,11 +277,12 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
 
         this.ThrowIfCurrentObjectDisposed();
 
-        using var innerLocker = this.ReadWriteLock();
+        using ReadWriteSynchronizationLocker innerLocker = this.ReadWriteLock();
 
         if (this.isInitialized)
         {
-            throw new InvalidOperationException("Initialization has already completed, so you cannot register any more assemblies for this service.");
+            throw new InvalidOperationException(
+                "Initialization has already completed, so you cannot register any more assemblies for this service.");
         }
 
         if (this.assembliesToRegister.Contains(assembly))
@@ -334,7 +345,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
         Justification = "This ")]
     private SynchronizationLocker EnsureInitialization()
     {
-        var innerLock = this.ReadLock();
+        ReadOnlySynchronizationLocker innerLock = this.ReadLock();
 
         if (this.isInitialized)
         {
@@ -343,7 +354,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
 
         innerLock.Dispose();
 
-        var innerWriteLock = this.ReadWriteLock();
+        ReadWriteSynchronizationLocker innerWriteLock = this.ReadWriteLock();
 
         if (this.isInitialized)
         {
@@ -381,16 +392,19 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
         Justification = "Parameters are very complex in this method.")]
     private void InitializeExtractorsDictionary()
     {
-        this.constantExtractors.Add(typeof(StringExtractor), new StringExtractor(), 1000);
-        this.constantExtractors.Add(typeof(ScientificFormatNumberExtractor), new ScientificFormatNumberExtractor(), 2000);
+        this.constantExtractors.Add(
+            typeof(StringExtractor),
+            new StringExtractor(),
+            1000);
+        this.constantExtractors.Add(
+            typeof(ScientificFormatNumberExtractor),
+            new ScientificFormatNumberExtractor(),
+            2000);
 
         var incrementer = 2001;
         this.assembliesToRegister.GetTypesAssignableFrom<IConstantsExtractor>()
             .Where(
-                p => p.IsClass &&
-                     !p.IsAbstract &&
-                     !p.IsGenericTypeDefinition &&
-                     p.HasPublicParameterlessConstructor())
+                p => p.IsClass && !p.IsAbstract && !p.IsGenericTypeDefinition && p.HasPublicParameterlessConstructor())
             .Select(p => p.AsType())
             .Where(
                 (
@@ -429,10 +443,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
         var incrementer = 2001;
         this.assembliesToRegister.GetTypesAssignableFrom<IConstantPassThroughExtractor>()
             .Where(
-                p => p.IsClass &&
-                     !p.IsAbstract &&
-                     !p.IsGenericTypeDefinition &&
-                     p.HasPublicParameterlessConstructor())
+                p => p.IsClass && !p.IsAbstract && !p.IsGenericTypeDefinition && p.HasPublicParameterlessConstructor())
             .Select(p => p.AsType())
             .Where(
                 (
@@ -471,10 +482,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
         var incrementer = 2001;
         this.assembliesToRegister.GetTypesAssignableFrom<IConstantInterpreter>()
             .Where(
-                p => p.IsClass &&
-                     !p.IsAbstract &&
-                     !p.IsGenericTypeDefinition &&
-                     p.HasPublicParameterlessConstructor())
+                p => p.IsClass && !p.IsAbstract && !p.IsGenericTypeDefinition && p.HasPublicParameterlessConstructor())
             .Select(p => p.AsType())
             .Where(
                 (
