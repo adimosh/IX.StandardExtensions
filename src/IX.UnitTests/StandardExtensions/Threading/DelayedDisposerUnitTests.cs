@@ -17,6 +17,11 @@ namespace IX.UnitTests.StandardExtensions.Threading;
 /// </summary>
 public class DelayedDisposerUnitTests
 {
+    public DelayedDisposerUnitTests()
+    {
+        DelayedDisposer.EnsureInitialized();
+    }
+
     /// <summary>
     /// Tests DelayedDisposer one instance.
     /// </summary>
@@ -120,6 +125,10 @@ public class DelayedDisposerUnitTests
     /// </summary>
     /// <returns>The task representing this test.</returns>
     [Fact(DisplayName = "DelayedDisposer exchange.", Timeout = 3000)]
+    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "IDisposableAnalyzers.Correctness",
+        "IDISP001:Dispose created",
+        Justification = "Not observed in this case.")]
     public async Task Test5()
     {
         // ARRANGE
@@ -144,9 +153,9 @@ public class DelayedDisposerUnitTests
         Assert.Equal(dt2, dt);
     }
 
-    private class DisposeTester : IDisposable
+    private sealed class DisposeTester : IDisposable
     {
-        private TaskCompletionSource<bool> tcs = new();
+        private readonly TaskCompletionSource<bool> tcs = new();
         private bool disposed;
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>

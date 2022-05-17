@@ -28,6 +28,16 @@ public static class DelayedDisposer
 #region Static methods
 
     /// <summary>
+    /// Explicitly ensures that the delayed disposer is initialized and running.
+    /// </summary>
+    /// <remarks>
+    /// <para>The delayed disposer will initialize automatically whenever an object is disposed, so the call to this method is not necessary.</para>
+    /// <para>However, due to the fact that spin-up might take a while, as well as allocations, for mission-critical code where it is necessary that things work
+    /// as fast as possible, you may use this method to ensure that everything is spun up before being needed.</para>
+    /// </remarks>
+    public static void EnsureInitialized() => EnsureProcessingThreadStarted();
+
+    /// <summary>
     ///     Atomically exchanges an old disposable reference with a new one, and adds the old one to the delayed disposer.
     /// </summary>
     /// <typeparam name="T">The type of item to exchange.</typeparam>
@@ -135,6 +145,8 @@ public static class DelayedDisposer
 
     private static async Task DisposableThread()
     {
+        await Task.Yield();
+
         lock (Locker)
         {
             currentlyRunning = true;
