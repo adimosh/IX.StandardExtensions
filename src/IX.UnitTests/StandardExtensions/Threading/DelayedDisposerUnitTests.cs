@@ -6,8 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using Xunit;
+using Xunit.Abstractions;
 using EnvironmentSettings = IX.StandardExtensions.EnvironmentSettings;
 
 namespace IX.UnitTests.StandardExtensions.Threading;
@@ -17,8 +19,14 @@ namespace IX.UnitTests.StandardExtensions.Threading;
 /// </summary>
 public class DelayedDisposerUnitTests
 {
-    public DelayedDisposerUnitTests()
+    private readonly ITestOutputHelper output;
+
+    public DelayedDisposerUnitTests(ITestOutputHelper output)
     {
+        Requires.NotNull(
+            out this.output,
+            output);
+
         DelayedDisposer.EnsureInitialized();
     }
 
@@ -30,17 +38,22 @@ public class DelayedDisposerUnitTests
     public async Task Test1()
     {
         // ARRANGE
+        this.output.WriteLine("Starting timed test...");
         var dt = new DisposeTester();
         EnvironmentSettings.DelayedDisposal.DefaultDisposalDelayInMilliseconds = 300;
 
         // ACT
+        this.output.WriteLine("Adding to safe disposer...");
         DelayedDisposer.SafelyDispose(dt);
 
         // ASSERT
+        this.output.WriteLine("Checking negative...");
         dt.CheckNegative();
 
+        this.output.WriteLine("Waiting for disposal...");
         await dt.WaitForDisposal();
 
+        this.output.WriteLine("Checking positive...");
         dt.Check();
     }
 
