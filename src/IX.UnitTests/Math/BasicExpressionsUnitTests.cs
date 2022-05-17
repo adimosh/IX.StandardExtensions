@@ -38,7 +38,7 @@ namespace IX.UnitTests.Math
                     new object[]
                     {
                         $"{leftOperand}+{rightOperand}",
-                        new object[0],
+                        Array.Empty<object>(),
                         (long)expectedResult,
                     });
                 tests.Add(
@@ -74,7 +74,7 @@ namespace IX.UnitTests.Math
                     new object[]
                     {
                         $"{leftOperand}-{rightOperand}",
-                        new object[0],
+                        Array.Empty<object>(),
                         (long)expectedResult,
                     });
                 tests.Add(
@@ -111,7 +111,7 @@ namespace IX.UnitTests.Math
                     new object[]
                     {
                         $"{leftOperand}*{rightOperand}",
-                        new object[0],
+                        Array.Empty<object>(),
                         (long)expectedResult,
                     });
                 tests.Add(
@@ -147,7 +147,7 @@ namespace IX.UnitTests.Math
                     new object[]
                     {
                         $"{leftOperand}/{rightOperand}",
-                        new object[0],
+                        Array.Empty<object>(),
                         expectedResult,
                     });
                 tests.Add(
@@ -192,7 +192,7 @@ namespace IX.UnitTests.Math
                     new object[]
                     {
                         $"{leftOperand}+{rightOperand}",
-                        new object[0],
+                        Array.Empty<object>(),
                         (long)expectedResult,
                     });
                 tests.Add(
@@ -232,7 +232,7 @@ namespace IX.UnitTests.Math
                     new object[]
                     {
                         $"{leftOperand}-{rightOperand}",
-                        new object[0],
+                        Array.Empty<object>(),
                         (long)expectedResult,
                     });
                 tests.Add(
@@ -273,7 +273,7 @@ namespace IX.UnitTests.Math
                     new object[]
                     {
                         $"{leftOperand}*{rightOperand}",
-                        new object[0],
+                        Array.Empty<object>(),
                         (long)expectedResult,
                     });
                 tests.Add(
@@ -313,7 +313,7 @@ namespace IX.UnitTests.Math
                     new object[]
                     {
                         $"{leftOperand}/{rightOperand}",
-                        new object[0],
+                        Array.Empty<object>(),
                         expectedResult,
                     });
                 tests.Add(
@@ -362,47 +362,46 @@ namespace IX.UnitTests.Math
             object[] parameters,
             object expectedResult)
         {
-            using (var service = new ExpressionParsingService())
+            using var service = new ExpressionParsingService();
+
+            ComputedExpression del;
+            try
             {
-                ComputedExpression del;
+                del = service.Interpret(expression);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(
+                    "The generation process should not have thrown an exception, but it did.",
+                    ex);
+            }
+
+            if (del == null)
+            {
+                throw new InvalidOperationException("No computed expression was generated!");
+            }
+
+            try
+            {
+                object result;
                 try
                 {
-                    del = service.Interpret(expression);
+                    result = del.Compute(parameters);
                 }
                 catch (Exception ex)
                 {
                     throw new InvalidOperationException(
-                        "The generation process should not have thrown an exception, but it did.",
+                        "The method should not have thrown an exception, but it did.",
                         ex);
                 }
 
-                try
-                {
-                    if (del == null)
-                    {
-                        throw new InvalidOperationException("No computed expression was generated!");
-                    }
-
-                    object result;
-                    try
-                    {
-                        result = del.Compute(parameters);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new InvalidOperationException(
-                            "The method should not have thrown an exception, but it did.",
-                            ex);
-                    }
-
-                    Assert.Equal(
-                        expectedResult,
-                        result);
-                }
-                finally
-                {
-                    del?.Dispose();
-                }
+                Assert.Equal(
+                    expectedResult,
+                    result);
+            }
+            finally
+            {
+                del.Dispose();
             }
         }
     }

@@ -13,7 +13,7 @@ namespace IX.UnitTests.Math
     public static partial class TestData
     {
         /// <summary>
-        ///     Provides templated random text data for basic operators and parantheses.
+        ///     Provides templated random text data for basic operators and parentheses.
         /// </summary>
         /// <returns>Test data.</returns>
         public static List<object[]> BasicOperatorsWithRandomNumbers()
