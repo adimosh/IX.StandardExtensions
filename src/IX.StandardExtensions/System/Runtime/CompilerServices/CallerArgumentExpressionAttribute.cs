@@ -3,7 +3,6 @@
 // </copyright>
 
 #if !NET5_0_OR_GREATER
-using System;
 using JetBrains.Annotations;
 
 // ReSharper disable once CheckNamespace
@@ -16,15 +15,13 @@ namespace System.Runtime.CompilerServices;
 [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
 public sealed class CallerArgumentExpressionAttribute : Attribute
 {
-    private string parameterName;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="CallerArgumentExpressionAttribute"/> class.
     /// </summary>
     /// <param name="parameterName">The name of the targeted parameter.</param>
     public CallerArgumentExpressionAttribute(string parameterName)
     {
-        this.parameterName = parameterName;
+        this.ParameterName = parameterName;
     }
 
     /// <summary>
@@ -33,6 +30,6 @@ public sealed class CallerArgumentExpressionAttribute : Attribute
     /// <value>
     /// The name of the targeted parameter of the CallerArgumentExpression.
     /// </value>
-    public string ParameterName => this.parameterName;
+    public string ParameterName { get; }
 }
 #endif

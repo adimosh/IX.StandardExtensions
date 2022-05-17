@@ -74,7 +74,7 @@ public sealed class Environment : IEnvironment
         "Usage",
         "DE0009:API is deprecated",
         Justification = "We have no other choice, if we are to emulate the API correctly.")]
-    public GlobalSystem.OperatingSystem OperatingSystemVersion => GlobalSystem.Environment.OSVersion;
+    public OperatingSystem OperatingSystemVersion => GlobalSystem.Environment.OSVersion;
 
     /// <summary>
     ///     Gets the executing assembly version.
@@ -82,7 +82,7 @@ public sealed class Environment : IEnvironment
     /// <value>
     ///     The executing assembly version.
     /// </value>
-    public GlobalSystem.Version Version => GlobalSystem.Environment.Version;
+    public Version Version => GlobalSystem.Environment.Version;
 
     /// <summary>
     ///     Gets the current managed thread identifier.
@@ -187,7 +187,7 @@ public sealed class Environment : IEnvironment
     /// <returns>The value of the environment variable, or <c>null</c> (<c>Nothing</c> in Visual Basic) if one is not found.</returns>
     public string? GetEnvironmentVariable(
         string variableName,
-        GlobalSystem.EnvironmentVariableTarget target) =>
+        EnvironmentVariableTarget target) =>
         GlobalSystem.Environment.GetEnvironmentVariable(
             variableName,
             target);
@@ -204,8 +204,8 @@ public sealed class Environment : IEnvironment
         GlobalSystem.Environment.GetEnvironmentVariables()
             .OfType<DictionaryEntry>()
             .ToDictionary(
-                p => GlobalSystem.Convert.ToString(p.Key) ?? string.Empty,
-                q => q.Value == null ? string.Empty : GlobalSystem.Convert.ToString(q.Value) ?? string.Empty);
+                p => Convert.ToString(p.Key) ?? string.Empty,
+                q => q.Value == null ? string.Empty : Convert.ToString(q.Value) ?? string.Empty);
 
     /// <summary>
     ///     Gets all available environment variables.
@@ -216,12 +216,12 @@ public sealed class Environment : IEnvironment
         "Usage",
         "DE0006:API is deprecated",
         Justification = "We have no other choice, if we are to emulate the API correctly.")]
-    public IDictionary<string, string> GetEnvironmentVariables(GlobalSystem.EnvironmentVariableTarget target) =>
+    public IDictionary<string, string> GetEnvironmentVariables(EnvironmentVariableTarget target) =>
         GlobalSystem.Environment.GetEnvironmentVariables(target)
             .OfType<DictionaryEntry>()
             .ToDictionary(
-                p => GlobalSystem.Convert.ToString(p.Key) ?? string.Empty,
-                q => q.Value == null ? string.Empty : GlobalSystem.Convert.ToString(q.Value) ?? string.Empty);
+                p => Convert.ToString(p.Key) ?? string.Empty,
+                q => q.Value == null ? string.Empty : Convert.ToString(q.Value) ?? string.Empty);
 
     /// <summary>
     ///     Sets the value of an environment variable.
@@ -244,7 +244,7 @@ public sealed class Environment : IEnvironment
     public void SetEnvironmentVariable(
         string variableName,
         string? value,
-        GlobalSystem.EnvironmentVariableTarget target) =>
+        EnvironmentVariableTarget target) =>
         GlobalSystem.Environment.SetEnvironmentVariable(
             variableName,
             value,
@@ -288,7 +288,7 @@ public sealed class Environment : IEnvironment
         GlobalSystem.Environment.Exit(exitCode);
 
         #if !FRAMEWORK_ADVANCED
-        throw new global::System.InvalidOperationException();
+        throw new InvalidOperationException();
         #endif
     }
 
@@ -302,7 +302,7 @@ public sealed class Environment : IEnvironment
         GlobalSystem.Environment.FailFast(message);
 
         #if !FRAMEWORK_ADVANCED
-        throw new global::System.InvalidOperationException();
+        throw new InvalidOperationException();
         #endif
     }
 
@@ -314,14 +314,14 @@ public sealed class Environment : IEnvironment
     [DoesNotReturn]
     public void FailFast(
         string? message,
-        GlobalSystem.Exception? exception)
+        Exception? exception)
     {
         GlobalSystem.Environment.FailFast(
             message,
             exception);
 
         #if !FRAMEWORK_ADVANCED
-        throw new global::System.InvalidOperationException();
+        throw new InvalidOperationException();
         #endif
     }
 
