@@ -1,4 +1,4 @@
-# Version 2022022400, Last Updated Thu Feb 24 07:07:01 2022 UTC
+# Version 2022051700, Last Updated Tue May 17 07:07:01 2022 UTC
 AAA
 AARP
 ABARTH
@@ -653,6 +653,7 @@ KG
 KH
 KI
 KIA
+KIDS
 KIM
 KINDER
 KINDLE
