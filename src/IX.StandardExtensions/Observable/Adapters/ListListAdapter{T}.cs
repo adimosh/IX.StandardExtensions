@@ -82,7 +82,7 @@ internal class ListListAdapter<T> : ModernListAdapter<T, List<T>.Enumerator>
     public override int Remove(T item)
     {
         var index = list.IndexOf(item);
-        list.Remove(item);
+        _ = list.Remove(item);
 
         return index;
     }

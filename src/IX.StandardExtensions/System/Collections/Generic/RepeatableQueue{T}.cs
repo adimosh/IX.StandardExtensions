@@ -58,7 +58,7 @@ public class RepeatableQueue<T> : IQueue<T>
     /// <param name="originalData">The original data.</param>
     public RepeatableQueue(IEnumerable<T> originalData)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             originalData,
             nameof(originalData));
 

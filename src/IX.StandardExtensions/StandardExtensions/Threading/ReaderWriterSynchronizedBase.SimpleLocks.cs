@@ -18,7 +18,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterReadLock()
     {
-        locker.TryEnterReadLock(EnvironmentSettings.LockAcquisitionTimeout);
+        _ = locker.TryEnterReadLock(EnvironmentSettings.LockAcquisitionTimeout);
 
         return true;
     }
@@ -30,7 +30,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterReadLock(int millisecondsTimeout)
     {
-        locker.TryEnterReadLock(millisecondsTimeout);
+        _ = locker.TryEnterReadLock(millisecondsTimeout);
 
         return true;
     }
@@ -42,7 +42,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterReadLock(TimeSpan timeout)
     {
-        locker.TryEnterReadLock(timeout);
+        _ = locker.TryEnterReadLock(timeout);
 
         return true;
     }
@@ -58,7 +58,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterWriteLock()
     {
-        locker.TryEnterWriteLock(EnvironmentSettings.LockAcquisitionTimeout);
+        _ = locker.TryEnterWriteLock(EnvironmentSettings.LockAcquisitionTimeout);
 
         return true;
     }
@@ -70,7 +70,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterWriteLock(int millisecondsTimeout)
     {
-        locker.TryEnterWriteLock(millisecondsTimeout);
+        _ = locker.TryEnterWriteLock(millisecondsTimeout);
 
         return true;
     }
@@ -82,7 +82,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterWriteLock(TimeSpan timeout)
     {
-        locker.TryEnterWriteLock(timeout);
+        _ = locker.TryEnterWriteLock(timeout);
 
         return true;
     }
@@ -98,7 +98,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterUpgradeableReadLock()
     {
-        locker.TryEnterUpgradeableReadLock(EnvironmentSettings.LockAcquisitionTimeout);
+        _ = locker.TryEnterUpgradeableReadLock(EnvironmentSettings.LockAcquisitionTimeout);
 
         return true;
     }
@@ -110,7 +110,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterUpgradeableReadLock(int millisecondsTimeout)
     {
-        locker.TryEnterUpgradeableReadLock(millisecondsTimeout);
+        _ = locker.TryEnterUpgradeableReadLock(millisecondsTimeout);
 
         return true;
     }
@@ -122,7 +122,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterUpgradeableReadLock(TimeSpan timeout)
     {
-        locker.TryEnterUpgradeableReadLock(timeout);
+        _ = locker.TryEnterUpgradeableReadLock(timeout);
 
         return true;
     }

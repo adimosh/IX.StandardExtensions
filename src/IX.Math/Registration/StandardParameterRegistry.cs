@@ -51,7 +51,7 @@ internal class StandardParameterRegistry : IParameterRegistry
 
         ParameterContext newContext = previousContext.DeepClone();
 
-        parameterContexts.TryAdd(name, newContext);
+        _ = parameterContexts.TryAdd(name, newContext);
 
         return newContext;
     }

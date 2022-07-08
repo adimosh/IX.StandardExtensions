@@ -60,8 +60,8 @@ public static class StringExtensions
         this string source,
         string attributeName)
     {
-        Requires.NotNullOrEmpty(source);
-        Requires.NotNullOrEmpty(attributeName);
+        _ = Requires.NotNullOrEmpty(source);
+        _ = Requires.NotNullOrEmpty(attributeName);
 
         return source.Equals(
                    attributeName,
@@ -91,7 +91,7 @@ public static class StringExtensions
         char[] charactersToReplace,
         char replacementCharacter)
     {
-        Requires.NotEmpty(charactersToReplace);
+        _ = Requires.NotEmpty(charactersToReplace);
 
         var array = Requires.NotNull(source)
             .ToCharArray();

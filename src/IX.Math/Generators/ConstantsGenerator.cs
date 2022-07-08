@@ -36,19 +36,19 @@ public static class ConstantsGenerator
         string stringIndicator,
         string content)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             originalExpression,
             nameof(originalExpression));
-        Requires.NotNull(
+        _ = Requires.NotNull(
             constantsTable,
             nameof(constantsTable));
-        Requires.NotNull(
+        _ = Requires.NotNull(
             reverseConstantsTable,
             nameof(reverseConstantsTable));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             stringIndicator,
             nameof(stringIndicator));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             content,
             nameof(content));
 
@@ -90,16 +90,16 @@ public static class ConstantsGenerator
         string originalExpression,
         string content)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             originalExpression,
             nameof(originalExpression));
-        Requires.NotNull(
+        _ = Requires.NotNull(
             constantsTable,
             nameof(constantsTable));
-        Requires.NotNull(
+        _ = Requires.NotNull(
             reverseConstantsTable,
             nameof(reverseConstantsTable));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             content,
             nameof(content));
 
@@ -144,13 +144,13 @@ public static class ConstantsGenerator
         double value,
         params string[] alternateNames)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             name,
             nameof(name));
-        Requires.NotNull(
+        _ = Requires.NotNull(
             constantsTable,
             nameof(constantsTable));
-        Requires.NotNull(
+        _ = Requires.NotNull(
             reverseConstantsTable,
             nameof(reverseConstantsTable));
 

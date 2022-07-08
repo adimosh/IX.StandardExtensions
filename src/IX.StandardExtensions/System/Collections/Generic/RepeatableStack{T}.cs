@@ -66,7 +66,7 @@ public class RepeatableStack<T> : IStack<T>
     /// <param name="originalData">The original data.</param>
     public RepeatableStack(IEnumerable<T> originalData)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             originalData,
             nameof(originalData));
         internalStack = new Stack<T>(originalData);

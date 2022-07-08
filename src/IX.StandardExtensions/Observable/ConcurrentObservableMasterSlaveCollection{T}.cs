@@ -98,7 +98,7 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
     /// </summary>
     protected override void DisposeGeneralContext()
     {
-        Interlocked.Exchange(
+        _ = Interlocked.Exchange(
             ref locker!,
             null!);
 

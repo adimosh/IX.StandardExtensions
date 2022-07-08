@@ -250,7 +250,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     /// <param name="items">The item range to push.</param>
     public void PushRange(T[] items)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             items);
 
         foreach (T item in items)
@@ -270,7 +270,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
         int startIndex,
         int count)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             items);
         Requires.ValidArrayRange(
             in startIndex,

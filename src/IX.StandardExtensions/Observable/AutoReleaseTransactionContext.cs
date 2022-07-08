@@ -89,7 +89,7 @@ internal class AutoReleaseTransactionContext : OperationTransaction
         EventHandler<EditCommittedEventArgs> editableHandler)
     {
         // Contract validation
-        Requires.NotNull(
+        _ = Requires.NotNull(
             items);
         Requires.NotNull(
             out this.parentContext,

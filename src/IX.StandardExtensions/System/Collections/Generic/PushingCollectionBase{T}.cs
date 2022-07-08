@@ -312,7 +312,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     {
         // Validate input
         ThrowIfCurrentObjectDisposed();
-        Requires.NotNull(
+        _ = Requires.NotNull(
             items,
             nameof(items));
 
@@ -350,7 +350,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     {
         // Validate input
         ThrowIfCurrentObjectDisposed();
-        Requires.NotNull(
+        _ = Requires.NotNull(
             items,
             nameof(items));
         Requires.ValidArrayRange(

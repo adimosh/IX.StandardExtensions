@@ -72,7 +72,7 @@ public class WorkOnThreadPoolUnitTests
                 {
                     Thread.Sleep(waitTime);
 
-                    Interlocked.Exchange(
+                    _ = Interlocked.Exchange(
                         ref floatingValue,
                         DataGenerator.RandomInteger());
 
@@ -117,7 +117,7 @@ public class WorkOnThreadPoolUnitTests
                 {
                     Thread.Sleep(waitTime);
 
-                    Interlocked.Exchange(
+                    _ = Interlocked.Exchange(
                         ref floatingValue,
                         Thread.CurrentThread.ManagedThreadId);
 

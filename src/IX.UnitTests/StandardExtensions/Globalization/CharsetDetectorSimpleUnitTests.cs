@@ -61,11 +61,11 @@ public class CharsetDetectorSimpleUnitTests
         // Act
         if (maxBytes == null)
         {
-            new CharsetDetectionEngine().Read(stream);
+            _ = new CharsetDetectionEngine().Read(stream);
         }
         else
         {
-            new CharsetDetectionEngine().Read(
+            _ = new CharsetDetectionEngine().Read(
                 stream,
                 maxBytes.Value);
         }

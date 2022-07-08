@@ -82,7 +82,7 @@ public static class StringFormatter
         Expression expression,
         List<IStringFormatter>? stringFormatters)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             expression,
             nameof(expression));
 

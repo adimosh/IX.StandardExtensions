@@ -77,7 +77,7 @@ public class SetResetEventAwaiter : IAwaiter
 
                 internalContinuation?.Invoke();
 
-                Interlocked.Exchange(
+                _ = Interlocked.Exchange(
                     ref internalThis.isCompleted,
                     1);
             },

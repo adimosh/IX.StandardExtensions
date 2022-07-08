@@ -83,7 +83,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
             return;
         }
 
-        list.Remove(value);
+        _ = list.Remove(value);
 
         if (list.Count == 0)
         {
@@ -106,7 +106,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
         TKey key,
         Func<KeyValuePair<TKey, TValue>, bool> action)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             action);
 
         if (!innerDictionary.TryGetValue(
@@ -141,7 +141,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
         TKey key,
         Func<TKey, TValue, bool> action)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             action);
 
         if (!innerDictionary.TryGetValue(
@@ -175,7 +175,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
         TKey key,
         Func<KeyValuePair<TKey, TValue>, Task<bool>> action)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             action);
 
         if (!innerDictionary.TryGetValue(
@@ -211,7 +211,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
         TKey key,
         Func<TKey, TValue, Task<bool>> action)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             action);
 
         if (!innerDictionary.TryGetValue(

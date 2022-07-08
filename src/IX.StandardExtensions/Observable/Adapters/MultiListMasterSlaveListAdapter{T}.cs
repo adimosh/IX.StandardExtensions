@@ -209,7 +209,7 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
 
         var index = master.IndexOf(item);
 
-        master.Remove(item);
+        _ = master.Remove(item);
 
         return index;
     }
@@ -315,7 +315,7 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
             // We need to do nothing here. Inability to remove the event delegate reference is of no consequence.
         }
 
-        slaves.Remove(localSlaveList);
+        _ = slaves.Remove(localSlaveList);
     }
 
     private void List_CollectionChanged(

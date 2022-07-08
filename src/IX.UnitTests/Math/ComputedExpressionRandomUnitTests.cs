@@ -60,7 +60,7 @@ namespace IX.UnitTests.Math
                             ex);
                     }
 
-                    Assert.IsType<double>(result);
+                    _ = Assert.IsType<double>(result);
 
                     Assert.True((double)result < highLimit);
                     Assert.True((double)result >= lowLimit);
@@ -103,7 +103,7 @@ namespace IX.UnitTests.Math
                             ex);
                     }
 
-                    Assert.IsType<double>(result);
+                    _ = Assert.IsType<double>(result);
 
                     Assert.True((double)result < limit);
                 }
@@ -140,7 +140,7 @@ namespace IX.UnitTests.Math
                             ex);
                     }
 
-                    Assert.IsType<double>(result);
+                    _ = Assert.IsType<double>(result);
                 }
             }
         }
@@ -192,7 +192,7 @@ namespace IX.UnitTests.Math
                             ex);
                     }
 
-                    Assert.IsType<long>(result);
+                    _ = Assert.IsType<long>(result);
 
                     Assert.True((long)result < highLimit);
                     Assert.True((long)result >= lowLimit);
@@ -235,7 +235,7 @@ namespace IX.UnitTests.Math
                             ex);
                     }
 
-                    Assert.IsType<long>(result);
+                    _ = Assert.IsType<long>(result);
 
                     Assert.True((long)result < limit);
                 }
@@ -272,7 +272,7 @@ namespace IX.UnitTests.Math
                             ex);
                     }
 
-                    Assert.IsType<long>(result);
+                    _ = Assert.IsType<long>(result);
                 }
             }
         }

@@ -121,7 +121,7 @@ internal sealed class FirePeriodicallyContext : DisposableBase,
     {
         var ticker = (FirePeriodicallyTicker)stateObject;
 
-        Interlocked.Increment(ref iteration);
+        _ = Interlocked.Increment(ref iteration);
 
         ticker(
             iteration,

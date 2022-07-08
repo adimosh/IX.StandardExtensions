@@ -89,7 +89,7 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapt
 
     public override int Remove(KeyValuePair<TKey, TValue> item)
     {
-        ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).Remove(item);
+        _ = ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).Remove(item);
 
         return -1;
     }

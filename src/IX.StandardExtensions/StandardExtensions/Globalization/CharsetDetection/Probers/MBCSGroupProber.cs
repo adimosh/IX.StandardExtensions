@@ -74,7 +74,7 @@ internal class MBCSGroupProber : CharsetProber
     {
         if (bestGuess == -1)
         {
-            GetConfidence();
+            _ = GetConfidence();
 
             if (bestGuess == -1)
             {
@@ -189,7 +189,7 @@ internal class MBCSGroupProber : CharsetProber
 
                 if (status != null)
                 {
-                    status.AppendLine($"Get confidence:");
+                    _ = status.AppendLine($"Get confidence:");
                 }
 
                 for (var i = 0; i < PROBERS_NUM; i++)
@@ -205,7 +205,7 @@ internal class MBCSGroupProber : CharsetProber
 
                             if (status != null)
                             {
-                                status.AppendLine(
+                                _ = status.AppendLine(
                                     $"-- new match found: confidence {bestConf}, index {bestGuess}, charset {probers[i].GetCharsetName()}.");
                             }
                         }
@@ -214,7 +214,7 @@ internal class MBCSGroupProber : CharsetProber
 
                 if (status != null)
                 {
-                    status.AppendLine($"Get confidence done.");
+                    _ = status.AppendLine($"Get confidence done.");
                 }
 
                 break;
@@ -229,7 +229,7 @@ internal class MBCSGroupProber : CharsetProber
 
         var cf = GetConfidence(status);
 
-        status.AppendLine(" MBCS Group Prober --------begin status");
+        _ = status.AppendLine(" MBCS Group Prober --------begin status");
 
         for (var i = 0; i < PROBERS_NUM; i++)
         {
@@ -237,7 +237,7 @@ internal class MBCSGroupProber : CharsetProber
             {
                 if (!isActive[i])
                 {
-                    status.AppendLine(
+                    _ = status.AppendLine(
                         $" MBCS inactive: {probers[i].GetCharsetName()} (i.e. confidence is too low).");
                 }
                 else
@@ -245,16 +245,16 @@ internal class MBCSGroupProber : CharsetProber
                     var cfp = probers[i]
                         .GetConfidence();
 
-                    status.AppendLine($" MBCS {cfp}: [{probers[i].GetCharsetName()}]");
+                    _ = status.AppendLine($" MBCS {cfp}: [{probers[i].GetCharsetName()}]");
 
-                    status.AppendLine(
+                    _ = status.AppendLine(
                         probers[i]
                             .DumpStatus());
                 }
             }
         }
 
-        status.AppendLine(
+        _ = status.AppendLine(
             $" MBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");
 
         return status.ToString();

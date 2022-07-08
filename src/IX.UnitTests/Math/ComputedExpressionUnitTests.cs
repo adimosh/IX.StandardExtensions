@@ -1555,7 +1555,7 @@ namespace IX.UnitTests.Math
                         {
                             var key = parameter.Key;
                             object value = parameter.Value;
-                            finder.Setup(
+                            _ = finder.Setup(
                                 p => p.TryGetData(
                                     key,
                                     out value)).Returns(true);
@@ -1632,7 +1632,7 @@ namespace IX.UnitTests.Math
                 {
                     var key = parameter.Key;
                     object value = parameter.Value;
-                    finder.Setup(
+                    _ = finder.Setup(
                         p => p.TryGetData(
                             key,
                             out value)).Returns(true);
@@ -1675,7 +1675,7 @@ namespace IX.UnitTests.Math
                         {
                             var key = parameter.Key;
                             object value = GenerateFuncOutOfParameterValue(parameter.Value);
-                            finder.Setup(
+                            _ = finder.Setup(
                                 p => p.TryGetData(
                                     key,
                                     out value)).Returns(true);
@@ -1723,7 +1723,7 @@ namespace IX.UnitTests.Math
                 {
                     var key = parameter.Key;
                     object value = GenerateFuncOutOfParameterValue(parameter.Value);
-                    finder.Setup(
+                    _ = finder.Setup(
                         p => p.TryGetData(
                             key,
                             out value)).Returns(true);
@@ -1768,7 +1768,7 @@ namespace IX.UnitTests.Math
                     {
                         var key = parameter.Key;
                         object value = GenerateFuncOutOfParameterValue(parameter.Value);
-                        finder.Setup(
+                        _ = finder.Setup(
                             p => p.TryGetData(
                                 key,
                                 out value)).Returns(true);

@@ -28,7 +28,7 @@ public static class AsyncEventInvokerExtensions
         this AsyncEventHandler? handler,
         object sender)
     {
-        Requires.NotNull(sender);
+        _ = Requires.NotNull(sender);
 
         Delegate[]? invocationList = handler?.GetInvocationList();
 
@@ -75,8 +75,8 @@ public static class AsyncEventInvokerExtensions
         TEventArgs e)
         where TEventArgs : EventArgs
     {
-        Requires.NotNull(sender);
-        Requires.NotNull(e);
+        _ = Requires.NotNull(sender);
+        _ = Requires.NotNull(e);
 
         Delegate[]? invocationList = handler?.GetInvocationList();
 
@@ -117,8 +117,8 @@ public static class AsyncEventInvokerExtensions
         object sender,
         EventArgs e)
     {
-        Requires.NotNull(sender);
-        Requires.NotNull(e);
+        _ = Requires.NotNull(sender);
+        _ = Requires.NotNull(e);
 
         Delegate[]? invocationList = handler?.GetInvocationList();
 

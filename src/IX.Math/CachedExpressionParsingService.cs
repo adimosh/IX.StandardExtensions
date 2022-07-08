@@ -103,7 +103,7 @@ public sealed class CachedExpressionParsingService : ExpressionParsingServiceBas
     {
         base.DisposeGeneralContext();
 
-        Interlocked.Exchange(
+        _ = Interlocked.Exchange(
             ref cachedComputedExpressions,
             null);
     }

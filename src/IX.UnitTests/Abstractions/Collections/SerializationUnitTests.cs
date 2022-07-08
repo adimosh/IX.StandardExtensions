@@ -54,14 +54,14 @@ public class SerializationUnitTests
         {
             dcs.WriteObject(ms, l1);
 
-            ms.Seek(0, SeekOrigin.Begin);
+            _ = ms.Seek(0, SeekOrigin.Begin);
 
             using (var textReader = new StreamReader(ms, Encoding.UTF8, false, 32768, true))
             {
                 content = textReader.ReadToEnd();
             }
 
-            ms.Seek(0, SeekOrigin.Begin);
+            _ = ms.Seek(0, SeekOrigin.Begin);
 
             l2 = dcs.ReadObject(ms) as PushDownStack<int>;
         }

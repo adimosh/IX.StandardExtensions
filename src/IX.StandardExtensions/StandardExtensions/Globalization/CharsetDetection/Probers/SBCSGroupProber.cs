@@ -338,7 +338,7 @@ internal class SBCSGroupProber : CharsetProber
 
                 if (status != null)
                 {
-                    status.AppendLine($"Get confidence:");
+                    _ = status.AppendLine($"Get confidence:");
                 }
 
                 for (var i = 0; i < PROBERS_NUM; i++)
@@ -354,7 +354,7 @@ internal class SBCSGroupProber : CharsetProber
 
                             if (status != null)
                             {
-                                status.AppendLine(
+                                _ = status.AppendLine(
                                     $"-- new match found: confidence {bestConf}, index {bestGuess}, charset {probers[i].GetCharsetName()}.");
                             }
                         }
@@ -363,7 +363,7 @@ internal class SBCSGroupProber : CharsetProber
 
                 if (status != null)
                 {
-                    status.AppendLine($"Get confidence done.");
+                    _ = status.AppendLine($"Get confidence done.");
                 }
 
                 break;
@@ -378,7 +378,7 @@ internal class SBCSGroupProber : CharsetProber
 
         var cf = GetConfidence(status);
 
-        status.AppendLine(" SBCS Group Prober --------begin status");
+        _ = status.AppendLine(" SBCS Group Prober --------begin status");
 
         for (var i = 0; i < PROBERS_NUM; i++)
         {
@@ -386,7 +386,7 @@ internal class SBCSGroupProber : CharsetProber
             {
                 if (!isActive[i])
                 {
-                    status.AppendLine(
+                    _ = status.AppendLine(
                         $" SBCS inactive: [{probers[i].GetCharsetName()}] (i.e. confidence is too low).");
                 }
                 else
@@ -394,16 +394,16 @@ internal class SBCSGroupProber : CharsetProber
                     var cfp = probers[i]
                         .GetConfidence();
 
-                    status.AppendLine($" SBCS {cfp}: [{probers[i].GetCharsetName()}]");
+                    _ = status.AppendLine($" SBCS {cfp}: [{probers[i].GetCharsetName()}]");
 
-                    status.AppendLine(
+                    _ = status.AppendLine(
                         probers[i]
                             .DumpStatus());
                 }
             }
         }
 
-        status.AppendLine(
+        _ = status.AppendLine(
             $" SBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");
 
         return status.ToString();
@@ -438,7 +438,7 @@ internal class SBCSGroupProber : CharsetProber
         //if we have no answer yet
         if (bestGuess == -1)
         {
-            GetConfidence();
+            _ = GetConfidence();
 
             //no charset seems positive
             if (bestGuess == -1)

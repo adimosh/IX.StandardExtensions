@@ -105,7 +105,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             serializer);
 
         // Parameter validation
-        directoryShim.RequiresExists(persistenceFolderPath);
+        _ = directoryShim.RequiresExists(persistenceFolderPath);
 
         // Internal state
         poisonedUnremovableFiles = new List<string>();
@@ -253,7 +253,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     /// <param name="items">The item range to push.</param>
     public void EnqueueRange(T[] items)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             items);
 
         foreach (T item in items)
@@ -273,7 +273,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         int startIndex,
         int count)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             items);
         Requires.ValidArrayRange(
             in startIndex,
@@ -421,7 +421,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         Action<TState, T> actionToInvoke,
         TState state)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             actionToInvoke);
         ThrowIfCurrentObjectDisposed();
 
@@ -655,9 +655,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         Action<TState, IEnumerable<T>> actionToInvoke,
         TState state)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             predicate);
-        Requires.NotNull(
+        _ = Requires.NotNull(
             actionToInvoke);
 
         this.RequiresNotDisposed();
@@ -1581,7 +1581,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             {
                 if (!FileShim.Exists(file))
                 {
-                    poisonedUnremovableFiles.Remove(file);
+                    _ = poisonedUnremovableFiles.Remove(file);
                 }
             }
             catch (IOException) { }

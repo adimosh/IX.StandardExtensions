@@ -114,7 +114,7 @@ internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
 
         if (secondParameter is ParameterNode pn)
         {
-            pn.DetermineInteger();
+            _ = pn.DetermineInteger();
         }
     }
 

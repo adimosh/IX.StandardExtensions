@@ -218,7 +218,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     /// </summary>
     protected override void DisposeGeneralContext()
     {
-        Interlocked.Exchange(
+        _ = Interlocked.Exchange(
             ref locker,
             null!);
 

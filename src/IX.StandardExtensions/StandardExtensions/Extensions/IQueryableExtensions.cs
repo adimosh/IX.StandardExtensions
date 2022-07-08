@@ -51,7 +51,7 @@ public static class IQueryableExtensions
         int? skip = default,
         int? take = default)
     {
-        Requires.NotNull(query);
+        _ = Requires.NotNull(query);
 
         if (skip != null)
         {

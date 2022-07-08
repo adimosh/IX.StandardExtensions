@@ -638,7 +638,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// </summary>
     protected override void DisposeGeneralContext()
     {
-        Interlocked.Exchange(
+        _ = Interlocked.Exchange(
             ref locker!,
             null!);
 

@@ -427,7 +427,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     {
         if (value is T v)
         {
-            Remove(v);
+            _ = Remove(v);
         }
     }
 
@@ -677,7 +677,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     public virtual void RemoveRange(IEnumerable<T> items)
     {
         // PRECONDITIONS
-        Requires.NotNull(
+        _ = Requires.NotNull(
             items);
 
         // Current object not disposed
@@ -775,7 +775,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     {
         // PRECONDITIONS
         Requires.NonNegative(index);
-        Requires.NotNull(items);
+        _ = Requires.NotNull(items);
 
         // Current object not disposed
         ThrowIfCurrentObjectDisposed();
@@ -1112,7 +1112,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             {
                 foreach (T t in originalItems)
                 {
-                    InternalListContainer.Add(t);
+                        _ = InternalListContainer.Add(t);
                 }
 
                 if (ItemsAreUndoable && AutomaticallyCaptureSubItems)

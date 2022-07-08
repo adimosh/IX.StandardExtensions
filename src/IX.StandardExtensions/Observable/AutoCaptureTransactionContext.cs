@@ -45,7 +45,7 @@ internal class AutoCaptureTransactionContext : OperationTransaction
         Requires.NotNull(
             out this.item,
             item);
-        Requires.NotNull(
+        _ = Requires.NotNull(
             parentContext);
         Requires.NotNull(
             out this.editableHandler,
@@ -82,9 +82,9 @@ internal class AutoCaptureTransactionContext : OperationTransaction
         EventHandler<EditCommittedEventArgs> editableHandler)
     {
         // Contract validation
-        Requires.NotNull(
+        _ = Requires.NotNull(
             items);
-        Requires.NotNull(
+        _ = Requires.NotNull(
             parentContext);
         Requires.NotNull(
             out this.editableHandler,

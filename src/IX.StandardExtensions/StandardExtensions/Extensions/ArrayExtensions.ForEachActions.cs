@@ -37,8 +37,8 @@ public static partial class ArrayExtensions
         Action<TItem, TParam1> action,
         TParam1 param1)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -79,8 +79,8 @@ public static partial class ArrayExtensions
         TParam1 param1,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -127,8 +127,8 @@ public static partial class ArrayExtensions
         TParam1 param1,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -175,8 +175,8 @@ public static partial class ArrayExtensions
         TParam1 param1,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -223,8 +223,8 @@ public static partial class ArrayExtensions
         TParam1 param1,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -266,8 +266,8 @@ public static partial class ArrayExtensions
         TParam1 param1,
         TParam2 param2)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -311,8 +311,8 @@ public static partial class ArrayExtensions
         TParam2 param2,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -362,8 +362,8 @@ public static partial class ArrayExtensions
         TParam2 param2,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -413,8 +413,8 @@ public static partial class ArrayExtensions
         TParam2 param2,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -464,8 +464,8 @@ public static partial class ArrayExtensions
         TParam2 param2,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -510,8 +510,8 @@ public static partial class ArrayExtensions
         TParam2 param2,
         TParam3 param3)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -558,8 +558,8 @@ public static partial class ArrayExtensions
         TParam3 param3,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -612,8 +612,8 @@ public static partial class ArrayExtensions
         TParam3 param3,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -666,8 +666,8 @@ public static partial class ArrayExtensions
         TParam3 param3,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -720,8 +720,8 @@ public static partial class ArrayExtensions
         TParam3 param3,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -769,8 +769,8 @@ public static partial class ArrayExtensions
         TParam3 param3,
         TParam4 param4)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -820,8 +820,8 @@ public static partial class ArrayExtensions
         TParam4 param4,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -877,8 +877,8 @@ public static partial class ArrayExtensions
         TParam4 param4,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -934,8 +934,8 @@ public static partial class ArrayExtensions
         TParam4 param4,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -991,8 +991,8 @@ public static partial class ArrayExtensions
         TParam4 param4,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -1043,8 +1043,8 @@ public static partial class ArrayExtensions
         TParam4 param4,
         TParam5 param5)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -1097,8 +1097,8 @@ public static partial class ArrayExtensions
         TParam5 param5,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -1157,8 +1157,8 @@ public static partial class ArrayExtensions
         TParam5 param5,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -1217,8 +1217,8 @@ public static partial class ArrayExtensions
         TParam5 param5,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -1277,8 +1277,8 @@ public static partial class ArrayExtensions
         TParam5 param5,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -1332,8 +1332,8 @@ public static partial class ArrayExtensions
         TParam5 param5,
         TParam6 param6)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -1389,8 +1389,8 @@ public static partial class ArrayExtensions
         TParam6 param6,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -1452,8 +1452,8 @@ public static partial class ArrayExtensions
         TParam6 param6,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -1515,8 +1515,8 @@ public static partial class ArrayExtensions
         TParam6 param6,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -1578,8 +1578,8 @@ public static partial class ArrayExtensions
         TParam6 param6,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -1636,8 +1636,8 @@ public static partial class ArrayExtensions
         TParam6 param6,
         TParam7 param7)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -1696,8 +1696,8 @@ public static partial class ArrayExtensions
         TParam7 param7,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -1762,8 +1762,8 @@ public static partial class ArrayExtensions
         TParam7 param7,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -1828,8 +1828,8 @@ public static partial class ArrayExtensions
         TParam7 param7,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -1894,8 +1894,8 @@ public static partial class ArrayExtensions
         TParam7 param7,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -1955,8 +1955,8 @@ public static partial class ArrayExtensions
         TParam7 param7,
         TParam8 param8)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -2018,8 +2018,8 @@ public static partial class ArrayExtensions
         TParam8 param8,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -2087,8 +2087,8 @@ public static partial class ArrayExtensions
         TParam8 param8,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -2156,8 +2156,8 @@ public static partial class ArrayExtensions
         TParam8 param8,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {
@@ -2225,8 +2225,8 @@ public static partial class ArrayExtensions
         TParam8 param8,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         if (cancellationToken.IsCancellationRequested)
         {

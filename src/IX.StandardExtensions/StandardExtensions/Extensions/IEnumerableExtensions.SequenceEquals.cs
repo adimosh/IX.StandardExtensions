@@ -188,7 +188,7 @@ public static partial class IEnumerableExtensions
         IEnumerable<T>? right,
         IEqualityComparer<T> comparer)
     {
-        Requires.NotNull(comparer);
+        _ = Requires.NotNull(comparer);
 
         if (left == null)
         {
@@ -245,7 +245,7 @@ public static partial class IEnumerableExtensions
         IEnumerable<T>? right,
         IComparer<T> comparer)
     {
-        Requires.NotNull(comparer);
+        _ = Requires.NotNull(comparer);
 
         if (left == null)
         {
@@ -303,7 +303,7 @@ public static partial class IEnumerableExtensions
         IEnumerable<T>? right,
         Func<T, T, bool> comparer)
     {
-        Requires.NotNull(comparer);
+        _ = Requires.NotNull(comparer);
 
         if (left == null)
         {
@@ -360,7 +360,7 @@ public static partial class IEnumerableExtensions
         IEnumerable<T>? right,
         Func<T, T, int> comparer)
     {
-        Requires.NotNull(comparer);
+        _ = Requires.NotNull(comparer);
 
         if (left == null)
         {

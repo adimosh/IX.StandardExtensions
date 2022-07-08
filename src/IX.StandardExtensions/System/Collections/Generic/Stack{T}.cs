@@ -101,7 +101,7 @@ public class Stack<T> : GlobalCollectionsGeneric.Stack<T>,
         int startIndex,
         int count)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             items,
             nameof(items));
         Requires.ValidArrayRange(

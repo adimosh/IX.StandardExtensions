@@ -192,7 +192,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Array array,
         int index)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             array);
         Requires.NonNegative(
             index);
@@ -269,9 +269,9 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Action<TState, IEnumerable<T>> actionToInvoke,
         TState state)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             predicate);
-        Requires.NotNull(
+        _ = Requires.NotNull(
             actionToInvoke);
 
         using (WriteLock())
@@ -323,7 +323,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
             for (var i = 0; i < index; i++)
             {
-                queue.Dequeue();
+                _ = queue.Dequeue();
             }
 
             return index;
@@ -353,9 +353,9 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         TState state,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             predicate);
-        Requires.NotNull(
+        _ = Requires.NotNull(
             actionToInvoke);
 
         using (WriteLock())
@@ -411,7 +411,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
             for (var i = 0; i < index; i++)
             {
-                queue.Dequeue();
+                _ = queue.Dequeue();
             }
 
             return index;
@@ -483,9 +483,9 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         TState state,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             predicate);
-        Requires.NotNull(
+        _ = Requires.NotNull(
             actionToInvoke);
 
         using (WriteLock())
@@ -541,7 +541,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
             for (var i = 0; i < index; i++)
             {
-                queue.Dequeue();
+                _ = queue.Dequeue();
             }
 
             return index;
@@ -613,9 +613,9 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         TState state,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             predicate);
-        Requires.NotNull(
+        _ = Requires.NotNull(
             actionToInvoke);
 
         using (WriteLock())
@@ -672,7 +672,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
             for (var i = 0; i < index; i++)
             {
-                queue.Dequeue();
+                _ = queue.Dequeue();
             }
 
             return index;
@@ -751,9 +751,9 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         TState state,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             predicate);
-        Requires.NotNull(
+        _ = Requires.NotNull(
             actionToInvoke);
 
         using (WriteLock())
@@ -810,7 +810,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
             for (var i = 0; i < index; i++)
             {
-                queue.Dequeue();
+                _ = queue.Dequeue();
             }
 
             return index;
@@ -831,7 +831,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Action<TState, T> actionToInvoke,
         TState state)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             actionToInvoke);
 
         using (WriteLock())
@@ -863,7 +863,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
                 return false;
             }
 
-            queue.Dequeue();
+            _ = queue.Dequeue();
 
             return true;
         }
@@ -886,7 +886,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         CancellationToken cancellationToken = default)
     {
         // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
-        Requires.NotNull(
+        _ = Requires.NotNull(
             actionToInvoke);
 
         using (WriteLock())
@@ -922,7 +922,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
                 return false;
             }
 
-            queue.Dequeue();
+            _ = queue.Dequeue();
 
             return true;
         }
@@ -978,7 +978,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         TState state,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             actionToInvoke);
 
         using (WriteLock())
@@ -1013,7 +1013,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
                 return false;
             }
 
-            queue.Dequeue();
+            _ = queue.Dequeue();
 
             return true;
         }
@@ -1289,7 +1289,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             }
             catch (Exception)
             {
-                Interlocked.Exchange(
+                _ = Interlocked.Exchange(
                     ref isInDisasterMode,
                     0);
 
@@ -1310,7 +1310,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             catch (Exception)
             {
                 transferQueue.Dispose();
-                Interlocked.Exchange(
+                _ = Interlocked.Exchange(
                     ref isInDisasterMode,
                     0);
 
@@ -1355,7 +1355,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             catch (Exception)
             {
                 persistedQueue!.Dispose();
-                Interlocked.Exchange(
+                _ = Interlocked.Exchange(
                     ref isInDisasterMode,
                     0);
 

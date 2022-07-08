@@ -108,7 +108,7 @@ public class Path : IPath
     /// </exception>
     public string EscapeFileName(string stringToEscape)
     {
-        Requires.NotNullOrWhiteSpace(stringToEscape);
+        _ = Requires.NotNullOrWhiteSpace(stringToEscape);
 
         var invalidChars = GetInvalidFileNameChars();
         var newString = new char[stringToEscape.Length];

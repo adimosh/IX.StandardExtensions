@@ -188,7 +188,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
     /// <param name="assembly">The assembly to register.</param>
     public void RegisterFunctionsAssembly(Assembly assembly)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             assembly,
             nameof(assembly));
 
@@ -222,7 +222,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
     /// </exception>
     public void RegisterTypeFormatter(IStringFormatter formatter)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             formatter,
             nameof(formatter));
 
@@ -281,7 +281,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
         string expression,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             expression,
             nameof(expression));
 
@@ -346,7 +346,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
             Interlocked.MemoryBarrier();
         }
 
-        Interlocked.Exchange(
+        _ = Interlocked.Exchange(
             ref interpretationDone,
             1);
 

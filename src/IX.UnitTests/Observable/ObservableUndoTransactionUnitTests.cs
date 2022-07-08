@@ -39,7 +39,7 @@ public class ObservableUndoTransactionUnitTests
                 tc.Success();
             }
 
-            Assert.Single(list);
+            _ = Assert.Single(list);
 
             list.Undo();
 
@@ -49,7 +49,7 @@ public class ObservableUndoTransactionUnitTests
 
             list.Redo();
 
-            Assert.Single(list);
+            _ = Assert.Single(list);
         }
     }
 
@@ -77,7 +77,7 @@ public class ObservableUndoTransactionUnitTests
             list.RemoveAt(0);
             list.RemoveAt(0);
 
-            Assert.Single(list);
+            _ = Assert.Single(list);
 
             try
             {
@@ -85,7 +85,7 @@ public class ObservableUndoTransactionUnitTests
             }
             catch (Exception ex)
             {
-                Assert.IsType<InvalidOperationException>(ex);
+                _ = Assert.IsType<InvalidOperationException>(ex);
             }
         }
     }
@@ -179,7 +179,7 @@ public class ObservableUndoTransactionUnitTests
                 tc.Success();
             }
 
-            Assert.Single(list);
+            _ = Assert.Single(list);
 
             list.Undo();
 
@@ -189,7 +189,7 @@ public class ObservableUndoTransactionUnitTests
 
             list.Redo();
 
-            Assert.Single(list);
+            _ = Assert.Single(list);
         }
     }
 
@@ -229,7 +229,7 @@ public class ObservableUndoTransactionUnitTests
                 tc.Success();
             }
 
-            Assert.Single(list);
+            _ = Assert.Single(list);
 
             list.Undo();
 
@@ -239,7 +239,7 @@ public class ObservableUndoTransactionUnitTests
 
             list.Redo();
 
-            Assert.Single(list);
+            _ = Assert.Single(list);
         }
     }
 
@@ -280,7 +280,7 @@ public class ObservableUndoTransactionUnitTests
             list.RemoveAt(0);
             list.RemoveAt(0);
 
-            Assert.Single(list);
+            _ = Assert.Single(list);
 
             try
             {
@@ -288,7 +288,7 @@ public class ObservableUndoTransactionUnitTests
             }
             catch (Exception ex)
             {
-                Assert.IsType<InvalidOperationException>(ex);
+                _ = Assert.IsType<InvalidOperationException>(ex);
             }
         }
     }
@@ -409,7 +409,7 @@ public class ObservableUndoTransactionUnitTests
                 tc.Success();
             }
 
-            Assert.Single(list);
+            _ = Assert.Single(list);
 
             list.Undo();
 
@@ -419,7 +419,7 @@ public class ObservableUndoTransactionUnitTests
 
             list.Redo();
 
-            Assert.Single(list);
+            _ = Assert.Single(list);
         }
     }
 }

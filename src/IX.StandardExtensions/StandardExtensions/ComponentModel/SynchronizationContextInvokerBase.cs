@@ -67,7 +67,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
     /// </summary>
     protected override void DisposeGeneralContext()
     {
-        Interlocked.Exchange(
+        _ = Interlocked.Exchange(
             ref synchronizationContext,
             null);
 
@@ -102,7 +102,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
     {
         ThrowIfCurrentObjectDisposed();
 
-        Requires.NotNull(
+        _ = Requires.NotNull(
             action);
 
         SynchronizationContext? currentSynchronizationContext =
@@ -165,7 +165,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
     {
         ThrowIfCurrentObjectDisposed();
 
-        Requires.NotNull(
+        _ = Requires.NotNull(
             action);
 
         SynchronizationContext? currentSynchronizationContext =
@@ -213,7 +213,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
     {
         ThrowIfCurrentObjectDisposed();
 
-        Requires.NotNull(
+        _ = Requires.NotNull(
             action);
 
         SynchronizationContext? currentSynchronizationContext =

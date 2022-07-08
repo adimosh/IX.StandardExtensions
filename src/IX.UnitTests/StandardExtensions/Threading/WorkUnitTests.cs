@@ -51,11 +51,11 @@ public class WorkUnitTests
                 {
                     Thread.Sleep(waitTime);
 
-                    Interlocked.Exchange(
+                    _ = Interlocked.Exchange(
                         ref floatingValue,
                         DataGenerator.RandomInteger());
 
-                    ev.Set();
+                    _ = ev.Set();
                 },
                 mre);
 
@@ -97,11 +97,11 @@ public class WorkUnitTests
                 {
                     Thread.Sleep(waitTime);
 
-                    Interlocked.Exchange(
+                    _ = Interlocked.Exchange(
                         ref floatingValue,
                         Thread.CurrentThread.ManagedThreadId);
 
-                    ev.Set();
+                    _ = ev.Set();
                 },
                 mre);
 

@@ -29,7 +29,7 @@ internal sealed class FunctionNodeRandomInt : NumericUnaryFunctionNodeBase
     {
         if (parameter is ParameterNode firstParameter)
         {
-            firstParameter.DetermineInteger();
+            _ = firstParameter.DetermineInteger();
         }
     }
 

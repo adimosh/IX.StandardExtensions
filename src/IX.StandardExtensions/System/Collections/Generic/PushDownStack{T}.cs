@@ -5,7 +5,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using IX.Abstractions.Collections;
-using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 namespace IX.System.Collections.Generic;
@@ -72,15 +71,7 @@ public class PushDownStack<T> : PushingCollectionBase<T>,
     ///     Pops the topmost element from the stack, removing it.
     /// </summary>
     /// <returns>The topmost element in the stack, if any.</returns>
-    public T Pop()
-    {
-        if (!TryPop(out T item))
-        {
-            throw new InvalidOperationException(Resources.ErrorStackIsEmpty);
-        }
-
-        return item;
-    }
+    public T Pop() => !TryPop(out T item) ? throw new InvalidOperationException(Resources.ErrorStackIsEmpty) : item;
 
     /// <summary>
     ///     Pushes an element to the top of the stack.

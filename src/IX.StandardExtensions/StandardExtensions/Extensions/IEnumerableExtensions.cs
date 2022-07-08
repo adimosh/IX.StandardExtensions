@@ -41,8 +41,8 @@ public static partial class IEnumerableExtensions
         this IEnumerable<T> source,
         Action<int, T> action)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         var i = 0;
         foreach (T item in source)
@@ -67,8 +67,8 @@ public static partial class IEnumerableExtensions
         this IEnumerable source,
         Action<int, object> action)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         var i = 0;
         foreach (var item in source)
@@ -94,8 +94,8 @@ public static partial class IEnumerableExtensions
         this IEnumerable<T> source,
         Action<T> action)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (T item in source)
         {
@@ -116,8 +116,8 @@ public static partial class IEnumerableExtensions
         this IEnumerable source,
         Action<object> action)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (var item in source)
         {
@@ -143,10 +143,10 @@ public static partial class IEnumerableExtensions
         this IEnumerable<T> source,
         Action<int, T> action)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
-        Parallel.ForEach(
+        _ = Parallel.ForEach(
             EnumerateWithIndex(
                 source,
                 action),
@@ -184,10 +184,10 @@ public static partial class IEnumerableExtensions
         this IEnumerable<T> source,
         Action<T> action)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
-        Parallel.ForEach(
+        _ = Parallel.ForEach(
             source,
             action);
     }

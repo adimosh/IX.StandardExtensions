@@ -211,7 +211,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     /// </summary>
     protected override void DisposeGeneralContext()
     {
-        Interlocked.Exchange(
+        _ = Interlocked.Exchange(
             ref locker,
             null!);
 

@@ -21,7 +21,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static byte[] DeepClone(this byte[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -45,7 +45,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static sbyte[] DeepClone(this sbyte[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -69,7 +69,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static short[] DeepClone(this short[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -93,7 +93,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static ushort[] DeepClone(this ushort[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -117,7 +117,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static char[] DeepClone(this char[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -141,7 +141,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static int[] DeepClone(this int[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -165,7 +165,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static uint[] DeepClone(this uint[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -189,7 +189,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static long[] DeepClone(this long[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -213,7 +213,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static ulong[] DeepClone(this ulong[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -237,7 +237,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static float[] DeepClone(this float[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -261,7 +261,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static double[] DeepClone(this double[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -285,7 +285,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static decimal[] DeepClone(this decimal[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -309,7 +309,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static DateTime[] DeepClone(this DateTime[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -333,7 +333,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static bool[] DeepClone(this bool[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -357,7 +357,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static TimeSpan[] DeepClone(this TimeSpan[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 
@@ -381,7 +381,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static string[] DeepClone(this string[] source)
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var length = source.Length;
 

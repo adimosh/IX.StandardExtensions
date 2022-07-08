@@ -34,12 +34,12 @@ internal sealed class FunctionNodeRandomInt : NumericBinaryFunctionNodeBase
     {
         if (firstParameter is ParameterNode up1)
         {
-            up1.DetermineInteger();
+            _ = up1.DetermineInteger();
         }
 
         if (secondParameter is ParameterNode up2)
         {
-            up2.DetermineInteger();
+            _ = up2.DetermineInteger();
         }
     }
 

@@ -482,7 +482,7 @@ internal class Latin1Prober : CharsetProber
     {
         var status = new StringBuilder();
 
-        status.AppendLine($" Latin1Prober: {GetConfidence()} [{GetCharsetName()}]");
+        _ = status.AppendLine($" Latin1Prober: {GetConfidence()} [{GetCharsetName()}]");
 
         return status.ToString();
     }

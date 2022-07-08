@@ -328,7 +328,7 @@ internal class HebrewProber : CharsetProber
     {
         var status = new StringBuilder();
 
-        status.AppendLine($"  HEB: {finalCharLogicalScore} - {finalCharVisualScore} [Logical-Visual score]");
+        _ = status.AppendLine($"  HEB: {finalCharLogicalScore} - {finalCharVisualScore} [Logical-Visual score]");
 
         return status.ToString();
     }

@@ -30,7 +30,7 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
     /// <exception cref="ArgumentNullException"><paramref name="name"/> is either <c>null</c>, empty or whitespace-only.</exception>
     public ParameterContext(string name, List<IStringFormatter> stringFormatters)
     {
-        Requires.NotNullOrWhiteSpace(name);
+        _ = Requires.NotNullOrWhiteSpace(name);
 
         Name = name;
         this.stringFormatters = stringFormatters;
@@ -90,7 +90,7 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
         {
             if (!alreadyCompiled)
             {
-                Compile();
+                _ = Compile();
             }
 
             return parameterDefinitionExpression;
@@ -320,7 +320,7 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
                            Name));
         }
 
-        Compile();
+        _ = Compile();
 
         return stringExpression ??
                throw new InvalidOperationException(

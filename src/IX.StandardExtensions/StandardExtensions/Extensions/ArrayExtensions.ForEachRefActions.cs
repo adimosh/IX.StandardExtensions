@@ -38,8 +38,8 @@ public static partial class ArrayExtensions
         RefIteratorAction<TItem, TParam1> action,
         ref TParam1 param1)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -75,8 +75,8 @@ public static partial class ArrayExtensions
         ref TParam1 param1,
         ref TParam2 param2)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -115,8 +115,8 @@ public static partial class ArrayExtensions
         ref TParam2 param2,
         ref TParam3 param3)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -158,8 +158,8 @@ public static partial class ArrayExtensions
         ref TParam3 param3,
         ref TParam4 param4)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -204,8 +204,8 @@ public static partial class ArrayExtensions
         ref TParam4 param4,
         ref TParam5 param5)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -253,8 +253,8 @@ public static partial class ArrayExtensions
         ref TParam5 param5,
         ref TParam6 param6)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -305,8 +305,8 @@ public static partial class ArrayExtensions
         ref TParam6 param6,
         ref TParam7 param7)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {
@@ -360,8 +360,8 @@ public static partial class ArrayExtensions
         ref TParam7 param7,
         ref TParam8 param8)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         for (var i = 0; i < source.Length; i++)
         {

@@ -89,8 +89,8 @@ public abstract class AtomicEnumerator<TItem> : AtomicEnumerator,
         where TCollection : class, IEnumerable<TItem>
     {
         // Validate arguments
-        Requires.NotNull(collection);
-        Requires.NotNull(readLock);
+        _ = Requires.NotNull(collection);
+        _ = Requires.NotNull(readLock);
 
         Delegate initializer = ConstructionDelegates.GetOrAdd(
             collection.GetType(),
@@ -159,8 +159,8 @@ public abstract class AtomicEnumerator<TItem> : AtomicEnumerator,
         Func<ReadOnlySynchronizationLocker> readLock)
         where TEnumerator : IEnumerator<TItem>
     {
-        Requires.NotNull(enumerator);
-        Requires.NotNull(readLock);
+        _ = Requires.NotNull(enumerator);
+        _ = Requires.NotNull(readLock);
 
         return new AtomicEnumerator<TItem, TEnumerator>(
             enumerator,

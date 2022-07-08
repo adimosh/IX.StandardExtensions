@@ -217,7 +217,7 @@ public class ObservableDictionaryUnitTests
         EnvironmentSettings.AlwaysSuppressCurrentSynchronizationContext = true;
 
         // ACT
-        dict.Remove(7);
+        _ = dict.Remove(7);
 
         Assert.False(
             dict.ContainsKey(7),
@@ -242,7 +242,7 @@ public class ObservableDictionaryUnitTests
         // ARRANGE
         EnvironmentSettings.AlwaysSuppressCurrentSynchronizationContext = true;
 
-        dict.Remove(7);
+        _ = dict.Remove(7);
         Assert.False(
             dict.ContainsKey(7),
             "Element found: 7");
@@ -272,7 +272,7 @@ public class ObservableDictionaryUnitTests
         dict.Add(
             18,
             18);
-        dict.Remove(7);
+        _ = dict.Remove(7);
         dict.Add(
             5,
             5);
@@ -282,7 +282,7 @@ public class ObservableDictionaryUnitTests
             7);
 
         // Act & Assert groups
-        Assert.Single(dict);
+        _ = Assert.Single(dict);
         Assert.Equal(
             7,
             dict[7]);

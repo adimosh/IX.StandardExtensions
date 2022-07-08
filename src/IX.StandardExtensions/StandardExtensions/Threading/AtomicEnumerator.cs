@@ -63,8 +63,8 @@ public abstract class AtomicEnumerator : DisposableBase
         where TCollection : class, IEnumerable<TItem>
     {
         // Validate arguments
-        Requires.NotNull(collection);
-        Requires.NotNull(readLock);
+        _ = Requires.NotNull(collection);
+        _ = Requires.NotNull(readLock);
 
         Delegate initializer = ConstructionDelegates.GetOrAdd(
             typeof(TCollection),

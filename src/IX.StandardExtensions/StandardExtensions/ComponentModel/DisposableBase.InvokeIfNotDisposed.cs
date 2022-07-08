@@ -26,7 +26,7 @@ public abstract partial class DisposableBase
         Action<TParam1> action,
         TParam1 param1)
     {
-        Requires.NotNull(action);
+        _ = Requires.NotNull(action);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -50,7 +50,7 @@ public abstract partial class DisposableBase
         Func<TParam1, TReturn> func,
         TParam1 param1)
     {
-        Requires.NotNull(func);
+        _ = Requires.NotNull(func);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -75,7 +75,7 @@ public abstract partial class DisposableBase
         TParam1 param1,
         TParam2 param2)
     {
-        Requires.NotNull(action);
+        _ = Requires.NotNull(action);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -103,7 +103,7 @@ public abstract partial class DisposableBase
         TParam1 param1,
         TParam2 param2)
     {
-        Requires.NotNull(func);
+        _ = Requires.NotNull(func);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -132,7 +132,7 @@ public abstract partial class DisposableBase
         TParam2 param2,
         TParam3 param3)
     {
-        Requires.NotNull(action);
+        _ = Requires.NotNull(action);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -164,7 +164,7 @@ public abstract partial class DisposableBase
         TParam2 param2,
         TParam3 param3)
     {
-        Requires.NotNull(func);
+        _ = Requires.NotNull(func);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -197,7 +197,7 @@ public abstract partial class DisposableBase
         TParam3 param3,
         TParam4 param4)
     {
-        Requires.NotNull(action);
+        _ = Requires.NotNull(action);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -233,7 +233,7 @@ public abstract partial class DisposableBase
         TParam3 param3,
         TParam4 param4)
     {
-        Requires.NotNull(func);
+        _ = Requires.NotNull(func);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -270,7 +270,7 @@ public abstract partial class DisposableBase
         TParam4 param4,
         TParam5 param5)
     {
-        Requires.NotNull(action);
+        _ = Requires.NotNull(action);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -310,7 +310,7 @@ public abstract partial class DisposableBase
         TParam4 param4,
         TParam5 param5)
     {
-        Requires.NotNull(func);
+        _ = Requires.NotNull(func);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -351,7 +351,7 @@ public abstract partial class DisposableBase
         TParam5 param5,
         TParam6 param6)
     {
-        Requires.NotNull(action);
+        _ = Requires.NotNull(action);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -395,7 +395,7 @@ public abstract partial class DisposableBase
         TParam5 param5,
         TParam6 param6)
     {
-        Requires.NotNull(func);
+        _ = Requires.NotNull(func);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -440,7 +440,7 @@ public abstract partial class DisposableBase
         TParam6 param6,
         TParam7 param7)
     {
-        Requires.NotNull(action);
+        _ = Requires.NotNull(action);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -488,7 +488,7 @@ public abstract partial class DisposableBase
         TParam6 param6,
         TParam7 param7)
     {
-        Requires.NotNull(func);
+        _ = Requires.NotNull(func);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -537,7 +537,7 @@ public abstract partial class DisposableBase
         TParam7 param7,
         TParam8 param8)
     {
-        Requires.NotNull(action);
+        _ = Requires.NotNull(action);
 
         ThrowIfCurrentObjectDisposed();
 
@@ -589,7 +589,7 @@ public abstract partial class DisposableBase
         TParam7 param7,
         TParam8 param8)
     {
-        Requires.NotNull(func);
+        _ = Requires.NotNull(func);
 
         ThrowIfCurrentObjectDisposed();
 

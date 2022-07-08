@@ -62,7 +62,7 @@ public class SerializationUnitTests
                     ms,
                     l1);
 
-                ms.Seek(
+                _ = ms.Seek(
                     0,
                     SeekOrigin.Begin);
 
@@ -76,7 +76,7 @@ public class SerializationUnitTests
                     content = textReader.ReadToEnd();
                 }
 
-                ms.Seek(
+                _ = ms.Seek(
                     0,
                     SeekOrigin.Begin);
 
@@ -152,7 +152,7 @@ public class SerializationUnitTests
                     ms,
                     l1);
 
-                ms.Seek(
+                _ = ms.Seek(
                     0,
                     SeekOrigin.Begin);
 
@@ -166,7 +166,7 @@ public class SerializationUnitTests
                     content = textReader.ReadToEnd();
                 }
 
-                ms.Seek(
+                _ = ms.Seek(
                     0,
                     SeekOrigin.Begin);
 
@@ -242,7 +242,7 @@ public class SerializationUnitTests
                     ms,
                     l1);
 
-                ms.Seek(
+                _ = ms.Seek(
                     0,
                     SeekOrigin.Begin);
 
@@ -256,7 +256,7 @@ public class SerializationUnitTests
                     content = textReader.ReadToEnd();
                 }
 
-                ms.Seek(
+                _ = ms.Seek(
                     0,
                     SeekOrigin.Begin);
 
@@ -338,7 +338,7 @@ public class SerializationUnitTests
                     ms,
                     l1);
 
-                ms.Seek(
+                _ = ms.Seek(
                     0,
                     SeekOrigin.Begin);
 
@@ -352,7 +352,7 @@ public class SerializationUnitTests
                     content = textReader.ReadToEnd();
                 }
 
-                ms.Seek(
+                _ = ms.Seek(
                     0,
                     SeekOrigin.Begin);
 
@@ -434,7 +434,7 @@ public class SerializationUnitTests
                     ms,
                     l1);
 
-                ms.Seek(
+                _ = ms.Seek(
                     0,
                     SeekOrigin.Begin);
 
@@ -448,7 +448,7 @@ public class SerializationUnitTests
                     content = textReader.ReadToEnd();
                 }
 
-                ms.Seek(
+                _ = ms.Seek(
                     0,
                     SeekOrigin.Begin);
 
@@ -524,7 +524,7 @@ public class SerializationUnitTests
                     ms,
                     l1);
 
-                ms.Seek(
+                _ = ms.Seek(
                     0,
                     SeekOrigin.Begin);
 
@@ -538,7 +538,7 @@ public class SerializationUnitTests
                     content = textReader.ReadToEnd();
                 }
 
-                ms.Seek(
+                _ = ms.Seek(
                     0,
                     SeekOrigin.Begin);
 

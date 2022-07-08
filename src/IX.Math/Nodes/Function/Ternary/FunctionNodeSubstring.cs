@@ -133,12 +133,12 @@ internal sealed class FunctionNodeSubstring : TernaryFunctionNodeBase
 
         if (second is ParameterNode pn)
         {
-            pn.DetermineInteger();
+            _ = pn.DetermineInteger();
         }
 
         if (third is ParameterNode pn2)
         {
-            pn2.DetermineInteger();
+            _ = pn2.DetermineInteger();
         }
     }
 

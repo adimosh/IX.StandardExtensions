@@ -96,7 +96,7 @@ internal static class TablePopulationGenerator
 
             // It's not a constant, nor something ever encountered before
             // Therefore it should be a parameter
-            parameterRegistry.AdvertiseParameter(exp);
+            _ = parameterRegistry.AdvertiseParameter(exp);
         }
     }
 }

@@ -37,8 +37,8 @@ public static partial class LinqExtensions
         TParam1, bool> predicate,
         TParam1 param1)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -68,8 +68,8 @@ public static partial class LinqExtensions
         TParam1 param1,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -103,8 +103,8 @@ public static partial class LinqExtensions
         TParam1 param1,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -138,8 +138,8 @@ public static partial class LinqExtensions
         TParam1 param1,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -173,8 +173,8 @@ public static partial class LinqExtensions
         TParam1 param1,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -211,8 +211,8 @@ public static partial class LinqExtensions
         TParam1, bool> predicate,
         TParam1 param1)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -242,8 +242,8 @@ public static partial class LinqExtensions
         TParam1 param1,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -277,8 +277,8 @@ public static partial class LinqExtensions
         TParam1 param1,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -312,8 +312,8 @@ public static partial class LinqExtensions
         TParam1 param1,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -347,8 +347,8 @@ public static partial class LinqExtensions
         TParam1 param1,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -873,8 +873,8 @@ public static partial class LinqExtensions
         TParam1 param1,
         TParam2 param2)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -907,8 +907,8 @@ public static partial class LinqExtensions
         TParam2 param2,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -945,8 +945,8 @@ public static partial class LinqExtensions
         TParam2 param2,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -983,8 +983,8 @@ public static partial class LinqExtensions
         TParam2 param2,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -1021,8 +1021,8 @@ public static partial class LinqExtensions
         TParam2 param2,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -1062,8 +1062,8 @@ public static partial class LinqExtensions
         TParam1 param1,
         TParam2 param2)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -1096,8 +1096,8 @@ public static partial class LinqExtensions
         TParam2 param2,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -1134,8 +1134,8 @@ public static partial class LinqExtensions
         TParam2 param2,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -1172,8 +1172,8 @@ public static partial class LinqExtensions
         TParam2 param2,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -1210,8 +1210,8 @@ public static partial class LinqExtensions
         TParam2 param2,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -1784,8 +1784,8 @@ public static partial class LinqExtensions
         TParam2 param2,
         TParam3 param3)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -1821,8 +1821,8 @@ public static partial class LinqExtensions
         TParam3 param3,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -1862,8 +1862,8 @@ public static partial class LinqExtensions
         TParam3 param3,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -1903,8 +1903,8 @@ public static partial class LinqExtensions
         TParam3 param3,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -1944,8 +1944,8 @@ public static partial class LinqExtensions
         TParam3 param3,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -1988,8 +1988,8 @@ public static partial class LinqExtensions
         TParam2 param2,
         TParam3 param3)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -2025,8 +2025,8 @@ public static partial class LinqExtensions
         TParam3 param3,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -2066,8 +2066,8 @@ public static partial class LinqExtensions
         TParam3 param3,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -2107,8 +2107,8 @@ public static partial class LinqExtensions
         TParam3 param3,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -2148,8 +2148,8 @@ public static partial class LinqExtensions
         TParam3 param3,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -2770,8 +2770,8 @@ public static partial class LinqExtensions
         TParam3 param3,
         TParam4 param4)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -2810,8 +2810,8 @@ public static partial class LinqExtensions
         TParam4 param4,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -2854,8 +2854,8 @@ public static partial class LinqExtensions
         TParam4 param4,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -2898,8 +2898,8 @@ public static partial class LinqExtensions
         TParam4 param4,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -2942,8 +2942,8 @@ public static partial class LinqExtensions
         TParam4 param4,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -2989,8 +2989,8 @@ public static partial class LinqExtensions
         TParam3 param3,
         TParam4 param4)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -3029,8 +3029,8 @@ public static partial class LinqExtensions
         TParam4 param4,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -3073,8 +3073,8 @@ public static partial class LinqExtensions
         TParam4 param4,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -3117,8 +3117,8 @@ public static partial class LinqExtensions
         TParam4 param4,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -3161,8 +3161,8 @@ public static partial class LinqExtensions
         TParam4 param4,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -3831,8 +3831,8 @@ public static partial class LinqExtensions
         TParam4 param4,
         TParam5 param5)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -3874,8 +3874,8 @@ public static partial class LinqExtensions
         TParam5 param5,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -3921,8 +3921,8 @@ public static partial class LinqExtensions
         TParam5 param5,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -3968,8 +3968,8 @@ public static partial class LinqExtensions
         TParam5 param5,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -4015,8 +4015,8 @@ public static partial class LinqExtensions
         TParam5 param5,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -4065,8 +4065,8 @@ public static partial class LinqExtensions
         TParam4 param4,
         TParam5 param5)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -4108,8 +4108,8 @@ public static partial class LinqExtensions
         TParam5 param5,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -4155,8 +4155,8 @@ public static partial class LinqExtensions
         TParam5 param5,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -4202,8 +4202,8 @@ public static partial class LinqExtensions
         TParam5 param5,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -4249,8 +4249,8 @@ public static partial class LinqExtensions
         TParam5 param5,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -4967,8 +4967,8 @@ public static partial class LinqExtensions
         TParam5 param5,
         TParam6 param6)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -5013,8 +5013,8 @@ public static partial class LinqExtensions
         TParam6 param6,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -5063,8 +5063,8 @@ public static partial class LinqExtensions
         TParam6 param6,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -5113,8 +5113,8 @@ public static partial class LinqExtensions
         TParam6 param6,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -5163,8 +5163,8 @@ public static partial class LinqExtensions
         TParam6 param6,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -5216,8 +5216,8 @@ public static partial class LinqExtensions
         TParam5 param5,
         TParam6 param6)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -5262,8 +5262,8 @@ public static partial class LinqExtensions
         TParam6 param6,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -5312,8 +5312,8 @@ public static partial class LinqExtensions
         TParam6 param6,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -5362,8 +5362,8 @@ public static partial class LinqExtensions
         TParam6 param6,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -5412,8 +5412,8 @@ public static partial class LinqExtensions
         TParam6 param6,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -6178,8 +6178,8 @@ public static partial class LinqExtensions
         TParam6 param6,
         TParam7 param7)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -6227,8 +6227,8 @@ public static partial class LinqExtensions
         TParam7 param7,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -6280,8 +6280,8 @@ public static partial class LinqExtensions
         TParam7 param7,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -6333,8 +6333,8 @@ public static partial class LinqExtensions
         TParam7 param7,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -6386,8 +6386,8 @@ public static partial class LinqExtensions
         TParam7 param7,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -6442,8 +6442,8 @@ public static partial class LinqExtensions
         TParam6 param6,
         TParam7 param7)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -6491,8 +6491,8 @@ public static partial class LinqExtensions
         TParam7 param7,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -6544,8 +6544,8 @@ public static partial class LinqExtensions
         TParam7 param7,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -6597,8 +6597,8 @@ public static partial class LinqExtensions
         TParam7 param7,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -6650,8 +6650,8 @@ public static partial class LinqExtensions
         TParam7 param7,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -7464,8 +7464,8 @@ public static partial class LinqExtensions
         TParam7 param7,
         TParam8 param8)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -7516,8 +7516,8 @@ public static partial class LinqExtensions
         TParam8 param8,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -7572,8 +7572,8 @@ public static partial class LinqExtensions
         TParam8 param8,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -7628,8 +7628,8 @@ public static partial class LinqExtensions
         TParam8 param8,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -7684,8 +7684,8 @@ public static partial class LinqExtensions
         TParam8 param8,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -7743,8 +7743,8 @@ public static partial class LinqExtensions
         TParam7 param7,
         TParam8 param8)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         foreach (TItem item in source)
         {
@@ -7795,8 +7795,8 @@ public static partial class LinqExtensions
         TParam8 param8,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -7851,8 +7851,8 @@ public static partial class LinqExtensions
         TParam8 param8,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -7907,8 +7907,8 @@ public static partial class LinqExtensions
         TParam8 param8,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -7963,8 +7963,8 @@ public static partial class LinqExtensions
         TParam8 param8,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(predicate);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(predicate);
 
         cancellationToken.ThrowIfCancellationRequested();
 

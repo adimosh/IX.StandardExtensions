@@ -79,7 +79,7 @@ public class PushDownStackUnitTests
             Assert.Equal(v4, pds.Pop());
             Assert.Equal(v3, pds.Pop());
             Assert.Equal(v2, pds.Pop());
-            Assert.Throws<InvalidOperationException>(() => pds.Pop());
+            _ = Assert.Throws<InvalidOperationException>(() => pds.Pop());
         }
     }
 
@@ -113,7 +113,7 @@ public class PushDownStackUnitTests
             Assert.Equal(v4, pds.Pop());
             Assert.Equal(v3, pds.Pop());
             Assert.Equal(v2, pds.Pop());
-            Assert.Throws<InvalidOperationException>(() => pds.Pop());
+            _ = Assert.Throws<InvalidOperationException>(() => pds.Pop());
         }
     }
 

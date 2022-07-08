@@ -302,9 +302,9 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
             return false;
         }
 
-        keyLevels[level]
+        _ = keyLevels[level]
             .Remove(key);
-        levelKeys.Remove(key);
+        _ = levelKeys.Remove(key);
 
         return true;
     }
@@ -530,7 +530,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
                     return false;
                 }
 
-                Interlocked.Increment(ref index);
+                _ = Interlocked.Increment(ref index);
 
                 return true;
             }

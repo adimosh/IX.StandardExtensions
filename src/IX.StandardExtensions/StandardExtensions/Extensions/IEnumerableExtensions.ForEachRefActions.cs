@@ -31,8 +31,8 @@ public static partial class IEnumerableExtensions
         RefIteratorAction<TItem, TParam1> action,
         ref TParam1 param1)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -57,8 +57,8 @@ public static partial class IEnumerableExtensions
         ref TParam1 param1,
         TParam2 param2)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -83,8 +83,8 @@ public static partial class IEnumerableExtensions
         ref TParam1 param1,
         ref TParam2 param2)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -112,8 +112,8 @@ public static partial class IEnumerableExtensions
         TParam2 param2,
         TParam3 param3)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -141,8 +141,8 @@ public static partial class IEnumerableExtensions
         ref TParam2 param2,
         TParam3 param3)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -170,8 +170,8 @@ public static partial class IEnumerableExtensions
         ref TParam2 param2,
         ref TParam3 param3)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -202,8 +202,8 @@ public static partial class IEnumerableExtensions
         TParam3 param3,
         TParam4 param4)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -234,8 +234,8 @@ public static partial class IEnumerableExtensions
         TParam3 param3,
         TParam4 param4)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -266,8 +266,8 @@ public static partial class IEnumerableExtensions
         ref TParam3 param3,
         TParam4 param4)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -298,8 +298,8 @@ public static partial class IEnumerableExtensions
         ref TParam3 param3,
         ref TParam4 param4)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -333,8 +333,8 @@ public static partial class IEnumerableExtensions
         TParam4 param4,
         TParam5 param5)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -368,8 +368,8 @@ public static partial class IEnumerableExtensions
         TParam4 param4,
         TParam5 param5)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -403,8 +403,8 @@ public static partial class IEnumerableExtensions
         TParam4 param4,
         TParam5 param5)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -438,8 +438,8 @@ public static partial class IEnumerableExtensions
         ref TParam4 param4,
         TParam5 param5)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -473,8 +473,8 @@ public static partial class IEnumerableExtensions
         ref TParam4 param4,
         ref TParam5 param5)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -511,8 +511,8 @@ public static partial class IEnumerableExtensions
         TParam5 param5,
         TParam6 param6)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -549,8 +549,8 @@ public static partial class IEnumerableExtensions
         TParam5 param5,
         TParam6 param6)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -587,8 +587,8 @@ public static partial class IEnumerableExtensions
         TParam5 param5,
         TParam6 param6)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -625,8 +625,8 @@ public static partial class IEnumerableExtensions
         TParam5 param5,
         TParam6 param6)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -663,8 +663,8 @@ public static partial class IEnumerableExtensions
         ref TParam5 param5,
         TParam6 param6)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -701,8 +701,8 @@ public static partial class IEnumerableExtensions
         ref TParam5 param5,
         ref TParam6 param6)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -742,8 +742,8 @@ public static partial class IEnumerableExtensions
         TParam6 param6,
         TParam7 param7)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -783,8 +783,8 @@ public static partial class IEnumerableExtensions
         TParam6 param6,
         TParam7 param7)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -824,8 +824,8 @@ public static partial class IEnumerableExtensions
         TParam6 param6,
         TParam7 param7)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -865,8 +865,8 @@ public static partial class IEnumerableExtensions
         TParam6 param6,
         TParam7 param7)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -906,8 +906,8 @@ public static partial class IEnumerableExtensions
         TParam6 param6,
         TParam7 param7)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -947,8 +947,8 @@ public static partial class IEnumerableExtensions
         ref TParam6 param6,
         TParam7 param7)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -988,8 +988,8 @@ public static partial class IEnumerableExtensions
         ref TParam6 param6,
         ref TParam7 param7)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -1032,8 +1032,8 @@ public static partial class IEnumerableExtensions
         TParam7 param7,
         TParam8 param8)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -1076,8 +1076,8 @@ public static partial class IEnumerableExtensions
         TParam7 param7,
         TParam8 param8)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -1120,8 +1120,8 @@ public static partial class IEnumerableExtensions
         TParam7 param7,
         TParam8 param8)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -1164,8 +1164,8 @@ public static partial class IEnumerableExtensions
         TParam7 param7,
         TParam8 param8)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -1208,8 +1208,8 @@ public static partial class IEnumerableExtensions
         TParam7 param7,
         TParam8 param8)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -1252,8 +1252,8 @@ public static partial class IEnumerableExtensions
         TParam7 param7,
         TParam8 param8)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -1296,8 +1296,8 @@ public static partial class IEnumerableExtensions
         ref TParam7 param7,
         TParam8 param8)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {
@@ -1340,8 +1340,8 @@ public static partial class IEnumerableExtensions
         ref TParam7 param7,
         ref TParam8 param8)
     {
-        Requires.NotNull(source);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(source);
+        _ = Requires.NotNull(action);
 
         foreach (TItem item in source)
         {

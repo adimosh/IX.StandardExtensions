@@ -32,8 +32,8 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
         NodeBase left,
         NodeBase right)
     {
-        Requires.NotNull(left);
-        Requires.NotNull(right);
+        _ = Requires.NotNull(left);
+        _ = Requires.NotNull(right);
 
         EnsureCompatibleOperands(
             left,

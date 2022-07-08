@@ -125,8 +125,8 @@ public static partial class TaskFactoryExtensions
         bool longRunning,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(taskFactory);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(taskFactory);
+        _ = Requires.NotNull(action);
 
         TaskCreationOptions creationOptions = TaskCreationOptions.HideScheduler |
                                               (longRunning
@@ -166,8 +166,8 @@ public static partial class TaskFactoryExtensions
         bool longRunning,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(taskFactory);
-        Requires.NotNull(action);
+        _ = Requires.NotNull(taskFactory);
+        _ = Requires.NotNull(action);
 
         TaskCreationOptions creationOptions = TaskCreationOptions.HideScheduler |
                                               (longRunning

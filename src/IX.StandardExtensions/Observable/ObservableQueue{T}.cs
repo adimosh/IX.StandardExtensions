@@ -270,7 +270,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     /// <param name="items">The item range to push.</param>
     public void EnqueueRange(T[] items)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             items);
 
         foreach (T item in items)
@@ -290,7 +290,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
         int startIndex,
         int count)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             items);
         Requires.ValidArrayRange(
             in startIndex,
@@ -645,7 +645,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
             {
                 var container = (QueueCollectionAdapter<T>)InternalContainer;
 
-                container.Dequeue();
+                    _ = container.Dequeue();
 
                 var index = 0;
                 toInvokeOutsideLock = innerState =>

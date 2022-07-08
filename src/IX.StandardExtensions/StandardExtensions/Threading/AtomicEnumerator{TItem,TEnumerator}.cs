@@ -46,7 +46,7 @@ internal sealed class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TI
         TEnumerator existingEnumerator,
         Func<ReadOnlySynchronizationLocker> readLock)
     {
-        Requires.NotNull(existingEnumerator);
+        _ = Requires.NotNull(existingEnumerator);
 
         this.existingEnumerator = existingEnumerator;
         current = default!; /* We forgive this possible null reference, as it should not be possible to

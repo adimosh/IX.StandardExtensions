@@ -645,7 +645,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             {
                 IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
-                container.Remove(keyValuePair.Key);
+                    _ = container.Remove(keyValuePair.Key);
 
                 toInvokeOutsideLock = innerState =>
                 {
@@ -665,9 +665,9 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             {
                 IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
-                container.Add(
-                    key,
-                    value);
+                    _ = container.Add(
+                        key,
+                        value);
 
                 toInvokeOutsideLock = innerState =>
                 {
@@ -689,9 +689,9 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
 
                 foreach ((TKey key, TValue value) in keyValuePairs)
                 {
-                    container.Add(
-                        key,
-                        value);
+                        _ = container.Add(
+                            key,
+                            value);
                 }
 
                 toInvokeOutsideLock = innerState =>
@@ -712,7 +712,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             {
                 IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
-                container.Remove(key);
+                    _ = container.Remove(key);
 
                 toInvokeOutsideLock = innerState =>
                 {
@@ -732,9 +732,9 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             {
                 IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
-                container.Add(
-                    key,
-                    value);
+                    _ = container.Add(
+                        key,
+                        value);
 
                 toInvokeOutsideLock = innerState =>
                 {
@@ -808,9 +808,9 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             {
                 IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
-                container.Add(
-                    key,
-                    value);
+                    _ = container.Add(
+                        key,
+                        value);
 
                 toInvokeOutsideLock = innerState =>
                 {
@@ -830,7 +830,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             {
                 IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
-                container.Remove(keyValuePair.Key);
+                    _ = container.Remove(keyValuePair.Key);
 
                 toInvokeOutsideLock = innerState =>
                 {
@@ -868,9 +868,9 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             {
                 IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
-                container.Add(
-                    key,
-                    value);
+                    _ = container.Add(
+                        key,
+                        value);
 
                 toInvokeOutsideLock = innerState =>
                 {
@@ -890,7 +890,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             {
                 IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
-                container.Remove(key);
+                    _ = container.Remove(key);
 
                 toInvokeOutsideLock = innerState =>
                 {

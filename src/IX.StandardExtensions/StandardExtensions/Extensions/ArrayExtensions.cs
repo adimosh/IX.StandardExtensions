@@ -27,7 +27,7 @@ public static partial class ArrayExtensions
     public static T[] DeepClone<T>(this T[] source)
         where T : IDeepCloneable<T>
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             source);
 
         var length = source.Length;
@@ -55,7 +55,7 @@ public static partial class ArrayExtensions
     public static T[] CopyWithShallowClones<T>(this T[] source)
         where T : IShallowCloneable<T>
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             source);
 
         var length = source.Length;
@@ -90,7 +90,7 @@ public static partial class ArrayExtensions
     /// </exception>
     public static T[] Copy<T>(this T[] source)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             source);
 
         var length = source.Length;
@@ -133,7 +133,7 @@ public static partial class ArrayExtensions
         this T[] source,
         int length)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             source);
         Requires.ValidArrayLength(
             in length,
@@ -182,7 +182,7 @@ public static partial class ArrayExtensions
         int sourceIndex,
         int length)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             source);
         Requires.ValidArrayRange(
             in sourceIndex,
@@ -220,9 +220,9 @@ public static partial class ArrayExtensions
         this T[] source,
         Action<T> action)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             source);
-        Requires.NotNull(
+        _ = Requires.NotNull(
             action);
 
         for (var i = 0; i < source.Length; i++)
@@ -257,9 +257,9 @@ public static partial class ArrayExtensions
         Func<T, Task> action,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             source);
-        Requires.NotNull(
+        _ = Requires.NotNull(
             action);
 
         if (cancellationToken.IsCancellationRequested)
@@ -300,9 +300,9 @@ public static partial class ArrayExtensions
         Func<T, ValueTask> action,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             source);
-        Requires.NotNull(
+        _ = Requires.NotNull(
             action);
 
         if (cancellationToken.IsCancellationRequested)
@@ -343,9 +343,9 @@ public static partial class ArrayExtensions
         Func<T, CancellationToken, Task> action,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             source);
-        Requires.NotNull(
+        _ = Requires.NotNull(
             action);
 
         if (cancellationToken.IsCancellationRequested)
@@ -386,9 +386,9 @@ public static partial class ArrayExtensions
         Func<T, CancellationToken, ValueTask> action,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             source);
-        Requires.NotNull(
+        _ = Requires.NotNull(
             action);
 
         if (cancellationToken.IsCancellationRequested)

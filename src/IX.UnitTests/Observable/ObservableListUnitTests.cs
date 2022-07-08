@@ -357,7 +357,7 @@ public class ObservableListUnitTests
         list.Add(7);
 
         // Act & Assert groups
-        Assert.Single(list);
+        _ = Assert.Single(list);
         Assert.Equal(
             7,
             list[0]);

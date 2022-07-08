@@ -20,7 +20,7 @@ internal class UndoableUnitBlockTransaction<T> : OperationTransaction
 
     internal UndoableUnitBlockTransaction(ObservableCollectionBase<T> collectionBase)
     {
-        Requires.NotNull(collectionBase);
+        _ = Requires.NotNull(collectionBase);
 
         this.collectionBase = collectionBase;
 

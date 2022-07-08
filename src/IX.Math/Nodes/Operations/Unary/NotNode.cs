@@ -28,7 +28,7 @@ internal sealed class NotNode : UnaryOperatorNodeBase
         if (operand is ParameterNode op)
         {
             // If this is or can be a number, it has to be an integer number, as we cannot binary-negate a floating point expression
-            op.DetermineInteger();
+            _ = op.DetermineInteger();
         }
 
         EnsureCompatibleOperand(operand);

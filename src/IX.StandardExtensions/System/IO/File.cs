@@ -47,10 +47,10 @@ public class File : IFile
         IEnumerable<string> contents,
         Encoding? encoding = null)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
-        Requires.NotNull(
+        _ = Requires.NotNull(
             contents,
             nameof(contents));
 
@@ -92,10 +92,10 @@ public class File : IFile
         Encoding? encoding = null,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
-        Requires.NotNull(
+        _ = Requires.NotNull(
             contents,
             nameof(contents));
 
@@ -135,10 +135,10 @@ public class File : IFile
         string contents,
         Encoding? encoding = null)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             contents,
             nameof(contents));
 
@@ -180,10 +180,10 @@ public class File : IFile
         Encoding? encoding = null,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             contents,
             nameof(contents));
 
@@ -215,7 +215,7 @@ public class File : IFile
     /// </exception>
     public StreamWriter AppendText(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -241,10 +241,10 @@ public class File : IFile
         string destFileName,
         bool overwrite = false)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             sourceFileName,
             nameof(sourceFileName));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             destFileName,
             nameof(destFileName));
 
@@ -276,10 +276,10 @@ public class File : IFile
         bool overwrite = false,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             sourceFileName,
             nameof(sourceFileName));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             destinationFileName,
             nameof(destinationFileName));
 
@@ -310,7 +310,7 @@ public class File : IFile
         string path,
         int bufferSize = 4096)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
         Requires.Positive(
@@ -334,7 +334,7 @@ public class File : IFile
     /// </exception>
     public StreamWriter CreateText(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -350,7 +350,7 @@ public class File : IFile
     /// </exception>
     public void Delete(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -370,7 +370,7 @@ public class File : IFile
         string path,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -392,7 +392,7 @@ public class File : IFile
     /// </exception>
     public bool Exists(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -414,7 +414,7 @@ public class File : IFile
         string path,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -436,7 +436,7 @@ public class File : IFile
     /// </exception>
     public DateTime GetCreationTime(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -458,7 +458,7 @@ public class File : IFile
         string path,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -480,7 +480,7 @@ public class File : IFile
     /// </exception>
     public DateTime GetLastAccessTime(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -502,7 +502,7 @@ public class File : IFile
         string path,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -524,7 +524,7 @@ public class File : IFile
     /// </exception>
     public DateTime GetLastWriteTime(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -546,7 +546,7 @@ public class File : IFile
         string path,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -569,10 +569,10 @@ public class File : IFile
         string sourceFileName,
         string destFileName)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             sourceFileName,
             nameof(sourceFileName));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             destFileName,
             nameof(destFileName));
 
@@ -597,10 +597,10 @@ public class File : IFile
         string destinationFileName,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             sourceFileName,
             nameof(sourceFileName));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             destinationFileName,
             nameof(destinationFileName));
 
@@ -624,7 +624,7 @@ public class File : IFile
     /// </exception>
     public Stream OpenRead(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -643,7 +643,7 @@ public class File : IFile
     /// </exception>
     public StreamReader OpenText(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -662,7 +662,7 @@ public class File : IFile
     /// </exception>
     public Stream OpenWrite(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -681,7 +681,7 @@ public class File : IFile
     /// </exception>
     public byte[] ReadAllBytes(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -703,7 +703,7 @@ public class File : IFile
         string path,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -733,7 +733,7 @@ public class File : IFile
         string path,
         Encoding? encoding = null)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -766,7 +766,7 @@ public class File : IFile
         Encoding? encoding = null,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -803,7 +803,7 @@ public class File : IFile
         string path,
         Encoding? encoding = null)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -836,7 +836,7 @@ public class File : IFile
         Encoding? encoding = null,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -873,7 +873,7 @@ public class File : IFile
         string path,
         Encoding? encoding = null)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -896,7 +896,7 @@ public class File : IFile
         string path,
         DateTime creationTime)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -920,7 +920,7 @@ public class File : IFile
         DateTime creationTime,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -944,7 +944,7 @@ public class File : IFile
         string path,
         DateTime lastAccessTime)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -968,7 +968,7 @@ public class File : IFile
         DateTime lastAccessTime,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -992,7 +992,7 @@ public class File : IFile
         string path,
         DateTime lastWriteTime)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -1016,7 +1016,7 @@ public class File : IFile
         DateTime lastWriteTime,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -1041,10 +1041,10 @@ public class File : IFile
         string path,
         byte[] bytes)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
-        Requires.NotEmpty(
+        _ = Requires.NotEmpty(
             bytes,
             nameof(bytes));
 
@@ -1069,10 +1069,10 @@ public class File : IFile
         byte[] bytes,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
-        Requires.NotEmpty(
+        _ = Requires.NotEmpty(
             bytes,
             nameof(bytes));
 
@@ -1104,10 +1104,10 @@ public class File : IFile
         IEnumerable<string> contents,
         Encoding? encoding = null)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
-        Requires.NotNull(
+        _ = Requires.NotNull(
             contents,
             nameof(contents));
 
@@ -1149,10 +1149,10 @@ public class File : IFile
         Encoding? encoding = null,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
-        Requires.NotNull(
+        _ = Requires.NotNull(
             contents,
             nameof(contents));
 
@@ -1192,10 +1192,10 @@ public class File : IFile
         string contents,
         Encoding? encoding = null)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             contents,
             nameof(contents));
 
@@ -1237,10 +1237,10 @@ public class File : IFile
         Encoding? encoding = null,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             contents,
             nameof(contents));
 

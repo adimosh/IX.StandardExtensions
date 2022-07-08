@@ -77,8 +77,8 @@ public class RestRemoteClient : DisposableBase
         CancellationToken cancellationToken = default)
     {
         // Validation
-        Requires.NotNull(envelope);
-        Requires.NotNullOrWhiteSpace(envelope.Resource);
+        _ = Requires.NotNull(envelope);
+        _ = Requires.NotNullOrWhiteSpace(envelope.Resource);
 
         if (!string.IsNullOrWhiteSpace(envelope.JsonBody) && envelope.FileData is not null or { Length: 0 })
         {
@@ -99,7 +99,7 @@ public class RestRemoteClient : DisposableBase
 
         if (!string.IsNullOrWhiteSpace(envelope.JsonBody))
         {
-            request.AddStringBody(
+            _ = request.AddStringBody(
                 envelope.JsonBody!,
                 DataFormat.Json);
         }
@@ -108,7 +108,7 @@ public class RestRemoteClient : DisposableBase
         {
             foreach (var (name, bytes, fileName) in envelope.FileData)
             {
-                request.AddFile(
+                _ = request.AddFile(
                     name,
                     bytes,
                     fileName);
@@ -119,7 +119,7 @@ public class RestRemoteClient : DisposableBase
         {
             foreach (var (name, value) in envelope.AdditionalHeaders)
             {
-                request.AddHeader(
+                _ = request.AddHeader(
                     name,
                     value);
             }

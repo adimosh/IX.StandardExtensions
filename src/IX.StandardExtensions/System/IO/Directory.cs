@@ -301,11 +301,11 @@ public class Directory : IDirectory
     /// </exception>
     public void CreateDirectory(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
-        FSDir.CreateDirectory(path);
+        _ = FSDir.CreateDirectory(path);
     }
 
     /// <summary>
@@ -320,7 +320,7 @@ public class Directory : IDirectory
         string path,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -345,7 +345,7 @@ public class Directory : IDirectory
         string path,
         bool recursive = false)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -373,7 +373,7 @@ public class Directory : IDirectory
         bool recursive = false,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -840,7 +840,7 @@ public class Directory : IDirectory
     /// </exception>
     public bool Exists(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -864,7 +864,7 @@ public class Directory : IDirectory
         string path,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -887,7 +887,7 @@ public class Directory : IDirectory
     /// </exception>
     public DateTime GetCreationTime(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -906,7 +906,7 @@ public class Directory : IDirectory
         string path,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -934,7 +934,7 @@ public class Directory : IDirectory
     /// </exception>
     public DateTime GetLastAccessTime(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -953,7 +953,7 @@ public class Directory : IDirectory
         string path,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -975,7 +975,7 @@ public class Directory : IDirectory
     /// </exception>
     public DateTime GetLastWriteTime(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -994,7 +994,7 @@ public class Directory : IDirectory
         string path,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -1016,10 +1016,10 @@ public class Directory : IDirectory
         string sourceDirName,
         string destDirName)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             sourceDirName,
             nameof(sourceDirName));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             destDirName,
             nameof(destDirName));
 
@@ -1040,10 +1040,10 @@ public class Directory : IDirectory
         string destinationDirectoryName,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             sourceDirectoryName,
             nameof(sourceDirectoryName));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             destinationDirectoryName,
             nameof(destinationDirectoryName));
 
@@ -1068,7 +1068,7 @@ public class Directory : IDirectory
         string path,
         DateTime creationTime)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -1089,7 +1089,7 @@ public class Directory : IDirectory
         DateTime creationTime,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -1114,7 +1114,7 @@ public class Directory : IDirectory
         string path,
         DateTime lastAccessTime)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -1135,7 +1135,7 @@ public class Directory : IDirectory
         DateTime lastAccessTime,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -1160,7 +1160,7 @@ public class Directory : IDirectory
         string path,
         DateTime lastWriteTime)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -1181,7 +1181,7 @@ public class Directory : IDirectory
         DateTime lastWriteTime,
         CancellationToken cancellationToken = default)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -1208,7 +1208,7 @@ public class Directory : IDirectory
     /// </exception>
     public string[] GetDirectories(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -1231,10 +1231,10 @@ public class Directory : IDirectory
         string path,
         string searchPattern)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             searchPattern,
             nameof(searchPattern));
 
@@ -1256,7 +1256,7 @@ public class Directory : IDirectory
     /// </exception>
     public string[] GetFiles(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -1279,10 +1279,10 @@ public class Directory : IDirectory
         string path,
         string searchPattern)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             searchPattern,
             nameof(searchPattern));
 
@@ -1304,7 +1304,7 @@ public class Directory : IDirectory
     /// </exception>
     public string[] GetFileSystemEntries(string path)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
 
@@ -1327,10 +1327,10 @@ public class Directory : IDirectory
         string path,
         string searchPattern)
     {
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             path,
             nameof(path));
-        Requires.NotNullOrWhiteSpace(
+        _ = Requires.NotNullOrWhiteSpace(
             searchPattern,
             nameof(searchPattern));
 

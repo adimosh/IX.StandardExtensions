@@ -108,8 +108,8 @@ public class BusyScope : SynchronizationContextInvokerBase
         Justification = "We know, that's the point.")]
     public void IncrementBusyScope(string? description = null)
     {
-        Interlocked.Increment(ref busyCount);
-        Interlocked.Exchange(
+        _ = Interlocked.Increment(ref busyCount);
+        _ = Interlocked.Exchange(
             ref this.description,
             description);
 
@@ -137,7 +137,7 @@ public class BusyScope : SynchronizationContextInvokerBase
             throw new InvalidOperationException();
         }
 
-        Interlocked.Decrement(ref busyCount);
+        _ = Interlocked.Decrement(ref busyCount);
 
         if (BusyScopeChanged != null)
         {

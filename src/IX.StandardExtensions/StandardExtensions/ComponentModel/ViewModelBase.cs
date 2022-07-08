@@ -183,7 +183,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
                                 validationResults,
                                 key))
                         {
-                            entityErrors.Value.TryRemove(
+                            _ = entityErrors.Value.TryRemove(
                                 key,
                                 out _);
                             RaiseErrorsChanged(key);

@@ -59,12 +59,12 @@ internal abstract class ByteShiftOperationNodeBase : BinaryOperatorNodeBase
 
         if (left is ParameterNode uLeft)
         {
-            uLeft.DetermineInteger();
+            _ = uLeft.DetermineInteger();
         }
 
         if (right is ParameterNode uRight)
         {
-            uRight.DetermineInteger();
+            _ = uRight.DetermineInteger();
         }
 
         if (left.ReturnType != SupportedValueType.Numeric || right.ReturnType != SupportedValueType.Numeric)

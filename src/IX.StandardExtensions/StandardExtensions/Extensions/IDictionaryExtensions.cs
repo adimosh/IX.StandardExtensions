@@ -37,7 +37,7 @@ public static partial class IDictionaryExtensions
         where TKey : notnull
         where TValue : IShallowCloneable<TValue>
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var destination = new Dictionary<TKey, TValue>();
 
@@ -66,7 +66,7 @@ public static partial class IDictionaryExtensions
         where TKey : notnull
         where TValue : IDeepCloneable<TValue>
     {
-        Requires.NotNull(source);
+        _ = Requires.NotNull(source);
 
         var destination = new Dictionary<TKey, TValue>();
 

@@ -147,7 +147,7 @@ internal class MultiListListAdapter<T> : ModernListAdapter<T, IEnumerator<T>>
         {
         }
 
-        lists.Remove(list ?? throw new ArgumentNullException(nameof(list)));
+        _ = lists.Remove(list ?? throw new ArgumentNullException(nameof(list)));
     }
 
     private void List_CollectionChanged(

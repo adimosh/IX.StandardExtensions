@@ -30,7 +30,7 @@ public class ParameterNode : NodeBase
 
         this.parametersRegistry = Requires.NotNull(parametersRegistry);
 
-        this.parametersRegistry.AdvertiseParameter(parameterName);
+        _ = this.parametersRegistry.AdvertiseParameter(parameterName);
     }
 
     /// <summary>
@@ -80,9 +80,9 @@ public class ParameterNode : NodeBase
     /// <returns>A deep clone.</returns>
     public override NodeBase DeepClone(NodeCloningContext context)
     {
-        Requires.NotNull(context, nameof(context));
+        _ = Requires.NotNull(context, nameof(context));
 
-        context.ParameterRegistry.CloneFrom(parametersRegistry.AdvertiseParameter(Name));
+        _ = context.ParameterRegistry.CloneFrom(parametersRegistry.AdvertiseParameter(Name));
 
         return new ParameterNode(Name, context.ParameterRegistry);
     }

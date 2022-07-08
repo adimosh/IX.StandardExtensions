@@ -110,7 +110,7 @@ public class SetResetEventAwaiterWithTimeout : IAwaiter<bool>
 
                 internalContinuation?.Invoke();
 
-                Interlocked.Exchange(
+                _ = Interlocked.Exchange(
                     ref internalThis.isCompleted,
                     1);
             },

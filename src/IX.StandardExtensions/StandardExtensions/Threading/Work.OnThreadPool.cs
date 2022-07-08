@@ -43,7 +43,7 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
@@ -60,7 +60,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -70,7 +70,7 @@ public static class Work
 
             try
             {
-                func(ct)
+                _ = func(ct)
                     .ContinueWith(
                         Continuation,
                         default,
@@ -81,27 +81,27 @@ public static class Work
                 {
                     if (completedTask.IsCanceled)
                     {
-                        tcs.TrySetCanceled(ct);
+                        _ = tcs.TrySetCanceled(ct);
                     }
                     else if (completedTask.IsFaulted)
                     {
-                        tcs.TrySetException(
+                        _ = tcs.TrySetException(
                             completedTask.Exception?.InnerExceptions ??
                             (IEnumerable<Exception>)Array.Empty<Exception>());
                     }
                     else
                     {
-                        tcs.TrySetResult(0);
+                        _ = tcs.TrySetResult(0);
                     }
                 }
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -127,12 +127,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, CancellationToken: cancellationToken));
 
@@ -144,7 +144,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -154,7 +154,7 @@ public static class Work
 
             try
             {
-                func(ct)
+                _ = func(ct)
                     .ContinueWith(
                         Continuation,
                         default,
@@ -165,27 +165,27 @@ public static class Work
                 {
                     if (completedTask.IsCanceled)
                     {
-                        tcs.TrySetCanceled(ct);
+                        _ = tcs.TrySetCanceled(ct);
                     }
                     else if (completedTask.IsFaulted)
                     {
-                        tcs.TrySetException(
+                        _ = tcs.TrySetException(
                             completedTask.Exception?.InnerExceptions ??
                             (IEnumerable<Exception>)Array.Empty<Exception>());
                     }
                     else
                     {
-                        tcs.TrySetResult(completedTask.Result);
+                        _ = tcs.TrySetResult(completedTask.Result);
                     }
                 }
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -213,12 +213,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, State: state, CancellationToken: cancellationToken));
 
@@ -230,7 +230,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -240,7 +240,7 @@ public static class Work
 
             try
             {
-                func(
+                _ = func(
                         payload,
                         ct)
                     .ContinueWith(
@@ -253,27 +253,27 @@ public static class Work
                 {
                     if (completedTask.IsCanceled)
                     {
-                        tcs.TrySetCanceled(ct);
+                        _ = tcs.TrySetCanceled(ct);
                     }
                     else if (completedTask.IsFaulted)
                     {
-                        tcs.TrySetException(
+                        _ = tcs.TrySetException(
                             completedTask.Exception?.InnerExceptions ??
                             (IEnumerable<Exception>)Array.Empty<Exception>());
                     }
                     else
                     {
-                        tcs.TrySetResult(0);
+                        _ = tcs.TrySetResult(0);
                     }
                 }
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -302,12 +302,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, State: state, CancellationToken: cancellationToken));
 
@@ -319,7 +319,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -329,7 +329,7 @@ public static class Work
 
             try
             {
-                func(
+                _ = func(
                         payload,
                         ct)
                     .ContinueWith(
@@ -342,27 +342,27 @@ public static class Work
                 {
                     if (completedTask.IsCanceled)
                     {
-                        tcs.TrySetCanceled(ct);
+                        _ = tcs.TrySetCanceled(ct);
                     }
                     else if (completedTask.IsFaulted)
                     {
-                        tcs.TrySetException(
+                        _ = tcs.TrySetException(
                             completedTask.Exception?.InnerExceptions ??
                             (IEnumerable<Exception>)Array.Empty<Exception>());
                     }
                     else
                     {
-                        tcs.TrySetResult(completedTask.Result);
+                        _ = tcs.TrySetResult(completedTask.Result);
                     }
                 }
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -388,12 +388,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, CancellationToken: cancellationToken));
 
@@ -405,7 +405,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -417,15 +417,15 @@ public static class Work
             {
                 TResult innerResult = func(ct);
 
-                tcs.TrySetResult(innerResult);
+                _ = tcs.TrySetResult(innerResult);
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -454,12 +454,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, State: state, CancellationToken: cancellationToken));
 
@@ -471,7 +471,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -485,15 +485,15 @@ public static class Work
                     payload,
                     ct);
 
-                tcs.TrySetResult(innerResult);
+                _ = tcs.TrySetResult(innerResult);
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -518,12 +518,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, CancellationToken: cancellationToken));
 
@@ -535,7 +535,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -545,7 +545,7 @@ public static class Work
 
             try
             {
-                func()
+                _ = func()
                     .ContinueWith(
                         Continuation,
                         default,
@@ -556,27 +556,27 @@ public static class Work
                 {
                     if (completedTask.IsCanceled)
                     {
-                        tcs.TrySetCanceled(ct);
+                        _ = tcs.TrySetCanceled(ct);
                     }
                     else if (completedTask.IsFaulted)
                     {
-                        tcs.TrySetException(
+                        _ = tcs.TrySetException(
                             completedTask.Exception?.InnerExceptions ??
                             (IEnumerable<Exception>)Array.Empty<Exception>());
                     }
                     else
                     {
-                        tcs.TrySetResult(0);
+                        _ = tcs.TrySetResult(0);
                     }
                 }
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -602,12 +602,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, CancellationToken: cancellationToken));
 
@@ -619,7 +619,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -629,7 +629,7 @@ public static class Work
 
             try
             {
-                func()
+                _ = func()
                     .ContinueWith(
                         Continuation,
                         default,
@@ -640,27 +640,27 @@ public static class Work
                 {
                     if (completedTask.IsCanceled)
                     {
-                        tcs.TrySetCanceled(ct);
+                        _ = tcs.TrySetCanceled(ct);
                     }
                     else if (completedTask.IsFaulted)
                     {
-                        tcs.TrySetException(
+                        _ = tcs.TrySetException(
                             completedTask.Exception?.InnerExceptions ??
                             (IEnumerable<Exception>)Array.Empty<Exception>());
                     }
                     else
                     {
-                        tcs.TrySetResult(completedTask.Result);
+                        _ = tcs.TrySetResult(completedTask.Result);
                     }
                 }
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -688,12 +688,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, State: state, CancellationToken: cancellationToken));
 
@@ -705,7 +705,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -715,7 +715,7 @@ public static class Work
 
             try
             {
-                func(payload)
+                _ = func(payload)
                     .ContinueWith(
                         Continuation,
                         default,
@@ -726,27 +726,27 @@ public static class Work
                 {
                     if (completedTask.IsCanceled)
                     {
-                        tcs.TrySetCanceled(ct);
+                        _ = tcs.TrySetCanceled(ct);
                     }
                     else if (completedTask.IsFaulted)
                     {
-                        tcs.TrySetException(
+                        _ = tcs.TrySetException(
                             completedTask.Exception?.InnerExceptions ??
                             (IEnumerable<Exception>)Array.Empty<Exception>());
                     }
                     else
                     {
-                        tcs.TrySetResult(0);
+                        _ = tcs.TrySetResult(0);
                     }
                 }
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -775,12 +775,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, State: state, CancellationToken: cancellationToken));
 
@@ -792,7 +792,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -802,7 +802,7 @@ public static class Work
 
             try
             {
-                func(payload)
+                _ = func(payload)
                     .ContinueWith(
                         Continuation,
                         default,
@@ -813,27 +813,27 @@ public static class Work
                 {
                     if (completedTask.IsCanceled)
                     {
-                        tcs.TrySetCanceled(ct);
+                        _ = tcs.TrySetCanceled(ct);
                     }
                     else if (completedTask.IsFaulted)
                     {
-                        tcs.TrySetException(
+                        _ = tcs.TrySetException(
                             completedTask.Exception?.InnerExceptions ??
                             (IEnumerable<Exception>)Array.Empty<Exception>());
                     }
                     else
                     {
-                        tcs.TrySetResult(completedTask.Result);
+                        _ = tcs.TrySetResult(completedTask.Result);
                     }
                 }
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -859,12 +859,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, CancellationToken: cancellationToken));
 
@@ -877,7 +877,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -889,15 +889,15 @@ public static class Work
             {
                 TResult innerResult = func();
 
-                tcs.TrySetResult(innerResult);
+                _ = tcs.TrySetResult(innerResult);
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -926,12 +926,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, State: state, CancellationToken: cancellationToken));
 
@@ -943,7 +943,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -955,15 +955,15 @@ public static class Work
             {
                 TResult innerResult = func(payload);
 
-                tcs.TrySetResult(innerResult);
+                _ = tcs.TrySetResult(innerResult);
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -991,12 +991,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, State: state, CancellationToken: cancellationToken));
 
@@ -1008,7 +1008,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -1022,15 +1022,15 @@ public static class Work
                     payload,
                     ct);
 
-                tcs.TrySetResult(0);
+                _ = tcs.TrySetResult(0);
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -1055,12 +1055,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, CancellationToken: cancellationToken));
 
@@ -1072,7 +1072,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -1084,15 +1084,15 @@ public static class Work
             {
                 func(ct);
 
-                tcs.TrySetResult(0);
+                _ = tcs.TrySetResult(0);
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -1120,12 +1120,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, State: state, CancellationToken: cancellationToken));
 
@@ -1137,7 +1137,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -1149,15 +1149,15 @@ public static class Work
             {
                 func(payload);
 
-                tcs.TrySetResult(0);
+                _ = tcs.TrySetResult(0);
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 
@@ -1182,12 +1182,12 @@ public static class Work
 
         if (cancellationToken.IsCancellationRequested)
         {
-            taskCompletionSource.TrySetCanceled(cancellationToken);
+            _ = taskCompletionSource.TrySetCanceled(cancellationToken);
 
             return taskCompletionSource.Task;
         }
 
-        ThreadPool.QueueUserWorkItem(
+        _ = ThreadPool.QueueUserWorkItem(
             WorkItem,
             (MethodToInvoke: methodToInvoke, CultureInfo.CurrentCulture, CultureInfo.CurrentUICulture, TaskCompletionSource: taskCompletionSource, CancellationToken: cancellationToken));
 
@@ -1200,7 +1200,7 @@ public static class Work
 
             if (ct.IsCancellationRequested)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
 
                 return;
             }
@@ -1212,15 +1212,15 @@ public static class Work
             {
                 func();
 
-                tcs.TrySetResult(0);
+                _ = tcs.TrySetResult(0);
             }
             catch (OperationCanceledException)
             {
-                tcs.TrySetCanceled(ct);
+                _ = tcs.TrySetCanceled(ct);
             }
             catch (Exception ex)
             {
-                tcs.TrySetException(ex);
+                _ = tcs.TrySetException(ex);
             }
         }
 

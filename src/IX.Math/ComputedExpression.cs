@@ -90,14 +90,6 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     /// <para>The method <see cref="GetParameterNames"/> instead.</para>
     /// </remarks>
     [Obsolete("Please use the GetParameterNames method instead.")]
-    [SuppressMessage(
-        "Performance",
-        "CA1819:Properties should not return arrays",
-        Justification = "This is obsolete and will be removed soon.")]
-    [SuppressMessage(
-        "Naming",
-        "CA1721:Property names should not match get methods",
-        Justification = "This is obsolete and will be removed soon.")]
     public string[] ParameterNames => GetParameterNames();
 
     /// <summary>
@@ -127,7 +119,6 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     /// <returns>
     /// The computed result, or, if the expression is not recognized correctly, the expression as a <see cref="string" />.
     /// </returns>
-    [SuppressMessage("CodeSmell", "ERP022:Unobserved exception in generic exception handler", Justification = "We want this in this case.")]
     [SuppressMessage("Performance", "HAA0302:Display class allocation to capture closure", Justification = "Unavoidable for now.")]
     [SuppressMessage("Performance", "HAA0301:Closure Allocation Source", Justification = "Unavoidable for now.")]
     public object Compute(Tolerance? tolerance, params object[] arguments)
@@ -796,7 +787,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
 
         var pars = new List<object>();
 
-        Requires.NotNull(
+        _ = Requires.NotNull(
             dataFinder,
             nameof(dataFinder));
 
@@ -832,6 +823,6 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     {
         base.DisposeGeneralContext();
 
-        Interlocked.Exchange(ref body, null);
+        _ = Interlocked.Exchange(ref body, null);
     }
 }

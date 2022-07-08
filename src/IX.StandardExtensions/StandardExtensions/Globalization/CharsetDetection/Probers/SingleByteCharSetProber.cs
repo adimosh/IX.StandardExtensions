@@ -168,7 +168,7 @@ internal class SingleByteCharSetProber : CharsetProber
     {
         var status = new StringBuilder();
 
-        status.AppendLine($"  SBCS: {GetConfidence():0.00############} [{GetCharsetName()}]");
+        _ = status.AppendLine($"  SBCS: {GetConfidence():0.00############} [{GetCharsetName()}]");
 
         return status.ToString();
     }

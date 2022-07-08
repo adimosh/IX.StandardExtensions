@@ -138,7 +138,7 @@ namespace IX.UnitTests.Math
                             {
                                 var key = kvp.Key;
                                 object value = kvp.Value;
-                                finder.Setup(
+                                _ = finder.Setup(
                                     p => p.TryGetData(
                                         key,
                                         out value)).Returns(true);
@@ -217,7 +217,7 @@ namespace IX.UnitTests.Math
                     {
                         var key = kvp.Key;
                         object value = kvp.Value;
-                        finder.Setup(
+                        _ = finder.Setup(
                             p => p.TryGetData(
                                 key,
                                 out value)).Returns(true);
@@ -266,7 +266,7 @@ namespace IX.UnitTests.Math
                                 var key = kvp.Key;
                                 object val = kvp.Value;
                                 object value = GenerateFuncOutOfParameterValue(val);
-                                finder.Setup(
+                                _ = finder.Setup(
                                     p => p.TryGetData(
                                         key,
                                         out value)).Returns(true);
@@ -313,7 +313,7 @@ namespace IX.UnitTests.Math
                         var key = kvp.Key;
                         object val = kvp.Value;
                         object value = GenerateFuncOutOfParameterValue(val);
-                        finder.Setup(
+                        _ = finder.Setup(
                             p => p.TryGetData(
                                 key,
                                 out value)).Returns(true);
@@ -363,7 +363,7 @@ namespace IX.UnitTests.Math
                             var key = kvp.Key;
                             object val = kvp.Value;
                             object value = GenerateFuncOutOfParameterValue(val);
-                            finder.Setup(
+                            _ = finder.Setup(
                                 p => p.TryGetData(
                                     key,
                                     out value)).Returns(true);

@@ -241,7 +241,7 @@ public abstract class EditableItemBase : ViewModelBase,
     /// <remarks>This method is meant to be used by containers, and should not be called directly.</remarks>
     public void CaptureIntoUndoContext(IUndoableItem parent)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             parent,
             nameof(parent));
 
@@ -330,7 +330,7 @@ public abstract class EditableItemBase : ViewModelBase,
     /// </exception>
     public void RedoStateChanges(StateChangeBase changesToRedo)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             changesToRedo,
             nameof(changesToRedo));
 
@@ -429,7 +429,7 @@ public abstract class EditableItemBase : ViewModelBase,
     /// </exception>
     public void UndoStateChanges(StateChangeBase changesToUndo)
     {
-        Requires.NotNull(
+        _ = Requires.NotNull(
             changesToUndo,
             nameof(changesToUndo));
 

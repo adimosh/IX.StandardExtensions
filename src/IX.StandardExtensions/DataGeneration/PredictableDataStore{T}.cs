@@ -99,7 +99,7 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
 
         if (parallelGenerate)
         {
-            Parallel.For(
+            _ = Parallel.For(
                 0,
                 capacity,
                 index =>

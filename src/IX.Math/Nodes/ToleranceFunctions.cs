@@ -88,7 +88,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double proportion)
     {
-        Requires.True(proportion > 1, nameof(proportion));
+        _ = Requires.True(proportion > 1, nameof(proportion));
 
         double directProportion = ((double)rightOperand) * proportion;
         double inverseProportion = ((double)rightOperand) * (1D / proportion);
@@ -115,7 +115,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double proportion)
     {
-        Requires.True(proportion > 1D, nameof(proportion));
+        _ = Requires.True(proportion > 1D, nameof(proportion));
 
         double directProportion = rightOperand * proportion;
         double inverseProportion = rightOperand * (1D / proportion);
@@ -142,7 +142,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double percentage)
     {
-        Requires.True(percentage is < 1 and > 0, nameof(percentage));
+        _ = Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -169,7 +169,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double percentage)
     {
-        Requires.True(percentage is < 1 and > 0, nameof(percentage));
+        _ = Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -251,7 +251,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double proportion)
     {
-        Requires.True(proportion > 1, nameof(proportion));
+        _ = Requires.True(proportion > 1, nameof(proportion));
 
         double directProportion = ((double)rightOperand) * proportion;
         double inverseProportion = ((double)rightOperand) * (1D / proportion);
@@ -274,7 +274,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double proportion)
     {
-        Requires.True(proportion > 1D, nameof(proportion));
+        _ = Requires.True(proportion > 1D, nameof(proportion));
 
         double directProportion = rightOperand * proportion;
         double inverseProportion = rightOperand * (1D / proportion);
@@ -297,7 +297,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double percentage)
     {
-        Requires.True(percentage is < 1 and > 0, nameof(percentage));
+        _ = Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -320,7 +320,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double percentage)
     {
-        Requires.True(percentage is < 1 and > 0, nameof(percentage));
+        _ = Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -398,7 +398,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double proportion)
     {
-        Requires.True(proportion > 1, nameof(proportion));
+        _ = Requires.True(proportion > 1, nameof(proportion));
 
         double directProportion = ((double)rightOperand) * proportion;
         double inverseProportion = ((double)rightOperand) * (1D / proportion);
@@ -421,7 +421,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double proportion)
     {
-        Requires.True(proportion > 1D, nameof(proportion));
+        _ = Requires.True(proportion > 1D, nameof(proportion));
 
         double directProportion = rightOperand * proportion;
         double inverseProportion = rightOperand * (1D / proportion);
@@ -444,7 +444,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double percentage)
     {
-        Requires.True(percentage is < 1 and > 0, nameof(percentage));
+        _ = Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -467,7 +467,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double percentage)
     {
-        Requires.True(percentage is < 1 and > 0, nameof(percentage));
+        _ = Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -545,7 +545,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double proportion)
     {
-        Requires.True(proportion > 1, nameof(proportion));
+        _ = Requires.True(proportion > 1, nameof(proportion));
 
         double directProportion = ((double)rightOperand) * proportion;
         double inverseProportion = ((double)rightOperand) * (1D / proportion);
@@ -568,7 +568,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double proportion)
     {
-        Requires.True(proportion > 1D, nameof(proportion));
+        _ = Requires.True(proportion > 1D, nameof(proportion));
 
         double directProportion = rightOperand * proportion;
         double inverseProportion = rightOperand * (1D / proportion);
@@ -591,7 +591,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double percentage)
     {
-        Requires.True(percentage is < 1 and > 0, nameof(percentage));
+        _ = Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -614,7 +614,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double percentage)
     {
-        Requires.True(percentage is < 1 and > 0, nameof(percentage));
+        _ = Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -692,7 +692,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double proportion)
     {
-        Requires.True(proportion > 1L, nameof(proportion));
+        _ = Requires.True(proportion > 1L, nameof(proportion));
 
         double directProportion = ((double)rightOperand) * proportion;
         double inverseProportion = ((double)rightOperand) * (1D / proportion);
@@ -715,7 +715,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double proportion)
     {
-        Requires.True(proportion > 1D, nameof(proportion));
+        _ = Requires.True(proportion > 1D, nameof(proportion));
 
         double directProportion = rightOperand * proportion;
         double inverseProportion = rightOperand * (1D / proportion);
@@ -738,7 +738,7 @@ public static class ToleranceFunctions
         long rightOperand,
         double percentage)
     {
-        Requires.True(percentage is < 1 and > 0, nameof(percentage));
+        _ = Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);
@@ -761,7 +761,7 @@ public static class ToleranceFunctions
         double rightOperand,
         double percentage)
     {
-        Requires.True(percentage is < 1 and > 0, nameof(percentage));
+        _ = Requires.True(percentage is < 1 and > 0, nameof(percentage));
 
         double directPercentage = ((double)rightOperand) * (1D - percentage);
         double inversePercentage = ((double)rightOperand) * (1D + percentage);

@@ -98,15 +98,7 @@ public class PushOutQueue<T> : PushingCollectionBase<T>,
     ///     Peeks in the stack to view the topmost item, without removing it.
     /// </summary>
     /// <returns>The topmost element in the stack, if any.</returns>
-    public T Peek()
-    {
-        if (!TryPeek(out T item))
-        {
-            throw new InvalidOperationException(Resources.ErrorQueueIsEmpty);
-        }
-
-        return item;
-    }
+    public T Peek() => !TryPeek(out T item) ? throw new InvalidOperationException(Resources.ErrorQueueIsEmpty) : item;
 
     /// <summary>
     ///     Attempts to dequeue an item from this push-out queue.

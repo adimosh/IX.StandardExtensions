@@ -158,7 +158,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
         {
             if (success)
             {
-                internalQueue.Dequeue();
+                _ = internalQueue.Dequeue();
             }
         }
     }
@@ -188,7 +188,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
             return false;
         }
 
-        internalQueue.Dequeue();
+        _ = internalQueue.Dequeue();
 
         return true;
     }
@@ -233,7 +233,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
         {
             for (var i = 0; i < success; i++)
             {
-                internalQueue.Dequeue();
+                _ = internalQueue.Dequeue();
             }
         }
 
@@ -272,7 +272,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
         {
             if (success)
             {
-                internalQueue.Dequeue();
+                _ = internalQueue.Dequeue();
             }
         }
 

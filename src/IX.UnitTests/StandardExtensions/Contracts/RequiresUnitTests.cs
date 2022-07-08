@@ -28,7 +28,7 @@ public class RequiresUnitTests
         string x = null;
         try
         {
-            Requires.NotNull(x, nameof(x));
+            _ = Requires.NotNull(x, nameof(x));
         }
         catch (ArgumentNullException)
         {
@@ -51,7 +51,7 @@ public class RequiresUnitTests
         string x = "alabala";
         try
         {
-            Requires.NotNull(x, nameof(x));
+            _ = Requires.NotNull(x, nameof(x));
         }
         catch
         {
@@ -72,7 +72,7 @@ public class RequiresUnitTests
         int? x = null;
         try
         {
-            Requires.NotNull(x, nameof(x));
+            _ = Requires.NotNull(x, nameof(x));
         }
         catch (ArgumentNullException)
         {
@@ -95,7 +95,7 @@ public class RequiresUnitTests
         int? x = 2;
         try
         {
-            Requires.NotNull(x, nameof(x));
+            _ = Requires.NotNull(x, nameof(x));
         }
         catch
         {
@@ -118,7 +118,7 @@ public class RequiresUnitTests
         string? x = null;
         try
         {
-            Requires.NotNull(x, nameof(x));
+            _ = Requires.NotNull(x, nameof(x));
         }
         catch (ArgumentNullException)
         {
@@ -141,7 +141,7 @@ public class RequiresUnitTests
         string x = "alabala";
         try
         {
-            Requires.NotNull(x, nameof(x));
+            _ = Requires.NotNull(x, nameof(x));
         }
         catch
         {
@@ -162,7 +162,7 @@ public class RequiresUnitTests
         string x = null!;
         try
         {
-            Requires.NotNull(x, nameof(x));
+            _ = Requires.NotNull(x, nameof(x));
         }
         catch (ArgumentNullException)
         {
@@ -185,7 +185,7 @@ public class RequiresUnitTests
         string x = "alabala";
         try
         {
-            Requires.NotNull(x, nameof(x));
+            _ = Requires.NotNull(x, nameof(x));
         }
         catch
         {
@@ -206,7 +206,7 @@ public class RequiresUnitTests
         int x = 2;
         try
         {
-            Requires.NotNull(x, nameof(x));
+            _ = Requires.NotNull(x, nameof(x));
         }
         catch (ArgumentNullException)
         {
@@ -253,7 +253,7 @@ public class RequiresUnitTests
     {
         try
         {
-            Requires.ValidEmailAddress(email);
+            _ = Requires.ValidEmailAddress(email);
         }
         catch (ArgumentDoesNotMatchException)
         {
@@ -309,7 +309,7 @@ public class RequiresUnitTests
     {
         try
         {
-            Requires.ValidEmailAddressStrict(email);
+            _ = Requires.ValidEmailAddressStrict(email);
         }
         catch (ArgumentDoesNotMatchException)
         {
