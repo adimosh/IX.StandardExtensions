@@ -21,7 +21,7 @@ public sealed class CallerArgumentExpressionAttribute : Attribute
     /// <param name="parameterName">The name of the targeted parameter.</param>
     public CallerArgumentExpressionAttribute(string parameterName)
     {
-        this.ParameterName = parameterName;
+        ParameterName = parameterName;
     }
 
     /// <summary>

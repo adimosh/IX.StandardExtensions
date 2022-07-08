@@ -62,55 +62,55 @@ internal class MBCSGroupProber : CharsetProber
 
     public MBCSGroupProber()
     {
-        this.probers[0] = new UTF8Prober();
-        this.probers[1] = new SJISProber();
-        this.probers[2] = new EUCJPProber();
-        this.probers[3] = new GB18030Prober();
-        this.probers[4] = new EUCKRProber();
-        this.probers[5] = new CP949Prober();
-        this.probers[6] = new Big5Prober();
-        this.probers[7] = new EUCTWProber();
+        probers[0] = new UTF8Prober();
+        probers[1] = new SJISProber();
+        probers[2] = new EUCJPProber();
+        probers[3] = new GB18030Prober();
+        probers[4] = new EUCKRProber();
+        probers[5] = new CP949Prober();
+        probers[6] = new Big5Prober();
+        probers[7] = new EUCTWProber();
 
-        this.Reset();
+        Reset();
     }
 
     public override string GetCharsetName()
     {
-        if (this.bestGuess == -1)
+        if (bestGuess == -1)
         {
-            this.GetConfidence();
+            GetConfidence();
 
-            if (this.bestGuess == -1)
+            if (bestGuess == -1)
             {
-                this.bestGuess = 0;
+                bestGuess = 0;
             }
         }
 
-        return this.probers[this.bestGuess]
+        return probers[bestGuess]
             .GetCharsetName();
     }
 
     public override void Reset()
     {
-        this.activeNum = 0;
+        activeNum = 0;
 
-        for (var i = 0; i < this.probers.Length; i++)
+        for (var i = 0; i < probers.Length; i++)
         {
-            if (this.probers[i] != null)
+            if (probers[i] != null)
             {
-                this.probers[i]
+                probers[i]
                     .Reset();
-                this.isActive[i] = true;
-                ++this.activeNum;
+                isActive[i] = true;
+                ++activeNum;
             }
             else
             {
-                this.isActive[i] = false;
+                isActive[i] = false;
             }
         }
 
-        this.bestGuess = -1;
-        this.state = ProbingState.Detecting;
+        bestGuess = -1;
+        state = ProbingState.Detecting;
     }
 
     public override ProbingState HandleData(
@@ -144,29 +144,29 @@ internal class MBCSGroupProber : CharsetProber
             }
         }
 
-        for (var i = 0; i < this.probers.Length; i++)
+        for (var i = 0; i < probers.Length; i++)
         {
-            if (this.isActive[i])
+            if (isActive[i])
             {
-                ProbingState st = this.probers[i]
+                ProbingState st = probers[i]
                     .HandleData(
                         highbyteBuf,
                         0,
                         hptr);
                 if (st == ProbingState.FoundIt)
                 {
-                    this.bestGuess = i;
-                    this.state = ProbingState.FoundIt;
+                    bestGuess = i;
+                    state = ProbingState.FoundIt;
 
                     break;
                 }
                 else if (st == ProbingState.NotMe)
                 {
-                    this.isActive[i] = false;
-                    this.activeNum--;
-                    if (this.activeNum <= 0)
+                    isActive[i] = false;
+                    activeNum--;
+                    if (activeNum <= 0)
                     {
-                        this.state = ProbingState.NotMe;
+                        state = ProbingState.NotMe;
 
                         break;
                     }
@@ -174,14 +174,14 @@ internal class MBCSGroupProber : CharsetProber
             }
         }
 
-        return this.state;
+        return state;
     }
 
     public override float GetConfidence(StringBuilder? status = null)
     {
         var bestConf = 0.0f;
 
-        switch (this.state)
+        switch (state)
         {
             case ProbingState.FoundIt:
                 return 0.99f;
@@ -198,19 +198,19 @@ internal class MBCSGroupProber : CharsetProber
 
                 for (var i = 0; i < PROBERS_NUM; i++)
                 {
-                    if (this.isActive[i])
+                    if (isActive[i])
                     {
-                        var cf = this.probers[i]
+                        var cf = probers[i]
                             .GetConfidence();
                         if (bestConf < cf)
                         {
                             bestConf = cf;
-                            this.bestGuess = i;
+                            bestGuess = i;
 
                             if (status != null)
                             {
                                 status.AppendLine(
-                                    $"-- new match found: confidence {bestConf}, index {this.bestGuess}, charset {this.probers[i].GetCharsetName()}.");
+                                    $"-- new match found: confidence {bestConf}, index {bestGuess}, charset {probers[i].GetCharsetName()}.");
                             }
                         }
                     }
@@ -231,35 +231,35 @@ internal class MBCSGroupProber : CharsetProber
     {
         var status = new StringBuilder();
 
-        var cf = this.GetConfidence(status);
+        var cf = GetConfidence(status);
 
         status.AppendLine(" MBCS Group Prober --------begin status");
 
         for (var i = 0; i < PROBERS_NUM; i++)
         {
-            if (this.probers[i] != null)
+            if (probers[i] != null)
             {
-                if (!this.isActive[i])
+                if (!isActive[i])
                 {
                     status.AppendLine(
-                        $" MBCS inactive: {this.probers[i].GetCharsetName()} (i.e. confidence is too low).");
+                        $" MBCS inactive: {probers[i].GetCharsetName()} (i.e. confidence is too low).");
                 }
                 else
                 {
-                    var cfp = this.probers[i]
+                    var cfp = probers[i]
                         .GetConfidence();
 
-                    status.AppendLine($" MBCS {cfp}: [{this.probers[i].GetCharsetName()}]");
+                    status.AppendLine($" MBCS {cfp}: [{probers[i].GetCharsetName()}]");
 
                     status.AppendLine(
-                        this.probers[i]
+                        probers[i]
                             .DumpStatus());
                 }
             }
         }
 
         status.AppendLine(
-            $" MBCS Group found best match [{this.probers[this.bestGuess].GetCharsetName()}] confidence {cf}.");
+            $" MBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");
 
         return status.ToString();
     }

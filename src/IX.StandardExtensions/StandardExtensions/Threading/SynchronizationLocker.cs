@@ -22,7 +22,7 @@ public abstract class SynchronizationLocker : IDisposable
     /// <param name="locker">The locker.</param>
     internal SynchronizationLocker(IReaderWriterLock? locker)
     {
-        this.Locker = locker;
+        Locker = locker;
     }
 
 #endregion

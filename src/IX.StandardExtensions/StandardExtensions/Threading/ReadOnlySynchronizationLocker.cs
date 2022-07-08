@@ -78,14 +78,14 @@ public class ReadOnlySynchronizationLocker : SynchronizationLocker
     /// </summary>
     public override void Dispose()
     {
-        if (this.Locker == null)
+        if (Locker == null)
         {
             return;
         }
 
-        if (this.Locker.IsReadLockHeld)
+        if (Locker.IsReadLockHeld)
         {
-            this.Locker.ExitReadLock();
+            Locker.ExitReadLock();
         }
 
         GC.SuppressFinalize(this);

@@ -67,7 +67,7 @@ public class CharsetDetectorDataUnitTests
         var result = new CharsetDetectionEngine().Read(za.Entries.First(p => p.FullName == testCase.InputFile).Open());
 
         Assert.NotNull(result.Encoding);
-        this.outputHelper.WriteLine($"- {testCase.FileName} ({testCase.ExpectedEncoding}) -> {result.Encoding.WebName}");
+        outputHelper.WriteLine($"- {testCase.FileName} ({testCase.ExpectedEncoding}) -> {result.Encoding.WebName}");
         Assert.Equal(expectedEncoding, result.Encoding);
     }
 
@@ -88,7 +88,7 @@ public class CharsetDetectorDataUnitTests
         var result = await new CharsetDetectionEngine().ReadAsync(za.Entries.First(p => p.FullName == testCase.InputFile).Open(), cancellationToken);
 
         Assert.NotNull(result.Encoding);
-        this.outputHelper.WriteLine($"- {testCase.FileName} ({testCase.ExpectedEncoding}) -> {result.Encoding.WebName}");
+        outputHelper.WriteLine($"- {testCase.FileName} ({testCase.ExpectedEncoding}) -> {result.Encoding.WebName}");
         Assert.Equal(expectedEncoding, result.Encoding);
     }
 
@@ -109,7 +109,7 @@ public class CharsetDetectorDataUnitTests
         var result = new CharsetDetectionEngine().Read(za.Entries.First(p => p.FullName == testCase.InputFile).Open().ReadAllBytes());
 
         Assert.NotNull(result.Encoding);
-        this.outputHelper.WriteLine($"- {testCase.FileName} ({testCase.ExpectedEncoding}) -> {result.Encoding.WebName}");
+        outputHelper.WriteLine($"- {testCase.FileName} ({testCase.ExpectedEncoding}) -> {result.Encoding.WebName}");
         Assert.Equal(expectedEncoding, result.Encoding);
     }
 
@@ -130,7 +130,7 @@ public class CharsetDetectorDataUnitTests
         var result = await new CharsetDetectionEngine().ReadAsync(await za.Entries.First(p => p.FullName == testCase.InputFile).Open().ReadAllBytesAsync(cancellationToken), cancellationToken);
 
         Assert.NotNull(result.Encoding);
-        this.outputHelper.WriteLine($"- {testCase.FileName} ({testCase.ExpectedEncoding}) -> {result.Encoding.WebName}");
+        outputHelper.WriteLine($"- {testCase.FileName} ({testCase.ExpectedEncoding}) -> {result.Encoding.WebName}");
         Assert.Equal(expectedEncoding, result.Encoding);
     }
 
@@ -143,9 +143,9 @@ public class CharsetDetectorDataUnitTests
 
         public TestCase(string inputFile, string fileName, string expectedEncoding)
         {
-            this.ExpectedEncoding = expectedEncoding;
-            this.FileName = fileName;
-            this.InputFile = inputFile;
+            ExpectedEncoding = expectedEncoding;
+            FileName = fileName;
+            InputFile = inputFile;
         }
 
         public string InputFile { get; private set; }
@@ -154,7 +154,7 @@ public class CharsetDetectorDataUnitTests
 
         public string ExpectedEncoding { get; private set; }
 
-        public override string ToString() => this.ExpectedEncoding + ": " + this.FileName;
+        public override string ToString() => ExpectedEncoding + ": " + FileName;
 
         /// <summary>
         /// Called when the object should populate itself with data from the serialization info.
@@ -162,9 +162,9 @@ public class CharsetDetectorDataUnitTests
         /// <param name="info">The info to get the data from.</param>
         public void Deserialize(IXunitSerializationInfo info)
         {
-            this.InputFile = info.GetValue<string>(nameof(this.InputFile));
-            this.FileName = info.GetValue<string>(nameof(this.FileName));
-            this.ExpectedEncoding = info.GetValue<string>(nameof(this.ExpectedEncoding));
+            InputFile = info.GetValue<string>(nameof(InputFile));
+            FileName = info.GetValue<string>(nameof(FileName));
+            ExpectedEncoding = info.GetValue<string>(nameof(ExpectedEncoding));
         }
 
         /// <summary>
@@ -173,9 +173,9 @@ public class CharsetDetectorDataUnitTests
         /// <param name="info">The info to store the data in.</param>
         public void Serialize(IXunitSerializationInfo info)
         {
-            info.AddValue(nameof(this.InputFile), this.InputFile, typeof(string));
-            info.AddValue(nameof(this.FileName), this.FileName, typeof(string));
-            info.AddValue(nameof(this.ExpectedEncoding), this.ExpectedEncoding, typeof(string));
+            info.AddValue(nameof(InputFile), InputFile, typeof(string));
+            info.AddValue(nameof(FileName), FileName, typeof(string));
+            info.AddValue(nameof(ExpectedEncoding), ExpectedEncoding, typeof(string));
         }
     }
 }

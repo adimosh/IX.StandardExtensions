@@ -42,11 +42,11 @@ public abstract class TernaryFunctionNodeBase : FunctionNodeBase
         NodeBase secondParameterTemp = secondParameter ?? throw new ArgumentNullException(nameof(secondParameter));
         NodeBase thirdParameterTemp = thirdParameter ?? throw new ArgumentNullException(nameof(thirdParameter));
 
-        this.EnsureCompatibleParameters(firstParameter, secondParameter, thirdParameter);
+        EnsureCompatibleParameters(firstParameter, secondParameter, thirdParameter);
 
-        this.FirstParameter = firstParameterTemp.Simplify();
-        this.SecondParameter = secondParameterTemp.Simplify();
-        this.ThirdParameter = thirdParameterTemp.Simplify();
+        FirstParameter = firstParameterTemp.Simplify();
+        SecondParameter = secondParameterTemp.Simplify();
+        ThirdParameter = thirdParameterTemp.Simplify();
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public abstract class TernaryFunctionNodeBase : FunctionNodeBase
     ///     <c>true</c> if this instance is tolerant; otherwise, <c>false</c>.
     /// </value>
     public override bool IsTolerant =>
-        this.FirstParameter.IsTolerant || this.SecondParameter.IsTolerant || this.ThirdParameter.IsTolerant;
+        FirstParameter.IsTolerant || SecondParameter.IsTolerant || ThirdParameter.IsTolerant;
 
     /// <summary>
     /// Sets the special object request function for sub objects.
@@ -82,17 +82,17 @@ public abstract class TernaryFunctionNodeBase : FunctionNodeBase
     /// <param name="func">The function.</param>
     protected override void SetSpecialObjectRequestFunctionForSubObjects(Func<Type, object> func)
     {
-        if (this.FirstParameter is ISpecialRequestNode srnl)
+        if (FirstParameter is ISpecialRequestNode srnl)
         {
             srnl.SetRequestSpecialObjectFunction(func);
         }
 
-        if (this.SecondParameter is ISpecialRequestNode srnr)
+        if (SecondParameter is ISpecialRequestNode srnr)
         {
             srnr.SetRequestSpecialObjectFunction(func);
         }
 
-        if (this.ThirdParameter is ISpecialRequestNode trnr)
+        if (ThirdParameter is ISpecialRequestNode trnr)
         {
             trnr.SetRequestSpecialObjectFunction(func);
         }

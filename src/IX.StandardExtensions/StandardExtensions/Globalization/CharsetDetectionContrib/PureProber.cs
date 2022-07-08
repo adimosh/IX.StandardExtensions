@@ -33,25 +33,25 @@ internal class PureProber : CharsetProber
             if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
             {
                 // High-byte found, let's get out of here
-                this.notAscii = true;
+                notAscii = true;
 
                 break;
             }
 
-            if (buf[i] == 0x1B || (buf[i] == 0x7B && this.lastByte == 0x7E))
+            if (buf[i] == 0x1B || (buf[i] == 0x7B && lastByte == 0x7E))
             {
                 // We found escape character or HZ "~{" - this is escaped ASCII and a different prober will take care of it
-                this.notAscii = true;
+                notAscii = true;
 
                 break;
             }
 
-            this.lastByte = buf[i];
+            lastByte = buf[i];
         }
 
-        this.state = this.notAscii ? ProbingState.NotMe : ProbingState.Detecting;
+        state = notAscii ? ProbingState.NotMe : ProbingState.Detecting;
 
-        return this.state;
+        return state;
     }
 
     /// <summary>
@@ -59,12 +59,12 @@ internal class PureProber : CharsetProber
     /// </summary>
     public override void Reset()
     {
-        this.state = ProbingState.Detecting;
-        this.notAscii = false;
-        this.lastByte = 0;
+        state = ProbingState.Detecting;
+        notAscii = false;
+        lastByte = 0;
     }
 
     public override string GetCharsetName() => CodepageName.ASCII;
 
-    public override float GetConfidence(StringBuilder? status = null) => this.notAscii ? 0f : 1f;
+    public override float GetConfidence(StringBuilder? status = null) => notAscii ? 0f : 1f;
 }

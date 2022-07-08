@@ -590,6 +590,6 @@ public class SerializationUnitTests
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
-        public bool Equals(DummyDataContract other) => this.RandomValue == other?.RandomValue;
+        public bool Equals(DummyDataContract other) => RandomValue == other?.RandomValue;
     }
 }

@@ -78,11 +78,11 @@ internal abstract class StateMachineModel
         string name)
     {
         this.classTable = classTable;
-        this.ClassFactor = classFactor;
+        ClassFactor = classFactor;
         this.stateTable = stateTable;
         this.charLenTable = charLenTable;
-        this.Name = name;
+        Name = name;
     }
 
-    public int GetClass(byte b) => this.classTable.Unpack((int)b);
+    public int GetClass(byte b) => classTable.Unpack((int)b);
 }

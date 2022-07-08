@@ -71,12 +71,12 @@ internal abstract class SequenceModel
     // The count of frequent characters
     protected int freqCharCount;
 
-    public int FreqCharCount => this.freqCharCount;
+    public int FreqCharCount => freqCharCount;
 
     // freqSeqs / totalSeqs
     protected float typicalPositiveRatio;
 
-    public float TypicalPositiveRatio => this.typicalPositiveRatio;
+    public float TypicalPositiveRatio => typicalPositiveRatio;
 
 
     /// <summary>
@@ -87,11 +87,11 @@ internal abstract class SequenceModel
     /// <summary>
     /// TODO not used?
     /// </summary>
-    public bool KeepEnglishLetter => this.keepEnglishLetter;
+    public bool KeepEnglishLetter => keepEnglishLetter;
 
     protected string charsetName;
 
-    public string CharsetName => this.charsetName;
+    public string CharsetName => charsetName;
 
     public SequenceModel(
         byte[] charToOrderMap,
@@ -109,7 +109,7 @@ internal abstract class SequenceModel
         this.charsetName = charsetName;
     }
 
-    public byte GetOrder(byte b) => this.charToOrderMap[b];
+    public byte GetOrder(byte b) => charToOrderMap[b];
 
-    public byte GetPrecedence(int pos) => this.precedenceMatrix[pos];
+    public byte GetPrecedence(int pos) => precedenceMatrix[pos];
 }

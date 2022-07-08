@@ -45,7 +45,7 @@ internal class QueueCollectionAdapter<T> : ModernCollectionAdapter<T, Queue<T>.E
     ///     Gets the number of items.
     /// </summary>
     /// <value>The number of items.</value>
-    public override int Count => this.queue.Count;
+    public override int Count => queue.Count;
 
     /// <summary>
     ///     Gets a value indicating whether this instance is read only.
@@ -64,15 +64,15 @@ internal class QueueCollectionAdapter<T> : ModernCollectionAdapter<T, Queue<T>.E
     /// <returns>The index of the freshly-added item.</returns>
     public override int Add(T item)
     {
-        this.queue.Enqueue(item);
+        queue.Enqueue(item);
 
-        return this.queue.Count - 1;
+        return queue.Count - 1;
     }
 
     /// <summary>
     ///     Clears this instance.
     /// </summary>
-    public override void Clear() => this.queue.Clear();
+    public override void Clear() => queue.Clear();
 
     /// <summary>
     ///     Determines whether the container list contains the specified item.
@@ -82,7 +82,7 @@ internal class QueueCollectionAdapter<T> : ModernCollectionAdapter<T, Queue<T>.E
     ///     <see langword="true" /> if the container list contains the specified item; otherwise, <see langword="false" />
     ///     .
     /// </returns>
-    public override bool Contains(T item) => this.queue.Contains(item);
+    public override bool Contains(T item) => queue.Contains(item);
 
     /// <summary>
     ///     Copies the contents of the container to an array.
@@ -92,7 +92,7 @@ internal class QueueCollectionAdapter<T> : ModernCollectionAdapter<T, Queue<T>.E
     public override void CopyTo(
         T[] array,
         int arrayIndex) =>
-        this.queue.CopyTo(
+        queue.CopyTo(
             array,
             arrayIndex);
 
@@ -107,36 +107,36 @@ internal class QueueCollectionAdapter<T> : ModernCollectionAdapter<T, Queue<T>.E
     ///     De-queues an item from the queue.
     /// </summary>
     /// <returns>An item.</returns>
-    public T Dequeue() => this.queue.Dequeue();
+    public T Dequeue() => queue.Dequeue();
 
     /// <summary>
     ///     Enqueues the specified item.
     /// </summary>
     /// <param name="item">The item.</param>
-    public void Enqueue(T item) => this.queue.Enqueue(item);
+    public void Enqueue(T item) => queue.Enqueue(item);
 
     /// <summary>
     ///     Peeks at the top item in the queue.
     /// </summary>
     /// <returns>An item.</returns>
-    public T Peek() => this.queue.Peek();
+    public T Peek() => queue.Peek();
 
     /// <summary>
     ///     Converts all items in the stack to an array.
     /// </summary>
     /// <returns>The array of items.</returns>
-    public T[] ToArray() => this.queue.ToArray();
+    public T[] ToArray() => queue.ToArray();
 
     /// <summary>
     ///     Trims the excess space in the stack.
     /// </summary>
-    public void TrimExcess() => this.queue.TrimExcess();
+    public void TrimExcess() => queue.TrimExcess();
 
     /// <summary>
     ///     Returns an enumerator that iterates through the collection.
     /// </summary>
     /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-    public override Queue<T>.Enumerator GetEnumerator() => this.queue.GetEnumerator();
+    public override Queue<T>.Enumerator GetEnumerator() => queue.GetEnumerator();
 
 #endregion
 }

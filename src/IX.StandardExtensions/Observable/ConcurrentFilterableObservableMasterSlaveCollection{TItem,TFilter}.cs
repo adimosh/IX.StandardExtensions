@@ -53,8 +53,8 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
     /// </exception>
     public ConcurrentFilterableObservableMasterSlaveCollection(Func<TItem, TFilter, bool> filteringPredicate)
     {
-        this.FilteringPredicate = Requires.NotNull(filteringPredicate);
-        this.cacheLocker = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
+        FilteringPredicate = Requires.NotNull(filteringPredicate);
+        cacheLocker = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
     }
 
     /// <summary>
@@ -72,8 +72,8 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         SynchronizationContext context)
         : base(context)
     {
-        this.FilteringPredicate = Requires.NotNull(filteringPredicate);
-        this.cacheLocker = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
+        FilteringPredicate = Requires.NotNull(filteringPredicate);
+        cacheLocker = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
     }
 
     /// <summary>
@@ -91,8 +91,8 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         bool suppressUndoable)
         : base(suppressUndoable)
     {
-        this.FilteringPredicate = Requires.NotNull(filteringPredicate);
-        this.cacheLocker = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
+        FilteringPredicate = Requires.NotNull(filteringPredicate);
+        cacheLocker = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
     }
 
     /// <summary>
@@ -114,8 +114,8 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
             context,
             suppressUndoable)
     {
-        this.FilteringPredicate = Requires.NotNull(filteringPredicate);
-        this.cacheLocker = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
+        FilteringPredicate = Requires.NotNull(filteringPredicate);
+        cacheLocker = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
     }
 
 #endregion
@@ -132,9 +132,9 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
     {
         get
         {
-            if (this.IsFilter())
+            if (IsFilter())
             {
-                return this.CheckAndCache()
+                return CheckAndCache()
                     .Count;
             }
 
@@ -158,16 +158,16 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
     /// </value>
     public TFilter? Filter
     {
-        get => this.filter;
+        get => filter;
         set
         {
-            this.filter = value;
+            filter = value;
 
-            this.ClearCachedContents();
+            ClearCachedContents();
 
-            this.RaiseCollectionReset();
-            this.RaisePropertyChanged(nameof(this.Count));
-            this.RaisePropertyChanged(Constants.ItemsName);
+            RaiseCollectionReset();
+            RaisePropertyChanged(nameof(Count));
+            RaisePropertyChanged(Constants.ItemsName);
         }
     }
 
@@ -187,9 +187,9 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         Justification = "We have to allocate an atomic enumerator.")]
     public override IEnumerator<TItem> GetEnumerator()
     {
-        if (this.IsFilter())
+        if (IsFilter())
         {
-            return this.CheckAndCache()
+            return CheckAndCache()
                 .GetEnumerator();
         }
 
@@ -206,7 +206,7 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         base.DisposeManagedContext();
 
         Interlocked.Exchange(
-                ref this.cacheLocker,
+                ref cacheLocker,
                 null!)
             ?.Dispose();
     }
@@ -222,9 +222,9 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         TItem addedItem,
         int index)
     {
-        if (this.IsFilter())
+        if (IsFilter())
         {
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
@@ -245,9 +245,9 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         TItem newItem,
         int index)
     {
-        if (this.IsFilter())
+        if (IsFilter())
         {
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
@@ -267,9 +267,9 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         TItem removedItem,
         int index)
     {
-        if (this.IsFilter())
+        if (IsFilter())
         {
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
@@ -285,7 +285,7 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         Justification = "We have to allocate an atomic enumerator.")]
     private IEnumerator<TItem> EnumerateFiltered()
     {
-        TFilter? internalFilter = this.Filter;
+        TFilter? internalFilter = Filter;
 
         using IEnumerator<TItem> enumerator = base.GetEnumerator();
 
@@ -301,7 +301,7 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
             while (enumerator.MoveNext())
             {
                 TItem current = enumerator.Current;
-                if (this.FilteringPredicate(
+                if (FilteringPredicate(
                         current,
                         internalFilter))
                 {
@@ -317,46 +317,46 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         Justification = "We have to allocate an atomic enumerator.")]
     private IList<TItem> CheckAndCache()
     {
-        using var locker = new ReadWriteSynchronizationLocker(this.cacheLocker);
+        using var locker = new ReadWriteSynchronizationLocker(cacheLocker);
 
-        if (this.cachedFilteredElements != null)
+        if (cachedFilteredElements != null)
         {
-            return this.cachedFilteredElements;
+            return cachedFilteredElements;
         }
 
         locker.Upgrade();
 
-        this.cachedFilteredElements = new List<TItem>(this.InternalListContainer.Count);
+        cachedFilteredElements = new List<TItem>(InternalListContainer.Count);
 
-        using IEnumerator<TItem> enumerator = this.EnumerateFiltered();
+        using IEnumerator<TItem> enumerator = EnumerateFiltered();
 
         while (enumerator.MoveNext())
         {
             TItem current = enumerator.Current;
-            this.cachedFilteredElements.Add(current);
+            cachedFilteredElements.Add(current);
         }
 
-        return this.cachedFilteredElements;
+        return cachedFilteredElements;
     }
 
     private void ClearCachedContents()
     {
-        using var synchronizationLocker = new WriteOnlySynchronizationLocker(this.cacheLocker);
+        using var synchronizationLocker = new WriteOnlySynchronizationLocker(cacheLocker);
 
-        if (this.cachedFilteredElements == null)
+        if (cachedFilteredElements == null)
         {
             return;
         }
 
-        IList<TItem> coll = this.cachedFilteredElements;
-        this.cachedFilteredElements = null;
+        IList<TItem> coll = cachedFilteredElements;
+        cachedFilteredElements = null;
         coll.Clear();
     }
 
     private bool IsFilter() =>
-        this.Filter is not null &&
+        Filter is not null &&
         !EqualityComparer<TFilter>.Default.Equals(
-            this.Filter,
+            Filter,
             default!);
 
 #endregion

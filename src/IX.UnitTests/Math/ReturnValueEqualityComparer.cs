@@ -23,15 +23,15 @@ namespace IX.UnitTests.Math
             switch (x)
             {
                 case int ix:
-                    return this.Equals(
+                    return Equals(
                         ix,
                         y);
                 case long lx:
-                    return this.Equals(
+                    return Equals(
                         lx,
                         y);
                 case double dx:
-                    return this.Equals(
+                    return Equals(
                         dx,
                         y);
                 case byte[] bx:

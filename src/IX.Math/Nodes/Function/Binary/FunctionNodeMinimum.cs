@@ -47,8 +47,8 @@ internal sealed class FunctionNodeMinimum : NumericBinaryFunctionNodeBase
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
         new FunctionNodeMinimum(
-            this.FirstParameter.DeepClone(context),
-            this.SecondParameter.DeepClone(context));
+            FirstParameter.DeepClone(context),
+            SecondParameter.DeepClone(context));
 
     /// <summary>
     ///     Simplifies this node, if possible, reflexively returns otherwise.
@@ -58,7 +58,7 @@ internal sealed class FunctionNodeMinimum : NumericBinaryFunctionNodeBase
     /// </returns>
     public override NodeBase Simplify()
     {
-        if (this.FirstParameter is not NumericNode firstParam || this.SecondParameter is not NumericNode secondParam)
+        if (FirstParameter is not NumericNode firstParam || SecondParameter is not NumericNode secondParam)
         {
             // Cannot be simplified
             return this;
@@ -91,7 +91,7 @@ internal sealed class FunctionNodeMinimum : NumericBinaryFunctionNodeBase
     ///     The expression.
     /// </returns>
     protected override Expression GenerateExpressionInternal() =>
-        this.GenerateStaticBinaryFunctionCall(
+        GenerateStaticBinaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Min));
 
@@ -101,7 +101,7 @@ internal sealed class FunctionNodeMinimum : NumericBinaryFunctionNodeBase
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
-        this.GenerateStaticBinaryFunctionCall(
+        GenerateStaticBinaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Min),
             tolerance);

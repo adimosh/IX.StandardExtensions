@@ -74,8 +74,8 @@ internal sealed class FunctionNodeRandomInt : NumericBinaryFunctionNodeBase
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
         new FunctionNodeRandomInt(
-            this.FirstParameter.DeepClone(context),
-            this.SecondParameter.DeepClone(context));
+            FirstParameter.DeepClone(context),
+            SecondParameter.DeepClone(context));
 
     /// <summary>
     ///     Generates the expression that will be compiled into code.
@@ -84,7 +84,7 @@ internal sealed class FunctionNodeRandomInt : NumericBinaryFunctionNodeBase
     ///     The expression.
     /// </returns>
     protected override Expression GenerateExpressionInternal() =>
-        this.GenerateStaticBinaryFunctionCall<FunctionNodeRandomInt>(nameof(GenerateRandom));
+        GenerateStaticBinaryFunctionCall<FunctionNodeRandomInt>(nameof(GenerateRandom));
 
     /// <summary>
     ///     Generates the expression with tolerance that will be compiled into code.
@@ -92,7 +92,7 @@ internal sealed class FunctionNodeRandomInt : NumericBinaryFunctionNodeBase
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
-        this.GenerateStaticBinaryFunctionCall<FunctionNodeRandomInt>(
+        GenerateStaticBinaryFunctionCall<FunctionNodeRandomInt>(
             nameof(GenerateRandom),
             tolerance);
 }

@@ -180,7 +180,7 @@ internal class HebrewProber : CharsetProber
 #pragma warning disable CS8618
     public HebrewProber()
     {
-        this.Reset();
+        Reset();
     }
 #pragma warning restore CS8618
 
@@ -188,8 +188,8 @@ internal class HebrewProber : CharsetProber
         CharsetProber logical,
         CharsetProber visual)
     {
-        this.logicalProber = logical;
-        this.visualProber = visual;
+        logicalProber = logical;
+        visualProber = visual;
     }
 
     /**
@@ -223,7 +223,7 @@ internal class HebrewProber : CharsetProber
         int len)
     {
         // Both model probers say it's not them. No reason to continue.
-        if (this.GetState() == ProbingState.NotMe)
+        if (GetState() == ProbingState.NotMe)
         {
             return ProbingState.NotMe;
         }
@@ -238,32 +238,32 @@ internal class HebrewProber : CharsetProber
             if (b == 0x20)
             {
                 // *(curPtr-2) was not a space so prev is not a 1 letter word
-                if (this.beforePrev != 0x20)
+                if (beforePrev != 0x20)
                 {
                     // case (1) [-2:not space][-1:final letter][cur:space]
-                    if (IsFinal(this.prev))
+                    if (IsFinal(prev))
                     {
-                        this.finalCharLogicalScore++;
+                        finalCharLogicalScore++;
                     }
 
                     // case (2) [-2:not space][-1:Non-Final letter][cur:space]
-                    else if (IsNonFinal(this.prev))
+                    else if (IsNonFinal(prev))
                     {
-                        this.finalCharVisualScore++;
+                        finalCharVisualScore++;
                     }
                 }
             }
             else
             {
                 // case (3) [-2:space][-1:final letter][cur:not space]
-                if (this.beforePrev == 0x20 && IsFinal(this.prev) && b != ' ')
+                if (beforePrev == 0x20 && IsFinal(prev) && b != ' ')
                 {
-                    ++this.finalCharVisualScore;
+                    ++finalCharVisualScore;
                 }
             }
 
-            this.beforePrev = this.prev;
-            this.prev = b;
+            beforePrev = prev;
+            prev = b;
         }
 
         // Forever detecting, till the end or until both model probers
@@ -275,7 +275,7 @@ internal class HebrewProber : CharsetProber
     public override string GetCharsetName()
     {
         // If the final letter score distance is dominant enough, rely on it.
-        var finalsub = this.finalCharLogicalScore - this.finalCharVisualScore;
+        var finalsub = finalCharLogicalScore - finalCharVisualScore;
         if (finalsub >= MIN_FINAL_CHAR_DISTANCE)
         {
             return LOGICAL_NAME;
@@ -287,7 +287,7 @@ internal class HebrewProber : CharsetProber
         }
 
         // It's not dominant enough, try to rely on the model scores instead.
-        var modelsub = this.logicalProber.GetConfidence() - this.visualProber.GetConfidence();
+        var modelsub = logicalProber.GetConfidence() - visualProber.GetConfidence();
         if (modelsub > MIN_MODEL_DISTANCE)
         {
             return LOGICAL_NAME;
@@ -310,16 +310,16 @@ internal class HebrewProber : CharsetProber
 
     public override void Reset()
     {
-        this.finalCharLogicalScore = 0;
-        this.finalCharVisualScore = 0;
-        this.prev = 0x20;
-        this.beforePrev = 0x20;
+        finalCharLogicalScore = 0;
+        finalCharVisualScore = 0;
+        prev = 0x20;
+        beforePrev = 0x20;
     }
 
     public override ProbingState GetState()
     {
         // Remain active as long as any of the model probers are active.
-        if (this.logicalProber.GetState() == ProbingState.NotMe && this.visualProber.GetState() == ProbingState.NotMe)
+        if (logicalProber.GetState() == ProbingState.NotMe && visualProber.GetState() == ProbingState.NotMe)
         {
             return ProbingState.NotMe;
         }
@@ -331,7 +331,7 @@ internal class HebrewProber : CharsetProber
     {
         var status = new StringBuilder();
 
-        status.AppendLine($"  HEB: {this.finalCharLogicalScore} - {this.finalCharVisualScore} [Logical-Visual score]");
+        status.AppendLine($"  HEB: {finalCharLogicalScore} - {finalCharVisualScore} [Logical-Visual score]");
 
         return status.ToString();
     }

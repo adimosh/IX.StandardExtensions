@@ -30,10 +30,10 @@ internal class AutoReleaseTransactionContext : OperationTransaction
     /// </summary>
     public AutoReleaseTransactionContext()
     {
-        this.editableHandler = null!;
-        this.parentContext = null!;
+        editableHandler = null!;
+        parentContext = null!;
 
-        this.Success();
+        Success();
     }
 
     /// <summary>
@@ -65,7 +65,7 @@ internal class AutoReleaseTransactionContext : OperationTransaction
         }
 
         // State
-        this.items = null;
+        items = null;
 
         item.ReleaseFromUndoContext();
 
@@ -74,7 +74,7 @@ internal class AutoReleaseTransactionContext : OperationTransaction
             tei.EditCommitted -= editableHandler;
         }
 
-        this.AddFailure();
+        AddFailure();
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ internal class AutoReleaseTransactionContext : OperationTransaction
 
         // State
         this.items = itemsArray;
-        this.item = null;
+        item = null;
 
         foreach (IUndoableItem undoableItem in itemsArray)
         {
@@ -124,7 +124,7 @@ internal class AutoReleaseTransactionContext : OperationTransaction
             }
         }
 
-        this.AddFailure();
+        AddFailure();
     }
 
 #endregion
@@ -137,7 +137,7 @@ internal class AutoReleaseTransactionContext : OperationTransaction
     protected override void WhenSuccessful() { }
 
     private void AddFailure() =>
-        this.AddRevertStep(
+        AddRevertStep(
             state =>
             {
                 var thisL1 = (AutoReleaseTransactionContext)state;

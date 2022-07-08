@@ -36,7 +36,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     /// </summary>
     public ConcurrentObservableQueue()
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     public ConcurrentObservableQueue(IEnumerable<T> collection)
         : base(collection)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     public ConcurrentObservableQueue(int capacity)
         : base(capacity)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     public ConcurrentObservableQueue(SynchronizationContext context)
         : base(context)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
             context,
             collection)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -96,7 +96,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
             context,
             capacity)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -106,7 +106,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     public ConcurrentObservableQueue(bool suppressUndoable)
         : base(suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -121,7 +121,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
             collection,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -136,7 +136,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
             capacity,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -151,7 +151,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
             context,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -169,7 +169,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
             collection,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -187,7 +187,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
             capacity,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
 #endregion
@@ -197,7 +197,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     /// <summary>
     ///     Gets a synchronization lock item to be used when trying to synchronize read/write operations between threads.
     /// </summary>
-    protected override IReaderWriterLock SynchronizationLock => this.locker.Value;
+    protected override IReaderWriterLock SynchronizationLock => locker.Value;
 
 #endregion
 
@@ -210,7 +210,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     [OnDeserializing]
     internal void OnDeserializingMethod(StreamingContext context) =>
         Interlocked.Exchange(
-            ref this.locker,
+            ref locker,
             EnvironmentSettings.GenerateDefaultLocker());
 
 #region Disposable
@@ -221,7 +221,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     protected override void DisposeManagedContext()
     {
         Lazy<System.Threading.ReaderWriterLockSlim> l = Interlocked.Exchange(
-            ref this.locker,
+            ref locker,
             null!);
         if (l?.IsValueCreated ?? false)
         {
@@ -237,7 +237,7 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     protected override void DisposeGeneralContext()
     {
         Interlocked.Exchange(
-            ref this.locker,
+            ref locker,
             null!);
 
         base.DisposeGeneralContext();

@@ -21,7 +21,7 @@ public class NameValueEventArgs : EventArgs
     /// <param name="nameValue">The name value.</param>
     public NameValueEventArgs(string nameValue)
     {
-        this.Name = nameValue;
+        Name = nameValue;
     }
 
 #endregion

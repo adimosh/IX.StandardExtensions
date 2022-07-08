@@ -33,12 +33,12 @@ internal sealed class LeftShiftNode : ByteShiftOperationNodeBase
     ///     A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() =>
-        this.Left switch
+        Left switch
         {
-            NumericNode nLeft when this.Right is NumericNode nRight => NumericNode.LeftShift(
+            NumericNode nLeft when Right is NumericNode nRight => NumericNode.LeftShift(
                 nLeft,
                 nRight),
-            ByteArrayNode baLeft when this.Right is NumericNode baRight => new ByteArrayNode(
+            ByteArrayNode baLeft when Right is NumericNode baRight => new ByteArrayNode(
                 baLeft.Value.LeftShift(baRight.ExtractInt())),
             _ => this
         };
@@ -49,8 +49,8 @@ internal sealed class LeftShiftNode : ByteShiftOperationNodeBase
     /// <returns>A deep clone.</returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
         new LeftShiftNode(
-            this.Left.DeepClone(context),
-            this.Right.DeepClone(context));
+            Left.DeepClone(context),
+            Right.DeepClone(context));
 
     /// <summary>
     ///     Generates the expression that will be compiled into code.
@@ -61,20 +61,20 @@ internal sealed class LeftShiftNode : ByteShiftOperationNodeBase
     protected override Expression GenerateExpressionInternal()
     {
         Expression rightExpression = Expression.Convert(
-            this.Right.GenerateExpression(),
+            Right.GenerateExpression(),
             typeof(int));
 
-        return this.Left.ReturnType switch
+        return Left.ReturnType switch
         {
             SupportedValueType.Numeric => Expression.LeftShift(
-                this.Left.GenerateExpression(),
+                Left.GenerateExpression(),
                 rightExpression),
             SupportedValueType.ByteArray => Expression.Call(
                 typeof(BitwiseExtensions).GetMethodWithExactParameters(
                     nameof(BitwiseExtensions.LeftShift),
                     typeof(byte[]),
                     typeof(int))!,
-                this.Left.GenerateExpression(),
+                Left.GenerateExpression(),
                 rightExpression),
             _ => throw new ExpressionNotValidLogicallyException()
         };
@@ -88,19 +88,19 @@ internal sealed class LeftShiftNode : ByteShiftOperationNodeBase
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         Expression rightExpression = Expression.Convert(
-            this.Right.GenerateExpression(tolerance),
+            Right.GenerateExpression(tolerance),
             typeof(int));
-        return this.Left.ReturnType switch
+        return Left.ReturnType switch
         {
             SupportedValueType.Numeric => Expression.LeftShift(
-                this.Left.GenerateExpression(tolerance),
+                Left.GenerateExpression(tolerance),
                 rightExpression),
             SupportedValueType.ByteArray => Expression.Call(
                 typeof(BitwiseExtensions).GetMethodWithExactParameters(
                     nameof(BitwiseExtensions.LeftShift),
                     typeof(byte[]),
                     typeof(int))!,
-                this.Left.GenerateExpression(tolerance),
+                Left.GenerateExpression(tolerance),
                 rightExpression),
             _ => throw new ExpressionNotValidLogicallyException()
         };

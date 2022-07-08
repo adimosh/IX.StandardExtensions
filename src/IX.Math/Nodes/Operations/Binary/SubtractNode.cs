@@ -38,7 +38,7 @@ internal sealed class SubtractNode : SimpleMathematicalOperationNodeBase
     /// </returns>
     public override NodeBase Simplify()
     {
-        if (this.Left is NumericNode nnLeft && this.Right is NumericNode nnRight)
+        if (Left is NumericNode nnLeft && Right is NumericNode nnRight)
         {
             return NumericNode.Subtract(
                 nnLeft,
@@ -55,8 +55,8 @@ internal sealed class SubtractNode : SimpleMathematicalOperationNodeBase
     /// <returns>A deep clone.</returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
         new SubtractNode(
-            this.Left.DeepClone(context),
-            this.Right.DeepClone(context));
+            Left.DeepClone(context),
+            Right.DeepClone(context));
 
     /// <summary>
     ///     Generates the expression that will be compiled into code.
@@ -66,10 +66,10 @@ internal sealed class SubtractNode : SimpleMathematicalOperationNodeBase
     /// </returns>
     protected override Expression GenerateExpressionInternal()
     {
-        var left = this.Left.GenerateExpression();
-        var right = this.Right.GenerateExpression();
+        var left = Left.GenerateExpression();
+        var right = Right.GenerateExpression();
 
-        this.EnsureCompatibleNumericExpressions(
+        EnsureCompatibleNumericExpressions(
             ref left,
             ref right);
 
@@ -86,10 +86,10 @@ internal sealed class SubtractNode : SimpleMathematicalOperationNodeBase
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         {
-            var left = this.Left.GenerateExpression(tolerance);
-            var right = this.Right.GenerateExpression(tolerance);
+            var left = Left.GenerateExpression(tolerance);
+            var right = Right.GenerateExpression(tolerance);
 
-            this.EnsureCompatibleNumericExpressions(
+            EnsureCompatibleNumericExpressions(
                 ref left,
                 ref right);
 

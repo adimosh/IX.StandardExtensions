@@ -29,12 +29,12 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
     /// <summary>
     ///     Gets a value indicating whether or not the redo stack has data.
     /// </summary>
-    public bool RedoStackHasData => (this.redoStack?.IsValueCreated ?? false) && this.redoStack.Value.Count > 0;
+    public bool RedoStackHasData => (redoStack?.IsValueCreated ?? false) && redoStack.Value.Count > 0;
 
     /// <summary>
     ///     Gets a value indicating whether or not the undo stack has data.
     /// </summary>
-    public bool UndoStackHasData => (this.undoStack?.IsValueCreated ?? false) && this.undoStack.Value.Count > 0;
+    public bool UndoStackHasData => (undoStack?.IsValueCreated ?? false) && undoStack.Value.Count > 0;
 
     /// <summary>
     ///     Gets or sets the number of levels to keep undo or redo information.
@@ -54,7 +54,7 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
     /// </remarks>
     public int HistoryLevels
     {
-        get => this.historyLevels;
+        get => historyLevels;
         set
         {
             if (value < 0)
@@ -66,17 +66,17 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
             {
                 // This lock is here to ensure that no multiple threads can set different history levels, no mater what.
                 // It is a write-only lock, so no need for expensive lockers
-                if (this.historyLevels == value)
+                if (historyLevels == value)
                 {
                     return;
                 }
 
-                this.historyLevels = value;
+                historyLevels = value;
 
-                this.ProcessHistoryLevelsChange();
+                ProcessHistoryLevelsChange();
             }
 
-            this.RaisePropertyChanged(nameof(this.HistoryLevels));
+            RaisePropertyChanged(nameof(HistoryLevels));
         }
     }
 
@@ -89,9 +89,9 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
     /// </summary>
     public void ClearRedoStack()
     {
-        if (this.redoStack?.IsValueCreated ?? false)
+        if (redoStack?.IsValueCreated ?? false)
         {
-            this.redoStack.Value.Clear();
+            redoStack.Value.Clear();
         }
     }
 
@@ -100,9 +100,9 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
     /// </summary>
     public void ClearUndoStack()
     {
-        if (this.undoStack?.IsValueCreated ?? false)
+        if (undoStack?.IsValueCreated ?? false)
         {
-            this.undoStack.Value.Clear();
+            undoStack.Value.Clear();
         }
     }
 
@@ -111,21 +111,21 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
     /// </summary>
     /// <returns>A state change.</returns>
     public StateChangeBase PopRedo() =>
-        (this.redoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Pop();
+        (redoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Pop();
 
     /// <summary>
     ///     Pushes one state change on the undo stack.
     /// </summary>
     /// <returns>A state change.</returns>
     public StateChangeBase PopUndo() =>
-        (this.undoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Pop();
+        (undoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Pop();
 
     /// <summary>
     ///     Pushes one state change on the redo stack.
     /// </summary>
     /// <param name="stateChange">A state change to push.</param>
     public void PushRedo(StateChangeBase stateChange) =>
-        (this.redoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Push(
+        (redoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Push(
             stateChange);
 
     /// <summary>
@@ -133,7 +133,7 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
     /// </summary>
     /// <param name="stateChange">A state change to push.</param>
     public void PushUndo(StateChangeBase stateChange) =>
-        (this.undoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Push(
+        (undoStack?.Value ?? throw new InvalidOperationException(Resources.NoHistoryLevelsException)).Push(
             stateChange);
 
 #region Disposable
@@ -144,7 +144,7 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
         base.DisposeManagedContext();
 
         // Setting history levels to 0 will automatically dispose the undo/redo stacks
-        this.HistoryLevels = 0;
+        HistoryLevels = 0;
     }
 
 #endregion
@@ -152,14 +152,14 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
     private void ProcessHistoryLevelsChange()
     {
         // WARNING !!! Always execute this method within a lock
-        if (this.historyLevels == 0)
+        if (historyLevels == 0)
         {
             // Undo stack
-            Lazy<PushDownStack<StateChangeBase>>? stack = this.undoStack;
+            Lazy<PushDownStack<StateChangeBase>>? stack = undoStack;
 
             if (stack != null)
             {
-                this.undoStack = null;
+                undoStack = null;
 
                 if (stack.IsValueCreated)
                 {
@@ -169,10 +169,10 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
             }
 
             // Redo stack
-            stack = this.redoStack;
+            stack = redoStack;
             if (stack != null)
             {
-                this.redoStack = null;
+                redoStack = null;
 
                 if (stack.IsValueCreated)
                 {
@@ -183,18 +183,18 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
         }
         else
         {
-            if (this.undoStack != null && this.redoStack != null)
+            if (undoStack != null && redoStack != null)
             {
                 // Both stacks are not null at this point
                 // If any of them is initialized, we should change its size limit
-                if (this.undoStack.IsValueCreated)
+                if (undoStack.IsValueCreated)
                 {
-                    this.undoStack.Value.Limit = this.historyLevels;
+                    undoStack.Value.Limit = historyLevels;
                 }
 
-                if (this.redoStack.IsValueCreated)
+                if (redoStack.IsValueCreated)
                 {
-                    this.redoStack.Value.Limit = this.historyLevels;
+                    redoStack.Value.Limit = historyLevels;
                 }
             }
             else
@@ -202,31 +202,31 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
                 // Both stacks are null at this point, or need to be otherwise reinitialized
 
                 // Let's check for whether or not stacks need to be disposed
-                if (this.undoStack?.IsValueCreated ?? false)
+                if (undoStack?.IsValueCreated ?? false)
                 {
-                    this.undoStack.Value.Dispose();
+                    undoStack.Value.Dispose();
                 }
 
-                if (this.redoStack?.IsValueCreated ?? false)
+                if (redoStack?.IsValueCreated ?? false)
                 {
-                    this.redoStack.Value.Dispose();
+                    redoStack.Value.Dispose();
                 }
 
                 // Do proper stack initialization
-                this.undoStack = new Lazy<PushDownStack<StateChangeBase>>(this.GenerateStack);
-                this.redoStack = new Lazy<PushDownStack<StateChangeBase>>(this.GenerateStack);
+                undoStack = new Lazy<PushDownStack<StateChangeBase>>(GenerateStack);
+                redoStack = new Lazy<PushDownStack<StateChangeBase>>(GenerateStack);
             }
         }
     }
 
     private PushDownStack<StateChangeBase> GenerateStack()
     {
-        if (this.historyLevels == 0)
+        if (historyLevels == 0)
         {
             throw new InvalidOperationException(Resources.NoHistoryLevelsException);
         }
 
-        return new PushDownStack<StateChangeBase>(this.historyLevels);
+        return new PushDownStack<StateChangeBase>(historyLevels);
     }
 
 #endregion

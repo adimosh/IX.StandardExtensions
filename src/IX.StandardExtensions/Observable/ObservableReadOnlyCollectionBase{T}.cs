@@ -39,8 +39,8 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     protected ObservableReadOnlyCollectionBase(ICollectionAdapter<T> internalContainer)
     {
         Requires.NotNull(out this.internalContainer, internalContainer);
-        this.internalContainer.MustReset -= this.InternalContainer_MustReset;
-        this.internalContainer.MustReset += this.InternalContainer_MustReset;
+        this.internalContainer.MustReset -= InternalContainer_MustReset;
+        this.internalContainer.MustReset += InternalContainer_MustReset;
     }
 
     /// <summary>
@@ -54,8 +54,8 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
         : base(context)
     {
         Requires.NotNull(out this.internalContainer, internalContainer);
-        this.internalContainer.MustReset -= this.InternalContainer_MustReset;
-        this.internalContainer.MustReset += this.InternalContainer_MustReset;
+        this.internalContainer.MustReset -= InternalContainer_MustReset;
+        this.internalContainer.MustReset += InternalContainer_MustReset;
     }
 
 #endregion
@@ -69,7 +69,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     ///     <para>On concurrent collections, this property is read-synchronized.</para>
     /// </remarks>
     public virtual int Count =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             thisL1 => thisL1.ReadLock(
                 thisL2 => thisL2.InternalContainer.Count,
                 thisL1),
@@ -79,7 +79,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     ///     Gets a value indicating whether the <see cref="ObservableCollectionBase{T}" /> is read-only.
     /// </summary>
     public bool IsReadOnly =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             thisL1 => thisL1.ReadLock(
                 thisL2 => thisL2.InternalContainer.IsReadOnly,
                 thisL1),
@@ -121,7 +121,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     /// <value>
     ///     The internal container.
     /// </value>
-    protected internal ICollectionAdapter<T> InternalContainer => this.internalContainer;
+    protected internal ICollectionAdapter<T> InternalContainer => internalContainer;
 
     /// <summary>
     ///     Gets the ignore reset count.
@@ -177,14 +177,14 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     {
         this.RequiresNotDisposed();
 
-        if (this.SynchronizationLock == null)
+        if (SynchronizationLock == null)
         {
-            return this.InternalContainer.GetEnumerator();
+            return InternalContainer.GetEnumerator();
         }
 
         return AtomicEnumerator<T>.FromCollection(
-            this.InternalContainer,
-            this.ReadLock);
+            InternalContainer,
+            ReadLock);
     }
 
     /// <summary>
@@ -203,10 +203,10 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
 
         T[] tempArray;
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            tempArray = new T[this.InternalContainer.Count - index];
-            this.InternalContainer.CopyTo(
+            tempArray = new T[InternalContainer.Count - index];
+            InternalContainer.CopyTo(
                 tempArray,
                 index);
         }
@@ -227,7 +227,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Unavoidable with this interface.")]
     [ExcludeFromCodeCoverage]
-    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 #endregion
 
@@ -246,9 +246,9 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            return this.InternalContainer.Contains(item);
+            return InternalContainer.Contains(item);
         }
     }
 
@@ -270,9 +270,9 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            this.InternalContainer.CopyTo(
+            InternalContainer.CopyTo(
                 array,
                 arrayIndex);
         }
@@ -289,9 +289,9 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            var containerCount = this.InternalContainer.Count;
+            var containerCount = InternalContainer.Count;
 
             if (fromIndex >= containerCount || fromIndex < 0)
             {
@@ -303,13 +303,13 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
             if (fromIndex == 0)
             {
                 array = new T[containerCount];
-                this.InternalContainer.CopyTo(
+                InternalContainer.CopyTo(
                     array,
                     0);
             }
             else
             {
-                array = this.InternalContainer.Skip(fromIndex)
+                array = InternalContainer.Skip(fromIndex)
                     .ToArray();
             }
 
@@ -326,12 +326,12 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            var containerCount = this.InternalContainer.Count;
+            var containerCount = InternalContainer.Count;
 
             var array = new T[containerCount];
-            this.InternalContainer.CopyTo(
+            InternalContainer.CopyTo(
                 array,
                 0);
 
@@ -352,7 +352,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     {
         try
         {
-            this.internalContainer.Clear();
+            internalContainer.Clear();
         }
         catch
         {
@@ -368,9 +368,9 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     /// </summary>
     protected void IncreaseIgnoreMustResetCounter()
     {
-        lock (this.resetCountLocker)
+        lock (resetCountLocker)
         {
-            this.IgnoreResetCount++;
+            IgnoreResetCount++;
         }
     }
 
@@ -380,9 +380,9 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     /// <param name="increaseBy">The amount to increase by.</param>
     protected void IncreaseIgnoreMustResetCounter(int increaseBy)
     {
-        lock (this.resetCountLocker)
+        lock (resetCountLocker)
         {
-            this.IgnoreResetCount += increaseBy;
+            IgnoreResetCount += increaseBy;
         }
     }
 
@@ -394,7 +394,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     private void InternalContainer_MustReset(
         object? sender,
         EventArgs e) =>
-        this.Invoke(
+        Invoke(
             thisL1 =>
             {
                 bool shouldReset;

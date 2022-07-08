@@ -43,7 +43,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     /// </summary>
     public ConcurrentObservableStack()
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     public ConcurrentObservableStack(int capacity)
         : base(capacity)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     public ConcurrentObservableStack(IEnumerable<T> collection)
         : base(collection)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     public ConcurrentObservableStack(SynchronizationContext context)
         : base(context)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -88,7 +88,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
             context,
             capacity)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -103,7 +103,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
             context,
             collection)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -113,7 +113,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     public ConcurrentObservableStack(bool suppressUndoable)
         : base(suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -128,7 +128,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
             capacity,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -143,7 +143,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
             collection,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -158,7 +158,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
             context,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -176,7 +176,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
             capacity,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -194,7 +194,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
             collection,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
 #endregion
@@ -204,7 +204,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     /// <summary>
     ///     Gets a synchronization lock item to be used when trying to synchronize read/write operations between threads.
     /// </summary>
-    protected override IReaderWriterLock SynchronizationLock => this.locker.Value;
+    protected override IReaderWriterLock SynchronizationLock => locker.Value;
 
 #endregion
 
@@ -217,7 +217,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     [OnDeserializing]
     internal void OnDeserializingMethod(StreamingContext context) =>
         Interlocked.Exchange(
-            ref this.locker,
+            ref locker,
             EnvironmentSettings.GenerateDefaultLocker());
 
 #region Disposable
@@ -228,7 +228,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     protected override void DisposeManagedContext()
     {
         Lazy<ReaderWriterLockSlim>? l = Interlocked.Exchange(
-            ref this.locker,
+            ref locker,
             null!);
         if (l?.IsValueCreated ?? false)
         {
@@ -244,7 +244,7 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     protected override void DisposeGeneralContext()
     {
         Interlocked.Exchange(
-            ref this.locker,
+            ref locker,
             null!);
 
         base.DisposeGeneralContext();

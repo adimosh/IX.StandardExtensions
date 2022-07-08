@@ -56,25 +56,25 @@ internal class EscCharsetProber : CharsetProber
 
     public EscCharsetProber()
     {
-        this.codingSM = new CodingStateMachine[CHARSETS_NUM];
-        this.codingSM[0] = new CodingStateMachine(new HZ_GB_2312_SMModel());
-        this.codingSM[1] = new CodingStateMachine(new Iso_2022_CN_SMModel());
-        this.codingSM[2] = new CodingStateMachine(new Iso_2022_JP_SMModel());
-        this.codingSM[3] = new CodingStateMachine(new Iso_2022_KR_SMModel());
-        this.Reset();
+        codingSM = new CodingStateMachine[CHARSETS_NUM];
+        codingSM[0] = new CodingStateMachine(new HZ_GB_2312_SMModel());
+        codingSM[1] = new CodingStateMachine(new Iso_2022_CN_SMModel());
+        codingSM[2] = new CodingStateMachine(new Iso_2022_JP_SMModel());
+        codingSM[3] = new CodingStateMachine(new Iso_2022_KR_SMModel());
+        Reset();
     }
 
     public override void Reset()
     {
-        this.state = ProbingState.Detecting;
+        state = ProbingState.Detecting;
         for (var i = 0; i < CHARSETS_NUM; i++)
         {
-            this.codingSM[i]
+            codingSM[i]
                 .Reset();
         }
 
-        this.activeSM = CHARSETS_NUM;
-        this.detectedCharset = null;
+        activeSM = CHARSETS_NUM;
+        detectedCharset = null;
     }
 
     public override ProbingState HandleData(
@@ -84,53 +84,53 @@ internal class EscCharsetProber : CharsetProber
     {
         var max = offset + len;
 
-        for (var i = offset; i < max && this.state == ProbingState.Detecting; i++)
+        for (var i = offset; i < max && state == ProbingState.Detecting; i++)
         {
             if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
             {
                 // High-byte found, let's get out of here
-                this.state = ProbingState.NotMe;
+                state = ProbingState.NotMe;
 
-                return this.state;
+                return state;
             }
 
-            for (var j = this.activeSM - 1; j >= 0; j--)
+            for (var j = activeSM - 1; j >= 0; j--)
             {
                 // byte is feed to all active state machine
-                var codingState = this.codingSM[j]
+                var codingState = codingSM[j]
                     .NextState(buf[i]);
                 if (codingState == StateMachineModel.ERROR)
                 {
                     // got negative answer for this state machine, make it inactive
-                    this.activeSM--;
-                    if (this.activeSM == 0)
+                    activeSM--;
+                    if (activeSM == 0)
                     {
-                        this.state = ProbingState.NotMe;
+                        state = ProbingState.NotMe;
 
-                        return this.state;
+                        return state;
                     }
-                    else if (j != this.activeSM)
+                    else if (j != activeSM)
                     {
-                        CodingStateMachine t = this.codingSM[this.activeSM];
-                        this.codingSM[this.activeSM] = this.codingSM[j];
-                        this.codingSM[j] = t;
+                        CodingStateMachine t = codingSM[activeSM];
+                        codingSM[activeSM] = codingSM[j];
+                        codingSM[j] = t;
                     }
                 }
                 else if (codingState == StateMachineModel.ITSME)
                 {
-                    this.state = ProbingState.FoundIt;
-                    this.detectedCharset = this.codingSM[j]
+                    state = ProbingState.FoundIt;
+                    detectedCharset = codingSM[j]
                         .ModelName;
 
-                    return this.state;
+                    return state;
                 }
             }
         }
 
-        return this.state;
+        return state;
     }
 
-    public override string GetCharsetName() => this.detectedCharset ?? CodepageName.ASCII;
+    public override string GetCharsetName() => detectedCharset ?? CodepageName.ASCII;
 
     public override float GetConfidence(StringBuilder? status = null) => 0.99f;
 }

@@ -52,8 +52,8 @@ public sealed class QueueDebugView<T>
     {
         get
         {
-            var items = new T[this.queue.InternalContainer.Count];
-            this.queue.InternalContainer.CopyTo(
+            var items = new T[queue.InternalContainer.Count];
+            queue.InternalContainer.CopyTo(
                 items,
                 0);
 

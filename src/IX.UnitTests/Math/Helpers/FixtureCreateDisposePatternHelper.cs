@@ -30,7 +30,7 @@ namespace IX.UnitTests.Math.Helpers
             Requires.NotNull(fixture, nameof(fixture));
             Requires.NotNull(create, nameof(create));
 
-            this.Service = create(fixture);
+            Service = create(fixture);
 
             this.dispose = dispose;
         }
@@ -48,9 +48,9 @@ namespace IX.UnitTests.Math.Helpers
         /// </summary>
         public void Dispose()
         {
-            if (this.Service != null)
+            if (Service != null)
             {
-                this.dispose?.Invoke(this.Service);
+                dispose?.Invoke(Service);
             }
         }
     }

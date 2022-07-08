@@ -193,7 +193,7 @@ public partial class ConcurrentDictionary<TKey, TValue> :
 
         try
         {
-            return this.AddOrUpdate(
+            return AddOrUpdate(
                 key,
                 addValue,
                 UpdateInternal<TState>);
@@ -214,8 +214,8 @@ public partial class ConcurrentDictionary<TKey, TValue> :
     /// <returns>The array of current items.</returns>
     public KeyValuePair<TKey, TValue>[] ClearToArray()
     {
-        KeyValuePair<TKey, TValue>[] arr = this.ToArray();
-        this.Clear();
+        KeyValuePair<TKey, TValue>[] arr = ToArray();
+        Clear();
 
         return arr;
     }

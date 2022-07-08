@@ -110,7 +110,7 @@ public class Path : IPath
     {
         Requires.NotNullOrWhiteSpace(stringToEscape);
 
-        var invalidChars = this.GetInvalidFileNameChars();
+        var invalidChars = GetInvalidFileNameChars();
         var newString = new char[stringToEscape.Length];
         ReadOnlySpan<char> oldString = stringToEscape.AsSpan();
 

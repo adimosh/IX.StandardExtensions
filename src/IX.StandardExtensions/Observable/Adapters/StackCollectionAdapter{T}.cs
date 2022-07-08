@@ -45,7 +45,7 @@ internal class StackCollectionAdapter<T> : ModernCollectionAdapter<T, System.Col
     ///     Gets the number of items.
     /// </summary>
     /// <value>The number of items.</value>
-    public override int Count => this.stack.Count;
+    public override int Count => stack.Count;
 
     /// <summary>
     ///     Gets a value indicating whether this instance is read only.
@@ -64,15 +64,15 @@ internal class StackCollectionAdapter<T> : ModernCollectionAdapter<T, System.Col
     /// <returns>The index of the freshly-added item.</returns>
     public override int Add(T item)
     {
-        this.stack.Push(item);
+        stack.Push(item);
 
-        return this.stack.Count - 1;
+        return stack.Count - 1;
     }
 
     /// <summary>
     ///     Clears this instance.
     /// </summary>
-    public override void Clear() => this.stack.Clear();
+    public override void Clear() => stack.Clear();
 
     /// <summary>
     ///     Determines whether the container list contains the specified item.
@@ -82,7 +82,7 @@ internal class StackCollectionAdapter<T> : ModernCollectionAdapter<T, System.Col
     ///     <see langword="true" /> if the container list contains the specified item; otherwise, <see langword="false" />
     ///     .
     /// </returns>
-    public override bool Contains(T item) => this.stack.Contains(item);
+    public override bool Contains(T item) => stack.Contains(item);
 
     /// <summary>
     ///     Copies the contents of the container to an array.
@@ -92,7 +92,7 @@ internal class StackCollectionAdapter<T> : ModernCollectionAdapter<T, System.Col
     public override void CopyTo(
         T[] array,
         int arrayIndex) =>
-        this.stack.CopyTo(
+        stack.CopyTo(
             array,
             arrayIndex);
 
@@ -107,36 +107,36 @@ internal class StackCollectionAdapter<T> : ModernCollectionAdapter<T, System.Col
     ///     Pops an item in the stack.
     /// </summary>
     /// <returns>T.</returns>
-    public T Pop() => this.stack.Pop();
+    public T Pop() => stack.Pop();
 
     /// <summary>
     ///     Peeks at the top item in the stack.
     /// </summary>
     /// <returns>T.</returns>
-    public T Peek() => this.stack.Peek();
+    public T Peek() => stack.Peek();
 
     /// <summary>
     ///     Pushes the specified item in the stack.
     /// </summary>
     /// <param name="item">The item.</param>
-    public void Push(T item) => this.stack.Push(item);
+    public void Push(T item) => stack.Push(item);
 
     /// <summary>
     ///     Converts all items in the stack to an array.
     /// </summary>
     /// <returns>The array of items.</returns>
-    public T[] ToArray() => this.stack.ToArray();
+    public T[] ToArray() => stack.ToArray();
 
     /// <summary>
     ///     Trims the excess space in the stack.
     /// </summary>
-    public void TrimExcess() => this.stack.TrimExcess();
+    public void TrimExcess() => stack.TrimExcess();
 
     /// <summary>
     ///     Returns an enumerator that iterates through the collection.
     /// </summary>
     /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-    public override System.Collections.Generic.Stack<T>.Enumerator GetEnumerator() => this.stack.GetEnumerator();
+    public override System.Collections.Generic.Stack<T>.Enumerator GetEnumerator() => stack.GetEnumerator();
 
 #endregion
 }

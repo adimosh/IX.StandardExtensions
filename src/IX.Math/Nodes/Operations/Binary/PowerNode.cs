@@ -38,7 +38,7 @@ internal sealed class PowerNode : SimpleMathematicalOperationNodeBase
     /// </returns>
     public override NodeBase Simplify()
     {
-        if (this.Left is NumericNode nnLeft && this.Right is NumericNode nnRight)
+        if (Left is NumericNode nnLeft && Right is NumericNode nnRight)
         {
             return NumericNode.Power(
                 nnLeft,
@@ -55,8 +55,8 @@ internal sealed class PowerNode : SimpleMathematicalOperationNodeBase
     /// <returns>A deep clone.</returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
         new PowerNode(
-            this.Left.DeepClone(context),
-            this.Right.DeepClone(context));
+            Left.DeepClone(context),
+            Right.DeepClone(context));
 
     /// <summary>
     ///     Generates the expression that will be compiled into code.
@@ -70,10 +70,10 @@ internal sealed class PowerNode : SimpleMathematicalOperationNodeBase
             nameof(global::System.Math.Pow),
             null,
             Expression.Convert(
-                this.Left.GenerateExpression(),
+                Left.GenerateExpression(),
                 typeof(double)),
             Expression.Convert(
-                this.Right.GenerateExpression(),
+                Right.GenerateExpression(),
                 typeof(double)));
 
     /// <summary>
@@ -87,9 +87,9 @@ internal sealed class PowerNode : SimpleMathematicalOperationNodeBase
             nameof(global::System.Math.Pow),
             null,
             Expression.Convert(
-                this.Left.GenerateExpression(tolerance),
+                Left.GenerateExpression(tolerance),
                 typeof(double)),
             Expression.Convert(
-                this.Right.GenerateExpression(tolerance),
+                Right.GenerateExpression(tolerance),
                 typeof(double)));
 }

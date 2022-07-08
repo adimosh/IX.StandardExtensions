@@ -58,8 +58,8 @@ public sealed class CollectionDebugView<T>
     {
         get
         {
-            var items = new T[this.collection.Count];
-            this.collection.CopyTo(
+            var items = new T[collection.Count];
+            collection.CopyTo(
                 items,
                 0);
 

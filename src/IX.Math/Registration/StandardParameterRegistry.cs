@@ -15,11 +15,11 @@ internal class StandardParameterRegistry : IParameterRegistry
 
     public StandardParameterRegistry(List<IStringFormatter> stringFormatters)
     {
-        this.parameterContexts = new ConcurrentDictionary<string, ParameterContext>();
+        parameterContexts = new ConcurrentDictionary<string, ParameterContext>();
         this.stringFormatters = stringFormatters;
     }
 
-    public bool Populated => this.parameterContexts.Count > 0;
+    public bool Populated => parameterContexts.Count > 0;
 
     public ParameterContext AdvertiseParameter(string name)
     {
@@ -28,7 +28,7 @@ internal class StandardParameterRegistry : IParameterRegistry
             throw new ArgumentNullException(nameof(name));
         }
 
-        return this.parameterContexts.GetOrAdd(name, (nameL1, formattersL1) => new ParameterContext(nameL1, formattersL1), this.stringFormatters);
+        return parameterContexts.GetOrAdd(name, (nameL1, formattersL1) => new ParameterContext(nameL1, formattersL1), stringFormatters);
     }
 
     public ParameterContext CloneFrom(ParameterContext previousContext)
@@ -39,7 +39,7 @@ internal class StandardParameterRegistry : IParameterRegistry
         }
 
         var name = previousContext.Name;
-        if (this.parameterContexts.TryGetValue(name, out ParameterContext existingValue))
+        if (parameterContexts.TryGetValue(name, out ParameterContext existingValue))
         {
             if (existingValue.Equals(previousContext))
             {
@@ -51,12 +51,12 @@ internal class StandardParameterRegistry : IParameterRegistry
 
         ParameterContext newContext = previousContext.DeepClone();
 
-        this.parameterContexts.TryAdd(name, newContext);
+        parameterContexts.TryAdd(name, newContext);
 
         return newContext;
     }
 
-    public ParameterContext[] Dump() => this.parameterContexts.ToArray().Select(p => p.Value).OrderBy(p => p.Order).ToArray();
+    public ParameterContext[] Dump() => parameterContexts.ToArray().Select(p => p.Value).OrderBy(p => p.Order).ToArray();
 
-    public bool Exists(string name) => this.parameterContexts.ContainsKey(name);
+    public bool Exists(string name) => parameterContexts.ContainsKey(name);
 }

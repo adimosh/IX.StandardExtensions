@@ -38,18 +38,18 @@ public class ReaderWriterLockSlim : DisposableBase,
     /// </summary>
     public ReaderWriterLockSlim()
     {
-        this.locker = new GlobalThreading.ReaderWriterLockSlim();
-        this.lockerLocal = true;
+        locker = new GlobalThreading.ReaderWriterLockSlim();
+        lockerLocal = true;
     }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ReaderWriterLockSlim" /> class.
     /// </summary>
     /// <param name="lockRecursionPolicy">The lock recursion policy.</param>
-    public ReaderWriterLockSlim(GlobalThreading.LockRecursionPolicy lockRecursionPolicy)
+    public ReaderWriterLockSlim(LockRecursionPolicy lockRecursionPolicy)
     {
-        this.locker = new GlobalThreading.ReaderWriterLockSlim(lockRecursionPolicy);
-        this.lockerLocal = true;
+        locker = new GlobalThreading.ReaderWriterLockSlim(lockRecursionPolicy);
+        lockerLocal = true;
     }
 
     /// <summary>
@@ -70,27 +70,27 @@ public class ReaderWriterLockSlim : DisposableBase,
     /// </summary>
     /// <value><see langword="true" /> if the current thread has a read lock held; otherwise, <see langword="false" />.</value>
     public bool IsReadLockHeld =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             lck => lck.IsReadLockHeld,
-            this.locker);
+            locker);
 
     /// <summary>
     ///     Gets a value indicating whether the current thread has an upgradeable lock held.
     /// </summary>
     /// <value><see langword="true" /> if the current thread has an upgradeable lock held; otherwise, <see langword="false" />.</value>
     public bool IsUpgradeableReadLockHeld =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             lck => lck.IsUpgradeableReadLockHeld,
-            this.locker);
+            locker);
 
     /// <summary>
     ///     Gets a value indicating whether the current thread has a write lock held.
     /// </summary>
     /// <value><see langword="true" /> if the current thread has a write lock held; otherwise, <see langword="false" />.</value>
     public bool IsWriteLockHeld =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             lck => lck.IsWriteLockHeld,
-            this.locker);
+            locker);
 
 #endregion
 
@@ -126,49 +126,49 @@ public class ReaderWriterLockSlim : DisposableBase,
     ///     Enters a read lock.
     /// </summary>
     public void EnterReadLock() =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             lck => lck.EnterReadLock(),
-            this.locker);
+            locker);
 
     /// <summary>
     ///     Enters an upgradeable read lock.
     /// </summary>
     public void EnterUpgradeableReadLock() =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             lck => lck.EnterUpgradeableReadLock(),
-            this.locker);
+            locker);
 
     /// <summary>
     ///     Enters the write lock.
     /// </summary>
     public void EnterWriteLock() =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             lck => lck.EnterWriteLock(),
-            this.locker);
+            locker);
 
     /// <summary>
     ///     Exits a read lock.
     /// </summary>
     public void ExitReadLock() =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             lck => lck.ExitReadLock(),
-            this.locker);
+            locker);
 
     /// <summary>
     ///     Exits an upgradeable read lock.
     /// </summary>
     public void ExitUpgradeableReadLock() =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             lck => lck.ExitUpgradeableReadLock(),
-            this.locker);
+            locker);
 
     /// <summary>
     ///     Exits a write lock.
     /// </summary>
     public void ExitWriteLock() =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             lck => lck.ExitWriteLock(),
-            this.locker);
+            locker);
 
     /// <summary>
     ///     Tries to enter a read lock.
@@ -179,11 +179,11 @@ public class ReaderWriterLockSlim : DisposableBase,
     ///     otherwise.
     /// </returns>
     public bool TryEnterReadLock(int millisecondsTimeout) =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             (
                 lck,
                 timeout) => lck.TryEnterReadLock(timeout),
-            this.locker,
+            locker,
             millisecondsTimeout);
 
     /// <summary>
@@ -195,11 +195,11 @@ public class ReaderWriterLockSlim : DisposableBase,
     ///     otherwise.
     /// </returns>
     public bool TryEnterReadLock(TimeSpan timeout) =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             (
                 lck,
                 timeoutInternal) => lck.TryEnterReadLock(timeoutInternal),
-            this.locker,
+            locker,
             timeout);
 
     /// <summary>
@@ -211,11 +211,11 @@ public class ReaderWriterLockSlim : DisposableBase,
     ///     otherwise.
     /// </returns>
     public bool TryEnterUpgradeableReadLock(int millisecondsTimeout) =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             (
                 lck,
                 timeout) => lck.TryEnterUpgradeableReadLock(timeout),
-            this.locker,
+            locker,
             millisecondsTimeout);
 
     /// <summary>
@@ -227,11 +227,11 @@ public class ReaderWriterLockSlim : DisposableBase,
     ///     otherwise.
     /// </returns>
     public bool TryEnterUpgradeableReadLock(TimeSpan timeout) =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             (
                 lck,
                 timeoutInternal) => lck.TryEnterUpgradeableReadLock(timeoutInternal),
-            this.locker,
+            locker,
             timeout);
 
     /// <summary>
@@ -243,11 +243,11 @@ public class ReaderWriterLockSlim : DisposableBase,
     ///     otherwise.
     /// </returns>
     public bool TryEnterWriteLock(int millisecondsTimeout) =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             (
                 lck,
                 timeout) => lck.TryEnterWriteLock(timeout),
-            this.locker,
+            locker,
             millisecondsTimeout);
 
     /// <summary>
@@ -259,11 +259,11 @@ public class ReaderWriterLockSlim : DisposableBase,
     ///     otherwise.
     /// </returns>
     public bool TryEnterWriteLock(TimeSpan timeout) =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             (
                 lck,
                 timeoutInternal) => lck.TryEnterWriteLock(timeoutInternal),
-            this.locker,
+            locker,
             timeout);
 
 #endregion
@@ -272,7 +272,7 @@ public class ReaderWriterLockSlim : DisposableBase,
     ///     Converts to a <see cref="GlobalThreading.ReaderWriterLockSlim" />.
     /// </summary>
     /// <returns>The <see cref="GlobalThreading.ReaderWriterLockSlim" /> that is encapsulated in this instance.</returns>
-    public GlobalThreading.ReaderWriterLockSlim ToReaderWriterLockSlim() => this.locker;
+    public GlobalThreading.ReaderWriterLockSlim ToReaderWriterLockSlim() => locker;
 
 #region Disposable
 
@@ -283,9 +283,9 @@ public class ReaderWriterLockSlim : DisposableBase,
     {
         base.DisposeManagedContext();
 
-        if (this.lockerLocal)
+        if (lockerLocal)
         {
-            this.locker.Dispose();
+            locker.Dispose();
         }
     }
 

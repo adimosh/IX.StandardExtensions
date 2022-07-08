@@ -27,7 +27,7 @@ public sealed class NotNullWhenAttribute : Attribute
     /// </param>
     public NotNullWhenAttribute(bool returnValue)
     {
-        this.ReturnValue = returnValue;
+        ReturnValue = returnValue;
     }
 
 #endregion

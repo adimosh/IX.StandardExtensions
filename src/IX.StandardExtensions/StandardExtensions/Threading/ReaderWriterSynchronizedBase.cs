@@ -37,8 +37,8 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     /// </summary>
     protected ReaderWriterSynchronizedBase()
     {
-        this.locker = new ReaderWriterLockSlim();
-        this.lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
+        locker = new ReaderWriterLockSlim();
+        lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
     }
 
     /// <summary>
@@ -54,8 +54,8 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         Requires.NotNull(
             out this.locker,
             locker);
-        this.lockInherited = true;
-        this.lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
+        lockInherited = true;
+        lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
     }
 
     /// <summary>
@@ -64,8 +64,8 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     /// <param name="timeout">The lock timeout duration.</param>
     protected ReaderWriterSynchronizedBase(TimeSpan timeout)
     {
-        this.locker = new ReaderWriterLockSlim();
-        this.lockerTimeout = timeout;
+        locker = new ReaderWriterLockSlim();
+        lockerTimeout = timeout;
     }
 
     /// <summary>
@@ -84,8 +84,8 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         Requires.NotNull(
             out this.locker,
             locker);
-        this.lockInherited = true;
-        this.lockerTimeout = timeout;
+        lockInherited = true;
+        lockerTimeout = timeout;
     }
 
 #endregion
@@ -99,7 +99,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     [OnDeserializing]
     internal void OnDeserializingMethod(StreamingContext context) =>
         Interlocked.Exchange(
-            ref this.locker,
+            ref locker,
             new ReaderWriterLockSlim());
 
 #region Disposable
@@ -109,9 +109,9 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     /// </summary>
     protected override void DisposeManagedContext()
     {
-        if (!this.lockInherited)
+        if (!lockInherited)
         {
-            this.locker.Dispose();
+            locker.Dispose();
         }
 
         base.DisposeManagedContext();
@@ -128,8 +128,8 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         this.RequiresNotDisposed();
 
         return new ReadOnlySynchronizationLocker(
-            this.locker,
-            this.lockerTimeout);
+            locker,
+            lockerTimeout);
     }
 
     /// <summary>
@@ -142,8 +142,8 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         Action localAction = Requires.NotNull(action);
 
         using (new ReadOnlySynchronizationLocker(
-                   this.locker,
-                   this.lockerTimeout))
+                   locker,
+                   lockerTimeout))
         {
             localAction();
         }
@@ -161,8 +161,8 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         Func<T> localAction = Requires.NotNull(action);
 
         using (new ReadOnlySynchronizationLocker(
-                   this.locker,
-                   this.lockerTimeout))
+                   locker,
+                   lockerTimeout))
         {
             return localAction();
         }
@@ -177,8 +177,8 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         this.RequiresNotDisposed();
 
         return new WriteOnlySynchronizationLocker(
-            this.locker,
-            this.lockerTimeout);
+            locker,
+            lockerTimeout);
     }
 
     /// <summary>
@@ -191,8 +191,8 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         Action localAction = Requires.NotNull(action);
 
         using (new WriteOnlySynchronizationLocker(
-                   this.locker,
-                   this.lockerTimeout))
+                   locker,
+                   lockerTimeout))
         {
             localAction();
         }
@@ -210,8 +210,8 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         Func<T> localAction = Requires.NotNull(action);
 
         using (new WriteOnlySynchronizationLocker(
-                   this.locker,
-                   this.lockerTimeout))
+                   locker,
+                   lockerTimeout))
         {
             return localAction();
         }
@@ -226,8 +226,8 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         this.RequiresNotDisposed();
 
         return new ReadWriteSynchronizationLocker(
-            this.locker,
-            this.lockerTimeout);
+            locker,
+            lockerTimeout);
     }
 
 #endregion

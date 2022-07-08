@@ -24,7 +24,7 @@ public sealed class MaybeNullWhenAttribute : Attribute
     /// </param>
     public MaybeNullWhenAttribute(bool returnValue)
     {
-        this.ReturnValue = returnValue;
+        ReturnValue = returnValue;
     }
 
     #endregion

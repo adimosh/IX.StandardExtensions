@@ -28,13 +28,13 @@ public class ByteArrayNode : ConstantNodeBase, ISpecialRequestNode
     /// <param name="value">The value of the constant.</param>
     public ByteArrayNode(byte[] value)
     {
-        this.Value = Requires.NotNull(value);
+        Value = Requires.NotNull(value);
     }
 
     /// <summary>
     ///     Gets the display value.
     /// </summary>
-    public string DisplayValue => this.GetString();
+    public string DisplayValue => GetString();
 
     /// <summary>
     ///     Gets the return type of this node.
@@ -55,7 +55,7 @@ public class ByteArrayNode : ConstantNodeBase, ISpecialRequestNode
     ///     Distills the value into a usable constant.
     /// </summary>
     /// <returns>A usable constant.</returns>
-    public override object DistillValue() => this.Value;
+    public override object DistillValue() => Value;
 
     /// <summary>
     ///     Generates the expression that will be compiled into code.
@@ -63,7 +63,7 @@ public class ByteArrayNode : ConstantNodeBase, ISpecialRequestNode
     /// <returns>A <see cref="ConstantExpression" /> with a boolean value.</returns>
     public override Expression GenerateCachedExpression() =>
         Expression.Constant(
-            this.Value,
+            Value,
             typeof(byte[]));
 
     /// <summary>
@@ -71,7 +71,7 @@ public class ByteArrayNode : ConstantNodeBase, ISpecialRequestNode
     /// </summary>
     /// <returns>The string expression.</returns>
     public override Expression GenerateCachedStringExpression() => Expression.Constant(
-        this.GetString(),
+        GetString(),
         typeof(string));
 
     /// <summary>
@@ -79,25 +79,25 @@ public class ByteArrayNode : ConstantNodeBase, ISpecialRequestNode
     /// </summary>
     /// <param name="context">The deep cloning context.</param>
     /// <returns>A deep clone.</returns>
-    public override NodeBase DeepClone(NodeCloningContext context) => new ByteArrayNode(this.Value);
+    public override NodeBase DeepClone(NodeCloningContext context) => new ByteArrayNode(Value);
 
     /// <summary>
     /// Sets the request special object function.
     /// </summary>
     /// <param name="func">The function to set.</param>
-    void ISpecialRequestNode.SetRequestSpecialObjectFunction(Func<Type, object> func) => this.specialObjectRequestFunction = func;
+    void ISpecialRequestNode.SetRequestSpecialObjectFunction(Func<Type, object> func) => specialObjectRequestFunction = func;
 
     private string GetString()
     {
-        if (this.cachedDistilledStringValue == null)
+        if (cachedDistilledStringValue == null)
         {
-            var stringFormatters = this.specialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) as List<IStringFormatter>;
+            var stringFormatters = specialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) as List<IStringFormatter>;
 
-            this.cachedDistilledStringValue = StringFormatter.FormatIntoString(
-                this.Value,
+            cachedDistilledStringValue = StringFormatter.FormatIntoString(
+                Value,
                 stringFormatters);
         }
 
-        return this.cachedDistilledStringValue;
+        return cachedDistilledStringValue;
     }
 }

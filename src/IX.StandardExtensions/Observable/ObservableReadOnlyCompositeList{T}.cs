@@ -32,7 +32,7 @@ public class ObservableReadOnlyCompositeList<T> : ObservableReadOnlyCollectionBa
     public ObservableReadOnlyCompositeList()
         : base(new MultiListListAdapter<T>())
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class ObservableReadOnlyCompositeList<T> : ObservableReadOnlyCollectionBa
             new MultiListListAdapter<T>(),
             context)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
 #endregion
@@ -59,14 +59,14 @@ public class ObservableReadOnlyCompositeList<T> : ObservableReadOnlyCollectionBa
     public void SetList<TList>(TList list)
         where TList : class, IEnumerable<T>, INotifyCollectionChanged
     {
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            ((MultiListListAdapter<T>)this.InternalContainer).SetList(list);
+            ((MultiListListAdapter<T>)InternalContainer).SetList(list);
         }
 
-        this.RaiseCollectionReset();
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionReset();
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
     }
 
     /// <summary>
@@ -77,14 +77,14 @@ public class ObservableReadOnlyCompositeList<T> : ObservableReadOnlyCollectionBa
     public void RemoveList<TList>(TList list)
         where TList : class, IEnumerable<T>, INotifyCollectionChanged
     {
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            ((MultiListListAdapter<T>)this.InternalContainer).RemoveList(list);
+            ((MultiListListAdapter<T>)InternalContainer).RemoveList(list);
         }
 
-        this.RaiseCollectionReset();
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionReset();
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
     }
 
 #region Disposable
@@ -94,9 +94,9 @@ public class ObservableReadOnlyCompositeList<T> : ObservableReadOnlyCollectionBa
     /// </summary>
     protected override void DisposeManagedContext()
     {
-        if (this.locker.IsValueCreated)
+        if (locker.IsValueCreated)
         {
-            this.locker.Value.Dispose();
+            locker.Value.Dispose();
         }
 
         base.DisposeManagedContext();

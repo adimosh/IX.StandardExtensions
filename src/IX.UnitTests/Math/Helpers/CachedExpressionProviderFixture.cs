@@ -23,8 +23,8 @@ namespace IX.UnitTests.Math.Helpers
         [UsedImplicitly]
         public CachedExpressionProviderFixture()
         {
-            this.CachedService = new CachedExpressionParsingService();
-            this.Service = new ExpressionParsingService();
+            CachedService = new CachedExpressionParsingService();
+            Service = new ExpressionParsingService();
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace IX.UnitTests.Math.Helpers
         public void AtFirstRun(Action action)
         {
             if (Interlocked.Exchange(
-                    ref this.firstRun,
+                    ref firstRun,
                     1) ==
                 0)
             {
@@ -59,8 +59,8 @@ namespace IX.UnitTests.Math.Helpers
         /// </summary>
         public void Dispose()
         {
-            this.CachedService.Dispose();
-            this.Service.Dispose();
+            CachedService.Dispose();
+            Service.Dispose();
         }
     }
 }

@@ -36,8 +36,8 @@ public class RepeatableStack<T> : IStack<T>
     /// </summary>
     public RepeatableStack()
     {
-        this.internalStack = new Stack<T>();
-        this.internalRepeatingStack = new List<T>();
+        internalStack = new Stack<T>();
+        internalRepeatingStack = new List<T>();
     }
 
     /// <summary>
@@ -54,10 +54,10 @@ public class RepeatableStack<T> : IStack<T>
     public RepeatableStack(IStack<T> originalStack)
     {
         Requires.NotNull(
-            out this.internalStack,
+            out internalStack,
             originalStack,
             nameof(originalStack));
-        this.internalRepeatingStack = new List<T>();
+        internalRepeatingStack = new List<T>();
     }
 
     /// <summary>
@@ -69,8 +69,8 @@ public class RepeatableStack<T> : IStack<T>
         Requires.NotNull(
             originalData,
             nameof(originalData));
-        this.internalStack = new Stack<T>(originalData);
-        this.internalRepeatingStack = new List<T>();
+        internalStack = new Stack<T>(originalData);
+        internalRepeatingStack = new List<T>();
     }
 
 #endregion
@@ -79,7 +79,7 @@ public class RepeatableStack<T> : IStack<T>
 
     /// <summary>Gets the number of elements in the collection.</summary>
     /// <returns>The number of elements in the collection. </returns>
-    public int Count => ((IReadOnlyCollection<T>)this.internalStack).Count;
+    public int Count => ((IReadOnlyCollection<T>)internalStack).Count;
 
     /// <summary>
     ///     Gets a value indicating whether this stack is empty.
@@ -87,7 +87,7 @@ public class RepeatableStack<T> : IStack<T>
     /// <value>
     ///     <c>true</c> if this stack is empty; otherwise, <c>false</c>.
     /// </value>
-    public bool IsEmpty => this.Count == 0;
+    public bool IsEmpty => Count == 0;
 
     /// <summary>
     ///     Gets a value indicating whether access to the <see cref="ICollection" /> is synchronized (thread safe).
@@ -97,7 +97,7 @@ public class RepeatableStack<T> : IStack<T>
     /// <summary>
     ///     Gets an object that can be used to synchronize access to the <see cref="ICollection" />.
     /// </summary>
-    public object SyncRoot => this.internalStack;
+    public object SyncRoot => internalStack;
 
 #endregion
 
@@ -117,7 +117,7 @@ public class RepeatableStack<T> : IStack<T>
     public void CopyTo(
         Array array,
         int index) =>
-        this.internalStack.CopyTo(
+        internalStack.CopyTo(
             array,
             index);
 
@@ -127,25 +127,25 @@ public class RepeatableStack<T> : IStack<T>
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Unavoidable.")]
-    public IEnumerator<T> GetEnumerator() => this.internalStack.GetEnumerator();
+    public IEnumerator<T> GetEnumerator() => internalStack.GetEnumerator();
 
     /// <summary>
     ///     Clears the observable stack.
     /// </summary>
-    public void Clear() => this.internalStack.Clear();
+    public void Clear() => internalStack.Clear();
 
     /// <summary>
     ///     Checks whether or not a certain item is in the stack.
     /// </summary>
     /// <param name="item">The item to check for.</param>
     /// <returns><see langword="true" /> if the item was found, <see langword="false" /> otherwise.</returns>
-    public bool Contains(T item) => this.internalStack.Contains(item);
+    public bool Contains(T item) => internalStack.Contains(item);
 
     /// <summary>
     ///     Peeks in the stack to view the topmost item, without removing it.
     /// </summary>
     /// <returns>The topmost element in the stack, if any.</returns>
-    public T Peek() => this.internalStack.Peek();
+    public T Peek() => internalStack.Peek();
 
     /// <summary>
     ///     Pops the topmost element from the stack, removing it.
@@ -153,8 +153,8 @@ public class RepeatableStack<T> : IStack<T>
     /// <returns>The topmost element in the stack, if any.</returns>
     public T Pop()
     {
-        T item = this.internalStack.Pop();
-        this.internalRepeatingStack.Add(item);
+        T item = internalStack.Pop();
+        internalRepeatingStack.Add(item);
 
         return item;
     }
@@ -163,13 +163,13 @@ public class RepeatableStack<T> : IStack<T>
     ///     Pushes an element to the top of the stack.
     /// </summary>
     /// <param name="item">The item to push.</param>
-    public void Push(T item) => this.internalStack.Push(item);
+    public void Push(T item) => internalStack.Push(item);
 
     /// <summary>
     ///     Pushes a range of elements to the top of the stack.
     /// </summary>
     /// <param name="items">The item range to push.</param>
-    public void PushRange(T[] items) => this.internalStack.PushRange(items);
+    public void PushRange(T[] items) => internalStack.PushRange(items);
 
     /// <summary>
     ///     Pushes a range of elements to the top of the stack.
@@ -181,7 +181,7 @@ public class RepeatableStack<T> : IStack<T>
         T[] items,
         int startIndex,
         int count) =>
-        this.internalStack.PushRange(
+        internalStack.PushRange(
             items,
             startIndex,
             count);
@@ -190,13 +190,13 @@ public class RepeatableStack<T> : IStack<T>
     ///     Copies all elements of the stack to a new array.
     /// </summary>
     /// <returns>An array containing all items in the stack.</returns>
-    public T[] ToArray() => this.internalStack.ToArray();
+    public T[] ToArray() => internalStack.ToArray();
 
     /// <summary>
     ///     Sets the capacity to the actual number of elements in the stack if that number is less than 90 percent of current
     ///     capacity.
     /// </summary>
-    public void TrimExcess() => this.internalStack.TrimExcess();
+    public void TrimExcess() => internalStack.TrimExcess();
 
     /// <summary>
     ///     Attempts to peek at the topmost item from the stack, without removing it.
@@ -206,7 +206,7 @@ public class RepeatableStack<T> : IStack<T>
     ///     <see langword="true" /> if an item is peeked at successfully, <see langword="false" /> otherwise, or if the
     ///     stack is empty.
     /// </returns>
-    public bool TryPeek([MaybeNullWhen(false)] out T item) => this.internalStack.TryPeek(out item);
+    public bool TryPeek([MaybeNullWhen(false)] out T item) => internalStack.TryPeek(out item);
 
     /// <summary>
     ///     Attempts to pop the topmost item from the stack, and remove it if successful.
@@ -218,14 +218,14 @@ public class RepeatableStack<T> : IStack<T>
     /// </returns>
     public bool TryPop([MaybeNullWhen(false)] out T item)
     {
-        if (!this.internalStack.TryPop(out T? item2))
+        if (!internalStack.TryPop(out T? item2))
         {
             item = default;
 
             return false;
         }
 
-        this.internalRepeatingStack.Add(item2);
+        internalRepeatingStack.Add(item2);
         item = item2;
 
         return true;
@@ -238,7 +238,7 @@ public class RepeatableStack<T> : IStack<T>
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Unavoidable.")]
     [ExcludeFromCodeCoverage]
-    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 #endregion
 
@@ -252,7 +252,7 @@ public class RepeatableStack<T> : IStack<T>
         Justification = "We want this exception if it occurs.")]
     public IStack<T> Repeat() =>
         new Stack<T>(
-            this.internalRepeatingStack.AsEnumerable()
+            internalRepeatingStack.AsEnumerable()
                 .Reverse()
                 .ToArray());
 

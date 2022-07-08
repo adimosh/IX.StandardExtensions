@@ -39,7 +39,7 @@ internal sealed class FunctionNodeSquareRoot : NumericUnaryFunctionNodeBase
     /// </returns>
     public override NodeBase Simplify()
     {
-        if (this.Parameter is NumericNode numericParam)
+        if (Parameter is NumericNode numericParam)
         {
             return new NumericNode(GlobalSystem.Math.Sqrt(numericParam.ExtractFloat()));
         }
@@ -55,10 +55,10 @@ internal sealed class FunctionNodeSquareRoot : NumericUnaryFunctionNodeBase
     ///     A deep clone.
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
-        new FunctionNodeSquareRoot(this.Parameter.DeepClone(context));
+        new FunctionNodeSquareRoot(Parameter.DeepClone(context));
 
     protected override Expression GenerateExpressionInternal() =>
-        this.GenerateStaticUnaryFunctionCall(
+        GenerateStaticUnaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Sqrt));
 
@@ -68,7 +68,7 @@ internal sealed class FunctionNodeSquareRoot : NumericUnaryFunctionNodeBase
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
-        this.GenerateStaticUnaryFunctionCall(
+        GenerateStaticUnaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Sqrt),
             tolerance);

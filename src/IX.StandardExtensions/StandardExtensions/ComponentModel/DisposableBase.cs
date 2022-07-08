@@ -37,7 +37,7 @@ public abstract partial class DisposableBase : IDisposable
     /// </summary>
     ~DisposableBase()
     {
-        this.Dispose(false);
+        Dispose(false);
     }
 
 #endregion
@@ -64,7 +64,7 @@ public abstract partial class DisposableBase : IDisposable
     public void Dispose()
     {
         if (Interlocked.Exchange(
-                ref this.disposeSignaled,
+                ref disposeSignaled,
                 1) !=
             0)
         {
@@ -72,7 +72,7 @@ public abstract partial class DisposableBase : IDisposable
         }
 
         GC.SuppressFinalize(this);
-        this.Dispose(true);
+        Dispose(true);
     }
 
 #endregion
@@ -83,10 +83,10 @@ public abstract partial class DisposableBase : IDisposable
     /// <exception cref="ObjectDisposedException">If the current object is disposed, this exception will be thrown.</exception>
     protected internal void ThrowIfCurrentObjectDisposed()
     {
-        if (this.Disposed)
+        if (Disposed)
         {
             throw new ObjectDisposedException(
-                this.GetType()
+                GetType()
                     .FullName);
         }
     }
@@ -123,7 +123,7 @@ public abstract partial class DisposableBase : IDisposable
     /// </exception>
     protected TReturn InvokeIfNotDisposed<TReturn>(Func<TReturn> func)
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         return Requires.NotNull(func)();
     }
@@ -151,16 +151,16 @@ public abstract partial class DisposableBase : IDisposable
         {
             if (disposing)
             {
-                this.DisposeAutomatically();
+                DisposeAutomatically();
 
-                this.DisposeManagedContext();
+                DisposeManagedContext();
             }
 
-            this.DisposeGeneralContext();
+            DisposeGeneralContext();
         }
         finally
         {
-            this.Disposed = true;
+            Disposed = true;
         }
     }
 

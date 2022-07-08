@@ -49,7 +49,7 @@ internal sealed class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TI
         Requires.NotNull(existingEnumerator);
 
         this.existingEnumerator = existingEnumerator;
-        this.current = default!; /* We forgive this possible null reference, as it should not be possible to
+        current = default!; /* We forgive this possible null reference, as it should not be possible to
                                       * access it before reading something from the enumerator
                                       */
 
@@ -72,14 +72,14 @@ internal sealed class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TI
     {
         get
         {
-            if (!this.movedNext)
+            if (!movedNext)
             {
                 throw new InvalidOperationException(Resources.MoveNextNotInvoked);
             }
 
-            this.ThrowIfCurrentObjectDisposed();
+            ThrowIfCurrentObjectDisposed();
 
-            return this.current;
+            return current;
         }
     }
 
@@ -96,19 +96,19 @@ internal sealed class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TI
     /// </returns>
     public override bool MoveNext()
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         bool result;
-        using (this.readLock())
+        using (readLock())
         {
-            ref TEnumerator localEnumerator = ref this.existingEnumerator;
+            ref TEnumerator localEnumerator = ref existingEnumerator;
             result = localEnumerator.MoveNext();
 
-            this.movedNext = true;
+            movedNext = true;
 
             if (result)
             {
-                this.current = localEnumerator.Current;
+                current = localEnumerator.Current;
             }
         }
 
@@ -121,12 +121,12 @@ internal sealed class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TI
     public override void Reset()
     {
         // DO NOT CHANGE the order of these operations!
-        this.movedNext = false;
+        movedNext = false;
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
-        this.existingEnumerator.Reset();
-        this.current = default!;
+        existingEnumerator.Reset();
+        current = default!;
     }
 
 #region Disposable
@@ -142,7 +142,7 @@ internal sealed class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TI
     {
         base.DisposeManagedContext();
 
-        this.existingEnumerator.Dispose();
+        existingEnumerator.Dispose();
     }
 
 #endregion

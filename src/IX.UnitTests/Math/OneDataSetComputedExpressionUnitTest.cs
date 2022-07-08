@@ -144,7 +144,7 @@ namespace IX.UnitTests.Math
             Dictionary<string, object> parameters,
             object expectedResult)
         {
-            ComputedExpression del = this.fixture.CachedService.Interpret(expression);
+            ComputedExpression del = fixture.CachedService.Interpret(expression);
             if (del == null)
             {
                 throw new InvalidOperationException("No computed expression was generated!");
@@ -175,7 +175,7 @@ namespace IX.UnitTests.Math
         {
             var finder = new Mock<IDataFinder>(MockBehavior.Loose);
 
-            ComputedExpression del = this.fixture.CachedService.Interpret(expression);
+            ComputedExpression del = fixture.CachedService.Interpret(expression);
             if (del == null)
             {
                 throw new InvalidOperationException("No computed expression was generated!");
@@ -259,7 +259,7 @@ namespace IX.UnitTests.Math
         {
             var finder = new Mock<IDataFinder>(MockBehavior.Loose);
 
-            ComputedExpression del = this.fixture.CachedService.Interpret(expression);
+            ComputedExpression del = fixture.CachedService.Interpret(expression);
             if (del == null)
             {
                 throw new InvalidOperationException("No computed expression was generated!");
@@ -308,7 +308,7 @@ namespace IX.UnitTests.Math
             {
                 var finder = new Mock<IDataFinder>(MockBehavior.Loose);
 
-                ComputedExpression del = this.fixture.CachedService.Interpret(expression);
+                ComputedExpression del = fixture.CachedService.Interpret(expression);
 
                 if (parameters != null)
                 {

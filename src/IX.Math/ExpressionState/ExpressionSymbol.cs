@@ -26,8 +26,8 @@ public class ExpressionSymbol
     /// <value>The name.</value>
     public string? Expression
     {
-        get => this.expression;
-        set => this.expression = string.IsNullOrWhiteSpace(value) ? null : value?.Trim();
+        get => expression;
+        set => expression = string.IsNullOrWhiteSpace(value) ? null : value?.Trim();
     }
 
     /// <summary>

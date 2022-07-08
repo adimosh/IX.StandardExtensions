@@ -212,7 +212,7 @@ public class SaveWhenDisposingMemoryStream : MemoryStream
     {
         if (disposing)
         {
-            this.saveFile(this.ToArray());
+            saveFile(ToArray());
         }
 
         base.Dispose(disposing);

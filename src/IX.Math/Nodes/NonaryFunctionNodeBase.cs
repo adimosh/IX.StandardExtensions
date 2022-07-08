@@ -41,7 +41,7 @@ public abstract class NonaryFunctionNodeBase : FunctionNodeBase
     /// <returns>An expression representing the function call.</returns>
     /// <exception cref="ArgumentException">The function name is invalid.</exception>
     protected Expression GenerateStaticNonaryFunctionCall<T>(string functionName) =>
-        this.GenerateStaticNonaryFunctionCall(typeof(T), functionName);
+        GenerateStaticNonaryFunctionCall(typeof(T), functionName);
 
     /// <summary>
     /// Generates a static function call for a function with no parameters.

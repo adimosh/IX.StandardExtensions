@@ -28,6 +28,6 @@ namespace IX.UnitTests.Math.ExternalAssemblyCapabilities
         /// <param name="reverseConstantsTable">The reverse constants table.</param>
         /// <param name="mathDefinition">The math definition.</param>
         /// <returns>The expression, after replacement.</returns>
-        public string ExtractAllConstants(string originalExpression, IDictionary<string, ConstantNodeBase> constantsTable, IDictionary<string, string> reverseConstantsTable, MathDefinition mathDefinition) => this.exponentialNotationRegex.Replace(originalExpression, "stupid", 1);
+        public string ExtractAllConstants(string originalExpression, IDictionary<string, ConstantNodeBase> constantsTable, IDictionary<string, string> reverseConstantsTable, MathDefinition mathDefinition) => exponentialNotationRegex.Replace(originalExpression, "stupid", 1);
     }
 }

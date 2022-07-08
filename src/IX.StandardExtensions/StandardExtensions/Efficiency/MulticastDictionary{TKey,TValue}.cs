@@ -43,7 +43,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
     public void Add(
         TKey key,
         TValue value) =>
-        _ = this.innerDictionary.AddOrUpdate(
+        _ = innerDictionary.AddOrUpdate(
             key,
             _ => new List<TValue>
             {
@@ -63,7 +63,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
     /// </summary>
     /// <param name="key">The key.</param>
     public void Remove(TKey key) =>
-        _ = this.innerDictionary.TryRemove(
+        _ = innerDictionary.TryRemove(
             key,
             out _);
 
@@ -76,7 +76,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
         TKey key,
         TValue value)
     {
-        if (!this.innerDictionary.TryGetValue(
+        if (!innerDictionary.TryGetValue(
                 key,
                 out var list))
         {
@@ -87,14 +87,14 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
 
         if (list.Count == 0)
         {
-            this.Remove(key);
+            Remove(key);
         }
     }
 
     /// <summary>
     ///     Clears all keys from the multicast dictionary.
     /// </summary>
-    public void Clear() => this.innerDictionary.Clear();
+    public void Clear() => innerDictionary.Clear();
 
     /// <summary>
     ///     Tries to act on a specified key, based on its multiple values.
@@ -109,7 +109,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
         Requires.NotNull(
             action);
 
-        if (!this.innerDictionary.TryGetValue(
+        if (!innerDictionary.TryGetValue(
                 key,
                 out var list) ||
             list.Count == 0)
@@ -144,7 +144,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
         Requires.NotNull(
             action);
 
-        if (!this.innerDictionary.TryGetValue(
+        if (!innerDictionary.TryGetValue(
                 key,
                 out var list) ||
             list.Count == 0)
@@ -178,7 +178,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
         Requires.NotNull(
             action);
 
-        if (!this.innerDictionary.TryGetValue(
+        if (!innerDictionary.TryGetValue(
                 key,
                 out var list) ||
             list.Count == 0)
@@ -214,7 +214,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
         Requires.NotNull(
             action);
 
-        if (!this.innerDictionary.TryGetValue(
+        if (!innerDictionary.TryGetValue(
                 key,
                 out var list) ||
             list.Count == 0)
@@ -241,7 +241,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
     /// <summary>Disposes in the managed context.</summary>
     protected override void DisposeManagedContext()
     {
-        foreach (KeyValuePair<TKey, List<TValue>> key in this.innerDictionary.ClearToArray())
+        foreach (KeyValuePair<TKey, List<TValue>> key in innerDictionary.ClearToArray())
         {
             key.Value?.Clear();
         }

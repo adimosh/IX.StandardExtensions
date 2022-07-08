@@ -22,7 +22,7 @@ public class ContextObjectEventArgs<T> : EventArgs
     /// <param name="contextObject">The context object.</param>
     public ContextObjectEventArgs(T contextObject)
     {
-        this.Context = contextObject;
+        Context = contextObject;
     }
 
 #endregion

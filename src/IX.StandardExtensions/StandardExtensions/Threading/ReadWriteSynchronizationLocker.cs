@@ -79,7 +79,7 @@ public class ReadWriteSynchronizationLocker : SynchronizationLocker
     /// <exception cref="TimeoutException">The lock could not be acquired in time.</exception>
     public void Upgrade()
     {
-        if (!this.Locker?.TryEnterWriteLock(EnvironmentSettings.LockAcquisitionTimeout) ?? false)
+        if (!Locker?.TryEnterWriteLock(EnvironmentSettings.LockAcquisitionTimeout) ?? false)
         {
             throw new TimeoutException();
         }
@@ -90,19 +90,19 @@ public class ReadWriteSynchronizationLocker : SynchronizationLocker
     /// </summary>
     public override void Dispose()
     {
-        if (this.Locker == null)
+        if (Locker == null)
         {
             return;
         }
 
-        if (this.Locker.IsWriteLockHeld)
+        if (Locker.IsWriteLockHeld)
         {
-            this.Locker.ExitWriteLock();
+            Locker.ExitWriteLock();
         }
 
-        if (this.Locker.IsUpgradeableReadLockHeld)
+        if (Locker.IsUpgradeableReadLockHeld)
         {
-            this.Locker.ExitUpgradeableReadLock();
+            Locker.ExitUpgradeableReadLock();
         }
 
         GC.SuppressFinalize(this);

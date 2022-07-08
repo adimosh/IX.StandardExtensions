@@ -26,7 +26,7 @@ internal abstract class ByteShiftOperationNodeBase : BinaryOperatorNodeBase
     /// <value>
     /// The node return type.
     /// </value>
-    public override SupportedValueType ReturnType => this.Left.ReturnType;
+    public override SupportedValueType ReturnType => Left.ReturnType;
 
     /// <summary>
     /// Strongly determines the node's type, if possible.

@@ -49,13 +49,13 @@ public class ObjectPoolQueue<T> : INotifyThreadException
         int objectLimit = 1000,
         CancellationToken cancellationToken = default)
     {
-        this.objects = new Queue<T>();
+        objects = new Queue<T>();
         this.cancellationToken = cancellationToken;
-        this.ObjectLimit = objectLimit;
+        ObjectLimit = objectLimit;
         this.queueAction = queueAction;
 
         _ = Work.OnThreadPoolAsync(
-            this.RunAsync,
+            RunAsync,
             this.cancellationToken);
     }
 
@@ -95,7 +95,7 @@ public class ObjectPoolQueue<T> : INotifyThreadException
         "CA1720:Identifier contains type name",
         Justification = "We don't really care.")]
     public void Enqueue(T @object) =>
-        this.objects.Enqueue(@object);
+        objects.Enqueue(@object);
 
     [SuppressMessage(
         "Performance",
@@ -113,15 +113,15 @@ public class ObjectPoolQueue<T> : INotifyThreadException
     {
         Thread.CurrentThread.Name = $"Object pool queue {Thread.CurrentThread.ManagedThreadId}";
 
-        while (!this.cancellationToken.IsCancellationRequested)
+        while (!cancellationToken.IsCancellationRequested)
         {
-            if (this.objects.Count == 0)
+            if (objects.Count == 0)
             {
                 try
                 {
                     await Task.Delay(
                             1000,
-                            this.cancellationToken)
+                            cancellationToken)
                         .ConfigureAwait(false);
                 }
                 catch (TaskCanceledException)
@@ -131,24 +131,24 @@ public class ObjectPoolQueue<T> : INotifyThreadException
             }
             else
             {
-                var objectLimit = this.ObjectLimit;
-                var initialSize = objectLimit < this.objects.Count ? objectLimit : this.objects.Count;
+                var objectLimit = ObjectLimit;
+                var initialSize = objectLimit < objects.Count ? objectLimit : objects.Count;
 
                 var listProcess = new List<T>(initialSize);
 
                 for (var i = 0; i < initialSize; i++)
                 {
-                    listProcess.Add(this.objects.Dequeue());
+                    listProcess.Add(objects.Dequeue());
                 }
 
                 var retryCounter = 0;
                 var shouldRetry = true;
 
-                while (shouldRetry && !this.cancellationToken.IsCancellationRequested)
+                while (shouldRetry && !cancellationToken.IsCancellationRequested)
                 {
                     try
                     {
-                        shouldRetry = !await this.queueAction(
+                        shouldRetry = !await queueAction(
                                 listProcess,
                                 retryCounter++)
                             .ConfigureAwait(false);

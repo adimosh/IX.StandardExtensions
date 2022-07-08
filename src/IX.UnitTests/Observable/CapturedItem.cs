@@ -22,23 +22,23 @@ public class CapturedItem : EditableItemBase
     /// <value>The test property.</value>
     public string TestProperty
     {
-        get => this.testProperty;
+        get => testProperty;
 
         set
         {
-            if (this.testProperty == value)
+            if (testProperty == value)
             {
                 return;
             }
 
-            this.AdvertisePropertyChange(
-                nameof(this.TestProperty),
-                this.testProperty,
+            AdvertisePropertyChange(
+                nameof(TestProperty),
+                testProperty,
                 value);
 
-            this.testProperty = value;
+            testProperty = value;
 
-            this.RaisePropertyChanged(nameof(this.TestProperty));
+            RaisePropertyChanged(nameof(TestProperty));
         }
     }
 
@@ -55,15 +55,15 @@ public class CapturedItem : EditableItemBase
     {
         if (stateChange is PropertyStateChange<string> psts)
         {
-            if (psts.PropertyName != nameof(this.TestProperty))
+            if (psts.PropertyName != nameof(TestProperty))
             {
                 throw new InvalidOperationException(
                     "Undo/Redo advertised a state change that is not for the only property, some state is leaking.");
             }
 
-            this.testProperty = psts.NewValue;
+            testProperty = psts.NewValue;
 
-            this.RaisePropertyChanged(nameof(this.TestProperty));
+            RaisePropertyChanged(nameof(TestProperty));
         }
         else
         {
@@ -85,15 +85,15 @@ public class CapturedItem : EditableItemBase
     {
         if (stateChange is PropertyStateChange<string> psts)
         {
-            if (psts.PropertyName != nameof(this.TestProperty))
+            if (psts.PropertyName != nameof(TestProperty))
             {
                 throw new InvalidOperationException(
                     "Undo/Redo advertised a state change that is not for the only property, some state is leaking.");
             }
 
-            this.testProperty = psts.OldValue;
+            testProperty = psts.OldValue;
 
-            this.RaisePropertyChanged(nameof(this.TestProperty));
+            RaisePropertyChanged(nameof(TestProperty));
         }
         else
         {

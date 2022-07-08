@@ -38,7 +38,7 @@ public class BusyScope : SynchronizationContextInvokerBase
     public BusyScope(string description)
     {
         Requires.NotNull<string>(
-            out this.initialDescription,
+            out initialDescription,
             description);
     }
 
@@ -50,7 +50,7 @@ public class BusyScope : SynchronizationContextInvokerBase
     public BusyScope(int initialBusyCount)
     {
         Requires.NonNegative(
-            out this.busyCount,
+            out busyCount,
             in initialBusyCount);
     }
 
@@ -66,10 +66,10 @@ public class BusyScope : SynchronizationContextInvokerBase
         string description)
     {
         Requires.NonNegative(
-            out this.busyCount,
+            out busyCount,
             in initialBusyCount);
         Requires.NotNull<string>(
-            out this.initialDescription,
+            out initialDescription,
             description);
     }
 
@@ -90,13 +90,13 @@ public class BusyScope : SynchronizationContextInvokerBase
     ///     Gets the busy count.
     /// </summary>
     /// <value>The busy count.</value>
-    public int BusyCount => this.busyCount;
+    public int BusyCount => busyCount;
 
     /// <summary>
     ///     Gets the description.
     /// </summary>
     /// <value>The description.</value>
-    public string Description => this.description ?? this.initialDescription ?? string.Empty;
+    public string Description => description ?? initialDescription ?? string.Empty;
 
 #endregion
 
@@ -112,14 +112,14 @@ public class BusyScope : SynchronizationContextInvokerBase
         Justification = "We know, that's the point.")]
     public void IncrementBusyScope(string? description = null)
     {
-        Interlocked.Increment(ref this.busyCount);
+        Interlocked.Increment(ref busyCount);
         Interlocked.Exchange(
             ref this.description,
             description);
 
         if (this.BusyScopeChanged != null)
         {
-            this.Invoke(
+            Invoke(
                 (
                     sender,
                     @event) => @event.Invoke(
@@ -136,16 +136,16 @@ public class BusyScope : SynchronizationContextInvokerBase
     /// <exception cref="InvalidOperationException">The scope is idle.</exception>
     public void DecrementBusyScope()
     {
-        if (this.BusyCount == 0)
+        if (BusyCount == 0)
         {
             throw new InvalidOperationException();
         }
 
-        Interlocked.Decrement(ref this.busyCount);
+        Interlocked.Decrement(ref busyCount);
 
         if (this.BusyScopeChanged != null)
         {
-            this.Invoke(
+            Invoke(
                 (
                     sender,
                     @event) => @event.Invoke(

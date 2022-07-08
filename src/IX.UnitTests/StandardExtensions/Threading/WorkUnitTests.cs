@@ -73,8 +73,8 @@ public class WorkUnitTests
         }
         catch
         {
-            this.output.WriteLine("Assert phase failed.");
-            this.output.WriteLine($"Test parameters: Expected Value: {initialValue}; Actual Value: {floatingValue}; Wait Time: {waitTime}; Wait Result: {result}.");
+            output.WriteLine("Assert phase failed.");
+            output.WriteLine($"Test parameters: Expected Value: {initialValue}; Actual Value: {floatingValue}; Wait Time: {waitTime}; Wait Result: {result}.");
             throw;
         }
     }
@@ -119,8 +119,8 @@ public class WorkUnitTests
         }
         catch
         {
-            this.output.WriteLine("Assert phase failed.");
-            this.output.WriteLine($"Test parameters: Expected Value: {initialValue}; Actual Value: {floatingValue}; Wait Time: {waitTime}; Wait Result: {result}.");
+            output.WriteLine("Assert phase failed.");
+            output.WriteLine($"Test parameters: Expected Value: {initialValue}; Actual Value: {floatingValue}; Wait Time: {waitTime}; Wait Result: {result}.");
             throw;
         }
     }
@@ -154,9 +154,9 @@ public class WorkUnitTests
                 {
                     #if DEBUG
                     var (dt2, wt2) = state;
-                    this.output.WriteLine($"Beginning inner method after {(DateTime.UtcNow - dt2).TotalMilliseconds} ms.");
+                    output.WriteLine($"Beginning inner method after {(DateTime.UtcNow - dt2).TotalMilliseconds} ms.");
                     Thread.Sleep(wt2);
-                    this.output.WriteLine($"Inner method wait finished after {(DateTime.UtcNow - dt2).TotalMilliseconds} ms.");
+                    output.WriteLine($"Inner method wait finished after {(DateTime.UtcNow - dt2).TotalMilliseconds} ms.");
                     #else
                         Thread.Sleep(state);
                     #endif
@@ -171,7 +171,7 @@ public class WorkUnitTests
                 (task, _) =>
                 {
                     #if DEBUG
-                    this.output.WriteLine($"Exception handler started after {(DateTime.UtcNow - dt).TotalMilliseconds} ms.");
+                    output.WriteLine($"Exception handler started after {(DateTime.UtcNow - dt).TotalMilliseconds} ms.");
                     #endif
                     Interlocked.Exchange(
                         ref ex,
@@ -185,7 +185,7 @@ public class WorkUnitTests
 
             result = await mre.WithTimeout(MaxWaitTime);
             #if DEBUG
-            this.output.WriteLine($"Outer method unlocked after {(DateTime.UtcNow - dt).TotalMilliseconds} ms.");
+            output.WriteLine($"Outer method unlocked after {(DateTime.UtcNow - dt).TotalMilliseconds} ms.");
             #endif
         }
 #pragma warning restore SA1114 // Parameter list should follow declaration
@@ -202,8 +202,8 @@ public class WorkUnitTests
         }
         catch
         {
-            this.output.WriteLine("Assert phase failed.");
-            this.output.WriteLine($"Test parameters: Wait Time: {waitTime}; Wait Result: {result}; Resulting exception: {ex?.ToString() ?? "null"}.");
+            output.WriteLine("Assert phase failed.");
+            output.WriteLine($"Test parameters: Wait Time: {waitTime}; Wait Result: {result}; Resulting exception: {ex?.ToString() ?? "null"}.");
             throw;
         }
     }

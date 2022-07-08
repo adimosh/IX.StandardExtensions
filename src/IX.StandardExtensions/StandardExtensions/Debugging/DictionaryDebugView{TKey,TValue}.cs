@@ -38,7 +38,7 @@ public sealed class DictionaryDebugView<TKey, TValue>
     public DictionaryDebugView(IDictionary<TKey, TValue> dictionary)
     {
         Requires.NotNull(
-            out this.dict,
+            out dict,
             dictionary,
             nameof(dictionary));
     }
@@ -60,8 +60,8 @@ public sealed class DictionaryDebugView<TKey, TValue>
     {
         get
         {
-            var items = new KeyValuePair<TKey, TValue>[this.dict.Count];
-            this.dict.CopyTo(
+            var items = new KeyValuePair<TKey, TValue>[dict.Count];
+            dict.CopyTo(
                 items,
                 0);
 

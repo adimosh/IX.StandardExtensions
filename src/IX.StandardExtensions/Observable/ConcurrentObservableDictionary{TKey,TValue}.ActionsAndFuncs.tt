@@ -84,9 +84,9 @@ for (int i = 1; i <= 8; i++)
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 return value;
@@ -95,7 +95,7 @@ for (int i = 1; i <= 8; i++)
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     return value;
@@ -105,7 +105,7 @@ for (int i = 1; i <= 8; i++)
                 value = valueGenerator(<#= paramNames #>);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -115,19 +115,19 @@ for (int i = 1; i <= 8; i++)
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -167,9 +167,9 @@ for (int i = 1; i <= 8; i++)
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 valueAction(value, <#= paramNames #>);
@@ -179,7 +179,7 @@ for (int i = 1; i <= 8; i++)
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     valueAction(value, <#= paramNames #>);
@@ -190,7 +190,7 @@ for (int i = 1; i <= 8; i++)
                 value = valueGenerator(<#= paramNames #>);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -200,19 +200,19 @@ for (int i = 1; i <= 8; i++)
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -250,16 +250,16 @@ for (int i = 1; i <= 8; i++)
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already removed it.
-                    oldIndex = this.InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
+                    oldIndex = InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
 
                     action(value, <#= paramNames #>);
                 }
@@ -280,19 +280,19 @@ for (int i = 1; i <= 8; i++)
         if (oldIndex == -1)
         {
             // If no index could be found for an item (Dictionary remove)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 <#
 }

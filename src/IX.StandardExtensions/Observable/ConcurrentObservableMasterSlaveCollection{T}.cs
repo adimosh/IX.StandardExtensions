@@ -33,7 +33,7 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
     /// </summary>
     public ConcurrentObservableMasterSlaveCollection()
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
     public ConcurrentObservableMasterSlaveCollection(SynchronizationContext context)
         : base(context)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
     public ConcurrentObservableMasterSlaveCollection(bool suppressUndoable)
         : base(suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -68,7 +68,7 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
             context,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
 #endregion
@@ -78,7 +78,7 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
     /// <summary>
     ///     Gets a synchronization lock item to be used when trying to synchronize read/write operations between threads.
     /// </summary>
-    protected override IReaderWriterLock SynchronizationLock => this.locker.Value;
+    protected override IReaderWriterLock SynchronizationLock => locker.Value;
 
 #endregion
 
@@ -92,7 +92,7 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
     protected override void DisposeManagedContext()
     {
         Lazy<System.Threading.ReaderWriterLockSlim>? l = Interlocked.Exchange(
-            ref this.locker!,
+            ref locker!,
             null!);
         if (l?.IsValueCreated ?? false)
         {
@@ -108,7 +108,7 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
     protected override void DisposeGeneralContext()
     {
         Interlocked.Exchange(
-            ref this.locker!,
+            ref locker!,
             null!);
 
         base.DisposeGeneralContext();

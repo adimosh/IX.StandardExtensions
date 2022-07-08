@@ -54,9 +54,9 @@ internal class EUCKRProber : CharsetProber
 
     public EUCKRProber()
     {
-        this.codingSM = new CodingStateMachine(new EUCKRSMModel());
-        this.distributionAnalyser = new EUCKRDistributionAnalyser();
-        this.Reset();
+        codingSM = new CodingStateMachine(new EUCKRSMModel());
+        distributionAnalyser = new EUCKRDistributionAnalyser();
+        Reset();
     }
 
     public override string GetCharsetName() => CodepageName.EUC_KR;
@@ -71,35 +71,35 @@ internal class EUCKRProber : CharsetProber
 
         for (var i = offset; i < max; i++)
         {
-            codingState = this.codingSM.NextState(buf[i]);
+            codingState = codingSM.NextState(buf[i]);
             if (codingState == StateMachineModel.ERROR)
             {
-                this.state = ProbingState.NotMe;
+                state = ProbingState.NotMe;
 
                 break;
             }
 
             if (codingState == StateMachineModel.ITSME)
             {
-                this.state = ProbingState.FoundIt;
+                state = ProbingState.FoundIt;
 
                 break;
             }
 
             if (codingState == StateMachineModel.START)
             {
-                var charLen = this.codingSM.CurrentCharLen;
+                var charLen = codingSM.CurrentCharLen;
                 if (i == offset)
                 {
-                    this.lastChar[1] = buf[offset];
-                    this.distributionAnalyser.HandleOneChar(
-                        this.lastChar,
+                    lastChar[1] = buf[offset];
+                    distributionAnalyser.HandleOneChar(
+                        lastChar,
                         0,
                         charLen);
                 }
                 else
                 {
-                    this.distributionAnalyser.HandleOneChar(
+                    distributionAnalyser.HandleOneChar(
                         buf,
                         i - 1,
                         charLen);
@@ -107,26 +107,26 @@ internal class EUCKRProber : CharsetProber
             }
         }
 
-        this.lastChar[0] = buf[max - 1];
+        lastChar[0] = buf[max - 1];
 
-        if (this.state == ProbingState.Detecting)
+        if (state == ProbingState.Detecting)
         {
-            if (this.distributionAnalyser.GotEnoughData() && this.GetConfidence() > SHORTCUT_THRESHOLD)
+            if (distributionAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
             {
-                this.state = ProbingState.FoundIt;
+                state = ProbingState.FoundIt;
             }
         }
 
-        return this.state;
+        return state;
     }
 
-    public override float GetConfidence(StringBuilder? status = null) => this.distributionAnalyser.GetConfidence();
+    public override float GetConfidence(StringBuilder? status = null) => distributionAnalyser.GetConfidence();
 
     public override void Reset()
     {
-        this.codingSM.Reset();
-        this.state = ProbingState.Detecting;
-        this.distributionAnalyser.Reset();
+        codingSM.Reset();
+        state = ProbingState.Detecting;
+        distributionAnalyser.Reset();
 
         //mContextAnalyser.Reset();
     }

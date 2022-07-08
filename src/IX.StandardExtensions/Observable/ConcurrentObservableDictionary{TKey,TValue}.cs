@@ -42,7 +42,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// </summary>
     public ConcurrentObservableDictionary()
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     public ConcurrentObservableDictionary(int capacity)
         : base(capacity)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     public ConcurrentObservableDictionary(IEqualityComparer<TKey> equalityComparer)
         : base(equalityComparer)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             capacity,
             equalityComparer)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -87,7 +87,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     public ConcurrentObservableDictionary(IDictionary<TKey, TValue> dictionary)
         : base(dictionary)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -102,7 +102,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             dictionary,
             comparer)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     public ConcurrentObservableDictionary(SynchronizationContext context)
         : base(context)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -127,7 +127,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             context,
             capacity)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -142,7 +142,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             context,
             equalityComparer)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -160,7 +160,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             capacity,
             equalityComparer)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -175,7 +175,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             context,
             dictionary)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -193,7 +193,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             dictionary,
             comparer)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -203,7 +203,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     public ConcurrentObservableDictionary(bool suppressUndoable)
         : base(suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -218,7 +218,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             capacity,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -233,7 +233,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             equalityComparer,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -251,7 +251,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             equalityComparer,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -266,7 +266,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             dictionary,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -284,7 +284,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             comparer,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -299,7 +299,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             context,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -317,7 +317,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             capacity,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -335,7 +335,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             equalityComparer,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -356,7 +356,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             equalityComparer,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -374,7 +374,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             dictionary,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -395,7 +395,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             comparer,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
 #endregion
@@ -405,7 +405,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <summary>
     ///     Gets a synchronization lock item to be used when trying to synchronize read/write operations between threads.
     /// </summary>
-    protected override IReaderWriterLock SynchronizationLock => this.locker.Value;
+    protected override IReaderWriterLock SynchronizationLock => locker.Value;
 
 #endregion
 
@@ -438,9 +438,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(
+            if (InternalContainer.TryGetValue(
                     key,
                     out value))
             {
@@ -450,7 +450,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
 
             rwl.Upgrade();
 
-            if (this.InternalContainer.TryGetValue(
+            if (InternalContainer.TryGetValue(
                     key,
                     out value))
             {
@@ -462,7 +462,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             value = valueGenerator();
 
             // Add the item
-            newIndex = this.InternalContainer.Add(
+            newIndex = InternalContainer.Add(
                 key,
                 value);
         }
@@ -473,12 +473,12 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(
+            RaiseCollectionChangedAdd(
                 new KeyValuePair<TKey, TValue>(
                     key,
                     value),
@@ -486,10 +486,10 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -516,9 +516,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(
+            if (InternalContainer.TryGetValue(
                     key,
                     out value))
             {
@@ -530,7 +530,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
 
             rwl.Upgrade();
 
-            if (this.InternalContainer.TryGetValue(
+            if (InternalContainer.TryGetValue(
                     key,
                     out value))
             {
@@ -544,7 +544,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             value = valueGenerator();
 
             // Add the item
-            newIndex = this.InternalContainer.Add(
+            newIndex = InternalContainer.Add(
                 key,
                 value);
         }
@@ -555,12 +555,12 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(
+            RaiseCollectionChangedAdd(
                 new KeyValuePair<TKey, TValue>(
                     key,
                     value),
@@ -568,10 +568,10 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -596,20 +596,20 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(
+            if (InternalContainer.TryGetValue(
                     key,
                     out value))
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(
+                if (InternalContainer.TryGetValue(
                         key,
                         out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already removed it.
-                    oldIndex = this.InternalContainer.Remove(
+                    oldIndex = InternalContainer.Remove(
                         new KeyValuePair<TKey, TValue>(
                             key,
                             value));
@@ -633,12 +633,12 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         if (oldIndex == -1)
         {
             // If no index could be found for an item (Dictionary remove)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedRemove(
+            RaiseCollectionChangedRemove(
                 new KeyValuePair<TKey, TValue>(
                     key,
                     value),
@@ -646,10 +646,10 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return true;
     }
@@ -661,7 +661,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     [OnDeserializing]
     internal void OnDeserializingMethod(StreamingContext context) =>
         Interlocked.Exchange(
-            ref this.locker,
+            ref locker,
             EnvironmentSettings.GenerateDefaultLocker());
 
 #region Disposable
@@ -672,7 +672,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     protected override void DisposeManagedContext()
     {
         Lazy<System.Threading.ReaderWriterLockSlim>? l = Interlocked.Exchange(
-            ref this.locker!,
+            ref locker!,
             null!);
         if (l?.IsValueCreated ?? false)
         {
@@ -688,7 +688,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     protected override void DisposeGeneralContext()
     {
         Interlocked.Exchange(
-            ref this.locker!,
+            ref locker!,
             null!);
 
         base.DisposeGeneralContext();

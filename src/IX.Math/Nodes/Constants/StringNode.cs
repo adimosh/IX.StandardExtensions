@@ -22,7 +22,7 @@ public sealed class StringNode : ConstantNodeBase
     /// <param name="value">The value.</param>
     public StringNode(string value)
     {
-        this.Value = value;
+        Value = value;
     }
 
     /// <summary>
@@ -41,24 +41,24 @@ public sealed class StringNode : ConstantNodeBase
     /// Generates the expression that will be compiled into code.
     /// </summary>
     /// <returns>The expression.</returns>
-    public override Expression GenerateCachedExpression() => Expression.Constant(this.Value, typeof(string));
+    public override Expression GenerateCachedExpression() => Expression.Constant(Value, typeof(string));
 
     /// <summary>
     /// Generates the expression that will be compiled into code as a string expression.
     /// </summary>
     /// <returns>The string expression.</returns>
-    public override Expression GenerateCachedStringExpression() => this.GenerateExpression();
+    public override Expression GenerateCachedStringExpression() => GenerateExpression();
 
     /// <summary>
     /// Distills the value into a usable constant.
     /// </summary>
     /// <returns>A usable constant.</returns>
-    public override object DistillValue() => this.Value;
+    public override object DistillValue() => Value;
 
     /// <summary>
     /// Creates a deep clone of the source object.
     /// </summary>
     /// <param name="context">The deep cloning context.</param>
     /// <returns>A deep clone.</returns>
-    public override NodeBase DeepClone(NodeCloningContext context) => new StringNode(this.Value);
+    public override NodeBase DeepClone(NodeCloningContext context) => new StringNode(Value);
 }

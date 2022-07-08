@@ -171,7 +171,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     /// <value>
     ///     <c>true</c> if this stack is empty; otherwise, <c>false</c>.
     /// </value>
-    public bool IsEmpty => this.Count == 0;
+    public bool IsEmpty => Count == 0;
 
 #endregion
 
@@ -187,9 +187,9 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            return ((StackCollectionAdapter<T>)this.InternalContainer).Peek();
+            return ((StackCollectionAdapter<T>)InternalContainer).Peek();
         }
     }
 
@@ -204,16 +204,16 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
         T item;
         int index;
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            var container = (StackCollectionAdapter<T>)this.InternalContainer;
+            var container = (StackCollectionAdapter<T>)InternalContainer;
             item = container.Pop();
             index = container.Count;
         }
 
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
-        this.RaiseCollectionChangedRemove(
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionChangedRemove(
             item,
             index);
 
@@ -230,16 +230,16 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
 
         int index;
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            var container = (StackCollectionAdapter<T>)this.InternalContainer;
+            var container = (StackCollectionAdapter<T>)InternalContainer;
             container.Push(item);
             index = container.Count - 1;
         }
 
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
-        this.RaiseCollectionChangedAdd(
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionChangedAdd(
             item,
             index);
     }
@@ -255,7 +255,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
 
         foreach (T item in items)
         {
-            this.Push(item);
+            Push(item);
         }
     }
 
@@ -283,7 +283,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
             count);
         foreach (T item in itemsSpan)
         {
-            this.Push(item);
+            Push(item);
         }
     }
 
@@ -295,9 +295,9 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            return ((StackCollectionAdapter<T>)this.InternalContainer).ToArray();
+            return ((StackCollectionAdapter<T>)InternalContainer).ToArray();
         }
     }
 
@@ -309,9 +309,9 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     {
         this.RequiresNotDisposed();
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            ((StackCollectionAdapter<T>)this.InternalContainer).TrimExcess();
+            ((StackCollectionAdapter<T>)InternalContainer).TrimExcess();
         }
     }
 
@@ -327,9 +327,9 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            var container = (StackCollectionAdapter<T>)this.InternalContainer;
+            var container = (StackCollectionAdapter<T>)InternalContainer;
 
             if (container.Count == 0)
             {
@@ -358,9 +358,9 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
 
         int index;
 
-        using (ReadWriteSynchronizationLocker @lock = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker @lock = ReadWriteLock())
         {
-            var container = (StackCollectionAdapter<T>)this.InternalContainer;
+            var container = (StackCollectionAdapter<T>)InternalContainer;
 
             if (container.Count == 0)
             {
@@ -382,9 +382,9 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
             index = container.Count;
         }
 
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
-        this.RaiseCollectionChangedRemove(
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionChangedRemove(
             item,
             index);
 
@@ -402,9 +402,9 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
         Action<object?>?[] actions,
         object?[] states)
     {
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
-        this.RaiseCollectionReset();
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionReset();
     }
 
 #endregion
@@ -435,7 +435,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
         {
             case AddStateChange<T>(var item, var index):
             {
-                var container = (StackCollectionAdapter<T>)this.InternalContainer;
+                var container = (StackCollectionAdapter<T>)InternalContainer;
 
                 container.Push(item);
 
@@ -466,7 +466,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
 
             case EnqueueStateChange<T>(var enqueuedItem):
             {
-                var container = (StackCollectionAdapter<T>)this.InternalContainer;
+                var container = (StackCollectionAdapter<T>)InternalContainer;
 
                 container.Push(enqueuedItem);
 
@@ -498,7 +498,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
 
             case DequeueStateChange<T>:
             {
-                var container = (StackCollectionAdapter<T>)this.InternalContainer;
+                var container = (StackCollectionAdapter<T>)InternalContainer;
 
                 T item = container.Pop();
                 var index = container.Count;
@@ -537,7 +537,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
 
             case ClearStateChange<T>:
             {
-                this.InternalContainer.Clear();
+                InternalContainer.Clear();
 
                 toInvokeOutsideLock = innerState =>
                 {
@@ -594,7 +594,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
         {
             case AddStateChange<T>:
             {
-                var container = (StackCollectionAdapter<T>)this.InternalContainer;
+                var container = (StackCollectionAdapter<T>)InternalContainer;
 
                 T item = container.Pop();
                 var index = container.Count;
@@ -625,7 +625,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
 
             case EnqueueStateChange<T>:
             {
-                var container = (StackCollectionAdapter<T>)this.InternalContainer;
+                var container = (StackCollectionAdapter<T>)InternalContainer;
 
                 T item = container.Pop();
                 var index = container.Count;
@@ -656,7 +656,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
 
             case DequeueStateChange<T>(var dequeuedItem):
             {
-                var container = (StackCollectionAdapter<T>)this.InternalContainer;
+                var container = (StackCollectionAdapter<T>)InternalContainer;
 
                 container.Push(dequeuedItem);
 
@@ -696,7 +696,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
 
             case ClearStateChange<T>(var originalItems):
             {
-                var container = (StackCollectionAdapter<T>)this.InternalContainer;
+                var container = (StackCollectionAdapter<T>)InternalContainer;
                 for (var i = 0; i < originalItems.Length - 1; i++)
                 {
                     container.Push(originalItems[i]);

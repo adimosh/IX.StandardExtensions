@@ -72,8 +72,8 @@ internal sealed class FirePeriodicallyContext : DisposableBase,
     {
         this.state = state;
         this.timeSpan = timeSpan;
-        this.timer = new Timer(
-            this.TimerTick!,
+        timer = new Timer(
+            TimerTick!,
             Requires.NotNull(tickerDelegate),
             initialDelay,
             timeSpan);
@@ -89,7 +89,7 @@ internal sealed class FirePeriodicallyContext : DisposableBase,
     ///     Interrupts this instance.
     /// </summary>
     public void Interrupt() =>
-        this.timer.Change(
+        timer.Change(
             Timeout.Infinite,
             Timeout.Infinite);
 
@@ -97,9 +97,9 @@ internal sealed class FirePeriodicallyContext : DisposableBase,
     ///     Resumes this instance.
     /// </summary>
     public void Resume() =>
-        this.timer.Change(
+        timer.Change(
             TimeSpan.Zero,
-            this.timeSpan);
+            timeSpan);
 
 #endregion
 
@@ -112,7 +112,7 @@ internal sealed class FirePeriodicallyContext : DisposableBase,
     {
         base.DisposeGeneralContext();
 
-        this.timer.Dispose();
+        timer.Dispose();
     }
 
 #endregion
@@ -121,12 +121,12 @@ internal sealed class FirePeriodicallyContext : DisposableBase,
     {
         var ticker = (FirePeriodicallyTicker)stateObject;
 
-        Interlocked.Increment(ref this.iteration);
+        Interlocked.Increment(ref iteration);
 
         ticker(
-            this.iteration,
+            iteration,
             this,
-            this.state);
+            state);
     }
 
 #endregion

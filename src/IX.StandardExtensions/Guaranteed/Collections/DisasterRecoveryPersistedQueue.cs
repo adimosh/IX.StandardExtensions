@@ -93,10 +93,10 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             pathShim);
 
         // Automatic disaster detection logic
-        AppDomain.CurrentDomain.UnhandledException += this.CurrentDomainOnUnhandledException;
+        AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
 
         // Initialize queues
-        this.queue = new System.Collections.Generic.Queue<T>();
+        queue = new System.Collections.Generic.Queue<T>();
 
         using var existingQueue = new PersistedQueue<T>(
             persistenceFolderPath,
@@ -107,7 +107,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
         while (existingQueue.TryDequeue(out T transferItem))
         {
-            this.queue.Enqueue(transferItem);
+            queue.Enqueue(transferItem);
         }
     }
 
@@ -126,14 +126,14 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     {
         get
         {
-            using (this.ReadLock())
+            using (ReadLock())
             {
-                if (this.isInDisasterMode != 0)
+                if (isInDisasterMode != 0)
                 {
                     throw new InvalidOperationException(Resources.ErrorTheQueueIsCurrentlyInDisasterMode);
                 }
 
-                return this.queue!.Count;
+                return queue!.Count;
             }
         }
     }
@@ -145,13 +145,13 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     ///     <c>true</c> if this queue is empty; otherwise, <c>false</c>.
     /// </value>
     public bool IsEmpty =>
-        this.Count == 0;
+        Count == 0;
 
     /// <summary>
     ///     Gets the current items count from the queue.
     /// </summary>
     int ICollection.Count =>
-        this.Count;
+        Count;
 
     /// <summary>
     ///     Gets a value indicating whether this queue is synchronized.
@@ -166,7 +166,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         "ReSharper",
         "ConvertToAutoProperty",
         Justification = "We're doing this because of an analyzer error.")]
-    object ICollection.SyncRoot => this.syncRoot;
+    object ICollection.SyncRoot => syncRoot;
 
 #endregion
 
@@ -197,12 +197,12 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Requires.NonNegative(
             index);
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            if (this.isInDisasterMode == 0)
+            if (isInDisasterMode == 0)
             {
                 // Not in disaster mode
-                ((ICollection)this.queue!).CopyTo(
+                ((ICollection)queue!).CopyTo(
                     array,
                     index);
             }
@@ -234,14 +234,14 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Justification = "Atomic enumerator expects a delegate instance.")]
     public IEnumerator<T> GetEnumerator()
     {
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            if (this.isInDisasterMode == 0)
+            if (isInDisasterMode == 0)
             {
                 // Not in disaster mode - we can spawn an atomic enumerator
                 return AtomicEnumerator<T>.FromCollection(
-                    this.queue!,
-                    this.ReadLock);
+                    queue!,
+                    ReadLock);
             }
 
             // Disaster mode - enumeration disabled
@@ -274,32 +274,32 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Requires.NotNull(
             actionToInvoke);
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.isInDisasterMode != 0)
+            if (isInDisasterMode != 0)
             {
                 // Disaster mode
-                return this.persistedQueue!.DequeueWhilePredicateWithAction(
+                return persistedQueue!.DequeueWhilePredicateWithAction(
                     predicate,
                     actionToInvoke,
                     state);
             }
 
             // Normal mode
-            if (this.queue!.Count == 0)
+            if (queue!.Count == 0)
             {
                 return 0;
             }
 
             if (!predicate(
                     state,
-                    this.queue.Peek()))
+                    queue.Peek()))
             {
                 return 0;
             }
 
             var index = 1;
-            T[] items = this.queue.ToArray();
+            T[] items = queue.ToArray();
             for (; index < items.Length; index++)
             {
                 if (!predicate(
@@ -323,7 +323,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
             for (var i = 0; i < index; i++)
             {
-                this.queue.Dequeue();
+                queue.Dequeue();
             }
 
             return index;
@@ -358,12 +358,12 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Requires.NotNull(
             actionToInvoke);
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.isInDisasterMode != 0)
+            if (isInDisasterMode != 0)
             {
                 // Disaster mode
-                return await this.persistedQueue!.DequeueWhilePredicateWithActionAsync(
+                return await persistedQueue!.DequeueWhilePredicateWithActionAsync(
                         predicate,
                         actionToInvoke,
                         state,
@@ -374,20 +374,20 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             await Task.Yield();
 
             // Normal mode
-            if (this.queue!.Count == 0)
+            if (queue!.Count == 0)
             {
                 return 0;
             }
 
             if (!predicate(
                     state,
-                    this.queue.Peek()))
+                    queue.Peek()))
             {
                 return 0;
             }
 
             var index = 1;
-            T[] items = this.queue.ToArray();
+            T[] items = queue.ToArray();
             for (; index < items.Length; index++)
             {
                 if (!predicate(
@@ -411,7 +411,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
             for (var i = 0; i < index; i++)
             {
-                this.queue.Dequeue();
+                queue.Dequeue();
             }
 
             return index;
@@ -446,7 +446,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         CancellationToken cancellationToken = default)
     {
         // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
-        return await this.DequeueWhilePredicateWithActionAsync(
+        return await DequeueWhilePredicateWithActionAsync(
             InvokePredicateLocal,
             actionToInvoke,
             state,
@@ -490,12 +490,12 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Requires.NotNull(
             actionToInvoke);
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.isInDisasterMode != 0)
+            if (isInDisasterMode != 0)
             {
                 // Disaster mode
-                return await this.persistedQueue!.DequeueWhilePredicateWithActionAsync(
+                return await persistedQueue!.DequeueWhilePredicateWithActionAsync(
                         predicate,
                         actionToInvoke,
                         state,
@@ -504,21 +504,21 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             }
 
             // Normal mode
-            if (this.queue!.Count == 0)
+            if (queue!.Count == 0)
             {
                 return 0;
             }
 
             if (!await predicate(
                         state,
-                        this.queue.Peek())
+                        queue.Peek())
                     .ConfigureAwait(false))
             {
                 return 0;
             }
 
             var index = 1;
-            T[] items = this.queue.ToArray();
+            T[] items = queue.ToArray();
             for (; index < items.Length; index++)
             {
                 if (!await predicate(
@@ -543,7 +543,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
             for (var i = 0; i < index; i++)
             {
-                this.queue.Dequeue();
+                queue.Dequeue();
             }
 
             return index;
@@ -578,7 +578,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         CancellationToken cancellationToken = default)
     {
         // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
-        return await this.DequeueWhilePredicateWithActionAsync(
+        return await DequeueWhilePredicateWithActionAsync(
             predicate,
             InvokeActionLocal,
             state,
@@ -622,12 +622,12 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Requires.NotNull(
             actionToInvoke);
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.isInDisasterMode != 0)
+            if (isInDisasterMode != 0)
             {
                 // Disaster mode
-                return await this.persistedQueue!.DequeueWhilePredicateWithActionAsync(
+                return await persistedQueue!.DequeueWhilePredicateWithActionAsync(
                         predicate,
                         actionToInvoke,
                         state,
@@ -638,20 +638,20 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             await Task.Yield();
 
             // Normal mode
-            if (this.queue!.Count == 0)
+            if (queue!.Count == 0)
             {
                 return 0;
             }
 
             if (!predicate(
                     state,
-                    this.queue.Peek()))
+                    queue.Peek()))
             {
                 return 0;
             }
 
             var index = 1;
-            T[] items = this.queue.ToArray();
+            T[] items = queue.ToArray();
             for (; index < items.Length; index++)
             {
                 if (!predicate(
@@ -676,7 +676,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
             for (var i = 0; i < index; i++)
             {
-                this.queue.Dequeue();
+                queue.Dequeue();
             }
 
             return index;
@@ -711,7 +711,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         CancellationToken cancellationToken = default)
     {
         // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
-        return await this.DequeueWhilePredicateWithActionAsync(
+        return await DequeueWhilePredicateWithActionAsync(
             InvokePredicateLocal,
             InvokeActionLocal,
             state,
@@ -764,12 +764,12 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Requires.NotNull(
             actionToInvoke);
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.isInDisasterMode != 0)
+            if (isInDisasterMode != 0)
             {
                 // Disaster mode
-                return await this.persistedQueue!.DequeueWhilePredicateWithActionAsync(
+                return await persistedQueue!.DequeueWhilePredicateWithActionAsync(
                         predicate,
                         actionToInvoke,
                         state,
@@ -778,21 +778,21 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             }
 
             // Normal mode
-            if (this.queue!.Count == 0)
+            if (queue!.Count == 0)
             {
                 return 0;
             }
 
             if (!await predicate(
                         state,
-                        this.queue.Peek())
+                        queue.Peek())
                     .ConfigureAwait(false))
             {
                 return 0;
             }
 
             var index = 1;
-            T[] items = this.queue.ToArray();
+            T[] items = queue.ToArray();
             for (; index < items.Length; index++)
             {
                 if (!await predicate(
@@ -818,7 +818,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
             for (var i = 0; i < index; i++)
             {
-                this.queue.Dequeue();
+                queue.Dequeue();
             }
 
             return index;
@@ -842,23 +842,23 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Requires.NotNull(
             actionToInvoke);
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.isInDisasterMode != 0)
+            if (isInDisasterMode != 0)
             {
                 // Disaster mode
-                return this.persistedQueue!.DequeueWithAction(
+                return persistedQueue!.DequeueWithAction(
                     actionToInvoke,
                     state);
             }
 
             // Normal mode
-            if (this.queue!.Count == 0)
+            if (queue!.Count == 0)
             {
                 return false;
             }
 
-            T item = this.queue.Peek();
+            T item = queue.Peek();
 
             try
             {
@@ -871,7 +871,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
                 return false;
             }
 
-            this.queue.Dequeue();
+            queue.Dequeue();
 
             return true;
         }
@@ -897,12 +897,12 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Requires.NotNull(
             actionToInvoke);
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.isInDisasterMode != 0)
+            if (isInDisasterMode != 0)
             {
                 // Disaster mode
-                return await this.persistedQueue!.DequeueWithActionAsync(
+                return await persistedQueue!.DequeueWithActionAsync(
                         actionToInvoke,
                         state,
                         cancellationToken)
@@ -910,14 +910,14 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             }
 
             // Normal mode
-            if (this.queue!.Count == 0)
+            if (queue!.Count == 0)
             {
                 return false;
             }
 
             await Task.Yield();
 
-            T item = this.queue.Peek();
+            T item = queue.Peek();
 
             try
             {
@@ -930,7 +930,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
                 return false;
             }
 
-            this.queue.Dequeue();
+            queue.Dequeue();
 
             return true;
         }
@@ -957,7 +957,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         CancellationToken cancellationToken = default)
     {
         // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
-        return await this.DequeueWithActionAsync(
+        return await DequeueWithActionAsync(
             InvokeActionLocal,
             state,
             cancellationToken);
@@ -991,12 +991,12 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Requires.NotNull(
             actionToInvoke);
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.isInDisasterMode != 0)
+            if (isInDisasterMode != 0)
             {
                 // Disaster mode
-                return await this.persistedQueue!.DequeueWithActionAsync(
+                return await persistedQueue!.DequeueWithActionAsync(
                         actionToInvoke,
                         state,
                         cancellationToken)
@@ -1004,12 +1004,12 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             }
 
             // Normal mode
-            if (this.queue!.Count == 0)
+            if (queue!.Count == 0)
             {
                 return false;
             }
 
-            T item = this.queue.Peek();
+            T item = queue.Peek();
 
             try
             {
@@ -1023,7 +1023,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
                 return false;
             }
 
-            this.queue.Dequeue();
+            queue.Dequeue();
 
             return true;
         }
@@ -1034,17 +1034,17 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </summary>
     public void Clear()
     {
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.isInDisasterMode == 0)
+            if (isInDisasterMode == 0)
             {
                 // Not in disaster mode
-                this.queue!.Clear();
+                queue!.Clear();
             }
             else
             {
                 // Disaster mode
-                this.persistedQueue!.Clear();
+                persistedQueue!.Clear();
             }
         }
     }
@@ -1062,12 +1062,12 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </exception>
     public bool Contains(T item)
     {
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            if (this.isInDisasterMode == 0)
+            if (isInDisasterMode == 0)
             {
                 // Not in disaster mode
-                return this.queue!.Contains(item);
+                return queue!.Contains(item);
             }
         }
 
@@ -1083,9 +1083,9 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </returns>
     public T Dequeue()
     {
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            return this.isInDisasterMode == 0 ? this.queue!.Dequeue() : this.persistedQueue!.Dequeue();
+            return isInDisasterMode == 0 ? queue!.Dequeue() : persistedQueue!.Dequeue();
         }
     }
 
@@ -1095,17 +1095,17 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// <param name="item">The item to enqueue.</param>
     public void Enqueue(T item)
     {
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.isInDisasterMode == 0)
+            if (isInDisasterMode == 0)
             {
                 // Not in disaster mode
-                this.queue!.Enqueue(item);
+                queue!.Enqueue(item);
             }
             else
             {
                 // Disaster mode
-                this.persistedQueue!.Enqueue(item);
+                persistedQueue!.Enqueue(item);
             }
         }
     }
@@ -1116,17 +1116,17 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// <param name="items">The item range to push.</param>
     public void EnqueueRange(T[] items)
     {
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.isInDisasterMode == 0)
+            if (isInDisasterMode == 0)
             {
                 // Not in disaster mode
-                this.queue!.EnqueueRange(items);
+                queue!.EnqueueRange(items);
             }
             else
             {
                 // Disaster mode
-                this.persistedQueue!.EnqueueRange(items);
+                persistedQueue!.EnqueueRange(items);
             }
         }
     }
@@ -1142,12 +1142,12 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         int startIndex,
         int count)
     {
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.isInDisasterMode == 0)
+            if (isInDisasterMode == 0)
             {
                 // Not in disaster mode
-                this.queue!.EnqueueRange(
+                queue!.EnqueueRange(
                     items,
                     startIndex,
                     count);
@@ -1155,7 +1155,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             else
             {
                 // Disaster mode
-                this.persistedQueue!.EnqueueRange(
+                persistedQueue!.EnqueueRange(
                     items,
                     startIndex,
                     count);
@@ -1171,9 +1171,9 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </returns>
     public T Peek()
     {
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            return this.isInDisasterMode == 0 ? this.queue!.Peek() : this.persistedQueue!.Peek();
+            return isInDisasterMode == 0 ? queue!.Peek() : persistedQueue!.Peek();
         }
     }
 
@@ -1189,12 +1189,12 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </exception>
     public T[] ToArray()
     {
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            if (this.isInDisasterMode == 0)
+            if (isInDisasterMode == 0)
             {
                 // Not in disaster mode
-                return this.queue!.ToArray();
+                return queue!.ToArray();
             }
         }
 
@@ -1207,12 +1207,12 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </summary>
     public void TrimExcess()
     {
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.isInDisasterMode == 0)
+            if (isInDisasterMode == 0)
             {
                 // Not in disaster mode
-                this.queue!.TrimExcess();
+                queue!.TrimExcess();
             }
         }
 
@@ -1229,11 +1229,11 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </returns>
     public bool TryDequeue(out T item)
     {
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            return this.isInDisasterMode == 0
-                ? this.queue!.TryDequeue(out item!)
-                : this.persistedQueue!.TryDequeue(out item);
+            return isInDisasterMode == 0
+                ? queue!.TryDequeue(out item!)
+                : persistedQueue!.TryDequeue(out item);
         }
     }
 
@@ -1246,11 +1246,11 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </returns>
     public bool TryPeek(out T item)
     {
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            return this.isInDisasterMode == 0
-                ? this.queue!.TryPeek(out item!)
-                : this.persistedQueue!.TryPeek(out item);
+            return isInDisasterMode == 0
+                ? queue!.TryPeek(out item!)
+                : persistedQueue!.TryPeek(out item);
         }
     }
 
@@ -1266,7 +1266,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Justification = "Unavoidable.")]
     [ExcludeFromCodeCoverage]
     IEnumerator IEnumerable.GetEnumerator() =>
-        this.GetEnumerator();
+        GetEnumerator();
 
 #endregion
 
@@ -1277,7 +1277,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     public void Disaster()
     {
         if (Interlocked.CompareExchange(
-                ref this.isInDisasterMode,
+                ref isInDisasterMode,
                 1,
                 0) !=
             0)
@@ -1285,34 +1285,34 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             return;
         }
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
             PersistedQueue<T> transferQueue;
             try
             {
                 transferQueue = new PersistedQueue<T>(
-                    this.persistenceFolderPath,
+                    persistenceFolderPath,
                     Timeout.InfiniteTimeSpan,
-                    this.fileShim,
-                    this.directoryShim,
-                    this.pathShim);
+                    fileShim,
+                    directoryShim,
+                    pathShim);
             }
             catch (Exception)
             {
                 Interlocked.Exchange(
-                    ref this.isInDisasterMode,
+                    ref isInDisasterMode,
                     0);
 
                 throw;
             }
 
             Interlocked.Exchange(
-                ref this.persistedQueue,
+                ref persistedQueue,
                 transferQueue)?.Dispose();
 
             try
             {
-                while (this.queue!.TryDequeue(out T? transferItem))
+                while (queue!.TryDequeue(out T? transferItem))
                 {
                     transferQueue.Enqueue(transferItem);
                 }
@@ -1321,14 +1321,14 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             {
                 transferQueue.Dispose();
                 Interlocked.Exchange(
-                    ref this.isInDisasterMode,
+                    ref isInDisasterMode,
                     0);
 
                 throw;
             }
 
             _ = Interlocked.Exchange(
-                ref this.queue,
+                ref queue,
                 null!);
         }
     }
@@ -1339,7 +1339,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     public void Recovery()
     {
         if (Interlocked.CompareExchange(
-                ref this.isInDisasterMode,
+                ref isInDisasterMode,
                 0,
                 1) !=
             1)
@@ -1347,33 +1347,33 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             return;
         }
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
             var transferQueue = new System.Collections.Generic.Queue<T>();
 
             _ = Interlocked.Exchange(
-                ref this.queue,
+                ref queue,
                 transferQueue);
 
             try
             {
-                while (this.persistedQueue!.TryDequeue(out T transferItem))
+                while (persistedQueue!.TryDequeue(out T transferItem))
                 {
                     transferQueue.Enqueue(transferItem);
                 }
             }
             catch (Exception)
             {
-                this.persistedQueue!.Dispose();
+                persistedQueue!.Dispose();
                 Interlocked.Exchange(
-                    ref this.isInDisasterMode,
+                    ref isInDisasterMode,
                     0);
 
                 throw;
             }
 
             Interlocked.Exchange(
-                ref this.persistedQueue,
+                ref persistedQueue,
                 null!).Dispose();
         }
     }
@@ -1389,7 +1389,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     {
         if (e.IsTerminating)
         {
-            this.Disaster();
+            Disaster();
         }
     }
 

@@ -40,7 +40,7 @@ internal sealed class NotNode : UnaryOperatorNodeBase
     /// <value>
     ///     The node return type.
     /// </value>
-    public override SupportedValueType ReturnType => this.Operand.ReturnType;
+    public override SupportedValueType ReturnType => Operand.ReturnType;
 
     /// <summary>
     ///     Ensures that the operand is actually compatible with the operation.
@@ -64,7 +64,7 @@ internal sealed class NotNode : UnaryOperatorNodeBase
     ///     A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() =>
-        this.Operand switch
+        Operand switch
         {
             NumericNode numericNode => new NumericNode(~numericNode.ExtractInteger()),
             BoolNode boolNode => new BoolNode(!boolNode.Value),
@@ -76,7 +76,7 @@ internal sealed class NotNode : UnaryOperatorNodeBase
     /// </summary>
     /// <param name="context">The deep cloning context.</param>
     /// <returns>A deep clone.</returns>
-    public override NodeBase DeepClone(NodeCloningContext context) => new NotNode(this.Operand.DeepClone(context));
+    public override NodeBase DeepClone(NodeCloningContext context) => new NotNode(Operand.DeepClone(context));
 
     /// <summary>
     ///     Strongly determines the node's type, if possible.
@@ -89,9 +89,9 @@ internal sealed class NotNode : UnaryOperatorNodeBase
             throw new ExpressionNotValidLogicallyException();
         }
 
-        this.Operand.DetermineStrongly(type);
+        Operand.DetermineStrongly(type);
 
-        EnsureCompatibleOperand(this.Operand);
+        EnsureCompatibleOperand(Operand);
     }
 
     /// <summary>
@@ -107,9 +107,9 @@ internal sealed class NotNode : UnaryOperatorNodeBase
             throw new ExpressionNotValidLogicallyException();
         }
 
-        this.Operand.DetermineWeakly(type);
+        Operand.DetermineWeakly(type);
 
-        EnsureCompatibleOperand(this.Operand);
+        EnsureCompatibleOperand(Operand);
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ internal sealed class NotNode : UnaryOperatorNodeBase
     /// <returns>
     ///     The expression.
     /// </returns>
-    protected override Expression GenerateExpressionInternal() => Expression.Not(this.Operand.GenerateExpression());
+    protected override Expression GenerateExpressionInternal() => Expression.Not(Operand.GenerateExpression());
 
     /// <summary>
     ///     Generates the expression with tolerance that will be compiled into code.
@@ -126,5 +126,5 @@ internal sealed class NotNode : UnaryOperatorNodeBase
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
-        Expression.Not(this.Operand.GenerateExpression(tolerance));
+        Expression.Not(Operand.GenerateExpression(tolerance));
 }

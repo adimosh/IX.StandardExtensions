@@ -48,7 +48,7 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
         Func<T> generator,
         bool parallelGenerate = false)
     {
-        this.items = new T[capacity];
+        items = new T[capacity];
 
         if (parallelGenerate)
         {
@@ -59,14 +59,14 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
                 {
                     T item = generator();
 
-                    this.items[index] = item;
+                    items[index] = item;
                 });
         }
         else
         {
             for (var i = 0; i < capacity; i++)
             {
-                this.items[i] = generator();
+                items[i] = generator();
             }
         }
     }
@@ -95,7 +95,7 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
         Func<object, T> localGenerator = Requires.NotNull(
             generator);
 
-        this.items = new T[capacity];
+        items = new T[capacity];
 
         if (parallelGenerate)
         {
@@ -106,14 +106,14 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
                 {
                     T item = localGenerator(state);
 
-                    this.items[index] = item;
+                    items[index] = item;
                 });
         }
         else
         {
             for (var i = 0; i < capacity; i++)
             {
-                this.items[i] = localGenerator(state);
+                items[i] = localGenerator(state);
             }
         }
     }
@@ -130,9 +130,9 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
     {
         get
         {
-            using (this.ReadLock())
+            using (ReadLock())
             {
-                return this.items.Length;
+                return items.Length;
             }
         }
     }
@@ -144,9 +144,9 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
     {
         get
         {
-            using (this.ReadLock())
+            using (ReadLock())
             {
-                return this.items[index];
+                return items[index];
             }
         }
     }
@@ -167,17 +167,17 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
         while (true)
         {
             T item;
-            using (ReadWriteSynchronizationLocker lck = this.ReadWriteLock())
+            using (ReadWriteSynchronizationLocker lck = ReadWriteLock())
             {
-                if (this.storeIndex >= this.items.Length)
+                if (storeIndex >= items.Length)
                 {
                     break;
                 }
 
                 lck.Upgrade();
 
-                item = this.items[this.storeIndex];
-                this.storeIndex++;
+                item = items[storeIndex];
+                storeIndex++;
             }
 
             yield return item;
@@ -193,7 +193,7 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Unavoidable.")]
     [ExcludeFromCodeCoverage]
-    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 #endregion
 
@@ -205,10 +205,10 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
     {
         T item;
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            item = this.items[this.storeIndex];
-            this.storeIndex++;
+            item = items[storeIndex];
+            storeIndex++;
         }
 
         return item;
@@ -219,9 +219,9 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
     /// </summary>
     public void Reset()
     {
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            this.storeIndex = 0;
+            storeIndex = 0;
         }
     }
 

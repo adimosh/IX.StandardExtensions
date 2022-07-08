@@ -24,11 +24,11 @@ internal class UndoableUnitBlockTransaction<T> : OperationTransaction
 
         this.collectionBase = collectionBase;
 
-        this.AddRevertStep(
+        AddRevertStep(
             state => { ((ObservableCollectionBase<T>)state).FailExplicitUndoBlockTransaction(); },
             collectionBase);
 
-        this.StateChanges = new CompositeStateChange(new List<StateChangeBase>());
+        StateChanges = new CompositeStateChange(new List<StateChangeBase>());
     }
 
 #endregion
@@ -41,7 +41,7 @@ internal class UndoableUnitBlockTransaction<T> : OperationTransaction
 
 #region Methods
 
-    protected override void WhenSuccessful() => this.collectionBase.FinishExplicitUndoBlockTransaction();
+    protected override void WhenSuccessful() => collectionBase.FinishExplicitUndoBlockTransaction();
 
 #endregion
 }

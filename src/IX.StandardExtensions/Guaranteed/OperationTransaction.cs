@@ -24,7 +24,7 @@ public abstract class OperationTransaction : DisposableBase
     /// </summary>
     protected OperationTransaction()
     {
-        this.revertSteps = new List<Tuple<Action<object>, object>>();
+        revertSteps = new List<Tuple<Action<object>, object>>();
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public abstract class OperationTransaction : DisposableBase
     /// <summary>
     /// Declares this operation transaction a success.
     /// </summary>
-    public void Success() => this.Successful = true;
+    public void Success() => Successful = true;
 
     /// <summary>
     /// Adds a revert step.
@@ -44,7 +44,7 @@ public abstract class OperationTransaction : DisposableBase
     /// <param name="action">The revert action.</param>
     /// <param name="state">The state object to pass to the revert action.</param>
     protected void AddRevertStep(Action<object> action, object state)
-        => this.revertSteps.Add(
+        => revertSteps.Add(
             new Tuple<Action<object>, object>(
                 action,
                 state));
@@ -61,18 +61,18 @@ public abstract class OperationTransaction : DisposableBase
     {
         base.DisposeGeneralContext();
 
-        if (this.Successful)
+        if (Successful)
         {
-            this.WhenSuccessful();
+            WhenSuccessful();
         }
         else
         {
-            foreach (Tuple<Action<object>, object> revertStep in this.revertSteps)
+            foreach (Tuple<Action<object>, object> revertStep in revertSteps)
             {
                 revertStep.Item1(revertStep.Item2);
             }
         }
 
-        this.revertSteps.Clear();
+        revertSteps.Clear();
     }
 }

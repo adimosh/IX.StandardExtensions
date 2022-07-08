@@ -48,8 +48,8 @@ public class ManualResetEvent : DisposableBase,
     /// <param name="initialState">The initial signal state.</param>
     public ManualResetEvent(bool initialState)
     {
-        this.sre = new GlobalThreading.ManualResetEvent(initialState);
-        this.eventLocal = true;
+        sre = new GlobalThreading.ManualResetEvent(initialState);
+        eventLocal = true;
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public class ManualResetEvent : DisposableBase,
     public ManualResetEvent(GlobalThreading.ManualResetEvent manualResetEvent)
     {
         Requires.NotNull(
-            out this.sre,
+            out sre,
             manualResetEvent,
             nameof(manualResetEvent));
     }
@@ -113,28 +113,18 @@ public class ManualResetEvent : DisposableBase,
     ///     Sets the state of this event instance to non-signaled. Any thread entering a wait from this point will block.
     /// </summary>
     /// <returns><see langword="true" /> if the signal has been reset, <see langword="false" /> otherwise.</returns>
-    public bool Reset() => this.sre.Reset();
+    public bool Reset() => sre.Reset();
 
     /// <summary>
     ///     Sets the state of this event instance to signaled. Any waiting thread will unblock.
     /// </summary>
     /// <returns><see langword="true" /> if the signal has been set, <see langword="false" /> otherwise.</returns>
-    public bool Set() => this.sre.Set();
+    public bool Set() => sre.Set();
 
     /// <summary>
     ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
     /// </summary>
-    public void WaitOne() => this.sre.WaitOne();
-
-    /// <summary>
-    ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
-    /// </summary>
-    /// <param name="millisecondsTimeout">The timeout period, in milliseconds.</param>
-    /// <returns>
-    ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
-    ///     is reached.
-    /// </returns>
-    public bool WaitOne(int millisecondsTimeout) => this.sre.WaitOne(TimeSpan.FromMilliseconds(millisecondsTimeout));
+    public void WaitOne() => sre.WaitOne();
 
     /// <summary>
     ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
@@ -144,7 +134,17 @@ public class ManualResetEvent : DisposableBase,
     ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
     ///     is reached.
     /// </returns>
-    public bool WaitOne(double millisecondsTimeout) => this.sre.WaitOne(TimeSpan.FromMilliseconds(millisecondsTimeout));
+    public bool WaitOne(int millisecondsTimeout) => sre.WaitOne(TimeSpan.FromMilliseconds(millisecondsTimeout));
+
+    /// <summary>
+    ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
+    /// </summary>
+    /// <param name="millisecondsTimeout">The timeout period, in milliseconds.</param>
+    /// <returns>
+    ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
+    ///     is reached.
+    /// </returns>
+    public bool WaitOne(double millisecondsTimeout) => sre.WaitOne(TimeSpan.FromMilliseconds(millisecondsTimeout));
 
     /// <summary>
     ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
@@ -154,7 +154,7 @@ public class ManualResetEvent : DisposableBase,
     ///     <see langword="true" /> if the event is set within the timeout period, <see langword="false" /> if the timeout
     ///     is reached.
     /// </returns>
-    public bool WaitOne(TimeSpan timeout) => this.sre.WaitOne(timeout);
+    public bool WaitOne(TimeSpan timeout) => sre.WaitOne(timeout);
 
     /// <summary>
     ///     Enters a wait period and, should there be no signal set, blocks the thread calling.
@@ -171,7 +171,7 @@ public class ManualResetEvent : DisposableBase,
     public bool WaitOne(
         int millisecondsTimeout,
         bool exitSynchronizationDomain) =>
-        this.sre.WaitOne(
+        sre.WaitOne(
             TimeSpan.FromMilliseconds(millisecondsTimeout),
             exitSynchronizationDomain);
 
@@ -190,7 +190,7 @@ public class ManualResetEvent : DisposableBase,
     public bool WaitOne(
         double millisecondsTimeout,
         bool exitSynchronizationDomain) =>
-        this.sre.WaitOne(
+        sre.WaitOne(
             TimeSpan.FromMilliseconds(millisecondsTimeout),
             exitSynchronizationDomain);
 
@@ -209,7 +209,7 @@ public class ManualResetEvent : DisposableBase,
     public bool WaitOne(
         TimeSpan timeout,
         bool exitSynchronizationDomain) =>
-        this.sre.WaitOne(
+        sre.WaitOne(
             timeout,
             exitSynchronizationDomain);
 
@@ -220,9 +220,9 @@ public class ManualResetEvent : DisposableBase,
     /// <returns>
     ///     A potentially awaitable value task.
     /// </returns>
-    public async ValueTask WaitOneAsync(GlobalThreading.CancellationToken cancellationToken = default) =>
-        _ = await this.sre.WaitOneAsync(
-            GlobalThreading.Timeout.InfiniteTimeSpan,
+    public async ValueTask WaitOneAsync(CancellationToken cancellationToken = default) =>
+        _ = await sre.WaitOneAsync(
+            Timeout.InfiniteTimeSpan,
             cancellationToken);
 
     /// <summary>
@@ -236,8 +236,8 @@ public class ManualResetEvent : DisposableBase,
     /// </returns>
     public ValueTask<bool> WaitOneAsync(
         int millisecondsTimeout,
-        GlobalThreading.CancellationToken cancellationToken = default) =>
-        this.sre.WaitOneAsync(
+        CancellationToken cancellationToken = default) =>
+        sre.WaitOneAsync(
             millisecondsTimeout,
             cancellationToken);
 
@@ -252,8 +252,8 @@ public class ManualResetEvent : DisposableBase,
     /// </returns>
     public ValueTask<bool> WaitOneAsync(
         double millisecondsTimeout,
-        GlobalThreading.CancellationToken cancellationToken = default) =>
-        this.sre.WaitOneAsync(
+        CancellationToken cancellationToken = default) =>
+        sre.WaitOneAsync(
             millisecondsTimeout,
             cancellationToken);
 
@@ -268,8 +268,8 @@ public class ManualResetEvent : DisposableBase,
     /// </returns>
     public ValueTask<bool> WaitOneAsync(
         TimeSpan timeout,
-        GlobalThreading.CancellationToken cancellationToken = default) =>
-        this.sre.WaitOneAsync(
+        CancellationToken cancellationToken = default) =>
+        sre.WaitOneAsync(
             timeout,
             cancellationToken);
 
@@ -289,8 +289,8 @@ public class ManualResetEvent : DisposableBase,
     public ValueTask<bool> WaitOneAsync(
         int millisecondsTimeout,
         bool exitSynchronizationDomain,
-        GlobalThreading.CancellationToken cancellationToken = default) =>
-        this.sre.WaitOneAsync(
+        CancellationToken cancellationToken = default) =>
+        sre.WaitOneAsync(
             millisecondsTimeout,
             cancellationToken);
 
@@ -310,8 +310,8 @@ public class ManualResetEvent : DisposableBase,
     public ValueTask<bool> WaitOneAsync(
         double millisecondsTimeout,
         bool exitSynchronizationDomain,
-        GlobalThreading.CancellationToken cancellationToken = default) =>
-        this.sre.WaitOneAsync(
+        CancellationToken cancellationToken = default) =>
+        sre.WaitOneAsync(
             millisecondsTimeout,
             cancellationToken);
 
@@ -331,8 +331,8 @@ public class ManualResetEvent : DisposableBase,
     public ValueTask<bool> WaitOneAsync(
         TimeSpan timeout,
         bool exitSynchronizationDomain,
-        GlobalThreading.CancellationToken cancellationToken = default) =>
-        this.sre.WaitOneAsync(
+        CancellationToken cancellationToken = default) =>
+        sre.WaitOneAsync(
             timeout,
             cancellationToken);
 
@@ -372,7 +372,7 @@ public class ManualResetEvent : DisposableBase,
     ///     Converts to a <see cref="GlobalThreading.ManualResetEvent" />.
     /// </summary>
     /// <returns>The <see cref="GlobalThreading.ManualResetEvent" /> that is encapsulated in this instance.</returns>
-    public GlobalThreading.ManualResetEvent ToManualResetEvent() => this.sre;
+    public GlobalThreading.ManualResetEvent ToManualResetEvent() => sre;
 
 #region Disposable
 
@@ -383,9 +383,9 @@ public class ManualResetEvent : DisposableBase,
     {
         base.DisposeManagedContext();
 
-        if (this.eventLocal)
+        if (eventLocal)
         {
-            this.sre.Dispose();
+            sre.Dispose();
         }
     }
 

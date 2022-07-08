@@ -2785,8 +2785,8 @@ internal class EUCKRDistributionAnalyser : CharDistributionAnalyser
 
     public EUCKRDistributionAnalyser()
     {
-        this.charToFreqOrder = EUCKR_CHAR2FREQ_ORDER;
-        this.typicalDistributionRatio = EUCKR_TYPICAL_DISTRIBUTION_RATIO;
+        charToFreqOrder = EUCKR_CHAR2FREQ_ORDER;
+        typicalDistributionRatio = EUCKR_TYPICAL_DISTRIBUTION_RATIO;
     }
 
     /// <summary>

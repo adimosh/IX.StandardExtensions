@@ -52,7 +52,7 @@ namespace IX.UnitTests.Math
             Action<IExpressionParsingService> dispose)
         {
             // Arrange
-            using var eps = new FixtureCreateDisposePatternHelper(this.fixture, create, dispose);
+            using var eps = new FixtureCreateDisposePatternHelper(fixture, create, dispose);
 
             if (dispose != null)
             {
@@ -85,7 +85,7 @@ namespace IX.UnitTests.Math
             Action<IExpressionParsingService> dispose)
         {
             // Arrange
-            using var eps = new FixtureCreateDisposePatternHelper(this.fixture, create, dispose);
+            using var eps = new FixtureCreateDisposePatternHelper(fixture, create, dispose);
 
             if (dispose != null)
             {
@@ -116,7 +116,7 @@ namespace IX.UnitTests.Math
             Action<IExpressionParsingService> dispose)
         {
             // Arrange
-            using var eps = new FixtureCreateDisposePatternHelper(this.fixture, create, dispose);
+            using var eps = new FixtureCreateDisposePatternHelper(fixture, create, dispose);
 
             if (dispose != null)
             {
@@ -148,7 +148,7 @@ namespace IX.UnitTests.Math
             Action<IExpressionParsingService> dispose)
         {
             // Arrange
-            using var eps = new FixtureCreateDisposePatternHelper(this.fixture, create, dispose);
+            using var eps = new FixtureCreateDisposePatternHelper(fixture, create, dispose);
 
             if (dispose != null)
             {
@@ -180,7 +180,7 @@ namespace IX.UnitTests.Math
             Action<IExpressionParsingService> dispose)
         {
             // Arrange
-            using var eps = new FixtureCreateDisposePatternHelper(this.fixture, create, dispose);
+            using var eps = new FixtureCreateDisposePatternHelper(fixture, create, dispose);
 
             if (dispose != null)
             {
@@ -211,7 +211,7 @@ namespace IX.UnitTests.Math
             Action<IExpressionParsingService> dispose)
         {
             // Arrange
-            using var eps = new FixtureCreateDisposePatternHelper(this.fixture, create, dispose);
+            using var eps = new FixtureCreateDisposePatternHelper(fixture, create, dispose);
 
             if (dispose != null)
             {

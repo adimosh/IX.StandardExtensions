@@ -22,7 +22,7 @@ public class ExceptionOccurredEventArgs : EventArgs
     /// <param name="exception">The exception that has occurred.</param>
     public ExceptionOccurredEventArgs(Exception exception)
     {
-        this.Exception = exception;
+        Exception = exception;
     }
 
 #endregion

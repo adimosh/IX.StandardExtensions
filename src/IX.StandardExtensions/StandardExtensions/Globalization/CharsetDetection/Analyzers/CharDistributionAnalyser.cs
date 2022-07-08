@@ -70,7 +70,7 @@ internal abstract class CharDistributionAnalyser
 #pragma warning disable CS8618
     public CharDistributionAnalyser()
     {
-        this.Reset();
+        Reset();
     }
 #pragma warning restore CS8618
 
@@ -102,18 +102,18 @@ internal abstract class CharDistributionAnalyser
     {
         //we only care about 2-bytes character in our distribution analysis
         var order = charLen == 2
-            ? this.GetOrder(
+            ? GetOrder(
                 buf,
                 offset)
             : -1;
         if (order >= 0)
         {
-            this.totalChars++;
-            if (order < this.charToFreqOrder.Length)
+            totalChars++;
+            if (order < charToFreqOrder.Length)
             { // order is valid
-                if (512 > this.charToFreqOrder[order])
+                if (512 > charToFreqOrder[order])
                 {
-                    this.freqChars++;
+                    freqChars++;
                 }
             }
         }
@@ -121,9 +121,9 @@ internal abstract class CharDistributionAnalyser
 
     public virtual void Reset()
     {
-        this.done = false;
-        this.totalChars = 0;
-        this.freqChars = 0;
+        done = false;
+        totalChars = 0;
+        freqChars = 0;
     }
 
     /// <summary>
@@ -135,14 +135,14 @@ internal abstract class CharDistributionAnalyser
         //if we didn't receive any character in our consideration range, or the
         // number of frequent characters is below the minimum threshold, return
         // negative answer
-        if (this.totalChars <= 0 || this.freqChars <= MINIMUM_DATA_THRESHOLD)
+        if (totalChars <= 0 || freqChars <= MINIMUM_DATA_THRESHOLD)
         {
             return SURE_NO;
         }
 
-        if (this.totalChars != this.freqChars)
+        if (totalChars != freqChars)
         {
-            var r = this.freqChars / ((this.totalChars - this.freqChars) * this.typicalDistributionRatio);
+            var r = freqChars / ((totalChars - freqChars) * typicalDistributionRatio);
             if (r < SURE_YES)
             {
                 return r;
@@ -155,5 +155,5 @@ internal abstract class CharDistributionAnalyser
 
     //It is not necessary to receive all data to draw conclusion. For charset detection,
     // certain amount of data is enough
-    public bool GotEnoughData() => this.totalChars > ENOUGH_DATA_THRESHOLD;
+    public bool GotEnoughData() => totalChars > ENOUGH_DATA_THRESHOLD;
 }

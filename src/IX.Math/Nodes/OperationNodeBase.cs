@@ -48,9 +48,9 @@ public abstract class OperationNodeBase : CachedExpressionNodeBase, ISpecialRequ
     /// </remarks>
     public sealed override Expression GenerateCachedExpression()
     {
-        NodeBase simplifiedExpression = this.Simplify();
+        NodeBase simplifiedExpression = Simplify();
 
-        return simplifiedExpression != this ? simplifiedExpression.GenerateExpression() : this.GenerateExpressionInternal();
+        return simplifiedExpression != this ? simplifiedExpression.GenerateExpression() : GenerateExpressionInternal();
     }
 
     /// <summary>
@@ -67,9 +67,9 @@ public abstract class OperationNodeBase : CachedExpressionNodeBase, ISpecialRequ
     /// </remarks>
     public sealed override Expression GenerateCachedExpression(Tolerance tolerance)
     {
-        NodeBase simplifiedExpression = this.Simplify();
+        NodeBase simplifiedExpression = Simplify();
 
-        return simplifiedExpression != this ? simplifiedExpression.GenerateExpression(tolerance) : this.GenerateExpressionInternal(tolerance);
+        return simplifiedExpression != this ? simplifiedExpression.GenerateExpression(tolerance) : GenerateExpressionInternal(tolerance);
     }
 
     /// <summary>
@@ -79,14 +79,14 @@ public abstract class OperationNodeBase : CachedExpressionNodeBase, ISpecialRequ
     /// <remarks>Since it is not possible for this node to be a constant node, the function <see cref="object.ToString"/> is called in whatever the node outputs.</remarks>
     public sealed override Expression GenerateCachedStringExpression()
     {
-        var expression = this.GenerateExpression();
+        var expression = GenerateExpression();
 
         if (expression.Type == typeof(string))
         {
             return expression;
         }
 
-        var stringFormatters = this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) as List<IStringFormatter>;
+        var stringFormatters = SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) as List<IStringFormatter>;
 
         return StringFormatter.CreateStringConversionExpression(
             expression,
@@ -100,14 +100,14 @@ public abstract class OperationNodeBase : CachedExpressionNodeBase, ISpecialRequ
     /// <returns>The generated <see cref="Expression" /> to be cached.</returns>
     public sealed override Expression GenerateCachedStringExpression(Tolerance tolerance)
     {
-        var expression = this.GenerateExpression(tolerance);
+        var expression = GenerateExpression(tolerance);
 
         if (expression.Type == typeof(string))
         {
             return expression;
         }
 
-        var stringFormatters = this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) as List<IStringFormatter>;
+        var stringFormatters = SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) as List<IStringFormatter>;
 
         return StringFormatter.CreateStringConversionExpression(
             expression,
@@ -120,8 +120,8 @@ public abstract class OperationNodeBase : CachedExpressionNodeBase, ISpecialRequ
     /// <param name="func">The function to set.</param>
     void ISpecialRequestNode.SetRequestSpecialObjectFunction(Func<Type, object> func)
     {
-        this.SpecialObjectRequestFunction = func;
-        this.SetSpecialObjectRequestFunctionForSubObjects(func);
+        SpecialObjectRequestFunction = func;
+        SetSpecialObjectRequestFunctionForSubObjects(func);
     }
 
     /// <summary>
@@ -131,7 +131,7 @@ public abstract class OperationNodeBase : CachedExpressionNodeBase, ISpecialRequ
     /// <returns>A deep clone.</returns>
     public sealed override NodeBase DeepClone(NodeCloningContext context)
     {
-        var node = this.DeepCloneNode(context);
+        var node = DeepCloneNode(context);
         node.SpecialObjectRequestFunction = context.SpecialRequestFunction;
         return node;
     }
@@ -160,5 +160,5 @@ public abstract class OperationNodeBase : CachedExpressionNodeBase, ISpecialRequ
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected virtual Expression GenerateExpressionInternal(Tolerance? tolerance) => this.GenerateExpressionInternal();
+    protected virtual Expression GenerateExpressionInternal(Tolerance? tolerance) => GenerateExpressionInternal();
 }

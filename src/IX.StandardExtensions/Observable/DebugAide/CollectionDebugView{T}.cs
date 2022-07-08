@@ -52,8 +52,8 @@ public sealed class CollectionDebugView<T>
     {
         get
         {
-            var items = new T[this.collection.InternalContainer.Count];
-            this.collection.InternalContainer.CopyTo(
+            var items = new T[collection.InternalContainer.Count];
+            collection.InternalContainer.CopyTo(
                 items,
                 0);
 

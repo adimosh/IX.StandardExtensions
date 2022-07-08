@@ -26,7 +26,7 @@ public class ParameterNode : NodeBase
     /// <exception cref="ArgumentNullException">parameterName.</exception>
     internal ParameterNode(string parameterName, IParameterRegistry parametersRegistry)
     {
-        this.Name = Requires.NotNullOrWhiteSpace(parameterName);
+        Name = Requires.NotNullOrWhiteSpace(parameterName);
 
         this.parametersRegistry = Requires.NotNull(parametersRegistry);
 
@@ -51,7 +51,7 @@ public class ParameterNode : NodeBase
     /// Gets the return type of this node.
     /// </summary>
     /// <value>The node return type.</value>
-    public override SupportedValueType ReturnType => this.parametersRegistry.AdvertiseParameter(this.Name).ReturnType;
+    public override SupportedValueType ReturnType => parametersRegistry.AdvertiseParameter(Name).ReturnType;
 
     /// <summary>
     /// Gets the supported return types.
@@ -59,7 +59,7 @@ public class ParameterNode : NodeBase
     /// <value>
     /// The supported return types.
     /// </value>
-    public SupportableValueType SupportedReturnType => this.parametersRegistry.AdvertiseParameter(this.Name).SupportedReturnType;
+    public SupportableValueType SupportedReturnType => parametersRegistry.AdvertiseParameter(Name).SupportedReturnType;
 
     /// <summary>
     /// Gets a value indicating whether or not this node is actually a constant.
@@ -71,7 +71,7 @@ public class ParameterNode : NodeBase
     /// Gets a value indicating whether this instance is float.
     /// </summary>
     /// <value><see langword="null"/> if not set, <see langword="true"/> if is float; otherwise, <see langword="false"/>.</value>
-    public bool? IsFloat => this.parametersRegistry.AdvertiseParameter(this.Name).IsFloat;
+    public bool? IsFloat => parametersRegistry.AdvertiseParameter(Name).IsFloat;
 
     /// <summary>
     /// Creates a deep clone of the source object.
@@ -82,22 +82,22 @@ public class ParameterNode : NodeBase
     {
         Requires.NotNull(context, nameof(context));
 
-        context.ParameterRegistry.CloneFrom(this.parametersRegistry.AdvertiseParameter(this.Name));
+        context.ParameterRegistry.CloneFrom(parametersRegistry.AdvertiseParameter(Name));
 
-        return new ParameterNode(this.Name, context.ParameterRegistry);
+        return new ParameterNode(Name, context.ParameterRegistry);
     }
 
     /// <summary>
     /// Generates the expression that will be compiled into code.
     /// </summary>
     /// <returns>The generated <see cref="Expression" />.</returns>
-    public override Expression GenerateExpression() => this.parametersRegistry.AdvertiseParameter(this.Name).Compile();
+    public override Expression GenerateExpression() => parametersRegistry.AdvertiseParameter(Name).Compile();
 
     /// <summary>
     /// Generates the expression that will be compiled into code as a string expression.
     /// </summary>
     /// <returns>The generated <see cref="Expression" /> that gives the values as a string.</returns>
-    public override Expression GenerateStringExpression() => this.parametersRegistry.AdvertiseParameter(this.Name).CompileString();
+    public override Expression GenerateStringExpression() => parametersRegistry.AdvertiseParameter(Name).CompileString();
 
     /// <summary>
     /// Simplifies this node, if possible, reflexively returns otherwise.
@@ -111,7 +111,7 @@ public class ParameterNode : NodeBase
     /// <returns>Returns reflexively.</returns>
     public ParameterNode DetermineInteger()
     {
-        this.parametersRegistry.AdvertiseParameter(this.Name).DetermineInteger();
+        parametersRegistry.AdvertiseParameter(Name).DetermineInteger();
         return this;
     }
 
@@ -121,7 +121,7 @@ public class ParameterNode : NodeBase
     /// <returns>Returns reflexively.</returns>
     public ParameterNode DetermineFloat()
     {
-        this.parametersRegistry.AdvertiseParameter(this.Name).DetermineFloat();
+        parametersRegistry.AdvertiseParameter(Name).DetermineFloat();
         return this;
     }
 
@@ -129,11 +129,11 @@ public class ParameterNode : NodeBase
     /// Strongly determines the node's type, if possible.
     /// </summary>
     /// <param name="type">The type to determine to.</param>
-    public override void DetermineStrongly(SupportedValueType type) => this.parametersRegistry.AdvertiseParameter(this.Name).DetermineType(type);
+    public override void DetermineStrongly(SupportedValueType type) => parametersRegistry.AdvertiseParameter(Name).DetermineType(type);
 
     /// <summary>
     /// Weakly determines the node's type, if possible, and, optionally, strongly determines if there is only one possible type left.
     /// </summary>
     /// <param name="type">The type or types to determine to.</param>
-    public override void DetermineWeakly(SupportableValueType type) => this.parametersRegistry.AdvertiseParameter(this.Name).LimitPossibleType(type);
+    public override void DetermineWeakly(SupportableValueType type) => parametersRegistry.AdvertiseParameter(Name).LimitPossibleType(type);
 }

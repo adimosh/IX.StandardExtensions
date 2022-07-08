@@ -53,8 +53,8 @@ internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
     /// A deep clone.
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) => new FunctionNodeSubstring(
-        this.FirstParameter.DeepClone(context),
-        this.SecondParameter.DeepClone(context));
+        FirstParameter.DeepClone(context),
+        SecondParameter.DeepClone(context));
 
     /// <summary>
     /// Simplifies this node, if possible, reflexively returns otherwise.
@@ -63,7 +63,7 @@ internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
     /// A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() =>
-        this.FirstParameter is StringNode stringParam && this.SecondParameter is NumericNode numericParam
+        FirstParameter is StringNode stringParam && SecondParameter is NumericNode numericParam
             ? new StringNode(stringParam.Value.Substring(numericParam.ExtractInt()))
             : this;
 
@@ -125,7 +125,7 @@ internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
     /// The expression.
     /// </returns>
     protected override Expression GenerateExpressionInternal()
-        => this.GenerateExpressionInternal(null);
+        => GenerateExpressionInternal(null);
 
     /// <summary>
     /// Generates the expression with tolerance that will be compiled into code.
@@ -154,13 +154,13 @@ internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
         Expression e1, e2;
         if (tolerance == null)
         {
-            e1 = this.FirstParameter.GenerateExpression();
-            e2 = this.SecondParameter.GenerateExpression();
+            e1 = FirstParameter.GenerateExpression();
+            e2 = SecondParameter.GenerateExpression();
         }
         else
         {
-            e1 = this.FirstParameter.GenerateExpression(tolerance);
-            e2 = this.SecondParameter.GenerateExpression(tolerance);
+            e1 = FirstParameter.GenerateExpression(tolerance);
+            e2 = SecondParameter.GenerateExpression(tolerance);
         }
 
         if (e1.Type != firstParameterType)

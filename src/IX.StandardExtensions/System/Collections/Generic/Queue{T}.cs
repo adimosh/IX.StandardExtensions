@@ -41,7 +41,7 @@ public class Queue<T> : GlobalCollectionsGeneric.Queue<T>,
     /// </summary>
     /// <param name="collection">The collection to copy elements from.</param>
     /// <exception cref="ArgumentNullException"><paramref name="collection" /> is <see langword="null" />.</exception>
-    public Queue(GlobalCollectionsGeneric.IEnumerable<T> collection)
+    public Queue(IEnumerable<T> collection)
         : base(collection) { }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class Queue<T> : GlobalCollectionsGeneric.Queue<T>,
     /// <value>
     ///     <c>true</c> if this queue is empty; otherwise, <c>false</c>.
     /// </value>
-    public bool IsEmpty => this.Count == 0;
+    public bool IsEmpty => Count == 0;
 
     /// <summary>
     ///     Converts from a standard .NET queue.
@@ -78,7 +78,7 @@ public class Queue<T> : GlobalCollectionsGeneric.Queue<T>,
                      items,
                      nameof(items)))
         {
-            this.Enqueue(item);
+            Enqueue(item);
         }
     }
 
@@ -119,7 +119,7 @@ public class Queue<T> : GlobalCollectionsGeneric.Queue<T>,
 
         foreach (T item in items)
         {
-            this.Enqueue(item);
+            Enqueue(item);
         }
     }
 
@@ -134,13 +134,13 @@ public class Queue<T> : GlobalCollectionsGeneric.Queue<T>,
     /// </returns>
     public bool TryDequeue([MaybeNullWhen(false)] out T item)
     {
-        if (this.Count == 0)
+        if (Count == 0)
         {
             item = default;
             return false;
         }
 
-        item = this.Dequeue();
+        item = Dequeue();
         return true;
     }
 
@@ -151,13 +151,13 @@ public class Queue<T> : GlobalCollectionsGeneric.Queue<T>,
     /// <returns><see langword="true" /> if an item is found, <see langword="false" /> otherwise, or if the queue is empty.</returns>
     public bool TryPeek([MaybeNullWhen(false)] out T item)
     {
-        if (this.Count == 0)
+        if (Count == 0)
         {
             item = default;
             return false;
         }
 
-        item = this.Peek();
+        item = Peek();
         return true;
     }
     #endif

@@ -43,8 +43,8 @@ internal sealed class FunctionNodeLogarithm : NumericBinaryFunctionNodeBase
     /// A deep clone.
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) => new FunctionNodeLogarithm(
-        this.FirstParameter.DeepClone(context),
-        this.SecondParameter.DeepClone(context));
+        FirstParameter.DeepClone(context),
+        SecondParameter.DeepClone(context));
 
     /// <summary>
     /// Simplifies this node, if possible, reflexively returns otherwise.
@@ -53,7 +53,7 @@ internal sealed class FunctionNodeLogarithm : NumericBinaryFunctionNodeBase
     /// A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() =>
-        this.FirstParameter is NumericNode firstParam && this.SecondParameter is NumericNode secondParam
+        FirstParameter is NumericNode firstParam && SecondParameter is NumericNode secondParam
             ? new NumericNode(
                 GlobalSystem.Math.Log(
                     firstParam.ExtractFloat(),
@@ -66,7 +66,7 @@ internal sealed class FunctionNodeLogarithm : NumericBinaryFunctionNodeBase
     /// <returns>
     /// The expression.
     /// </returns>
-    protected override Expression GenerateExpressionInternal() => this.GenerateStaticBinaryFunctionCall(
+    protected override Expression GenerateExpressionInternal() => GenerateStaticBinaryFunctionCall(
         typeof(GlobalSystem.Math),
         nameof(GlobalSystem.Math.Log));
 
@@ -75,7 +75,7 @@ internal sealed class FunctionNodeLogarithm : NumericBinaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
-    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) => this.GenerateStaticBinaryFunctionCall(
+    protected override Expression GenerateExpressionInternal(Tolerance? tolerance) => GenerateStaticBinaryFunctionCall(
         typeof(GlobalSystem.Math),
         nameof(GlobalSystem.Math.Log),
         tolerance);

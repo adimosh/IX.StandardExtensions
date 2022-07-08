@@ -55,10 +55,10 @@ internal class EUCJPProber : CharsetProber
 
     public EUCJPProber()
     {
-        this.codingSM = new CodingStateMachine(new EUCJPSMModel());
-        this.distributionAnalyser = new EUCJPDistributionAnalyser();
-        this.contextAnalyser = new EUCJPContextAnalyser();
-        this.Reset();
+        codingSM = new CodingStateMachine(new EUCJPSMModel());
+        distributionAnalyser = new EUCJPDistributionAnalyser();
+        contextAnalyser = new EUCJPContextAnalyser();
+        Reset();
     }
 
     public override string GetCharsetName() => CodepageName.EUC_JP;
@@ -73,43 +73,43 @@ internal class EUCJPProber : CharsetProber
 
         for (var i = offset; i < max; i++)
         {
-            codingState = this.codingSM.NextState(buf[i]);
+            codingState = codingSM.NextState(buf[i]);
             if (codingState == StateMachineModel.ERROR)
             {
-                this.state = ProbingState.NotMe;
+                state = ProbingState.NotMe;
 
                 break;
             }
 
             if (codingState == StateMachineModel.ITSME)
             {
-                this.state = ProbingState.FoundIt;
+                state = ProbingState.FoundIt;
 
                 break;
             }
 
             if (codingState == StateMachineModel.START)
             {
-                var charLen = this.codingSM.CurrentCharLen;
+                var charLen = codingSM.CurrentCharLen;
                 if (i == offset)
                 {
-                    this.lastChar[1] = buf[offset];
-                    this.contextAnalyser.HandleOneChar(
-                        this.lastChar,
+                    lastChar[1] = buf[offset];
+                    contextAnalyser.HandleOneChar(
+                        lastChar,
                         0,
                         charLen);
-                    this.distributionAnalyser.HandleOneChar(
-                        this.lastChar,
+                    distributionAnalyser.HandleOneChar(
+                        lastChar,
                         0,
                         charLen);
                 }
                 else
                 {
-                    this.contextAnalyser.HandleOneChar(
+                    contextAnalyser.HandleOneChar(
                         buf,
                         i - 1,
                         charLen);
-                    this.distributionAnalyser.HandleOneChar(
+                    distributionAnalyser.HandleOneChar(
                         buf,
                         i - 1,
                         charLen);
@@ -117,31 +117,31 @@ internal class EUCJPProber : CharsetProber
             }
         }
 
-        this.lastChar[0] = buf[max - 1];
+        lastChar[0] = buf[max - 1];
 
-        if (this.state == ProbingState.Detecting)
+        if (state == ProbingState.Detecting)
         {
-            if (this.contextAnalyser.GotEnoughData() && this.GetConfidence() > SHORTCUT_THRESHOLD)
+            if (contextAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
             {
-                this.state = ProbingState.FoundIt;
+                state = ProbingState.FoundIt;
             }
         }
 
-        return this.state;
+        return state;
     }
 
     public override void Reset()
     {
-        this.codingSM.Reset();
-        this.state = ProbingState.Detecting;
-        this.contextAnalyser.Reset();
-        this.distributionAnalyser.Reset();
+        codingSM.Reset();
+        state = ProbingState.Detecting;
+        contextAnalyser.Reset();
+        distributionAnalyser.Reset();
     }
 
     public override float GetConfidence(StringBuilder? status = null)
     {
-        var contxtCf = this.contextAnalyser.GetConfidence();
-        var distribCf = this.distributionAnalyser.GetConfidence();
+        var contxtCf = contextAnalyser.GetConfidence();
+        var distribCf = distributionAnalyser.GetConfidence();
 
         return contxtCf > distribCf ? contxtCf : distribCf;
     }

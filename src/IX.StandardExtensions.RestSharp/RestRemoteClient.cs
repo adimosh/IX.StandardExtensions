@@ -34,7 +34,7 @@ public class RestRemoteClient : DisposableBase
     /// <param name="baseUrl">The base URL for his client.</param>
     public RestRemoteClient(string baseUrl)
     {
-        this.client = new RestClient(Requires.NotNullOrWhiteSpace(baseUrl));
+        client = new RestClient(Requires.NotNullOrWhiteSpace(baseUrl));
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public class RestRemoteClient : DisposableBase
     /// <param name="options">The client options.</param>
     public RestRemoteClient(RestClientOptions options)
     {
-        this.client = new RestClient(Requires.NotNull(options));
+        client = new RestClient(Requires.NotNull(options));
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public class RestRemoteClient : DisposableBase
         string baseUrl,
         IAuthenticator authenticator)
     {
-        this.client = new RestClient(Requires.NotNullOrWhiteSpace(baseUrl))
+        client = new RestClient(Requires.NotNullOrWhiteSpace(baseUrl))
         {
             Authenticator = Requires.NotNull(authenticator)
         };
@@ -70,7 +70,7 @@ public class RestRemoteClient : DisposableBase
         RestClientOptions options,
         IAuthenticator authenticator)
     {
-        this.client = new RestClient(Requires.NotNull(options))
+        client = new RestClient(Requires.NotNull(options))
         {
             Authenticator = Requires.NotNull(authenticator)
         };
@@ -135,7 +135,7 @@ public class RestRemoteClient : DisposableBase
             }
         }
 
-        return (await this.client.ExecuteAsync(
+        return (await client.ExecuteAsync(
             request,
             cancellationToken)).ToEnvelope();
     }
@@ -147,6 +147,6 @@ public class RestRemoteClient : DisposableBase
     {
         base.DisposeManagedContext();
 
-        this.client.Dispose();
+        client.Dispose();
     }
 }

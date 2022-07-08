@@ -108,17 +108,17 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         directoryShim.RequiresExists(persistenceFolderPath);
 
         // Internal state
-        this.poisonedUnremovableFiles = new List<string>();
+        poisonedUnremovableFiles = new List<string>();
 
         // Persistence folder paths
         var dataFolderPath = pathShim.Combine(
             persistenceFolderPath,
             "Data");
-        this.DataFolderPath = dataFolderPath;
+        DataFolderPath = dataFolderPath;
         var poisonFolderPath = pathShim.Combine(
             persistenceFolderPath,
             "Poison");
-        this.PoisonFolderPath = poisonFolderPath;
+        PoisonFolderPath = poisonFolderPath;
 
         // Initialize folder paths
         if (!directoryShim.Exists(dataFolderPath))
@@ -148,7 +148,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     /// <value>
     ///     <c>true</c> if this queue is empty; otherwise, <c>false</c>.
     /// </value>
-    public bool IsEmpty => this.Count == 0;
+    public bool IsEmpty => Count == 0;
 
     /// <summary>
     ///     Gets a value indicating whether access to the <see cref="PersistedQueueBase{T}" /> is synchronized (thread safe).
@@ -172,19 +172,19 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     ///     Gets the folder shim.
     /// </summary>
     /// <value>The folder shim.</value>
-    protected IDirectory DirectoryShim => this.directoryShim;
+    protected IDirectory DirectoryShim => directoryShim;
 
     /// <summary>
     ///     Gets the file shim.
     /// </summary>
     /// <value>The file shim.</value>
-    protected IFile FileShim => this.fileShim;
+    protected IFile FileShim => fileShim;
 
     /// <summary>
     ///     Gets the path shim.
     /// </summary>
     /// <value>The path shim.</value>
-    protected IPath PathShim => this.pathShim;
+    protected IPath PathShim => pathShim;
 
     /// <summary>
     ///     Gets the poison folder path.
@@ -196,7 +196,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     ///     Gets the serializer.
     /// </summary>
     /// <value>The serializer.</value>
-    protected DataContractSerializer Serializer => this.serializer;
+    protected DataContractSerializer Serializer => serializer;
 
 #endregion
 
@@ -258,7 +258,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         foreach (T item in items)
         {
-            this.Enqueue(item);
+            Enqueue(item);
         }
     }
 
@@ -286,7 +286,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             count);
         foreach (T item in itemsRange)
         {
-            this.Enqueue(item);
+            Enqueue(item);
         }
     }
 
@@ -335,7 +335,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "We can't yet avoid this.")]
-    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 #endregion
 
@@ -348,9 +348,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     {
         this.RequiresNotDisposed();
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            string[] files = this.GetPossibleDataFiles();
+            string[] files = GetPossibleDataFiles();
             var i = 0;
             string possibleFilePath;
             T obj;
@@ -366,43 +366,43 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
                 try
                 {
-                    using Stream stream = this.FileShim.OpenRead(possibleFilePath);
-                    obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
+                    using Stream stream = FileShim.OpenRead(possibleFilePath);
+                    obj = (T)(Serializer.ReadObject(stream) ?? throw new SerializationException());
 
                     break;
                 }
                 catch (IOException)
                 {
-                    this.HandleFileLoadProblem(possibleFilePath);
+                    HandleFileLoadProblem(possibleFilePath);
                     i++;
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    this.HandleFileLoadProblem(possibleFilePath);
+                    HandleFileLoadProblem(possibleFilePath);
                     i++;
                 }
                 catch (SerializationException)
                 {
-                    this.HandleFileLoadProblem(possibleFilePath);
+                    HandleFileLoadProblem(possibleFilePath);
                     i++;
                 }
             }
 
             try
             {
-                this.FileShim.Delete(possibleFilePath);
+                FileShim.Delete(possibleFilePath);
             }
             catch (IOException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
             catch (UnauthorizedAccessException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
             catch (SerializationException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
 
             return obj;
@@ -426,9 +426,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         this.RequiresNotDisposed();
 
-        using ReadWriteSynchronizationLocker locker = this.ReadWriteLock();
+        using ReadWriteSynchronizationLocker locker = ReadWriteLock();
 
-        string[] files = this.GetPossibleDataFiles();
+        string[] files = GetPossibleDataFiles();
         var i = 0;
 
         T obj;
@@ -445,25 +445,25 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
             try
             {
-                using Stream stream = this.FileShim.OpenRead(possibleFilePath);
+                using Stream stream = FileShim.OpenRead(possibleFilePath);
 
-                obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
+                obj = (T)(Serializer.ReadObject(stream) ?? throw new SerializationException());
 
                 break;
             }
             catch (IOException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
             catch (UnauthorizedAccessException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
             catch (SerializationException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
         }
@@ -483,19 +483,19 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         try
         {
-            this.FileShim.Delete(possibleFilePath);
+            FileShim.Delete(possibleFilePath);
         }
         catch (IOException)
         {
-            this.HandleFileLoadProblem(possibleFilePath);
+            HandleFileLoadProblem(possibleFilePath);
         }
         catch (UnauthorizedAccessException)
         {
-            this.HandleFileLoadProblem(possibleFilePath);
+            HandleFileLoadProblem(possibleFilePath);
         }
         catch (SerializationException)
         {
-            this.HandleFileLoadProblem(possibleFilePath);
+            HandleFileLoadProblem(possibleFilePath);
         }
 
         return true;
@@ -520,7 +520,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         CancellationToken cancellationToken = default)
     {
         // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
-        return await this.TryLoadTopmostItemWithActionAsync(
+        return await TryLoadTopmostItemWithActionAsync(
             InvokeActionLocal,
             state,
             cancellationToken);
@@ -553,9 +553,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         this.RequiresNotDisposed();
 
-        using ReadWriteSynchronizationLocker locker = this.ReadWriteLock();
+        using ReadWriteSynchronizationLocker locker = ReadWriteLock();
 
-        string[] files = this.GetPossibleDataFiles();
+        string[] files = GetPossibleDataFiles();
         var i = 0;
 
         T obj;
@@ -575,28 +575,28 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             try
             {
                 #if FRAMEWORK_ADVANCED
-                await using Stream stream = this.FileShim.OpenRead(possibleFilePath);
+                await using Stream stream = FileShim.OpenRead(possibleFilePath);
                 #else
-                using Stream stream = this.FileShim.OpenRead(possibleFilePath);
+                using Stream stream = FileShim.OpenRead(possibleFilePath);
                 #endif
 
-                obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
+                obj = (T)(Serializer.ReadObject(stream) ?? throw new SerializationException());
 
                 break;
             }
             catch (IOException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
             catch (UnauthorizedAccessException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
             catch (SerializationException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
         }
@@ -617,21 +617,21 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         try
         {
-            await this.FileShim.DeleteAsync(
+            await FileShim.DeleteAsync(
                 possibleFilePath,
                 cancellationToken);
         }
         catch (IOException)
         {
-            this.HandleFileLoadProblem(possibleFilePath);
+            HandleFileLoadProblem(possibleFilePath);
         }
         catch (UnauthorizedAccessException)
         {
-            this.HandleFileLoadProblem(possibleFilePath);
+            HandleFileLoadProblem(possibleFilePath);
         }
         catch (SerializationException)
         {
-            this.HandleFileLoadProblem(possibleFilePath);
+            HandleFileLoadProblem(possibleFilePath);
         }
 
         return true;
@@ -665,9 +665,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         this.RequiresNotDisposed();
 
-        using ReadWriteSynchronizationLocker locker = this.ReadWriteLock();
+        using ReadWriteSynchronizationLocker locker = ReadWriteLock();
 
-        string[] files = this.GetPossibleDataFiles();
+        string[] files = GetPossibleDataFiles();
         var i = 0;
 
         var accumulatedObjects = new List<T>();
@@ -681,9 +681,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             {
                 T obj;
 
-                using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                using (Stream stream = FileShim.OpenRead(possibleFilePath))
                 {
-                    obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
+                    obj = (T)(Serializer.ReadObject(stream) ?? throw new SerializationException());
                 }
 
                 if (!predicate(
@@ -700,17 +700,17 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             }
             catch (IOException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
             catch (UnauthorizedAccessException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
             catch (SerializationException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
         }
@@ -737,19 +737,19 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         {
             try
             {
-                this.FileShim.Delete(possibleFilePath);
+                FileShim.Delete(possibleFilePath);
             }
             catch (IOException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
             catch (UnauthorizedAccessException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
             catch (SerializationException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
         }
 
@@ -784,7 +784,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         CancellationToken cancellationToken = default)
     {
         // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
-        return await this.TryLoadWhilePredicateWithActionAsync(
+        return await TryLoadWhilePredicateWithActionAsync(
             InvokePredicateLocal,
             actionToInvoke,
             state,
@@ -828,9 +828,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         this.RequiresNotDisposed();
 
-        using ReadWriteSynchronizationLocker locker = this.ReadWriteLock();
+        using ReadWriteSynchronizationLocker locker = ReadWriteLock();
 
-        string[] files = this.GetPossibleDataFiles();
+        string[] files = GetPossibleDataFiles();
         var i = 0;
 
         var accumulatedObjects = new List<T>();
@@ -850,12 +850,12 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
                 T obj;
 
                 #if FRAMEWORK_ADVANCED
-                await using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                await using (Stream stream = FileShim.OpenRead(possibleFilePath))
                 #else
-                using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                using (Stream stream = FileShim.OpenRead(possibleFilePath))
                 #endif
                 {
-                    obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
+                    obj = (T)(Serializer.ReadObject(stream) ?? throw new SerializationException());
                 }
 
                 if (!await predicate(
@@ -873,17 +873,17 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             }
             catch (IOException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
             catch (UnauthorizedAccessException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
             catch (SerializationException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
         }
@@ -914,21 +914,21 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         {
             try
             {
-                await this.FileShim.DeleteAsync(
+                await FileShim.DeleteAsync(
                     possibleFilePath,
                     cancellationToken);
             }
             catch (IOException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
             catch (UnauthorizedAccessException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
             catch (SerializationException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
         }
 
@@ -965,7 +965,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         CancellationToken cancellationToken = default)
     {
         // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
-        return await this.TryLoadWhilePredicateWithActionAsync(
+        return await TryLoadWhilePredicateWithActionAsync(
             predicate,
             InvokeActionLocal,
             state,
@@ -1009,9 +1009,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         this.RequiresNotDisposed();
 
-        using ReadWriteSynchronizationLocker locker = this.ReadWriteLock();
+        using ReadWriteSynchronizationLocker locker = ReadWriteLock();
 
-        string[] files = this.GetPossibleDataFiles();
+        string[] files = GetPossibleDataFiles();
         var i = 0;
 
         var accumulatedObjects = new List<T>();
@@ -1031,12 +1031,12 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
                 T obj;
 
                 #if FRAMEWORK_ADVANCED
-                await using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                await using (Stream stream = FileShim.OpenRead(possibleFilePath))
                 #else
-                using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                using (Stream stream = FileShim.OpenRead(possibleFilePath))
                 #endif
                 {
-                    obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
+                    obj = (T)(Serializer.ReadObject(stream) ?? throw new SerializationException());
                 }
 
                 if (!predicate(
@@ -1053,17 +1053,17 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             }
             catch (IOException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
             catch (UnauthorizedAccessException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
             catch (SerializationException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
         }
@@ -1095,21 +1095,21 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         {
             try
             {
-                await this.FileShim.DeleteAsync(
+                await FileShim.DeleteAsync(
                     possibleFilePath,
                     cancellationToken);
             }
             catch (IOException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
             catch (UnauthorizedAccessException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
             catch (SerializationException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
         }
 
@@ -1146,7 +1146,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         CancellationToken cancellationToken = default)
     {
         // TODO BREAKING: In next breaking-changes version, switch this to a ValueTask-returning method
-        return await this.TryLoadWhilePredicateWithActionAsync(
+        return await TryLoadWhilePredicateWithActionAsync(
             InvokePredicateLocal,
             InvokeActionLocal,
             state,
@@ -1199,9 +1199,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         this.RequiresNotDisposed();
 
-        using ReadWriteSynchronizationLocker locker = this.ReadWriteLock();
+        using ReadWriteSynchronizationLocker locker = ReadWriteLock();
 
-        string[] files = this.GetPossibleDataFiles();
+        string[] files = GetPossibleDataFiles();
         var i = 0;
 
         var accumulatedObjects = new List<T>();
@@ -1221,12 +1221,12 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
                 T obj;
 
                 #if FRAMEWORK_ADVANCED
-                await using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                await using (Stream stream = FileShim.OpenRead(possibleFilePath))
                 #else
-                using (Stream stream = this.FileShim.OpenRead(possibleFilePath))
+                using (Stream stream = FileShim.OpenRead(possibleFilePath))
                 #endif
                 {
-                    obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
+                    obj = (T)(Serializer.ReadObject(stream) ?? throw new SerializationException());
                 }
 
                 if (!await predicate(
@@ -1244,17 +1244,17 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             }
             catch (IOException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
             catch (UnauthorizedAccessException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
             catch (SerializationException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
                 i++;
             }
         }
@@ -1286,21 +1286,21 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         {
             try
             {
-                await this.FileShim.DeleteAsync(
+                await FileShim.DeleteAsync(
                     possibleFilePath,
                     cancellationToken);
             }
             catch (IOException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
             catch (UnauthorizedAccessException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
             catch (SerializationException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
             }
         }
 
@@ -1316,7 +1316,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     /// <exception cref="InvalidOperationException">There are no more valid items in the folder.</exception>
     protected T PeekTopmostItem()
     {
-        if (!this.TryPeekTopmostItem(out T item))
+        if (!TryPeekTopmostItem(out T item))
         {
             throw new InvalidOperationException();
         }
@@ -1335,9 +1335,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            string[] files = this.GetPossibleDataFiles();
+            string[] files = GetPossibleDataFiles();
             var i = 0;
 
             while (true)
@@ -1353,24 +1353,24 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
                 try
                 {
-                    using Stream stream = this.FileShim.OpenRead(possibleFilePath);
-                    item = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
+                    using Stream stream = FileShim.OpenRead(possibleFilePath);
+                    item = (T)(Serializer.ReadObject(stream) ?? throw new SerializationException());
 
                     return true;
                 }
                 catch (IOException)
                 {
-                    this.HandleFileLoadProblem(possibleFilePath);
+                    HandleFileLoadProblem(possibleFilePath);
                     i++;
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    this.HandleFileLoadProblem(possibleFilePath);
+                    HandleFileLoadProblem(possibleFilePath);
                     i++;
                 }
                 catch (SerializationException)
                 {
-                    this.HandleFileLoadProblem(possibleFilePath);
+                    HandleFileLoadProblem(possibleFilePath);
                     i++;
                 }
             }
@@ -1391,29 +1391,29 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     /// <exception cref="InvalidOperationException">There are no more valid items in the folder.</exception>
     protected IEnumerable<Tuple<T, string>> LoadValidItemObjectHandles()
     {
-        foreach (var possibleFilePath in this.GetPossibleDataFiles())
+        foreach (var possibleFilePath in GetPossibleDataFiles())
         {
             T obj;
             try
             {
-                using Stream stream = this.FileShim.OpenRead(possibleFilePath);
-                obj = (T)(this.Serializer.ReadObject(stream) ?? throw new SerializationException());
+                using Stream stream = FileShim.OpenRead(possibleFilePath);
+                obj = (T)(Serializer.ReadObject(stream) ?? throw new SerializationException());
             }
             catch (IOException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
 
                 continue;
             }
             catch (UnauthorizedAccessException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
 
                 continue;
             }
             catch (SerializationException)
             {
-                this.HandleFileLoadProblem(possibleFilePath);
+                HandleFileLoadProblem(possibleFilePath);
 
                 continue;
             }
@@ -1441,7 +1441,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     {
         this.RequiresNotDisposed();
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
             var i = 1;
             string filePath;
@@ -1450,8 +1450,8 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
             do
             {
-                filePath = this.PathShim.Combine(
-                    this.DataFolderPath,
+                filePath = PathShim.Combine(
+                    DataFolderPath,
                     $"{now:yyyy.MM.dd.HH.mm.ss.fffffff}.{i}.dat");
                 i++;
 
@@ -1460,11 +1460,11 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
                     throw new InvalidOperationException();
                 }
             }
-            while (this.FileShim.Exists(filePath));
+            while (FileShim.Exists(filePath));
 
-            using (Stream stream = this.FileShim.Create(filePath))
+            using (Stream stream = FileShim.Create(filePath))
             {
-                this.Serializer.WriteObject(
+                Serializer.WriteObject(
                     stream,
                     item!);
             }
@@ -1480,18 +1480,18 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     {
         this.RequiresNotDisposed();
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            foreach (var possibleFilePath in this.DirectoryShim.EnumerateFiles(
-                             this.DataFolderPath,
+            foreach (var possibleFilePath in DirectoryShim.EnumerateFiles(
+                             DataFolderPath,
                              "*.dat")
                          .ToArray())
             {
-                this.HandleImpossibleMoveToPoison(possibleFilePath);
+                HandleImpossibleMoveToPoison(possibleFilePath);
             }
         }
 
-        this.FixUnmovableReferences();
+        FixUnmovableReferences();
     }
 
     /// <summary>
@@ -1499,10 +1499,10 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     /// </summary>
     /// <returns>An array of data file names.</returns>
     protected string[] GetPossibleDataFiles() =>
-        this.DirectoryShim.EnumerateFiles(
-                this.DataFolderPath,
+        DirectoryShim.EnumerateFiles(
+                DataFolderPath,
                 "*.dat")
-            .Except(this.poisonedUnremovableFiles)
+            .Except(poisonedUnremovableFiles)
             .ToArray();
 
     /// <summary>
@@ -1511,9 +1511,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     /// <param name="possibleFilePath">The possible file path.</param>
     private void HandleFileLoadProblem(string possibleFilePath)
     {
-        var newFilePath = this.PathShim.Combine(
-            this.PoisonFolderPath,
-            this.PathShim.GetFileName(possibleFilePath));
+        var newFilePath = PathShim.Combine(
+            PoisonFolderPath,
+            PathShim.GetFileName(possibleFilePath));
 
         // Seemingly-redundant catch code below will be replaced at a later time with an opt-in-based logging solution
         // and a more try/finally general approach
@@ -1521,20 +1521,20 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         // If an item by the same name exists in the poison queue, delete it
         try
         {
-            if (this.FileShim.Exists(newFilePath))
+            if (FileShim.Exists(newFilePath))
             {
-                this.FileShim.Delete(newFilePath);
+                FileShim.Delete(newFilePath);
             }
         }
         catch (IOException)
         {
-            this.HandleImpossibleMoveToPoison(possibleFilePath);
+            HandleImpossibleMoveToPoison(possibleFilePath);
 
             return;
         }
         catch (UnauthorizedAccessException)
         {
-            this.HandleImpossibleMoveToPoison(possibleFilePath);
+            HandleImpossibleMoveToPoison(possibleFilePath);
 
             return;
         }
@@ -1542,17 +1542,17 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         try
         {
             // Move to poison queue
-            this.FileShim.Move(
+            FileShim.Move(
                 possibleFilePath,
                 newFilePath);
         }
         catch (IOException)
         {
-            this.HandleImpossibleMoveToPoison(possibleFilePath);
+            HandleImpossibleMoveToPoison(possibleFilePath);
         }
         catch (UnauthorizedAccessException)
         {
-            this.HandleImpossibleMoveToPoison(possibleFilePath);
+            HandleImpossibleMoveToPoison(possibleFilePath);
         }
     }
 
@@ -1565,15 +1565,15 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         try
         {
             // If deletion was not possible, delete the offending item
-            this.FileShim.Delete(possibleFilePath);
+            FileShim.Delete(possibleFilePath);
         }
         catch (IOException)
         {
-            this.poisonedUnremovableFiles.Add(possibleFilePath);
+            poisonedUnremovableFiles.Add(possibleFilePath);
         }
         catch (UnauthorizedAccessException)
         {
-            this.poisonedUnremovableFiles.Add(possibleFilePath);
+            poisonedUnremovableFiles.Add(possibleFilePath);
         }
     }
 
@@ -1586,13 +1586,13 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         Justification = "It's fine.")]
     private void FixUnmovableReferences()
     {
-        foreach (var file in this.poisonedUnremovableFiles.ToArray())
+        foreach (var file in poisonedUnremovableFiles.ToArray())
         {
             try
             {
-                if (!this.FileShim.Exists(file))
+                if (!FileShim.Exists(file))
                 {
-                    this.poisonedUnremovableFiles.Remove(file);
+                    poisonedUnremovableFiles.Remove(file);
                 }
             }
             catch (IOException) { }

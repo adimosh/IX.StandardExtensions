@@ -57,7 +57,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
     ///     Gets the synchronization context used by this object, if any.
     /// </summary>
     /// <value>The synchronization context.</value>
-    public SynchronizationContext? SynchronizationContext => this.synchronizationContext;
+    public SynchronizationContext? SynchronizationContext => synchronizationContext;
 
 #endregion
 
@@ -71,7 +71,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
     protected override void DisposeGeneralContext()
     {
         Interlocked.Exchange(
-            ref this.synchronizationContext,
+            ref synchronizationContext,
             null);
 
         base.DisposeGeneralContext();
@@ -85,7 +85,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
     /// </summary>
     /// <param name="action">The action to invoke.</param>
     protected void Invoke(Action action) =>
-        this.Invoke(
+        Invoke(
             p => p(),
             action);
 
@@ -103,13 +103,13 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
         Action<object> action,
         object state)
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         Requires.NotNull(
             action);
 
         SynchronizationContext? currentSynchronizationContext =
-            this.synchronizationContext ?? EnvironmentSettings.GetUsableSynchronizationContext();
+            synchronizationContext ?? EnvironmentSettings.GetUsableSynchronizationContext();
 
         if (currentSynchronizationContext == null)
         {
@@ -130,13 +130,13 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
             if (EnvironmentSettings.InvokeAsynchronously)
             {
                 currentSynchronizationContext.Post(
-                    this.SendOrPost,
+                    SendOrPost,
                     outerState);
             }
             else
             {
                 currentSynchronizationContext.Send(
-                    this.SendOrPost,
+                    SendOrPost,
                     outerState);
             }
         }
@@ -148,7 +148,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
     /// </summary>
     /// <param name="action">The action to invoke.</param>
     protected void InvokePost(Action action) =>
-        this.InvokePost(
+        InvokePost(
             p => p(),
             action);
 
@@ -166,13 +166,13 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
         Action<object> action,
         object state)
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         Requires.NotNull(
             action);
 
         SynchronizationContext? currentSynchronizationContext =
-            this.synchronizationContext ?? EnvironmentSettings.GetUsableSynchronizationContext();
+            synchronizationContext ?? EnvironmentSettings.GetUsableSynchronizationContext();
 
         if (currentSynchronizationContext == null)
         {
@@ -185,7 +185,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
                 state);
 
             currentSynchronizationContext.Post(
-                this.SendOrPost,
+                SendOrPost,
                 outerState);
         }
     }
@@ -196,7 +196,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
     /// </summary>
     /// <param name="action">The action to invoke.</param>
     protected void InvokeSend(Action action) =>
-        this.InvokeSend(
+        InvokeSend(
             p => p(),
             action);
 
@@ -214,13 +214,13 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
         Action<object> action,
         object state)
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         Requires.NotNull(
             action);
 
         SynchronizationContext? currentSynchronizationContext =
-            this.synchronizationContext ?? EnvironmentSettings.GetUsableSynchronizationContext();
+            synchronizationContext ?? EnvironmentSettings.GetUsableSynchronizationContext();
 
         if (currentSynchronizationContext == null)
         {
@@ -233,7 +233,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
                 state);
 
             currentSynchronizationContext.Send(
-                this.SendOrPost,
+                SendOrPost,
                 outerState);
         }
     }
@@ -262,7 +262,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
         }
         catch (Exception ex)
         {
-            this.InvokeExceptionOccurredOnSeparateThread(ex);
+            InvokeExceptionOccurredOnSeparateThread(ex);
         }
     }
 

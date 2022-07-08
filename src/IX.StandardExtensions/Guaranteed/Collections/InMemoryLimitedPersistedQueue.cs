@@ -70,12 +70,12 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
             EnvironmentSettings.PersistedCollectionsLockTimeout)
     {
         // Internal state
-        this.internalQueue = new System.Collections.Generic.Queue<string>();
+        internalQueue = new System.Collections.Generic.Queue<string>();
 
         // Initialize objects
-        foreach (Tuple<T, string> item in this.LoadValidItemObjectHandles())
+        foreach (Tuple<T, string> item in LoadValidItemObjectHandles())
         {
-            this.internalQueue.Enqueue(item.Item2);
+            internalQueue.Enqueue(item.Item2);
         }
 
         GC.Collect();
@@ -96,7 +96,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
     ///     </para>
     /// </remarks>
     public override int Count =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             reference => reference.ReadLock(
                 referenceL2 => referenceL2.internalQueue.Count,
                 reference),
@@ -111,8 +111,8 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
     /// </summary>
     public override void Clear()
     {
-        this.internalQueue.Clear();
-        this.ClearData();
+        internalQueue.Clear();
+        ClearData();
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
 
         try
         {
-            return this.LoadTopmostItem();
+            return LoadTopmostItem();
         }
         catch (Exception)
         {
@@ -158,7 +158,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
         {
             if (success)
             {
-                this.internalQueue.Dequeue();
+                internalQueue.Dequeue();
             }
         }
     }
@@ -179,7 +179,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
     {
         try
         {
-            item = this.LoadTopmostItem();
+            item = LoadTopmostItem();
         }
         catch (Exception)
         {
@@ -188,7 +188,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
             return false;
         }
 
-        this.internalQueue.Dequeue();
+        internalQueue.Dequeue();
 
         return true;
     }
@@ -218,7 +218,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
 
         try
         {
-            success = this.TryLoadWhilePredicateWithAction(
+            success = TryLoadWhilePredicateWithAction(
                 predicate,
                 actionToInvoke,
                 state);
@@ -233,7 +233,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
         {
             for (var i = 0; i < success; i++)
             {
-                this.internalQueue.Dequeue();
+                internalQueue.Dequeue();
             }
         }
 
@@ -258,7 +258,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
 
         try
         {
-            success = this.TryLoadTopmostItemWithAction(
+            success = TryLoadTopmostItemWithAction(
                 actionToInvoke,
                 state);
         }
@@ -272,7 +272,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
         {
             if (success)
             {
-                this.internalQueue.Dequeue();
+                internalQueue.Dequeue();
             }
         }
 
@@ -285,9 +285,9 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
     /// <param name="item">The item to enqueue.</param>
     public override void Enqueue(T item)
     {
-        var filePath = this.SaveNewItem(item);
+        var filePath = SaveNewItem(item);
 
-        this.internalQueue.Enqueue(filePath);
+        internalQueue.Enqueue(filePath);
     }
 
     /// <summary>
@@ -302,7 +302,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
     /// </summary>
     /// <returns>The item peeked at, if any.</returns>
     public override T Peek() =>
-        this.PeekTopmostItem();
+        PeekTopmostItem();
 
     /// <summary>
     ///     This method should not be called, as it will always throw an <see cref="InvalidOperationException" />.
@@ -315,7 +315,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
     ///     Trims the excess free space from within the queue, reducing the capacity to the actual number of elements.
     /// </summary>
     public override void TrimExcess() =>
-        this.internalQueue.TrimExcess();
+        internalQueue.TrimExcess();
 
     /// <summary>
     ///     Attempts to peek at the current queue and return the item that is next in line to be dequeued.
@@ -325,7 +325,7 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
     ///     <see langword="true" /> if an item is found, <see langword="false" /> otherwise, or if the queue is empty.
     /// </returns>
     public override bool TryPeek(out T item) =>
-        this.TryPeekTopmostItem(out item);
+        TryPeekTopmostItem(out item);
 
 #endregion
 }

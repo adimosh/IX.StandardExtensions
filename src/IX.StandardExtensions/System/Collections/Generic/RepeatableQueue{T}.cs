@@ -35,8 +35,8 @@ public class RepeatableQueue<T> : IQueue<T>
     /// </summary>
     public RepeatableQueue()
     {
-        this.internalQueue = new Queue<T>();
-        this.internalRepeatingQueue = new Queue<T>();
+        internalQueue = new Queue<T>();
+        internalRepeatingQueue = new Queue<T>();
     }
 
     /// <summary>
@@ -46,10 +46,10 @@ public class RepeatableQueue<T> : IQueue<T>
     public RepeatableQueue(IQueue<T> originalQueue)
     {
         Requires.NotNull(
-            out this.internalQueue,
+            out internalQueue,
             originalQueue,
             nameof(originalQueue));
-        this.internalRepeatingQueue = new Queue<T>();
+        internalRepeatingQueue = new Queue<T>();
     }
 
     /// <summary>
@@ -62,8 +62,8 @@ public class RepeatableQueue<T> : IQueue<T>
             originalData,
             nameof(originalData));
 
-        this.internalQueue = new Queue<T>(originalData);
-        this.internalRepeatingQueue = new Queue<T>();
+        internalQueue = new Queue<T>(originalData);
+        internalRepeatingQueue = new Queue<T>();
     }
 
 #endregion
@@ -72,7 +72,7 @@ public class RepeatableQueue<T> : IQueue<T>
 
     /// <summary>Gets the number of elements in the collection.</summary>
     /// <returns>The number of elements in the collection. </returns>
-    public int Count => ((IReadOnlyCollection<T>)this.internalQueue).Count;
+    public int Count => ((IReadOnlyCollection<T>)internalQueue).Count;
 
     /// <summary>
     ///     Gets a value indicating whether this queue is empty.
@@ -80,11 +80,11 @@ public class RepeatableQueue<T> : IQueue<T>
     /// <value>
     ///     <c>true</c> if this queue is empty; otherwise, <c>false</c>.
     /// </value>
-    public bool IsEmpty => this.Count == 0;
+    public bool IsEmpty => Count == 0;
 
     /// <summary>Gets the number of elements contained in the <see cref="ICollection" />.</summary>
     /// <returns>The number of elements contained in the <see cref="ICollection" />.</returns>
-    int ICollection.Count => this.Count;
+    int ICollection.Count => Count;
 
     /// <summary>
     ///     Gets a value indicating whether access to the <see cref="ICollection" /> is synchronized
@@ -94,11 +94,11 @@ public class RepeatableQueue<T> : IQueue<T>
     ///     <see langword="true" /> if access to the <see cref="ICollection" /> is synchronized (thread
     ///     safe); otherwise, <see langword="false" />.
     /// </returns>
-    bool ICollection.IsSynchronized => this.internalQueue.IsSynchronized;
+    bool ICollection.IsSynchronized => internalQueue.IsSynchronized;
 
     /// <summary>Gets an object that can be used to synchronize access to the <see cref="ICollection" />.</summary>
     /// <returns>An object that can be used to synchronize access to the <see cref="ICollection" />.</returns>
-    object ICollection.SyncRoot => this.internalQueue.SyncRoot;
+    object ICollection.SyncRoot => internalQueue.SyncRoot;
 
 #endregion
 
@@ -130,7 +130,7 @@ public class RepeatableQueue<T> : IQueue<T>
     public void CopyTo(
         Array array,
         int index) =>
-        this.internalQueue.CopyTo(
+        internalQueue.CopyTo(
             array,
             index);
 
@@ -140,15 +140,15 @@ public class RepeatableQueue<T> : IQueue<T>
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Unavoidable.")]
-    public IEnumerator<T> GetEnumerator() => this.internalQueue.GetEnumerator();
+    public IEnumerator<T> GetEnumerator() => internalQueue.GetEnumerator();
 
     /// <summary>
     ///     Clears the queue of all elements.
     /// </summary>
     public void Clear()
     {
-        this.internalQueue.Clear();
-        this.internalRepeatingQueue.Clear();
+        internalQueue.Clear();
+        internalRepeatingQueue.Clear();
     }
 
     /// <summary>
@@ -156,7 +156,7 @@ public class RepeatableQueue<T> : IQueue<T>
     /// </summary>
     /// <param name="item">The item to verify.</param>
     /// <returns><see langword="true" /> if the item is queued, <see langword="false" /> otherwise.</returns>
-    public bool Contains(T item) => this.internalQueue.Contains(item);
+    public bool Contains(T item) => internalQueue.Contains(item);
 
     /// <summary>
     ///     De-queues an item and removes it from the queue.
@@ -164,8 +164,8 @@ public class RepeatableQueue<T> : IQueue<T>
     /// <returns>The item that has been de-queued.</returns>
     public T Dequeue()
     {
-        T dequeuedItem = this.internalQueue.Dequeue();
-        this.internalRepeatingQueue.Enqueue(dequeuedItem);
+        T dequeuedItem = internalQueue.Dequeue();
+        internalRepeatingQueue.Enqueue(dequeuedItem);
 
         return dequeuedItem;
     }
@@ -174,13 +174,13 @@ public class RepeatableQueue<T> : IQueue<T>
     ///     Queues an item, adding it to the queue.
     /// </summary>
     /// <param name="item">The item to enqueue.</param>
-    public void Enqueue(T item) => this.internalQueue.Enqueue(item);
+    public void Enqueue(T item) => internalQueue.Enqueue(item);
 
     /// <summary>
     ///     Queues a range of elements, adding them to the queue.
     /// </summary>
     /// <param name="items">The item range to push.</param>
-    public void EnqueueRange(T[] items) => this.internalQueue.EnqueueRange(items);
+    public void EnqueueRange(T[] items) => internalQueue.EnqueueRange(items);
 
     /// <summary>
     ///     Queues a range of elements, adding them to the queue.
@@ -192,7 +192,7 @@ public class RepeatableQueue<T> : IQueue<T>
         T[] items,
         int startIndex,
         int count) =>
-        this.internalQueue.EnqueueRange(
+        internalQueue.EnqueueRange(
             items,
             startIndex,
             count);
@@ -201,18 +201,18 @@ public class RepeatableQueue<T> : IQueue<T>
     ///     Peeks at the topmost element in the queue, without removing it.
     /// </summary>
     /// <returns>The item peeked at, if any.</returns>
-    public T Peek() => this.internalQueue.Peek();
+    public T Peek() => internalQueue.Peek();
 
     /// <summary>
     ///     Copies all elements of the queue into a new array.
     /// </summary>
     /// <returns>The created array with all element of the queue.</returns>
-    public T[] ToArray() => this.internalQueue.ToArray();
+    public T[] ToArray() => internalQueue.ToArray();
 
     /// <summary>
     ///     Trims the excess free space from within the queue, reducing the capacity to the actual number of elements.
     /// </summary>
-    public void TrimExcess() => this.internalQueue.TrimExcess();
+    public void TrimExcess() => internalQueue.TrimExcess();
 
     /// <summary>
     ///     Attempts to de-queue an item and to remove it from queue.
@@ -224,12 +224,12 @@ public class RepeatableQueue<T> : IQueue<T>
     /// </returns>
     public bool TryDequeue([MaybeNullWhen(false)] out T item)
     {
-        if (!this.internalQueue.TryDequeue(out item))
+        if (!internalQueue.TryDequeue(out item))
         {
             return false;
         }
 
-        this.internalRepeatingQueue.Enqueue(item);
+        internalRepeatingQueue.Enqueue(item);
 
         return true;
     }
@@ -241,7 +241,7 @@ public class RepeatableQueue<T> : IQueue<T>
     /// <returns>
     ///     <see langword="true" /> if an item is found, <see langword="false" /> otherwise, or if the queue is empty.
     /// </returns>
-    public bool TryPeek([MaybeNullWhen(false)] out T item) => this.internalQueue.TryPeek(out item);
+    public bool TryPeek([MaybeNullWhen(false)] out T item) => internalQueue.TryPeek(out item);
 
     /// <summary>Returns an enumerator that iterates through a collection.</summary>
     /// <returns>An <see cref="IEnumerator" /> object that can be used to iterate through the collection.</returns>
@@ -250,7 +250,7 @@ public class RepeatableQueue<T> : IQueue<T>
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Unavoidable.")]
     [ExcludeFromCodeCoverage]
-    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 #endregion
 
@@ -258,7 +258,7 @@ public class RepeatableQueue<T> : IQueue<T>
     ///     Gets a repeat of the sequence of elements dequeued from this instance.
     /// </summary>
     /// <returns>A repeating queue.</returns>
-    public IQueue<T> Repeat() => new Queue<T>(this.internalRepeatingQueue.ToArray());
+    public IQueue<T> Repeat() => new Queue<T>(internalRepeatingQueue.ToArray());
 
 #endregion
 }

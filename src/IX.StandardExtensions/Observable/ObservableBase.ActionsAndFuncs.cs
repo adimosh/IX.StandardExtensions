@@ -2,6 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System;
 using IX.StandardExtensions.ComponentModel;
 using IX.StandardExtensions.Threading;
 
@@ -21,7 +22,7 @@ public abstract partial class ObservableBase
     /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
     protected void ReadLock<TParam1>(Action<TParam1> action, TParam1 param1)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1);
         }
@@ -37,7 +38,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn ReadLock<TParam1, TReturn>(Func<TParam1, TReturn> action, TParam1 param1)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1);
         }
@@ -51,7 +52,7 @@ public abstract partial class ObservableBase
     /// <param name="param1">A parameter of type <typeparamref name="TParam1" /> to pass to the invoked method at index 0.</param>
     protected void WriteLock<TParam1>(Action<TParam1> action, TParam1 param1)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1);
         }
@@ -67,7 +68,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn WriteLock<TParam1, TReturn>(Func<TParam1, TReturn> action, TParam1 param1)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1);
         }
@@ -83,7 +84,7 @@ public abstract partial class ObservableBase
     /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
     protected void ReadLock<TParam1, TParam2>(Action<TParam1, TParam2> action, TParam1 param1, TParam2 param2)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2);
         }
@@ -101,7 +102,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn ReadLock<TParam1, TParam2, TReturn>(Func<TParam1, TParam2, TReturn> action, TParam1 param1, TParam2 param2)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2);
         }
@@ -117,7 +118,7 @@ public abstract partial class ObservableBase
     /// <param name="param2">A parameter of type <typeparamref name="TParam2" /> to pass to the invoked method at index 1.</param>
     protected void WriteLock<TParam1, TParam2>(Action<TParam1, TParam2> action, TParam1 param1, TParam2 param2)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2);
         }
@@ -135,7 +136,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn WriteLock<TParam1, TParam2, TReturn>(Func<TParam1, TParam2, TReturn> action, TParam1 param1, TParam2 param2)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2);
         }
@@ -153,7 +154,7 @@ public abstract partial class ObservableBase
     /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
     protected void ReadLock<TParam1, TParam2, TParam3>(Action<TParam1, TParam2, TParam3> action, TParam1 param1, TParam2 param2, TParam3 param3)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2, param3);
         }
@@ -173,7 +174,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn ReadLock<TParam1, TParam2, TParam3, TReturn>(Func<TParam1, TParam2, TParam3, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2, param3);
         }
@@ -191,7 +192,7 @@ public abstract partial class ObservableBase
     /// <param name="param3">A parameter of type <typeparamref name="TParam3" /> to pass to the invoked method at index 2.</param>
     protected void WriteLock<TParam1, TParam2, TParam3>(Action<TParam1, TParam2, TParam3> action, TParam1 param1, TParam2 param2, TParam3 param3)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2, param3);
         }
@@ -211,7 +212,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn WriteLock<TParam1, TParam2, TParam3, TReturn>(Func<TParam1, TParam2, TParam3, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2, param3);
         }
@@ -231,7 +232,7 @@ public abstract partial class ObservableBase
     /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
     protected void ReadLock<TParam1, TParam2, TParam3, TParam4>(Action<TParam1, TParam2, TParam3, TParam4> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2, param3, param4);
         }
@@ -253,7 +254,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn ReadLock<TParam1, TParam2, TParam3, TParam4, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2, param3, param4);
         }
@@ -273,7 +274,7 @@ public abstract partial class ObservableBase
     /// <param name="param4">A parameter of type <typeparamref name="TParam4" /> to pass to the invoked method at index 3.</param>
     protected void WriteLock<TParam1, TParam2, TParam3, TParam4>(Action<TParam1, TParam2, TParam3, TParam4> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2, param3, param4);
         }
@@ -295,7 +296,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn WriteLock<TParam1, TParam2, TParam3, TParam4, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2, param3, param4);
         }
@@ -317,7 +318,7 @@ public abstract partial class ObservableBase
     /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
     protected void ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5>(Action<TParam1, TParam2, TParam3, TParam4, TParam5> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2, param3, param4, param5);
         }
@@ -341,7 +342,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2, param3, param4, param5);
         }
@@ -363,7 +364,7 @@ public abstract partial class ObservableBase
     /// <param name="param5">A parameter of type <typeparamref name="TParam5" /> to pass to the invoked method at index 4.</param>
     protected void WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5>(Action<TParam1, TParam2, TParam3, TParam4, TParam5> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2, param3, param4, param5);
         }
@@ -387,7 +388,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2, param3, param4, param5);
         }
@@ -411,7 +412,7 @@ public abstract partial class ObservableBase
     /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
     protected void ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2, param3, param4, param5, param6);
         }
@@ -437,7 +438,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2, param3, param4, param5, param6);
         }
@@ -461,7 +462,7 @@ public abstract partial class ObservableBase
     /// <param name="param6">A parameter of type <typeparamref name="TParam6" /> to pass to the invoked method at index 5.</param>
     protected void WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2, param3, param4, param5, param6);
         }
@@ -487,7 +488,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2, param3, param4, param5, param6);
         }
@@ -513,7 +514,7 @@ public abstract partial class ObservableBase
     /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
     protected void ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2, param3, param4, param5, param6, param7);
         }
@@ -541,7 +542,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2, param3, param4, param5, param6, param7);
         }
@@ -567,7 +568,7 @@ public abstract partial class ObservableBase
     /// <param name="param7">A parameter of type <typeparamref name="TParam7" /> to pass to the invoked method at index 6.</param>
     protected void WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2, param3, param4, param5, param6, param7);
         }
@@ -595,7 +596,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2, param3, param4, param5, param6, param7);
         }
@@ -623,7 +624,7 @@ public abstract partial class ObservableBase
     /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
     protected void ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2, param3, param4, param5, param6, param7, param8);
         }
@@ -653,7 +654,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn ReadLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
     {
-        using (new ReadOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2, param3, param4, param5, param6, param7, param8);
         }
@@ -681,7 +682,7 @@ public abstract partial class ObservableBase
     /// <param name="param8">A parameter of type <typeparamref name="TParam8" /> to pass to the invoked method at index 7.</param>
     protected void WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             action(param1, param2, param3, param4, param5, param6, param7, param8);
         }
@@ -711,7 +712,7 @@ public abstract partial class ObservableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected TReturn WriteLock<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TReturn>(Func<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TReturn> action, TParam1 param1, TParam2 param2, TParam3 param3, TParam4 param4, TParam5 param5, TParam6 param6, TParam7 param7, TParam8 param8)
     {
-        using (new WriteOnlySynchronizationLocker(this.SynchronizationLock))
+        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
         {
             return action(param1, param2, param3, param4, param5, param6, param7, param8);
         }

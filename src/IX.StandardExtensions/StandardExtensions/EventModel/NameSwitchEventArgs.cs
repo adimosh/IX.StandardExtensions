@@ -25,8 +25,8 @@ public class NameSwitchEventArgs : EventArgs
         string switchName,
         bool switchValue)
     {
-        this.Name = switchName;
-        this.Value = switchValue;
+        Name = switchName;
+        Value = switchValue;
     }
 
 #endregion

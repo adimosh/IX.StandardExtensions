@@ -20,18 +20,18 @@ internal class MultiListListAdapter<T> : ModernListAdapter<T, IEnumerator<T>>
 
     internal MultiListListAdapter()
     {
-        this.lists = new List<IEnumerable<T>>();
+        lists = new List<IEnumerable<T>>();
     }
 
 #endregion
 
 #region Properties and indexers
 
-    public override int Count => this.lists.Sum(p => p.Count());
+    public override int Count => lists.Sum(p => p.Count());
 
     public override bool IsReadOnly => true;
 
-    public int SlavesCount => this.lists.Count;
+    public int SlavesCount => lists.Count;
 
     public override T this[int index]
     {
@@ -39,7 +39,7 @@ internal class MultiListListAdapter<T> : ModernListAdapter<T, IEnumerator<T>>
         {
             var idx = index;
 
-            foreach (IEnumerable<T> list in this.lists)
+            foreach (IEnumerable<T> list in lists)
             {
                 var count = list.Count();
                 if (count > idx)
@@ -67,7 +67,7 @@ internal class MultiListListAdapter<T> : ModernListAdapter<T, IEnumerator<T>>
     public override void Clear() => throw new InvalidOperationException();
 
     public override bool Contains(T item) =>
-        this.lists.Any(
+        lists.Any(
             (
                 p,
                 itemL1) => p.Contains(itemL1),
@@ -77,8 +77,8 @@ internal class MultiListListAdapter<T> : ModernListAdapter<T, IEnumerator<T>>
         T[] array,
         int arrayIndex)
     {
-        var totalCount = this.Count + arrayIndex;
-        using IEnumerator<T> enumerator = this.GetEnumerator();
+        var totalCount = Count + arrayIndex;
+        using IEnumerator<T> enumerator = GetEnumerator();
         for (var i = arrayIndex; i < totalCount; i++)
         {
             if (!enumerator.MoveNext())
@@ -92,7 +92,7 @@ internal class MultiListListAdapter<T> : ModernListAdapter<T, IEnumerator<T>>
 
     public override IEnumerator<T> GetEnumerator()
     {
-        foreach (IEnumerable<T> lst in this.lists)
+        foreach (IEnumerable<T> lst in lists)
         {
             foreach (T var in lst)
             {
@@ -112,7 +112,7 @@ internal class MultiListListAdapter<T> : ModernListAdapter<T, IEnumerator<T>>
     {
         var offset = 0;
 
-        foreach (List<T> list in this.lists.Select(p => p.ToList()))
+        foreach (List<T> list in lists.Select(p => p.ToList()))
         {
             int foundIndex;
             if ((foundIndex = list.IndexOf(item)) != -1)
@@ -131,8 +131,8 @@ internal class MultiListListAdapter<T> : ModernListAdapter<T, IEnumerator<T>>
     internal void SetList<TList>(TList list)
         where TList : class, IEnumerable<T>, INotifyCollectionChanged
     {
-        this.lists.Add(list ?? throw new ArgumentNullException(nameof(list)));
-        list.CollectionChanged += this.List_CollectionChanged;
+        lists.Add(list ?? throw new ArgumentNullException(nameof(list)));
+        list.CollectionChanged += List_CollectionChanged;
     }
 
     [SuppressMessage(
@@ -144,19 +144,19 @@ internal class MultiListListAdapter<T> : ModernListAdapter<T, IEnumerator<T>>
     {
         try
         {
-            list.CollectionChanged -= this.List_CollectionChanged;
+            list.CollectionChanged -= List_CollectionChanged;
         }
         catch
         {
         }
 
-        this.lists.Remove(list ?? throw new ArgumentNullException(nameof(list)));
+        lists.Remove(list ?? throw new ArgumentNullException(nameof(list)));
     }
 
     private void List_CollectionChanged(
         object? sender,
         NotifyCollectionChangedEventArgs e) =>
-        this.TriggerReset();
+        TriggerReset();
 
 #endregion
 }

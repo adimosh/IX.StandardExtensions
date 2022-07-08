@@ -4649,8 +4649,8 @@ internal class SJISDistributionAnalyser : CharDistributionAnalyser
 
     public SJISDistributionAnalyser()
     {
-        this.charToFreqOrder = SJIS_CHAR2FREQ_ORDER;
-        this.typicalDistributionRatio = SJIS_TYPICAL_DISTRIBUTION_RATIO;
+        charToFreqOrder = SJIS_CHAR2FREQ_ORDER;
+        typicalDistributionRatio = SJIS_TYPICAL_DISTRIBUTION_RATIO;
     }
 
     /// <summary>

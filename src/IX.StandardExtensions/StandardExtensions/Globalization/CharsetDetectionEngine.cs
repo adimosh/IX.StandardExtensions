@@ -196,7 +196,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     /// </summary>
     /// <param name="stream">The stream to read from.</param>
     /// <returns>The interpretation result.</returns>
-    public (Encoding? Encoding, float Confidence) Read(Stream stream) => this.Interpret(stream);
+    public (Encoding? Encoding, float Confidence) Read(Stream stream) => Interpret(stream);
 
     /// <summary>
     /// Read data from a stream and feed it into the recognition engine.
@@ -207,7 +207,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     public (Encoding? Encoding, float Confidence) Read(
         Stream stream,
         int limit) =>
-        this.Interpret(
+        Interpret(
             stream,
             limit);
 
@@ -220,7 +220,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     public (Encoding? Encoding, float Confidence) Read(
         Stream stream,
         long limit) =>
-        this.Interpret(
+        Interpret(
             stream,
             limit);
 
@@ -235,7 +235,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         byte[] buffer,
         int offset,
         int count) =>
-        this.Interpret(
+        Interpret(
             buffer,
             offset,
             count);
@@ -249,7 +249,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     public (Encoding? Encoding, float Confidence) Read(
         byte[] buffer,
         int count) =>
-        this.Interpret(
+        Interpret(
             buffer,
             0,
             count);
@@ -261,7 +261,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     /// <returns>The interpretation result.</returns>
     public (Encoding? Encoding, float Confidence) Read(
         byte[] buffer) =>
-        this.Interpret(
+        Interpret(
             buffer,
             0,
             buffer.LongLength);
@@ -275,7 +275,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     public Task<(Encoding? Encoding, float Confidence)> ReadAsync(
         Stream stream,
         CancellationToken cancellationToken = default) =>
-        this.InterpretAsync(
+        InterpretAsync(
             stream,
             cancellationToken: cancellationToken);
 
@@ -290,7 +290,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         Stream stream,
         int limit,
         CancellationToken cancellationToken = default) =>
-        this.InterpretAsync(
+        InterpretAsync(
             stream,
             limit,
             cancellationToken);
@@ -306,7 +306,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         Stream stream,
         long limit,
         CancellationToken cancellationToken = default) =>
-        this.InterpretAsync(
+        InterpretAsync(
             stream,
             limit,
             cancellationToken);
@@ -327,7 +327,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     {
         await Task.Yield();
 
-        return this.Interpret(
+        return Interpret(
             buffer,
             offset,
             count);
@@ -349,7 +349,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     {
         await Task.Yield();
 
-        return this.Interpret(
+        return Interpret(
             buffer,
             offset,
             count,
@@ -367,7 +367,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         byte[] buffer,
         int count,
         CancellationToken cancellationToken = default) =>
-        this.ReadAsync(
+        ReadAsync(
             buffer,
             0,
             count,
@@ -384,7 +384,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         byte[] buffer,
         long count,
         CancellationToken cancellationToken = default) =>
-        this.ReadAsync(
+        ReadAsync(
             buffer,
             0L,
             count,
@@ -399,7 +399,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     public Task<(Encoding? Encoding, float Confidence)> ReadAsync(
         byte[] buffer,
         CancellationToken cancellationToken = default) =>
-        this.ReadAsync(
+        ReadAsync(
             buffer,
             0L,
             buffer.LongLength,
@@ -444,7 +444,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
                     0,
                     toRead);
 
-                if (this.CheckSmallBuffer(
+                if (CheckSmallBuffer(
                         probers.Value,
                         chunk,
                         (int)toRead,
@@ -544,7 +544,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
 
                 #endregion
 
-                if (this.CheckSmallBuffer(
+                if (CheckSmallBuffer(
                         probers.Value,
                         chunk,
                         readBytes,
@@ -646,7 +646,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
 
                 #endregion
 
-                if (this.CheckSmallBuffer(
+                if (CheckSmallBuffer(
                         probers.Value,
                         chunk,
                         readBytes,

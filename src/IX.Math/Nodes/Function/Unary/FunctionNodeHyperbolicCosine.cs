@@ -37,7 +37,7 @@ internal sealed class FunctionNodeHyperbolicCosine : NumericUnaryFunctionNodeBas
     /// </returns>
     public override NodeBase Simplify()
     {
-        if (this.Parameter is NumericNode numericParam)
+        if (Parameter is NumericNode numericParam)
         {
             return new NumericNode(GlobalSystem.Math.Cosh(numericParam.ExtractFloat()));
         }
@@ -53,7 +53,7 @@ internal sealed class FunctionNodeHyperbolicCosine : NumericUnaryFunctionNodeBas
     ///     A deep clone.
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
-        new FunctionNodeHyperbolicCosine(this.Parameter.DeepClone(context));
+        new FunctionNodeHyperbolicCosine(Parameter.DeepClone(context));
 
     /// <summary>
     ///     Generates the expression that will be compiled into code.
@@ -62,7 +62,7 @@ internal sealed class FunctionNodeHyperbolicCosine : NumericUnaryFunctionNodeBas
     ///     The expression.
     /// </returns>
     protected override Expression GenerateExpressionInternal() =>
-        this.GenerateStaticUnaryFunctionCall(
+        GenerateStaticUnaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Cosh));
 
@@ -72,7 +72,7 @@ internal sealed class FunctionNodeHyperbolicCosine : NumericUnaryFunctionNodeBas
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
-        this.GenerateStaticUnaryFunctionCall(
+        GenerateStaticUnaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Cosh),
             tolerance);

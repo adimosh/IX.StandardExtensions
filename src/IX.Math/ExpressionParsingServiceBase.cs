@@ -62,22 +62,22 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
     {
         // Preconditions
         Requires.NotNull(
-            out this.workingDefinition,
+            out workingDefinition,
             definition,
             nameof(definition));
 
         // Initialized internal state
-        this.constantExtractors = new LevelDictionary<Type, IConstantsExtractor>();
-        this.constantInterpreters = new LevelDictionary<Type, IConstantInterpreter>();
-        this.constantPassThroughExtractors = new LevelDictionary<Type, IConstantPassThroughExtractor>();
-        this.stringFormatters = new List<IStringFormatter>();
+        constantExtractors = new LevelDictionary<Type, IConstantsExtractor>();
+        constantInterpreters = new LevelDictionary<Type, IConstantInterpreter>();
+        constantPassThroughExtractors = new LevelDictionary<Type, IConstantPassThroughExtractor>();
+        stringFormatters = new List<IStringFormatter>();
 
-        this.nonaryFunctions = new Dictionary<string, Type>();
-        this.unaryFunctions = new Dictionary<string, Type>();
-        this.binaryFunctions = new Dictionary<string, Type>();
-        this.ternaryFunctions = new Dictionary<string, Type>();
+        nonaryFunctions = new Dictionary<string, Type>();
+        unaryFunctions = new Dictionary<string, Type>();
+        binaryFunctions = new Dictionary<string, Type>();
+        ternaryFunctions = new Dictionary<string, Type>();
 
-        this.assembliesToRegister = new List<Assembly>
+        assembliesToRegister = new List<Assembly>
         {
             typeof(ExpressionParsingService).GetTypeInfo()
                 .Assembly
@@ -96,22 +96,22 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
     /// <returns>All function names, with all possible combinations of input and output data.</returns>
     public string[] GetRegisteredFunctions()
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
-        using SynchronizationLocker innerLock = this.EnsureInitialization();
+        using SynchronizationLocker innerLock = EnsureInitialization();
 
         // Capacity is sum of all, times 3; the "3" number was chosen as a good-enough average of how many overloads are defined, on average
         var bldr = new List<string>(
-            (this.nonaryFunctions.Count +
-             this.unaryFunctions.Count +
-             this.binaryFunctions.Count +
-             this.ternaryFunctions.Count) *
+            (nonaryFunctions.Count +
+             unaryFunctions.Count +
+             binaryFunctions.Count +
+             ternaryFunctions.Count) *
             3);
 
-        bldr.AddRange(this.nonaryFunctions.Select(function => $"{function.Key}()"));
+        bldr.AddRange(nonaryFunctions.Select(function => $"{function.Key}()"));
 
         (
-            from KeyValuePair<string, Type> function in this.unaryFunctions
+            from KeyValuePair<string, Type> function in unaryFunctions
             from ConstructorInfo constructor in function.Value.GetTypeInfo()
                 .DeclaredConstructors
             let parameters = constructor.GetParameters()
@@ -127,7 +127,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
             bldr);
 
         (
-            from KeyValuePair<string, Type> function in this.binaryFunctions
+            from KeyValuePair<string, Type> function in binaryFunctions
             from ConstructorInfo constructor in function.Value.GetTypeInfo()
                 .DeclaredConstructors
             let parameters = constructor.GetParameters()
@@ -147,7 +147,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
             bldr);
 
         (
-            from KeyValuePair<string, Type> function in this.ternaryFunctions
+            from KeyValuePair<string, Type> function in ternaryFunctions
             from ConstructorInfo constructor in function.Value.GetTypeInfo()
                 .DeclaredConstructors
             let parameters = constructor.GetParameters()
@@ -192,24 +192,24 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
             assembly,
             nameof(assembly));
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
-        using ReadWriteSynchronizationLocker innerLocker = this.ReadWriteLock();
+        using ReadWriteSynchronizationLocker innerLocker = ReadWriteLock();
 
-        if (this.isInitialized)
+        if (isInitialized)
         {
             throw new InvalidOperationException(
                 "Initialization has already completed, so you cannot register any more assemblies for this service.");
         }
 
-        if (this.assembliesToRegister.Contains(assembly))
+        if (assembliesToRegister.Contains(assembly))
         {
             return;
         }
 
         innerLocker.Upgrade();
 
-        this.assembliesToRegister.Add(assembly);
+        assembliesToRegister.Add(assembly);
     }
 
     /// <summary>
@@ -226,14 +226,14 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
             formatter,
             nameof(formatter));
 
-        if (this.interpretationDone != 0)
+        if (interpretationDone != 0)
         {
             throw new InvalidOperationException(
                 Resources
                     .TheExpressionParsingServiceHasAlreadyDoneInterpretationAndCannotHaveAnyMoreFormattersRegistered);
         }
 
-        this.stringFormatters.Add(formatter);
+        stringFormatters.Add(formatter);
     }
 
 #endregion
@@ -245,17 +245,17 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
     /// </summary>
     protected override void DisposeManagedContext()
     {
-        this.nonaryFunctions.Clear();
-        this.unaryFunctions.Clear();
-        this.binaryFunctions.Clear();
-        this.ternaryFunctions.Clear();
+        nonaryFunctions.Clear();
+        unaryFunctions.Clear();
+        binaryFunctions.Clear();
+        ternaryFunctions.Clear();
 
-        this.stringFormatters.Clear();
-        this.constantExtractors.Clear();
-        this.constantInterpreters.Clear();
-        this.constantPassThroughExtractors.Clear();
+        stringFormatters.Clear();
+        constantExtractors.Clear();
+        constantInterpreters.Clear();
+        constantPassThroughExtractors.Clear();
 
-        this.assembliesToRegister.Clear();
+        assembliesToRegister.Clear();
 
         base.DisposeManagedContext();
     }
@@ -285,12 +285,12 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
             expression,
             nameof(expression));
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
-        using SynchronizationLocker innerLock = this.EnsureInitialization();
+        using SynchronizationLocker innerLock = EnsureInitialization();
 
         // Check expression through pass-through extractors
-        if (this.constantPassThroughExtractors.KeysByLevel.SelectMany(p => p.Value)
+        if (constantPassThroughExtractors.KeysByLevel.SelectMany(p => p.Value)
             .Any(
                 ConstantPassThroughExtractorPredicate,
                 expression,
@@ -300,8 +300,8 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
                 expression,
                 new StringNode(expression),
                 true,
-                new StandardParameterRegistry(this.stringFormatters),
-                this.stringFormatters,
+                new StandardParameterRegistry(stringFormatters),
+                stringFormatters,
                 null);
         }
 
@@ -317,14 +317,14 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
         ComputedExpression result;
         using (var workingSet = new WorkingExpressionSet(
                    expression,
-                   this.workingDefinition.DeepClone(),
-                   this.nonaryFunctions,
-                   this.unaryFunctions,
-                   this.binaryFunctions,
-                   this.ternaryFunctions,
-                   this.constantExtractors,
-                   this.constantInterpreters,
-                   this.stringFormatters,
+                   workingDefinition.DeepClone(),
+                   nonaryFunctions,
+                   unaryFunctions,
+                   binaryFunctions,
+                   ternaryFunctions,
+                   constantExtractors,
+                   constantInterpreters,
+                   stringFormatters,
                    cancellationToken))
         {
             (NodeBase? node, IParameterRegistry? parameterRegistry) = ExpressionGenerator.CreateBody(workingSet);
@@ -335,21 +335,21 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
                     null,
                     false,
                     null,
-                    this.stringFormatters,
+                    stringFormatters,
                     null)
                 : new ComputedExpression(
                     expression,
                     node,
                     true,
                     parameterRegistry,
-                    this.stringFormatters,
+                    stringFormatters,
                     workingSet.OfferReservedType);
 
             Interlocked.MemoryBarrier();
         }
 
         Interlocked.Exchange(
-            ref this.interpretationDone,
+            ref interpretationDone,
             1);
 
         return result;
@@ -361,18 +361,18 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
         Justification = "This ")]
     private SynchronizationLocker EnsureInitialization()
     {
-        ReadOnlySynchronizationLocker innerLock = this.ReadLock();
+        ReadOnlySynchronizationLocker innerLock = ReadLock();
 
-        if (this.isInitialized)
+        if (isInitialized)
         {
             return innerLock;
         }
 
         innerLock.Dispose();
 
-        ReadWriteSynchronizationLocker innerWriteLock = this.ReadWriteLock();
+        ReadWriteSynchronizationLocker innerWriteLock = ReadWriteLock();
 
-        if (this.isInitialized)
+        if (isInitialized)
         {
             return innerWriteLock;
         }
@@ -382,24 +382,24 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
             innerWriteLock.Upgrade();
 
             // Initializing functions dictionaries
-            this.assembliesToRegister.GenerateInternalNonaryFunctionsDictionary(this.nonaryFunctions);
-            this.assembliesToRegister.GenerateInternalUnaryFunctionsDictionary(this.unaryFunctions);
-            this.assembliesToRegister.GenerateInternalBinaryFunctionsDictionary(this.binaryFunctions);
-            this.assembliesToRegister.GenerateInternalTernaryFunctionsDictionary(this.ternaryFunctions);
+            assembliesToRegister.GenerateInternalNonaryFunctionsDictionary(nonaryFunctions);
+            assembliesToRegister.GenerateInternalUnaryFunctionsDictionary(unaryFunctions);
+            assembliesToRegister.GenerateInternalBinaryFunctionsDictionary(binaryFunctions);
+            assembliesToRegister.GenerateInternalTernaryFunctionsDictionary(ternaryFunctions);
 
             // Extractors
-            this.InitializePassThroughExtractorsDictionary();
-            this.InitializeExtractorsDictionary();
-            this.InitializeInterpretersDictionary();
+            InitializePassThroughExtractorsDictionary();
+            InitializeExtractorsDictionary();
+            InitializeInterpretersDictionary();
 
-            this.isInitialized = true;
+            isInitialized = true;
         }
         finally
         {
             innerWriteLock.Dispose();
         }
 
-        return this.ReadLock();
+        return ReadLock();
     }
 
     [DiagCA.SuppressMessage(
@@ -408,17 +408,17 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
         Justification = "Parameters are very complex in this method.")]
     private void InitializeExtractorsDictionary()
     {
-        this.constantExtractors.Add(
+        constantExtractors.Add(
             typeof(StringExtractor),
             new StringExtractor(),
             1000);
-        this.constantExtractors.Add(
+        constantExtractors.Add(
             typeof(ScientificFormatNumberExtractor),
             new ScientificFormatNumberExtractor(),
             2000);
 
         var incrementer = 2001;
-        this.assembliesToRegister.GetTypesAssignableFrom<IConstantsExtractor>()
+        assembliesToRegister.GetTypesAssignableFrom<IConstantsExtractor>()
             .Where(
                 p => p.IsClass && !p.IsAbstract && !p.IsGenericTypeDefinition && p.HasPublicParameterlessConstructor())
             .Select(p => p.AsType())
@@ -457,7 +457,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
     private void InitializePassThroughExtractorsDictionary()
     {
         var incrementer = 2001;
-        this.assembliesToRegister.GetTypesAssignableFrom<IConstantPassThroughExtractor>()
+        assembliesToRegister.GetTypesAssignableFrom<IConstantPassThroughExtractor>()
             .Where(
                 p => p.IsClass && !p.IsAbstract && !p.IsGenericTypeDefinition && p.HasPublicParameterlessConstructor())
             .Select(p => p.AsType())
@@ -496,7 +496,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
     private void InitializeInterpretersDictionary()
     {
         var incrementer = 2001;
-        this.assembliesToRegister.GetTypesAssignableFrom<IConstantInterpreter>()
+        assembliesToRegister.GetTypesAssignableFrom<IConstantInterpreter>()
             .Where(
                 p => p.IsClass && !p.IsAbstract && !p.IsGenericTypeDefinition && p.HasPublicParameterlessConstructor())
             .Select(p => p.AsType())

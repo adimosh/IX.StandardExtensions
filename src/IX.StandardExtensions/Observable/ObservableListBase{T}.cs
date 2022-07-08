@@ -87,7 +87,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     ///     Gets a value indicating whether or not this list is of a fixed size.
     /// </summary>
     public virtual bool IsFixedSize =>
-        this.InvokeIfNotDisposed(
+        InvokeIfNotDisposed(
             thisL1 => thisL1.ReadLock(
                 thisL2 => thisL2.InternalListContainer.IsFixedSize,
                 thisL1),
@@ -99,7 +99,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     /// <value>
     ///     The count after add.
     /// </value>
-    protected virtual int CountAfterAdd => this.Count;
+    protected virtual int CountAfterAdd => Count;
 
     /// <summary>
     ///     Gets the internal list container.
@@ -127,9 +127,9 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             this.RequiresNotDisposed();
 
             // ACTION
-            using (this.ReadLock())
+            using (ReadLock())
             {
-                return this.InternalListContainer[index];
+                return InternalListContainer[index];
             }
         }
 
@@ -144,10 +144,10 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             T oldValue;
 
             // Inside a read/write lock
-            using (ReadWriteSynchronizationLocker lockContext = this.ReadWriteLock())
+            using (ReadWriteSynchronizationLocker lockContext = ReadWriteLock())
             {
                 // Verify if we are within bounds in a read lock
-                if (index >= this.InternalListContainer.Count)
+                if (index >= InternalListContainer.Count)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -156,18 +156,18 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
                 lockContext.Upgrade();
 
                 // Get the old value
-                oldValue = this.InternalListContainer[index];
+                oldValue = InternalListContainer[index];
 
                 // Two undo/redo transactions
-                using (OperationTransaction tc1 = this.CheckItemAutoCapture(value))
+                using (OperationTransaction tc1 = CheckItemAutoCapture(value))
                 {
-                    using (OperationTransaction tc2 = this.CheckItemAutoRelease(oldValue))
+                    using (OperationTransaction tc2 = CheckItemAutoRelease(oldValue))
                     {
                         // Replace with new value
-                        this.InternalListContainer[index] = value;
+                        InternalListContainer[index] = value;
 
                         // Push the undo level
-                        this.PushUndoLevel(
+                        PushUndoLevel(
                             new ChangeAtStateChange<T>(
                                 index,
                                 value,
@@ -185,16 +185,16 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             // NOTIFICATION
 
             // Collection changed
-            this.RaiseCollectionChangedChanged(
+            RaiseCollectionChangedChanged(
                 oldValue,
                 value,
                 index);
 
             // Property changed
-            this.RaisePropertyChanged(nameof(this.Count));
+            RaisePropertyChanged(nameof(Count));
 
             // Contents may have changed
-            this.ContentsMayHaveChanged();
+            ContentsMayHaveChanged();
         }
     }
 
@@ -239,9 +239,9 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            return this.InternalListContainer.IndexOf(item);
+            return InternalListContainer.IndexOf(item);
         }
     }
 
@@ -265,18 +265,18 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         // ACTION
 
         // Inside a write lock
-        using (this.WriteLock())
+        using (WriteLock())
         {
             // Inside an undo/redo transaction
-            using OperationTransaction tc = this.CheckItemAutoCapture(item);
+            using OperationTransaction tc = CheckItemAutoCapture(item);
 
             // Actually insert
-            this.InternalListContainer.Insert(
+            InternalListContainer.Insert(
                 index,
                 item);
 
             // Push undo level
-            this.PushUndoLevel(
+            PushUndoLevel(
                 new AddStateChange<T>(
                     item,
                     index));
@@ -288,15 +288,15 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         // NOTIFICATION
 
         // Collection changed
-        this.RaiseCollectionChangedAdd(
+        RaiseCollectionChangedAdd(
             item,
             index);
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -314,10 +314,10 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         T item;
 
         // Inside a read/write lock
-        using (ReadWriteSynchronizationLocker lockContext = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker lockContext = ReadWriteLock())
         {
             // Check to see if we are in range
-            if (index >= this.InternalListContainer.Count)
+            if (index >= InternalListContainer.Count)
             {
                 return;
             }
@@ -325,16 +325,16 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             // Upgrade the lock to a write lock
             lockContext.Upgrade();
 
-            item = this.InternalListContainer[index];
+            item = InternalListContainer[index];
 
             // Using an undo/redo transaction
-            using OperationTransaction tc = this.CheckItemAutoRelease(item);
+            using OperationTransaction tc = CheckItemAutoRelease(item);
 
             // Actually do the removal
-            this.InternalListContainer.RemoveAt(index);
+            InternalListContainer.RemoveAt(index);
 
             // Push an undo level
-            this.PushUndoLevel(
+            PushUndoLevel(
                 new RemoveStateChange<T>(
                     index,
                     item));
@@ -346,15 +346,15 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         // NOTIFICATION
 
         // Collection changed
-        this.RaiseCollectionChangedRemove(
+        RaiseCollectionChangedRemove(
             item,
             index);
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -366,9 +366,9 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     {
         T v = Requires.ArgumentOfType<T>(value);
 
-        this.Add(v);
+        Add(v);
 
-        return this.CountAfterAdd - 1;
+        return CountAfterAdd - 1;
     }
 
     /// <summary>
@@ -382,7 +382,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     {
         if (value is T v)
         {
-            return this.Contains(v);
+            return Contains(v);
         }
 
         return false;
@@ -397,7 +397,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     {
         if (value is T v)
         {
-            return this.IndexOf(v);
+            return IndexOf(v);
         }
 
         return -1;
@@ -414,7 +414,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     {
         T v = Requires.ArgumentOfType<T>(value);
 
-        this.Insert(
+        Insert(
             index,
             v);
     }
@@ -427,7 +427,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     {
         if (value is T v)
         {
-            this.Remove(v);
+            Remove(v);
         }
     }
 
@@ -453,16 +453,16 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         int newIndex;
 
         // Inside a write lock
-        using (this.WriteLock())
+        using (WriteLock())
         {
             // Use an undo/redo transaction
-            using OperationTransaction tc = this.CheckItemAutoCapture(itemsList);
+            using OperationTransaction tc = CheckItemAutoCapture(itemsList);
 
             // Actually add the items
-            newIndex = this.InternalListContainer.AddRange(itemsList);
+            newIndex = InternalListContainer.AddRange(itemsList);
 
             // Push an undo level
-            this.PushUndoLevel(
+            PushUndoLevel(
                 new AddMultipleStateChange<T>(
                     itemsList,
                     newIndex));
@@ -476,20 +476,20 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         // Collection changed
         if (newIndex == -1)
         {
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
-            this.RaiseCollectionChangedAddMultiple(
+            RaiseCollectionChangedAddMultiple(
                 itemsList,
                 newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -515,34 +515,34 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         T[] itemsList;
 
         // Inside a write lock
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (startIndex >= this.InternalListContainer.Count)
+            if (startIndex >= InternalListContainer.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(startIndex));
             }
 
-            itemsList = this.InternalListContainer.Skip(startIndex)
+            itemsList = InternalListContainer.Skip(startIndex)
                 .Reverse()
                 .ToArray();
             var indexesList = new int[itemsList.Length];
             for (var i = 0; i < indexesList.Length; i++)
             {
-                indexesList[i] = this.InternalListContainer.Count - 1 - i;
+                indexesList[i] = InternalListContainer.Count - 1 - i;
             }
 
             // Use an undo/redo transaction
-            using OperationTransaction tc = this.CheckItemAutoRelease(itemsList);
+            using OperationTransaction tc = CheckItemAutoRelease(itemsList);
 
             // Actually remove
-            for (var index = this.InternalListContainer.Count - 1; index >= startIndex; index--)
+            for (var index = InternalListContainer.Count - 1; index >= startIndex; index--)
             {
                 // Remove item (in reverse order)
-                this.InternalListContainer.RemoveAt(index);
+                InternalListContainer.RemoveAt(index);
             }
 
             // Push an undo level
-            this.PushUndoLevel(
+            PushUndoLevel(
                 new RemoveMultipleStateChange<T>(
                     indexesList,
                     itemsList));
@@ -554,15 +554,15 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         // NOTIFICATION
 
         // Collection changed
-        this.RaiseCollectionChangedRemoveMultiple(
+        RaiseCollectionChangedRemoveMultiple(
             itemsList,
             startIndex);
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -603,19 +603,19 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         T[] itemsList;
 
         // Inside a write lock
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (startIndex >= this.InternalListContainer.Count)
+            if (startIndex >= InternalListContainer.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(startIndex));
             }
 
-            if (startIndex + length > this.InternalListContainer.Count)
+            if (startIndex + length > InternalListContainer.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(length));
             }
 
-            itemsList = this.InternalListContainer.Skip(startIndex)
+            itemsList = InternalListContainer.Skip(startIndex)
                 .Take(length)
                 .Reverse()
                 .ToArray();
@@ -626,17 +626,17 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             }
 
             // Use an undo/redo transaction
-            using OperationTransaction tc = this.CheckItemAutoRelease(itemsList);
+            using OperationTransaction tc = CheckItemAutoRelease(itemsList);
 
             // Actually remove
             for (var index = startIndex + length - 1; index >= startIndex; index--)
             {
                 // Remove item (in reverse order)
-                this.InternalListContainer.RemoveAt(index);
+                InternalListContainer.RemoveAt(index);
             }
 
             // Push an undo level
-            this.PushUndoLevel(
+            PushUndoLevel(
                 new RemoveMultipleStateChange<T>(
                     indexesList,
                     itemsList));
@@ -648,15 +648,15 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         // NOTIFICATION
 
         // Collection changed
-        this.RaiseCollectionChangedRemoveMultiple(
+        RaiseCollectionChangedRemoveMultiple(
             itemsList,
             startIndex);
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -685,20 +685,20 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
 
         // ACTION
         // Inside a write lock
-        using (this.WriteLock())
+        using (WriteLock())
         {
             if (items.Any(
                     (
                         p,
                         coll) => !coll.Contains(p),
-                    this.InternalListContainer))
+                    InternalListContainer))
             {
                 throw new ArgumentException(
                     Resources.TheGivenCollectionToRemoveIsNotContainedInTheInitialCollection,
                     nameof(items));
             }
 
-            var itemsToDelete = this.InternalListContainer.Select(
+            var itemsToDelete = InternalListContainer.Select(
                     (
                         p,
                         index) => new
@@ -715,17 +715,17 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
                 .ToArray();
 
             // Use an undo/redo transaction
-            using OperationTransaction tc = this.CheckItemAutoRelease(items);
+            using OperationTransaction tc = CheckItemAutoRelease(items);
 
             // Actually remove
             foreach (var item in itemsToDelete)
             {
                 // Remove an item
-                this.InternalListContainer.RemoveAt(item.Index);
+                InternalListContainer.RemoveAt(item.Index);
             }
 
             // Push undo transaction
-            this.PushUndoLevel(
+            PushUndoLevel(
                 new RemoveMultipleStateChange<T>(
                     itemsToDelete.Select(p => p.Index)
                         .ToArray(),
@@ -739,13 +739,13 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         // NOTIFICATION
 
         // Collection changed
-        this.RaiseCollectionReset();
+        RaiseCollectionReset();
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -755,7 +755,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     /// <remarks>
     ///     <para>On concurrent collections, this method is write-synchronized.</para>
     /// </remarks>
-    public virtual void RemoveRange(params T[] items) => this.RemoveRange((IEnumerable<T>)items);
+    public virtual void RemoveRange(params T[] items) => RemoveRange((IEnumerable<T>)items);
 
     /// <summary>
     ///     Inserts a range of items to the <see cref="ObservableCollectionBase{T}" /> at a pre-defined position.
@@ -784,26 +784,26 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
 
         // ACTION
         // Inside a write lock
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (index > this.InternalListContainer.Count)
+            if (index > InternalListContainer.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             // Use an undo/redo transaction
-            using OperationTransaction tc = this.CheckItemAutoCapture(itemsList);
+            using OperationTransaction tc = CheckItemAutoCapture(itemsList);
 
             // Actually add the items
             foreach (T item in Enumerable.Reverse(itemsList))
             {
-                this.InternalListContainer.Insert(
+                InternalListContainer.Insert(
                     index,
                     item);
             }
 
             // Push an undo level
-            this.PushUndoLevel(
+            PushUndoLevel(
                 new AddMultipleStateChange<T>(
                     itemsList,
                     index));
@@ -815,15 +815,15 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         // NOTIFICATION
 
         // Collection changed
-        this.RaiseCollectionChangedAddMultiple(
+        RaiseCollectionChangedAddMultiple(
             itemsList,
             index);
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -834,7 +834,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     protected virtual void RaiseCollectionChangedAddMultiple(
         IEnumerable<T> addedItems,
         int index) =>
-        this.RaiseCollectionAdd(
+        RaiseCollectionAdd(
             index,
             addedItems);
 
@@ -851,14 +851,14 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
 
         if (ixs.Length > 5)
         {
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             T[] ims = addedItems.ToArray();
             for (var i = 0; i < ixs.Length; i++)
             {
-                this.RaiseCollectionAdd(
+                RaiseCollectionAdd(
                     ixs[i],
                     ims[i]);
             }
@@ -873,7 +873,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     protected virtual void RaiseCollectionChangedRemoveMultiple(
         IEnumerable<T> removedItems,
         int index) =>
-        this.RaiseCollectionRemove(
+        RaiseCollectionRemove(
             index,
             removedItems);
 
@@ -890,14 +890,14 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
 
         if (ixs.Length > 5)
         {
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             T[] ims = removedItems.ToArray();
             for (var i = 0; i < ixs.Length; i++)
             {
-                this.RaiseCollectionRemove(
+                RaiseCollectionRemove(
                     ixs[i],
                     ims[i]);
             }
@@ -913,8 +913,8 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         Action<object?>?[] actions,
         object?[] states)
     {
-        this.RaiseCollectionReset();
-        this.ContentsMayHaveChanged();
+        RaiseCollectionReset();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -945,10 +945,10 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         {
             case AddStateChange<T>(var item, var index):
             {
-                this.InternalListContainer.RemoveAt(index);
+                InternalListContainer.RemoveAt(index);
 
-                if (this.ItemsAreUndoable &&
-                    this.AutomaticallyCaptureSubItems &&
+                if (ItemsAreUndoable &&
+                    AutomaticallyCaptureSubItems &&
                     item is IUndoableItem { IsCapturedIntoUndoContext: true } ul &&
                     ul.ParentUndoContext == this)
                 {
@@ -984,12 +984,12 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             {
                 for (var i = 0; i < addedItems.Length; i++)
                 {
-                    this.InternalListContainer.RemoveAt(index);
+                    InternalListContainer.RemoveAt(index);
                 }
 
                 IEnumerable<T> items = addedItems;
 
-                if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
+                if (ItemsAreUndoable && AutomaticallyCaptureSubItems)
                 {
                     foreach (IUndoableItem ul in items.Cast<IUndoableItem>()
                                  .Where(
@@ -1029,12 +1029,12 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
 
             case RemoveStateChange<T>(var index, var item):
             {
-                this.InternalListContainer.Insert(
+                InternalListContainer.Insert(
                     index,
                     item);
 
-                if (this.ItemsAreUndoable &&
-                    this.AutomaticallyCaptureSubItems &&
+                if (ItemsAreUndoable &&
+                    AutomaticallyCaptureSubItems &&
                     item is IUndoableItem { IsCapturedIntoUndoContext: false } ul)
                 {
                     ul.CaptureIntoUndoContext(this);
@@ -1069,12 +1069,12 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             {
                 for (var i = items.Length - 1; i >= 0; i--)
                 {
-                    this.InternalListContainer.Insert(
+                    InternalListContainer.Insert(
                         indexes[i],
                         items[i]);
                 }
 
-                if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
+                if (ItemsAreUndoable && AutomaticallyCaptureSubItems)
                 {
                     foreach (IUndoableItem ul in items.Cast<IUndoableItem>()
                                  .Where(p => !p.IsCapturedIntoUndoContext))
@@ -1112,10 +1112,10 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             {
                 foreach (T t in originalItems)
                 {
-                    this.InternalListContainer.Add(t);
+                    InternalListContainer.Add(t);
                 }
 
-                if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
+                if (ItemsAreUndoable && AutomaticallyCaptureSubItems)
                 {
                     foreach (IUndoableItem ul in originalItems.Cast<IUndoableItem>()
                                  .Where(p => !p.IsCapturedIntoUndoContext))
@@ -1145,9 +1145,9 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
 
             case ChangeAtStateChange<T>(var index, var oldItem, var newItem):
             {
-                this.InternalListContainer[index] = newItem;
+                InternalListContainer[index] = newItem;
 
-                if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
+                if (ItemsAreUndoable && AutomaticallyCaptureSubItems)
                 {
                     if (newItem is IUndoableItem { IsCapturedIntoUndoContext: false } ul)
                     {
@@ -1228,12 +1228,12 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         {
             case AddStateChange<T>(var addedItem, var index):
             {
-                this.InternalListContainer.Insert(
+                InternalListContainer.Insert(
                     index,
                     addedItem);
 
-                if (this.ItemsAreUndoable &&
-                    this.AutomaticallyCaptureSubItems &&
+                if (ItemsAreUndoable &&
+                    AutomaticallyCaptureSubItems &&
                     addedItem is IUndoableItem { IsCapturedIntoUndoContext: false } ul)
                 {
                     ul.CaptureIntoUndoContext(this);
@@ -1279,7 +1279,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
                         this,
                         index);
 
-                if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
+                if (ItemsAreUndoable && AutomaticallyCaptureSubItems)
                 {
                     foreach (IUndoableItem ul in addedItems.Cast<IUndoableItem>()
                                  .Where(p => !p.IsCapturedIntoUndoContext))
@@ -1315,10 +1315,10 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
 
             case RemoveStateChange<T>(var index, var removedItem):
             {
-                this.InternalListContainer.RemoveAt(index);
+                InternalListContainer.RemoveAt(index);
 
-                if (this.ItemsAreUndoable &&
-                    this.AutomaticallyCaptureSubItems &&
+                if (ItemsAreUndoable &&
+                    AutomaticallyCaptureSubItems &&
                     removedItem is IUndoableItem { IsCapturedIntoUndoContext: true } ul &&
                     ul.ParentUndoContext == this)
                 {
@@ -1354,10 +1354,10 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             {
                 foreach (var t in indexes)
                 {
-                    this.InternalListContainer.RemoveAt(t);
+                    InternalListContainer.RemoveAt(t);
                 }
 
-                if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
+                if (ItemsAreUndoable && AutomaticallyCaptureSubItems)
                 {
                     foreach (IUndoableItem ul in removedItems.Cast<IUndoableItem>()
                                  .Where(
@@ -1397,9 +1397,9 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
 
             case ClearStateChange<T>(var originalItems):
             {
-                this.InternalListContainer.Clear();
+                InternalListContainer.Clear();
 
-                if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
+                if (ItemsAreUndoable && AutomaticallyCaptureSubItems)
                 {
                     foreach (IUndoableItem ul in originalItems.Cast<IUndoableItem>()
                                  .Where(
@@ -1433,9 +1433,9 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
 
             case ChangeAtStateChange<T>(var index, var newItem, var oldItem):
             {
-                this.InternalListContainer[index] = newItem;
+                InternalListContainer[index] = newItem;
 
-                if (this.ItemsAreUndoable && this.AutomaticallyCaptureSubItems)
+                if (ItemsAreUndoable && AutomaticallyCaptureSubItems)
                 {
                     if (newItem is IUndoableItem { IsCapturedIntoUndoContext: false } ul)
                     {

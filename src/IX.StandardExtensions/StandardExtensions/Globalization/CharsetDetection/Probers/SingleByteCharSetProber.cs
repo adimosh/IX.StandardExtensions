@@ -91,7 +91,7 @@ internal class SingleByteCharSetProber : CharsetProber
         this.model = model;
         this.reversed = reversed;
         this.nameProber = nameProber;
-        this.Reset();
+        Reset();
     }
 
     public override ProbingState HandleData(
@@ -103,72 +103,72 @@ internal class SingleByteCharSetProber : CharsetProber
 
         for (var i = offset; i < max; i++)
         {
-            var order = this.model.GetOrder(buf[i]);
+            var order = model.GetOrder(buf[i]);
 
             if (order < SYMBOL_CAT_ORDER)
             {
-                this.totalChar++;
+                totalChar++;
             }
             else if (order == SequenceModel.ILL)
             {
                 // When encountering an illegal codepoint,
                 // no need to continue analyzing data
-                this.state = ProbingState.NotMe;
+                state = ProbingState.NotMe;
 
                 break;
             }
             else if (order == SequenceModel.CTR)
             {
-                this.ctrlChar++;
+                ctrlChar++;
             }
 
-            if (order < this.model.FreqCharCount)
+            if (order < model.FreqCharCount)
             {
-                this.freqChar++;
+                freqChar++;
 
-                if (this.lastOrder < this.model.FreqCharCount)
+                if (lastOrder < model.FreqCharCount)
                 {
-                    this.totalSeqs++;
-                    if (!this.reversed)
+                    totalSeqs++;
+                    if (!reversed)
                     {
-                        ++this.seqCounters[
-                            this.model.GetPrecedence((this.lastOrder * this.model.FreqCharCount) + order)];
+                        ++seqCounters[
+                            model.GetPrecedence((lastOrder * model.FreqCharCount) + order)];
                     }
                     else // reverse the order of the letters in the lookup
                     {
-                        ++this.seqCounters[
-                            this.model.GetPrecedence((order * this.model.FreqCharCount) + this.lastOrder)];
+                        ++seqCounters[
+                            model.GetPrecedence((order * model.FreqCharCount) + lastOrder)];
                     }
                 }
             }
 
-            this.lastOrder = order;
+            lastOrder = order;
         }
 
-        if (this.state == ProbingState.Detecting)
+        if (state == ProbingState.Detecting)
         {
-            if (this.totalSeqs > SB_ENOUGH_REL_THRESHOLD)
+            if (totalSeqs > SB_ENOUGH_REL_THRESHOLD)
             {
-                var cf = this.GetConfidence();
+                var cf = GetConfidence();
                 if (cf > POSITIVE_SHORTCUT_THRESHOLD)
                 {
-                    this.state = ProbingState.FoundIt;
+                    state = ProbingState.FoundIt;
                 }
                 else if (cf < NEGATIVE_SHORTCUT_THRESHOLD)
                 {
-                    this.state = ProbingState.NotMe;
+                    state = ProbingState.NotMe;
                 }
             }
         }
 
-        return this.state;
+        return state;
     }
 
     public override string DumpStatus()
     {
         var status = new StringBuilder();
 
-        status.AppendLine($"  SBCS: {this.GetConfidence():0.00############} [{this.GetCharsetName()}]");
+        status.AppendLine($"  SBCS: {GetConfidence():0.00############} [{GetCharsetName()}]");
 
         return status.ToString();
     }
@@ -192,9 +192,9 @@ internal class SingleByteCharSetProber : CharsetProber
         // POSITIVE_APPROACH
         float r;
 
-        if (this.totalSeqs > 0)
+        if (totalSeqs > 0)
         {
-            r = 1.0f * this.seqCounters[POSITIVE_CAT] / this.totalSeqs / this.model.TypicalPositiveRatio;
+            r = 1.0f * seqCounters[POSITIVE_CAT] / totalSeqs / model.TypicalPositiveRatio;
 
             // Multiply by a ratio of positive sequences per characters.
             // This would help in particular to distinguish close winners.
@@ -203,13 +203,13 @@ internal class SingleByteCharSetProber : CharsetProber
             // may not have been a letter, but instead a symbol (or some other
             // character). This could make the difference between very closely related
             // charsets used for the same language.
-            r = r * (this.seqCounters[POSITIVE_CAT] + ((float)this.seqCounters[PROBABLE_CAT] / 4.0f)) / this.totalChar;
+            r = r * (seqCounters[POSITIVE_CAT] + ((float)seqCounters[PROBABLE_CAT] / 4.0f)) / totalChar;
 
             // The more control characters (proportionnaly to the size of the text), the
             // less confident we become in the current charset.
-            r = r * (this.totalChar - this.ctrlChar) / this.totalChar;
+            r = r * (totalChar - ctrlChar) / totalChar;
 
-            r = r * this.freqChar / this.totalChar;
+            r = r * freqChar / totalChar;
             if (r >= 1.0f)
             {
                 r = 0.99f;
@@ -223,19 +223,19 @@ internal class SingleByteCharSetProber : CharsetProber
 
     public override void Reset()
     {
-        this.state = ProbingState.Detecting;
-        this.lastOrder = 255;
+        state = ProbingState.Detecting;
+        lastOrder = 255;
         for (var i = 0; i < NUMBER_OF_SEQ_CAT; i++)
         {
-            this.seqCounters[i] = 0;
+            seqCounters[i] = 0;
         }
 
-        this.totalSeqs = 0;
-        this.totalChar = 0;
-        this.ctrlChar = 0;
-        this.freqChar = 0;
+        totalSeqs = 0;
+        totalChar = 0;
+        ctrlChar = 0;
+        freqChar = 0;
     }
 
     public override string GetCharsetName() =>
-        this.nameProber == null ? this.model.CharsetName : this.nameProber.GetCharsetName();
+        nameProber == null ? model.CharsetName : nameProber.GetCharsetName();
 }

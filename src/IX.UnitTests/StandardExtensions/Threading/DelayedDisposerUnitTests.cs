@@ -38,24 +38,24 @@ public class DelayedDisposerUnitTests
     public async Task Test1()
     {
         // ARRANGE
-        this.output.WriteLine("Starting timed test...");
+        output.WriteLine("Starting timed test...");
         var dt = new DisposeTester();
         EnvironmentSettings.DelayedDisposal.DefaultDisposalDelayInMilliseconds = 300;
 
         // ACT
-        this.output.WriteLine("Adding to safe disposer...");
+        output.WriteLine("Adding to safe disposer...");
         DelayedDisposer.SafelyDispose(dt);
 
         // ASSERT
-        this.output.WriteLine("Checking negative...");
+        output.WriteLine("Checking negative...");
         dt.CheckNegative();
 
-        this.output.WriteLine("Waiting for disposal...");
+        output.WriteLine("Waiting for disposal...");
         await dt.WaitForDisposal();
 
-        this.output.WriteLine("Checking positive...");
+        output.WriteLine("Checking positive...");
         dt.Check();
-        this.output.WriteLine("All done. Test should not hang anymore.");
+        output.WriteLine("All done. Test should not hang anymore.");
     }
 
     /// <summary>
@@ -175,20 +175,20 @@ public class DelayedDisposerUnitTests
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
-            this.disposed = true;
-            this.tcs.SetResult(true);
+            disposed = true;
+            tcs.SetResult(true);
         }
 
         /// <summary>
         /// Checks whether this instance has been correctly disposed.
         /// </summary>
-        public void Check() => Assert.True(this.disposed, "The instance has not been disposed.");
+        public void Check() => Assert.True(disposed, "The instance has not been disposed.");
 
         /// <summary>
         /// Checks whether this instance has NOT been disposed.
         /// </summary>
-        public void CheckNegative() => Assert.False(this.disposed, "The instance has been disposed.");
+        public void CheckNegative() => Assert.False(disposed, "The instance has been disposed.");
 
-        public Task WaitForDisposal() => this.tcs.Task;
+        public Task WaitForDisposal() => tcs.Task;
     }
 }

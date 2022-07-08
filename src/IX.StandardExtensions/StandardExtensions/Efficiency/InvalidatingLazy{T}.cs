@@ -29,8 +29,8 @@ public class InvalidatingLazy<T>
     /// </summary>
     public InvalidatingLazy()
     {
-        this.internalLazy = new Lazy<T>();
-        this.lazyCreator = () => new Lazy<T>();
+        internalLazy = new Lazy<T>();
+        lazyCreator = () => new Lazy<T>();
     }
 
     /// <summary>
@@ -47,8 +47,8 @@ public class InvalidatingLazy<T>
         Justification = "Unavoidable.")]
     public InvalidatingLazy(Func<T> valueFactory)
     {
-        this.internalLazy = new Lazy<T>(valueFactory);
-        this.lazyCreator = () => new Lazy<T>(valueFactory);
+        internalLazy = new Lazy<T>(valueFactory);
+        lazyCreator = () => new Lazy<T>(valueFactory);
     }
 
     /// <summary>
@@ -68,8 +68,8 @@ public class InvalidatingLazy<T>
         Justification = "Unavoidable.")]
     public InvalidatingLazy(bool isThreadSafe)
     {
-        this.internalLazy = new Lazy<T>(isThreadSafe);
-        this.lazyCreator = () => new Lazy<T>(isThreadSafe);
+        internalLazy = new Lazy<T>(isThreadSafe);
+        lazyCreator = () => new Lazy<T>(isThreadSafe);
     }
 
     /// <summary>
@@ -86,8 +86,8 @@ public class InvalidatingLazy<T>
         Justification = "Unavoidable.")]
     public InvalidatingLazy(LazyThreadSafetyMode mode)
     {
-        this.internalLazy = new Lazy<T>(mode);
-        this.lazyCreator = () => new Lazy<T>(mode);
+        internalLazy = new Lazy<T>(mode);
+        lazyCreator = () => new Lazy<T>(mode);
     }
 
     /// <summary>
@@ -110,10 +110,10 @@ public class InvalidatingLazy<T>
         Func<T> valueFactory,
         bool isThreadSafe)
     {
-        this.internalLazy = new Lazy<T>(
+        internalLazy = new Lazy<T>(
             valueFactory,
             isThreadSafe);
-        this.lazyCreator = () => new Lazy<T>(
+        lazyCreator = () => new Lazy<T>(
             valueFactory,
             isThreadSafe);
     }
@@ -135,10 +135,10 @@ public class InvalidatingLazy<T>
         Func<T> valueFactory,
         LazyThreadSafetyMode mode)
     {
-        this.internalLazy = new Lazy<T>(
+        internalLazy = new Lazy<T>(
             valueFactory,
             mode);
-        this.lazyCreator = () => new Lazy<T>(
+        lazyCreator = () => new Lazy<T>(
             valueFactory,
             mode);
     }
@@ -152,7 +152,7 @@ public class InvalidatingLazy<T>
     ///     instance.
     /// </summary>
     /// <returns>true if a value has been created for this <see cref="InvalidatingLazy{T}"></see> instance; otherwise, false.</returns>
-    public bool IsValueCreated => this.internalLazy.IsValueCreated;
+    public bool IsValueCreated => internalLazy.IsValueCreated;
 
     /// <summary>Gets the lazily initialized value of the current <see cref="InvalidatingLazy{T}"></see> instance.</summary>
     /// <returns>The lazily initialized value of the current <see cref="InvalidatingLazy{T}"></see> instance.</returns>
@@ -170,7 +170,7 @@ public class InvalidatingLazy<T>
     ///     The initialization function tries to access
     ///     <see cref="InvalidatingLazy{T}.Value"></see> on this instance.
     /// </exception>
-    public T Value => this.internalLazy.Value;
+    public T Value => internalLazy.Value;
 
 #endregion
 
@@ -189,7 +189,7 @@ public class InvalidatingLazy<T>
     ///     value has not been created.
     /// </returns>
     /// <exception cref="NullReferenceException">The <see cref="InvalidatingLazy{T}.Value"></see> property is null.</exception>
-    public override string? ToString() => this.internalLazy.ToString();
+    public override string? ToString() => internalLazy.ToString();
 
     /// <summary>
     ///     Invalidates the instance stored into this lazy initializer, and allows a new one to be created.
@@ -201,8 +201,8 @@ public class InvalidatingLazy<T>
     public T Invalidate()
     {
         Lazy<T> existingLazy = Interlocked.Exchange(
-            ref this.internalLazy,
-            this.lazyCreator());
+            ref internalLazy,
+            lazyCreator());
 
         return existingLazy.IsValueCreated ? existingLazy.Value : default!;
     }

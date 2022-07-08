@@ -35,7 +35,7 @@ public class SmartDisposableWeakReference<T>
     /// <param name="obj">The object.</param>
     public SmartDisposableWeakReference(T obj)
     {
-        this.reference = new WeakReference<T>(obj);
+        reference = new WeakReference<T>(obj);
     }
 
 #endregion
@@ -49,7 +49,7 @@ public class SmartDisposableWeakReference<T>
     ///     <see langword="true" /> if the target hasn't been either disposed or collected; otherwise,
     ///     <see langword="false" />.
     /// </value>
-    public bool TargetAlive => this.TryGetTarget(out _);
+    public bool TargetAlive => TryGetTarget(out _);
 
 #endregion
 
@@ -68,7 +68,7 @@ public class SmartDisposableWeakReference<T>
         [MaybeNullWhen(false)] [NotNullWhen(true)]
         out T target)
     {
-        if (!this.reference.TryGetTarget(out T? intermediateTarget))
+        if (!reference.TryGetTarget(out T? intermediateTarget))
         {
             target = null!;
 
@@ -91,7 +91,7 @@ public class SmartDisposableWeakReference<T>
     ///     Sets the target to a new object.
     /// </summary>
     /// <param name="newObject">The new object.</param>
-    public void SetTarget(T newObject) => this.reference.SetTarget(newObject);
+    public void SetTarget(T newObject) => reference.SetTarget(newObject);
 
 #endregion
 }

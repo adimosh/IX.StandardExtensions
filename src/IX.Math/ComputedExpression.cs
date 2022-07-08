@@ -37,15 +37,15 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
         List<IStringFormatter> stringFormatters,
         Func<Type, object>? specialObjectRequestFunc)
     {
-        this.parametersRegistry = parameterRegistry;
+        parametersRegistry = parameterRegistry;
         this.stringFormatters = stringFormatters;
         this.specialObjectRequestFunc = specialObjectRequestFunc;
 
         this.initialExpression = initialExpression;
         this.body = body;
-        this.RecognizedCorrectly = isRecognized;
-        this.IsConstant = body?.IsConstant ?? false;
-        this.IsTolerant = body?.IsTolerant ?? false;
+        RecognizedCorrectly = isRecognized;
+        IsConstant = body?.IsConstant ?? false;
+        IsTolerant = body?.IsTolerant ?? false;
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     /// Gets a value indicating whether or not the expression has undefined parameters.
     /// </summary>
     /// <value><see langword="true"/> if the expression has undefined parameters, <see langword="false"/> otherwise.</value>
-    public bool HasUndefinedParameters => this.parametersRegistry?.Dump().Any(p => p.ReturnType == SupportedValueType.Unknown) ?? false;
+    public bool HasUndefinedParameters => parametersRegistry?.Dump().Any(p => p.ReturnType == SupportedValueType.Unknown) ?? false;
 
     /// <summary>
     /// Gets the names of the parameters this expression requires, if any. This property is obsolete and should not be used anymore.
@@ -98,14 +98,14 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
         "Naming",
         "CA1721:Property names should not match get methods",
         Justification = "This is obsolete and will be removed soon.")]
-    public string[] ParameterNames => this.GetParameterNames();
+    public string[] ParameterNames => GetParameterNames();
 
     /// <summary>
     /// Gets the names of the parameters this expression requires, if any.
     /// </summary>
     /// <returns>An array of required parameter names.</returns>
     public string[] GetParameterNames() =>
-        this.parametersRegistry?.Dump()
+        parametersRegistry?.Dump()
             .Select(p => p.Name)
             .ToArray() ?? Array.Empty<string>();
 
@@ -115,7 +115,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     /// <param name="arguments">The arguments with which to invoke the execution of the expression.</param>
     /// <returns>The computed result, or, if the expression is not recognized correctly, the expression as a <see cref="string"/>.</returns>
     public object Compute(params object[] arguments) =>
-        this.Compute(
+        Compute(
             null,
             arguments);
 
@@ -134,13 +134,13 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     {
         this.RequiresNotDisposed();
 
-        if (!this.RecognizedCorrectly)
+        if (!RecognizedCorrectly)
         {
             // Expression was not recognized correctly.
-            return this.initialExpression;
+            return initialExpression;
         }
 
-        var convertedArguments = FormatArgumentsAccordingToParameters(arguments, this.parametersRegistry?.Dump() ?? Array.Empty<ParameterContext>());
+        var convertedArguments = FormatArgumentsAccordingToParameters(arguments, parametersRegistry?.Dump() ?? Array.Empty<ParameterContext>());
 
         object[]? FormatArgumentsAccordingToParameters(
             object[] parameterValues,
@@ -309,7 +309,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                             case SupportedValueType.String:
                                 paramValue = CreateValue(
                                     paraContext,
-                                    StringFormatter.FormatIntoString(convertedParam, this.stringFormatters));
+                                    StringFormatter.FormatIntoString(convertedParam, stringFormatters));
 
                                 break;
 
@@ -351,7 +351,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                             case SupportedValueType.String:
                                 paramValue = CreateValue(
                                     paraContext,
-                                    StringFormatter.FormatIntoString(convertedParam, this.stringFormatters));
+                                    StringFormatter.FormatIntoString(convertedParam, stringFormatters));
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -378,7 +378,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                             case SupportedValueType.String:
                                 paramValue = CreateValue(
                                     paraContext,
-                                    StringFormatter.FormatIntoString(convertedParam, this.stringFormatters));
+                                    StringFormatter.FormatIntoString(convertedParam, stringFormatters));
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -477,7 +477,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                             case SupportedValueType.String:
                                 paramValue = CreateValue(
                                     paraContext,
-                                    StringFormatter.FormatIntoString(convertedParam, this.stringFormatters));
+                                    StringFormatter.FormatIntoString(convertedParam, stringFormatters));
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -517,7 +517,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                                 break;
 
                             case SupportedValueType.String:
-                                paramValue = CreateValueFromFunc(paraContext, () => StringFormatter.FormatIntoString(convertedParam(), this.stringFormatters));
+                                paramValue = CreateValueFromFunc(paraContext, () => StringFormatter.FormatIntoString(convertedParam(), stringFormatters));
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -558,7 +558,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                                 break;
 
                             case SupportedValueType.String:
-                                paramValue = CreateValueFromFunc(paraContext, () => StringFormatter.FormatIntoString(convertedParam(), this.stringFormatters));
+                                paramValue = CreateValueFromFunc(paraContext, () => StringFormatter.FormatIntoString(convertedParam(), stringFormatters));
 
                                 break;
 
@@ -586,7 +586,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                                 return null;
 
                             case SupportedValueType.String:
-                                paramValue = CreateValueFromFunc(paraContext, () => StringFormatter.FormatIntoString(convertedParam(), this.stringFormatters));
+                                paramValue = CreateValueFromFunc(paraContext, () => StringFormatter.FormatIntoString(convertedParam(), stringFormatters));
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -674,7 +674,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                                 break;
 
                             case SupportedValueType.String:
-                                paramValue = CreateValueFromFunc(paraContext, () => StringFormatter.FormatIntoString(convertedParam(), this.stringFormatters));
+                                paramValue = CreateValueFromFunc(paraContext, () => StringFormatter.FormatIntoString(convertedParam(), stringFormatters));
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -717,12 +717,12 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
         if (convertedArguments == null)
         {
             // The arguments could not be correctly converted.
-            return this.initialExpression;
+            return initialExpression;
         }
 
         Delegate? del;
 
-        if (this.body == null)
+        if (body == null)
         {
             del = null;
         }
@@ -731,8 +731,8 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
             try
             {
                 del = Expression.Lambda(
-                        tolerance == null ? this.body.GenerateExpression() : this.body.GenerateExpression(tolerance),
-                        this.parametersRegistry?.Dump().Select(p => p.ParameterExpression) ?? Array.Empty<ParameterExpression>())
+                        tolerance == null ? body.GenerateExpression() : body.GenerateExpression(tolerance),
+                        parametersRegistry?.Dump().Select(p => p.ParameterExpression) ?? Array.Empty<ParameterExpression>())
                     .Compile();
             }
             catch
@@ -745,7 +745,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
         if (del == null)
         {
             // Delegate could not be compiled with the given arguments.
-            return this.initialExpression;
+            return initialExpression;
         }
 
         try
@@ -763,7 +763,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
         catch
         {
             // Dynamic invocation of generated expression failed.
-            return this.initialExpression;
+            return initialExpression;
         }
     }
 
@@ -773,7 +773,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     /// <param name="dataFinder">The data finder for the arguments with which to invoke execution of the expression.</param>
     /// <returns>The computed result, or, if the expression is not recognized correctly, the expression as a <see cref="string"/>.</returns>
     public object Compute(IDataFinder dataFinder) =>
-        this.Compute(
+        Compute(
             null,
             dataFinder);
 
@@ -789,9 +789,9 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     {
         this.RequiresNotDisposed();
 
-        if (!this.RecognizedCorrectly)
+        if (!RecognizedCorrectly)
         {
-            return this.initialExpression;
+            return initialExpression;
         }
 
         var pars = new List<object>();
@@ -800,7 +800,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
             dataFinder,
             nameof(dataFinder));
 
-        foreach (ParameterContext p in this.parametersRegistry?.Dump() ?? Array.Empty<ParameterContext>())
+        foreach (ParameterContext p in parametersRegistry?.Dump() ?? Array.Empty<ParameterContext>())
         {
             if (!dataFinder.TryGetData(p.Name, out var data))
             {
@@ -810,7 +810,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
             pars.Add(data);
         }
 
-        return pars.Any(p => p == null) ? this.initialExpression : this.Compute(tolerance, pars.ToArray());
+        return pars.Any(p => p == null) ? initialExpression : Compute(tolerance, pars.ToArray());
     }
 
     /// <summary>
@@ -819,10 +819,10 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     /// <returns>A deep clone.</returns>
     public ComputedExpression DeepClone()
     {
-        var registry = new StandardParameterRegistry(this.stringFormatters);
-        var context = new NodeCloningContext { ParameterRegistry = registry, SpecialRequestFunction = this.specialObjectRequestFunc };
+        var registry = new StandardParameterRegistry(stringFormatters);
+        var context = new NodeCloningContext { ParameterRegistry = registry, SpecialRequestFunction = specialObjectRequestFunc };
 
-        return new ComputedExpression(this.initialExpression, this.body?.DeepClone(context), this.RecognizedCorrectly, registry, this.stringFormatters, this.specialObjectRequestFunc);
+        return new ComputedExpression(initialExpression, body?.DeepClone(context), RecognizedCorrectly, registry, stringFormatters, specialObjectRequestFunc);
     }
 
     /// <summary>
@@ -832,6 +832,6 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     {
         base.DisposeGeneralContext();
 
-        Interlocked.Exchange(ref this.body, null);
+        Interlocked.Exchange(ref body, null);
     }
 }

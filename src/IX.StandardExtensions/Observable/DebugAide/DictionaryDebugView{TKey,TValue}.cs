@@ -32,7 +32,7 @@ public sealed class DictionaryDebugView<TKey, TValue>
     public DictionaryDebugView(ObservableDictionary<TKey, TValue> dictionary)
     {
         Requires.NotNull(
-            out this.dict,
+            out dict,
             dictionary);
     }
 
@@ -52,8 +52,8 @@ public sealed class DictionaryDebugView<TKey, TValue>
     {
         get
         {
-            var items = new KeyValuePair<TKey, TValue>[this.dict.InternalContainer.Count];
-            this.dict.InternalContainer.CopyTo(
+            var items = new KeyValuePair<TKey, TValue>[dict.InternalContainer.Count];
+            dict.InternalContainer.CopyTo(
                 items,
                 0);
 

@@ -54,18 +54,18 @@ internal class UTF8Prober : CharsetProber
 
     public UTF8Prober()
     {
-        this.numOfMBChar = 0;
-        this.codingSM = new CodingStateMachine(new UTF8_SMModel());
-        this.Reset();
+        numOfMBChar = 0;
+        codingSM = new CodingStateMachine(new UTF8_SMModel());
+        Reset();
     }
 
     public override string GetCharsetName() => CodepageName.UTF8;
 
     public override void Reset()
     {
-        this.codingSM.Reset();
-        this.numOfMBChar = 0;
-        this.state = ProbingState.Detecting;
+        codingSM.Reset();
+        numOfMBChar = 0;
+        state = ProbingState.Detecting;
     }
 
     public override ProbingState HandleData(
@@ -77,40 +77,40 @@ internal class UTF8Prober : CharsetProber
 
         for (var i = offset; i < max; i++)
         {
-            var codingState = this.codingSM.NextState(buf[i]);
+            var codingState = codingSM.NextState(buf[i]);
 
             if (codingState == StateMachineModel.ERROR)
             {
-                this.state = ProbingState.NotMe;
+                state = ProbingState.NotMe;
 
                 break;
             }
 
             if (codingState == StateMachineModel.ITSME)
             {
-                this.state = ProbingState.FoundIt;
+                state = ProbingState.FoundIt;
 
                 break;
             }
 
             if (codingState == StateMachineModel.START)
             {
-                if (this.codingSM.CurrentCharLen >= 2)
+                if (codingSM.CurrentCharLen >= 2)
                 {
-                    this.numOfMBChar++;
+                    numOfMBChar++;
                 }
             }
         }
 
-        if (this.state == ProbingState.Detecting)
+        if (state == ProbingState.Detecting)
         {
-            if (this.GetConfidence() > SHORTCUT_THRESHOLD)
+            if (GetConfidence() > SHORTCUT_THRESHOLD)
             {
-                this.state = ProbingState.FoundIt;
+                state = ProbingState.FoundIt;
             }
         }
 
-        return this.state;
+        return state;
     }
 
     public override float GetConfidence(StringBuilder? status = null)
@@ -118,9 +118,9 @@ internal class UTF8Prober : CharsetProber
         var unlike = 0.99f;
         float confidence;
 
-        if (this.numOfMBChar < 6)
+        if (numOfMBChar < 6)
         {
-            for (var i = 0; i < this.numOfMBChar; i++)
+            for (var i = 0; i < numOfMBChar; i++)
             {
                 unlike *= ONE_CHAR_PROB;
             }

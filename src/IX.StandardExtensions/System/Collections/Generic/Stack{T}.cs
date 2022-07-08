@@ -39,7 +39,7 @@ public class Stack<T> : GlobalCollectionsGeneric.Stack<T>,
     ///     Initializes a new instance of the <see cref="Stack{T}" /> class.
     /// </summary>
     /// <param name="collection">The collection to copy elements from.</param>
-    public Stack(GlobalCollectionsGeneric.IEnumerable<T> collection)
+    public Stack(IEnumerable<T> collection)
         : base(collection) { }
 
     /// <summary>
@@ -48,7 +48,7 @@ public class Stack<T> : GlobalCollectionsGeneric.Stack<T>,
     /// <value>
     ///     <c>true</c> if this stack is empty; otherwise, <c>false</c>.
     /// </value>
-    public bool IsEmpty => this.Count == 0;
+    public bool IsEmpty => Count == 0;
 
     /// <summary>
     ///     Converts from a standard .NET stack.
@@ -76,7 +76,7 @@ public class Stack<T> : GlobalCollectionsGeneric.Stack<T>,
                      items,
                      nameof(items)))
         {
-            this.Push(item);
+            Push(item);
         }
     }
 
@@ -120,7 +120,7 @@ public class Stack<T> : GlobalCollectionsGeneric.Stack<T>,
 
         foreach (T item in items)
         {
-            this.Push(item);
+            Push(item);
         }
     }
 
@@ -135,13 +135,13 @@ public class Stack<T> : GlobalCollectionsGeneric.Stack<T>,
     /// </returns>
     public bool TryPeek([MaybeNullWhen(false)] out T item)
     {
-        if (this.Count == 0)
+        if (Count == 0)
         {
             item = default;
             return false;
         }
 
-        item = this.Peek();
+        item = Peek();
         return true;
     }
 
@@ -155,13 +155,13 @@ public class Stack<T> : GlobalCollectionsGeneric.Stack<T>,
     /// </returns>
     public bool TryPop([MaybeNullWhen(false)] out T item)
     {
-        if (this.Count == 0)
+        if (Count == 0)
         {
             item = default;
             return false;
         }
 
-        item = this.Pop();
+        item = Pop();
         return true;
     }
     #endif

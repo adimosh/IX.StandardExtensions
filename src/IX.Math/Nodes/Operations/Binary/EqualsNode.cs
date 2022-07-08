@@ -39,13 +39,13 @@ internal sealed class EqualsNode : ComparisonOperationNodeBase
     ///     A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() =>
-        this.Left switch
+        Left switch
         {
             // NumericNode nnLeft when this.Right is NumericNode nnRight => new BoolNode(
             //    Convert.ToDouble(nnLeft.Value) == Convert.ToDouble(nnRight.Value)),
-            StringNode snLeft when this.Right is StringNode snRight => new BoolNode(snLeft.Value == snRight.Value),
-            BoolNode bnLeft when this.Right is BoolNode bnRight => new BoolNode(bnLeft.Value == bnRight.Value),
-            ByteArrayNode baLeft when this.Right is ByteArrayNode baRight => new BoolNode(
+            StringNode snLeft when Right is StringNode snRight => new BoolNode(snLeft.Value == snRight.Value),
+            BoolNode bnLeft when Right is BoolNode bnRight => new BoolNode(bnLeft.Value == bnRight.Value),
+            ByteArrayNode baLeft when Right is ByteArrayNode baRight => new BoolNode(
                 baLeft.Value.SequenceEqualsWithMsb(baRight.Value)),
             _ => this
         };
@@ -57,8 +57,8 @@ internal sealed class EqualsNode : ComparisonOperationNodeBase
     /// <returns>A deep clone.</returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
         new EqualsNode(
-            this.Left.DeepClone(context),
-            this.Right.DeepClone(context));
+            Left.DeepClone(context),
+            Right.DeepClone(context));
 
     /// <summary>
     ///     Generates the expression that will be compiled into code.
@@ -68,10 +68,10 @@ internal sealed class EqualsNode : ComparisonOperationNodeBase
     /// </returns>
     protected override Expression GenerateExpressionInternal()
     {
-        var (leftExpression, rightExpression) = this.GetExpressionsOfSameTypeFromOperands();
+        var (leftExpression, rightExpression) = GetExpressionsOfSameTypeFromOperands();
 
-        if (this.Left.ReturnType == SupportedValueType.ByteArray ||
-            this.Right.ReturnType == SupportedValueType.ByteArray)
+        if (Left.ReturnType == SupportedValueType.ByteArray ||
+            Right.ReturnType == SupportedValueType.ByteArray)
         {
             return Expression.Call(
                 typeof(ArrayExtensions).GetMethodWithExactParameters(
@@ -96,10 +96,10 @@ internal sealed class EqualsNode : ComparisonOperationNodeBase
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         var (leftExpression, rightExpression) =
-            this.GetExpressionsOfSameTypeFromOperands(tolerance);
+            GetExpressionsOfSameTypeFromOperands(tolerance);
 
-        if (this.Left.ReturnType == SupportedValueType.ByteArray ||
-            this.Right.ReturnType == SupportedValueType.ByteArray)
+        if (Left.ReturnType == SupportedValueType.ByteArray ||
+            Right.ReturnType == SupportedValueType.ByteArray)
         {
             return Expression.Call(
                 typeof(ArrayExtensions).GetMethodWithExactParameters(
@@ -110,10 +110,10 @@ internal sealed class EqualsNode : ComparisonOperationNodeBase
                 rightExpression);
         }
 
-        if (this.Left.ReturnType == SupportedValueType.Numeric &&
-            this.Right.ReturnType == SupportedValueType.Numeric)
+        if (Left.ReturnType == SupportedValueType.Numeric &&
+            Right.ReturnType == SupportedValueType.Numeric)
         {
-            var possibleTolerantExpression = this.GenerateNumericalToleranceEquateExpression(
+            var possibleTolerantExpression = GenerateNumericalToleranceEquateExpression(
                 leftExpression,
                 rightExpression,
                 tolerance);

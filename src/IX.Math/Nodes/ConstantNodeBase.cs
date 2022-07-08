@@ -52,7 +52,7 @@ public abstract class ConstantNodeBase : CachedExpressionNodeBase
     /// <param name="type">The type to determine to.</param>
     public sealed override void DetermineStrongly(SupportedValueType type)
     {
-        if (type != this.ReturnType)
+        if (type != ReturnType)
         {
             throw new ExpressionNotValidLogicallyException();
         }
@@ -64,7 +64,7 @@ public abstract class ConstantNodeBase : CachedExpressionNodeBase
     /// <param name="type">The type or types to determine to.</param>
     public sealed override void DetermineWeakly(SupportableValueType type)
     {
-        if ((type & (SupportableValueType)(int)this.ReturnType) == 0)
+        if ((type & (SupportableValueType)(int)ReturnType) == 0)
         {
             throw new ExpressionNotValidLogicallyException();
         }

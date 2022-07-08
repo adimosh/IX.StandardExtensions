@@ -30,7 +30,7 @@ public sealed class CachedExpressionParsingService : ExpressionParsingServiceBas
     public CachedExpressionParsingService()
         : base(MathDefinition.Default)
     {
-        this.cachedComputedExpressions = new ConcurrentDictionary<string, ComputedExpression>();
+        cachedComputedExpressions = new ConcurrentDictionary<string, ComputedExpression>();
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public sealed class CachedExpressionParsingService : ExpressionParsingServiceBas
     public CachedExpressionParsingService(MathDefinition definition)
         : base(definition)
     {
-        this.cachedComputedExpressions = new ConcurrentDictionary<string, ComputedExpression>();
+        cachedComputedExpressions = new ConcurrentDictionary<string, ComputedExpression>();
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public sealed class CachedExpressionParsingService : ExpressionParsingServiceBas
         string expression,
         CancellationToken cancellationToken = default)
     {
-        ComputedExpression expr = this.cachedComputedExpressions.GetOrAdd(
+        ComputedExpression expr = cachedComputedExpressions.GetOrAdd(
             expression,
             (
                 ex,
@@ -91,7 +91,7 @@ public sealed class CachedExpressionParsingService : ExpressionParsingServiceBas
     /// </summary>
     protected override void DisposeManagedContext()
     {
-        this.cachedComputedExpressions.Clear();
+        cachedComputedExpressions.Clear();
 
         base.DisposeManagedContext();
     }
@@ -108,7 +108,7 @@ public sealed class CachedExpressionParsingService : ExpressionParsingServiceBas
         base.DisposeGeneralContext();
 
         Interlocked.Exchange(
-            ref this.cachedComputedExpressions,
+            ref cachedComputedExpressions,
             null);
     }
 }

@@ -50,7 +50,7 @@ public abstract class AtomicEnumerator<TItem> : AtomicEnumerator,
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "Unavoidable with a generic enumerator.")]
-    object? IEnumerator.Current => this.Current;
+    object? IEnumerator.Current => Current;
 
 #endregion
 

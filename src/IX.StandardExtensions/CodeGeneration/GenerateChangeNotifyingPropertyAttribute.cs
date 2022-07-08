@@ -22,7 +22,7 @@ public class GenerateChangeNotifyingPropertyAttribute : Attribute
     /// <param name="name">The name of the property.</param>
     public GenerateChangeNotifyingPropertyAttribute(string name)
     {
-        this.Name = name;
+        Name = name;
     }
 
 #endregion

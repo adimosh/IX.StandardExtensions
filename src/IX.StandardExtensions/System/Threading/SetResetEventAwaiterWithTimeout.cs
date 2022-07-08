@@ -35,7 +35,7 @@ public class SetResetEventAwaiterWithTimeout : IAwaiter<bool>
             mre,
             nameof(mre));
 
-        this.tsTimeout = TimeSpan.FromMilliseconds(timeout);
+        tsTimeout = TimeSpan.FromMilliseconds(timeout);
     }
 
     internal SetResetEventAwaiterWithTimeout(
@@ -47,7 +47,7 @@ public class SetResetEventAwaiterWithTimeout : IAwaiter<bool>
             mre,
             nameof(mre));
 
-        this.tsTimeout = timeout;
+        tsTimeout = timeout;
     }
 
     internal SetResetEventAwaiterWithTimeout(
@@ -59,7 +59,7 @@ public class SetResetEventAwaiterWithTimeout : IAwaiter<bool>
             mre,
             nameof(mre));
 
-        this.tsTimeout = TimeSpan.FromMilliseconds(timeout);
+        tsTimeout = TimeSpan.FromMilliseconds(timeout);
     }
 
 #endregion
@@ -73,7 +73,7 @@ public class SetResetEventAwaiterWithTimeout : IAwaiter<bool>
     ///     <c>true</c> if this awaiter has completed; otherwise, <c>false</c>.
     /// </value>
     [UsedImplicitly]
-    public bool IsCompleted => this.isCompleted != 0;
+    public bool IsCompleted => isCompleted != 0;
 
 #endregion
 
@@ -92,7 +92,7 @@ public class SetResetEventAwaiterWithTimeout : IAwaiter<bool>
     /// </summary>
     /// <returns><c>true</c> if the wait didn't outrun the timeout, <c>false</c> if it did.</returns>
     [UsedImplicitly]
-    public bool GetResult() => this.result;
+    public bool GetResult() => result;
 
     /// <summary>Schedules the continuation action that's invoked when the instance completes.</summary>
     /// <param name="continuation">The action to invoke when the operation completes.</param>

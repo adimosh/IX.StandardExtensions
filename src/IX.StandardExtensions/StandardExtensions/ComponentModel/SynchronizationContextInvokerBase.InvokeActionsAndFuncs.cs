@@ -24,7 +24,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1>, Tuple<TParam1>>(action, new Tuple<TParam1>(param1));
 
-        this.Invoke(state =>
+        Invoke(state =>
         {
             var unpackedState = (Tuple<Action<TParam1>, Tuple<TParam1>>)state;
             Tuple<TParam1> unpackedParameters = unpackedState.Item2;
@@ -44,7 +44,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1>, Tuple<TParam1>>(action, new Tuple<TParam1>(param1));
 
-        this.InvokePost(state =>
+        InvokePost(state =>
         {
             var unpackedState = (Tuple<Action<TParam1>, Tuple<TParam1>>)state;
             Tuple<TParam1> unpackedParameters = unpackedState.Item2;
@@ -64,7 +64,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1>, Tuple<TParam1>>(action, new Tuple<TParam1>(param1));
 
-        this.InvokeSend(state =>
+        InvokeSend(state =>
         {
             var unpackedState = (Tuple<Action<TParam1>, Tuple<TParam1>>)state;
             Tuple<TParam1> unpackedParameters = unpackedState.Item2;
@@ -86,7 +86,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>(action, new Tuple<TParam1, TParam2>(param1, param2));
 
-        this.Invoke(state =>
+        Invoke(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>)state;
             Tuple<TParam1, TParam2> unpackedParameters = unpackedState.Item2;
@@ -108,7 +108,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>(action, new Tuple<TParam1, TParam2>(param1, param2));
 
-        this.InvokePost(state =>
+        InvokePost(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>)state;
             Tuple<TParam1, TParam2> unpackedParameters = unpackedState.Item2;
@@ -130,7 +130,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>(action, new Tuple<TParam1, TParam2>(param1, param2));
 
-        this.InvokeSend(state =>
+        InvokeSend(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2>, Tuple<TParam1, TParam2>>)state;
             Tuple<TParam1, TParam2> unpackedParameters = unpackedState.Item2;
@@ -154,7 +154,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>(action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3));
 
-        this.Invoke(state =>
+        Invoke(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>)state;
             Tuple<TParam1, TParam2, TParam3> unpackedParameters = unpackedState.Item2;
@@ -178,7 +178,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>(action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3));
 
-        this.InvokePost(state =>
+        InvokePost(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>)state;
             Tuple<TParam1, TParam2, TParam3> unpackedParameters = unpackedState.Item2;
@@ -202,7 +202,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>(action, new Tuple<TParam1, TParam2, TParam3>(param1, param2, param3));
 
-        this.InvokeSend(state =>
+        InvokeSend(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3>, Tuple<TParam1, TParam2, TParam3>>)state;
             Tuple<TParam1, TParam2, TParam3> unpackedParameters = unpackedState.Item2;
@@ -228,7 +228,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4));
 
-        this.Invoke(state =>
+        Invoke(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters = unpackedState.Item2;
@@ -254,7 +254,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4));
 
-        this.InvokePost(state =>
+        InvokePost(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters = unpackedState.Item2;
@@ -280,7 +280,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4>(param1, param2, param3, param4));
 
-        this.InvokeSend(state =>
+        InvokeSend(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4>, Tuple<TParam1, TParam2, TParam3, TParam4>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4> unpackedParameters = unpackedState.Item2;
@@ -308,7 +308,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5));
 
-        this.Invoke(state =>
+        Invoke(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters = unpackedState.Item2;
@@ -336,7 +336,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5));
 
-        this.InvokePost(state =>
+        InvokePost(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters = unpackedState.Item2;
@@ -364,7 +364,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>(param1, param2, param3, param4, param5));
 
-        this.InvokeSend(state =>
+        InvokeSend(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4, TParam5> unpackedParameters = unpackedState.Item2;
@@ -394,7 +394,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6));
 
-        this.Invoke(state =>
+        Invoke(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters = unpackedState.Item2;
@@ -424,7 +424,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6));
 
-        this.InvokePost(state =>
+        InvokePost(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters = unpackedState.Item2;
@@ -454,7 +454,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>(param1, param2, param3, param4, param5, param6));
 
-        this.InvokeSend(state =>
+        InvokeSend(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6> unpackedParameters = unpackedState.Item2;
@@ -486,7 +486,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7));
 
-        this.Invoke(state =>
+        Invoke(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters = unpackedState.Item2;
@@ -518,7 +518,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7));
 
-        this.InvokePost(state =>
+        InvokePost(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters = unpackedState.Item2;
@@ -550,7 +550,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>(param1, param2, param3, param4, param5, param6, param7));
 
-        this.InvokeSend(state =>
+        InvokeSend(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7> unpackedParameters = unpackedState.Item2;
@@ -584,7 +584,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8));
 
-        this.Invoke(state =>
+        Invoke(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters = unpackedState.Item2;
@@ -618,7 +618,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8));
 
-        this.InvokePost(state =>
+        InvokePost(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters = unpackedState.Item2;
@@ -652,7 +652,7 @@ public abstract partial class SynchronizationContextInvokerBase
     {
         var outerState = new Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>(action, new Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>(param1, param2, param3, param4, param5, param6, param7, param8));
 
-        this.InvokeSend(state =>
+        InvokeSend(state =>
         {
             var unpackedState = (Tuple<Action<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>, Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>>)state;
             Tuple<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8> unpackedParameters = unpackedState.Item2;

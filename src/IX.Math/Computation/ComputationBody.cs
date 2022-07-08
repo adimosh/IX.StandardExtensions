@@ -21,15 +21,15 @@ internal readonly struct ComputationBody
         NodeBase? bodyNode,
         IParameterRegistry? parameterRegistry)
     {
-        this.BodyNode = bodyNode;
-        this.ParameterRegistry = parameterRegistry;
+        BodyNode = bodyNode;
+        ParameterRegistry = parameterRegistry;
     }
 
     internal void Deconstruct(
         out NodeBase? bodyNode,
         out IParameterRegistry? parameterRegistry)
     {
-        bodyNode = this.BodyNode;
-        parameterRegistry = this.ParameterRegistry;
+        bodyNode = BodyNode;
+        parameterRegistry = ParameterRegistry;
     }
 }

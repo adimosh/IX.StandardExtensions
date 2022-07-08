@@ -39,7 +39,7 @@ internal sealed class FunctionNodeLength : UnaryFunctionNodeBase
     ///     A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() =>
-        this.Parameter switch
+        Parameter switch
         {
             StringNode sn => new NumericNode(Convert.ToInt64(sn.Value.Length)),
             ByteArrayNode bn => new NumericNode(Convert.ToInt64(bn.Value.Length)),
@@ -54,7 +54,7 @@ internal sealed class FunctionNodeLength : UnaryFunctionNodeBase
     ///     A deep clone.
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
-        new FunctionNodeLength(this.Parameter.DeepClone(context));
+        new FunctionNodeLength(Parameter.DeepClone(context));
 
     /// <summary>
     ///     Strongly determines the node's type, if possible.
@@ -106,9 +106,9 @@ internal sealed class FunctionNodeLength : UnaryFunctionNodeBase
     /// </returns>
     protected override Expression GenerateExpressionInternal() =>
         Expression.Convert(
-            this.Parameter.ReturnType == SupportedValueType.ByteArray
-                ? this.GenerateParameterPropertyCall<byte[]>(nameof(Array.Length))
-                : this.GenerateParameterPropertyCall<string>(nameof(string.Length)),
+            Parameter.ReturnType == SupportedValueType.ByteArray
+                ? GenerateParameterPropertyCall<byte[]>(nameof(Array.Length))
+                : GenerateParameterPropertyCall<string>(nameof(string.Length)),
             typeof(long));
 
     /// <summary>
@@ -118,11 +118,11 @@ internal sealed class FunctionNodeLength : UnaryFunctionNodeBase
     /// <returns>The expression.</returns>
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         Expression.Convert(
-            this.Parameter.ReturnType == SupportedValueType.ByteArray
-                ? this.GenerateParameterPropertyCall<byte[]>(
+            Parameter.ReturnType == SupportedValueType.ByteArray
+                ? GenerateParameterPropertyCall<byte[]>(
                     nameof(Array.Length),
                     tolerance)
-                : this.GenerateParameterPropertyCall<string>(
+                : GenerateParameterPropertyCall<string>(
                     nameof(string.Length),
                     tolerance),
             typeof(long));

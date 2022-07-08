@@ -46,18 +46,18 @@ internal class WorkingExpressionSet : DisposableBase
         List<IStringFormatter> stringFormatters,
         CancellationToken cancellationToken)
     {
-        this.ParameterRegistry = new StandardParameterRegistry(stringFormatters);
-        this.ConstantsTable = new Dictionary<string, ConstantNodeBase>();
-        this.ReverseConstantsTable = new Dictionary<string, string>();
-        this.SymbolTable = new Dictionary<string, ExpressionSymbol>();
-        this.ReverseSymbolTable = new Dictionary<string, string>();
-        this.StringFormatters = stringFormatters;
+        ParameterRegistry = new StandardParameterRegistry(stringFormatters);
+        ConstantsTable = new Dictionary<string, ConstantNodeBase>();
+        ReverseConstantsTable = new Dictionary<string, string>();
+        SymbolTable = new Dictionary<string, ExpressionSymbol>();
+        ReverseSymbolTable = new Dictionary<string, string>();
+        StringFormatters = stringFormatters;
 
-        this.CancellationToken = cancellationToken;
-        this.Expression = expression;
-        this.Definition = mathDefinition;
+        CancellationToken = cancellationToken;
+        Expression = expression;
+        Definition = mathDefinition;
 
-        this.AllOperatorsInOrder = new[]
+        AllOperatorsInOrder = new[]
         {
             mathDefinition.GreaterThanOrEqualSymbol,
             mathDefinition.LessThanOrEqualSymbol,
@@ -78,15 +78,15 @@ internal class WorkingExpressionSet : DisposableBase
             mathDefinition.NotSymbol
         };
 
-        this.NonaryFunctions = nonaryFunctions;
-        this.UnaryFunctions = unaryFunctions;
-        this.BinaryFunctions = binaryFunctions;
-        this.TernaryFunctions = ternaryFunctions;
+        NonaryFunctions = nonaryFunctions;
+        UnaryFunctions = unaryFunctions;
+        BinaryFunctions = binaryFunctions;
+        TernaryFunctions = ternaryFunctions;
 
-        this.Extractors = extractors;
-        this.Interpreters = interpreters;
+        Extractors = extractors;
+        Interpreters = interpreters;
 
-        this.FunctionRegex = new Regex(
+        FunctionRegex = new Regex(
             $@"(?'functionName'.*?){Regex.Escape(mathDefinition.Parentheses.Left)}(?'expression'.*?){Regex.Escape(mathDefinition.Parentheses.Right)}");
     }
 
@@ -313,7 +313,7 @@ internal class WorkingExpressionSet : DisposableBase
 
         if (type == typeof(IStringFormatter))
         {
-            return this.StringFormatters;
+            return StringFormatters;
         }
 
         throw new NotSupportedException();
@@ -344,16 +344,16 @@ internal class WorkingExpressionSet : DisposableBase
         Justification = "We actively want this to keep a reference to this working set.")]
     internal void Initialize()
     {
-        if (this.initialized)
+        if (initialized)
         {
             return;
         }
 
-        this.initialized = true;
+        initialized = true;
 
         var i = 1;
-        var allOperatorsInOrder = this.AllOperatorsInOrder;
-        MathDefinition definition = this.Definition;
+        var allOperatorsInOrder = AllOperatorsInOrder;
+        MathDefinition definition = Definition;
 
         foreach (var op in allOperatorsInOrder.OrderByDescending(p => p.Length)
                      .Where(
@@ -369,7 +369,7 @@ internal class WorkingExpressionSet : DisposableBase
         {
             var s = $"@op{i}@";
 
-            this.Expression = this.Expression.Replace(
+            Expression = Expression.Replace(
                 op,
                 s);
 
@@ -473,7 +473,7 @@ internal class WorkingExpressionSet : DisposableBase
         // ======================================
 
         // Binary operators
-        this.BinaryOperators =
+        BinaryOperators =
             new LevelDictionary<string, Func<MathDefinition, NodeBase, NodeBase, BinaryOperatorNodeBase>>
             {
                 // First tier - Comparison and equation operators
@@ -634,7 +634,7 @@ internal class WorkingExpressionSet : DisposableBase
             };
 
         // Unary operators
-        this.UnaryOperators = new LevelDictionary<string, Func<MathDefinition, NodeBase, UnaryOperatorNodeBase>>
+        UnaryOperators = new LevelDictionary<string, Func<MathDefinition, NodeBase, UnaryOperatorNodeBase>>
         {
             // First tier - Negation and inversion
             {
@@ -652,7 +652,7 @@ internal class WorkingExpressionSet : DisposableBase
         };
 
         // All symbols
-        this.AllSymbols = allOperatorsInOrder.Union(
+        AllSymbols = allOperatorsInOrder.Union(
                 new[]
                 {
                     definition.ParameterSeparator,
@@ -665,47 +665,47 @@ internal class WorkingExpressionSet : DisposableBase
 
         // Euler-Napier constant (e)
         ConstantsGenerator.GenerateNamedNumericSymbol(
-            this.ConstantsTable,
-            this.ReverseConstantsTable,
+            ConstantsTable,
+            ReverseConstantsTable,
             "e",
             global::System.Math.E);
 
         // Archimedes-Ludolph constant (pi)
         ConstantsGenerator.GenerateNamedNumericSymbol(
-            this.ConstantsTable,
-            this.ReverseConstantsTable,
+            ConstantsTable,
+            ReverseConstantsTable,
             "π",
             global::System.Math.PI,
             $"{definition.SpecialSymbolIndicators.Begin}pi{definition.SpecialSymbolIndicators.End}");
 
         // Golden ratio
         ConstantsGenerator.GenerateNamedNumericSymbol(
-            this.ConstantsTable,
-            this.ReverseConstantsTable,
+            ConstantsTable,
+            ReverseConstantsTable,
             "φ",
             1.6180339887498948,
             $"{definition.SpecialSymbolIndicators.Begin}phi{definition.SpecialSymbolIndicators.End}");
 
         // Bernstein constant
         ConstantsGenerator.GenerateNamedNumericSymbol(
-            this.ConstantsTable,
-            this.ReverseConstantsTable,
+            ConstantsTable,
+            ReverseConstantsTable,
             "β",
             0.2801694990238691,
             $"{definition.SpecialSymbolIndicators.Begin}beta{definition.SpecialSymbolIndicators.End}");
 
         // Euler-Mascheroni constant
         ConstantsGenerator.GenerateNamedNumericSymbol(
-            this.ConstantsTable,
-            this.ReverseConstantsTable,
+            ConstantsTable,
+            ReverseConstantsTable,
             "γ",
             0.5772156649015328,
             $"{definition.SpecialSymbolIndicators.Begin}gamma{definition.SpecialSymbolIndicators.End}");
 
         // Gauss-Kuzmin-Wirsing constant
         ConstantsGenerator.GenerateNamedNumericSymbol(
-            this.ConstantsTable,
-            this.ReverseConstantsTable,
+            ConstantsTable,
+            ReverseConstantsTable,
             "λ",
             0.3036630028987326,
             $"{definition.SpecialSymbolIndicators.Begin}lambda{definition.SpecialSymbolIndicators.End}");
@@ -724,12 +724,12 @@ internal class WorkingExpressionSet : DisposableBase
     {
         base.DisposeManagedContext();
 
-        this.ConstantsTable.Clear();
-        this.ReverseConstantsTable.Clear();
-        this.SymbolTable.Clear();
-        this.ReverseSymbolTable.Clear();
-        this.UnaryOperators.Dispose();
-        this.BinaryOperators.Dispose();
+        ConstantsTable.Clear();
+        ReverseConstantsTable.Clear();
+        SymbolTable.Clear();
+        ReverseSymbolTable.Clear();
+        UnaryOperators.Dispose();
+        BinaryOperators.Dispose();
     }
 
 #endregion

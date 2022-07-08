@@ -48,8 +48,8 @@ internal sealed class FunctionNodeTrim : BinaryFunctionNodeBase
     /// A deep clone.
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) => new FunctionNodeTrim(
-        this.FirstParameter.DeepClone(context),
-        this.SecondParameter.DeepClone(context));
+        FirstParameter.DeepClone(context),
+        SecondParameter.DeepClone(context));
 
     /// <summary>
     /// Simplifies this node, if possible, reflexively returns otherwise.
@@ -58,7 +58,7 @@ internal sealed class FunctionNodeTrim : BinaryFunctionNodeBase
     /// A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() =>
-        this.FirstParameter is StringNode stringParam && this.SecondParameter is StringNode charParam
+        FirstParameter is StringNode stringParam && SecondParameter is StringNode charParam
             ? new StringNode(stringParam.Value.Trim(charParam.Value.ToCharArray()))
             : this;
 
@@ -115,7 +115,7 @@ internal sealed class FunctionNodeTrim : BinaryFunctionNodeBase
     /// The expression.
     /// </returns>
     protected override Expression GenerateExpressionInternal()
-        => this.GenerateExpressionInternal(null);
+        => GenerateExpressionInternal(null);
 
     /// <summary>
     /// Generates the expression with tolerance that will be compiled into code.
@@ -153,13 +153,13 @@ internal sealed class FunctionNodeTrim : BinaryFunctionNodeBase
         Expression e1, e2;
         if (tolerance == null)
         {
-            e1 = this.FirstParameter.GenerateExpression();
-            e2 = this.SecondParameter.GenerateExpression();
+            e1 = FirstParameter.GenerateExpression();
+            e2 = SecondParameter.GenerateExpression();
         }
         else
         {
-            e1 = this.FirstParameter.GenerateExpression(tolerance);
-            e2 = this.SecondParameter.GenerateExpression(tolerance);
+            e1 = FirstParameter.GenerateExpression(tolerance);
+            e2 = SecondParameter.GenerateExpression(tolerance);
         }
 
         if (e1.Type != typeof(string))

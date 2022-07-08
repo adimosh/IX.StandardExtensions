@@ -81,7 +81,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     ///     The count after add.
     /// </value>
     protected override int CountAfterAdd =>
-        ((MultiListMasterSlaveListAdapter<T>)this.InternalListContainer).MasterCount;
+        ((MultiListMasterSlaveListAdapter<T>)InternalListContainer).MasterCount;
 
 #endregion
 
@@ -97,14 +97,14 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     {
         this.RequiresNotDisposed();
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            ((MultiListMasterSlaveListAdapter<T>)this.InternalListContainer).SetMaster(list);
+            ((MultiListMasterSlaveListAdapter<T>)InternalListContainer).SetMaster(list);
         }
 
-        this.RaiseCollectionReset();
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionReset();
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
     }
 
     /// <summary>
@@ -117,14 +117,14 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     {
         this.RequiresNotDisposed();
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            ((MultiListMasterSlaveListAdapter<T>)this.InternalListContainer).SetSlave(list);
+            ((MultiListMasterSlaveListAdapter<T>)InternalListContainer).SetSlave(list);
         }
 
-        this.RaiseCollectionReset();
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionReset();
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
     }
 
     /// <summary>
@@ -137,14 +137,14 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     {
         this.RequiresNotDisposed();
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            ((MultiListMasterSlaveListAdapter<T>)this.InternalListContainer).RemoveSlave(list);
+            ((MultiListMasterSlaveListAdapter<T>)InternalListContainer).RemoveSlave(list);
         }
 
-        this.RaiseCollectionReset();
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionReset();
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
     }
 
     /// <summary>
@@ -154,7 +154,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     /// <remarks>On concurrent collections, this method is write-synchronized.</remarks>
     public override void Add(T item)
     {
-        this.IncreaseIgnoreMustResetCounter();
+        IncreaseIgnoreMustResetCounter();
         base.Add(item);
     }
 
@@ -167,7 +167,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
         int index,
         T item)
     {
-        this.IncreaseIgnoreMustResetCounter();
+        IncreaseIgnoreMustResetCounter();
         base.Insert(
             index,
             item);
@@ -187,13 +187,13 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     /// <remarks>On concurrent collections, this method is write-synchronized.</remarks>
     public override bool Remove(T item)
     {
-        this.IncreaseIgnoreMustResetCounter();
+        IncreaseIgnoreMustResetCounter();
         if (base.Remove(item))
         {
             return true;
         }
 
-        this.IncreaseIgnoreMustResetCounter(-1);
+        IncreaseIgnoreMustResetCounter(-1);
 
         return false;
     }
@@ -208,30 +208,30 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
 
         T item;
 
-        using (ReadWriteSynchronizationLocker lockContext = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker lockContext = ReadWriteLock())
         {
-            if (index >= this.InternalListContainer.Count)
+            if (index >= InternalListContainer.Count)
             {
                 return;
             }
 
             lockContext.Upgrade();
 
-            item = this.InternalListContainer[index];
-            this.IncreaseIgnoreMustResetCounter();
-            this.InternalListContainer.RemoveAt(index);
+            item = InternalListContainer[index];
+            IncreaseIgnoreMustResetCounter();
+            InternalListContainer.RemoveAt(index);
 
-            this.PushUndoLevel(
+            PushUndoLevel(
                 new RemoveStateChange<T>(
                     index,
                     item));
         }
 
-        this.RaiseCollectionChangedRemove(
+        RaiseCollectionChangedRemove(
             item,
             index);
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.ContentsMayHaveChanged();
+        RaisePropertyChanged(nameof(Count));
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -245,25 +245,25 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
 
         T[] originalArray;
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            var container = (MultiListMasterSlaveListAdapter<T>)this.InternalListContainer;
+            var container = (MultiListMasterSlaveListAdapter<T>)InternalListContainer;
 
-            this.IncreaseIgnoreMustResetCounter(container.SlavesCount + 1);
+            IncreaseIgnoreMustResetCounter(container.SlavesCount + 1);
 
             originalArray = new T[container.MasterCount];
             container.MasterCopyTo(
                 originalArray,
                 0);
 
-            this.InternalListContainer.Clear();
+            InternalListContainer.Clear();
 
-            this.PushUndoLevel(new ClearStateChange<T>(originalArray));
+            PushUndoLevel(new ClearStateChange<T>(originalArray));
         }
 
-        this.RaiseCollectionReset();
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.ContentsMayHaveChanged();
+        RaiseCollectionReset();
+        RaisePropertyChanged(nameof(Count));
+        ContentsMayHaveChanged();
 
         return originalArray;
     }
@@ -271,7 +271,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     /// <summary>
     ///     Called when the contents may have changed so that proper notifications can happen.
     /// </summary>
-    protected override void ContentsMayHaveChanged() => this.RaisePropertyChanged(Constants.ItemsName);
+    protected override void ContentsMayHaveChanged() => RaisePropertyChanged(Constants.ItemsName);
 
 #endregion
 }

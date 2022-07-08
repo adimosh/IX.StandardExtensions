@@ -53,5 +53,5 @@ public abstract class FunctionNodeBase : OperationNodeBase
     /// </summary>
     /// <param name="context">The deep cloning context.</param>
     /// <returns>A deep clone.</returns>
-    protected override OperationNodeBase DeepCloneNode(NodeCloningContext context) => (OperationNodeBase)this.DeepClone(context);
+    protected override OperationNodeBase DeepCloneNode(NodeCloningContext context) => (OperationNodeBase)DeepClone(context);
 }

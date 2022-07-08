@@ -62,8 +62,8 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         SynchronizationContext? synchronizationContext = null)
         : base(synchronizationContext)
     {
-        this.entityErrors = new Lazy<ConcurrentDictionary<string, List<string>>>();
-        this.validatorLock = new object();
+        entityErrors = new Lazy<ConcurrentDictionary<string, List<string>>>();
+        validatorLock = new object();
         this.busyScope = busyScope;
     }
 
@@ -85,7 +85,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
     /// </summary>
     /// <value><see langword="true" /> if this instance has errors; otherwise, <see langword="false" />.</value>
     public bool HasErrors =>
-        this.entityErrors.IsValueCreated && this.entityErrors.Value.Values.Any(p => p.Count > 0);
+        entityErrors.IsValueCreated && entityErrors.Value.Values.Any(p => p.Count > 0);
 
     /// <summary>
     ///     Gets or sets a value indicating whether this view-model is busy.
@@ -95,16 +95,16 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
     /// </value>
     public bool IsBusy
     {
-        get => this.isBusy != 0;
+        get => isBusy != 0;
         set
         {
             var intValue = value ? 1 : 0;
             if (Interlocked.Exchange(
-                    ref this.isBusy,
+                    ref isBusy,
                     intValue) !=
                 intValue)
             {
-                this.RaisePropertyChanged(nameof(this.IsBusy));
+                RaisePropertyChanged(nameof(IsBusy));
             }
         }
     }
@@ -124,7 +124,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
     /// </param>
     /// <returns>The validation errors for the property or entity.</returns>
     public IEnumerable GetErrors(string? propertyName) =>
-        this.entityErrors.Value.TryGetValue(
+        entityErrors.Value.TryGetValue(
             Requires.NotNull(propertyName),
             out List<string>? propertyErrors)
             ? propertyErrors.ToArray()
@@ -153,9 +153,9 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         Justification = "We're trying to avoid closures.")]
     public void Validate()
     {
-        lock (this.validatorLock)
+        lock (validatorLock)
         {
-            var initialHasErrors = this.HasErrors;
+            var initialHasErrors = HasErrors;
 
             // We validate the object
             var validationResults = new List<ValidationResult>();
@@ -167,26 +167,26 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
                     validationResults,
                     true))
             {
-                if (this.entityErrors.IsValueCreated)
+                if (entityErrors.IsValueCreated)
                 {
-                    this.entityErrors.Value.Clear();
+                    entityErrors.Value.Clear();
                 }
             }
             else
             {
                 // Remove those properties which pass validation
-                if (!this.entityErrors.IsValueCreated)
+                if (!entityErrors.IsValueCreated)
                 {
-                    foreach (var (key, _) in this.entityErrors.Value.ToArray())
+                    foreach (var (key, _) in entityErrors.Value.ToArray())
                     {
                         if (AllDifferent(
                                 validationResults,
                                 key))
                         {
-                            this.entityErrors.Value.TryRemove(
+                            entityErrors.Value.TryRemove(
                                 key,
                                 out _);
-                            this.RaiseErrorsChanged(key);
+                            RaiseErrorsChanged(key);
                         }
 
                         static bool AllDifferent(
@@ -216,19 +216,19 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
                     string[] messages = property.Select(r => r.ErrorMessage ?? string.Empty)
                         .ToArray();
 
-                    List<string> errorList = this.entityErrors.Value.GetOrAdd(
+                    List<string> errorList = entityErrors.Value.GetOrAdd(
                         property.Key,
                         new List<string>(messages.Length));
                     errorList.Clear();
                     errorList.AddRange(messages);
-                    this.RaiseErrorsChanged(property.Key);
+                    RaiseErrorsChanged(property.Key);
                 }
             }
 
             // Raise property changed for HasErrors, if necessary
-            if (this.HasErrors != initialHasErrors)
+            if (HasErrors != initialHasErrors)
             {
-                this.RaisePropertyChanged(nameof(this.HasErrors));
+                RaisePropertyChanged(nameof(HasErrors));
             }
         }
     }
@@ -247,9 +247,9 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         Justification = "Unavoidable, unfortunately.")]
     protected void RaisePropertyChangedWithValidation(string propertyName)
     {
-        this.RaisePropertyChanged(propertyName);
+        RaisePropertyChanged(propertyName);
 
-        _ = Work.OnThreadPoolAsync(this.Validate);
+        _ = Work.OnThreadPoolAsync(Validate);
     }
 
     /// <summary>
@@ -261,7 +261,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         "CA1030:Use events where appropriate",
         Justification = "This is not a violation, we're actively using an event.")]
     protected void RaiseErrorsChanged(string propertyName) =>
-        this.Invoke(
+        Invoke(
             (
                 invoker,
                 internalPropertyName) => invoker.ErrorsChanged?.Invoke(
@@ -282,7 +282,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        this.busyScope?.IncrementBusyScope(description);
+        busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -290,7 +290,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            this.busyScope?.DecrementBusyScope();
+            busyScope?.DecrementBusyScope();
         }
     }
 
@@ -309,7 +309,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        this.busyScope?.IncrementBusyScope(description);
+        busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -319,7 +319,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            this.busyScope?.DecrementBusyScope();
+            busyScope?.DecrementBusyScope();
         }
     }
 
@@ -335,7 +335,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        this.busyScope?.IncrementBusyScope(description);
+        busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -343,7 +343,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            this.busyScope?.DecrementBusyScope();
+            busyScope?.DecrementBusyScope();
         }
     }
 
@@ -362,7 +362,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        this.busyScope?.IncrementBusyScope(description);
+        busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -372,7 +372,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            this.busyScope?.DecrementBusyScope();
+            busyScope?.DecrementBusyScope();
         }
     }
 
@@ -388,7 +388,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        this.busyScope?.IncrementBusyScope(description);
+        busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -396,7 +396,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            this.busyScope?.DecrementBusyScope();
+            busyScope?.DecrementBusyScope();
         }
     }
 
@@ -415,7 +415,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        this.busyScope?.IncrementBusyScope(description);
+        busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -425,7 +425,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            this.busyScope?.DecrementBusyScope();
+            busyScope?.DecrementBusyScope();
         }
     }
 
@@ -441,7 +441,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        this.busyScope?.IncrementBusyScope(description);
+        busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -449,7 +449,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            this.busyScope?.DecrementBusyScope();
+            busyScope?.DecrementBusyScope();
         }
     }
 
@@ -468,7 +468,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        this.busyScope?.IncrementBusyScope(description);
+        busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -478,7 +478,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            this.busyScope?.DecrementBusyScope();
+            busyScope?.DecrementBusyScope();
         }
     }
 

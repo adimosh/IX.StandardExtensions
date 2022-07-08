@@ -60,7 +60,7 @@ public class PushDownStack<T> : PushingCollectionBase<T>,
     /// <returns>The topmost element in the stack, if any.</returns>
     public T Peek()
     {
-        if (!this.TryPeek(out T item))
+        if (!TryPeek(out T item))
         {
             throw new InvalidOperationException(Resources.ErrorStackIsEmpty);
         }
@@ -74,7 +74,7 @@ public class PushDownStack<T> : PushingCollectionBase<T>,
     /// <returns>The topmost element in the stack, if any.</returns>
     public T Pop()
     {
-        if (!this.TryPop(out T item))
+        if (!TryPop(out T item))
         {
             throw new InvalidOperationException(Resources.ErrorStackIsEmpty);
         }
@@ -86,13 +86,13 @@ public class PushDownStack<T> : PushingCollectionBase<T>,
     ///     Pushes an element to the top of the stack.
     /// </summary>
     /// <param name="item">The item to push.</param>
-    public void Push(T item) => this.Append(item);
+    public void Push(T item) => Append(item);
 
     /// <summary>
     ///     Pushes a range of elements to the top of the stack.
     /// </summary>
     /// <param name="items">The item range to push.</param>
-    public void PushRange(T[] items) => this.Append(items);
+    public void PushRange(T[] items) => Append(items);
 
     /// <summary>
     ///     Pushes a range of elements to the top of the stack.
@@ -104,7 +104,7 @@ public class PushDownStack<T> : PushingCollectionBase<T>,
         T[] items,
         int startIndex,
         int count) =>
-        this.Append(
+        Append(
             items,
             startIndex,
             count);
@@ -121,16 +121,16 @@ public class PushDownStack<T> : PushingCollectionBase<T>,
     {
         this.RequiresNotDisposed();
 
-        if (this.Limit == 0)
+        if (Limit == 0)
         {
             item = default!;
 
             return false;
         }
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            var index = this.InternalContainer.Count - 1;
+            var index = InternalContainer.Count - 1;
 
             if (index < 0)
             {
@@ -139,7 +139,7 @@ public class PushDownStack<T> : PushingCollectionBase<T>,
                 return false;
             }
 
-            item = this.InternalContainer[index];
+            item = InternalContainer[index];
 
             return true;
         }
@@ -157,16 +157,16 @@ public class PushDownStack<T> : PushingCollectionBase<T>,
     {
         this.RequiresNotDisposed();
 
-        if (this.Limit == 0)
+        if (Limit == 0)
         {
             item = default!;
 
             return false;
         }
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            var index = this.InternalContainer.Count - 1;
+            var index = InternalContainer.Count - 1;
 
             if (index < 0)
             {
@@ -175,9 +175,9 @@ public class PushDownStack<T> : PushingCollectionBase<T>,
                 return false;
             }
 
-            item = this.InternalContainer[index];
+            item = InternalContainer[index];
 
-            this.InternalContainer.RemoveAt(index);
+            InternalContainer.RemoveAt(index);
 
             return true;
         }

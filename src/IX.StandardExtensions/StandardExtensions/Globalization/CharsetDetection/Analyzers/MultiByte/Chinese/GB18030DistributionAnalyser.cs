@@ -3983,8 +3983,8 @@ internal class GB18030DistributionAnalyser : CharDistributionAnalyser
     public GB18030DistributionAnalyser()
         : base()
     {
-        this.charToFreqOrder = GB2312_CHAR2FREQ_ORDER;
-        this.typicalDistributionRatio = GB2312_TYPICAL_DISTRIBUTION_RATIO;
+        charToFreqOrder = GB2312_CHAR2FREQ_ORDER;
+        typicalDistributionRatio = GB2312_TYPICAL_DISTRIBUTION_RATIO;
     }
 
     /// <summary>

@@ -38,10 +38,10 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
         NodeBase firstParameterTemp = Requires.NotNull(firstParameter);
         NodeBase secondParameterTemp = Requires.NotNull(secondParameter);
 
-        this.EnsureCompatibleParameters(firstParameter, secondParameter);
+        EnsureCompatibleParameters(firstParameter, secondParameter);
 
-        this.FirstParameter = firstParameterTemp.Simplify();
-        this.SecondParameter = secondParameterTemp.Simplify();
+        FirstParameter = firstParameterTemp.Simplify();
+        SecondParameter = secondParameterTemp.Simplify();
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
     /// <value>
     ///     <c>true</c> if this instance is tolerant; otherwise, <c>false</c>.
     /// </value>
-    public override bool IsTolerant => this.FirstParameter.IsTolerant || this.SecondParameter.IsTolerant;
+    public override bool IsTolerant => FirstParameter.IsTolerant || SecondParameter.IsTolerant;
 
     /// <summary>
     /// Sets the special object request function for sub objects.
@@ -70,12 +70,12 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
     /// <param name="func">The function.</param>
     protected override void SetSpecialObjectRequestFunctionForSubObjects(Func<Type, object> func)
     {
-        if (this.FirstParameter is ISpecialRequestNode specialRequestNodeLeft)
+        if (FirstParameter is ISpecialRequestNode specialRequestNodeLeft)
         {
             specialRequestNodeLeft.SetRequestSpecialObjectFunction(func);
         }
 
-        if (this.SecondParameter is ISpecialRequestNode specialRequestNodeRight)
+        if (SecondParameter is ISpecialRequestNode specialRequestNodeRight)
         {
             specialRequestNodeRight.SetRequestSpecialObjectFunction(func);
         }
@@ -94,7 +94,7 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
     /// <typeparam name="T">The type to call on.</typeparam>
     /// <param name="functionName">Name of the function.</param>
     /// <returns>An expression representing the call.</returns>
-    protected Expression GenerateStaticBinaryFunctionCall<T>(string functionName) => this.GenerateStaticBinaryFunctionCall(typeof(T), functionName, null);
+    protected Expression GenerateStaticBinaryFunctionCall<T>(string functionName) => GenerateStaticBinaryFunctionCall(typeof(T), functionName, null);
 
     /// <summary>
     /// Generates a static binary function call expression.
@@ -103,7 +103,7 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
     /// <param name="functionName">Name of the function.</param>
     /// <param name="tolerance">The tolerance, should there be any. This argument can be <c>null</c> (<c>Nothing</c> in Visual Basic).</param>
     /// <returns>An expression representing the call.</returns>
-    protected Expression GenerateStaticBinaryFunctionCall<T>(string functionName, Tolerance? tolerance) => this.GenerateStaticBinaryFunctionCall(typeof(T), functionName, tolerance);
+    protected Expression GenerateStaticBinaryFunctionCall<T>(string functionName, Tolerance? tolerance) => GenerateStaticBinaryFunctionCall(typeof(T), functionName, tolerance);
 
     /// <summary>
     /// Generates a static binary function call expression.
@@ -113,7 +113,7 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
     /// <returns>Expression.</returns>
     /// <exception cref="ArgumentException">The function name is invalid.</exception>
     protected Expression GenerateStaticBinaryFunctionCall(Type t, string functionName)
-        => this.GenerateStaticBinaryFunctionCall(t, functionName, null);
+        => GenerateStaticBinaryFunctionCall(t, functionName, null);
 
     /// <summary>
     /// Generates a static binary function call expression.
@@ -130,8 +130,8 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
             throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.FunctionCouldNotBeFound, functionName), nameof(functionName));
         }
 
-        Type firstParameterType = ParameterTypeFromParameter(this.FirstParameter);
-        Type secondParameterType = ParameterTypeFromParameter(this.SecondParameter);
+        Type firstParameterType = ParameterTypeFromParameter(FirstParameter);
+        Type secondParameterType = ParameterTypeFromParameter(SecondParameter);
 
         MethodInfo? mi = t.GetMethodWithExactParameters(functionName, firstParameterType, secondParameterType);
 
@@ -163,13 +163,13 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
         Expression e1, e2;
         if (tolerance == null)
         {
-            e1 = this.FirstParameter.GenerateExpression();
-            e2 = this.SecondParameter.GenerateExpression();
+            e1 = FirstParameter.GenerateExpression();
+            e2 = SecondParameter.GenerateExpression();
         }
         else
         {
-            e1 = this.FirstParameter.GenerateExpression(tolerance);
-            e2 = this.SecondParameter.GenerateExpression(tolerance);
+            e1 = FirstParameter.GenerateExpression(tolerance);
+            e2 = SecondParameter.GenerateExpression(tolerance);
         }
 
         if (e1.Type != firstParameterType)
@@ -197,7 +197,7 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
     /// </returns>
     /// <exception cref="ArgumentException">The function name is invalid.</exception>
     protected Expression GenerateStaticBinaryFunctionCall<TParam1, TParam2>(Type t, string functionName)
-        => this.GenerateStaticBinaryFunctionCall<TParam1, TParam2>(t, functionName, null);
+        => GenerateStaticBinaryFunctionCall<TParam1, TParam2>(t, functionName, null);
 
     /// <summary>
     /// Generates a static binary function call with explicit parameter types.
@@ -218,21 +218,21 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
             throw new ArgumentException(string.Format(Resources.FunctionCouldNotBeFound, functionName), nameof(functionName));
         }
 
-        Type firstParameterType = ParameterTypeFromParameter(this.FirstParameter);
-        Type secondParameterType = ParameterTypeFromParameter(this.SecondParameter);
+        Type firstParameterType = ParameterTypeFromParameter(FirstParameter);
+        Type secondParameterType = ParameterTypeFromParameter(SecondParameter);
 
         MethodInfo mi = t.GetMethodWithExactParameters(functionName, typeof(TParam1), typeof(TParam2)) ?? throw new FunctionCallNotValidLogicallyException();
 
         Expression e1, e2;
         if (tolerance == null)
         {
-            e1 = this.FirstParameter.GenerateExpression();
-            e2 = this.SecondParameter.GenerateExpression();
+            e1 = FirstParameter.GenerateExpression();
+            e2 = SecondParameter.GenerateExpression();
         }
         else
         {
-            e1 = this.FirstParameter.GenerateExpression(tolerance);
-            e2 = this.SecondParameter.GenerateExpression(tolerance);
+            e1 = FirstParameter.GenerateExpression(tolerance);
+            e2 = SecondParameter.GenerateExpression(tolerance);
         }
 
         if (e1.Type != firstParameterType)
@@ -265,7 +265,7 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
     /// <param name="functionName">Name of the function.</param>
     /// <returns>An expression representing the call.</returns>
     protected Expression GenerateBinaryFunctionCallFirstParameterInstance<T>(string functionName) =>
-        this.GenerateBinaryFunctionCallFirstParameterInstance(
+        GenerateBinaryFunctionCallFirstParameterInstance(
             typeof(T),
             functionName,
             null);
@@ -280,7 +280,7 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
     protected Expression GenerateBinaryFunctionCallFirstParameterInstance(
         Type t,
         string functionName) =>
-        this.GenerateBinaryFunctionCallFirstParameterInstance(
+        GenerateBinaryFunctionCallFirstParameterInstance(
             t,
             functionName,
             null);
@@ -302,8 +302,8 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
             throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.FunctionCouldNotBeFound, functionName), nameof(functionName));
         }
 
-        Type firstParameterType = ParameterTypeFromParameter(this.FirstParameter);
-        Type secondParameterType = ParameterTypeFromParameter(this.SecondParameter);
+        Type firstParameterType = ParameterTypeFromParameter(FirstParameter);
+        Type secondParameterType = ParameterTypeFromParameter(SecondParameter);
 
         MethodInfo? mi = t.GetMethodWithExactParameters(functionName, firstParameterType, secondParameterType);
 
@@ -343,13 +343,13 @@ public abstract class BinaryFunctionNodeBase : FunctionNodeBase
         Expression e1, e2;
         if (tolerance == null)
         {
-            e1 = this.FirstParameter.GenerateExpression();
-            e2 = this.SecondParameter.GenerateExpression();
+            e1 = FirstParameter.GenerateExpression();
+            e2 = SecondParameter.GenerateExpression();
         }
         else
         {
-            e1 = this.FirstParameter.GenerateExpression(tolerance);
-            e2 = this.SecondParameter.GenerateExpression(tolerance);
+            e1 = FirstParameter.GenerateExpression(tolerance);
+            e2 = SecondParameter.GenerateExpression(tolerance);
         }
 
         if (e1.Type != firstParameterType)

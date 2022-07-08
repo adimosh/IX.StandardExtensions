@@ -83,5 +83,5 @@ internal sealed class FunctionNodeRandom : NonaryFunctionNodeBase
     ///     The expression.
     /// </returns>
     protected override Expression GenerateExpressionInternal() =>
-        this.GenerateStaticNonaryFunctionCall<FunctionNodeRandom>(nameof(GenerateRandom));
+        GenerateStaticNonaryFunctionCall<FunctionNodeRandom>(nameof(GenerateRandom));
 }

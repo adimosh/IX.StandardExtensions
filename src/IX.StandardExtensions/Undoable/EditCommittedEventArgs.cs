@@ -21,7 +21,7 @@ public class EditCommittedEventArgs : EventArgs
     /// <param name="stateChanges">The state changes that have been committed.</param>
     public EditCommittedEventArgs(StateChangeBase stateChanges)
     {
-        this.StateChanges = stateChanges;
+        StateChanges = stateChanges;
     }
 
 #endregion

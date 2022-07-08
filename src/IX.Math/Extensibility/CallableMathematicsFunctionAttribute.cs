@@ -20,7 +20,7 @@ public class CallableMathematicsFunctionAttribute : Attribute
     /// <param name="names">The names.</param>
     public CallableMathematicsFunctionAttribute(params string[] names)
     {
-        this.Names = names;
+        Names = names;
     }
 
     /// <summary>

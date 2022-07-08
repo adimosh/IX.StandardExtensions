@@ -37,7 +37,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     /// </summary>
     public ConcurrentObservableList()
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     public ConcurrentObservableList(IEnumerable<T> source)
         : base(source)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     public ConcurrentObservableList(SynchronizationContext context)
         : base(context)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
             source,
             context)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -82,7 +82,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     public ConcurrentObservableList(bool suppressUndoable)
         : base(suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
             source,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
             context,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
     /// <summary>
@@ -130,7 +130,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
             context,
             suppressUndoable)
     {
-        this.locker = EnvironmentSettings.GenerateDefaultLocker();
+        locker = EnvironmentSettings.GenerateDefaultLocker();
     }
 
 #endregion
@@ -140,7 +140,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     /// <summary>
     ///     Gets a synchronization lock item to be used when trying to synchronize read/write operations between threads.
     /// </summary>
-    protected override IReaderWriterLock SynchronizationLock => this.locker.Value;
+    protected override IReaderWriterLock SynchronizationLock => locker.Value;
 
 #endregion
 
@@ -153,7 +153,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     [OnDeserializing]
     internal void OnDeserializingMethod(StreamingContext context) =>
         Interlocked.Exchange(
-            ref this.locker,
+            ref locker,
             EnvironmentSettings.GenerateDefaultLocker());
 
 #region Disposable
@@ -164,7 +164,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     protected override void DisposeManagedContext()
     {
         Lazy<System.Threading.ReaderWriterLockSlim>? l = Interlocked.Exchange(
-            ref this.locker!,
+            ref locker!,
             null!);
         if (l?.IsValueCreated ?? false)
         {
@@ -180,7 +180,7 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     protected override void DisposeGeneralContext()
     {
         Interlocked.Exchange(
-            ref this.locker!,
+            ref locker!,
             null!);
 
         base.DisposeGeneralContext();

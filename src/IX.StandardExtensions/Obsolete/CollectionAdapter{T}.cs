@@ -97,7 +97,7 @@ public abstract class CollectionAdapter<T> : ICollectionAdapter<T>
     /// <param name="item">The object to add to the <see cref="ICollection{TItem}" />.</param>
     /// <exception cref="NotSupportedException">The <see cref="ICollection{TItem}" /> is read-only.</exception>
     [ExcludeFromCodeCoverage]
-    void ICollection<T>.Add(T item) => this.Add(item);
+    void ICollection<T>.Add(T item) => Add(item);
 
     /// <summary>Removes the first occurrence of a specific object from the <see cref="ICollection{TItem}" />.</summary>
     /// <param name="item">The object to remove from the <see cref="ICollection{TItem}" />.</param>
@@ -109,7 +109,7 @@ public abstract class CollectionAdapter<T> : ICollectionAdapter<T>
     /// </returns>
     /// <exception cref="NotSupportedException">The <see cref="ICollection{TItem}" /> is read-only.</exception>
     [ExcludeFromCodeCoverage]
-    bool ICollection<T>.Remove(T item) => this.Remove(item) != -1;
+    bool ICollection<T>.Remove(T item) => Remove(item) != -1;
 
     /// <summary>
     ///     Returns an enumerator that iterates through the collection.
@@ -120,7 +120,7 @@ public abstract class CollectionAdapter<T> : ICollectionAdapter<T>
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Unavoidable.")]
     [ExcludeFromCodeCoverage]
-    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 #endregion
 

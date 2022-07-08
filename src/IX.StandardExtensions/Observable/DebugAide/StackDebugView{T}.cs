@@ -52,8 +52,8 @@ public sealed class StackDebugView<T>
     {
         get
         {
-            var items = new T[this.stack.InternalContainer.Count];
-            this.stack.InternalContainer.CopyTo(
+            var items = new T[stack.InternalContainer.Count];
+            stack.InternalContainer.CopyTo(
                 items,
                 0);
 

@@ -42,14 +42,14 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
     ///     A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() =>
-        this.Left switch
+        Left switch
         {
             // NumericNode nnLeft when this.Right is NumericNode nnRight => new BoolNode(
             //    Convert.ToDouble(nnLeft.Value) > Convert.ToDouble(nnRight.Value)),
-            StringNode snLeft when this.Right is StringNode snRight => new BoolNode(
+            StringNode snLeft when Right is StringNode snRight => new BoolNode(
                 snLeft.Value.CurrentCultureCompareTo(snRight.Value) > 0),
-            BoolNode bnLeft when this.Right is BoolNode bnRight => new BoolNode(bnLeft.Value && !bnRight.Value),
-            ByteArrayNode baLeft when this.Right is ByteArrayNode baRight => new BoolNode(
+            BoolNode bnLeft when Right is BoolNode bnRight => new BoolNode(bnLeft.Value && !bnRight.Value),
+            ByteArrayNode baLeft when Right is ByteArrayNode baRight => new BoolNode(
                 baLeft.Value.SequenceCompareWithMsb(baRight.Value) > 0),
             _ => this
         };
@@ -61,8 +61,8 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
     /// <returns>A deep clone.</returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
         new GreaterThanNode(
-            this.Left.DeepClone(context),
-            this.Right.DeepClone(context));
+            Left.DeepClone(context),
+            Right.DeepClone(context));
 
     /// <summary>
     ///     Generates the expression that will be compiled into code.
@@ -76,7 +76,7 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
         Justification = "We want it this way.")]
     protected override Expression GenerateExpressionInternal()
     {
-        var (leftExpression, rightExpression) = this.GetExpressionsOfSameTypeFromOperands();
+        var (leftExpression, rightExpression) = GetExpressionsOfSameTypeFromOperands();
         if (leftExpression.Type == typeof(string))
         {
             MethodInfo mi = typeof(string).GetMethodWithExactParameters(
@@ -86,15 +86,15 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
             return Expression.GreaterThan(
                 Expression.Call(
                     mi,
-                    this.Left.GenerateStringExpression(),
-                    this.Right.GenerateStringExpression()),
+                    Left.GenerateStringExpression(),
+                    Right.GenerateStringExpression()),
                 Expression.Constant(
                     0,
                     typeof(int)));
         }
 
-        if (this.Left.ReturnType == SupportedValueType.Boolean ||
-            this.Right.ReturnType == SupportedValueType.Boolean)
+        if (Left.ReturnType == SupportedValueType.Boolean ||
+            Right.ReturnType == SupportedValueType.Boolean)
         {
             return Expression.Condition(
                 Expression.Equal(
@@ -108,8 +108,8 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
                     typeof(bool)));
         }
 
-        if (this.Left.ReturnType == SupportedValueType.ByteArray ||
-            this.Right.ReturnType == SupportedValueType.ByteArray)
+        if (Left.ReturnType == SupportedValueType.ByteArray ||
+            Right.ReturnType == SupportedValueType.ByteArray)
         {
             return Expression.GreaterThan(
                 Expression.Call(
@@ -140,7 +140,7 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
         Justification = "We want it this way.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
-        var (leftExpression, rightExpression) = this.GetExpressionsOfSameTypeFromOperands(tolerance);
+        var (leftExpression, rightExpression) = GetExpressionsOfSameTypeFromOperands(tolerance);
         if (leftExpression.Type == typeof(string))
         {
             MethodInfo mi = typeof(string).GetMethodWithExactParameters(
@@ -152,8 +152,8 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
             return Expression.GreaterThan(
                 Expression.Call(
                     mi,
-                    this.Left.GenerateStringExpression(),
-                    this.Right.GenerateStringExpression(),
+                    Left.GenerateStringExpression(),
+                    Right.GenerateStringExpression(),
                     Expression.Constant(false, typeof(bool)),
                     Expression.Property(null, typeof(CultureInfo), nameof(CultureInfo.CurrentCulture))),
                 Expression.Constant(
@@ -161,8 +161,8 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
                     typeof(int)));
         }
 
-        if (this.Left.ReturnType == SupportedValueType.Boolean ||
-            this.Right.ReturnType == SupportedValueType.Boolean)
+        if (Left.ReturnType == SupportedValueType.Boolean ||
+            Right.ReturnType == SupportedValueType.Boolean)
         {
             return Expression.Condition(
                 Expression.Equal(
@@ -176,8 +176,8 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
                     typeof(bool)));
         }
 
-        if (this.Left.ReturnType == SupportedValueType.ByteArray ||
-            this.Right.ReturnType == SupportedValueType.ByteArray)
+        if (Left.ReturnType == SupportedValueType.ByteArray ||
+            Right.ReturnType == SupportedValueType.ByteArray)
         {
             return Expression.GreaterThan(
                 Expression.Call(
@@ -192,10 +192,10 @@ internal sealed class GreaterThanNode : ComparisonOperationNodeBase
                     typeof(int)));
         }
 
-        if (this.Left.ReturnType == SupportedValueType.Numeric &&
-            this.Right.ReturnType == SupportedValueType.Numeric)
+        if (Left.ReturnType == SupportedValueType.Numeric &&
+            Right.ReturnType == SupportedValueType.Numeric)
         {
-            var possibleTolerantExpression = this.PossibleToleranceExpression(
+            var possibleTolerantExpression = PossibleToleranceExpression(
                 leftExpression,
                 rightExpression,
                 tolerance);

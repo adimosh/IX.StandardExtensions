@@ -78,14 +78,14 @@ public class WriteOnlySynchronizationLocker : SynchronizationLocker
     /// </summary>
     public override void Dispose()
     {
-        if (this.Locker == null)
+        if (Locker == null)
         {
             return;
         }
 
-        if (this.Locker.IsWriteLockHeld)
+        if (Locker.IsWriteLockHeld)
         {
-            this.Locker.ExitWriteLock();
+            Locker.ExitWriteLock();
         }
 
         GC.SuppressFinalize(this);

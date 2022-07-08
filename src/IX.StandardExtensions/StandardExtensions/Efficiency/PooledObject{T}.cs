@@ -30,7 +30,7 @@ public sealed class PooledObject<T> : IDisposable
         ObjectPool<T> pool,
         T value)
     {
-        this.Value = value;
+        Value = value;
         this.pool = pool;
     }
 
@@ -72,9 +72,9 @@ public sealed class PooledObject<T> : IDisposable
     /// </summary>
     public void Dispose()
     {
-        if (!this.abort)
+        if (!abort)
         {
-            this.pool.Release(this.Value);
+            pool.Release(Value);
         }
     }
 
@@ -84,7 +84,7 @@ public sealed class PooledObject<T> : IDisposable
     ///     Aborts this pooled object, not returning its value to the pool.
     /// </summary>
     public void Abort() =>
-        this.abort = true;
+        abort = true;
 
 #endregion
 }

@@ -56,10 +56,10 @@ internal class GB18030Prober : CharsetProber
 
     public GB18030Prober()
     {
-        this.lastChar = new byte[2];
-        this.codingSM = new CodingStateMachine(new GB18030_SMModel());
-        this.analyser = new GB18030DistributionAnalyser();
-        this.Reset();
+        lastChar = new byte[2];
+        codingSM = new CodingStateMachine(new GB18030_SMModel());
+        analyser = new GB18030DistributionAnalyser();
+        Reset();
     }
 
     public override string GetCharsetName() => CodepageName.GB18030;
@@ -73,36 +73,36 @@ internal class GB18030Prober : CharsetProber
 
         for (var i = offset; i < max; i++)
         {
-            var codingState = this.codingSM.NextState(buf[i]);
+            var codingState = codingSM.NextState(buf[i]);
 
             if (codingState == StateMachineModel.ERROR)
             {
-                this.state = ProbingState.NotMe;
+                state = ProbingState.NotMe;
 
                 break;
             }
 
             if (codingState == StateMachineModel.ITSME)
             {
-                this.state = ProbingState.FoundIt;
+                state = ProbingState.FoundIt;
 
                 break;
             }
 
             if (codingState == StateMachineModel.START)
             {
-                var charLen = this.codingSM.CurrentCharLen;
+                var charLen = codingSM.CurrentCharLen;
                 if (i == offset)
                 {
-                    this.lastChar[1] = buf[offset];
-                    this.analyser.HandleOneChar(
-                        this.lastChar,
+                    lastChar[1] = buf[offset];
+                    analyser.HandleOneChar(
+                        lastChar,
                         0,
                         charLen);
                 }
                 else
                 {
-                    this.analyser.HandleOneChar(
+                    analyser.HandleOneChar(
                         buf,
                         i - 1,
                         charLen);
@@ -110,25 +110,25 @@ internal class GB18030Prober : CharsetProber
             }
         }
 
-        this.lastChar[0] = buf[max - 1];
+        lastChar[0] = buf[max - 1];
 
-        if (this.state == ProbingState.Detecting)
+        if (state == ProbingState.Detecting)
         {
-            if (this.analyser.GotEnoughData() && this.GetConfidence() > SHORTCUT_THRESHOLD)
+            if (analyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
             {
-                this.state = ProbingState.FoundIt;
+                state = ProbingState.FoundIt;
             }
         }
 
-        return this.state;
+        return state;
     }
 
-    public override float GetConfidence(StringBuilder? status = null) => this.analyser.GetConfidence();
+    public override float GetConfidence(StringBuilder? status = null) => analyser.GetConfidence();
 
     public override void Reset()
     {
-        this.codingSM.Reset();
-        this.state = ProbingState.Detecting;
-        this.analyser.Reset();
+        codingSM.Reset();
+        state = ProbingState.Detecting;
+        analyser.Reset();
     }
 }

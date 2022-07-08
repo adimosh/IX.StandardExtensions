@@ -21,7 +21,7 @@ internal abstract class UnaryOperatorNodeBase : OperationNodeBase
     /// is <c>null</c> (<c>Nothing</c> in Visual Basic).</exception>
     protected private UnaryOperatorNodeBase(NodeBase operand)
     {
-        this.Operand = Requires.NotNull(operand);
+        Operand = Requires.NotNull(operand);
     }
 
     /// <summary>
@@ -30,7 +30,7 @@ internal abstract class UnaryOperatorNodeBase : OperationNodeBase
     /// <value>
     ///     <c>true</c> if this instance is tolerant; otherwise, <c>false</c>.
     /// </value>
-    public override bool IsTolerant => this.Operand.IsTolerant;
+    public override bool IsTolerant => Operand.IsTolerant;
 
     /// <summary>
     /// Gets the operand.
@@ -52,7 +52,7 @@ internal abstract class UnaryOperatorNodeBase : OperationNodeBase
     /// </summary>
     /// <param name="context">The deep cloning context.</param>
     /// <returns>A deep clone.</returns>
-    protected override OperationNodeBase DeepCloneNode(NodeCloningContext context) => (OperationNodeBase)this.DeepClone(context);
+    protected override OperationNodeBase DeepCloneNode(NodeCloningContext context) => (OperationNodeBase)DeepClone(context);
 
     /// <summary>
     /// Sets the special object request function for sub objects.
@@ -60,7 +60,7 @@ internal abstract class UnaryOperatorNodeBase : OperationNodeBase
     /// <param name="func">The function.</param>
     protected override void SetSpecialObjectRequestFunctionForSubObjects(Func<Type, object> func)
     {
-        if (this.Operand is ISpecialRequestNode specialRequestNode)
+        if (Operand is ISpecialRequestNode specialRequestNode)
         {
             specialRequestNode.SetRequestSpecialObjectFunction(func);
         }

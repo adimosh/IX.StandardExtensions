@@ -59,9 +59,9 @@ internal sealed class FunctionNodeReplace : TernaryFunctionNodeBase
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
         new FunctionNodeReplace(
-            this.FirstParameter.DeepClone(context),
-            this.SecondParameter.DeepClone(context),
-            this.ThirdParameter.DeepClone(context));
+            FirstParameter.DeepClone(context),
+            SecondParameter.DeepClone(context),
+            ThirdParameter.DeepClone(context));
 
     /// <summary>
     ///     Simplifies this node, if possible, reflexively returns otherwise.
@@ -70,9 +70,9 @@ internal sealed class FunctionNodeReplace : TernaryFunctionNodeBase
     ///     A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() =>
-        this.FirstParameter is StringNode stringParam &&
-        this.SecondParameter is StringNode numericParam &&
-        this.ThirdParameter is StringNode secondNumericParam
+        FirstParameter is StringNode stringParam &&
+        SecondParameter is StringNode numericParam &&
+        ThirdParameter is StringNode secondNumericParam
             ? new StringNode(
                 stringParam.Value.Replace(
                     numericParam.Value,
@@ -133,7 +133,7 @@ internal sealed class FunctionNodeReplace : TernaryFunctionNodeBase
     /// <returns>
     ///     The expression.
     /// </returns>
-    protected override Expression GenerateExpressionInternal() => this.GenerateExpressionInternal(null);
+    protected override Expression GenerateExpressionInternal() => GenerateExpressionInternal(null);
 
     /// <summary>
     ///     Generates the expression with tolerance that will be compiled into code.
@@ -159,15 +159,15 @@ internal sealed class FunctionNodeReplace : TernaryFunctionNodeBase
         Expression e1, e2, e3;
         if (tolerance == null)
         {
-            e1 = this.FirstParameter.GenerateStringExpression();
-            e2 = this.SecondParameter.GenerateStringExpression();
-            e3 = this.ThirdParameter.GenerateStringExpression();
+            e1 = FirstParameter.GenerateStringExpression();
+            e2 = SecondParameter.GenerateStringExpression();
+            e3 = ThirdParameter.GenerateStringExpression();
         }
         else
         {
-            e1 = this.FirstParameter.GenerateStringExpression(tolerance);
-            e2 = this.SecondParameter.GenerateStringExpression(tolerance);
-            e3 = this.ThirdParameter.GenerateStringExpression(tolerance);
+            e1 = FirstParameter.GenerateStringExpression(tolerance);
+            e2 = SecondParameter.GenerateStringExpression(tolerance);
+            e3 = ThirdParameter.GenerateStringExpression(tolerance);
         }
 
         return Expression.Call(

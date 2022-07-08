@@ -33,7 +33,7 @@ public class ArgumentsException : Exception
                     ", ",
                     Requires.NotNull(argumentNames))))
     {
-        this.ArgumentNames = argumentNames;
+        ArgumentNames = argumentNames;
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class ArgumentsException : Exception
                     Requires.NotNull(argumentNames))),
             innerException)
     {
-        this.ArgumentNames = argumentNames;
+        ArgumentNames = argumentNames;
     }
 
     /// <summary>
@@ -75,7 +75,7 @@ public class ArgumentsException : Exception
                     Requires.NotNull(argumentNames))),
             innerException)
     {
-        this.ArgumentNames = argumentNames;
+        ArgumentNames = argumentNames;
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ public class ArgumentsException : Exception
                     ", ",
                     Requires.NotNull(argumentNames))))
     {
-        this.ArgumentNames = argumentNames;
+        ArgumentNames = argumentNames;
     }
 
     /// <summary>
@@ -115,9 +115,9 @@ public class ArgumentsException : Exception
             info,
             context)
     {
-        this.ArgumentNames = Requires.ArgumentOfType<string[]>(
+        ArgumentNames = Requires.ArgumentOfType<string[]>(
             info.GetValue(
-                nameof(this.ArgumentNames),
+                nameof(ArgumentNames),
                 typeof(string[])),
             nameof(info));
     }
@@ -155,8 +155,8 @@ public class ArgumentsException : Exception
             context);
 
         info.AddValue(
-            nameof(this.ArgumentNames),
-            this.ArgumentNames,
+            nameof(ArgumentNames),
+            ArgumentNames,
             typeof(string[]));
     }
 

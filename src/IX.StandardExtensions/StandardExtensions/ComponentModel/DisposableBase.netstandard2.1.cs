@@ -34,7 +34,7 @@ public abstract partial class DisposableBase : IAsyncDisposable
     public async ValueTask DisposeAsync()
     {
         if (Interlocked.Exchange(
-                ref this.disposeSignaled,
+                ref disposeSignaled,
                 1) !=
             0)
         {
@@ -42,7 +42,7 @@ public abstract partial class DisposableBase : IAsyncDisposable
         }
 
         GC.SuppressFinalize(this);
-        await this.DisposeAsync(true)
+        await DisposeAsync(true)
             .ConfigureAwait(false);
     }
 
@@ -56,7 +56,7 @@ public abstract partial class DisposableBase : IAsyncDisposable
     /// </returns>
     protected virtual ValueTask DisposeManagedContextAsync()
     {
-        this.DisposeManagedContext();
+        DisposeManagedContext();
 
         return new ValueTask(Task.CompletedTask);
     }
@@ -69,7 +69,7 @@ public abstract partial class DisposableBase : IAsyncDisposable
     /// </returns>
     protected virtual ValueTask DisposeGeneralContextAsync()
     {
-        this.DisposeGeneralContext();
+        DisposeGeneralContext();
 
         return new ValueTask(Task.CompletedTask);
     }
@@ -87,18 +87,18 @@ public abstract partial class DisposableBase : IAsyncDisposable
         {
             if (disposing)
             {
-                this.DisposeAutomatically();
+                DisposeAutomatically();
 
-                await this.DisposeManagedContextAsync()
+                await DisposeManagedContextAsync()
                     .ConfigureAwait(false);
             }
 
-            await this.DisposeGeneralContextAsync()
+            await DisposeGeneralContextAsync()
                 .ConfigureAwait(false);
         }
         finally
         {
-            this.Disposed = true;
+            Disposed = true;
         }
     }
 

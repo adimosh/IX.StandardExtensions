@@ -39,7 +39,7 @@ internal sealed class FunctionNodeCeiling : NumericUnaryFunctionNodeBase
     /// </returns>
     public override NodeBase Simplify()
     {
-        if (this.Parameter is NumericNode numericParam)
+        if (Parameter is NumericNode numericParam)
         {
             switch (numericParam.Value)
             {
@@ -61,7 +61,7 @@ internal sealed class FunctionNodeCeiling : NumericUnaryFunctionNodeBase
     ///     A deep clone.
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
-        new FunctionNodeCeiling(this.Parameter.DeepClone(context));
+        new FunctionNodeCeiling(Parameter.DeepClone(context));
 
     /// <summary>
     ///     Generates the expression that will be compiled into code.
@@ -70,7 +70,7 @@ internal sealed class FunctionNodeCeiling : NumericUnaryFunctionNodeBase
     ///     The expression.
     /// </returns>
     protected override Expression GenerateExpressionInternal() =>
-        this.GenerateStaticUnaryFunctionCall(
+        GenerateStaticUnaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Ceiling));
 
@@ -80,7 +80,7 @@ internal sealed class FunctionNodeCeiling : NumericUnaryFunctionNodeBase
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
-        this.GenerateStaticUnaryFunctionCall(
+        GenerateStaticUnaryFunctionCall(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Ceiling),
             tolerance);

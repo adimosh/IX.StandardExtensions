@@ -113,5 +113,5 @@ internal class BitPackage
             (h << 4) | g);
 
     public int Unpack(int i) =>
-        (this.data[i >> this.indexShift] >> ((i & this.shiftMask) << this.bitShift)) & this.unitMask;
+        (data[i >> indexShift] >> ((i & shiftMask) << bitShift)) & unitMask;
 }

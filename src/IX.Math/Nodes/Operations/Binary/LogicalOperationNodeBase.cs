@@ -30,7 +30,7 @@ internal abstract class LogicalOperationNodeBase : BinaryOperatorNodeBase
     /// <value>
     ///     The node return type.
     /// </value>
-    public override SupportedValueType ReturnType => this.Left.ReturnType;
+    public override SupportedValueType ReturnType => Left.ReturnType;
 
     /// <summary>
     ///     Determines the children.
@@ -65,12 +65,12 @@ internal abstract class LogicalOperationNodeBase : BinaryOperatorNodeBase
     {
         if (type is SupportedValueType.Boolean or SupportedValueType.Numeric)
         {
-            this.Left.DetermineStrongly(type);
-            this.Right.DetermineStrongly(type);
+            Left.DetermineStrongly(type);
+            Right.DetermineStrongly(type);
 
-            this.EnsureCompatibleOperands(
-                this.Left,
-                this.Right);
+            EnsureCompatibleOperands(
+                Left,
+                Right);
         }
         else
         {
@@ -90,12 +90,12 @@ internal abstract class LogicalOperationNodeBase : BinaryOperatorNodeBase
             throw new ExpressionNotValidLogicallyException();
         }
 
-        this.Left.DetermineWeakly(type);
-        this.Right.DetermineWeakly(type);
+        Left.DetermineWeakly(type);
+        Right.DetermineWeakly(type);
 
-        this.EnsureCompatibleOperands(
-            this.Left,
-            this.Right);
+        EnsureCompatibleOperands(
+            Left,
+            Right);
     }
 
     protected override void EnsureCompatibleOperands(

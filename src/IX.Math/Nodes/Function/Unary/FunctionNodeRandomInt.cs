@@ -57,7 +57,7 @@ internal sealed class FunctionNodeRandomInt : NumericUnaryFunctionNodeBase
     ///     A deep clone.
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
-        new FunctionNodeRandomInt(this.Parameter.DeepClone(context));
+        new FunctionNodeRandomInt(Parameter.DeepClone(context));
 
     /// <summary>
     ///     Generates the expression that will be compiled into code.
@@ -66,7 +66,7 @@ internal sealed class FunctionNodeRandomInt : NumericUnaryFunctionNodeBase
     ///     The expression.
     /// </returns>
     protected override Expression GenerateExpressionInternal() =>
-        this.GenerateStaticUnaryFunctionCall<FunctionNodeRandomInt>(nameof(GenerateRandom));
+        GenerateStaticUnaryFunctionCall<FunctionNodeRandomInt>(nameof(GenerateRandom));
 
     /// <summary>
     ///     Generates the expression with tolerance that will be compiled into code.
@@ -74,7 +74,7 @@ internal sealed class FunctionNodeRandomInt : NumericUnaryFunctionNodeBase
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
-        this.GenerateStaticUnaryFunctionCall<FunctionNodeRandomInt>(
+        GenerateStaticUnaryFunctionCall<FunctionNodeRandomInt>(
             nameof(GenerateRandom),
             tolerance);
 }

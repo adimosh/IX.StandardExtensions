@@ -36,8 +36,8 @@ internal sealed class FunctionNodeRound : NumericBinaryFunctionNodeBase
     /// <param name="context">The deep cloning context.</param>
     /// <returns>A deep clone.</returns>
     public override NodeBase DeepClone(NodeCloningContext context) => new FunctionNodeRound(
-        this.FirstParameter.DeepClone(context),
-        this.SecondParameter.DeepClone(context));
+        FirstParameter.DeepClone(context),
+        SecondParameter.DeepClone(context));
 
     /// <summary>
     ///     Simplifies this node, if possible, reflexively returns otherwise.
@@ -45,7 +45,7 @@ internal sealed class FunctionNodeRound : NumericBinaryFunctionNodeBase
     /// <returns>A simplified node, or this instance.</returns>
     public override NodeBase Simplify()
     {
-        if (this.FirstParameter is NumericNode fln && this.SecondParameter is NumericNode inn)
+        if (FirstParameter is NumericNode fln && SecondParameter is NumericNode inn)
         {
             return new NumericNode(
                 GlobalSystem.Math.Round(
@@ -61,7 +61,7 @@ internal sealed class FunctionNodeRound : NumericBinaryFunctionNodeBase
     /// </summary>
     /// <returns>The expression.</returns>
     protected override Expression GenerateExpressionInternal() =>
-        this.GenerateStaticBinaryFunctionCall<double, int>(
+        GenerateStaticBinaryFunctionCall<double, int>(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Round));
 
@@ -71,7 +71,7 @@ internal sealed class FunctionNodeRound : NumericBinaryFunctionNodeBase
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
-        this.GenerateStaticBinaryFunctionCall<double, int>(
+        GenerateStaticBinaryFunctionCall<double, int>(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Round),
             tolerance);

@@ -42,5 +42,5 @@ public sealed class ExpressionParsingService : ExpressionParsingServiceBase
     public override ComputedExpression Interpret(
         string expression,
         CancellationToken cancellationToken = default) =>
-        this.InterpretInternal(expression, cancellationToken);
+        InterpretInternal(expression, cancellationToken);
 }

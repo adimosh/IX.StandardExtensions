@@ -48,7 +48,7 @@ internal sealed class SubtractNode : UnaryOperatorNodeBase
     ///     A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() =>
-        this.Operand switch
+        Operand switch
         {
             NumericNode numericNode => NumericNode.Subtract(
                 new NumericNode(0),
@@ -87,7 +87,7 @@ internal sealed class SubtractNode : UnaryOperatorNodeBase
     /// <param name="context">The deep cloning context.</param>
     /// <returns>A deep clone.</returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
-        new SubtractNode(this.Operand.DeepClone(context));
+        new SubtractNode(Operand.DeepClone(context));
 
     /// <summary>
     ///     Generates the expression that will be compiled into code.
@@ -104,7 +104,7 @@ internal sealed class SubtractNode : UnaryOperatorNodeBase
             Expression.Constant(
                 0L,
                 typeof(long)),
-            this.Operand.GenerateExpression());
+            Operand.GenerateExpression());
 
     /// <summary>
     ///     Generates the expression with tolerance that will be compiled into code.
@@ -120,5 +120,5 @@ internal sealed class SubtractNode : UnaryOperatorNodeBase
             Expression.Constant(
                 0L,
                 typeof(long)),
-            this.Operand.GenerateExpression(tolerance));
+            Operand.GenerateExpression(tolerance));
 }

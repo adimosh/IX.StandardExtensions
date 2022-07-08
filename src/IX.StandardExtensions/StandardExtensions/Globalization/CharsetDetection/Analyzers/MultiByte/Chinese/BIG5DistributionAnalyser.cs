@@ -5950,8 +5950,8 @@ internal class BIG5DistributionAnalyser : CharDistributionAnalyser
 
     public BIG5DistributionAnalyser()
     {
-        this.charToFreqOrder = BIG5_CHAR2FREQ_ORDER;
-        this.typicalDistributionRatio = BIG5_TYPICAL_DISTRIBUTION_RATIO;
+        charToFreqOrder = BIG5_CHAR2FREQ_ORDER;
+        typicalDistributionRatio = BIG5_TYPICAL_DISTRIBUTION_RATIO;
     }
 
     /// <summary>

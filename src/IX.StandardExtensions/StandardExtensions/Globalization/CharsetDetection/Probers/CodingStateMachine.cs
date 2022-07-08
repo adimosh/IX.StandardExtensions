@@ -57,7 +57,7 @@ internal class CodingStateMachine
 
     public CodingStateMachine(StateMachineModel model)
     {
-        this.currentState = StateMachineModel.START;
+        currentState = StateMachineModel.START;
         this.model = model;
     }
 
@@ -65,21 +65,21 @@ internal class CodingStateMachine
     {
         // for each byte we get its class, if it is first byte,
         // we also get byte length
-        var byteCls = this.model.GetClass(b);
-        if (this.currentState == StateMachineModel.START)
+        var byteCls = model.GetClass(b);
+        if (currentState == StateMachineModel.START)
         {
-            this.currentCharLen = this.model.charLenTable[byteCls];
+            currentCharLen = model.charLenTable[byteCls];
         }
 
         // from byte's class and stateTable, we get its next state
-        this.currentState = this.model.stateTable.Unpack((this.currentState * this.model.ClassFactor) + byteCls);
+        currentState = model.stateTable.Unpack((currentState * model.ClassFactor) + byteCls);
 
-        return this.currentState;
+        return currentState;
     }
 
-    public void Reset() => this.currentState = StateMachineModel.START;
+    public void Reset() => currentState = StateMachineModel.START;
 
-    public int CurrentCharLen => this.currentCharLen;
+    public int CurrentCharLen => currentCharLen;
 
-    public string ModelName => this.model.Name;
+    public string ModelName => model.Name;
 }

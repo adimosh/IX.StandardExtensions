@@ -18,7 +18,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterReadLock()
     {
-        this.locker.TryEnterReadLock(EnvironmentSettings.LockAcquisitionTimeout);
+        locker.TryEnterReadLock(EnvironmentSettings.LockAcquisitionTimeout);
 
         return true;
     }
@@ -30,7 +30,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterReadLock(int millisecondsTimeout)
     {
-        this.locker.TryEnterReadLock(millisecondsTimeout);
+        locker.TryEnterReadLock(millisecondsTimeout);
 
         return true;
     }
@@ -42,7 +42,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterReadLock(TimeSpan timeout)
     {
-        this.locker.TryEnterReadLock(timeout);
+        locker.TryEnterReadLock(timeout);
 
         return true;
     }
@@ -50,7 +50,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <summary>
     ///     Exits a read lock.
     /// </summary>
-    protected void ExitReadLock() => this.locker.ExitReadLock();
+    protected void ExitReadLock() => locker.ExitReadLock();
 
     /// <summary>
     ///     Enters a read lock.
@@ -58,7 +58,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterWriteLock()
     {
-        this.locker.TryEnterWriteLock(EnvironmentSettings.LockAcquisitionTimeout);
+        locker.TryEnterWriteLock(EnvironmentSettings.LockAcquisitionTimeout);
 
         return true;
     }
@@ -70,7 +70,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterWriteLock(int millisecondsTimeout)
     {
-        this.locker.TryEnterWriteLock(millisecondsTimeout);
+        locker.TryEnterWriteLock(millisecondsTimeout);
 
         return true;
     }
@@ -82,7 +82,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterWriteLock(TimeSpan timeout)
     {
-        this.locker.TryEnterWriteLock(timeout);
+        locker.TryEnterWriteLock(timeout);
 
         return true;
     }
@@ -90,7 +90,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <summary>
     ///     Exits a write lock.
     /// </summary>
-    protected void ExitWriteLock() => this.locker.ExitWriteLock();
+    protected void ExitWriteLock() => locker.ExitWriteLock();
 
     /// <summary>
     ///     Enters an upgradeable read lock.
@@ -98,7 +98,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterUpgradeableReadLock()
     {
-        this.locker.TryEnterUpgradeableReadLock(EnvironmentSettings.LockAcquisitionTimeout);
+        locker.TryEnterUpgradeableReadLock(EnvironmentSettings.LockAcquisitionTimeout);
 
         return true;
     }
@@ -110,7 +110,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterUpgradeableReadLock(int millisecondsTimeout)
     {
-        this.locker.TryEnterUpgradeableReadLock(millisecondsTimeout);
+        locker.TryEnterUpgradeableReadLock(millisecondsTimeout);
 
         return true;
     }
@@ -122,7 +122,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <returns><see langword="true" /> if the lock is entered, <see langword="false" /> otherwise.</returns>
     protected bool EnterUpgradeableReadLock(TimeSpan timeout)
     {
-        this.locker.TryEnterUpgradeableReadLock(timeout);
+        locker.TryEnterUpgradeableReadLock(timeout);
 
         return true;
     }
@@ -130,7 +130,7 @@ public abstract partial class ReaderWriterSynchronizedBase
     /// <summary>
     ///     Exits an upgradeable read lock.
     /// </summary>
-    protected void ExitUpgradeableReadLock() => this.locker.ExitUpgradeableReadLock();
+    protected void ExitUpgradeableReadLock() => locker.ExitUpgradeableReadLock();
 
 #endregion
 }

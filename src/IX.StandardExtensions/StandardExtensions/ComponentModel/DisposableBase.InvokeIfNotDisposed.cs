@@ -28,7 +28,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(action);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         action.Invoke(
             param1);
@@ -52,7 +52,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(func);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         return func.Invoke(
             param1);
@@ -77,7 +77,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(action);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         action.Invoke(
             param1,
@@ -105,7 +105,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(func);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         return func.Invoke(
             param1,
@@ -134,7 +134,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(action);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         action.Invoke(
             param1,
@@ -166,7 +166,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(func);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         return func.Invoke(
             param1,
@@ -199,7 +199,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(action);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         action.Invoke(
             param1,
@@ -235,7 +235,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(func);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         return func.Invoke(
             param1,
@@ -272,7 +272,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(action);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         action.Invoke(
             param1,
@@ -312,7 +312,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(func);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         return func.Invoke(
             param1,
@@ -353,7 +353,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(action);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         action.Invoke(
             param1,
@@ -397,7 +397,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(func);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         return func.Invoke(
             param1,
@@ -442,7 +442,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(action);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         action.Invoke(
             param1,
@@ -490,7 +490,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(func);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         return func.Invoke(
             param1,
@@ -539,7 +539,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(action);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         action.Invoke(
             param1,
@@ -591,7 +591,7 @@ public abstract partial class DisposableBase
     {
         Requires.NotNull(func);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         return func.Invoke(
             param1,

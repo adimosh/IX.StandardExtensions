@@ -26,7 +26,7 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
 
     internal MultiListMasterSlaveListAdapter()
     {
-        this.slaves = new List<IEnumerable<T>>();
+        slaves = new List<IEnumerable<T>>();
     }
 
 #endregion
@@ -37,9 +37,9 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
     {
         get
         {
-            this.master ??= new ObservableList<T>();
+            master ??= new ObservableList<T>();
 
-            return this.master.Count + this.slaves.Sum(p => p.Count());
+            return master.Count + slaves.Sum(p => p.Count());
         }
     }
 
@@ -47,21 +47,21 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
     {
         get
         {
-            this.master ??= new ObservableList<T>();
+            master ??= new ObservableList<T>();
 
-            return this.master.IsReadOnly;
+            return master.IsReadOnly;
         }
     }
 
-    public int SlavesCount => this.slaves.Count;
+    public int SlavesCount => slaves.Count;
 
     internal int MasterCount
     {
         get
         {
-            this.master ??= new ObservableList<T>();
+            master ??= new ObservableList<T>();
 
-            return this.master.Count;
+            return master.Count;
         }
     }
 
@@ -73,16 +73,16 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
     {
         get
         {
-            this.master ??= new ObservableList<T>();
+            master ??= new ObservableList<T>();
 
-            if (index < this.master.Count)
+            if (index < master.Count)
             {
-                return this.master[index];
+                return master[index];
             }
 
-            var idx = index - this.master.Count;
+            var idx = index - master.Count;
 
-            foreach (IEnumerable<T> slave in this.slaves)
+            foreach (IEnumerable<T> slave in slaves)
             {
                 var count = slave.Count();
                 if (count > idx)
@@ -98,9 +98,9 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
 
         set
         {
-            this.master ??= new ObservableList<T>();
+            master ??= new ObservableList<T>();
 
-            this.master[index] = value;
+            master[index] = value;
         }
     }
 
@@ -110,40 +110,40 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
 
     public override int Add(T item)
     {
-        this.master ??= new ObservableList<T>();
+        master ??= new ObservableList<T>();
 
-        this.master.Add(item);
+        master.Add(item);
 
-        return this.MasterCount - 1;
+        return MasterCount - 1;
     }
 
     public override int AddRange(IEnumerable<T> items)
     {
-        this.master ??= new ObservableList<T>();
+        master ??= new ObservableList<T>();
 
-        var index = this.master.Count;
+        var index = master.Count;
         items.ForEach(
             (
                 p,
                 masterL1) => masterL1.Add(p),
-            this.master);
+            master);
 
         return index;
     }
 
     public override void Clear()
     {
-        this.master ??= new ObservableList<T>();
+        master ??= new ObservableList<T>();
 
-        this.master.Clear();
+        master.Clear();
     }
 
     public override bool Contains(T item)
     {
-        this.master ??= new ObservableList<T>();
+        master ??= new ObservableList<T>();
 
-        return this.master.Contains(item) ||
-               this.slaves.Any(
+        return master.Contains(item) ||
+               slaves.Any(
                    (
                        p,
                        itemL1) => p.Contains(itemL1),
@@ -154,9 +154,9 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
         T[] array,
         int arrayIndex)
     {
-        this.master ??= new ObservableList<T>();
+        master ??= new ObservableList<T>();
 
-        this.master.CopyTo(
+        master.CopyTo(
             array,
             arrayIndex);
     }
@@ -169,10 +169,10 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
         T[] array,
         int arrayIndex)
     {
-        this.master ??= new ObservableList<T>();
+        master ??= new ObservableList<T>();
 
-        var totalCount = this.Count + arrayIndex;
-        using IEnumerator<T> enumerator = this.GetEnumerator();
+        var totalCount = Count + arrayIndex;
+        using IEnumerator<T> enumerator = GetEnumerator();
         for (var i = arrayIndex; i < totalCount; i++)
         {
             if (!enumerator.MoveNext())
@@ -190,14 +190,14 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
         Justification = "We can't avoid this here.")]
     public override IEnumerator<T> GetEnumerator()
     {
-        this.master ??= new ObservableList<T>();
+        master ??= new ObservableList<T>();
 
-        foreach (T var in this.master)
+        foreach (T var in master)
         {
             yield return var;
         }
 
-        foreach (IEnumerable<T> lst in this.slaves)
+        foreach (IEnumerable<T> lst in slaves)
         {
             foreach (T var in lst)
             {
@@ -208,11 +208,11 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
 
     public override int Remove(T item)
     {
-        this.master ??= new ObservableList<T>();
+        master ??= new ObservableList<T>();
 
-        var index = this.master.IndexOf(item);
+        var index = master.IndexOf(item);
 
-        this.master.Remove(item);
+        master.Remove(item);
 
         return index;
     }
@@ -221,9 +221,9 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
         int index,
         T item)
     {
-        this.master ??= new ObservableList<T>();
+        master ??= new ObservableList<T>();
 
-        this.master.Insert(
+        master.Insert(
             index,
             item);
     }
@@ -234,19 +234,19 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
         Justification = "We can't avoid this here.")]
     public override int IndexOf(T item)
     {
-        this.master ??= new ObservableList<T>();
+        master ??= new ObservableList<T>();
 
         var offset = 0;
 
         int foundIndex;
-        if ((foundIndex = this.master.IndexOf(item)) != -1)
+        if ((foundIndex = master.IndexOf(item)) != -1)
         {
             return foundIndex;
         }
 
-        offset += this.master.Count;
+        offset += master.Count;
 
-        foreach (List<T> slave in this.slaves.Select(p => p.ToList()))
+        foreach (List<T> slave in slaves.Select(p => p.ToList()))
         {
             if ((foundIndex = slave.IndexOf(item)) != -1)
             {
@@ -265,9 +265,9 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
     /// <param name="index">The index at which to remove from.</param>
     public override void RemoveAt(int index)
     {
-        this.master ??= new ObservableList<T>();
+        master ??= new ObservableList<T>();
 
-        this.master.RemoveAt(index);
+        master.RemoveAt(index);
     }
 
     [SuppressMessage(
@@ -278,13 +278,13 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
         where TList : class, IList<T>, INotifyCollectionChanged
     {
         TList newMaster = Requires.NotNull(masterList);
-        IList<T>? oldMaster = this.master;
+        IList<T>? oldMaster = master;
 
         if (oldMaster != null)
         {
             try
             {
-                ((INotifyCollectionChanged)oldMaster).CollectionChanged -= this.List_CollectionChanged;
+                ((INotifyCollectionChanged)oldMaster).CollectionChanged -= List_CollectionChanged;
             }
             catch
             {
@@ -292,15 +292,15 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
             }
         }
 
-        this.master = newMaster;
-        masterList.CollectionChanged += this.List_CollectionChanged;
+        master = newMaster;
+        masterList.CollectionChanged += List_CollectionChanged;
     }
 
     internal void SetSlave<TList>(TList slaveList)
         where TList : class, IEnumerable<T>, INotifyCollectionChanged
     {
-        this.slaves.Add(Requires.NotNull(slaveList));
-        slaveList.CollectionChanged += this.List_CollectionChanged;
+        slaves.Add(Requires.NotNull(slaveList));
+        slaveList.CollectionChanged += List_CollectionChanged;
     }
 
     internal void RemoveSlave<TList>(TList slaveList)
@@ -311,20 +311,20 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
 
         try
         {
-            localSlaveList.CollectionChanged -= this.List_CollectionChanged;
+            localSlaveList.CollectionChanged -= List_CollectionChanged;
         }
         catch
         {
             // We need to do nothing here. Inability to remove the event delegate reference is of no consequence.
         }
 
-        this.slaves.Remove(localSlaveList);
+        slaves.Remove(localSlaveList);
     }
 
     private void List_CollectionChanged(
         object? sender,
         NotifyCollectionChangedEventArgs e) =>
-        this.TriggerReset();
+        TriggerReset();
 
 #endregion
 }

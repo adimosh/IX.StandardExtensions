@@ -22,26 +22,26 @@ internal class ListListAdapter<T> : ModernListAdapter<T, List<T>.Enumerator>
 
     public ListListAdapter()
     {
-        this.list = new List<T>();
+        list = new List<T>();
     }
 
     public ListListAdapter(IEnumerable<T> source)
     {
-        this.list = new List<T>(source);
+        list = new List<T>(source);
     }
 
 #endregion
 
 #region Properties and indexers
 
-    public override int Count => this.list.Count;
+    public override int Count => list.Count;
 
     public override bool IsReadOnly => false;
 
     public override T this[int index]
     {
-        get => this.list[index];
-        set => this.list[index] = value;
+        get => list[index];
+        set => list[index] = value;
     }
 
 #endregion
@@ -50,50 +50,50 @@ internal class ListListAdapter<T> : ModernListAdapter<T, List<T>.Enumerator>
 
     public override int Add(T item)
     {
-        this.list.Add(item);
+        list.Add(item);
 
-        return this.list.Count - 1;
+        return list.Count - 1;
     }
 
     public override int AddRange(IEnumerable<T> items)
     {
-        var index = this.list.Count;
-        this.list.AddRange(items);
+        var index = list.Count;
+        list.AddRange(items);
 
         return index;
     }
 
-    public override void Clear() => this.list.Clear();
+    public override void Clear() => list.Clear();
 
-    public override bool Contains(T item) => this.list.Contains(item);
+    public override bool Contains(T item) => list.Contains(item);
 
     public override void CopyTo(
         T[] array,
         int arrayIndex) =>
-        this.list.CopyTo(
+        list.CopyTo(
             array,
             arrayIndex);
 
-    public override List<T>.Enumerator GetEnumerator() => this.list.GetEnumerator();
+    public override List<T>.Enumerator GetEnumerator() => list.GetEnumerator();
 
-    public override int IndexOf(T item) => this.list.IndexOf(item);
+    public override int IndexOf(T item) => list.IndexOf(item);
 
     public override void Insert(
         int index,
         T item) =>
-        this.list.Insert(
+        list.Insert(
             index,
             item);
 
     public override int Remove(T item)
     {
-        var index = this.list.IndexOf(item);
-        this.list.Remove(item);
+        var index = list.IndexOf(item);
+        list.Remove(item);
 
         return index;
     }
 
-    public override void RemoveAt(int index) => this.list.RemoveAt(index);
+    public override void RemoveAt(int index) => list.RemoveAt(index);
 
 #endregion
 }

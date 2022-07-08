@@ -20,7 +20,7 @@ public readonly struct ImmutableValueTuple<TItem1> : IEquatable<ImmutableValueTu
     /// <param name="item1">The value of the item at index 1.</param>
     public ImmutableValueTuple(TItem1 item1)
     {
-        this.Item1 = item1;
+        Item1 = item1;
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public readonly struct ImmutableValueTuple<TItem1> : IEquatable<ImmutableValueTu
     /// <param name="other">The other object to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public override bool Equals(object? other) =>
-        other is ImmutableValueTuple<TItem1> otherTuple && this.Equals(otherTuple);
+        other is ImmutableValueTuple<TItem1> otherTuple && Equals(otherTuple);
 
     /// <summary>
     /// Equates this tuple to another tuple.
@@ -65,7 +65,7 @@ public readonly struct ImmutableValueTuple<TItem1> : IEquatable<ImmutableValueTu
     /// <param name="other">The other tuple to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public bool Equals(ImmutableValueTuple<TItem1> other) =>
-        EqualityComparer<TItem1>.Default.Equals(this.Item1, other.Item1);
+        EqualityComparer<TItem1>.Default.Equals(Item1, other.Item1);
 
     /// <summary>
     /// Returns a hash code for this instance.
@@ -74,7 +74,7 @@ public readonly struct ImmutableValueTuple<TItem1> : IEquatable<ImmutableValueTu
     /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
     /// </returns>
     public override int GetHashCode() =>
-        this.Item1?.GetHashCode() ?? 0;
+        Item1?.GetHashCode() ?? 0;
 }
 
 /// <summary>
@@ -92,8 +92,8 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2> : IEquatable<Immutabl
     /// <param name="item2">The value of the item at index 2.</param>
     public ImmutableValueTuple(TItem1 item1, TItem2 item2)
     {
-        this.Item1 = item1;
-        this.Item2 = item2;
+        Item1 = item1;
+        Item2 = item2;
     }
 
     /// <summary>
@@ -138,7 +138,7 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2> : IEquatable<Immutabl
     /// <param name="other">The other object to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public override bool Equals(object? other) =>
-        other is ImmutableValueTuple<TItem1, TItem2> otherTuple && this.Equals(otherTuple);
+        other is ImmutableValueTuple<TItem1, TItem2> otherTuple && Equals(otherTuple);
 
     /// <summary>
     /// Equates this tuple to another tuple.
@@ -146,8 +146,8 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2> : IEquatable<Immutabl
     /// <param name="other">The other tuple to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public bool Equals(ImmutableValueTuple<TItem1, TItem2> other) =>
-        EqualityComparer<TItem1>.Default.Equals(this.Item1, other.Item1) &&
-            EqualityComparer<TItem2>.Default.Equals(this.Item2, other.Item2);
+        EqualityComparer<TItem1>.Default.Equals(Item1, other.Item1) &&
+            EqualityComparer<TItem2>.Default.Equals(Item2, other.Item2);
 
     /// <summary>
     /// Returns a hash code for this instance.
@@ -156,7 +156,7 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2> : IEquatable<Immutabl
     /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
     /// </returns>
     public override int GetHashCode() =>
-        (this.Item1, this.Item2).GetHashCode();
+        (Item1, Item2).GetHashCode();
 }
 
 /// <summary>
@@ -176,9 +176,9 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3> : IEquatable<
     /// <param name="item3">The value of the item at index 3.</param>
     public ImmutableValueTuple(TItem1 item1, TItem2 item2, TItem3 item3)
     {
-        this.Item1 = item1;
-        this.Item2 = item2;
-        this.Item3 = item3;
+        Item1 = item1;
+        Item2 = item2;
+        Item3 = item3;
     }
 
     /// <summary>
@@ -231,7 +231,7 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3> : IEquatable<
     /// <param name="other">The other object to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public override bool Equals(object? other) =>
-        other is ImmutableValueTuple<TItem1, TItem2, TItem3> otherTuple && this.Equals(otherTuple);
+        other is ImmutableValueTuple<TItem1, TItem2, TItem3> otherTuple && Equals(otherTuple);
 
     /// <summary>
     /// Equates this tuple to another tuple.
@@ -239,9 +239,9 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3> : IEquatable<
     /// <param name="other">The other tuple to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public bool Equals(ImmutableValueTuple<TItem1, TItem2, TItem3> other) =>
-        EqualityComparer<TItem1>.Default.Equals(this.Item1, other.Item1) &&
-            EqualityComparer<TItem2>.Default.Equals(this.Item2, other.Item2) &&
-            EqualityComparer<TItem3>.Default.Equals(this.Item3, other.Item3);
+        EqualityComparer<TItem1>.Default.Equals(Item1, other.Item1) &&
+            EqualityComparer<TItem2>.Default.Equals(Item2, other.Item2) &&
+            EqualityComparer<TItem3>.Default.Equals(Item3, other.Item3);
 
     /// <summary>
     /// Returns a hash code for this instance.
@@ -250,7 +250,7 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3> : IEquatable<
     /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
     /// </returns>
     public override int GetHashCode() =>
-        (this.Item1, this.Item2, this.Item3).GetHashCode();
+        (Item1, Item2, Item3).GetHashCode();
 }
 
 /// <summary>
@@ -272,10 +272,10 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4> : IEq
     /// <param name="item4">The value of the item at index 4.</param>
     public ImmutableValueTuple(TItem1 item1, TItem2 item2, TItem3 item3, TItem4 item4)
     {
-        this.Item1 = item1;
-        this.Item2 = item2;
-        this.Item3 = item3;
-        this.Item4 = item4;
+        Item1 = item1;
+        Item2 = item2;
+        Item3 = item3;
+        Item4 = item4;
     }
 
     /// <summary>
@@ -336,7 +336,7 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4> : IEq
     /// <param name="other">The other object to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public override bool Equals(object? other) =>
-        other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4> otherTuple && this.Equals(otherTuple);
+        other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4> otherTuple && Equals(otherTuple);
 
     /// <summary>
     /// Equates this tuple to another tuple.
@@ -344,10 +344,10 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4> : IEq
     /// <param name="other">The other tuple to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public bool Equals(ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4> other) =>
-        EqualityComparer<TItem1>.Default.Equals(this.Item1, other.Item1) &&
-            EqualityComparer<TItem2>.Default.Equals(this.Item2, other.Item2) &&
-            EqualityComparer<TItem3>.Default.Equals(this.Item3, other.Item3) &&
-            EqualityComparer<TItem4>.Default.Equals(this.Item4, other.Item4);
+        EqualityComparer<TItem1>.Default.Equals(Item1, other.Item1) &&
+            EqualityComparer<TItem2>.Default.Equals(Item2, other.Item2) &&
+            EqualityComparer<TItem3>.Default.Equals(Item3, other.Item3) &&
+            EqualityComparer<TItem4>.Default.Equals(Item4, other.Item4);
 
     /// <summary>
     /// Returns a hash code for this instance.
@@ -356,7 +356,7 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4> : IEq
     /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
     /// </returns>
     public override int GetHashCode() =>
-        (this.Item1, this.Item2, this.Item3, this.Item4).GetHashCode();
+        (Item1, Item2, Item3, Item4).GetHashCode();
 }
 
 /// <summary>
@@ -380,11 +380,11 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// <param name="item5">The value of the item at index 5.</param>
     public ImmutableValueTuple(TItem1 item1, TItem2 item2, TItem3 item3, TItem4 item4, TItem5 item5)
     {
-        this.Item1 = item1;
-        this.Item2 = item2;
-        this.Item3 = item3;
-        this.Item4 = item4;
-        this.Item5 = item5;
+        Item1 = item1;
+        Item2 = item2;
+        Item3 = item3;
+        Item4 = item4;
+        Item5 = item5;
     }
 
     /// <summary>
@@ -453,7 +453,7 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// <param name="other">The other object to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public override bool Equals(object? other) =>
-        other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5> otherTuple && this.Equals(otherTuple);
+        other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5> otherTuple && Equals(otherTuple);
 
     /// <summary>
     /// Equates this tuple to another tuple.
@@ -461,11 +461,11 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// <param name="other">The other tuple to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public bool Equals(ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5> other) =>
-        EqualityComparer<TItem1>.Default.Equals(this.Item1, other.Item1) &&
-            EqualityComparer<TItem2>.Default.Equals(this.Item2, other.Item2) &&
-            EqualityComparer<TItem3>.Default.Equals(this.Item3, other.Item3) &&
-            EqualityComparer<TItem4>.Default.Equals(this.Item4, other.Item4) &&
-            EqualityComparer<TItem5>.Default.Equals(this.Item5, other.Item5);
+        EqualityComparer<TItem1>.Default.Equals(Item1, other.Item1) &&
+            EqualityComparer<TItem2>.Default.Equals(Item2, other.Item2) &&
+            EqualityComparer<TItem3>.Default.Equals(Item3, other.Item3) &&
+            EqualityComparer<TItem4>.Default.Equals(Item4, other.Item4) &&
+            EqualityComparer<TItem5>.Default.Equals(Item5, other.Item5);
 
     /// <summary>
     /// Returns a hash code for this instance.
@@ -474,7 +474,7 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
     /// </returns>
     public override int GetHashCode() =>
-        (this.Item1, this.Item2, this.Item3, this.Item4, this.Item5).GetHashCode();
+        (Item1, Item2, Item3, Item4, Item5).GetHashCode();
 }
 
 /// <summary>
@@ -500,12 +500,12 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// <param name="item6">The value of the item at index 6.</param>
     public ImmutableValueTuple(TItem1 item1, TItem2 item2, TItem3 item3, TItem4 item4, TItem5 item5, TItem6 item6)
     {
-        this.Item1 = item1;
-        this.Item2 = item2;
-        this.Item3 = item3;
-        this.Item4 = item4;
-        this.Item5 = item5;
-        this.Item6 = item6;
+        Item1 = item1;
+        Item2 = item2;
+        Item3 = item3;
+        Item4 = item4;
+        Item5 = item5;
+        Item6 = item6;
     }
 
     /// <summary>
@@ -582,7 +582,7 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// <param name="other">The other object to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public override bool Equals(object? other) =>
-        other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6> otherTuple && this.Equals(otherTuple);
+        other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6> otherTuple && Equals(otherTuple);
 
     /// <summary>
     /// Equates this tuple to another tuple.
@@ -590,12 +590,12 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// <param name="other">The other tuple to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public bool Equals(ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6> other) =>
-        EqualityComparer<TItem1>.Default.Equals(this.Item1, other.Item1) &&
-            EqualityComparer<TItem2>.Default.Equals(this.Item2, other.Item2) &&
-            EqualityComparer<TItem3>.Default.Equals(this.Item3, other.Item3) &&
-            EqualityComparer<TItem4>.Default.Equals(this.Item4, other.Item4) &&
-            EqualityComparer<TItem5>.Default.Equals(this.Item5, other.Item5) &&
-            EqualityComparer<TItem6>.Default.Equals(this.Item6, other.Item6);
+        EqualityComparer<TItem1>.Default.Equals(Item1, other.Item1) &&
+            EqualityComparer<TItem2>.Default.Equals(Item2, other.Item2) &&
+            EqualityComparer<TItem3>.Default.Equals(Item3, other.Item3) &&
+            EqualityComparer<TItem4>.Default.Equals(Item4, other.Item4) &&
+            EqualityComparer<TItem5>.Default.Equals(Item5, other.Item5) &&
+            EqualityComparer<TItem6>.Default.Equals(Item6, other.Item6);
 
     /// <summary>
     /// Returns a hash code for this instance.
@@ -604,7 +604,7 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
     /// </returns>
     public override int GetHashCode() =>
-        (this.Item1, this.Item2, this.Item3, this.Item4, this.Item5, this.Item6).GetHashCode();
+        (Item1, Item2, Item3, Item4, Item5, Item6).GetHashCode();
 }
 
 /// <summary>
@@ -632,13 +632,13 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// <param name="item7">The value of the item at index 7.</param>
     public ImmutableValueTuple(TItem1 item1, TItem2 item2, TItem3 item3, TItem4 item4, TItem5 item5, TItem6 item6, TItem7 item7)
     {
-        this.Item1 = item1;
-        this.Item2 = item2;
-        this.Item3 = item3;
-        this.Item4 = item4;
-        this.Item5 = item5;
-        this.Item6 = item6;
-        this.Item7 = item7;
+        Item1 = item1;
+        Item2 = item2;
+        Item3 = item3;
+        Item4 = item4;
+        Item5 = item5;
+        Item6 = item6;
+        Item7 = item7;
     }
 
     /// <summary>
@@ -723,7 +723,7 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// <param name="other">The other object to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public override bool Equals(object? other) =>
-        other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7> otherTuple && this.Equals(otherTuple);
+        other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7> otherTuple && Equals(otherTuple);
 
     /// <summary>
     /// Equates this tuple to another tuple.
@@ -731,13 +731,13 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// <param name="other">The other tuple to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public bool Equals(ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7> other) =>
-        EqualityComparer<TItem1>.Default.Equals(this.Item1, other.Item1) &&
-            EqualityComparer<TItem2>.Default.Equals(this.Item2, other.Item2) &&
-            EqualityComparer<TItem3>.Default.Equals(this.Item3, other.Item3) &&
-            EqualityComparer<TItem4>.Default.Equals(this.Item4, other.Item4) &&
-            EqualityComparer<TItem5>.Default.Equals(this.Item5, other.Item5) &&
-            EqualityComparer<TItem6>.Default.Equals(this.Item6, other.Item6) &&
-            EqualityComparer<TItem7>.Default.Equals(this.Item7, other.Item7);
+        EqualityComparer<TItem1>.Default.Equals(Item1, other.Item1) &&
+            EqualityComparer<TItem2>.Default.Equals(Item2, other.Item2) &&
+            EqualityComparer<TItem3>.Default.Equals(Item3, other.Item3) &&
+            EqualityComparer<TItem4>.Default.Equals(Item4, other.Item4) &&
+            EqualityComparer<TItem5>.Default.Equals(Item5, other.Item5) &&
+            EqualityComparer<TItem6>.Default.Equals(Item6, other.Item6) &&
+            EqualityComparer<TItem7>.Default.Equals(Item7, other.Item7);
 
     /// <summary>
     /// Returns a hash code for this instance.
@@ -746,7 +746,7 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
     /// </returns>
     public override int GetHashCode() =>
-        (this.Item1, this.Item2, this.Item3, this.Item4, this.Item5, this.Item6, this.Item7).GetHashCode();
+        (Item1, Item2, Item3, Item4, Item5, Item6, Item7).GetHashCode();
 }
 
 /// <summary>
@@ -776,14 +776,14 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// <param name="item8">The value of the item at index 8.</param>
     public ImmutableValueTuple(TItem1 item1, TItem2 item2, TItem3 item3, TItem4 item4, TItem5 item5, TItem6 item6, TItem7 item7, TItem8 item8)
     {
-        this.Item1 = item1;
-        this.Item2 = item2;
-        this.Item3 = item3;
-        this.Item4 = item4;
-        this.Item5 = item5;
-        this.Item6 = item6;
-        this.Item7 = item7;
-        this.Item8 = item8;
+        Item1 = item1;
+        Item2 = item2;
+        Item3 = item3;
+        Item4 = item4;
+        Item5 = item5;
+        Item6 = item6;
+        Item7 = item7;
+        Item8 = item8;
     }
 
     /// <summary>
@@ -876,7 +876,7 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// <param name="other">The other object to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public override bool Equals(object? other) =>
-        other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7, TItem8> otherTuple && this.Equals(otherTuple);
+        other is ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7, TItem8> otherTuple && Equals(otherTuple);
 
     /// <summary>
     /// Equates this tuple to another tuple.
@@ -884,14 +884,14 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// <param name="other">The other tuple to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public bool Equals(ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem5, TItem6, TItem7, TItem8> other) =>
-        EqualityComparer<TItem1>.Default.Equals(this.Item1, other.Item1) &&
-            EqualityComparer<TItem2>.Default.Equals(this.Item2, other.Item2) &&
-            EqualityComparer<TItem3>.Default.Equals(this.Item3, other.Item3) &&
-            EqualityComparer<TItem4>.Default.Equals(this.Item4, other.Item4) &&
-            EqualityComparer<TItem5>.Default.Equals(this.Item5, other.Item5) &&
-            EqualityComparer<TItem6>.Default.Equals(this.Item6, other.Item6) &&
-            EqualityComparer<TItem7>.Default.Equals(this.Item7, other.Item7) &&
-            EqualityComparer<TItem8>.Default.Equals(this.Item8, other.Item8);
+        EqualityComparer<TItem1>.Default.Equals(Item1, other.Item1) &&
+            EqualityComparer<TItem2>.Default.Equals(Item2, other.Item2) &&
+            EqualityComparer<TItem3>.Default.Equals(Item3, other.Item3) &&
+            EqualityComparer<TItem4>.Default.Equals(Item4, other.Item4) &&
+            EqualityComparer<TItem5>.Default.Equals(Item5, other.Item5) &&
+            EqualityComparer<TItem6>.Default.Equals(Item6, other.Item6) &&
+            EqualityComparer<TItem7>.Default.Equals(Item7, other.Item7) &&
+            EqualityComparer<TItem8>.Default.Equals(Item8, other.Item8);
 
     /// <summary>
     /// Returns a hash code for this instance.
@@ -900,6 +900,6 @@ public readonly struct ImmutableValueTuple<TItem1, TItem2, TItem3, TItem4, TItem
     /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
     /// </returns>
     public override int GetHashCode() =>
-        (this.Item1, this.Item2, this.Item3, this.Item4, this.Item5, this.Item6, this.Item7, this.Item8).GetHashCode();
+        (Item1, Item2, Item3, Item4, Item5, Item6, Item7, Item8).GetHashCode();
 }
 #pragma warning restore SA1402 // File may only contain a single type

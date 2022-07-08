@@ -21,7 +21,7 @@ public class SwitchEventArgs : EventArgs
     /// <param name="switchValue">The value of the switch.</param>
     public SwitchEventArgs(bool switchValue)
     {
-        this.Value = switchValue;
+        Value = switchValue;
     }
 
 #endregion

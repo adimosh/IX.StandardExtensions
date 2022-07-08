@@ -54,12 +54,12 @@ internal class CP949Prober : CharsetProber
 
     public CP949Prober()
     {
-        this.codingSM = new CodingStateMachine(new CP949SMModel());
+        codingSM = new CodingStateMachine(new CP949SMModel());
 
         // NOTE: CP949 is a superset of EUC-KR, so the distribution should be
         //       not different.
-        this.distributionAnalyser = new EUCKRDistributionAnalyser();
-        this.Reset();
+        distributionAnalyser = new EUCKRDistributionAnalyser();
+        Reset();
     }
 
     public override string GetCharsetName() => CodepageName.CP949;
@@ -74,35 +74,35 @@ internal class CP949Prober : CharsetProber
 
         for (var i = offset; i < max; i++)
         {
-            codingState = this.codingSM.NextState(buf[i]);
+            codingState = codingSM.NextState(buf[i]);
             if (codingState == StateMachineModel.ERROR)
             {
-                this.state = ProbingState.NotMe;
+                state = ProbingState.NotMe;
 
                 break;
             }
 
             if (codingState == StateMachineModel.ITSME)
             {
-                this.state = ProbingState.FoundIt;
+                state = ProbingState.FoundIt;
 
                 break;
             }
 
             if (codingState == StateMachineModel.START)
             {
-                var charLen = this.codingSM.CurrentCharLen;
+                var charLen = codingSM.CurrentCharLen;
                 if (i == offset)
                 {
-                    this.lastChar[1] = buf[offset];
-                    this.distributionAnalyser.HandleOneChar(
-                        this.lastChar,
+                    lastChar[1] = buf[offset];
+                    distributionAnalyser.HandleOneChar(
+                        lastChar,
                         0,
                         charLen);
                 }
                 else
                 {
-                    this.distributionAnalyser.HandleOneChar(
+                    distributionAnalyser.HandleOneChar(
                         buf,
                         i - 1,
                         charLen);
@@ -110,26 +110,26 @@ internal class CP949Prober : CharsetProber
             }
         }
 
-        this.lastChar[0] = buf[max - 1];
+        lastChar[0] = buf[max - 1];
 
-        if (this.state == ProbingState.Detecting)
+        if (state == ProbingState.Detecting)
         {
-            if (this.distributionAnalyser.GotEnoughData() && this.GetConfidence() > SHORTCUT_THRESHOLD)
+            if (distributionAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
             {
-                this.state = ProbingState.FoundIt;
+                state = ProbingState.FoundIt;
             }
         }
 
-        return this.state;
+        return state;
     }
 
-    public override float GetConfidence(StringBuilder? status = null) => this.distributionAnalyser.GetConfidence();
+    public override float GetConfidence(StringBuilder? status = null) => distributionAnalyser.GetConfidence();
 
     public override void Reset()
     {
-        this.codingSM.Reset();
-        this.state = ProbingState.Detecting;
-        this.distributionAnalyser.Reset();
+        codingSM.Reset();
+        state = ProbingState.Detecting;
+        distributionAnalyser.Reset();
 
         //mContextAnalyser.Reset();
     }

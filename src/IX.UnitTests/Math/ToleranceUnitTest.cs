@@ -1106,7 +1106,7 @@ namespace IX.UnitTests.Math
             object expectedResult,
             Tolerance tolerance)
         {
-            ComputedExpression del = this.fixture.CachedService.Interpret(expression);
+            ComputedExpression del = fixture.CachedService.Interpret(expression);
             if (del == null)
             {
                 throw new InvalidOperationException("No computed expression was generated!");
@@ -1137,7 +1137,7 @@ namespace IX.UnitTests.Math
         {
             var finder = new Mock<IDataFinder>(MockBehavior.Loose);
 
-            ComputedExpression del = this.fixture.CachedService.Interpret(expression);
+            ComputedExpression del = fixture.CachedService.Interpret(expression);
             if (del == null)
             {
                 throw new InvalidOperationException("No computed expression was generated!");
@@ -1191,7 +1191,7 @@ namespace IX.UnitTests.Math
                 foreach (KeyValuePair<string, object> parameter in parameters)
                 {
                     var key = parameter.Key;
-                    object value = this.GenerateFuncOutOfParameterValue(parameter.Value);
+                    object value = GenerateFuncOutOfParameterValue(parameter.Value);
                     finder.Setup(
                         p => p.TryGetData(
                             key,
@@ -1226,7 +1226,7 @@ namespace IX.UnitTests.Math
         {
             var finder = new Mock<IDataFinder>(MockBehavior.Loose);
 
-            ComputedExpression del = this.fixture.CachedService.Interpret(expression);
+            ComputedExpression del = fixture.CachedService.Interpret(expression);
             if (del == null)
             {
                 throw new InvalidOperationException("No computed expression was generated!");
@@ -1237,7 +1237,7 @@ namespace IX.UnitTests.Math
                 foreach (KeyValuePair<string, object> parameter in parameters)
                 {
                     var key = parameter.Key;
-                    object value = this.GenerateFuncOutOfParameterValue(parameter.Value);
+                    object value = GenerateFuncOutOfParameterValue(parameter.Value);
                     finder.Setup(
                         p => p.TryGetData(
                             key,
@@ -1275,14 +1275,14 @@ namespace IX.UnitTests.Math
             {
                 var finder = new Mock<IDataFinder>(MockBehavior.Loose);
 
-                ComputedExpression del = this.fixture.CachedService.Interpret(expression);
+                ComputedExpression del = fixture.CachedService.Interpret(expression);
 
                 if (parameters != null)
                 {
                     foreach (KeyValuePair<string, object> parameter in parameters)
                     {
                         var key = parameter.Key;
-                        object value = this.GenerateFuncOutOfParameterValue(parameter.Value);
+                        object value = GenerateFuncOutOfParameterValue(parameter.Value);
                         finder.Setup(
                             p => p.TryGetData(
                                 key,

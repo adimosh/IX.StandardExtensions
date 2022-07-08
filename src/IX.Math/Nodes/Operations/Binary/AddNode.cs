@@ -45,18 +45,18 @@ internal sealed class AddNode : BinaryOperatorNodeBase
     {
         get
         {
-            if (this.Left.ReturnType == SupportedValueType.String ||
-                this.Right.ReturnType == SupportedValueType.String)
+            if (Left.ReturnType == SupportedValueType.String ||
+                Right.ReturnType == SupportedValueType.String)
             {
                 return SupportedValueType.String;
             }
 
-            return this.Left.ReturnType switch
+            return Left.ReturnType switch
             {
-                SupportedValueType.ByteArray => this.Right.ReturnType == SupportedValueType.ByteArray
+                SupportedValueType.ByteArray => Right.ReturnType == SupportedValueType.ByteArray
                     ? SupportedValueType.ByteArray
                     : SupportedValueType.Unknown,
-                SupportedValueType.Numeric => this.Right.ReturnType == SupportedValueType.Numeric
+                SupportedValueType.Numeric => Right.ReturnType == SupportedValueType.Numeric
                     ? SupportedValueType.Numeric
                     : SupportedValueType.Unknown,
                 _ => SupportedValueType.Unknown,
@@ -119,28 +119,28 @@ internal sealed class AddNode : BinaryOperatorNodeBase
     /// </returns>
     public override NodeBase Simplify()
     {
-        if (this.Left.IsConstant != this.Right.IsConstant)
+        if (Left.IsConstant != Right.IsConstant)
         {
             return this;
         }
 
-        if (!this.Left.IsConstant)
+        if (!Left.IsConstant)
         {
             return this;
         }
 
-        switch (this.Left)
+        switch (Left)
         {
-            case NumericNode nn1Left when this.Right is NumericNode nn1Right:
+            case NumericNode nn1Left when Right is NumericNode nn1Right:
                 return NumericNode.Add(
                     nn1Left,
                     nn1Right);
-            case StringNode sn1Left when this.Right is StringNode sn1Right:
+            case StringNode sn1Left when Right is StringNode sn1Right:
                 return new StringNode(sn1Left.Value + sn1Right.Value);
-            case NumericNode nn2Left when this.Right is StringNode sn2Right:
+            case NumericNode nn2Left when Right is StringNode sn2Right:
             {
                 var stringValue =
-                    this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is not List<IStringFormatter>
+                    SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is not List<IStringFormatter>
                         formatters
                         ? nn2Left.Value.ToString()
                         : StringFormatter.FormatIntoString(
@@ -150,10 +150,10 @@ internal sealed class AddNode : BinaryOperatorNodeBase
                 return new StringNode($"{stringValue}{sn2Right.Value}");
             }
 
-            case StringNode sn3Left when this.Right is NumericNode nn3Right:
+            case StringNode sn3Left when Right is NumericNode nn3Right:
             {
                 var stringValue =
-                    this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is not List<IStringFormatter>
+                    SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is not List<IStringFormatter>
                         formatters
                         ? nn3Right.Value.ToString()
                         : StringFormatter.FormatIntoString(
@@ -163,10 +163,10 @@ internal sealed class AddNode : BinaryOperatorNodeBase
                 return new StringNode($"{sn3Left.Value}{stringValue}");
             }
 
-            case BoolNode bn4Left when this.Right is StringNode sn4Right:
+            case BoolNode bn4Left when Right is StringNode sn4Right:
             {
                 var stringValue =
-                    this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is not List<IStringFormatter>
+                    SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is not List<IStringFormatter>
                         formatters
                         ? bn4Left.Value.ToString(CultureInfo.CurrentCulture)
                         : StringFormatter.FormatIntoString(
@@ -176,10 +176,10 @@ internal sealed class AddNode : BinaryOperatorNodeBase
                 return new StringNode($"{stringValue}{sn4Right.Value}");
             }
 
-            case StringNode sn5Left when this.Right is BoolNode bn5Right:
+            case StringNode sn5Left when Right is BoolNode bn5Right:
             {
                 var stringValue =
-                    this.SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is not List<IStringFormatter>
+                    SpecialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) is not List<IStringFormatter>
                         formatters
                         ? bn5Right.Value.ToString(CultureInfo.CurrentCulture)
                         : StringFormatter.FormatIntoString(
@@ -189,7 +189,7 @@ internal sealed class AddNode : BinaryOperatorNodeBase
                 return new StringNode($"{sn5Left.Value}{stringValue}");
             }
 
-            case ByteArrayNode ban5Left when this.Right is ByteArrayNode ban5Right:
+            case ByteArrayNode ban5Left when Right is ByteArrayNode ban5Right:
                 return new ByteArrayNode(
                     Stitch(
                         ban5Left.Value,
@@ -205,8 +205,8 @@ internal sealed class AddNode : BinaryOperatorNodeBase
     /// <param name="context">The deep cloning context.</param>
     /// <returns>A deep clone.</returns>
     public override NodeBase DeepClone(NodeCloningContext context) => new AddNode(
-        this.Left.DeepClone(context),
-        this.Right.DeepClone(context));
+        Left.DeepClone(context),
+        Right.DeepClone(context));
 
     /// <summary>
     ///     Strongly determines the node's type, if possible.
@@ -219,19 +219,19 @@ internal sealed class AddNode : BinaryOperatorNodeBase
             case SupportedValueType.Boolean:
                 throw new ExpressionNotValidLogicallyException();
             case SupportedValueType.ByteArray:
-                this.Left.DetermineStrongly(SupportedValueType.ByteArray);
-                this.Right.DetermineStrongly(SupportedValueType.ByteArray);
+                Left.DetermineStrongly(SupportedValueType.ByteArray);
+                Right.DetermineStrongly(SupportedValueType.ByteArray);
                 break;
 
             case SupportedValueType.Numeric:
-                this.Left.DetermineStrongly(SupportedValueType.Numeric);
-                this.Right.DetermineStrongly(SupportedValueType.Numeric);
+                Left.DetermineStrongly(SupportedValueType.Numeric);
+                Right.DetermineStrongly(SupportedValueType.Numeric);
                 break;
         }
 
-        this.EnsureCompatibleOperands(
-            this.Left,
-            this.Right);
+        EnsureCompatibleOperands(
+            Left,
+            Right);
     }
 
     /// <summary>
@@ -246,12 +246,12 @@ internal sealed class AddNode : BinaryOperatorNodeBase
             type ^= SupportableValueType.Boolean;
         }
 
-        this.Left.DetermineWeakly(type);
-        this.Right.DetermineWeakly(type);
+        Left.DetermineWeakly(type);
+        Right.DetermineWeakly(type);
 
-        this.EnsureCompatibleOperands(
-            this.Left,
-            this.Right);
+        EnsureCompatibleOperands(
+            Left,
+            Right);
     }
 
     /// <summary>
@@ -355,9 +355,9 @@ internal sealed class AddNode : BinaryOperatorNodeBase
     /// </returns>
     protected override Expression GenerateExpressionInternal()
     {
-        var (leftExpression, rightExpression) = this.GetExpressionsOfSameTypeFromOperands();
+        var (leftExpression, rightExpression) = GetExpressionsOfSameTypeFromOperands();
 
-        switch (this.ReturnType)
+        switch (ReturnType)
         {
             case SupportedValueType.String:
                 MethodInfo mi1 = typeof(string).GetMethodWithExactParameters(
@@ -392,9 +392,9 @@ internal sealed class AddNode : BinaryOperatorNodeBase
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         var (leftExpression, rightExpression) =
-            this.GetExpressionsOfSameTypeFromOperands(tolerance);
+            GetExpressionsOfSameTypeFromOperands(tolerance);
 
-        switch (this.ReturnType)
+        switch (ReturnType)
         {
             case SupportedValueType.String:
                 MethodInfo mi1 = typeof(string).GetMethodWithExactParameters(

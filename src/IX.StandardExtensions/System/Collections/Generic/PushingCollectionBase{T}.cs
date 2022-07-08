@@ -71,7 +71,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
 
         this.limit = limit;
 
-        this.internalContainer = new List<T>();
+        internalContainer = new List<T>();
     }
 
 #endregion
@@ -90,9 +90,9 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
         {
             this.RequiresNotDisposed();
 
-            using (this.ReadLock())
+            using (ReadLock())
             {
-                return this.internalContainer.Count;
+                return internalContainer.Count;
             }
         }
     }
@@ -103,20 +103,20 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     /// <value>
     ///     <c>true</c> if this pushing collection is empty; otherwise, <c>false</c>.
     /// </value>
-    public bool IsEmpty => this.Count == 0;
+    public bool IsEmpty => Count == 0;
 
     /// <summary>
     ///     Gets a value indicating whether access to the <see cref="ICollection" /> is synchronized
     ///     (thread safe).
     /// </summary>
     /// <value><see langword="true" /> if this instance is synchronized; otherwise, <see langword="false" />.</value>
-    bool ICollection.IsSynchronized => ((ICollection)this.internalContainer).IsSynchronized;
+    bool ICollection.IsSynchronized => ((ICollection)internalContainer).IsSynchronized;
 
     /// <summary>
     ///     Gets an object that can be used to synchronize access to the <see cref="ICollection" />.
     /// </summary>
     /// <value>The synchronize root.</value>
-    object ICollection.SyncRoot => ((ICollection)this.internalContainer).SyncRoot;
+    object ICollection.SyncRoot => ((ICollection)internalContainer).SyncRoot;
 
     /// <summary>
     ///     Gets or sets the number of items in the push-down stack.
@@ -124,7 +124,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     [DataMember]
     public int Limit
     {
-        get => this.limit;
+        get => limit;
         set
         {
             this.RequiresNotDisposed();
@@ -134,20 +134,20 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
                 throw new LimitArgumentNegativeException();
             }
 
-            using (this.WriteLock())
+            using (WriteLock())
             {
-                this.limit = value;
+                limit = value;
 
                 if (value != 0)
                 {
-                    while (this.internalContainer.Count > value)
+                    while (internalContainer.Count > value)
                     {
-                        this.internalContainer.RemoveAt(0);
+                        internalContainer.RemoveAt(0);
                     }
                 }
                 else
                 {
-                    this.internalContainer.Clear();
+                    internalContainer.Clear();
                 }
             }
         }
@@ -159,7 +159,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     /// <value>
     ///     The internal container.
     /// </value>
-    protected List<T> InternalContainer => this.internalContainer;
+    protected List<T> InternalContainer => internalContainer;
 
 #endregion
 
@@ -183,9 +183,9 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            ((ICollection)this.internalContainer).CopyTo(
+            ((ICollection)internalContainer).CopyTo(
                 array,
                 index);
         }
@@ -200,7 +200,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Unavoidable.")]
     [ExcludeFromCodeCoverage]
-    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 #endregion
 
@@ -211,9 +211,9 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     {
         this.RequiresNotDisposed();
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            this.internalContainer.Clear();
+            internalContainer.Clear();
         }
     }
 
@@ -226,9 +226,9 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            return this.internalContainer.Contains(item);
+            return internalContainer.Contains(item);
         }
     }
 
@@ -246,8 +246,8 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
         Justification = "We're returning a class enumerator, so we're expecting an allocation anyway.")]
     public IEnumerator<T> GetEnumerator() =>
         AtomicEnumerator<T>.FromCollection(
-            this.internalContainer,
-            this.ReadLock);
+            internalContainer,
+            ReadLock);
 
     /// <summary>
     ///     Copies all elements of the stack to a new array.
@@ -257,9 +257,9 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            return this.internalContainer.ToArray();
+            return internalContainer.ToArray();
         }
     }
 
@@ -273,7 +273,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
         base.DisposeManagedContext();
 
         Interlocked.Exchange(
-                ref this.internalContainer,
+                ref internalContainer,
                 null!)
             ?.Clear();
     }
@@ -288,19 +288,19 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     {
         this.RequiresNotDisposed();
 
-        if (this.Limit == 0)
+        if (Limit == 0)
         {
             return;
         }
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.InternalContainer.Count == this.Limit)
+            if (InternalContainer.Count == Limit)
             {
-                this.InternalContainer.RemoveAt(0);
+                InternalContainer.RemoveAt(0);
             }
 
-            this.InternalContainer.Add(item);
+            InternalContainer.Add(item);
         }
     }
 
@@ -317,21 +317,21 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
             nameof(items));
 
         // Check disabled collection
-        if (this.Limit == 0)
+        if (Limit == 0)
         {
             return;
         }
 
         // Lock on write
-        using (this.WriteLock())
+        using (WriteLock())
         {
             foreach (T item in items)
             {
-                this.InternalContainer.Add(item);
+                InternalContainer.Add(item);
 
-                if (this.InternalContainer.Count == this.Limit + 1)
+                if (InternalContainer.Count == Limit + 1)
                 {
-                    this.InternalContainer.RemoveAt(0);
+                    InternalContainer.RemoveAt(0);
                 }
             }
         }
@@ -360,7 +360,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
             nameof(items));
 
         // Check disabled collection
-        var innerLimit = this.Limit;
+        var innerLimit = Limit;
         if (innerLimit == 0)
         {
             return;
@@ -372,10 +372,10 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
             count);
 
         // Lock on write
-        using (this.WriteLock())
+        using (WriteLock())
         {
             // Add all items
-            List<T> innerInternalContainer = this.InternalContainer;
+            List<T> innerInternalContainer = InternalContainer;
             foreach (T item in copiedItems)
             {
                 innerInternalContainer.Add(item);

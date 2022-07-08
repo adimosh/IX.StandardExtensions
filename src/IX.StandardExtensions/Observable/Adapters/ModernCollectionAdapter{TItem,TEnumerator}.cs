@@ -60,12 +60,12 @@ internal abstract class ModernCollectionAdapter<TItem, TEnumerator> : ModernColl
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "Unavoidable due to interface implementation.")]
-    IEnumerator<TItem> IEnumerable<TItem>.GetEnumerator() => this.GetEnumerator();
+    IEnumerator<TItem> IEnumerable<TItem>.GetEnumerator() => GetEnumerator();
 
     /// <summary>Adds an item to the <see cref="ICollection{TItem}" />.</summary>
     /// <param name="item">The object to add to the <see cref="ICollection{TItem}" />.</param>
     /// <exception cref="NotSupportedException">The <see cref="ICollection{TItem}" /> is read-only.</exception>
-    void ICollection<TItem>.Add(TItem item) => this.Add(item);
+    void ICollection<TItem>.Add(TItem item) => Add(item);
 
     /// <summary>Removes the first occurrence of a specific object from the <see cref="ICollection{TItem}" />.</summary>
     /// <param name="item">The object to remove from the <see cref="ICollection{TItem}" />.</param>
@@ -76,7 +76,7 @@ internal abstract class ModernCollectionAdapter<TItem, TEnumerator> : ModernColl
     ///     .
     /// </returns>
     /// <exception cref="NotSupportedException">The <see cref="ICollection{TItem}" /> is read-only.</exception>
-    bool ICollection<TItem>.Remove(TItem item) => this.Remove(item) != -1;
+    bool ICollection<TItem>.Remove(TItem item) => Remove(item) != -1;
 
     /// <summary>
     ///     Returns an enumerator that iterates through the collection.
@@ -91,7 +91,7 @@ internal abstract class ModernCollectionAdapter<TItem, TEnumerator> : ModernColl
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "Unavoidable due to interface implementation.")]
     [ExcludeFromCodeCoverage]
-    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     /// <summary>
     ///     Returns an enumerator that iterates through the collection.

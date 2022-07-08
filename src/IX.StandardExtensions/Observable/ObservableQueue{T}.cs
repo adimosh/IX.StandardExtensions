@@ -170,7 +170,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     /// <value>
     ///     <c>true</c> if this queue is empty; otherwise, <c>false</c>.
     /// </value>
-    public bool IsEmpty => this.Count == 0;
+    public bool IsEmpty => Count == 0;
 
 #endregion
 
@@ -186,15 +186,15 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
 
         T item;
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            item = ((QueueCollectionAdapter<T>)this.InternalContainer).Dequeue();
-            this.PushUndoLevel(new DequeueStateChange<T>(item));
+            item = ((QueueCollectionAdapter<T>)InternalContainer).Dequeue();
+            PushUndoLevel(new DequeueStateChange<T>(item));
         }
 
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
-        this.RaiseCollectionChangedRemove(
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionChangedRemove(
             item,
             0);
 
@@ -213,9 +213,9 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     {
         this.RequiresNotDisposed();
 
-        using (ReadWriteSynchronizationLocker locker = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker locker = ReadWriteLock())
         {
-            var adapter = (QueueCollectionAdapter<T>)this.InternalContainer;
+            var adapter = (QueueCollectionAdapter<T>)InternalContainer;
 
             if (adapter.Count == 0)
             {
@@ -227,12 +227,12 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
             locker.Upgrade();
 
             item = adapter.Dequeue();
-            this.PushUndoLevel(new DequeueStateChange<T>(item));
+            PushUndoLevel(new DequeueStateChange<T>(item));
         }
 
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
-        this.RaiseCollectionChangedRemove(
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionChangedRemove(
             item,
             0);
 
@@ -249,17 +249,17 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
 
         int newIndex;
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            var internalContainer = (QueueCollectionAdapter<T>)this.InternalContainer;
+            var internalContainer = (QueueCollectionAdapter<T>)InternalContainer;
             internalContainer.Enqueue(item);
             newIndex = internalContainer.Count - 1;
-            this.PushUndoLevel(new EnqueueStateChange<T>(item));
+            PushUndoLevel(new EnqueueStateChange<T>(item));
         }
 
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
-        this.RaiseCollectionChangedAdd(
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionChangedAdd(
             item,
             newIndex);
     }
@@ -275,7 +275,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
 
         foreach (T item in items)
         {
-            this.Enqueue(item);
+            Enqueue(item);
         }
     }
 
@@ -303,7 +303,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
             count);
         foreach (T item in itemsSpan)
         {
-            this.Enqueue(item);
+            Enqueue(item);
         }
     }
 
@@ -315,9 +315,9 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            return ((QueueCollectionAdapter<T>)this.InternalContainer).Peek();
+            return ((QueueCollectionAdapter<T>)InternalContainer).Peek();
         }
     }
 
@@ -330,9 +330,9 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            var ip = (QueueCollectionAdapter<T>)this.InternalContainer;
+            var ip = (QueueCollectionAdapter<T>)InternalContainer;
             if (ip.Count == 0)
             {
                 item = default!;
@@ -354,9 +354,9 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            return ((QueueCollectionAdapter<T>)this.InternalContainer).ToArray();
+            return ((QueueCollectionAdapter<T>)InternalContainer).ToArray();
         }
     }
 
@@ -368,9 +368,9 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     {
         this.RequiresNotDisposed();
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            ((QueueCollectionAdapter<T>)this.InternalContainer).TrimExcess();
+            ((QueueCollectionAdapter<T>)InternalContainer).TrimExcess();
         }
     }
 
@@ -402,7 +402,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
         {
             case AddStateChange<T>:
             {
-                var container = (QueueCollectionAdapter<T>)this.InternalContainer;
+                var container = (QueueCollectionAdapter<T>)InternalContainer;
                 var array = new T[container.Count];
                 container.CopyTo(
                     array,
@@ -442,7 +442,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
 
             case EnqueueStateChange<T>:
             {
-                var container = (QueueCollectionAdapter<T>)this.InternalContainer;
+                var container = (QueueCollectionAdapter<T>)InternalContainer;
                 var array = new T[container.Count];
                 container.CopyTo(
                     array,
@@ -482,7 +482,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
 
             case DequeueStateChange<T>(var dequeuedItem):
             {
-                var container = (QueueCollectionAdapter<T>)this.InternalContainer;
+                var container = (QueueCollectionAdapter<T>)InternalContainer;
                 container.Enqueue(dequeuedItem);
 
                 var index = container.Count - 1;
@@ -520,7 +520,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
 
             case ClearStateChange<T>(var originalItems):
             {
-                var container = (QueueCollectionAdapter<T>)this.InternalContainer;
+                var container = (QueueCollectionAdapter<T>)InternalContainer;
                 for (var i = 0; i < originalItems.Length - 1; i++)
                 {
                     container.Enqueue(originalItems[i]);
@@ -581,7 +581,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
         {
             case AddStateChange<T>(var addedItem, _):
             {
-                var container = (QueueCollectionAdapter<T>)this.InternalContainer;
+                var container = (QueueCollectionAdapter<T>)InternalContainer;
 
                 container.Enqueue(addedItem);
 
@@ -612,7 +612,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
 
             case EnqueueStateChange<T>(var enqueuedItem):
             {
-                var container = (QueueCollectionAdapter<T>)this.InternalContainer;
+                var container = (QueueCollectionAdapter<T>)InternalContainer;
 
                 container.Enqueue(enqueuedItem);
 
@@ -643,7 +643,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
 
             case DequeueStateChange<T>(var dequeuedItem):
             {
-                var container = (QueueCollectionAdapter<T>)this.InternalContainer;
+                var container = (QueueCollectionAdapter<T>)InternalContainer;
 
                 container.Dequeue();
 
@@ -682,7 +682,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
 
             case ClearStateChange<T>:
             {
-                this.InternalContainer.Clear();
+                InternalContainer.Clear();
 
                 toInvokeOutsideLock = innerState =>
                 {
@@ -724,9 +724,9 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
         Action<object?>?[] actions,
         object?[] states)
     {
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
-        this.RaiseCollectionReset();
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionReset();
     }
 
 #endregion

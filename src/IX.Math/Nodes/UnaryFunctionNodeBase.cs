@@ -33,9 +33,9 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
         NodeBase parameterTemp = Requires.NotNull(parameter);
 
         // ReSharper disable once VirtualMemberCallInConstructor - We want this to happen
-        this.EnsureCompatibleParameter(parameterTemp);
+        EnsureCompatibleParameter(parameterTemp);
 
-        this.Parameter = parameterTemp.Simplify();
+        Parameter = parameterTemp.Simplify();
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     /// <value>
     ///     <c>true</c> if this instance is tolerant; otherwise, <c>false</c>.
     /// </value>
-    public override bool IsTolerant => this.Parameter.IsTolerant;
+    public override bool IsTolerant => Parameter.IsTolerant;
 
     /// <summary>
     /// Sets the special object request function for sub objects.
@@ -58,7 +58,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     /// <param name="func">The function.</param>
     protected override void SetSpecialObjectRequestFunctionForSubObjects(Func<Type, object> func)
     {
-        if (this.Parameter is ISpecialRequestNode specialRequestNode)
+        if (Parameter is ISpecialRequestNode specialRequestNode)
         {
             specialRequestNode.SetRequestSpecialObjectFunction(func);
         }
@@ -79,7 +79,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     /// <returns>An expression representing the static function call.</returns>
     /// <exception cref="ArgumentException"><paramref name="functionName" /> represents a function that cannot be found.</exception>
     protected Expression GenerateStaticUnaryFunctionCall<T>(string functionName) =>
-        this.GenerateStaticUnaryFunctionCall(
+        GenerateStaticUnaryFunctionCall(
             typeof(T),
             functionName,
             null);
@@ -95,7 +95,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     protected Expression GenerateStaticUnaryFunctionCall<T>(
         string functionName,
         Tolerance? tolerance) =>
-        this.GenerateStaticUnaryFunctionCall(
+        GenerateStaticUnaryFunctionCall(
             typeof(T),
             functionName,
             tolerance);
@@ -110,7 +110,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     protected Expression GenerateStaticUnaryFunctionCall(
         Type t,
         string functionName) =>
-        this.GenerateStaticUnaryFunctionCall(
+        GenerateStaticUnaryFunctionCall(
             t,
             functionName,
             null);
@@ -140,7 +140,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
                 nameof(functionName));
         }
 
-        Type parameterType = ParameterTypeFromParameter(this.Parameter);
+        Type parameterType = ParameterTypeFromParameter(Parameter);
 
         MethodInfo? mi = t.GetMethodWithExactParameters(
             functionName,
@@ -180,8 +180,8 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
         }
 
         Expression e = tolerance == null
-            ? this.Parameter.GenerateExpression()
-            : this.Parameter.GenerateExpression(tolerance);
+            ? Parameter.GenerateExpression()
+            : Parameter.GenerateExpression(tolerance);
 
         if (e.Type != parameterType)
         {
@@ -203,7 +203,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     /// <returns>An expression representing a property call.</returns>
     /// <exception cref="ArgumentException"><paramref name="propertyName" /> represents a property that cannot be found.</exception>
     protected Expression GenerateParameterPropertyCall<T>(string propertyName) =>
-        this.GenerateParameterPropertyCall<T>(
+        GenerateParameterPropertyCall<T>(
             propertyName,
             null);
 
@@ -238,7 +238,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
                               nameof(propertyName));
 
         return Expression.Property(
-            tolerance == null ? this.Parameter.GenerateExpression() : this.Parameter.GenerateExpression(tolerance),
+            tolerance == null ? Parameter.GenerateExpression() : Parameter.GenerateExpression(tolerance),
             pi);
     }
 
@@ -250,7 +250,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     /// <returns>An expression representing a property call.</returns>
     /// <exception cref="ArgumentException"><paramref name="methodName" /> represents a property that cannot be found.</exception>
     protected Expression GenerateParameterMethodCall<T>(string methodName) =>
-        this.GenerateParameterMethodCall<T>(
+        GenerateParameterMethodCall<T>(
             methodName,
             null);
 
@@ -288,10 +288,10 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
 
         return tolerance == null
             ? Expression.Call(
-                this.Parameter.GenerateExpression(),
+                Parameter.GenerateExpression(),
                 mi)
             : Expression.Call(
-                this.Parameter.GenerateExpression(tolerance),
+                Parameter.GenerateExpression(tolerance),
                 mi);
     }
 }

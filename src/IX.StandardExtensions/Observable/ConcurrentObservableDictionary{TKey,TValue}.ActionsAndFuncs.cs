@@ -35,9 +35,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 return value;
@@ -46,7 +46,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     return value;
@@ -56,7 +56,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -66,19 +66,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -104,9 +104,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 valueAction(value, param1);
@@ -116,7 +116,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     valueAction(value, param1);
@@ -127,7 +127,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -137,19 +137,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -173,16 +173,16 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already removed it.
-                    oldIndex = this.InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
+                    oldIndex = InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
 
                     action(value, param1);
                 }
@@ -203,19 +203,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (oldIndex == -1)
         {
             // If no index could be found for an item (Dictionary remove)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -244,9 +244,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 return value;
@@ -255,7 +255,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     return value;
@@ -265,7 +265,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -275,19 +275,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -315,9 +315,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 valueAction(value, param1, param2);
@@ -327,7 +327,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     valueAction(value, param1, param2);
@@ -338,7 +338,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -348,19 +348,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -386,16 +386,16 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already removed it.
-                    oldIndex = this.InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
+                    oldIndex = InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
 
                     action(value, param1, param2);
                 }
@@ -416,19 +416,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (oldIndex == -1)
         {
             // If no index could be found for an item (Dictionary remove)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -459,9 +459,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 return value;
@@ -470,7 +470,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     return value;
@@ -480,7 +480,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2, param3);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -490,19 +490,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -532,9 +532,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 valueAction(value, param1, param2, param3);
@@ -544,7 +544,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     valueAction(value, param1, param2, param3);
@@ -555,7 +555,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2, param3);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -565,19 +565,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -605,16 +605,16 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already removed it.
-                    oldIndex = this.InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
+                    oldIndex = InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
 
                     action(value, param1, param2, param3);
                 }
@@ -635,19 +635,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (oldIndex == -1)
         {
             // If no index could be found for an item (Dictionary remove)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -680,9 +680,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 return value;
@@ -691,7 +691,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     return value;
@@ -701,7 +701,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2, param3, param4);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -711,19 +711,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -755,9 +755,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 valueAction(value, param1, param2, param3, param4);
@@ -767,7 +767,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     valueAction(value, param1, param2, param3, param4);
@@ -778,7 +778,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2, param3, param4);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -788,19 +788,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -830,16 +830,16 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already removed it.
-                    oldIndex = this.InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
+                    oldIndex = InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
 
                     action(value, param1, param2, param3, param4);
                 }
@@ -860,19 +860,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (oldIndex == -1)
         {
             // If no index could be found for an item (Dictionary remove)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -907,9 +907,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 return value;
@@ -918,7 +918,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     return value;
@@ -928,7 +928,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2, param3, param4, param5);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -938,19 +938,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -984,9 +984,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 valueAction(value, param1, param2, param3, param4, param5);
@@ -996,7 +996,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     valueAction(value, param1, param2, param3, param4, param5);
@@ -1007,7 +1007,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2, param3, param4, param5);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -1017,19 +1017,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -1061,16 +1061,16 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already removed it.
-                    oldIndex = this.InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
+                    oldIndex = InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
 
                     action(value, param1, param2, param3, param4, param5);
                 }
@@ -1091,19 +1091,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (oldIndex == -1)
         {
             // If no index could be found for an item (Dictionary remove)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -1140,9 +1140,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 return value;
@@ -1151,7 +1151,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     return value;
@@ -1161,7 +1161,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2, param3, param4, param5, param6);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -1171,19 +1171,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -1219,9 +1219,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 valueAction(value, param1, param2, param3, param4, param5, param6);
@@ -1231,7 +1231,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     valueAction(value, param1, param2, param3, param4, param5, param6);
@@ -1242,7 +1242,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2, param3, param4, param5, param6);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -1252,19 +1252,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -1298,16 +1298,16 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already removed it.
-                    oldIndex = this.InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
+                    oldIndex = InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
 
                     action(value, param1, param2, param3, param4, param5, param6);
                 }
@@ -1328,19 +1328,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (oldIndex == -1)
         {
             // If no index could be found for an item (Dictionary remove)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -1379,9 +1379,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 return value;
@@ -1390,7 +1390,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     return value;
@@ -1400,7 +1400,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2, param3, param4, param5, param6, param7);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -1410,19 +1410,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -1460,9 +1460,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 valueAction(value, param1, param2, param3, param4, param5, param6, param7);
@@ -1472,7 +1472,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     valueAction(value, param1, param2, param3, param4, param5, param6, param7);
@@ -1483,7 +1483,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2, param3, param4, param5, param6, param7);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -1493,19 +1493,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -1541,16 +1541,16 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already removed it.
-                    oldIndex = this.InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
+                    oldIndex = InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
 
                     action(value, param1, param2, param3, param4, param5, param6, param7);
                 }
@@ -1571,19 +1571,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (oldIndex == -1)
         {
             // If no index could be found for an item (Dictionary remove)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -1624,9 +1624,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 return value;
@@ -1635,7 +1635,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     return value;
@@ -1645,7 +1645,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2, param3, param4, param5, param6, param7, param8);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -1655,19 +1655,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -1707,9 +1707,9 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 // Within read lock, if the key is found, return the value.
                 valueAction(value, param1, param2, param3, param4, param5, param6, param7, param8);
@@ -1719,7 +1719,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already added it.
                     valueAction(value, param1, param2, param3, param4, param5, param6, param7, param8);
@@ -1730,7 +1730,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
                 value = valueGenerator(param1, param2, param3, param4, param5, param6, param7, param8);
 
                 // Add the item
-                newIndex = this.InternalContainer.Add(key, value);
+                newIndex = InternalContainer.Add(key, value);
             }
         }
 
@@ -1740,19 +1740,19 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return value;
     }
@@ -1790,16 +1790,16 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
         {
-            if (this.InternalContainer.TryGetValue(key, out value))
+            if (InternalContainer.TryGetValue(key, out value))
             {
                 rwl.Upgrade();
 
-                if (this.InternalContainer.TryGetValue(key, out value))
+                if (InternalContainer.TryGetValue(key, out value))
                 {
                     // Re-check within a write lock, to ensure that something else hasn't already removed it.
-                    oldIndex = this.InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
+                    oldIndex = InternalContainer.Remove(new KeyValuePair<TKey, TValue>(key, value));
 
                     action(value, param1, param2, param3, param4, param5, param6, param7, param8);
                 }
@@ -1820,18 +1820,18 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         if (oldIndex == -1)
         {
             // If no index could be found for an item (Dictionary remove)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 }

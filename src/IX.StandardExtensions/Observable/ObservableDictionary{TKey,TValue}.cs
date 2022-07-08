@@ -361,9 +361,9 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         {
             this.RequiresNotDisposed();
 
-            using (this.ReadLock())
+            using (ReadLock())
             {
-                return this.InternalContainer.Keys;
+                return InternalContainer.Keys;
             }
         }
     }
@@ -377,9 +377,9 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         {
             this.RequiresNotDisposed();
 
-            using (this.ReadLock())
+            using (ReadLock())
             {
-                return this.InternalContainer.Values;
+                return InternalContainer.Values;
             }
         }
     }
@@ -387,12 +387,12 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
     /// <summary>
     ///     Gets the collection of keys in this dictionary.
     /// </summary>
-    IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => this.Keys;
+    IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => Keys;
 
     /// <summary>
     ///     Gets the collection of values in this dictionary.
     /// </summary>
-    IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => this.Values;
+    IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => Values;
 
     /// <summary>
     ///     Gets the internal object container.
@@ -412,9 +412,9 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         {
             this.RequiresNotDisposed();
 
-            using (this.ReadLock())
+            using (ReadLock())
             {
-                return this.InternalContainer[key];
+                return InternalContainer[key];
             }
         }
 
@@ -426,10 +426,10 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             this.RequiresNotDisposed();
 
             // ACTION
-            IDictionary<TKey, TValue> dictionary = this.InternalContainer;
+            IDictionary<TKey, TValue> dictionary = InternalContainer;
 
             // Within a write lock
-            using (this.WriteLock())
+            using (WriteLock())
             {
                 if (dictionary.TryGetValue(
                         key,
@@ -439,7 +439,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
                     dictionary[key] = value;
 
                     // Push a change undo level
-                    this.PushUndoLevel(
+                    PushUndoLevel(
                         new DictionaryChangeStateChange<TKey, TValue>(
                             key,
                             value,
@@ -453,7 +453,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
                         value);
 
                     // Push an add undo level
-                    this.PushUndoLevel(
+                    PushUndoLevel(
                         new DictionaryAddStateChange<TKey, TValue>(
                             key,
                             value));
@@ -461,7 +461,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             }
 
             // NOTIFICATION
-            this.BroadcastChange();
+            BroadcastChange();
         }
     }
 
@@ -488,15 +488,15 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         // ACTION
 
         // Under write lock
-        using (this.WriteLock())
+        using (WriteLock())
         {
             // Add the item
-            var newIndex = this.InternalContainer.Add(
+            var newIndex = InternalContainer.Add(
                 key,
                 value);
 
             // Push the undo level
-            this.PushUndoLevel(
+            PushUndoLevel(
                 new AddStateChange<KeyValuePair<TKey, TValue>>(
                     new KeyValuePair<TKey, TValue>(
                         key,
@@ -505,7 +505,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         }
 
         // NOTIFICATIONS
-        this.BroadcastChange();
+        BroadcastChange();
     }
 
     /// <summary>
@@ -517,9 +517,9 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            return this.InternalContainer.ContainsKey(key);
+            return InternalContainer.ContainsKey(key);
         }
     }
 
@@ -537,10 +537,10 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
 
         // ACTION
         bool result;
-        IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
+        IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
         // Within a read/write lock
-        using (ReadWriteSynchronizationLocker locker = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker locker = ReadWriteLock())
         {
             // Find out if there's anything to remove
             if (!container.TryGetValue(
@@ -559,7 +559,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             // Push undo level
             if (result)
             {
-                this.PushUndoLevel(
+                PushUndoLevel(
                     new DictionaryRemoveStateChange<TKey, TValue>(
                         key,
                         value));
@@ -569,7 +569,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         // NOTIFICATION AND RETURN
         if (result)
         {
-            this.BroadcastChange();
+            BroadcastChange();
         }
 
         return result;
@@ -588,9 +588,9 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
     {
         this.RequiresNotDisposed();
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            return this.InternalContainer.TryGetValue(
+            return InternalContainer.TryGetValue(
                 key,
                 out value);
         }
@@ -604,9 +604,9 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
     /// </summary>
     protected override void ContentsMayHaveChanged()
     {
-        this.RaisePropertyChanged(nameof(this.Keys));
-        this.RaisePropertyChanged(nameof(this.Values));
-        this.RaisePropertyChanged(Constants.ItemsName);
+        RaisePropertyChanged(nameof(Keys));
+        RaisePropertyChanged(nameof(Values));
+        RaisePropertyChanged(Constants.ItemsName);
     }
 
     /// <summary>
@@ -617,7 +617,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
     protected override void InterpretBlockStateChangesOutsideLock(
         Action<object?>?[] actions,
         object?[] states) =>
-        this.BroadcastChange();
+        BroadcastChange();
 
     /// <summary>
     ///     Has the last operation undone.
@@ -643,7 +643,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         {
             case AddStateChange<KeyValuePair<TKey, TValue>>(var keyValuePair, _):
             {
-                IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
+                IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
                 container.Remove(keyValuePair.Key);
 
@@ -663,7 +663,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
 
             case RemoveStateChange<KeyValuePair<TKey, TValue>>(_, var (key, value)):
             {
-                IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
+                IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
                 container.Add(
                     key,
@@ -685,7 +685,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
 
             case ClearStateChange<KeyValuePair<TKey, TValue>>(var keyValuePairs):
             {
-                IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
+                IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
                 foreach ((TKey key, TValue value) in keyValuePairs)
                 {
@@ -710,7 +710,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
 
             case DictionaryAddStateChange<TKey, TValue>(var key, _):
             {
-                IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
+                IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
                 container.Remove(key);
 
@@ -730,7 +730,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
 
             case DictionaryRemoveStateChange<TKey, TValue>(var key, var value):
             {
-                IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
+                IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
                 container.Add(
                     key,
@@ -752,7 +752,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
 
             case DictionaryChangeStateChange<TKey, TValue>(var key, _, var oldValue):
             {
-                IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
+                IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
                 container[key] = oldValue;
 
@@ -806,7 +806,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         {
             case AddStateChange<KeyValuePair<TKey, TValue>>(var (key, value), _):
             {
-                IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
+                IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
                 container.Add(
                     key,
@@ -828,7 +828,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
 
             case RemoveStateChange<KeyValuePair<TKey, TValue>>(_, var keyValuePair):
             {
-                IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
+                IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
                 container.Remove(keyValuePair.Key);
 
@@ -848,7 +848,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
 
             case ClearStateChange<KeyValuePair<TKey, TValue>>:
             {
-                this.InternalContainer.Clear();
+                InternalContainer.Clear();
 
                 toInvokeOutsideLock = innerState =>
                 {
@@ -866,7 +866,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
 
             case DictionaryAddStateChange<TKey, TValue>(var key, var value):
             {
-                IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
+                IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
                 container.Add(
                     key,
@@ -888,7 +888,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
 
             case DictionaryRemoveStateChange<TKey, TValue>(var key, _):
             {
-                IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
+                IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
                 container.Remove(key);
 
@@ -908,7 +908,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
 
             case DictionaryChangeStateChange<TKey, TValue>(var key, var newValue, _):
             {
-                IDictionaryCollectionAdapter<TKey, TValue> container = this.InternalContainer;
+                IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
                 container[key] = newValue;
 
@@ -940,11 +940,11 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
 
     private void BroadcastChange()
     {
-        this.RaiseCollectionReset();
-        this.RaisePropertyChanged(nameof(this.Keys));
-        this.RaisePropertyChanged(nameof(this.Values));
-        this.RaisePropertyChanged(nameof(this.Count));
-        this.RaisePropertyChanged(Constants.ItemsName);
+        RaiseCollectionReset();
+        RaisePropertyChanged(nameof(Keys));
+        RaisePropertyChanged(nameof(Values));
+        RaisePropertyChanged(nameof(Count));
+        RaisePropertyChanged(Constants.ItemsName);
     }
 
 #endregion

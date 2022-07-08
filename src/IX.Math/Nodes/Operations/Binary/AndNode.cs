@@ -37,11 +37,11 @@ internal sealed class AndNode : LogicalOperationNodeBase
     ///     A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() =>
-        this.Left switch
+        Left switch
         {
-            NumericNode nnLeft when this.Right is NumericNode nnRight => new NumericNode(
+            NumericNode nnLeft when Right is NumericNode nnRight => new NumericNode(
                 nnLeft.ExtractInteger() & nnRight.ExtractInteger()),
-            BoolNode bnLeft when this.Right is BoolNode bnRight => new BoolNode(bnLeft.Value & bnRight.Value),
+            BoolNode bnLeft when Right is BoolNode bnRight => new BoolNode(bnLeft.Value & bnRight.Value),
             _ => this
         };
 
@@ -52,8 +52,8 @@ internal sealed class AndNode : LogicalOperationNodeBase
     /// <returns>A deep clone.</returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
         new AndNode(
-            this.Left.DeepClone(context),
-            this.Right.DeepClone(context));
+            Left.DeepClone(context),
+            Right.DeepClone(context));
 
     /// <summary>
     ///     Generates the expression that will be compiled into code.
@@ -63,8 +63,8 @@ internal sealed class AndNode : LogicalOperationNodeBase
     /// </returns>
     protected override Expression GenerateExpressionInternal() =>
         Expression.And(
-            this.Left.GenerateExpression(),
-            this.Right.GenerateExpression());
+            Left.GenerateExpression(),
+            Right.GenerateExpression());
 
     /// <summary>
     ///     Generates the expression with tolerance that will be compiled into code.
@@ -73,6 +73,6 @@ internal sealed class AndNode : LogicalOperationNodeBase
     /// <returns>The expression.</returns>
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         Expression.And(
-            this.Left.GenerateExpression(tolerance),
-            this.Right.GenerateExpression(tolerance));
+            Left.GenerateExpression(tolerance),
+            Right.GenerateExpression(tolerance));
 }

@@ -37,9 +37,9 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     /// </summary>
     public LevelDictionary()
     {
-        this.internalDictionary = new Dictionary<TKey, TValue>();
-        this.keyLevels = new Dictionary<int, List<TKey>>();
-        this.levelKeys = new Dictionary<TKey, int>();
+        internalDictionary = new Dictionary<TKey, TValue>();
+        keyLevels = new Dictionary<int, List<TKey>>();
+        levelKeys = new Dictionary<TKey, int>();
     }
 
 #endregion
@@ -56,9 +56,9 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     {
         get
         {
-            this.ThrowIfCurrentObjectDisposed();
+            ThrowIfCurrentObjectDisposed();
 
-            return this.internalDictionary.Count;
+            return internalDictionary.Count;
         }
     }
 
@@ -76,9 +76,9 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     {
         get
         {
-            this.ThrowIfCurrentObjectDisposed();
+            ThrowIfCurrentObjectDisposed();
 
-            return this.internalDictionary.Keys;
+            return internalDictionary.Keys;
         }
     }
 
@@ -90,9 +90,9 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     {
         get
         {
-            this.ThrowIfCurrentObjectDisposed();
+            ThrowIfCurrentObjectDisposed();
 
-            return this.keyLevels.OrderBy(p => p.Key)
+            return keyLevels.OrderBy(p => p.Key)
                 .Select(
                     p => new KeyValuePair<int, TKey[]>(
                         p.Key,
@@ -108,9 +108,9 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     {
         get
         {
-            this.ThrowIfCurrentObjectDisposed();
+            ThrowIfCurrentObjectDisposed();
 
-            return this.internalDictionary.Values;
+            return internalDictionary.Values;
         }
     }
 
@@ -123,16 +123,16 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     {
         get
         {
-            this.ThrowIfCurrentObjectDisposed();
+            ThrowIfCurrentObjectDisposed();
 
-            return this.internalDictionary[key];
+            return internalDictionary[key];
         }
 
         set
         {
-            this.ThrowIfCurrentObjectDisposed();
+            ThrowIfCurrentObjectDisposed();
 
-            this.internalDictionary[key] = value;
+            internalDictionary[key] = value;
         }
     }
 
@@ -147,11 +147,11 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     /// </summary>
     public void Clear()
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
-        this.internalDictionary.Clear();
-        this.keyLevels.Clear();
-        this.levelKeys.Clear();
+        internalDictionary.Clear();
+        keyLevels.Clear();
+        levelKeys.Clear();
     }
 
     /// <summary>
@@ -161,9 +161,9 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     /// <returns><see langword="true" /> if the dictionary contains the key; otherwise, <see langword="false" />.</returns>
     public bool ContainsKey(TKey key)
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
-        return this.internalDictionary.ContainsKey(key);
+        return internalDictionary.ContainsKey(key);
     }
 
     /// <summary>
@@ -176,9 +176,9 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
         TKey key,
         out TValue value)
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
-        return this.internalDictionary.TryGetValue(
+        return internalDictionary.TryGetValue(
             key,
             out value!);
     }
@@ -203,9 +203,9 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     [ExcludeFromCodeCoverage]
     bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
-        return (this.internalDictionary as ICollection<KeyValuePair<TKey, TValue>>).Contains(item);
+        return (internalDictionary as ICollection<KeyValuePair<TKey, TValue>>).Contains(item);
     }
 
     /// <summary>
@@ -218,9 +218,9 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
         KeyValuePair<TKey, TValue>[] array,
         int arrayIndex)
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
-        (this.internalDictionary as ICollection<KeyValuePair<TKey, TValue>>).CopyTo(
+        (internalDictionary as ICollection<KeyValuePair<TKey, TValue>>).CopyTo(
             array,
             arrayIndex);
     }
@@ -231,7 +231,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     /// <param name="item">The item.</param>
     /// <returns><see langword="true" /> if the removal was a success, <see langword="false" /> otherwise.</returns>
     [ExcludeFromCodeCoverage]
-    bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item) => this.Remove(item.Key);
+    bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item) => Remove(item.Key);
 
     /// <summary>
     ///     Adds the specified key.
@@ -254,7 +254,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     /// <param name="key">The key.</param>
     /// <returns><see langword="true" /> if the key has been removed, <see langword="false" /> otherwise.</returns>
     [ExcludeFromCodeCoverage]
-    bool IDictionary<TKey, TValue>.Remove(TKey key) => this.Remove(in key);
+    bool IDictionary<TKey, TValue>.Remove(TKey key) => Remove(in key);
 
     /// <summary>
     ///     Gets the enumerator.
@@ -265,7 +265,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "Explicit interface implementation.")]
     [ExcludeFromCodeCoverage]
-    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     /// <summary>
     ///     Gets the enumerator.
@@ -277,7 +277,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
         Justification = "Explicit interface implementation.")]
     [ExcludeFromCodeCoverage]
     IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() =>
-        this.GetEnumerator();
+        GetEnumerator();
 
 #endregion
 
@@ -288,23 +288,23 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     /// <returns><see langword="true" /> if the key has been removed, <see langword="false" /> otherwise.</returns>
     public bool Remove(in TKey key)
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
-        if (!this.levelKeys.TryGetValue(
+        if (!levelKeys.TryGetValue(
                 key,
                 out var level))
         {
             return false;
         }
 
-        if (!this.internalDictionary.Remove(key))
+        if (!internalDictionary.Remove(key))
         {
             return false;
         }
 
-        this.keyLevels[level]
+        keyLevels[level]
             .Remove(key);
-        this.levelKeys.Remove(key);
+        levelKeys.Remove(key);
 
         return true;
     }
@@ -326,16 +326,16 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
             throw new ArgumentOutOfRangeException(nameof(level));
         }
 
-        if (this.internalDictionary.ContainsKey(key))
+        if (internalDictionary.ContainsKey(key))
         {
             throw new InvalidOperationException(Resources.ErrorKeyFoundInDictionary);
         }
 
-        this.internalDictionary.Add(
+        internalDictionary.Add(
             key,
             value);
 
-        if (this.keyLevels.TryGetValue(
+        if (keyLevels.TryGetValue(
                 level,
                 out List<TKey>? list))
         {
@@ -343,7 +343,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
         }
         else
         {
-            this.keyLevels.Add(
+            keyLevels.Add(
                 level,
                 new List<TKey>
                 {
@@ -351,7 +351,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
                 });
         }
 
-        this.levelKeys.Add(
+        levelKeys.Add(
             key,
             level);
     }
@@ -362,9 +362,9 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     /// <returns>The dictionary's enumerator.</returns>
     public Dictionary<TKey, TValue>.Enumerator GetEnumerator()
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
-        return this.internalDictionary.GetEnumerator();
+        return internalDictionary.GetEnumerator();
     }
 
     /// <summary>
@@ -385,12 +385,12 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
         Justification = "We use ReSharper.")]
     public IEnumerable<TValue> EnumerateValuesOnLevelKeys()
     {
-        foreach (List<TKey> keyList in this.keyLevels.OrderBy(p => p.Key)
+        foreach (List<TKey> keyList in keyLevels.OrderBy(p => p.Key)
                      .Select(p => p.Value))
         {
             foreach (TKey key in keyList)
             {
-                yield return this.internalDictionary[key];
+                yield return internalDictionary[key];
             }
         }
     }
@@ -402,9 +402,9 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     /// </summary>
     protected override void DisposeManagedContext()
     {
-        this.internalDictionary.Clear();
-        this.keyLevels.Clear();
-        this.levelKeys.Clear();
+        internalDictionary.Clear();
+        keyLevels.Clear();
+        levelKeys.Clear();
 
         base.DisposeManagedContext();
     }
@@ -429,7 +429,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
             Justification = "Not a problem.")]
         internal KeyLevelEnumerable(LevelDictionary<TKey, TValue> instance)
         {
-            this.values = (
+            values = (
                 from p in instance.keyLevels.OrderBy(p => p.Key)
                     .SelectMany(p => p.Value)
                 join q in instance.internalDictionary.AsEnumerable() on p equals q.Key
@@ -440,7 +440,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
         ///     Gets an enumerator for this level dictionary.
         /// </summary>
         /// <returns>An enumerator that enumerates by key levels.</returns>
-        public KeyLevelEnumerator GetEnumerator() => new(this.values);
+        public KeyLevelEnumerator GetEnumerator() => new(values);
 
         /// <summary>
         ///     Gets an enumerator for this level dictionary.
@@ -451,7 +451,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "Explicit interface implementation.")]
         [ExcludeFromCodeCoverage]
-        IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator() => this.GetEnumerator();
+        IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator() => GetEnumerator();
 
         /// <summary>
         ///     Gets an enumerator for this level dictionary.
@@ -462,7 +462,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
             "HAA0601:Value type to reference type conversion causing boxing allocation",
             Justification = "Explicit interface implementation.")]
         [ExcludeFromCodeCoverage]
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>
         ///     An enumerator for the <see cref="LevelDictionary{TKey,TValue}" />, so that it can enumerate on level keys.
@@ -477,7 +477,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
             {
                 this.values = values;
 
-                this.index = 0;
+                index = 0;
             }
 
             /// <summary>Gets the element in the collection at the current position of the enumerator.</summary>
@@ -486,17 +486,17 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
             {
                 get
                 {
-                    if (this.index == -1)
+                    if (index == -1)
                     {
                         throw new ObjectDisposedException(nameof(KeyLevelEnumerator));
                     }
 
-                    if (this.index >= this.values.Length)
+                    if (index >= values.Length)
                     {
                         throw new IndexOutOfRangeException(Resources.TheLevelDictionaryHasNoMoreItems);
                     }
 
-                    return this.values[this.index];
+                    return values[index];
                 }
             }
 
@@ -506,12 +506,12 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
                 "Performance",
                 "HAA0601:Value type to reference type conversion causing boxing allocation",
                 Justification = "This is how the property works, and should not be used directly anyway.")]
-            object? IEnumerator.Current => this.Current;
+            object? IEnumerator.Current => Current;
 
             /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
             public void Dispose() =>
                 Interlocked.Exchange(
-                    ref this.index,
+                    ref index,
                     -1);
 
             /// <summary>Advances the enumerator to the next element of the collection.</summary>
@@ -522,17 +522,17 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
             /// <exception cref="T:System.InvalidOperationException">The collection was modified after the enumerator was created.</exception>
             public bool MoveNext()
             {
-                if (this.index == -1)
+                if (index == -1)
                 {
                     throw new ObjectDisposedException(nameof(KeyLevelEnumerator));
                 }
 
-                if (this.index == this.values.Length)
+                if (index == values.Length)
                 {
                     return false;
                 }
 
-                Interlocked.Increment(ref this.index);
+                Interlocked.Increment(ref index);
 
                 return true;
             }
@@ -541,12 +541,12 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
             /// <exception cref="T:System.InvalidOperationException">The collection was modified after the enumerator was created.</exception>
             public void Reset()
             {
-                if (this.index == -1)
+                if (index == -1)
                 {
                     throw new ObjectDisposedException(nameof(KeyLevelEnumerator));
                 }
 
-                this.index = 0;
+                index = 0;
             }
         }
     }

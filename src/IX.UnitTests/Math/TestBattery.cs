@@ -28,7 +28,7 @@ namespace IX.UnitTests.Math
         public TestBattery(CachedExpressionProviderFixture fixture)
         {
             this.fixture = fixture;
-            this.comparer = new ReturnValueEqualityComparer();
+            comparer = new ReturnValueEqualityComparer();
         }
 
         private static object GenerateFuncOutOfParameterValue(object tempParameter) => tempParameter switch
@@ -97,7 +97,7 @@ namespace IX.UnitTests.Math
                     }
                 }
 
-                this.AssertResults(
+                AssertResults(
                     in expectedResult,
                     in result);
             }
@@ -149,7 +149,7 @@ namespace IX.UnitTests.Math
                     }
                 }
 
-                this.AssertResults(
+                AssertResults(
                     in expectedResult,
                     in result);
             }
@@ -178,11 +178,11 @@ namespace IX.UnitTests.Math
         {
             try
             {
-                ComputedExpression del = this.fixture.CachedService.Interpret(expression);
+                ComputedExpression del = fixture.CachedService.Interpret(expression);
 
                 object result = del.Compute(parameters?.OrderBy(q => expression.IndexOf(q.Key, StringComparison.Ordinal)).Select(p => p.Value).ToArray() ?? new object[0]);
 
-                this.AssertResults(in expectedResult, in result);
+                AssertResults(in expectedResult, in result);
             }
             catch (DivideByZeroException)
             {
@@ -209,7 +209,7 @@ namespace IX.UnitTests.Math
             {
                 var finder = new Mock<IDataFinder>(MockBehavior.Loose);
 
-                ComputedExpression del = this.fixture.CachedService.Interpret(expression);
+                ComputedExpression del = fixture.CachedService.Interpret(expression);
 
                 if (parameters != null)
                 {
@@ -226,7 +226,7 @@ namespace IX.UnitTests.Math
 
                 object result = del.Compute(finder.Object);
 
-                this.AssertResults(in expectedResult, in result);
+                AssertResults(in expectedResult, in result);
             }
             catch (DivideByZeroException)
             {
@@ -277,7 +277,7 @@ namespace IX.UnitTests.Math
                     }
                 }
 
-                this.AssertResults(in expectedResult, in result);
+                AssertResults(in expectedResult, in result);
             }
             catch (DivideByZeroException)
             {
@@ -304,7 +304,7 @@ namespace IX.UnitTests.Math
             {
                 var finder = new Mock<IDataFinder>(MockBehavior.Loose);
 
-                ComputedExpression del = this.fixture.CachedService.Interpret(expression);
+                ComputedExpression del = fixture.CachedService.Interpret(expression);
 
                 if (parameters != null)
                 {
@@ -322,7 +322,7 @@ namespace IX.UnitTests.Math
 
                 object result = del.Compute(finder.Object);
 
-                this.AssertResults(in expectedResult, in result);
+                AssertResults(in expectedResult, in result);
             }
             catch (DivideByZeroException)
             {
@@ -354,7 +354,7 @@ namespace IX.UnitTests.Math
                 {
                     var finder = new Mock<IDataFinder>(MockBehavior.Loose);
 
-                    ComputedExpression del = this.fixture.CachedService.Interpret(expression);
+                    ComputedExpression del = fixture.CachedService.Interpret(expression);
 
                     if (parameters != null)
                     {
@@ -372,7 +372,7 @@ namespace IX.UnitTests.Math
 
                     object result = del.Compute(finder.Object);
 
-                    this.AssertResults(in expectedResult, in result);
+                    AssertResults(in expectedResult, in result);
                 }
             }
             catch (DivideByZeroException)
@@ -395,7 +395,7 @@ namespace IX.UnitTests.Math
             Assert.Equal(
                 expectedResult,
                 result,
-                this.comparer);
+                comparer);
         }
     }
 }

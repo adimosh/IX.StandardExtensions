@@ -45,7 +45,7 @@ internal sealed class ScientificFormatNumberExtractor : Extensibility.IConstants
 
         while (process.Length > location)
         {
-            Match match = this.exponentialNotationRegex.Match(
+            Match match = exponentialNotationRegex.Match(
                 process,
                 location);
 
@@ -62,7 +62,7 @@ internal sealed class ScientificFormatNumberExtractor : Extensibility.IConstants
 
             if (!string.IsNullOrWhiteSpace(itemName))
             {
-                process = this.exponentialNotationRegex.Replace(
+                process = exponentialNotationRegex.Replace(
                     process,
                     itemName,
                     1,

@@ -35,12 +35,12 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
         Requires.NotNull(left);
         Requires.NotNull(right);
 
-        this.EnsureCompatibleOperands(
+        EnsureCompatibleOperands(
             left,
             right);
 
-        this.Left = left.Simplify();
-        this.Right = right.Simplify();
+        Left = left.Simplify();
+        Right = right.Simplify();
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
     /// <value>
     ///     <c>true</c> if this instance is tolerant; otherwise, <c>false</c>.
     /// </value>
-    public override bool IsTolerant => this.Left.IsTolerant || this.Right.IsTolerant;
+    public override bool IsTolerant => Left.IsTolerant || Right.IsTolerant;
 
     /// <summary>
     ///     Gets the left operand.
@@ -80,7 +80,7 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
     /// <param name="context">The deep cloning context.</param>
     /// <returns>A deep clone.</returns>
     protected override OperationNodeBase DeepCloneNode(NodeCloningContext context) =>
-        (OperationNodeBase)this.DeepClone(context);
+        (OperationNodeBase)DeepClone(context);
 
     /// <summary>
     ///     Ensures that the operands are compatible.
@@ -97,12 +97,12 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
     /// <param name="func">The function.</param>
     protected override void SetSpecialObjectRequestFunctionForSubObjects(Func<Type, object> func)
     {
-        if (this.Left is ISpecialRequestNode specialRequestNodeLeft)
+        if (Left is ISpecialRequestNode specialRequestNodeLeft)
         {
             specialRequestNodeLeft.SetRequestSpecialObjectFunction(func);
         }
 
-        if (this.Right is ISpecialRequestNode specialRequestNodeRight)
+        if (Right is ISpecialRequestNode specialRequestNodeRight)
         {
             specialRequestNodeRight.SetRequestSpecialObjectFunction(func);
         }
@@ -114,14 +114,14 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
     /// <returns>The left and right operand expressions.</returns>
     protected (Expression Left, Expression Right) GetExpressionsOfSameTypeFromOperands()
     {
-        if (this.Left.ReturnType == SupportedValueType.String || this.Right.ReturnType == SupportedValueType.String)
+        if (Left.ReturnType == SupportedValueType.String || Right.ReturnType == SupportedValueType.String)
         {
-            return (this.Left.GenerateStringExpression(),
-                this.Right.GenerateStringExpression());
+            return (Left.GenerateStringExpression(),
+                Right.GenerateStringExpression());
         }
 
-        Expression le = this.Left.GenerateExpression();
-        Expression re = this.Right.GenerateExpression();
+        Expression le = Left.GenerateExpression();
+        Expression re = Right.GenerateExpression();
 
         if (le.Type == typeof(double) && re.Type == typeof(long))
         {
@@ -149,14 +149,14 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
     /// <returns>The left and right operand expressions.</returns>
     protected (Expression Left, Expression Right) GetExpressionsOfSameTypeFromOperands(Tolerance? tolerance)
     {
-        if (this.Left.ReturnType == SupportedValueType.String || this.Right.ReturnType == SupportedValueType.String)
+        if (Left.ReturnType == SupportedValueType.String || Right.ReturnType == SupportedValueType.String)
         {
-            return (this.Left.GenerateStringExpression(tolerance),
-                this.Right.GenerateStringExpression(tolerance));
+            return (Left.GenerateStringExpression(tolerance),
+                Right.GenerateStringExpression(tolerance));
         }
 
-        Expression le = this.Left.GenerateExpression(tolerance);
-        Expression re = this.Right.GenerateExpression(tolerance);
+        Expression le = Left.GenerateExpression(tolerance);
+        Expression re = Right.GenerateExpression(tolerance);
 
         if (le.Type == typeof(double) && re.Type == typeof(long))
         {

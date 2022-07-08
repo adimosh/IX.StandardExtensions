@@ -60,7 +60,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     {
         if (this.CollectionChanged != null)
         {
-            this.Invoke(this.CollectionResetInvocationMethod);
+            Invoke(CollectionResetInvocationMethod);
         }
     }
 
@@ -80,7 +80,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     {
         if (this.CollectionChanged != null)
         {
-            this.InvokePost(this.CollectionResetInvocationMethod);
+            InvokePost(CollectionResetInvocationMethod);
         }
     }
 
@@ -100,7 +100,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     {
         if (this.CollectionChanged != null)
         {
-            this.InvokeSend(this.CollectionResetInvocationMethod);
+            InvokeSend(CollectionResetInvocationMethod);
         }
     }
 
@@ -124,7 +124,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.Invoke(this.CollectionResetInvocationMethod);
+            Invoke(CollectionResetInvocationMethod);
         }
     }
 
@@ -144,7 +144,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokePost(this.CollectionResetInvocationMethod);
+            InvokePost(CollectionResetInvocationMethod);
         }
     }
 
@@ -164,7 +164,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokeSend(this.CollectionResetInvocationMethod);
+            InvokeSend(CollectionResetInvocationMethod);
         }
     }
 
@@ -193,8 +193,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.Invoke(
-                this.CollectionAddItemInvocationMethod,
+            Invoke(
+                CollectionAddItemInvocationMethod,
                 index,
                 item);
         }
@@ -221,8 +221,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokePost(
-                this.CollectionAddItemInvocationMethod,
+            InvokePost(
+                CollectionAddItemInvocationMethod,
                 index,
                 item);
         }
@@ -249,8 +249,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokeSend(
-                this.CollectionAddItemInvocationMethod,
+            InvokeSend(
+                CollectionAddItemInvocationMethod,
                 index,
                 item);
         }
@@ -281,8 +281,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.Invoke(
-                this.CollectionAddItemsInvocationMethod,
+            Invoke(
+                CollectionAddItemsInvocationMethod,
                 index,
                 items);
         }
@@ -310,8 +310,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokePost(
-                this.CollectionAddItemsInvocationMethod,
+            InvokePost(
+                CollectionAddItemsInvocationMethod,
                 index,
                 items);
         }
@@ -339,8 +339,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokeSend(
-                this.CollectionAddItemsInvocationMethod,
+            InvokeSend(
+                CollectionAddItemsInvocationMethod,
                 index,
                 items);
         }
@@ -371,8 +371,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.Invoke(
-                this.CollectionRemoveItemInvocationMethod,
+            Invoke(
+                CollectionRemoveItemInvocationMethod,
                 index,
                 item);
         }
@@ -399,8 +399,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokePost(
-                this.CollectionRemoveItemInvocationMethod,
+            InvokePost(
+                CollectionRemoveItemInvocationMethod,
                 index,
                 item);
         }
@@ -427,8 +427,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokeSend(
-                this.CollectionRemoveItemInvocationMethod,
+            InvokeSend(
+                CollectionRemoveItemInvocationMethod,
                 index,
                 item);
         }
@@ -459,8 +459,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.Invoke(
-                this.CollectionRemoveItemsInvocationMethod,
+            Invoke(
+                CollectionRemoveItemsInvocationMethod,
                 index,
                 items);
         }
@@ -488,8 +488,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokePost(
-                this.CollectionRemoveItemsInvocationMethod,
+            InvokePost(
+                CollectionRemoveItemsInvocationMethod,
                 index,
                 items);
         }
@@ -517,8 +517,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokeSend(
-                this.CollectionRemoveItemsInvocationMethod,
+            InvokeSend(
+                CollectionRemoveItemsInvocationMethod,
                 index,
                 items);
         }
@@ -551,8 +551,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.Invoke(
-                this.CollectionMoveItemInvocationMethod,
+            Invoke(
+                CollectionMoveItemInvocationMethod,
                 oldIndex,
                 newIndex,
                 item);
@@ -582,8 +582,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokePost(
-                this.CollectionMoveItemInvocationMethod,
+            InvokePost(
+                CollectionMoveItemInvocationMethod,
                 oldIndex,
                 newIndex,
                 item);
@@ -613,8 +613,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokeSend(
-                this.CollectionMoveItemInvocationMethod,
+            InvokeSend(
+                CollectionMoveItemInvocationMethod,
                 oldIndex,
                 newIndex,
                 item);
@@ -648,8 +648,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.Invoke(
-                this.CollectionMoveItemsInvocationMethod,
+            Invoke(
+                CollectionMoveItemsInvocationMethod,
                 oldIndex,
                 newIndex,
                 items);
@@ -679,8 +679,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokePost(
-                this.CollectionMoveItemsInvocationMethod,
+            InvokePost(
+                CollectionMoveItemsInvocationMethod,
                 oldIndex,
                 newIndex,
                 items);
@@ -710,8 +710,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokeSend(
-                this.CollectionMoveItemsInvocationMethod,
+            InvokeSend(
+                CollectionMoveItemsInvocationMethod,
                 oldIndex,
                 newIndex,
                 items);
@@ -745,8 +745,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.Invoke(
-                this.CollectionReplaceItemInvocationMethod,
+            Invoke(
+                CollectionReplaceItemInvocationMethod,
                 index,
                 oldItem,
                 newItem);
@@ -777,8 +777,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokePost(
-                this.CollectionReplaceItemInvocationMethod,
+            InvokePost(
+                CollectionReplaceItemInvocationMethod,
                 index,
                 oldItem,
                 newItem);
@@ -808,8 +808,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokeSend(
-                this.CollectionReplaceItemInvocationMethod,
+            InvokeSend(
+                CollectionReplaceItemInvocationMethod,
                 index,
                 oldItem,
                 newItem);
@@ -843,8 +843,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.Invoke(
-                this.CollectionReplaceItemsInvocationMethod,
+            Invoke(
+                CollectionReplaceItemsInvocationMethod,
                 index,
                 oldItems,
                 newItems);
@@ -875,8 +875,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokePost(
-                this.CollectionReplaceItemsInvocationMethod,
+            InvokePost(
+                CollectionReplaceItemsInvocationMethod,
                 index,
                 oldItems,
                 newItems);
@@ -907,8 +907,8 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
 
         if (this.CollectionChanged != null)
         {
-            this.InvokeSend(
-                this.CollectionReplaceItemsInvocationMethod,
+            InvokeSend(
+                CollectionReplaceItemsInvocationMethod,
                 index,
                 oldItems,
                 newItems);

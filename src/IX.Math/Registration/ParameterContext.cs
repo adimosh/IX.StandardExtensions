@@ -32,9 +32,9 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
     {
         Requires.NotNullOrWhiteSpace(name);
 
-        this.Name = name;
+        Name = name;
         this.stringFormatters = stringFormatters;
-        this.SupportedReturnType = SupportableValueType.All;
+        SupportedReturnType = SupportableValueType.All;
     }
 
     /// <summary>
@@ -88,12 +88,12 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
     {
         get
         {
-            if (!this.alreadyCompiled)
+            if (!alreadyCompiled)
             {
-                this.Compile();
+                Compile();
             }
 
-            return this.parameterDefinitionExpression;
+            return parameterDefinitionExpression;
         }
     }
 
@@ -119,13 +119,13 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
                 nameof(limit));
         }
 
-        var newVal = limit & this.SupportedReturnType;
+        var newVal = limit & SupportedReturnType;
         if (newVal == SupportableValueType.None)
         {
             throw new ExpressionNotValidLogicallyException();
         }
 
-        this.SupportedReturnType = newVal;
+        SupportedReturnType = newVal;
 
         int iVal = (int)newVal;
 
@@ -133,7 +133,7 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
                 typeof(SupportedValueType),
                 iVal))
         {
-            this.DetermineType((SupportedValueType)iVal);
+            DetermineType((SupportedValueType)iVal);
         }
     }
 
@@ -167,36 +167,36 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
                 return;
 
             default:
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterTypeNotRecognized, this.Name), this.Name);
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterTypeNotRecognized, Name), Name);
         }
 
         void ChangeReturnType(SupportedValueType newReturnType)
         {
-            if (this.ReturnType == newReturnType)
+            if (ReturnType == newReturnType)
             {
                 return;
             }
 
-            if (this.ReturnType == SupportedValueType.Unknown)
+            if (ReturnType == SupportedValueType.Unknown)
             {
-                if (this.alreadyCompiled)
+                if (alreadyCompiled)
                 {
-                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterAlreadyCompiled, this.Name));
+                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterAlreadyCompiled, Name));
                 }
 
-                int i1 = (int)newReturnType, i2 = (int)this.SupportedReturnType;
+                int i1 = (int)newReturnType, i2 = (int)SupportedReturnType;
 
                 if ((i1 & i2) == 0)
                 {
-                    throw new ExpressionNotValidLogicallyException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterRequiredOfMismatchedTypes, this.Name));
+                    throw new ExpressionNotValidLogicallyException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterRequiredOfMismatchedTypes, Name));
                 }
 
-                this.ReturnType = newReturnType;
-                this.SupportedReturnType = (SupportableValueType)i1;
+                ReturnType = newReturnType;
+                SupportedReturnType = (SupportableValueType)i1;
             }
             else
             {
-                throw new ExpressionNotValidLogicallyException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterRequiredOfMismatchedTypes, this.Name));
+                throw new ExpressionNotValidLogicallyException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterRequiredOfMismatchedTypes, Name));
             }
         }
     }
@@ -206,15 +206,15 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
     /// </summary>
     public void DetermineFloat()
     {
-        switch (this.IsFloat)
+        switch (IsFloat)
         {
             case true:
                 return;
             case null:
-                this.IsFloat = true;
+                IsFloat = true;
                 break;
             default:
-                throw new ExpressionNotValidLogicallyException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterMustBeFloatButAlreadyRequiredToBeInteger, this.Name));
+                throw new ExpressionNotValidLogicallyException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterMustBeFloatButAlreadyRequiredToBeInteger, Name));
         }
     }
 
@@ -223,22 +223,22 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
     /// </summary>
     public void DetermineInteger()
     {
-        switch (this.IsFloat)
+        switch (IsFloat)
         {
             case false:
                 return;
             case null:
-                this.IsFloat = false;
+                IsFloat = false;
                 break;
             default:
-                throw new ExpressionNotValidLogicallyException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterMustBeIntegerButAlreadyRequiredToBeFloat, this.Name));
+                throw new ExpressionNotValidLogicallyException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterMustBeIntegerButAlreadyRequiredToBeFloat, Name));
         }
     }
 
     /// <summary>
     /// Determines the parameter to be a function.
     /// </summary>
-    public void DetermineFunc() => this.FuncParameter = true;
+    public void DetermineFunc() => FuncParameter = true;
 
     /// <summary>
     /// Compiles this instance.
@@ -248,32 +248,32 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
     /// <exception cref="ExpressionNotValidLogicallyException">The parameter is still undefined.</exception>
     public Expression Compile()
     {
-        if (this.alreadyCompiled)
+        if (alreadyCompiled)
         {
-            return this.expression ?? throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterAlreadyCompiledButCompilationIsNull, this.Name));
+            return expression ?? throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.ParameterAlreadyCompiledButCompilationIsNull, Name));
         }
 
         Type type;
 
-        switch (this.ReturnType)
+        switch (ReturnType)
         {
             case SupportedValueType.Boolean:
-                type = this.FuncParameter ? typeof(Func<bool>) : typeof(bool);
+                type = FuncParameter ? typeof(Func<bool>) : typeof(bool);
                 break;
             case SupportedValueType.ByteArray:
-                type = this.FuncParameter ? typeof(Func<byte[]>) : typeof(byte[]);
+                type = FuncParameter ? typeof(Func<byte[]>) : typeof(byte[]);
                 break;
             case SupportedValueType.String:
-                type = this.FuncParameter ? typeof(Func<string>) : typeof(string);
+                type = FuncParameter ? typeof(Func<string>) : typeof(string);
                 break;
             case SupportedValueType.Numeric:
-                if (this.IsFloat == false)
+                if (IsFloat == false)
                 {
-                    type = this.FuncParameter ? typeof(Func<long>) : typeof(long);
+                    type = FuncParameter ? typeof(Func<long>) : typeof(long);
                 }
                 else
                 {
-                    type = this.FuncParameter ? typeof(Func<double>) : typeof(double);
+                    type = FuncParameter ? typeof(Func<double>) : typeof(double);
                 }
 
                 break;
@@ -281,27 +281,27 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
                 throw new ExpressionNotValidLogicallyException();
         }
 
-        ParameterExpression parameterExpression = Expression.Parameter(type, this.Name);
+        ParameterExpression parameterExpression = Expression.Parameter(type, Name);
 
-        this.parameterDefinitionExpression = parameterExpression;
+        parameterDefinitionExpression = parameterExpression;
 
-        if (this.FuncParameter)
+        if (FuncParameter)
         {
-            this.expression = Expression.Invoke(parameterExpression);
+            expression = Expression.Invoke(parameterExpression);
         }
         else
         {
-            this.expression = parameterExpression;
+            expression = parameterExpression;
         }
 
-        this.stringExpression = (this.ReturnType == SupportedValueType.String)
-            ? this.expression
+        stringExpression = (ReturnType == SupportedValueType.String)
+            ? expression
             : StringFormatter.CreateStringConversionExpression(
-                this.expression,
-                this.stringFormatters);
+                expression,
+                stringFormatters);
 
-        this.alreadyCompiled = true;
-        return this.expression;
+        alreadyCompiled = true;
+        return expression;
     }
 
     /// <summary>
@@ -310,24 +310,24 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
     /// <returns>A LINQ expression representing the parameter, as a string.</returns>
     public Expression CompileString()
     {
-        if (this.alreadyCompiled)
+        if (alreadyCompiled)
         {
-            return this.stringExpression ??
+            return stringExpression ??
                    throw new InvalidOperationException(
                        string.Format(
                            CultureInfo.CurrentCulture,
                            Resources.ParameterAlreadyCompiledButCompilationIsNull,
-                           this.Name));
+                           Name));
         }
 
-        this.Compile();
+        Compile();
 
-        return this.stringExpression ??
+        return stringExpression ??
                throw new InvalidOperationException(
                    string.Format(
                        CultureInfo.CurrentCulture,
                        Resources.ParameterAlreadyCompiledButCompilationIsNull,
-                       this.Name));
+                       Name));
     }
 
     /// <summary>
@@ -338,12 +338,12 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
     /// <para>Warning! This method does not copy the compilation result.</para>
     /// <para>When called on a compiled expression, the resulting context will not be itself compiled.</para>
     /// </remarks>
-    public ParameterContext DeepClone() => new(this.Name, this.stringFormatters)
+    public ParameterContext DeepClone() => new(Name, stringFormatters)
     {
-        IsFloat = this.IsFloat,
-        ReturnType = this.ReturnType,
-        FuncParameter = this.FuncParameter,
-        Order = this.Order,
+        IsFloat = IsFloat,
+        ReturnType = ReturnType,
+        FuncParameter = FuncParameter,
+        Order = Order,
     };
 
     /// <summary>
@@ -359,10 +359,10 @@ public class ParameterContext : StandardExtensions.IDeepCloneable<ParameterConte
         }
 
         return
-            other.IsFloat == this.IsFloat &&
-            other.Name == this.Name &&
-            other.FuncParameter == this.FuncParameter &&
-            other.Order == this.Order &&
-            other.ReturnType == this.ReturnType;
+            other.IsFloat == IsFloat &&
+            other.Name == Name &&
+            other.FuncParameter == FuncParameter &&
+            other.Order == Order &&
+            other.ReturnType == ReturnType;
     }
 }

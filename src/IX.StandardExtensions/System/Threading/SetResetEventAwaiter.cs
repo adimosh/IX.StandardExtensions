@@ -43,7 +43,7 @@ public class SetResetEventAwaiter : IAwaiter
     ///     <c>true</c> if this awaiter has completed; otherwise, <c>false</c>.
     /// </value>
     [UsedImplicitly]
-    public bool IsCompleted => this.isCompleted != 0;
+    public bool IsCompleted => isCompleted != 0;
 
 #endregion
 

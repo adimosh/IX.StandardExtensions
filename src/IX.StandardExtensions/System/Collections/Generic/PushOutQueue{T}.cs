@@ -59,7 +59,7 @@ public class PushOutQueue<T> : PushingCollectionBase<T>,
     /// <returns>The item.</returns>
     public T Dequeue()
     {
-        if (!this.TryDequeue(out T item))
+        if (!TryDequeue(out T item))
         {
             throw new InvalidOperationException(Resources.ErrorQueueIsEmpty);
         }
@@ -71,13 +71,13 @@ public class PushOutQueue<T> : PushingCollectionBase<T>,
     ///     Enqueues the specified item.
     /// </summary>
     /// <param name="item">The item.</param>
-    public void Enqueue(T item) => this.Append(item);
+    public void Enqueue(T item) => Append(item);
 
     /// <summary>
     ///     Queues a range of elements, adding them to the queue.
     /// </summary>
     /// <param name="items">The item range to push.</param>
-    public void EnqueueRange(T[] items) => this.Append(items);
+    public void EnqueueRange(T[] items) => Append(items);
 
     /// <summary>
     ///     Queues a range of elements, adding them to the queue.
@@ -89,7 +89,7 @@ public class PushOutQueue<T> : PushingCollectionBase<T>,
         T[] items,
         int startIndex,
         int count) =>
-        this.Append(
+        Append(
             items,
             startIndex,
             count);
@@ -100,7 +100,7 @@ public class PushOutQueue<T> : PushingCollectionBase<T>,
     /// <returns>The topmost element in the stack, if any.</returns>
     public T Peek()
     {
-        if (!this.TryPeek(out T item))
+        if (!TryPeek(out T item))
         {
             throw new InvalidOperationException(Resources.ErrorQueueIsEmpty);
         }
@@ -119,25 +119,25 @@ public class PushOutQueue<T> : PushingCollectionBase<T>,
     {
         this.RequiresNotDisposed();
 
-        if (this.Limit == 0)
+        if (Limit == 0)
         {
             item = default!;
 
             return false;
         }
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            if (this.InternalContainer.Count == 0)
+            if (InternalContainer.Count == 0)
             {
                 item = default!;
 
                 return false;
             }
 
-            item = this.InternalContainer[0];
+            item = InternalContainer[0];
 
-            this.InternalContainer.RemoveAt(0);
+            InternalContainer.RemoveAt(0);
 
             return true;
         }
@@ -152,25 +152,25 @@ public class PushOutQueue<T> : PushingCollectionBase<T>,
     /// </returns>
     public bool TryPeek(out T item)
     {
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
-        if (this.Limit == 0)
+        if (Limit == 0)
         {
             item = default!;
 
             return false;
         }
 
-        using (this.ReadLock())
+        using (ReadLock())
         {
-            if (this.InternalContainer.Count == 0)
+            if (InternalContainer.Count == 0)
             {
                 item = default!;
 
                 return false;
             }
 
-            item = this.InternalContainer[0];
+            item = InternalContainer[0];
 
             return true;
         }

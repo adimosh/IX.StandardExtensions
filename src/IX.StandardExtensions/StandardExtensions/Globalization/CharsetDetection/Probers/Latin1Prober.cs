@@ -408,18 +408,18 @@ internal class Latin1Prober : CharsetProber
 
     public Latin1Prober()
     {
-        this.Reset();
+        Reset();
     }
 
     public override string GetCharsetName() => CodepageName.WINDOWS_1252;
 
     public override void Reset()
     {
-        this.state = ProbingState.Detecting;
-        this.lastCharClass = OTH;
+        state = ProbingState.Detecting;
+        lastCharClass = OTH;
         for (var i = 0; i < FREQ_CAT_NUM; i++)
         {
-            this.freqCounter[i] = 0;
+            freqCounter[i] = 0;
         }
     }
 
@@ -437,24 +437,24 @@ internal class Latin1Prober : CharsetProber
         for (var i = 0; i < newbuf.Length; i++)
         {
             charClass = Latin1_CharToClass[newbuf[i]];
-            freq = Latin1ClassModel[(this.lastCharClass * CLASS_NUM) + charClass];
+            freq = Latin1ClassModel[(lastCharClass * CLASS_NUM) + charClass];
             if (freq == 0)
             {
-                this.state = ProbingState.NotMe;
+                state = ProbingState.NotMe;
 
                 break;
             }
 
-            this.freqCounter[freq]++;
-            this.lastCharClass = charClass;
+            freqCounter[freq]++;
+            lastCharClass = charClass;
         }
 
-        return this.state;
+        return state;
     }
 
     public override float GetConfidence(StringBuilder? status = null)
     {
-        if (this.state == ProbingState.NotMe)
+        if (state == ProbingState.NotMe)
         {
             return 0.01f;
         }
@@ -463,7 +463,7 @@ internal class Latin1Prober : CharsetProber
         var total = 0;
         for (var i = 0; i < FREQ_CAT_NUM; i++)
         {
-            total += this.freqCounter[i];
+            total += freqCounter[i];
         }
 
         if (total <= 0)
@@ -472,8 +472,8 @@ internal class Latin1Prober : CharsetProber
         }
         else
         {
-            confidence = this.freqCounter[3] * 1.0f / total;
-            confidence -= this.freqCounter[1] * 20.0f / total;
+            confidence = freqCounter[3] * 1.0f / total;
+            confidence -= freqCounter[1] * 20.0f / total;
         }
 
         // lower the confidence of latin1 so that other more accurate detector
@@ -485,7 +485,7 @@ internal class Latin1Prober : CharsetProber
     {
         var status = new StringBuilder();
 
-        status.AppendLine($" Latin1Prober: {this.GetConfidence()} [{this.GetCharsetName()}]");
+        status.AppendLine($" Latin1Prober: {GetConfidence()} [{GetCharsetName()}]");
 
         return status.ToString();
     }

@@ -30,7 +30,7 @@ internal class AutoCaptureTransactionContext : OperationTransaction
     /// </summary>
     public AutoCaptureTransactionContext()
     {
-        this.Success();
+        Success();
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ internal class AutoCaptureTransactionContext : OperationTransaction
         }
 
         // State
-        this.items = null;
+        items = null;
 
         item.CaptureIntoUndoContext(parentContext);
 
@@ -70,7 +70,7 @@ internal class AutoCaptureTransactionContext : OperationTransaction
             tei.EditCommitted += editableHandler;
         }
 
-        this.AddFailure();
+        AddFailure();
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ internal class AutoCaptureTransactionContext : OperationTransaction
 
         // State
         this.items = itemsArray;
-        this.item = null;
+        item = null;
 
         foreach (IUndoableItem undoableItem in itemsArray)
         {
@@ -119,7 +119,7 @@ internal class AutoCaptureTransactionContext : OperationTransaction
             }
         }
 
-        this.AddFailure();
+        AddFailure();
     }
 
 #endregion
@@ -132,7 +132,7 @@ internal class AutoCaptureTransactionContext : OperationTransaction
     protected override void WhenSuccessful() { }
 
     private void AddFailure() =>
-        this.AddRevertStep(
+        AddRevertStep(
             state =>
             {
                 var thisL1 = (AutoCaptureTransactionContext)state;

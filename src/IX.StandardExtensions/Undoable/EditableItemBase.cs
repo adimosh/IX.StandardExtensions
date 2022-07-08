@@ -44,12 +44,12 @@ public abstract class EditableItemBase : ViewModelBase,
     protected EditableItemBase(int limit)
     {
         Requires.NonNegative(
-            out this.historyLevels,
+            out historyLevels,
             in limit,
             nameof(limit));
 
-        this.undoContext = new Lazy<UndoableInnerContext>(this.InnerContextFactory);
-        this.stateChanges = new List<StateChangeBase>();
+        undoContext = new Lazy<UndoableInnerContext>(InnerContextFactory);
+        stateChanges = new List<StateChangeBase>();
     }
 
 #endregion
@@ -73,7 +73,7 @@ public abstract class EditableItemBase : ViewModelBase,
     ///     <see langword="false" /> otherwise.
     /// </value>
     public bool CanRedo =>
-        this.IsCapturedIntoUndoContext || (this.undoContext.IsValueCreated && this.undoContext.Value.RedoStackHasData);
+        IsCapturedIntoUndoContext || (undoContext.IsValueCreated && undoContext.Value.RedoStackHasData);
 
     /// <summary>
     ///     Gets a value indicating whether or not an undo can be performed on this item.
@@ -83,13 +83,13 @@ public abstract class EditableItemBase : ViewModelBase,
     ///     <see langword="false" /> otherwise.
     /// </value>
     public bool CanUndo =>
-        this.IsCapturedIntoUndoContext || (this.undoContext.IsValueCreated && this.undoContext.Value.UndoStackHasData);
+        IsCapturedIntoUndoContext || (undoContext.IsValueCreated && undoContext.Value.UndoStackHasData);
 
     /// <summary>
     ///     Gets a value indicating whether this instance is captured in undo context.
     /// </summary>
     /// <value><see langword="true" /> if this instance is captured in undo context; otherwise, <see langword="false" />.</value>
-    public bool IsCapturedIntoUndoContext => this.ParentUndoContext != null;
+    public bool IsCapturedIntoUndoContext => ParentUndoContext != null;
 
     /// <summary>
     ///     Gets or sets the number of levels to keep undo or redo information.
@@ -110,18 +110,18 @@ public abstract class EditableItemBase : ViewModelBase,
     /// </remarks>
     public int HistoryLevels
     {
-        get => this.historyLevels;
+        get => historyLevels;
         set
         {
-            if (value == this.historyLevels)
+            if (value == historyLevels)
             {
                 return;
             }
 
-            this.undoContext.Value.HistoryLevels = value;
+            undoContext.Value.HistoryLevels = value;
 
             // We'll let the internal undo context to curate our history levels
-            this.historyLevels = this.undoContext.Value.HistoryLevels;
+            historyLevels = undoContext.Value.HistoryLevels;
         }
     }
 
@@ -148,14 +148,14 @@ public abstract class EditableItemBase : ViewModelBase,
     /// </summary>
     public void BeginEdit()
     {
-        if (this.IsInEditMode)
+        if (IsInEditMode)
         {
             return;
         }
 
-        this.IsInEditMode = true;
+        IsInEditMode = true;
 
-        this.RaisePropertyChanged(nameof(this.IsInEditMode));
+        RaisePropertyChanged(nameof(IsInEditMode));
     }
 
     /// <summary>
@@ -165,20 +165,20 @@ public abstract class EditableItemBase : ViewModelBase,
     /// <exception cref="IX.Undoable.ItemNotInEditModeException">The item is not in edit mode.</exception>
     public void CancelEdit()
     {
-        if (!this.IsInEditMode)
+        if (!IsInEditMode)
         {
             throw new ItemNotInEditModeException();
         }
 
-        if (this.stateChanges.Count <= 0)
+        if (stateChanges.Count <= 0)
         {
             return;
         }
 
-        this.RevertChanges(
-            this.stateChanges.Count == 1 ? this.stateChanges[0] : new CompositeStateChange(this.stateChanges));
+        RevertChanges(
+            stateChanges.Count == 1 ? stateChanges[0] : new CompositeStateChange(stateChanges));
 
-        this.stateChanges.Clear();
+        stateChanges.Clear();
     }
 
     /// <summary>
@@ -187,19 +187,19 @@ public abstract class EditableItemBase : ViewModelBase,
     /// <exception cref="IX.Undoable.ItemNotInEditModeException">The item is not in edit mode.</exception>
     public void CommitEdit()
     {
-        if (!this.IsInEditMode)
+        if (!IsInEditMode)
         {
             throw new ItemNotInEditModeException();
         }
 
-        if (this.stateChanges.Count <= 0)
+        if (stateChanges.Count <= 0)
         {
             return;
         }
 
-        this.CommitEditInternal(this.stateChanges.ToArray());
+        CommitEditInternal(stateChanges.ToArray());
 
-        this.stateChanges.Clear();
+        stateChanges.Clear();
     }
 
     /// <summary>
@@ -208,21 +208,21 @@ public abstract class EditableItemBase : ViewModelBase,
     /// <exception cref="IX.Undoable.ItemNotInEditModeException">The item is not in edit mode.</exception>
     public void EndEdit()
     {
-        if (!this.IsInEditMode)
+        if (!IsInEditMode)
         {
             throw new ItemNotInEditModeException();
         }
 
-        if (this.stateChanges.Count > 0)
+        if (stateChanges.Count > 0)
         {
-            this.CommitEditInternal(this.stateChanges.ToArray());
+            CommitEditInternal(stateChanges.ToArray());
 
-            this.stateChanges.Clear();
+            stateChanges.Clear();
         }
 
-        this.IsInEditMode = false;
+        IsInEditMode = false;
 
-        this.RaisePropertyChanged(nameof(this.IsInEditMode));
+        RaisePropertyChanged(nameof(IsInEditMode));
     }
 
     /// <summary>
@@ -245,26 +245,26 @@ public abstract class EditableItemBase : ViewModelBase,
             parent,
             nameof(parent));
 
-        if (parent == this.ParentUndoContext)
+        if (parent == ParentUndoContext)
         {
             return;
         }
 
-        if (this.IsInEditMode)
+        if (IsInEditMode)
         {
             throw new ItemIsInEditModeException();
         }
 
         // Set the parent undo context
-        this.ParentUndoContext = parent;
-        if (this.undoContext.IsValueCreated)
+        ParentUndoContext = parent;
+        if (undoContext.IsValueCreated)
         {
             // We already have an undo inner context, let's clear it out.
             // If we don't have an undo inner context, no sense in clearing it out just yet.
-            this.undoContext.Value.HistoryLevels = 0;
+            undoContext.Value.HistoryLevels = 0;
         }
 
-        this.RaisePropertyChanged(nameof(this.IsCapturedIntoUndoContext));
+        RaisePropertyChanged(nameof(IsCapturedIntoUndoContext));
     }
 
     /// <summary>
@@ -283,10 +283,10 @@ public abstract class EditableItemBase : ViewModelBase,
     /// </remarks>
     public void Redo()
     {
-        if (this.ParentUndoContext != null)
+        if (ParentUndoContext != null)
         {
             // We are captured by a parent context, let's invoke that context's Redo.
-            this.ParentUndoContext.Redo();
+            ParentUndoContext.Redo();
 
             return;
         }
@@ -294,14 +294,14 @@ public abstract class EditableItemBase : ViewModelBase,
         // We are not captured, let's proceed with Undo.
 
         // Let's check whether or not we have an undo inner context first
-        if (!this.undoContext.IsValueCreated)
+        if (!undoContext.IsValueCreated)
         {
             // Undo inner context not created, there's nothing to undo
             return;
         }
 
         // Undo context created, let's try to undo
-        UndoableInnerContext uc = this.undoContext.Value;
+        UndoableInnerContext uc = undoContext.Value;
         if (!uc.RedoStackHasData)
         {
             // We don't have anything to Redo.
@@ -310,10 +310,10 @@ public abstract class EditableItemBase : ViewModelBase,
 
         StateChangeBase redoData = uc.PopRedo();
         uc.PushUndo(redoData);
-        this.DoChanges(redoData);
+        DoChanges(redoData);
 
-        this.RaisePropertyChanged(nameof(this.CanUndo));
-        this.RaisePropertyChanged(nameof(this.CanRedo));
+        RaisePropertyChanged(nameof(CanUndo));
+        RaisePropertyChanged(nameof(CanRedo));
     }
 
     /// <summary>
@@ -334,12 +334,12 @@ public abstract class EditableItemBase : ViewModelBase,
             changesToRedo,
             nameof(changesToRedo));
 
-        if (!this.IsCapturedIntoUndoContext)
+        if (!IsCapturedIntoUndoContext)
         {
             throw new ItemNotCapturedIntoUndoContextException();
         }
 
-        this.DoChanges(changesToRedo);
+        DoChanges(changesToRedo);
     }
 
     /// <summary>
@@ -348,22 +348,22 @@ public abstract class EditableItemBase : ViewModelBase,
     /// <remarks>This method is meant to be used by containers, and should not be called directly.</remarks>
     public void ReleaseFromUndoContext()
     {
-        if (this.ParentUndoContext == null)
+        if (ParentUndoContext == null)
         {
             return;
         }
 
         // Set parent undo context as null
-        this.ParentUndoContext = null;
+        ParentUndoContext = null;
 
-        if (this.undoContext.IsValueCreated)
+        if (undoContext.IsValueCreated)
         {
             // We already have an undo inner context, let's set it back.
             // If we don't have an undo inner context, no sense in setting anything.
-            this.undoContext.Value.HistoryLevels = this.historyLevels;
+            undoContext.Value.HistoryLevels = historyLevels;
         }
 
-        this.RaisePropertyChanged(nameof(this.IsCapturedIntoUndoContext));
+        RaisePropertyChanged(nameof(IsCapturedIntoUndoContext));
     }
 
     /// <summary>
@@ -382,10 +382,10 @@ public abstract class EditableItemBase : ViewModelBase,
     /// </remarks>
     public void Undo()
     {
-        if (this.ParentUndoContext != null)
+        if (ParentUndoContext != null)
         {
             // We are captured by a parent context, let's invoke that context's Undo.
-            this.ParentUndoContext.Undo();
+            ParentUndoContext.Undo();
 
             return;
         }
@@ -393,14 +393,14 @@ public abstract class EditableItemBase : ViewModelBase,
         // We are not captured, let's proceed with Undo.
 
         // Let's check whether or not we have an undo inner context first
-        if (!this.undoContext.IsValueCreated)
+        if (!undoContext.IsValueCreated)
         {
             // Undo inner context not created, there's nothing to undo
             return;
         }
 
         // Undo context created, let's try to undo
-        UndoableInnerContext uc = this.undoContext.Value;
+        UndoableInnerContext uc = undoContext.Value;
         if (!uc.UndoStackHasData)
         {
             // We don't have anything to Undo.
@@ -409,10 +409,10 @@ public abstract class EditableItemBase : ViewModelBase,
 
         StateChangeBase undoData = uc.PopUndo();
         uc.PushRedo(undoData);
-        this.RevertChanges(undoData);
+        RevertChanges(undoData);
 
-        this.RaisePropertyChanged(nameof(this.CanUndo));
-        this.RaisePropertyChanged(nameof(this.CanRedo));
+        RaisePropertyChanged(nameof(CanUndo));
+        RaisePropertyChanged(nameof(CanRedo));
     }
 
     /// <summary>
@@ -433,12 +433,12 @@ public abstract class EditableItemBase : ViewModelBase,
             changesToUndo,
             nameof(changesToUndo));
 
-        if (!this.IsCapturedIntoUndoContext)
+        if (!IsCapturedIntoUndoContext)
         {
             throw new ItemNotCapturedIntoUndoContextException();
         }
 
-        this.RevertChanges(changesToUndo);
+        RevertChanges(changesToUndo);
     }
 
 #endregion
@@ -452,9 +452,9 @@ public abstract class EditableItemBase : ViewModelBase,
     {
         base.DisposeManagedContext();
 
-        if (this.undoContext.IsValueCreated)
+        if (undoContext.IsValueCreated)
         {
-            this.undoContext.Value.Dispose();
+            undoContext.Value.Dispose();
         }
     }
 
@@ -486,7 +486,7 @@ public abstract class EditableItemBase : ViewModelBase,
 
         item.CaptureIntoUndoContext(this);
 
-        item.EditCommitted += this.Item_EditCommitted;
+        item.EditCommitted += Item_EditCommitted;
     }
 
     /// <summary>
@@ -506,7 +506,7 @@ public abstract class EditableItemBase : ViewModelBase,
             throw new ArgumentNullException(nameof(item));
         }
 
-        item.EditCommitted -= this.Item_EditCommitted;
+        item.EditCommitted -= Item_EditCommitted;
 
         item.ReleaseFromUndoContext();
     }
@@ -517,13 +517,13 @@ public abstract class EditableItemBase : ViewModelBase,
     /// <param name="stateChange">The state change to advertise.</param>
     protected void AdvertiseStateChange(StateChangeBase stateChange)
     {
-        if (this.IsInEditMode)
+        if (IsInEditMode)
         {
-            this.stateChanges.Add(stateChange);
+            stateChanges.Add(stateChange);
         }
         else
         {
-            this.CommitEditInternal(
+            CommitEditInternal(
                 new[]
                 {
                     stateChange
@@ -542,7 +542,7 @@ public abstract class EditableItemBase : ViewModelBase,
         string propertyName,
         T oldValue,
         T newValue) =>
-        this.AdvertiseStateChange(
+        AdvertiseStateChange(
             new PropertyStateChange<T>(
                 propertyName,
                 oldValue,
@@ -574,12 +574,12 @@ public abstract class EditableItemBase : ViewModelBase,
             return;
         }
 
-        this.stateChanges.Add(
+        stateChanges.Add(
             new SubItemStateChange(
                 (IUndoableItem)sender,
                 e.StateChanges));
 
-        this.CommitEditInternal(this.stateChanges.ToArray());
+        CommitEditInternal(stateChanges.ToArray());
     }
 
     /// <summary>
@@ -597,14 +597,14 @@ public abstract class EditableItemBase : ViewModelBase,
             ? changesToCommit[0]
             : new CompositeStateChange(changesToCommit.ToList());
 
-        if (this.ParentUndoContext == null && this.historyLevels > 0)
+        if (ParentUndoContext == null && historyLevels > 0)
         {
-            this.undoContext.Value.PushUndo(stateChangeBase);
-            this.undoContext.Value.ClearRedoStack();
+            undoContext.Value.PushUndo(stateChangeBase);
+            undoContext.Value.ClearRedoStack();
         }
 
-        this.RaisePropertyChanged(nameof(this.CanUndo));
-        this.RaisePropertyChanged(nameof(this.CanRedo));
+        RaisePropertyChanged(nameof(CanUndo));
+        RaisePropertyChanged(nameof(CanRedo));
 
         this.EditCommitted?.Invoke(
             this,
@@ -614,7 +614,7 @@ public abstract class EditableItemBase : ViewModelBase,
     private UndoableInnerContext InnerContextFactory() =>
         new()
         {
-            HistoryLevels = this.historyLevels
+            HistoryLevels = historyLevels
         };
 
 #endregion

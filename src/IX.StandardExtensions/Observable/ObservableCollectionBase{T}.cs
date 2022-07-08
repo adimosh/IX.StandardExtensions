@@ -74,9 +74,9 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         bool suppressUndoable)
         : base(internalContainer)
     {
-        this.undoContext = new Lazy<UndoableInnerContext>(this.InnerContextFactory);
+        undoContext = new Lazy<UndoableInnerContext>(InnerContextFactory);
         this.suppressUndoable = EnvironmentSettings.DisableUndoable || suppressUndoable;
-        this.historyLevels = EnvironmentSettings.DefaultUndoRedoLevels;
+        historyLevels = EnvironmentSettings.DefaultUndoRedoLevels;
     }
 
     /// <summary>
@@ -93,9 +93,9 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             internalContainer,
             context)
     {
-        this.undoContext = new Lazy<UndoableInnerContext>(this.InnerContextFactory);
+        undoContext = new Lazy<UndoableInnerContext>(InnerContextFactory);
         this.suppressUndoable = EnvironmentSettings.DisableUndoable || suppressUndoable;
-        this.historyLevels = EnvironmentSettings.DefaultUndoRedoLevels;
+        historyLevels = EnvironmentSettings.DefaultUndoRedoLevels;
     }
 
 #endregion
@@ -134,15 +134,15 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     {
         get
         {
-            if (this.suppressUndoable || EnvironmentSettings.DisableUndoable || this.historyLevels == 0)
+            if (suppressUndoable || EnvironmentSettings.DisableUndoable || historyLevels == 0)
             {
                 return false;
             }
 
             this.RequiresNotDisposed();
 
-            return this.ParentUndoContext?.CanRedo ??
-                   this.ReadLock(
+            return ParentUndoContext?.CanRedo ??
+                   ReadLock(
                        thisL1 => thisL1.undoContext.IsValueCreated && thisL1.undoContext.Value.RedoStackHasData,
                        this);
         }
@@ -159,15 +159,15 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     {
         get
         {
-            if (this.suppressUndoable || EnvironmentSettings.DisableUndoable || this.historyLevels == 0)
+            if (suppressUndoable || EnvironmentSettings.DisableUndoable || historyLevels == 0)
             {
                 return false;
             }
 
             this.RequiresNotDisposed();
 
-            return this.ParentUndoContext?.CanUndo ??
-                   this.ReadLock(
+            return ParentUndoContext?.CanUndo ??
+                   ReadLock(
                        thisL1 => thisL1.undoContext.IsValueCreated && thisL1.undoContext.Value.UndoStackHasData,
                        this);
         }
@@ -176,7 +176,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// <summary>
     ///     Gets a value indicating whether this instance is caught into an undo context.
     /// </summary>
-    public bool IsCapturedIntoUndoContext => this.ParentUndoContext != null;
+    public bool IsCapturedIntoUndoContext => ParentUndoContext != null;
 
     /// <summary>
     ///     Gets a value indicating whether items are key/value pairs.
@@ -204,10 +204,10 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// </remarks>
     public bool AutomaticallyCaptureSubItems
     {
-        get => this.automaticallyCaptureSubItems;
+        get => automaticallyCaptureSubItems;
 
         set =>
-            this.SetAutomaticallyCaptureSubItems(
+            SetAutomaticallyCaptureSubItems(
                 value,
                 false);
     }
@@ -235,18 +235,18 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// </remarks>
     public int HistoryLevels
     {
-        get => this.historyLevels;
+        get => historyLevels;
         set
         {
-            if (value == this.historyLevels)
+            if (value == historyLevels)
             {
                 return;
             }
 
-            this.undoContext.Value.HistoryLevels = value;
+            undoContext.Value.HistoryLevels = value;
 
             // We'll let the internal undo context to curate our history levels
-            this.historyLevels = this.undoContext.Value.HistoryLevels;
+            historyLevels = undoContext.Value.HistoryLevels;
         }
     }
 
@@ -288,16 +288,16 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         int newIndex;
 
         // Under write lock
-        using (this.WriteLock())
+        using (WriteLock())
         {
             // Using an undo/redo transaction lock
-            using OperationTransaction tc = this.CheckItemAutoCapture(item);
+            using OperationTransaction tc = CheckItemAutoCapture(item);
 
             // Add the item
-            newIndex = this.InternalContainer.Add(item);
+            newIndex = InternalContainer.Add(item);
 
             // Push the undo level
-            this.PushUndoLevel(
+            PushUndoLevel(
                 new AddStateChange<T>(
                     item,
                     newIndex));
@@ -312,21 +312,21 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         if (newIndex == -1)
         {
             // If no index could be found for an item (Dictionary add)
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
             // If index was added at a specific index
-            this.RaiseCollectionChangedAdd(
+            RaiseCollectionChangedAdd(
                 item,
                 newIndex);
         }
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
     }
 
     /// <summary>
@@ -335,7 +335,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// <remarks>
     ///     <para>On concurrent collections, this method is write-synchronized.</para>
     /// </remarks>
-    public void Clear() => this.ClearInternal();
+    public void Clear() => ClearInternal();
 
     /// <summary>
     ///     Removes the first occurrence of a specific object from the <see cref="ObservableCollectionBase{T}" />.
@@ -361,16 +361,16 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         int oldIndex;
 
         // Under write lock
-        using (this.WriteLock())
+        using (WriteLock())
         {
             // Inside an undo/redo transaction
-            using OperationTransaction tc = this.CheckItemAutoRelease(item);
+            using OperationTransaction tc = CheckItemAutoRelease(item);
 
             // Remove the item
-            oldIndex = this.InternalContainer.Remove(item);
+            oldIndex = InternalContainer.Remove(item);
 
             // Push an undo level
-            this.PushUndoLevel(
+            PushUndoLevel(
                 new RemoveStateChange<T>(
                     oldIndex,
                     item));
@@ -385,15 +385,15 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         if (oldIndex >= 0)
         {
             // Collection changed with a specific index
-            this.RaiseCollectionChangedRemove(
+            RaiseCollectionChangedRemove(
                 item,
                 oldIndex);
 
             // Property changed
-            this.RaisePropertyChanged(nameof(this.Count));
+            RaisePropertyChanged(nameof(Count));
 
             // Contents may have changed
-            this.ContentsMayHaveChanged();
+            ContentsMayHaveChanged();
 
             return true;
         }
@@ -405,13 +405,13 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         }
 
         // Collection changed with no specific index (Dictionary remove)
-        this.RaiseCollectionReset();
+        RaiseCollectionReset();
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return true;
     }
@@ -422,7 +422,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// </summary>
     /// <param name="parent">The parent undo and redo context.</param>
     public void CaptureIntoUndoContext(IUndoableItem parent) =>
-        this.CaptureIntoUndoContext(
+        CaptureIntoUndoContext(
             parent,
             false);
 
@@ -442,21 +442,21 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// </remarks>
     public void Redo()
     {
-        if (this.suppressUndoable || EnvironmentSettings.DisableUndoable || this.historyLevels == 0)
+        if (suppressUndoable || EnvironmentSettings.DisableUndoable || historyLevels == 0)
         {
             return;
         }
 
         this.RequiresNotDisposed();
 
-        if (this.ParentUndoContext != null)
+        if (ParentUndoContext != null)
         {
-            this.ParentUndoContext.Redo();
+            ParentUndoContext.Redo();
 
             return;
         }
 
-        if (this.currentUndoBlockTransaction != null)
+        if (currentUndoBlockTransaction != null)
         {
             throw new InvalidOperationException(
                 Resources.UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen);
@@ -465,19 +465,19 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         Action<object?>? toInvoke;
         object? state;
         bool internalResult;
-        using (ReadWriteSynchronizationLocker locker = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker locker = ReadWriteLock())
         {
-            if (!this.undoContext.IsValueCreated || !this.undoContext.Value.RedoStackHasData)
+            if (!undoContext.IsValueCreated || !undoContext.Value.RedoStackHasData)
             {
                 return;
             }
 
             locker.Upgrade();
 
-            UndoableInnerContext uc = this.undoContext.Value;
+            UndoableInnerContext uc = undoContext.Value;
 
             StateChangeBase level = uc.PopRedo();
-            internalResult = this.RedoInternally(
+            internalResult = RedoInternally(
                 level,
                 out toInvoke,
                 out state);
@@ -492,8 +492,8 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             toInvoke?.Invoke(state);
         }
 
-        this.RaisePropertyChanged(nameof(this.CanUndo));
-        this.RaisePropertyChanged(nameof(this.CanRedo));
+        RaisePropertyChanged(nameof(CanUndo));
+        RaisePropertyChanged(nameof(CanRedo));
     }
 
     /// <summary>
@@ -504,7 +504,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     public void RedoStateChanges(StateChangeBase changesToRedo)
     {
         // PRECONDITIONS
-        if (this.suppressUndoable || EnvironmentSettings.DisableUndoable || this.historyLevels == 0)
+        if (suppressUndoable || EnvironmentSettings.DisableUndoable || historyLevels == 0)
         {
             return;
         }
@@ -513,7 +513,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         this.RequiresNotDisposed();
 
         // Current object captured in an undo/redo context
-        if (!this.IsCapturedIntoUndoContext)
+        if (!IsCapturedIntoUndoContext)
         {
             throw new ItemNotCapturedIntoUndoContextException();
         }
@@ -535,9 +535,9 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                     object? state;
                     bool internalResult;
                     Action<object?>? act;
-                    using (this.WriteLock())
+                    using (WriteLock())
                     {
-                        internalResult = this.RedoInternally(
+                        internalResult = RedoInternally(
                             stateChangeBase,
                             out act,
                             out state);
@@ -558,9 +558,9 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                 object? state;
                 bool internalResult;
 
-                using (this.WriteLock())
+                using (WriteLock())
                 {
-                    internalResult = this.RedoInternally(
+                    internalResult = RedoInternally(
                         stateChangeBase,
                         out act,
                         out state);
@@ -583,12 +583,12 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     {
         this.RequiresNotDisposed();
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            this.SetAutomaticallyCaptureSubItems(
+            SetAutomaticallyCaptureSubItems(
                 false,
                 true);
-            this.ParentUndoContext = null;
+            ParentUndoContext = null;
         }
     }
 
@@ -608,21 +608,21 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// </remarks>
     public void Undo()
     {
-        if (this.suppressUndoable || EnvironmentSettings.DisableUndoable || this.historyLevels == 0)
+        if (suppressUndoable || EnvironmentSettings.DisableUndoable || historyLevels == 0)
         {
             return;
         }
 
         this.RequiresNotDisposed();
 
-        if (this.ParentUndoContext != null)
+        if (ParentUndoContext != null)
         {
-            this.ParentUndoContext.Undo();
+            ParentUndoContext.Undo();
 
             return;
         }
 
-        if (this.currentUndoBlockTransaction != null)
+        if (currentUndoBlockTransaction != null)
         {
             throw new InvalidOperationException(
                 Resources.UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen);
@@ -631,19 +631,19 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         Action<object?>? toInvoke;
         object? state;
         bool internalResult;
-        using (ReadWriteSynchronizationLocker locker = this.ReadWriteLock())
+        using (ReadWriteSynchronizationLocker locker = ReadWriteLock())
         {
-            if (!this.undoContext.IsValueCreated || !this.undoContext.Value.UndoStackHasData)
+            if (!undoContext.IsValueCreated || !undoContext.Value.UndoStackHasData)
             {
                 return;
             }
 
             locker.Upgrade();
 
-            UndoableInnerContext uc = this.undoContext.Value;
+            UndoableInnerContext uc = undoContext.Value;
 
             StateChangeBase level = uc.PopUndo();
-            internalResult = this.UndoInternally(
+            internalResult = UndoInternally(
                 level,
                 out toInvoke,
                 out state);
@@ -658,8 +658,8 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             toInvoke?.Invoke(state);
         }
 
-        this.RaisePropertyChanged(nameof(this.CanUndo));
-        this.RaisePropertyChanged(nameof(this.CanRedo));
+        RaisePropertyChanged(nameof(CanUndo));
+        RaisePropertyChanged(nameof(CanRedo));
     }
 
     /// <summary>
@@ -670,7 +670,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     public void UndoStateChanges(StateChangeBase changesToUndo)
     {
         // PRECONDITIONS
-        if (this.suppressUndoable || EnvironmentSettings.DisableUndoable || this.historyLevels == 0)
+        if (suppressUndoable || EnvironmentSettings.DisableUndoable || historyLevels == 0)
         {
             return;
         }
@@ -679,7 +679,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         this.RequiresNotDisposed();
 
         // Current object captured in an undo/redo context
-        if (!this.IsCapturedIntoUndoContext)
+        if (!IsCapturedIntoUndoContext)
         {
             throw new ItemNotCapturedIntoUndoContextException();
         }
@@ -701,9 +701,9 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                     Action<object?>? act;
                     object? state;
                     bool internalResult;
-                    using (this.WriteLock())
+                    using (WriteLock())
                     {
-                        internalResult = this.UndoInternally(
+                        internalResult = UndoInternally(
                             stateChangeBase,
                             out act,
                             out state);
@@ -724,9 +724,9 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                 object? state;
                 bool internalResult;
 
-                using (this.WriteLock())
+                using (WriteLock())
                 {
-                    internalResult = this.UndoInternally(
+                    internalResult = UndoInternally(
                         stateChangeBase,
                         out act,
                         out state);
@@ -750,7 +750,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// <remarks>
     ///     <para>If undoable operations were suppressed, no undo levels will accumulate before calling this method.</para>
     /// </remarks>
-    public void StartUndo() => this.suppressUndoable = false;
+    public void StartUndo() => suppressUndoable = false;
 
     /// <summary>
     ///     Removes all items from the <see cref="ObservableCollectionBase{T}" /> and returns them as an array.
@@ -759,7 +759,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// <remarks>
     ///     <para>On concurrent collections, this method is write-synchronized.</para>
     /// </remarks>
-    public T[] ClearAndPersist() => this.ClearInternal();
+    public T[] ClearAndPersist() => ClearInternal();
 
     /// <summary>
     ///     Allows the implementer to be captured by a containing undo-/redo-capable object so that undo and redo operations
@@ -781,12 +781,12 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             throw new ArgumentNullException(nameof(parent));
         }
 
-        using (this.WriteLock())
+        using (WriteLock())
         {
-            this.SetAutomaticallyCaptureSubItems(
+            SetAutomaticallyCaptureSubItems(
                 captureSubItems,
                 true);
-            this.ParentUndoContext = parent;
+            ParentUndoContext = parent;
         }
     }
 
@@ -796,13 +796,13 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// <returns>OperationTransaction.</returns>
     public OperationTransaction StartExplicitUndoBlockTransaction()
     {
-        if (this.IsCapturedIntoUndoContext)
+        if (IsCapturedIntoUndoContext)
         {
             throw new InvalidOperationException(
                 Resources.TheCollectionIsCapturedIntoAContextItCannotStartAnExplicitTransaction);
         }
 
-        if (this.currentUndoBlockTransaction != null)
+        if (currentUndoBlockTransaction != null)
         {
             throw new InvalidOperationException(Resources.ThereAlreadyIsAnOpenUndoTransaction);
         }
@@ -810,7 +810,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         var transaction = new UndoableUnitBlockTransaction<T>(this);
 
         Interlocked.Exchange(
-            ref this.currentUndoBlockTransaction,
+            ref currentUndoBlockTransaction,
             transaction);
 
         return transaction;
@@ -821,21 +821,21 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// </summary>
     internal void FinishExplicitUndoBlockTransaction()
     {
-        if (this.currentUndoBlockTransaction == null)
+        if (currentUndoBlockTransaction == null)
         {
             return;
         }
 
-        this.undoContext.Value.PushUndo(this.currentUndoBlockTransaction.StateChanges);
+        undoContext.Value.PushUndo(currentUndoBlockTransaction.StateChanges);
 
         _ = Interlocked.Exchange(
-            ref this.currentUndoBlockTransaction,
+            ref currentUndoBlockTransaction,
             null!);
 
-        this.undoContext.Value.ClearRedoStack();
+        undoContext.Value.ClearRedoStack();
 
-        this.RaisePropertyChanged(nameof(this.CanUndo));
-        this.RaisePropertyChanged(nameof(this.CanRedo));
+        RaisePropertyChanged(nameof(CanUndo));
+        RaisePropertyChanged(nameof(CanRedo));
     }
 
     /// <summary>
@@ -843,7 +843,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// </summary>
     internal void FailExplicitUndoBlockTransaction() =>
         Interlocked.Exchange(
-            ref this.currentUndoBlockTransaction,
+            ref currentUndoBlockTransaction,
             null);
 
 #region Disposable
@@ -855,9 +855,9 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     {
         base.DisposeManagedContext();
 
-        if (this.undoContext.IsValueCreated)
+        if (undoContext.IsValueCreated)
         {
-            this.undoContext.Value.Dispose();
+            undoContext.Value.Dispose();
         }
     }
 
@@ -908,7 +908,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                 {
                     try
                     {
-                        var localResult = this.UndoInternally(
+                        var localResult = UndoInternally(
                             sc,
                             out Action<object?>? toInvoke,
                             out var toState);
@@ -998,7 +998,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                 {
                     try
                     {
-                        var localResult = this.RedoInternally(
+                        var localResult = RedoInternally(
                             sc,
                             out Action<object>? toInvoke,
                             out var toState);
@@ -1070,34 +1070,34 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// <param name="undoRedoLevel">The undo level to push.</param>
     protected void PushUndoLevel(StateChangeBase undoRedoLevel)
     {
-        if (this.suppressUndoable || EnvironmentSettings.DisableUndoable || this.historyLevels == 0)
+        if (suppressUndoable || EnvironmentSettings.DisableUndoable || historyLevels == 0)
         {
             return;
         }
 
-        if (this.IsCapturedIntoUndoContext)
+        if (IsCapturedIntoUndoContext)
         {
             this.EditCommittedInternal?.Invoke(
                 this,
                 new EditCommittedEventArgs(undoRedoLevel));
 
-            this.undoContext.Value.ClearRedoStack();
+            undoContext.Value.ClearRedoStack();
 
-            this.RaisePropertyChanged(nameof(this.CanUndo));
-            this.RaisePropertyChanged(nameof(this.CanRedo));
+            RaisePropertyChanged(nameof(CanUndo));
+            RaisePropertyChanged(nameof(CanRedo));
         }
-        else if (this.currentUndoBlockTransaction == null)
+        else if (currentUndoBlockTransaction == null)
         {
-            this.undoContext.Value.PushUndo(undoRedoLevel);
+            undoContext.Value.PushUndo(undoRedoLevel);
 
-            this.undoContext.Value.ClearRedoStack();
+            undoContext.Value.ClearRedoStack();
 
-            this.RaisePropertyChanged(nameof(this.CanUndo));
-            this.RaisePropertyChanged(nameof(this.CanRedo));
+            RaisePropertyChanged(nameof(CanUndo));
+            RaisePropertyChanged(nameof(CanRedo));
         }
         else
         {
-            this.currentUndoBlockTransaction.StateChanges.StateChanges.Add(undoRedoLevel);
+            currentUndoBlockTransaction.StateChanges.StateChanges.Add(undoRedoLevel);
         }
     }
 
@@ -1109,7 +1109,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     protected virtual void RaiseCollectionChangedAdd(
         T addedItem,
         int index) =>
-        this.RaiseCollectionAdd(
+        RaiseCollectionAdd(
             index,
             addedItem);
 
@@ -1123,7 +1123,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         T oldItem,
         T newItem,
         int index) =>
-        this.RaiseCollectionReplace(
+        RaiseCollectionReplace(
             index,
             oldItem,
             newItem);
@@ -1136,7 +1136,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     protected virtual void RaiseCollectionChangedRemove(
         T removedItem,
         int index) =>
-        this.RaiseCollectionRemove(
+        RaiseCollectionRemove(
             index,
             removedItem);
 
@@ -1147,7 +1147,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// <returns>An auto-capture transaction context that reverts the capture if things go wrong.</returns>
     protected virtual OperationTransaction CheckItemAutoCapture(T item)
     {
-        if (!this.AutomaticallyCaptureSubItems || !this.ItemsAreUndoable)
+        if (!AutomaticallyCaptureSubItems || !ItemsAreUndoable)
         {
             return new AutoCaptureTransactionContext();
         }
@@ -1157,7 +1157,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             return new AutoCaptureTransactionContext(
                 ui,
                 this,
-                this.Tei_EditCommitted);
+                Tei_EditCommitted);
         }
 
         return new AutoCaptureTransactionContext();
@@ -1170,12 +1170,12 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// <returns>An auto-capture transaction context that reverts the capture if things go wrong.</returns>
     protected virtual OperationTransaction CheckItemAutoCapture(IEnumerable<T> items)
     {
-        if (this.AutomaticallyCaptureSubItems && this.ItemsAreUndoable)
+        if (AutomaticallyCaptureSubItems && ItemsAreUndoable)
         {
             return new AutoCaptureTransactionContext(
                 items.Cast<IUndoableItem>(),
                 this,
-                this.Tei_EditCommitted);
+                Tei_EditCommitted);
         }
 
         return new AutoCaptureTransactionContext();
@@ -1188,14 +1188,14 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// <returns>An auto-capture transaction context that reverts the capture if things go wrong.</returns>
     protected virtual OperationTransaction CheckItemAutoRelease(T item)
     {
-        if (this.AutomaticallyCaptureSubItems && this.ItemsAreUndoable)
+        if (AutomaticallyCaptureSubItems && ItemsAreUndoable)
         {
             if (item is IUndoableItem ui)
             {
                 return new AutoReleaseTransactionContext(
                     ui,
                     this,
-                    this.Tei_EditCommitted);
+                    Tei_EditCommitted);
             }
         }
 
@@ -1209,12 +1209,12 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// <returns>An auto-capture transaction context that reverts the capture if things go wrong.</returns>
     protected virtual OperationTransaction CheckItemAutoRelease(IEnumerable<T> items)
     {
-        if (this.AutomaticallyCaptureSubItems && this.ItemsAreUndoable)
+        if (AutomaticallyCaptureSubItems && ItemsAreUndoable)
         {
             return new AutoReleaseTransactionContext(
                 items.Cast<IUndoableItem>(),
                 this,
-                this.Tei_EditCommitted);
+                Tei_EditCommitted);
         }
 
         return new AutoReleaseTransactionContext();
@@ -1235,22 +1235,22 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         T[] tempArray;
 
         // Under write lock
-        using (this.WriteLock())
+        using (WriteLock())
         {
             // Save existing items
-            tempArray = new T[this.InternalContainer.Count];
-            this.InternalContainer.CopyTo(
+            tempArray = new T[InternalContainer.Count];
+            InternalContainer.CopyTo(
                 tempArray,
                 0);
 
             // Into an undo/redo transaction context
-            using OperationTransaction tc = this.CheckItemAutoRelease(tempArray);
+            using OperationTransaction tc = CheckItemAutoRelease(tempArray);
 
             // Do the actual clearing
-            this.InternalContainer.Clear();
+            InternalContainer.Clear();
 
             // Push an undo level
-            this.PushUndoLevel(new ClearStateChange<T>(tempArray));
+            PushUndoLevel(new ClearStateChange<T>(tempArray));
 
             // Mark the transaction as a success
             tc.Success();
@@ -1259,13 +1259,13 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         // NOTIFICATIONS
 
         // Collection changed
-        this.RaiseCollectionReset();
+        RaiseCollectionReset();
 
         // Property changed
-        this.RaisePropertyChanged(nameof(this.Count));
+        RaisePropertyChanged(nameof(Count));
 
         // Contents may have changed
-        this.ContentsMayHaveChanged();
+        ContentsMayHaveChanged();
 
         return tempArray;
     }
@@ -1273,7 +1273,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     private void Tei_EditCommitted(
         object? sender,
         EditCommittedEventArgs e) =>
-        this.PushUndoLevel(
+        PushUndoLevel(
             new SubItemStateChange(
                 Requires.ArgumentOfType<IUndoableItem>(sender),
                 e.StateChanges));
@@ -1281,7 +1281,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     private UndoableInnerContext InnerContextFactory() =>
         new()
         {
-            HistoryLevels = this.historyLevels
+            HistoryLevels = historyLevels
         };
 
     [SuppressMessage(
@@ -1292,28 +1292,28 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         bool value,
         bool lockAcquired)
     {
-        this.automaticallyCaptureSubItems = value;
+        automaticallyCaptureSubItems = value;
 
-        if (!this.ItemsAreUndoable)
+        if (!ItemsAreUndoable)
         {
             return;
         }
 
-        ReadWriteSynchronizationLocker? locker = lockAcquired ? null : this.ReadWriteLock();
+        ReadWriteSynchronizationLocker? locker = lockAcquired ? null : ReadWriteLock();
 
         if (value)
         {
             // At this point we start capturing
             try
             {
-                if (this.InternalContainer.Count <= 0)
+                if (InternalContainer.Count <= 0)
                 {
                     return;
                 }
 
                 locker?.Upgrade();
 
-                foreach (T item in this.InternalContainer)
+                foreach (T item in InternalContainer)
                 {
                     if (item == null)
                     {
@@ -1334,14 +1334,14 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             // At this point we release the captures
             try
             {
-                if (this.InternalContainer.Count <= 0)
+                if (InternalContainer.Count <= 0)
                 {
                     return;
                 }
 
                 locker?.Upgrade();
 
-                foreach (IUndoableItem item in this.InternalContainer.Cast<IUndoableItem>())
+                foreach (IUndoableItem item in InternalContainer.Cast<IUndoableItem>())
                 {
                     item.ReleaseFromUndoContext();
                 }

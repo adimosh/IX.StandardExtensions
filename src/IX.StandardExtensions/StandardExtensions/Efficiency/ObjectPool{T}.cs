@@ -44,8 +44,8 @@ public class ObjectPool<T>
             out this.objectFactory,
             objectFactory);
 
-        this.locker = new object();
-        this.availableObjects = new Queue<T>();
+        locker = new object();
+        availableObjects = new Queue<T>();
     }
 
     /// <summary>
@@ -69,12 +69,12 @@ public class ObjectPool<T>
             out this.objectFactory,
             objectFactory);
 
-        this.locker = new object();
-        this.availableObjects = new Queue<T>();
+        locker = new object();
+        availableObjects = new Queue<T>();
 
         for (int i = 0; i < initialNumberOfObjects; i++)
         {
-            this.availableObjects.Enqueue(objectFactory());
+            availableObjects.Enqueue(objectFactory());
         }
     }
 
@@ -96,9 +96,9 @@ public class ObjectPool<T>
     {
         get
         {
-            lock (this.locker)
+            lock (locker)
             {
-                return this.availableObjects.Count;
+                return availableObjects.Count;
             }
         }
     }
@@ -115,9 +115,9 @@ public class ObjectPool<T>
     {
         T @object;
 
-        lock (this.locker)
+        lock (locker)
         {
-            @object = this.availableObjects.Count > 0 ? this.availableObjects.Dequeue() : this.objectFactory();
+            @object = availableObjects.Count > 0 ? availableObjects.Dequeue() : objectFactory();
         }
 
         return new PooledObject<T>(
@@ -127,9 +127,9 @@ public class ObjectPool<T>
 
     internal void Release(T @object)
     {
-        lock (this.locker)
+        lock (locker)
         {
-            this.availableObjects.Enqueue(@object);
+            availableObjects.Enqueue(@object);
         }
     }
 

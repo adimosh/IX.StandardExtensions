@@ -44,7 +44,7 @@ internal sealed class FunctionNodeStringLength : UnaryFunctionNodeBase
     /// </returns>
     public override NodeBase Simplify()
     {
-        if (this.Parameter is StringNode stringParam)
+        if (Parameter is StringNode stringParam)
         {
             return new NumericNode(Convert.ToInt64(stringParam.Value.Length));
         }
@@ -60,7 +60,7 @@ internal sealed class FunctionNodeStringLength : UnaryFunctionNodeBase
     ///     A deep clone.
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
-        new FunctionNodeStringLength(this.Parameter.DeepClone(context));
+        new FunctionNodeStringLength(Parameter.DeepClone(context));
 
     /// <summary>
     ///     Strongly determines the node's type, if possible.
@@ -111,7 +111,7 @@ internal sealed class FunctionNodeStringLength : UnaryFunctionNodeBase
     /// </returns>
     protected override Expression GenerateExpressionInternal() =>
         Expression.Convert(
-            this.GenerateParameterPropertyCall<string>(nameof(string.Length)),
+            GenerateParameterPropertyCall<string>(nameof(string.Length)),
             typeof(long));
 
     /// <summary>
@@ -121,7 +121,7 @@ internal sealed class FunctionNodeStringLength : UnaryFunctionNodeBase
     /// <returns>The expression.</returns>
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         Expression.Convert(
-            this.GenerateParameterPropertyCall<string>(
+            GenerateParameterPropertyCall<string>(
                 nameof(string.Length),
                 tolerance),
             typeof(long));

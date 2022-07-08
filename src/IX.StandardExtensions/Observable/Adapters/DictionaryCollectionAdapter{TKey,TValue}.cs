@@ -34,7 +34,7 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapt
 
     public DictionaryCollectionAdapter()
     {
-        this.dictionary = new Dictionary<TKey, TValue>();
+        dictionary = new Dictionary<TKey, TValue>();
     }
 
     internal DictionaryCollectionAdapter(IDictionary<TKey, TValue> dictionary)
@@ -46,18 +46,18 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapt
 
 #region Properties and indexers
 
-    public override int Count => this.dictionary.Count;
+    public override int Count => dictionary.Count;
 
-    public override bool IsReadOnly => ((ICollection<KeyValuePair<TKey, TValue>>)this.dictionary).IsReadOnly;
+    public override bool IsReadOnly => ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).IsReadOnly;
 
-    public ICollection<TKey> Keys => this.dictionary.Keys;
+    public ICollection<TKey> Keys => dictionary.Keys;
 
-    public ICollection<TValue> Values => this.dictionary.Values;
+    public ICollection<TValue> Values => dictionary.Values;
 
     public TValue this[TKey key]
     {
-        get => this.dictionary[key];
-        set => this.dictionary[key] = value;
+        get => dictionary[key];
+        set => dictionary[key] = value;
     }
 
 #endregion
@@ -68,8 +68,8 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapt
 
     public override void Clear()
     {
-        Dictionary<TKey, TValue> tempDictionary = this.dictionary;
-        this.dictionary = new Dictionary<TKey, TValue>();
+        Dictionary<TKey, TValue> tempDictionary = dictionary;
+        dictionary = new Dictionary<TKey, TValue>();
 
         _ = Work.OnThreadPoolAsync(
             oldDictionary => oldDictionary.Clear(),
@@ -77,38 +77,38 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapt
     }
 
     public override bool Contains(KeyValuePair<TKey, TValue> item) =>
-        ((ICollection<KeyValuePair<TKey, TValue>>)this.dictionary).Contains(item);
+        ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).Contains(item);
 
     public override void CopyTo(
         KeyValuePair<TKey, TValue>[] array,
         int arrayIndex) =>
-        ((ICollection<KeyValuePair<TKey, TValue>>)this.dictionary).CopyTo(
+        ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).CopyTo(
             array,
             arrayIndex);
 
     public override int Add(KeyValuePair<TKey, TValue> item)
     {
-        ((ICollection<KeyValuePair<TKey, TValue>>)this.dictionary).Add(item);
+        ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).Add(item);
 
         return -1;
     }
 
     public override int Remove(KeyValuePair<TKey, TValue> item)
     {
-        ((ICollection<KeyValuePair<TKey, TValue>>)this.dictionary).Remove(item);
+        ((ICollection<KeyValuePair<TKey, TValue>>)dictionary).Remove(item);
 
         return -1;
     }
 
-    public bool ContainsKey(TKey key) => this.dictionary.ContainsKey(key);
+    public bool ContainsKey(TKey key) => dictionary.ContainsKey(key);
 
-    public bool Remove(TKey item) => this.dictionary.Remove(item);
+    public bool Remove(TKey item) => dictionary.Remove(item);
 
 #pragma warning disable CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
     public bool TryGetValue(
         TKey key,
         [MaybeNullWhen(false)] out TValue value) =>
-        this.dictionary.TryGetValue(
+        dictionary.TryGetValue(
             key,
             out value);
 #pragma warning restore CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
@@ -117,7 +117,7 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapt
         TKey key,
         TValue value)
     {
-        this.dictionary.Add(
+        dictionary.Add(
             key,
             value);
 
@@ -127,13 +127,13 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapt
     void IDictionary<TKey, TValue>.Add(
         TKey key,
         TValue value) =>
-        this.dictionary.Add(
+        dictionary.Add(
             key,
             value);
 
 #endregion
 
-    public override Dictionary<TKey, TValue>.Enumerator GetEnumerator() => this.dictionary.GetEnumerator();
+    public override Dictionary<TKey, TValue>.Enumerator GetEnumerator() => dictionary.GetEnumerator();
 
 #endregion
 }

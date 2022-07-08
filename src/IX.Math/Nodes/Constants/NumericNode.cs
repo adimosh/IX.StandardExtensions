@@ -37,7 +37,7 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     /// <param name="value">The integer value.</param>
     public NumericNode(long value)
     {
-        this.Initialize(value);
+        Initialize(value);
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     /// <param name="value">The floating-point value.</param>
     public NumericNode(double value)
     {
-        this.Initialize(value);
+        Initialize(value);
     }
 
     /// <summary>
@@ -59,10 +59,10 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
         switch (value)
         {
             case double d:
-                this.Initialize(d);
+                Initialize(d);
                 break;
             case long l:
-                this.Initialize(l);
+                Initialize(l);
                 break;
             default:
                 throw new ArgumentException(Resources.NumericTypeInvalid, nameof(value));
@@ -99,12 +99,12 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     {
         get
         {
-            if (this.IsFloat)
+            if (IsFloat)
             {
-                return this.floatValue;
+                return floatValue;
             }
 
-            return this.integerValue;
+            return integerValue;
         }
     }
 
@@ -270,9 +270,9 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "This is desired.")]
-    public override Expression GenerateCachedExpression() => this.IsFloat ?
-        Expression.Constant(this.floatValue, typeof(double)) :
-        Expression.Constant(this.integerValue, typeof(long));
+    public override Expression GenerateCachedExpression() => IsFloat ?
+        Expression.Constant(floatValue, typeof(double)) :
+        Expression.Constant(integerValue, typeof(long));
 
     /// <summary>
     /// Generates a floating-point expression.
@@ -283,7 +283,7 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "This is desired.")]
 
-    public Expression GenerateFloatExpression() => this.IsFloat ? this.GenerateExpression() : Expression.Constant(Convert.ToDouble(this.floatValue), typeof(double));
+    public Expression GenerateFloatExpression() => IsFloat ? GenerateExpression() : Expression.Constant(Convert.ToDouble(floatValue), typeof(double));
 
     /// <summary>
     /// Generates an integer expression.
@@ -301,17 +301,17 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
 
     public Expression GenerateLongExpression()
     {
-        if (!this.IsFloat)
+        if (!IsFloat)
         {
-            return this.GenerateExpression();
+            return GenerateExpression();
         }
 
-        if (global::System.Math.Floor(this.floatValue) != this.floatValue)
+        if (global::System.Math.Floor(floatValue) != floatValue)
         {
             throw new InvalidCastException();
         }
 
-        return Expression.Constant(Convert.ToInt64(this.floatValue), typeof(long));
+        return Expression.Constant(Convert.ToInt64(floatValue), typeof(long));
     }
 
     /// <summary>
@@ -325,17 +325,17 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
         Justification = "If we're reaching the precision loss boundary, it means we're rounding to an integer anyway, so it's acceptable.")]
     public long ExtractInteger()
     {
-        if (!this.IsFloat)
+        if (!IsFloat)
         {
-            return this.integerValue;
+            return integerValue;
         }
 
-        if (global::System.Math.Floor(this.floatValue) != this.floatValue)
+        if (global::System.Math.Floor(floatValue) != floatValue)
         {
             throw new InvalidCastException();
         }
 
-        return Convert.ToInt64(this.floatValue);
+        return Convert.ToInt64(floatValue);
     }
 
     /// <summary>
@@ -344,12 +344,12 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     /// <returns>A floating-point value.</returns>
     public double ExtractFloat()
     {
-        if (this.IsFloat)
+        if (IsFloat)
         {
-            return this.floatValue;
+            return floatValue;
         }
 
-        return Convert.ToDouble(this.integerValue);
+        return Convert.ToDouble(integerValue);
     }
 
     /// <summary>
@@ -363,24 +363,24 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
         Justification = "If we're reaching the precision loss boundary, it means we're rounding to an integer anyway, so it's acceptable.")]
     public int ExtractInt()
     {
-        if (!this.IsFloat)
+        if (!IsFloat)
         {
-            return Convert.ToInt32(this.integerValue);
+            return Convert.ToInt32(integerValue);
         }
 
-        if (global::System.Math.Floor(this.floatValue) != this.floatValue)
+        if (global::System.Math.Floor(floatValue) != floatValue)
         {
             throw new InvalidCastException();
         }
 
-        return Convert.ToInt32(this.floatValue);
+        return Convert.ToInt32(floatValue);
     }
 
     /// <summary>
     /// Distills the value into a usable constant.
     /// </summary>
     /// <returns>A usable constant.</returns>
-    public override object DistillValue() => this.Value;
+    public override object DistillValue() => Value;
 
     /// <summary>
     /// Generates the expression that will be compiled into code as a string expression.
@@ -388,9 +388,9 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     /// <returns>The string expression.</returns>
     public override Expression GenerateCachedStringExpression()
     {
-        var stringFormatters = this.specialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) as List<IStringFormatter>;
+        var stringFormatters = specialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) as List<IStringFormatter>;
         return Expression.Constant(
-            StringFormatter.FormatIntoString(this.Value, stringFormatters),
+            StringFormatter.FormatIntoString(Value, stringFormatters),
             typeof(string));
     }
 
@@ -401,16 +401,16 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     /// <returns>A deep clone.</returns>
     public override NodeBase DeepClone(NodeCloningContext context) => new NumericNode
     {
-        integerValue = this.integerValue,
-        floatValue = this.floatValue,
-        IsFloat = this.IsFloat,
+        integerValue = integerValue,
+        floatValue = floatValue,
+        IsFloat = IsFloat,
     };
 
     /// <summary>
     /// Sets the request special object function.
     /// </summary>
     /// <param name="func">The function to set.</param>
-    void ISpecialRequestNode.SetRequestSpecialObjectFunction(Func<Type, object> func) => this.specialObjectRequestFunction = func;
+    void ISpecialRequestNode.SetRequestSpecialObjectFunction(Func<Type, object> func) => specialObjectRequestFunction = func;
 
     /// <summary>
     /// Initializes the specified value.
@@ -418,8 +418,8 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     /// <param name="value">The value.</param>
     private void Initialize(long value)
     {
-        this.integerValue = value;
-        this.IsFloat = false;
+        integerValue = value;
+        IsFloat = false;
     }
 
     /// <summary>
@@ -428,7 +428,7 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     /// <param name="value">The value.</param>
     private void Initialize(double value)
     {
-        this.floatValue = value;
-        this.IsFloat = true;
+        floatValue = value;
+        IsFloat = true;
     }
 }

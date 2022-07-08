@@ -7130,15 +7130,15 @@ internal abstract class JapaneseContextAnalyser
 
     public JapaneseContextAnalyser()
     {
-        this.Reset();
+        Reset();
     }
 
     public float GetConfidence()
     {
         // This is just one way to calculate confidence. It works well for me.
-        if (this.totalRel > MINIMUM_DATA_THRESHOLD)
+        if (totalRel > MINIMUM_DATA_THRESHOLD)
         {
-            return (float)(this.totalRel - this.relSample[0]) / this.totalRel;
+            return (float)(totalRel - relSample[0]) / totalRel;
         }
         else
         {
@@ -7153,7 +7153,7 @@ internal abstract class JapaneseContextAnalyser
     {
         var max = offset + len;
 
-        if (this.done)
+        if (done)
         {
             return;
         }
@@ -7165,35 +7165,35 @@ internal abstract class JapaneseContextAnalyser
         // to record those bytes as well and analyse the character once it
         // is complete, but since a character will not make much difference,
         // skipping it will simplify our logic and improve performance.
-        for (var i = this.needToSkipCharNum + offset; i < max;)
+        for (var i = needToSkipCharNum + offset; i < max;)
         {
-            var order = this.GetOrder(
+            var order = GetOrder(
                 buf,
                 i,
                 out var charLen);
             i += charLen;
             if (i > max)
             {
-                this.needToSkipCharNum = i - max;
-                this.lastCharOrder = -1;
+                needToSkipCharNum = i - max;
+                lastCharOrder = -1;
             }
             else
             {
-                if (order != -1 && this.lastCharOrder != -1)
+                if (order != -1 && lastCharOrder != -1)
                 {
-                    this.totalRel++;
-                    if (this.totalRel > MAX_REL_THRESHOLD)
+                    totalRel++;
+                    if (totalRel > MAX_REL_THRESHOLD)
                     {
-                        this.done = true;
+                        done = true;
 
                         break;
                     }
 
-                    this.relSample[jp2CharContext[this.lastCharOrder,
+                    relSample[jp2CharContext[lastCharOrder,
                         order]]++;
                 }
 
-                this.lastCharOrder = order;
+                lastCharOrder = order;
             }
         }
     }
@@ -7203,43 +7203,43 @@ internal abstract class JapaneseContextAnalyser
         int offset,
         int charLen)
     {
-        if (this.totalRel > MAX_REL_THRESHOLD)
+        if (totalRel > MAX_REL_THRESHOLD)
         {
-            this.done = true;
+            done = true;
         }
 
-        if (this.done)
+        if (done)
         {
             return;
         }
 
         // Only 2-bytes characters are of our interest
         var order = charLen == 2
-            ? this.GetOrder(
+            ? GetOrder(
                 buf,
                 offset)
             : -1;
-        if (order != -1 && this.lastCharOrder != -1)
+        if (order != -1 && lastCharOrder != -1)
         {
-            this.totalRel++;
+            totalRel++;
 
             // count this sequence to its category counter
-            this.relSample[jp2CharContext[this.lastCharOrder,
+            relSample[jp2CharContext[lastCharOrder,
                 order]]++;
         }
 
-        this.lastCharOrder = order;
+        lastCharOrder = order;
     }
 
     public void Reset()
     {
-        this.totalRel = 0;
+        totalRel = 0;
         for (var i = 0; i < CATEGORIES_NUM; i++)
         {
-            this.relSample[i] = 0;
-            this.needToSkipCharNum = 0;
-            this.lastCharOrder = -1;
-            this.done = false;
+            relSample[i] = 0;
+            needToSkipCharNum = 0;
+            lastCharOrder = -1;
+            done = false;
         }
     }
 
@@ -7252,5 +7252,5 @@ internal abstract class JapaneseContextAnalyser
         byte[] buf,
         int offset);
 
-    public bool GotEnoughData() => this.totalRel > ENOUGH_REL_THRESHOLD;
+    public bool GotEnoughData() => totalRel > ENOUGH_REL_THRESHOLD;
 }

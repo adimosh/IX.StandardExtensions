@@ -5449,8 +5449,8 @@ internal class EUCTWDistributionAnalyser : CharDistributionAnalyser
 
     public EUCTWDistributionAnalyser()
     {
-        this.charToFreqOrder = EUCTW_CHAR2FREQ_ORDER;
-        this.typicalDistributionRatio = EUCTW_TYPICAL_DISTRIBUTION_RATIO;
+        charToFreqOrder = EUCTW_CHAR2FREQ_ORDER;
+        typicalDistributionRatio = EUCTW_TYPICAL_DISTRIBUTION_RATIO;
     }
 
     /// <summary>

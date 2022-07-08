@@ -44,7 +44,7 @@ internal sealed class FunctionNodeTrim : UnaryFunctionNodeBase
     /// </returns>
     public override NodeBase Simplify()
     {
-        if (this.Parameter is StringNode stringParam)
+        if (Parameter is StringNode stringParam)
         {
             return new StringNode(stringParam.Value.Trim());
         }
@@ -60,7 +60,7 @@ internal sealed class FunctionNodeTrim : UnaryFunctionNodeBase
     ///     A deep clone.
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) =>
-        new FunctionNodeTrim(this.Parameter.DeepClone(context));
+        new FunctionNodeTrim(Parameter.DeepClone(context));
 
     /// <summary>
     ///     Strongly determines the node's type, if possible.
@@ -110,7 +110,7 @@ internal sealed class FunctionNodeTrim : UnaryFunctionNodeBase
     ///     The expression.
     /// </returns>
     protected override Expression GenerateExpressionInternal() =>
-        this.GenerateParameterMethodCall<string>(nameof(string.Trim));
+        GenerateParameterMethodCall<string>(nameof(string.Trim));
 
     /// <summary>
     ///     Generates the expression with tolerance that will be compiled into code.
@@ -118,7 +118,7 @@ internal sealed class FunctionNodeTrim : UnaryFunctionNodeBase
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
-        this.GenerateParameterMethodCall<string>(
+        GenerateParameterMethodCall<string>(
             nameof(string.Trim),
             tolerance);
 }

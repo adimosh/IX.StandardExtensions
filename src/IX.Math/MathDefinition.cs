@@ -20,29 +20,29 @@ public record MathDefinition : IDeepCloneable<MathDefinition>
     /// </summary>
     public MathDefinition()
     {
-        this.Parentheses = ("(", ")");
-        this.SpecialSymbolIndicators = ("[", "]");
-        this.StringIndicator = "\"";
-        this.ParameterSeparator = ",";
-        this.AddSymbol = "+";
-        this.AndSymbol = "&";
-        this.DivideSymbol = "/";
-        this.NotEqualsSymbol = "!=";
-        this.EqualsSymbol = "=";
-        this.MultiplySymbol = "*";
-        this.NotSymbol = "!";
-        this.OrSymbol = "|";
-        this.PowerSymbol = "^";
-        this.SubtractSymbol = "-";
-        this.XorSymbol = "#";
-        this.GreaterThanOrEqualSymbol = ">=";
-        this.GreaterThanSymbol = ">";
-        this.LessThanOrEqualSymbol = "<=";
-        this.LessThanSymbol = "<";
-        this.RightShiftSymbol = ">>";
-        this.LeftShiftSymbol = "<<";
-        this.OperatorPrecedenceStyle = OperatorPrecedenceStyle.Mathematical;
-        this.EscapeCharacter = "\\";
+        Parentheses = ("(", ")");
+        SpecialSymbolIndicators = ("[", "]");
+        StringIndicator = "\"";
+        ParameterSeparator = ",";
+        AddSymbol = "+";
+        AndSymbol = "&";
+        DivideSymbol = "/";
+        NotEqualsSymbol = "!=";
+        EqualsSymbol = "=";
+        MultiplySymbol = "*";
+        NotSymbol = "!";
+        OrSymbol = "|";
+        PowerSymbol = "^";
+        SubtractSymbol = "-";
+        XorSymbol = "#";
+        GreaterThanOrEqualSymbol = ">=";
+        GreaterThanSymbol = ">";
+        LessThanOrEqualSymbol = "<=";
+        LessThanSymbol = "<";
+        RightShiftSymbol = ">>";
+        LeftShiftSymbol = "<<";
+        OperatorPrecedenceStyle = OperatorPrecedenceStyle.Mathematical;
+        EscapeCharacter = "\\";
     }
 
     /// <summary>
@@ -51,30 +51,30 @@ public record MathDefinition : IDeepCloneable<MathDefinition>
     /// <param name="definition">The definition to use.</param>
     public MathDefinition(MathDefinition definition)
     {
-        this.Parentheses = (definition.Parentheses.Left, definition.Parentheses.Right);
-        this.SpecialSymbolIndicators =
+        Parentheses = (definition.Parentheses.Left, definition.Parentheses.Right);
+        SpecialSymbolIndicators =
             (definition.SpecialSymbolIndicators.Begin, definition.SpecialSymbolIndicators.End);
-        this.StringIndicator = definition.StringIndicator;
-        this.ParameterSeparator = definition.ParameterSeparator;
-        this.AddSymbol = definition.AddSymbol;
-        this.AndSymbol = definition.AndSymbol;
-        this.DivideSymbol = definition.DivideSymbol;
-        this.NotEqualsSymbol = definition.NotEqualsSymbol;
-        this.EqualsSymbol = definition.EqualsSymbol;
-        this.GreaterThanOrEqualSymbol = definition.GreaterThanOrEqualSymbol;
-        this.GreaterThanSymbol = definition.GreaterThanSymbol;
-        this.LessThanOrEqualSymbol = definition.LessThanOrEqualSymbol;
-        this.LessThanSymbol = definition.LessThanSymbol;
-        this.MultiplySymbol = definition.MultiplySymbol;
-        this.NotSymbol = definition.NotSymbol;
-        this.OrSymbol = definition.OrSymbol;
-        this.PowerSymbol = definition.PowerSymbol;
-        this.LeftShiftSymbol = definition.LeftShiftSymbol;
-        this.RightShiftSymbol = definition.RightShiftSymbol;
-        this.SubtractSymbol = definition.SubtractSymbol;
-        this.XorSymbol = definition.XorSymbol;
-        this.EscapeCharacter = definition.EscapeCharacter;
-        this.OperatorPrecedenceStyle = definition.OperatorPrecedenceStyle;
+        StringIndicator = definition.StringIndicator;
+        ParameterSeparator = definition.ParameterSeparator;
+        AddSymbol = definition.AddSymbol;
+        AndSymbol = definition.AndSymbol;
+        DivideSymbol = definition.DivideSymbol;
+        NotEqualsSymbol = definition.NotEqualsSymbol;
+        EqualsSymbol = definition.EqualsSymbol;
+        GreaterThanOrEqualSymbol = definition.GreaterThanOrEqualSymbol;
+        GreaterThanSymbol = definition.GreaterThanSymbol;
+        LessThanOrEqualSymbol = definition.LessThanOrEqualSymbol;
+        LessThanSymbol = definition.LessThanSymbol;
+        MultiplySymbol = definition.MultiplySymbol;
+        NotSymbol = definition.NotSymbol;
+        OrSymbol = definition.OrSymbol;
+        PowerSymbol = definition.PowerSymbol;
+        LeftShiftSymbol = definition.LeftShiftSymbol;
+        RightShiftSymbol = definition.RightShiftSymbol;
+        SubtractSymbol = definition.SubtractSymbol;
+        XorSymbol = definition.XorSymbol;
+        EscapeCharacter = definition.EscapeCharacter;
+        OperatorPrecedenceStyle = definition.OperatorPrecedenceStyle;
     }
 
 #endregion

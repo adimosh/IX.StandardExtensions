@@ -26,7 +26,7 @@ public sealed class BoolNode : ConstantNodeBase, ISpecialRequestNode
     /// <param name="value">The node's boolean value.</param>
     public BoolNode(bool value)
     {
-        this.Value = value;
+        Value = value;
     }
 
 #pragma warning disable SA1623 // Property summary documentation should match accessors - It does, and does not indicate "whether" something at all
@@ -48,13 +48,13 @@ public sealed class BoolNode : ConstantNodeBase, ISpecialRequestNode
     /// Distills the value into a usable constant.
     /// </summary>
     /// <returns>A usable constant.</returns>
-    public override object DistillValue() => this.Value;
+    public override object DistillValue() => Value;
 
     /// <summary>
     /// Generates the expression that will be compiled into code.
     /// </summary>
     /// <returns>A <see cref="ConstantExpression"/> with a boolean value.</returns>
-    public override Expression GenerateCachedExpression() => Expression.Constant(this.Value, typeof(bool));
+    public override Expression GenerateCachedExpression() => Expression.Constant(Value, typeof(bool));
 #pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
 
     /// <summary>
@@ -63,9 +63,9 @@ public sealed class BoolNode : ConstantNodeBase, ISpecialRequestNode
     /// <returns>The string expression.</returns>
     public override Expression GenerateCachedStringExpression()
     {
-        var stringFormatters = this.specialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) as List<IStringFormatter>;
+        var stringFormatters = specialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) as List<IStringFormatter>;
         return Expression.Constant(
-            StringFormatter.FormatIntoString(this.Value, stringFormatters),
+            StringFormatter.FormatIntoString(Value, stringFormatters),
             typeof(string));
     }
 
@@ -74,11 +74,11 @@ public sealed class BoolNode : ConstantNodeBase, ISpecialRequestNode
     /// </summary>
     /// <param name="context">The deep cloning context.</param>
     /// <returns>A deep clone.</returns>
-    public override NodeBase DeepClone(NodeCloningContext context) => new BoolNode(this.Value);
+    public override NodeBase DeepClone(NodeCloningContext context) => new BoolNode(Value);
 
     /// <summary>
     /// Sets the request special object function.
     /// </summary>
     /// <param name="func">The function to set.</param>
-    void ISpecialRequestNode.SetRequestSpecialObjectFunction(Func<Type, object> func) => this.specialObjectRequestFunction = func;
+    void ISpecialRequestNode.SetRequestSpecialObjectFunction(Func<Type, object> func) => specialObjectRequestFunction = func;
 }

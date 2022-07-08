@@ -41,7 +41,7 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
     /// </exception>
     public FilterableObservableMasterSlaveCollection(Func<TItem, TFilter, bool> filteringPredicate)
     {
-        this.FilteringPredicate = Requires.NotNull(filteringPredicate);
+        FilteringPredicate = Requires.NotNull(filteringPredicate);
     }
 
     /// <summary>
@@ -58,7 +58,7 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
         SynchronizationContext context)
         : base(context)
     {
-        this.FilteringPredicate = Requires.NotNull(filteringPredicate);
+        FilteringPredicate = Requires.NotNull(filteringPredicate);
     }
 
 #endregion
@@ -75,17 +75,17 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
     {
         get
         {
-            if (!this.IsFilter())
+            if (!IsFilter())
             {
                 return base.Count;
             }
 
-            if (this.filteredElements == null)
+            if (filteredElements == null)
             {
-                this.FillCachedList();
+                FillCachedList();
             }
 
-            return this.filteredElements!.Count;
+            return filteredElements!.Count;
         }
     }
 
@@ -105,16 +105,16 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
     /// </value>
     public TFilter? Filter
     {
-        get => this.filter;
+        get => filter;
         set
         {
-            this.filter = value;
+            filter = value;
 
-            this.ClearCachedContents();
+            ClearCachedContents();
 
-            this.RaiseCollectionReset();
-            this.RaisePropertyChanged(nameof(this.Count));
-            this.RaisePropertyChanged(Constants.ItemsName);
+            RaiseCollectionReset();
+            RaisePropertyChanged(nameof(Count));
+            RaisePropertyChanged(Constants.ItemsName);
         }
     }
 
@@ -134,17 +134,17 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
         Justification = "This cannot be avoidable.")]
     public override IEnumerator<TItem> GetEnumerator()
     {
-        if (!this.IsFilter())
+        if (!IsFilter())
         {
             return base.GetEnumerator();
         }
 
-        if (this.filteredElements != null)
+        if (filteredElements != null)
         {
-            return this.filteredElements.GetEnumerator();
+            return filteredElements.GetEnumerator();
         }
 
-        this.FillCachedList();
+        FillCachedList();
 
         return base.GetEnumerator();
     }
@@ -158,9 +158,9 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
         TItem addedItem,
         int index)
     {
-        if (this.IsFilter())
+        if (IsFilter())
         {
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
@@ -181,9 +181,9 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
         TItem newItem,
         int index)
     {
-        if (this.IsFilter())
+        if (IsFilter())
         {
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
@@ -203,9 +203,9 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
         TItem removedItem,
         int index)
     {
-        if (this.IsFilter())
+        if (IsFilter())
         {
-            this.RaiseCollectionReset();
+            RaiseCollectionReset();
         }
         else
         {
@@ -221,7 +221,7 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
         Justification = "This cannot be avoidable.")]
     private IEnumerator<TItem> EnumerateFiltered()
     {
-        TFilter? localFilter = this.Filter;
+        TFilter? localFilter = Filter;
 
         using IEnumerator<TItem> enumerator = base.GetEnumerator();
 
@@ -237,7 +237,7 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
             while (enumerator.MoveNext())
             {
                 TItem current = enumerator.Current;
-                if (this.FilteringPredicate(
+                if (FilteringPredicate(
                         current,
                         localFilter))
                 {
@@ -253,37 +253,37 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
         Justification = "This cannot be avoidable.")]
     private void FillCachedList()
     {
-        this.filteredElements = new List<TItem>(base.Count);
+        filteredElements = new List<TItem>(base.Count);
 
-        using IEnumerator<TItem> enumerator = this.EnumerateFiltered();
+        using IEnumerator<TItem> enumerator = EnumerateFiltered();
         while (enumerator.MoveNext())
         {
             TItem current = enumerator.Current;
-            this.filteredElements.Add(current);
+            filteredElements.Add(current);
         }
     }
 
     private void ClearCachedContents()
     {
-        if (this.filteredElements == null)
+        if (filteredElements == null)
         {
             return;
         }
 
-        IList<TItem> coll = this.filteredElements;
-        this.filteredElements = null;
+        IList<TItem> coll = filteredElements;
+        filteredElements = null;
         coll.Clear();
     }
 
     private bool IsFilter()
     {
-        if (this.filter == null)
+        if (filter == null)
         {
             return true;
         }
 
         return !EqualityComparer<TFilter>.Default.Equals(
-            this.filter,
+            filter,
             default!);
     }
 

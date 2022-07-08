@@ -121,11 +121,11 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
     {
         get
         {
-            this.ThrowIfCurrentObjectDisposed();
+            ThrowIfCurrentObjectDisposed();
 
-            using (this.ReadLock())
+            using (ReadLock())
             {
-                return this.GetPossibleDataFiles()
+                return GetPossibleDataFiles()
                     .Length;
             }
         }
@@ -179,7 +179,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
         Func<TState, T, bool> predicate,
         Action<TState, IEnumerable<T>> actionToInvoke,
         TState state) =>
-        this.TryLoadWhilePredicateWithAction(
+        TryLoadWhilePredicateWithAction(
             predicate,
             actionToInvoke,
             state);
@@ -212,7 +212,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        return this.TryLoadWhilePredicateWithAction(
+        return TryLoadWhilePredicateWithAction(
             predicate,
             actionToInvoke,
             state);
@@ -241,7 +241,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
         Action<TState, IEnumerable<T>> actionToInvoke,
         TState state,
         CancellationToken cancellationToken = default) =>
-        this.TryLoadWhilePredicateWithActionAsync(
+        TryLoadWhilePredicateWithActionAsync(
             predicate,
             actionToInvoke,
             state,
@@ -269,7 +269,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
         Action<TState, IEnumerable<T>> actionToInvoke,
         TState state,
         CancellationToken cancellationToken = default) =>
-        this.TryLoadWhilePredicateWithActionAsync(
+        TryLoadWhilePredicateWithActionAsync(
             predicate,
             actionToInvoke,
             state,
@@ -298,7 +298,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
         Func<TState, IEnumerable<T>, Task> actionToInvoke,
         TState state,
         CancellationToken cancellationToken = default) =>
-        this.TryLoadWhilePredicateWithActionAsync(
+        TryLoadWhilePredicateWithActionAsync(
             predicate,
             actionToInvoke,
             state,
@@ -326,7 +326,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
         Func<TState, IEnumerable<T>, ValueTask> actionToInvoke,
         TState state,
         CancellationToken cancellationToken = default) =>
-        this.TryLoadWhilePredicateWithActionAsync(
+        TryLoadWhilePredicateWithActionAsync(
             predicate,
             actionToInvoke,
             state,
@@ -355,7 +355,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
         Func<TState, IEnumerable<T>, Task> actionToInvoke,
         TState state,
         CancellationToken cancellationToken = default) =>
-        this.TryLoadWhilePredicateWithActionAsync(
+        TryLoadWhilePredicateWithActionAsync(
             predicate,
             actionToInvoke,
             state,
@@ -383,7 +383,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
         Func<TState, IEnumerable<T>, ValueTask> actionToInvoke,
         TState state,
         CancellationToken cancellationToken = default) =>
-        this.TryLoadWhilePredicateWithActionAsync(
+        TryLoadWhilePredicateWithActionAsync(
             predicate,
             actionToInvoke,
             state,
@@ -402,7 +402,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
     public bool DequeueWithAction<TState>(
         Action<TState, T> actionToInvoke,
         TState state) =>
-        this.TryLoadTopmostItemWithAction(
+        TryLoadTopmostItemWithAction(
             actionToInvoke,
             state);
 
@@ -427,7 +427,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        return this.DequeueWithAction(
+        return DequeueWithAction(
             actionToInvoke,
             state);
     }
@@ -448,7 +448,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
         Func<TState, T, Task> actionToInvoke,
         TState state,
         CancellationToken cancellationToken = default) =>
-        this.TryLoadTopmostItemWithActionAsync(
+        TryLoadTopmostItemWithActionAsync(
             actionToInvoke,
             state,
             cancellationToken);
@@ -468,7 +468,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
         Func<TState, T, ValueTask> actionToInvoke,
         TState state,
         CancellationToken cancellationToken = default) =>
-        this.TryLoadTopmostItemWithActionAsync(
+        TryLoadTopmostItemWithActionAsync(
             actionToInvoke,
             state,
             cancellationToken);
@@ -477,7 +477,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
     ///     Clears the queue of all elements.
     /// </summary>
     public override void Clear() =>
-        this.ClearData();
+        ClearData();
 
     /// <summary>
     ///     This method should not be called, as it will always throw an <see cref="InvalidOperationException" />.
@@ -493,21 +493,21 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
     /// </summary>
     /// <returns>The item that has been de-queued.</returns>
     public override T Dequeue() =>
-        this.LoadTopmostItem();
+        LoadTopmostItem();
 
     /// <summary>
     ///     Queues an item, adding it to the queue.
     /// </summary>
     /// <param name="item">The item to enqueue.</param>
     public override void Enqueue(T item) =>
-        this.SaveNewItem(item);
+        SaveNewItem(item);
 
     /// <summary>
     ///     Peeks at the topmost element in the queue, without removing it.
     /// </summary>
     /// <returns>The item peeked at, if any.</returns>
     public override T Peek() =>
-        this.PeekTopmostItem();
+        PeekTopmostItem();
 
     /// <summary>
     ///     This method should not be called, as it will always throw an <see cref="InvalidOperationException" />.
@@ -539,7 +539,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
     {
         try
         {
-            item = this.LoadTopmostItem();
+            item = LoadTopmostItem();
 
             return true;
         }
@@ -558,7 +558,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
     ///     <see langword="true" /> if an item is found, <see langword="false" /> otherwise, or if the queue is empty.
     /// </returns>
     public override bool TryPeek(out T item) =>
-        this.TryPeekTopmostItem(out item);
+        TryPeekTopmostItem(out item);
 
 #endregion
 

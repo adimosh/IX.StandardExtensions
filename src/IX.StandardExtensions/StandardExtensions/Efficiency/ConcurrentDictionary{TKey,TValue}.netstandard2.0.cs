@@ -59,7 +59,7 @@ public partial class ConcurrentDictionary<TKey, TValue>
 
             try
             {
-                return this.AddOrUpdate(
+                return AddOrUpdate(
                     key,
                     AddInternal<TState>,
                     UpdateInternal<TState>);
@@ -94,7 +94,7 @@ public partial class ConcurrentDictionary<TKey, TValue>
 
             try
             {
-                return this.GetOrAdd(
+                return GetOrAdd(
                     key,
                     AddInternal<TState>);
             }
