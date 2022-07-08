@@ -24,10 +24,6 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
         "ReSharper",
         "VirtualMemberCallInConstructor",
         Justification = "We specifically want this to happen.")]
-    [SuppressMessage(
-        "Usage",
-        "CA2214:Do not call overridable methods in constructors",
-        Justification = "We specifically want this to happen.")]
     protected private BinaryOperatorNodeBase(
         NodeBase left,
         NodeBase right)

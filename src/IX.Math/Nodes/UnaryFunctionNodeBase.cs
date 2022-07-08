@@ -2,6 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -24,15 +25,14 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     /// </summary>
     /// <param name="parameter">The parameter.</param>
     /// <exception cref="ArgumentNullException">parameter.</exception>
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "Usage",
-        "CA2214:Do not call overridable methods in constructors",
-        Justification = "This is OK and expected at this point.")]
+    [SuppressMessage(
+        "ReSharper",
+        "VirtualMemberCallInConstructor",
+        Justification = "We specifically want this to happen.")]
     protected UnaryFunctionNodeBase(NodeBase parameter)
     {
         NodeBase parameterTemp = Requires.NotNull(parameter);
 
-        // ReSharper disable once VirtualMemberCallInConstructor - We want this to happen
         EnsureCompatibleParameter(parameterTemp);
 
         Parameter = parameterTemp.Simplify();
