@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -41,6 +37,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 using System.Text;
+
 using UtfUnknown.Core.Analyzers.Chinese;
 using UtfUnknown.Core.Models;
 using UtfUnknown.Core.Models.MultiByte.Chinese;
@@ -61,47 +58,34 @@ internal class Big5Prober : CharsetProber
         Reset();
     }
 
-    public override ProbingState HandleData(
-        byte[] buf,
-        int offset,
-        int len)
+    public override ProbingState HandleData(byte[] buf, int offset, int len)
     {
-        var max = offset + len;
+        int max = offset + len;
 
-        for (var i = offset; i < max; i++)
+        for (int i = offset; i < max; i++)
         {
             var codingState = codingSM.NextState(buf[i]);
             if (codingState == StateMachineModel.ERROR)
             {
                 state = ProbingState.NotMe;
-
                 break;
             }
-
             if (codingState == StateMachineModel.ITSME)
             {
                 state = ProbingState.FoundIt;
-
                 break;
             }
-
             if (codingState == StateMachineModel.START)
             {
-                var charLen = codingSM.CurrentCharLen;
+                int charLen = codingSM.CurrentCharLen;
                 if (i == offset)
                 {
                     lastChar[1] = buf[offset];
-                    distributionAnalyser.HandleOneChar(
-                        lastChar,
-                        0,
-                        charLen);
+                    distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
                 }
                 else
                 {
-                    distributionAnalyser.HandleOneChar(
-                        buf,
-                        i - 1,
-                        charLen);
+                    distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
                 }
             }
         }
@@ -109,12 +93,8 @@ internal class Big5Prober : CharsetProber
         lastChar[0] = buf[max - 1];
 
         if (state == ProbingState.Detecting)
-        {
             if (distributionAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
-            {
                 state = ProbingState.FoundIt;
-            }
-        }
 
         return state;
     }
@@ -126,7 +106,13 @@ internal class Big5Prober : CharsetProber
         distributionAnalyser.Reset();
     }
 
-    public override string GetCharsetName() => CodepageName.BIG5;
+    public override string GetCharsetName()
+    {
+        return CodepageName.BIG5;
+    }
 
-    public override float GetConfidence(StringBuilder? status = null) => distributionAnalyser.GetConfidence();
+    public override float GetConfidence(StringBuilder status = null)
+    {
+        return distributionAnalyser.GetConfidence();
+    }
 }

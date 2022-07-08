@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -25,7 +21,7 @@
  * Contributor(s):
  *          Shy Shalom <shooshX@gmail.com>
  *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- *
+ * 
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -40,6 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
 using System.Text;
 
 /*
@@ -47,40 +44,40 @@ using System.Text;
  *
  * Four main charsets exist in Hebrew:
  * "ISO-8859-8" - Visual Hebrew
- * "windows-1255" - Logical Hebrew
+ * "windows-1255" - Logical Hebrew 
  * "ISO-8859-8-I" - Logical Hebrew
  * "x-mac-hebrew" - ?? Logical Hebrew ??
  *
  * Both "ISO" charsets use a completely identical set of code points, whereas
- * "windows-1255" and "x-mac-hebrew" are two different proper supersets of
+ * "windows-1255" and "x-mac-hebrew" are two different proper supersets of 
  * these code points. windows-1255 defines additional characters in the range
- * 0x80-0x9F as some misc punctuation marks as well as some Hebrew-specific
+ * 0x80-0x9F as some misc punctuation marks as well as some Hebrew-specific 
  * diacritics and additional 'Yiddish' ligature letters in the range 0xc0-0xd6.
- * x-mac-hebrew defines similar additional code points but with a different
+ * x-mac-hebrew defines similar additional code points but with a different 
  * mapping.
  *
- * As far as an average Hebrew text with no diacritics is concerned, all four
- * charsets are identical with respect to code points. Meaning that for the
- * main Hebrew alphabet, all four map the same values to all 27 Hebrew letters
+ * As far as an average Hebrew text with no diacritics is concerned, all four 
+ * charsets are identical with respect to code points. Meaning that for the 
+ * main Hebrew alphabet, all four map the same values to all 27 Hebrew letters 
  * (including final letters).
  *
  * The dominant difference between these charsets is their directionality.
  * "Visual" directionality means that the text is ordered as if the renderer is
- * not aware of a BIDI rendering algorithm. The renderer sees the text and
- * draws it from left to right. The text itself when ordered naturally is read
+ * not aware of a BIDI rendering algorithm. The renderer sees the text and 
+ * draws it from left to right. The text itself when ordered naturally is read 
  * backwards. A buffer of Visual Hebrew generally looks like so:
  * "[last word of first line spelled backwards] [whole line ordered backwards
- * and spelled backwards] [first word of first line spelled backwards]
+ * and spelled backwards] [first word of first line spelled backwards] 
  * [end of line] [last word of second line] ... etc' "
  * adding punctuation marks, numbers and English text to visual text is
  * naturally also "visual" and from left to right.
- *
+ * 
  * "Logical" directionality means the text is ordered "naturally" according to
- * the order it is read. It is the responsibility of the renderer to display
- * the text from right to left. A BIDI algorithm is used to place general
+ * the order it is read. It is the responsibility of the renderer to display 
+ * the text from right to left. A BIDI algorithm is used to place general 
  * punctuation marks, numbers and English text in the text.
  *
- * Texts in x-mac-hebrew are almost impossible to find on the Internet. From
+ * Texts in x-mac-hebrew are almost impossible to find on the Internet. From 
  * what little evidence I could find, it seems that its general directionality
  * is Logical.
  *
@@ -88,17 +85,17 @@ using System.Text;
  * charsets:
  * Visual Hebrew - "ISO-8859-8" - backwards text - Words and sentences are
  *    backwards while line order is natural. For charset recognition purposes
- *    the line order is unimportant (In fact, for this implementation, even
+ *    the line order is unimportant (In fact, for this implementation, even 
  *    word order is unimportant).
  * Logical Hebrew - "windows-1255" - normal, naturally ordered text.
  *
- * "ISO-8859-8-I" is a subset of windows-1255 and doesn't need to be
+ * "ISO-8859-8-I" is a subset of windows-1255 and doesn't need to be 
  *    specifically identified.
  * "x-mac-hebrew" is also identified as windows-1255. A text in x-mac-hebrew
  *    that contain special punctuation marks or diacritics is displayed with
  *    some unconverted characters showing as question marks. This problem might
  *    be corrected using another model prober for x-mac-hebrew. Due to the fact
- *    that x-mac-hebrew texts are so rare, writing another model prober isn't
+ *    that x-mac-hebrew texts are so rare, writing another model prober isn't 
  *    worth the effort and performance hit.
  *
  * *** The Prober ***
@@ -148,11 +145,11 @@ namespace UtfUnknown.Core.Probers;
 internal class HebrewProber : CharsetProber
 {
     // windows-1255 / ISO-8859-8 code points of interest
-    private const byte FINAL_KAF = 0xEA;
+    private const byte FINAL_KAF  = 0xEA;
     private const byte NORMAL_KAF = 0xEB;
-    private const byte FINAL_MEM = 0xED;
+    private const byte FINAL_MEM  = 0xED;
     private const byte NORMAL_MEM = 0xEE;
-    private const byte FINAL_NUN = 0xEF;
+    private const byte FINAL_NUN  = 0xEF;
     private const byte NORMAL_NUN = 0xF0;
     private const byte FINAL_PE = 0xF3;
     private const byte NORMAL_PE = 0xF4;
@@ -177,88 +174,71 @@ internal class HebrewProber : CharsetProber
     // The two last bytes seen in the previous buffer.
     protected byte prev, beforePrev;
 
-#pragma warning disable CS8618
-    public HebrewProber() => Reset();
-#pragma warning restore CS8618
-
-    public void SetModelProbers(
-        CharsetProber logical,
-        CharsetProber visual)
+    public HebrewProber()
     {
-        logicalProber = logical;
-        visualProber = visual;
+        Reset();
     }
 
-    /**
+    public void SetModelProbers(CharsetProber logical, CharsetProber visual)
+    { 
+        logicalProber = logical; 
+        visualProber = visual; 
+    }
+
+    /** 
          * Final letter analysis for logical-visual decision.
-         * Look for evidence that the received buffer is either logical Hebrew or
+         * Look for evidence that the received buffer is either logical Hebrew or 
          * visual Hebrew.
          * The following cases are checked:
-         * 1) A word longer than 1 letter, ending with a final letter. This is an
-         *    indication that the text is laid out "naturally" since the final letter
+         * 1) A word longer than 1 letter, ending with a final letter. This is an 
+         *    indication that the text is laid out "naturally" since the final letter 
          *    really appears at the end. +1 for logical score.
          * 2) A word longer than 1 letter, ending with a Non-Final letter. In normal
          *    Hebrew, words ending with Kaf, Mem, Nun, Pe or Tsadi, should not end with
          *    the Non-Final form of that letter. Exceptions to this rule are mentioned
          *    above in isNonFinal(). This is an indication that the text is laid out
          *    backwards. +1 for visual score
-         * 3) A word longer than 1 letter, starting with a final letter. Final letters
-         *    should not appear at the beginning of a word. This is an indication that
+         * 3) A word longer than 1 letter, starting with a final letter. Final letters 
+         *    should not appear at the beginning of a word. This is an indication that 
          *    the text is laid out backwards. +1 for visual score.
          *
-         * The visual score and logical score are accumulated throughout the text and
+         * The visual score and logical score are accumulated throughout the text and 
          * are finally checked against each other in GetCharSetName().
          * No checking for final letters in the middle of words is done since that case
          * is not an indication for either Logical or Visual text.
          *
          * The input buffer should not contain any white spaces that are not (' ')
-         * or any low-ascii punctuation marks.
+         * or any low-ascii punctuation marks. 
          */
-    public override ProbingState HandleData(
-        byte[] buf,
-        int offset,
-        int len)
+    public override ProbingState HandleData(byte[] buf, int offset, int len)
     {
         // Both model probers say it's not them. No reason to continue.
         if (GetState() == ProbingState.NotMe)
-        {
             return ProbingState.NotMe;
-        }
 
-        var max = offset + len;
+        int max = offset + len;
 
-        for (var i = offset; i < max; i++)
-        {
-            var b = buf[i];
+        for (int i = offset; i < max; i++) {
+
+            byte b = buf[i];
 
             // a word just ended
-            if (b == 0x20)
-            {
+            if (b == 0x20) {
                 // *(curPtr-2) was not a space so prev is not a 1 letter word
-                if (beforePrev != 0x20)
-                {
+                if (beforePrev != 0x20) {
                     // case (1) [-2:not space][-1:final letter][cur:space]
                     if (IsFinal(prev))
-                    {
                         finalCharLogicalScore++;
-                    }
-
                     // case (2) [-2:not space][-1:Non-Final letter][cur:space]
                     else if (IsNonFinal(prev))
-                    {
                         finalCharVisualScore++;
-                    }
                 }
-            }
-            else
-            {
-                // case (3) [-2:space][-1:final letter][cur:not space]
-                if (beforePrev == 0x20 && IsFinal(prev) && b != ' ')
-                {
-                    ++finalCharVisualScore;
-                }
-            }
 
+            } else {
+                // case (3) [-2:space][-1:final letter][cur:not space]
+                if ((beforePrev == 0x20) && (IsFinal(prev)) && (b != ' '))
+                    ++finalCharVisualScore;
+            }
             beforePrev = prev;
             prev = b;
         }
@@ -272,34 +252,22 @@ internal class HebrewProber : CharsetProber
     public override string GetCharsetName()
     {
         // If the final letter score distance is dominant enough, rely on it.
-        var finalsub = finalCharLogicalScore - finalCharVisualScore;
+        int finalsub = finalCharLogicalScore - finalCharVisualScore;
         if (finalsub >= MIN_FINAL_CHAR_DISTANCE)
-        {
             return LOGICAL_NAME;
-        }
-
-        if (finalsub <= -MIN_FINAL_CHAR_DISTANCE)
-        {
+        if (finalsub <= -(MIN_FINAL_CHAR_DISTANCE))
             return VISUAL_NAME;
-        }
 
         // It's not dominant enough, try to rely on the model scores instead.
-        var modelsub = logicalProber.GetConfidence() - visualProber.GetConfidence();
+        float modelsub = logicalProber.GetConfidence() - visualProber.GetConfidence();
         if (modelsub > MIN_MODEL_DISTANCE)
-        {
             return LOGICAL_NAME;
-        }
-
-        if (modelsub < -MIN_MODEL_DISTANCE)
-        {
+        if (modelsub < -(MIN_MODEL_DISTANCE))
             return VISUAL_NAME;
-        }
-
+            
         // Still no good, back to final letter distance, maybe it'll save the day.
         if (finalsub < 0)
-        {
             return VISUAL_NAME;
-        }
 
         // (finalsub > 0 - Logical) or (don't know what to do) default to Logical.
         return LOGICAL_NAME;
@@ -316,30 +284,34 @@ internal class HebrewProber : CharsetProber
     public override ProbingState GetState()
     {
         // Remain active as long as any of the model probers are active.
-        if (logicalProber.GetState() == ProbingState.NotMe && visualProber.GetState() == ProbingState.NotMe)
-        {
+        if (logicalProber.GetState() == ProbingState.NotMe &&
+            visualProber.GetState() == ProbingState.NotMe)
             return ProbingState.NotMe;
-        }
-
         return ProbingState.Detecting;
     }
 
     public override string DumpStatus()
     {
-        var status = new StringBuilder();
+        StringBuilder status = new StringBuilder();
 
-        _ = status.AppendLine($"  HEB: {finalCharLogicalScore} - {finalCharVisualScore} [Logical-Visual score]");
+        status.AppendLine($"  HEB: {finalCharLogicalScore} - {finalCharVisualScore} [Logical-Visual score]");
 
         return status.ToString();
     }
 
-    public override float GetConfidence(StringBuilder? status = null) => 0.0f;
+    public override float GetConfidence(StringBuilder status = null)
+    { 
+        return 0.0f;
+    }
 
-    protected static bool IsFinal(byte b) =>
-        b == FINAL_KAF || b == FINAL_MEM || b == FINAL_NUN || b == FINAL_PE || b == FINAL_TSADI;
+    protected static bool IsFinal(byte b)
+    {
+        return (b == FINAL_KAF || b == FINAL_MEM || b == FINAL_NUN
+                || b == FINAL_PE || b == FINAL_TSADI);        
+    }
 
-    protected static bool IsNonFinal(byte b) =>
-
+    protected static bool IsNonFinal(byte b)
+    {
         // The normal Tsadi is not a good Non-Final letter due to words like
         // 'lechotet' (to chat) containing an apostrophe after the tsadi. This
         // apostrophe is converted to a space in FilterWithoutEnglishLetters causing
@@ -350,5 +322,6 @@ internal class HebrewProber : CharsetProber
         // example legally end with a Non-Final Pe or Kaf. However, the benefit of
         // these letters as Non-Final letters outweighs the damage since these words
         // are quite rare.
-        b == NORMAL_KAF || b == NORMAL_MEM || b == NORMAL_NUN || b == NORMAL_PE;
+        return (b == NORMAL_KAF || b == NORMAL_MEM || b == NORMAL_NUN || b == NORMAL_PE);
+    }
 }

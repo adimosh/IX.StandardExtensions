@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 namespace UtfUnknown.Core.Analyzers.Japanese;
 
 internal class EUCJPDistributionAnalyser : SJISDistributionAnalyser
@@ -11,17 +7,11 @@ internal class EUCJPDistributionAnalyser : SJISDistributionAnalyser
     ///  second byte range: 0xa1 -- 0xfe
     /// no validation needed here. State machine has done that
     /// </summary>
-    public override int GetOrder(
-        byte[] buf,
-        int offset)
-    {
+    public override int GetOrder(byte[] buf, int offset)
+    { 
         if (buf[offset] >= 0xA0)
-        {
-            return (94 * (buf[offset] - 0xA1)) + buf[offset + 1] - 0xA1;
-        }
+            return 94 * (buf[offset] - 0xA1) + buf[offset+1] - 0xA1;
         else
-        {
             return -1;
-        }
     }
 }

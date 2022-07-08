@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -25,7 +21,7 @@
  * Contributor(s):
  *          Shy Shalom <shooshX@gmail.com>
  *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- *
+ * 
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -41,6 +37,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 using System.Text;
+
 using UtfUnknown.Core.Analyzers.Chinese;
 using UtfUnknown.Core.Models;
 using UtfUnknown.Core.Models.MultiByte.Chinese;
@@ -60,48 +57,37 @@ internal class EUCTWProber : CharsetProber
         Reset();
     }
 
-    public override ProbingState HandleData(
-        byte[] buf,
-        int offset,
-        int len)
+    public override ProbingState HandleData(byte[] buf, int offset, int len)
     {
         int codingState;
-        var max = offset + len;
+        int max = offset + len;
 
-        for (var i = 0; i < max; i++)
+        for (int i = 0; i < max; i++)
         {
             codingState = codingSM.NextState(buf[i]);
             if (codingState == StateMachineModel.ERROR)
             {
                 state = ProbingState.NotMe;
-
                 break;
             }
 
             if (codingState == StateMachineModel.ITSME)
             {
                 state = ProbingState.FoundIt;
-
                 break;
             }
 
             if (codingState == StateMachineModel.START)
             {
-                var charLen = codingSM.CurrentCharLen;
+                int charLen = codingSM.CurrentCharLen;
                 if (i == offset)
                 {
                     lastChar[1] = buf[offset];
-                    distributionAnalyser.HandleOneChar(
-                        lastChar,
-                        0,
-                        charLen);
+                    distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
                 }
                 else
                 {
-                    distributionAnalyser.HandleOneChar(
-                        buf,
-                        i - 1,
-                        charLen);
+                    distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
                 }
             }
         }
@@ -109,17 +95,16 @@ internal class EUCTWProber : CharsetProber
         lastChar[0] = buf[max - 1];
 
         if (state == ProbingState.Detecting)
-        {
             if (distributionAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
-            {
                 state = ProbingState.FoundIt;
-            }
-        }
 
         return state;
     }
 
-    public override string GetCharsetName() => CodepageName.EUC_TW;
+    public override string GetCharsetName()
+    {
+        return CodepageName.EUC_TW;
+    }
 
     public override void Reset()
     {
@@ -128,5 +113,8 @@ internal class EUCTWProber : CharsetProber
         distributionAnalyser.Reset();
     }
 
-    public override float GetConfidence(StringBuilder? status = null) => distributionAnalyser.GetConfidence();
+    public override float GetConfidence(StringBuilder status = null)
+    {
+        return distributionAnalyser.GetConfidence();
+    }
 }

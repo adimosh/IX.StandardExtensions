@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -40,6 +36,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 using System.Text;
+
 using UtfUnknown.Core.Analyzers.Korean;
 using UtfUnknown.Core.Models;
 using UtfUnknown.Core.Models.MultiByte.Korean;
@@ -59,50 +56,42 @@ internal class EUCKRProber : CharsetProber
         Reset();
     }
 
-    public override string GetCharsetName() => CodepageName.EUC_KR;
+    public override string GetCharsetName()
+    {
+        return CodepageName.EUC_KR;
+    }
 
-    public override ProbingState HandleData(
-        byte[] buf,
-        int offset,
-        int len)
+    public override ProbingState HandleData(byte[] buf, int offset, int len)
     {
         int codingState;
-        var max = offset + len;
+        int max = offset + len;
 
-        for (var i = offset; i < max; i++)
+        for (int i = offset; i < max; i++)
         {
             codingState = codingSM.NextState(buf[i]);
             if (codingState == StateMachineModel.ERROR)
             {
                 state = ProbingState.NotMe;
-
                 break;
             }
 
             if (codingState == StateMachineModel.ITSME)
             {
                 state = ProbingState.FoundIt;
-
                 break;
             }
 
             if (codingState == StateMachineModel.START)
             {
-                var charLen = codingSM.CurrentCharLen;
+                int charLen = codingSM.CurrentCharLen;
                 if (i == offset)
                 {
                     lastChar[1] = buf[offset];
-                    distributionAnalyser.HandleOneChar(
-                        lastChar,
-                        0,
-                        charLen);
+                    distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
                 }
                 else
                 {
-                    distributionAnalyser.HandleOneChar(
-                        buf,
-                        i - 1,
-                        charLen);
+                    distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
                 }
             }
         }
@@ -110,24 +99,22 @@ internal class EUCKRProber : CharsetProber
         lastChar[0] = buf[max - 1];
 
         if (state == ProbingState.Detecting)
-        {
             if (distributionAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
-            {
                 state = ProbingState.FoundIt;
-            }
-        }
 
         return state;
     }
 
-    public override float GetConfidence(StringBuilder? status = null) => distributionAnalyser.GetConfidence();
+    public override float GetConfidence(StringBuilder status = null)
+    {
+        return distributionAnalyser.GetConfidence();
+    }
 
     public override void Reset()
     {
         codingSM.Reset();
         state = ProbingState.Detecting;
         distributionAnalyser.Reset();
-
         //mContextAnalyser.Reset();
     }
 }

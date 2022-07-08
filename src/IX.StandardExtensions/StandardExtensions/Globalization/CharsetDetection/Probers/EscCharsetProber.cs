@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -40,6 +36,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 using System.Text;
+
 using UtfUnknown.Core.Models;
 using UtfUnknown.Core.Models.MultiByte.Chinese;
 using UtfUnknown.Core.Models.MultiByte.Japanese;
@@ -50,9 +47,9 @@ namespace UtfUnknown.Core.Probers;
 internal class EscCharsetProber : CharsetProber
 {
     private const int CHARSETS_NUM = 4;
-    private string? detectedCharset;
+    private string detectedCharset;
     private CodingStateMachine[] codingSM;
-    private int activeSM;
+    int activeSM;
 
     public EscCharsetProber()
     {
@@ -67,70 +64,48 @@ internal class EscCharsetProber : CharsetProber
     public override void Reset()
     {
         state = ProbingState.Detecting;
-        for (var i = 0; i < CHARSETS_NUM; i++)
-        {
-            codingSM[i]
-                .Reset();
-        }
-
+        for (int i = 0; i < CHARSETS_NUM; i++)
+            codingSM[i].Reset();
         activeSM = CHARSETS_NUM;
         detectedCharset = null;
     }
 
-    public override ProbingState HandleData(
-        byte[] buf,
-        int offset,
-        int len)
+    public override ProbingState HandleData(byte[] buf, int offset, int len)
     {
-        var max = offset + len;
+        int max = offset + len;
 
-        for (var i = offset; i < max && state == ProbingState.Detecting; i++)
-        {
-            if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
-            {
-                // High-byte found, let's get out of here
-                state = ProbingState.NotMe;
-
-                return state;
-            }
-
-            for (var j = activeSM - 1; j >= 0; j--)
-            {
+        for (int i = offset; i < max && state == ProbingState.Detecting; i++) {
+            for (int j = activeSM - 1; j >= 0; j--) {
                 // byte is feed to all active state machine
-                var codingState = codingSM[j]
-                    .NextState(buf[i]);
-                if (codingState == StateMachineModel.ERROR)
-                {
+                int codingState = codingSM[j].NextState(buf[i]);
+                if (codingState == StateMachineModel.ERROR)  {
                     // got negative answer for this state machine, make it inactive
                     activeSM--;
-                    if (activeSM == 0)
-                    {
+                    if (activeSM == 0) {
                         state = ProbingState.NotMe;
-
                         return state;
-                    }
-                    else if (j != activeSM)
-                    {
+                    } else if (j != activeSM) {
                         CodingStateMachine t = codingSM[activeSM];
                         codingSM[activeSM] = codingSM[j];
                         codingSM[j] = t;
                     }
-                }
-                else if (codingState == StateMachineModel.ITSME)
-                {
+                } else if (codingState == StateMachineModel.ITSME) {
                     state = ProbingState.FoundIt;
-                    detectedCharset = codingSM[j]
-                        .ModelName;
-
+                    detectedCharset = codingSM[j].ModelName;
                     return state;
                 }
             }
         }
-
         return state;
     }
 
-    public override string GetCharsetName() => detectedCharset ?? CodepageName.ASCII;
+    public override string GetCharsetName()
+    {
+        return detectedCharset;
+    }
 
-    public override float GetConfidence(StringBuilder? status = null) => 0.99f;
+    public override float GetConfidence(StringBuilder status = null)
+    {
+        return 0.99f;
+    }
 }

@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -25,7 +21,7 @@
  * Contributor(s):
  *          Shy Shalom <shooshX@gmail.com>
  *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- *
+ * 
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -40,6 +36,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
+
 namespace UtfUnknown.Core.Models;
 
 internal abstract class SequenceModel
@@ -48,16 +46,12 @@ internal abstract class SequenceModel
 
     // Illegal codepoints
     public const byte ILL = 255;
-
     // Control character
     public const byte CTR = 254;
-
     // Symbols and punctuation that does not belong to words
     public const byte SYM = 253;
-
     // Return/Line feeds
     public const byte RET = 252;
-
     // Numbers 0-9
     public const byte NUM = 251;
 
@@ -71,12 +65,17 @@ internal abstract class SequenceModel
     // The count of frequent characters
     protected int freqCharCount;
 
-    public int FreqCharCount => freqCharCount;
+    public int FreqCharCount
+    {
+        get { return freqCharCount; }
+    }
 
     // freqSeqs / totalSeqs
     protected float typicalPositiveRatio;
 
-    public float TypicalPositiveRatio => typicalPositiveRatio;
+    public float TypicalPositiveRatio {
+        get { return typicalPositiveRatio; }
+    }
 
 
     /// <summary>
@@ -87,11 +86,15 @@ internal abstract class SequenceModel
     /// <summary>
     /// TODO not used?
     /// </summary>
-    public bool KeepEnglishLetter => keepEnglishLetter;
+    public bool KeepEnglishLetter {
+        get { return keepEnglishLetter; }
+    }
 
     protected string charsetName;
 
-    public string CharsetName => charsetName;
+    public string CharsetName {
+        get { return charsetName; }
+    }
 
     public SequenceModel(
         byte[] charToOrderMap,
@@ -99,7 +102,7 @@ internal abstract class SequenceModel
         int freqCharCount,
         float typicalPositiveRatio,
         bool keepEnglishLetter,
-        string charsetName)
+        String charsetName)
     {
         this.charToOrderMap = charToOrderMap;
         this.precedenceMatrix = precedenceMatrix;
@@ -109,7 +112,13 @@ internal abstract class SequenceModel
         this.charsetName = charsetName;
     }
 
-    public byte GetOrder(byte b) => charToOrderMap[b];
+    public byte GetOrder(byte b)
+    {
+        return charToOrderMap[b];
+    }
 
-    public byte GetPrecedence(int pos) => precedenceMatrix[pos];
+    public byte GetPrecedence(int pos)
+    {
+        return precedenceMatrix[pos];
+    }
 }

@@ -42,8 +42,13 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
     /// </summary>
     /// <param name="encodingShortName">The short name of the encoding.</param>
     /// <returns>The encoding, if one is found.</returns>
-    public static Encoding? GetCompatibleEncodingByShortName(string encodingShortName)
+    public static Encoding? GetCompatibleEncodingByShortName(string? encodingShortName)
     {
+        if (encodingShortName == null)
+        {
+            return Encoding.ASCII;
+        }
+
         var encodingName = FixedToSupportCodepageName.TryGetValue(
             encodingShortName,
             out var supportCodepageName)
@@ -52,6 +57,21 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
         try
         {
             return Encoding.GetEncoding(encodingName);
+        }
+        catch (NotSupportedException)
+        {
+#if STANDARD_GT_20
+            try
+            {
+                return CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
+            }
+            catch
+            {
+                return null;
+            }
+#else
+            return null;
+#endif
         }
         catch (ArgumentException)
         {
@@ -433,7 +453,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
             byte[]? chunk = null;
             while (length != 0)
             {
-                long toRead = length > 1000 ? 1000 : length;
+                var toRead = length > 1000 ? 1000 : length;
 
                 chunk ??= new byte[toRead];
 
@@ -460,7 +480,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
             }
 
             Encoding? finalEncoding = null;
-            float finalConfidence = 0f;
+            var finalConfidence = 0f;
 
             var mostLikelyCharset = probers.Value.Where(p => p.GetState() != ProbingState.NotMe)
                 .Select(
@@ -501,7 +521,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        bool firstTime = true;
+        var firstTime = true;
 
         using var probers = UnicodeProbersPool.Get();
 
@@ -510,7 +530,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
             byte[]? chunk = null;
             while (length != 0)
             {
-                int toRead = (length ?? 1001) > 1000 ? 1000 : (int)length!.Value;
+                var toRead = (length ?? 1001) > 1000 ? 1000 : (int)length!.Value;
 
                 chunk ??= new byte[toRead];
 
@@ -559,7 +579,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
             }
 
             Encoding? finalEncoding = null;
-            float finalConfidence = 0f;
+            var finalConfidence = 0f;
 
             var mostLikelyCharset = probers.Value.Where(p => p.GetState() != ProbingState.NotMe)
                 .Select(
@@ -579,7 +599,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
             }
 
             return finalEncoding == null
-                ? (null, 0f)
+                ? (Encoding.ASCII, 0f)
                 : (finalEncoding, finalConfidence >= 0.99f ? 1.0f : finalConfidence);
         }
         finally
@@ -602,7 +622,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        bool firstTime = true;
+        var firstTime = true;
 
         using var probers = UnicodeProbersPool.Get();
 
@@ -611,7 +631,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
             byte[]? chunk = null;
             while (length != 0)
             {
-                int toRead = (length ?? 1001) > 1000 ? 1000 : (int)length!.Value;
+                var toRead = (length ?? 1001) > 1000 ? 1000 : (int)length!.Value;
 
                 chunk ??= new byte[toRead];
 
@@ -661,7 +681,7 @@ public class CharsetDetectionEngine : ICharsetDetectionEngine
             }
 
             Encoding? finalEncoding = null;
-            float finalConfidence = 0f;
+            var finalConfidence = 0f;
 
             var mostLikelyCharset = probers.Value.Where(p => p.GetState() != ProbingState.NotMe)
                 .Select(

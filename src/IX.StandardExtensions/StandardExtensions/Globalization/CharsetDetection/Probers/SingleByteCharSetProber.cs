@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -24,7 +20,7 @@
  *
  * Contributor(s):
  *          Shy Shalom <shooshX@gmail.com>
- *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
+ *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port) 
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -40,7 +36,9 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
 using System.Text;
+
 using UtfUnknown.Core.Models;
 
 namespace UtfUnknown.Core.Probers;
@@ -60,50 +58,45 @@ internal class SingleByteCharSetProber : CharsetProber
     protected SequenceModel model;
 
     // true if we need to reverse every pair in the model lookup
-    private bool reversed;
+    bool reversed;
 
     // char order of last character
-    private byte lastOrder;
+    byte lastOrder;
 
-    private int totalSeqs;
-    private int[] seqCounters = new int[NUMBER_OF_SEQ_CAT];
+    int totalSeqs;
+    int[] seqCounters = new int[NUMBER_OF_SEQ_CAT];
 
-    private int totalChar;
-    private int ctrlChar;
+    int totalChar;
+    int ctrlChar;
 
     // characters that fall in our sampling range
-    private int freqChar;
+    int freqChar;
 
     // Optional auxiliary prober for name decision. created and destroyed by the GroupProber
-    private CharsetProber? nameProber;
+    CharsetProber nameProber;
 
     public SingleByteCharSetProber(SequenceModel model)
-        : this(
-            model,
-            false,
-            null) { }
+        : this(model, false, null)
+    {
+            
+    }
 
-    public SingleByteCharSetProber(
-        SequenceModel model,
-        bool reversed,
-        CharsetProber? nameProber)
+    public SingleByteCharSetProber(SequenceModel model, bool reversed,
+                                   CharsetProber nameProber)
     {
         this.model = model;
         this.reversed = reversed;
         this.nameProber = nameProber;
-        Reset();
+        Reset();            
     }
 
-    public override ProbingState HandleData(
-        byte[] buf,
-        int offset,
-        int len)
+    public override ProbingState HandleData(byte[] buf, int offset, int len)
     {
-        var max = offset + len;
-
-        for (var i = offset; i < max; i++)
+        int max = offset + len;
+            
+        for (int i = offset; i < max; i++)
         {
-            var order = model.GetOrder(buf[i]);
+            byte order = model.GetOrder(buf[i]);
 
             if (order < SYMBOL_CAT_ORDER)
             {
@@ -114,7 +107,6 @@ internal class SingleByteCharSetProber : CharsetProber
                 // When encountering an illegal codepoint,
                 // no need to continue analyzing data
                 state = ProbingState.NotMe;
-
                 break;
             }
             else if (order == SequenceModel.CTR)
@@ -130,56 +122,42 @@ internal class SingleByteCharSetProber : CharsetProber
                 {
                     totalSeqs++;
                     if (!reversed)
-                    {
-                        ++seqCounters[
-                            model.GetPrecedence((lastOrder * model.FreqCharCount) + order)];
-                    }
+                        ++(seqCounters[model.GetPrecedence(lastOrder * model.FreqCharCount + order)]);
                     else // reverse the order of the letters in the lookup
-                    {
-                        ++seqCounters[
-                            model.GetPrecedence((order * model.FreqCharCount) + lastOrder)];
-                    }
+                        ++(seqCounters[model.GetPrecedence(order * model.FreqCharCount + lastOrder)]);
                 }
             }
 
             lastOrder = order;
         }
 
-        if (state == ProbingState.Detecting)
-        {
-            if (totalSeqs > SB_ENOUGH_REL_THRESHOLD)
-            {
-                var cf = GetConfidence();
+        if (state == ProbingState.Detecting) {
+            if (totalSeqs > SB_ENOUGH_REL_THRESHOLD) {
+                float cf = GetConfidence();
                 if (cf > POSITIVE_SHORTCUT_THRESHOLD)
-                {
                     state = ProbingState.FoundIt;
-                }
                 else if (cf < NEGATIVE_SHORTCUT_THRESHOLD)
-                {
                     state = ProbingState.NotMe;
-                }
             }
         }
-
         return state;
     }
 
     public override string DumpStatus()
     {
-        var status = new StringBuilder();
+        StringBuilder status = new StringBuilder();
 
-        _ = status.AppendLine($"  SBCS: {GetConfidence():0.00############} [{GetCharsetName()}]");
+        status.AppendLine($"  SBCS: {GetConfidence():0.00############} [{GetCharsetName()}]");
 
         return status.ToString();
     }
 
-    private void StringBuilder(
-        string v1,
-        float v2,
-        string v3) =>
+    private void StringBuilder(string v1, float v2, string v3)
+    {
         throw new NotImplementedException();
+    }
 
-    public override float GetConfidence(StringBuilder? status = null)
+    public override float GetConfidence(StringBuilder status = null)
     {
         /*
         NEGATIVE_APPROACH
@@ -192,8 +170,7 @@ internal class SingleByteCharSetProber : CharsetProber
         // POSITIVE_APPROACH
         float r;
 
-        if (totalSeqs > 0)
-        {
+        if (totalSeqs > 0) {
             r = 1.0f * seqCounters[POSITIVE_CAT] / totalSeqs / model.TypicalPositiveRatio;
 
             // Multiply by a ratio of positive sequences per characters.
@@ -203,7 +180,7 @@ internal class SingleByteCharSetProber : CharsetProber
             // may not have been a letter, but instead a symbol (or some other
             // character). This could make the difference between very closely related
             // charsets used for the same language.
-            r = r * (seqCounters[POSITIVE_CAT] + ((float)seqCounters[PROBABLE_CAT] / 4.0f)) / totalChar;
+            r = r * (seqCounters[POSITIVE_CAT] + (float)seqCounters[PROBABLE_CAT] / 4.0f) / totalChar;
 
             // The more control characters (proportionnaly to the size of the text), the
             // less confident we become in the current charset.
@@ -211,31 +188,27 @@ internal class SingleByteCharSetProber : CharsetProber
 
             r = r * freqChar / totalChar;
             if (r >= 1.0f)
-            {
                 r = 0.99f;
-            }
-
             return r;
         }
-
-        return 0.01f;
+        return 0.01f;            
     }
 
     public override void Reset()
     {
         state = ProbingState.Detecting;
         lastOrder = 255;
-        for (var i = 0; i < NUMBER_OF_SEQ_CAT; i++)
-        {
+        for (int i = 0; i < NUMBER_OF_SEQ_CAT; i++)
             seqCounters[i] = 0;
-        }
-
         totalSeqs = 0;
         totalChar = 0;
-        ctrlChar = 0;
         freqChar = 0;
+        ctrlChar = 0;
     }
 
-    public override string GetCharsetName() =>
-        nameProber == null ? model.CharsetName : nameProber.GetCharsetName();
+    public override string GetCharsetName()
+    {
+        return (nameProber == null) ? model.CharsetName
+            : nameProber.GetCharsetName();
+    }
 }

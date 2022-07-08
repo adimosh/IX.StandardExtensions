@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -25,7 +21,7 @@
  * Contributor(s):
  *          Shy Shalom <shooshX@gmail.com>
  *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- *
+ * 
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -40,6 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System.IO;
 using System.Text;
 
 namespace UtfUnknown.Core.Probers;
@@ -68,10 +65,7 @@ internal abstract class CharsetProber
     /// <returns>
     /// A <see cref="ProbingState"/>
     /// </returns>
-    public abstract ProbingState HandleData(
-        byte[] buf,
-        int offset,
-        int len);
+    public abstract ProbingState HandleData(byte[] buf, int offset, int len);
 
     /// <summary>
     /// Reset prober state
@@ -80,38 +74,44 @@ internal abstract class CharsetProber
 
     public abstract string GetCharsetName();
 
-    public abstract float GetConfidence(StringBuilder? status = null);
+    public abstract float GetConfidence(StringBuilder status = null);
 
-    public virtual ProbingState GetState() => state;
+    public virtual ProbingState GetState()
+    {
+        return state;
+    }
 
-    public virtual void SetOption() { }
+    public virtual void SetOption()
+    {
 
-    public virtual string DumpStatus() => string.Empty;
+    }
+
+    public virtual string DumpStatus()
+    {
+        return string.Empty;
+    }
 
     //
     // Helper functions used in the Latin1 and Group probers
     //
     /// <summary>
-    ///
+    ///  
     /// </summary>
     /// <returns>filtered buffer</returns>
-    protected static byte[] FilterWithoutEnglishLetters(
-        byte[] buf,
-        int offset,
-        int len)
+    protected static byte[] FilterWithoutEnglishLetters(byte[] buf, int offset, int len)
     {
         byte[] result;
 
-        using (var ms = new MemoryStream(buf.Length))
+        using (MemoryStream ms = new MemoryStream(buf.Length))
         {
-            var meetMSB = false;
-            var max = offset + len;
-            var prev = offset;
-            var cur = offset;
+            bool meetMSB = false;
+            int max = offset + len;
+            int prev = offset;
+            int cur = offset;
 
             while (cur < max)
             {
-                var b = buf[cur];
+                byte b = buf[cur];
 
                 if ((b & 0x80) != 0)
                 {
@@ -121,32 +121,20 @@ internal abstract class CharsetProber
                 {
                     if (meetMSB && cur > prev)
                     {
-                        ms.Write(
-                            buf,
-                            prev,
-                            cur - prev);
+                        ms.Write(buf, prev, cur - prev);
                         ms.WriteByte(SPACE);
                         meetMSB = false;
                     }
-
                     prev = cur + 1;
                 }
-
                 cur++;
             }
 
             if (meetMSB && cur > prev)
-            {
-                ms.Write(
-                    buf,
-                    prev,
-                    cur - prev);
-            }
-
+                ms.Write(buf, prev, cur - prev);
             ms.SetLength(ms.Position);
             result = ms.ToArray();
         }
-
         return result;
     }
 
@@ -156,65 +144,49 @@ internal abstract class CharsetProber
     /// both English characters and upper ASCII characters.
     /// </summary>
     /// <returns>a filtered copy of the input buffer</returns>
-    protected static byte[] FilterWithEnglishLetters(
-        byte[] buf,
-        int offset,
-        int len)
+    protected static byte[] FilterWithEnglishLetters(byte[] buf, int offset, int len)
     {
         byte[] result;
 
-        using (var ms = new MemoryStream(buf.Length))
+        using (MemoryStream ms = new MemoryStream(buf.Length))
         {
-            var inTag = false;
-            var max = offset + len;
-            var prev = offset;
-            var cur = offset;
+
+            bool inTag = false;
+            int max = offset + len;
+            int prev = offset;
+            int cur = offset;
 
             while (cur < max)
             {
-                var b = buf[cur];
+
+                byte b = buf[cur];
 
                 if (b == GREATER_THAN)
-                {
                     inTag = false;
-                }
                 else if (b == LESS_THAN)
-                {
                     inTag = true;
-                }
 
                 // it's ascii, but it's not a letter
-                if ((b & 0x80) == 0 && (b < CAPITAL_A || b > SMALL_Z || (b > CAPITAL_Z && b < SMALL_A)))
+                if ((b & 0x80) == 0 && (b < CAPITAL_A || b > SMALL_Z
+                                                      || (b > CAPITAL_Z && b < SMALL_A)))
                 {
                     if (cur > prev && !inTag)
                     {
-                        ms.Write(
-                            buf,
-                            prev,
-                            cur - prev);
+                        ms.Write(buf, prev, cur - prev);
                         ms.WriteByte(SPACE);
                     }
-
                     prev = cur + 1;
                 }
-
                 cur++;
             }
 
             // If the current segment contains more than just a symbol
             // and it is not inside a tag then keep it.
             if (!inTag && cur > prev)
-            {
-                ms.Write(
-                    buf,
-                    prev,
-                    cur - prev);
-            }
-
+                ms.Write(buf, prev, cur - prev);
             ms.SetLength(ms.Position);
             result = ms.ToArray();
         }
-
         return result;
     }
 }

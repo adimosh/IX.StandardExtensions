@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -25,7 +21,7 @@
  * Contributor(s):
  *          Shy Shalom <shooshX@gmail.com>
  *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- *
+ * 
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -40,6 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
 using System.Text;
 
 #region using languages
@@ -105,23 +102,13 @@ internal class SBCSGroupProber : CharsetProber
         probers[9] = new SingleByteCharSetProber(new Windows_1251_BulgarianModel());
 
         // Hebrew
-        var hebprober = new HebrewProber();
+        HebrewProber hebprober = new HebrewProber();
         probers[10] = hebprober;
-
         // Logical
-        probers[11] = new SingleByteCharSetProber(
-            new Windows_1255_HebrewModel(),
-            false,
-            hebprober);
-
+        probers[11] = new SingleByteCharSetProber(new Windows_1255_HebrewModel(), false, hebprober);
         // Visual
-        probers[12] = new SingleByteCharSetProber(
-            new Windows_1255_HebrewModel(),
-            true,
-            hebprober);
-        hebprober.SetModelProbers(
-            probers[11],
-            probers[12]);
+        probers[12] = new SingleByteCharSetProber(new Windows_1255_HebrewModel(), true, hebprober);
+        hebprober.SetModelProbers(probers[11], probers[12]);
 
         // Thai
         probers[13] = new SingleByteCharSetProber(new Tis_620_ThaiModel());
@@ -266,10 +253,7 @@ internal class SBCSGroupProber : CharsetProber
         Reset();
     }
 
-    public override ProbingState HandleData(
-        byte[] buf,
-        int offset,
-        int len)
+    public override ProbingState HandleData(byte[] buf, int offset, int len)
     {
         // apply filter to original buffer, and we got new buffer back
         // depend on what script it is, we will feed them the new buffer
@@ -278,31 +262,21 @@ internal class SBCSGroupProber : CharsetProber
         // of each prober since as of now, there are no probers here which
         // recognize languages with English characters.
 
-        var newBuf = FilterWithoutEnglishLetters(
-            buf,
-            offset,
-            len);
+        byte[] newBuf = FilterWithoutEnglishLetters(buf, offset, len);
 
         if (newBuf.Length == 0)
-        {
             return state; // Nothing to see here, move on.
-        }
 
-        for (var i = 0; i < PROBERS_NUM; i++)
+        for (int i = 0; i < PROBERS_NUM; i++)
         {
             if (isActive[i])
             {
-                ProbingState st = probers[i]
-                    .HandleData(
-                        newBuf,
-                        0,
-                        newBuf.Length);
+                ProbingState st = probers[i].HandleData(newBuf, 0, newBuf.Length);
 
                 if (st == ProbingState.FoundIt)
                 {
                     bestGuess = i;
                     state = ProbingState.FoundIt;
-
                     break;
                 }
                 else if (st == ProbingState.NotMe)
@@ -312,7 +286,6 @@ internal class SBCSGroupProber : CharsetProber
                     if (activeNum <= 0)
                     {
                         state = ProbingState.NotMe;
-
                         break;
                     }
                 }
@@ -322,7 +295,7 @@ internal class SBCSGroupProber : CharsetProber
         return state;
     }
 
-    public override float GetConfidence(StringBuilder? status = null)
+    public override float GetConfidence(StringBuilder status = null)
     {
         float bestConf = 0.0f, cf;
 
@@ -332,21 +305,20 @@ internal class SBCSGroupProber : CharsetProber
                 return 0.99f; //sure yes
 
             case ProbingState.NotMe:
-                return 0.01f; //sure no
+                return 0.01f;  //sure no
 
             default:
 
                 if (status != null)
                 {
-                    _ = status.AppendLine($"Get confidence:");
+                    status.AppendLine($"Get confidence:");
                 }
 
-                for (var i = 0; i < PROBERS_NUM; i++)
+                for (int i = 0; i < PROBERS_NUM; i++)
                 {
                     if (isActive[i])
                     {
-                        cf = probers[i]
-                            .GetConfidence();
+                        cf = probers[i].GetConfidence();
                         if (bestConf < cf)
                         {
                             bestConf = cf;
@@ -354,8 +326,7 @@ internal class SBCSGroupProber : CharsetProber
 
                             if (status != null)
                             {
-                                _ = status.AppendLine(
-                                    $"-- new match found: confidence {bestConf}, index {bestGuess}, charset {probers[i].GetCharsetName()}.");
+                                status.AppendLine($"-- new match found: confidence {bestConf}, index {bestGuess}, charset {probers[i].GetCharsetName()}.");
                             }
                         }
                     }
@@ -363,7 +334,7 @@ internal class SBCSGroupProber : CharsetProber
 
                 if (status != null)
                 {
-                    _ = status.AppendLine($"Get confidence done.");
+                    status.AppendLine($"Get confidence done.");
                 }
 
                 break;
@@ -374,37 +345,32 @@ internal class SBCSGroupProber : CharsetProber
 
     public override string DumpStatus()
     {
-        var status = new StringBuilder();
+        StringBuilder status = new StringBuilder();
 
-        var cf = GetConfidence(status);
+        float cf = GetConfidence(status);
 
-        _ = status.AppendLine(" SBCS Group Prober --------begin status");
+        status.AppendLine(" SBCS Group Prober --------begin status");
 
-        for (var i = 0; i < PROBERS_NUM; i++)
+        for (int i = 0; i < PROBERS_NUM; i++)
         {
             if (probers[i] != null)
             {
                 if (!isActive[i])
                 {
-                    _ = status.AppendLine(
-                        $" SBCS inactive: [{probers[i].GetCharsetName()}] (i.e. confidence is too low).");
+                    status.AppendLine($" SBCS inactive: [{probers[i].GetCharsetName()}] (i.e. confidence is too low).");
                 }
                 else
                 {
-                    var cfp = probers[i]
-                        .GetConfidence();
+                    var cfp = probers[i].GetConfidence();
 
-                    _ = status.AppendLine($" SBCS {cfp}: [{probers[i].GetCharsetName()}]");
+                    status.AppendLine($" SBCS {cfp}: [{probers[i].GetCharsetName()}]");
 
-                    _ = status.AppendLine(
-                        probers[i]
-                            .DumpStatus());
+                    status.AppendLine(probers[i].DumpStatus());
                 }
             }
         }
 
-        _ = status.AppendLine(
-            $" SBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");
+        status.AppendLine($" SBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");
 
         return status.ToString();
     }
@@ -413,12 +379,11 @@ internal class SBCSGroupProber : CharsetProber
     {
         activeNum = 0;
 
-        for (var i = 0; i < PROBERS_NUM; i++)
+        for (int i = 0; i < PROBERS_NUM; i++)
         {
             if (probers[i] != null)
             {
-                probers[i]
-                    .Reset();
+                probers[i].Reset();
                 isActive[i] = true;
                 ++activeNum;
             }
@@ -438,16 +403,11 @@ internal class SBCSGroupProber : CharsetProber
         //if we have no answer yet
         if (bestGuess == -1)
         {
-            _ = GetConfidence();
-
+            GetConfidence();
             //no charset seems positive
             if (bestGuess == -1)
-            {
                 bestGuess = 0;
-            }
         }
-
-        return probers[bestGuess]
-            .GetCharsetName();
+        return probers[bestGuess].GetCharsetName();
     }
 }

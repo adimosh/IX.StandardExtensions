@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -25,7 +21,7 @@
  * Contributor(s):
  *          Shy Shalom <shooshX@gmail.com>
  *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- *
+ * 
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -41,6 +37,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 using System.Text;
+
 using UtfUnknown.Core.Analyzers.Japanese;
 using UtfUnknown.Core.Models;
 using UtfUnknown.Core.Models.MultiByte.Japanese;
@@ -68,58 +65,42 @@ internal class SJISProber : CharsetProber
         Reset();
     }
 
-    public override string GetCharsetName() => CodepageName.SHIFT_JIS;
+    public override string GetCharsetName()
+    {
+        return CodepageName.SHIFT_JIS;
+    }
 
-    public override ProbingState HandleData(
-        byte[] buf,
-        int offset,
-        int len)
+    public override ProbingState HandleData(byte[] buf, int offset, int len)
     {
         int codingState;
-        var max = offset + len;
+        int max = offset + len;
 
-        for (var i = offset; i < max; i++)
+        for (int i = offset; i < max; i++)
         {
             codingState = codingSM.NextState(buf[i]);
             if (codingState == StateMachineModel.ERROR)
             {
                 state = ProbingState.NotMe;
-
                 break;
             }
-
             if (codingState == StateMachineModel.ITSME)
             {
                 state = ProbingState.FoundIt;
-
                 break;
             }
-
             if (codingState == StateMachineModel.START)
             {
-                var charLen = codingSM.CurrentCharLen;
+                int charLen = codingSM.CurrentCharLen;
                 if (i == offset)
                 {
                     lastChar[1] = buf[offset];
-                    contextAnalyser.HandleOneChar(
-                        lastChar,
-                        2 - charLen,
-                        charLen);
-                    distributionAnalyser.HandleOneChar(
-                        lastChar,
-                        0,
-                        charLen);
+                    contextAnalyser.HandleOneChar(lastChar, 2 - charLen, charLen);
+                    distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
                 }
                 else
                 {
-                    contextAnalyser.HandleOneChar(
-                        buf,
-                        i + 1 - charLen,
-                        charLen);
-                    distributionAnalyser.HandleOneChar(
-                        buf,
-                        i - 1,
-                        charLen);
+                    contextAnalyser.HandleOneChar(buf, i + 1 - charLen, charLen);
+                    distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
                 }
             }
         }
@@ -127,12 +108,8 @@ internal class SJISProber : CharsetProber
         lastChar[0] = buf[max - 1];
 
         if (state == ProbingState.Detecting)
-        {
             if (contextAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
-            {
                 state = ProbingState.FoundIt;
-            }
-        }
 
         return state;
     }
@@ -145,11 +122,10 @@ internal class SJISProber : CharsetProber
         distributionAnalyser.Reset();
     }
 
-    public override float GetConfidence(StringBuilder? status = null)
+    public override float GetConfidence(StringBuilder status = null)
     {
-        var contxtCf = contextAnalyser.GetConfidence();
-        var distribCf = distributionAnalyser.GetConfidence();
-
-        return contxtCf > distribCf ? contxtCf : distribCf;
+        float contxtCf = contextAnalyser.GetConfidence();
+        float distribCf = distributionAnalyser.GetConfidence();
+        return (contxtCf > distribCf ? contxtCf : distribCf);
     }
 }

@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -67,9 +63,10 @@ internal abstract class CharDistributionAnalyser
     // This constant value varies from language to language. It is used in calculating confidence.
     protected float typicalDistributionRatio;
 
-#pragma warning disable CS8618
-    public CharDistributionAnalyser() => Reset();
-#pragma warning restore CS8618
+    public CharDistributionAnalyser()
+    {
+        Reset();
+    }
 
     /// <summary>
     /// Feed a block of data and do distribution analysis
@@ -82,9 +79,7 @@ internal abstract class CharDistributionAnalyser
     /// <param name="buf">A <see cref="System.Byte"/></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public abstract int GetOrder(
-        byte[] buf,
-        int offset);
+    public abstract int GetOrder(byte[] buf, int offset);
 
     /// <summary>
     /// Feed a character with known length
@@ -92,26 +87,17 @@ internal abstract class CharDistributionAnalyser
     /// <param name="buf">A <see cref="System.Byte"/></param>
     /// <param name="offset">buf offset</param>
     /// <param name="charLen">1 of 2 char length?</param>
-    public void HandleOneChar(
-        byte[] buf,
-        int offset,
-        int charLen)
+    public void HandleOneChar(byte[] buf, int offset, int charLen)
     {
         //we only care about 2-bytes character in our distribution analysis
-        var order = charLen == 2
-            ? GetOrder(
-                buf,
-                offset)
-            : -1;
+        int order = (charLen == 2) ? GetOrder(buf, offset) : -1;
         if (order >= 0)
         {
             totalChars++;
             if (order < charToFreqOrder.Length)
             { // order is valid
                 if (512 > charToFreqOrder[order])
-                {
                     freqChars++;
-                }
             }
         }
     }
@@ -133,24 +119,21 @@ internal abstract class CharDistributionAnalyser
         // number of frequent characters is below the minimum threshold, return
         // negative answer
         if (totalChars <= 0 || freqChars <= MINIMUM_DATA_THRESHOLD)
-        {
             return SURE_NO;
-        }
-
         if (totalChars != freqChars)
         {
-            var r = freqChars / ((totalChars - freqChars) * typicalDistributionRatio);
+            float r = freqChars / ((totalChars - freqChars) * typicalDistributionRatio);
             if (r < SURE_YES)
-            {
                 return r;
-            }
         }
-
         //normalize confidence, (we don't want to be 100% sure)
         return SURE_YES;
     }
 
     //It is not necessary to receive all data to draw conclusion. For charset detection,
     // certain amount of data is enough
-    public bool GotEnoughData() => totalChars > ENOUGH_DATA_THRESHOLD;
+    public bool GotEnoughData()
+    {
+        return totalChars > ENOUGH_DATA_THRESHOLD;
+    }
 }

@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -26,7 +22,7 @@
  *          Shy Shalom <shooshX@gmail.com>
  *          Kohei TAKETA <k-tak@void.in> (Java port)
  *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- *
+ * 
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -65,21 +61,31 @@ internal class CodingStateMachine
     {
         // for each byte we get its class, if it is first byte,
         // we also get byte length
-        var byteCls = model.GetClass(b);
-        if (currentState == StateMachineModel.START)
-        {
+        int byteCls = model.GetClass(b);
+        if (currentState == StateMachineModel.START) {
+
             currentCharLen = model.charLenTable[byteCls];
         }
 
         // from byte's class and stateTable, we get its next state
-        currentState = model.stateTable.Unpack((currentState * model.ClassFactor) + byteCls);
+        currentState = model.stateTable.Unpack(
+            currentState * model.ClassFactor + byteCls);
 
         return currentState;
     }
 
-    public void Reset() => currentState = StateMachineModel.START;
+    public void Reset()
+    {
+        currentState = StateMachineModel.START;
+    }
 
-    public int CurrentCharLen => currentCharLen;
+    public int CurrentCharLen
+    {
+        get { return currentCharLen; }
+    }
 
-    public string ModelName => model.Name;
+    public string ModelName
+    {
+        get { return model.Name; }
+    }
 }
