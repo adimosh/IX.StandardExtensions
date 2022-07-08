@@ -19,10 +19,7 @@ public class SwitchEventArgs : EventArgs
     ///     Initializes a new instance of the <see cref="SwitchEventArgs" /> class.
     /// </summary>
     /// <param name="switchValue">The value of the switch.</param>
-    public SwitchEventArgs(bool switchValue)
-    {
-        Value = switchValue;
-    }
+    public SwitchEventArgs(bool switchValue) => Value = switchValue;
 
 #endregion
 

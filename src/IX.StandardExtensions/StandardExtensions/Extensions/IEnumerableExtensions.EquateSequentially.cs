@@ -162,10 +162,8 @@ public static partial class IEnumerableExtensions
 
                 static bool EquateUsingIEquatableOfT(
                     T l,
-                    T r)
-                {
-                    return (l as IEquatable<T>)?.Equals(r) ?? (r as IEquatable<T>)?.Equals(l) ?? true;
-                }
+                    T r) =>
+                    (l as IEquatable<T>)?.Equals(r) ?? (r as IEquatable<T>)?.Equals(l) ?? true;
             }
             else if (typeof(IComparable<T>).GetTypeInfo()
                      .IsAssignableFrom(typeof(T).GetTypeInfo()))
@@ -174,10 +172,8 @@ public static partial class IEnumerableExtensions
 
                 static bool EquateSequentiallyUsingIComparerOfT(
                     T l,
-                    T r)
-                {
-                    return ((l as IComparable<T>)?.CompareTo(r) ?? (r as IComparable<T>)?.CompareTo(l) ?? 0) == 0;
-                }
+                    T r) =>
+                    ((l as IComparable<T>)?.CompareTo(r) ?? (r as IComparable<T>)?.CompareTo(l) ?? 0) == 0;
             }
             else if (typeof(IComparable).GetTypeInfo()
                      .IsAssignableFrom(typeof(T).GetTypeInfo()))

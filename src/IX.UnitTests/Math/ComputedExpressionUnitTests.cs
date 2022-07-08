@@ -24,10 +24,7 @@ namespace IX.UnitTests.Math
         ///     Initializes a new instance of the <see cref="ComputedExpressionUnitTests" /> class.
         /// </summary>
         /// <param name="fixture">The fixture.</param>
-        public ComputedExpressionUnitTests(CachedExpressionProviderFixture fixture)
-        {
-            this.fixture = fixture;
-        }
+        public ComputedExpressionUnitTests(CachedExpressionProviderFixture fixture) => this.fixture = fixture;
 
         /// <summary>
         ///     Provides the data for theory.
@@ -1482,9 +1479,8 @@ namespace IX.UnitTests.Math
             }
         };
 
-        private static object GenerateFuncOutOfParameterValue(object tempParameter)
-        {
-            return tempParameter switch
+        private static object GenerateFuncOutOfParameterValue(object tempParameter) =>
+            tempParameter switch
             {
                 byte convertedValue => new Func<byte>(() => convertedValue),
                 sbyte convertedValue => new Func<sbyte>(() => convertedValue),
@@ -1501,7 +1497,6 @@ namespace IX.UnitTests.Math
                 bool convertedValue => new Func<bool>(() => convertedValue),
                 _ => throw new InvalidOperationException(),
             };
-        }
 
         /// <summary>
         ///     Tests the computed expression with parameters.

@@ -34,10 +34,7 @@ internal abstract partial class ModernListAdapter<TItem, TEnumerator>
 
 #region Constructors and destructors
 
-        internal ListShim(ModernListAdapter<TItem, TEnumerator> instance)
-        {
-            this.instance = instance;
-        }
+        internal ListShim(ModernListAdapter<TItem, TEnumerator> instance) => this.instance = instance;
 
 #endregion
 

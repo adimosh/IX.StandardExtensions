@@ -39,10 +39,7 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
     ///     <paramref name="filteringPredicate" /> is <see langword="null" /> (
     ///     <see langword="Nothing" />) in Visual Basic.
     /// </exception>
-    public FilterableObservableMasterSlaveCollection(Func<TItem, TFilter, bool> filteringPredicate)
-    {
-        FilteringPredicate = Requires.NotNull(filteringPredicate);
-    }
+    public FilterableObservableMasterSlaveCollection(Func<TItem, TFilter, bool> filteringPredicate) => FilteringPredicate = Requires.NotNull(filteringPredicate);
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="FilterableObservableMasterSlaveCollection{TItem, TFilter}" /> class.
@@ -56,10 +53,8 @@ public class FilterableObservableMasterSlaveCollection<TItem, TFilter> : Observa
     public FilterableObservableMasterSlaveCollection(
         Func<TItem, TFilter, bool> filteringPredicate,
         SynchronizationContext context)
-        : base(context)
-    {
+        : base(context) =>
         FilteringPredicate = Requires.NotNull(filteringPredicate);
-    }
 
 #endregion
 

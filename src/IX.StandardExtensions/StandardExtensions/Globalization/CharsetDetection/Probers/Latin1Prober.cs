@@ -406,10 +406,7 @@ internal class Latin1Prober : CharsetProber
     private byte lastCharClass;
     private int[] freqCounter = new int[FREQ_CAT_NUM];
 
-    public Latin1Prober()
-    {
-        Reset();
-    }
+    public Latin1Prober() => Reset();
 
     public override string GetCharsetName() => CodepageName.WINDOWS_1252;
 

@@ -30,9 +30,9 @@ for (int i = 1; i <= 8; i++)
         types[idx] = $"TItem{j}";
         names[idx] = $"item{j}";
         nameTypes[idx] = $"TItem{j} item{j}";
-        parameters[idx] = $"this.Item{j} = item{j}";
-        parametersEquality[idx] = $"EqualityComparer<TItem{j}>.Default.Equals(this.Item{j}, other.Item{j})";
-        parametersHashCode[idx] = $"this.Item{j}";
+        parameters[idx] = $"Item{j} = item{j}";
+        parametersEquality[idx] = $"EqualityComparer<TItem{j}>.Default.Equals(Item{j}, other.Item{j})";
+        parametersHashCode[idx] = $"Item{j}";
     }
 
     string paramTypes = string.Join(", ", types);
@@ -76,7 +76,7 @@ public readonly struct ImmutableValueTuple<<#= paramTypes #>> : IEquatable<Immut
     for (int j = 1; j <= i; j++)
     {
 #>
-        this.Item<#= j #> = item<#= j #>;
+        Item<#= j #> = item<#= j #>;
 <#
     }
 #>
@@ -123,7 +123,7 @@ public readonly struct ImmutableValueTuple<<#= paramTypes #>> : IEquatable<Immut
     /// <param name="other">The other object to equate to.</param>
     /// <returns><c>true</c> if the two tuples are equals, <c>false</c> otherwise.</returns>
     public override bool Equals(object? other) =>
-        other is ImmutableValueTuple<<#= paramTypes #>> otherTuple && this.Equals(otherTuple);
+        other is ImmutableValueTuple<<#= paramTypes #>> otherTuple && Equals(otherTuple);
 
     /// <summary>
     /// Equates this tuple to another tuple.

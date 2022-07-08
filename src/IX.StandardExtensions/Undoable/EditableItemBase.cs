@@ -606,7 +606,7 @@ public abstract class EditableItemBase : ViewModelBase,
         RaisePropertyChanged(nameof(CanUndo));
         RaisePropertyChanged(nameof(CanRedo));
 
-        this.EditCommitted?.Invoke(
+        EditCommitted?.Invoke(
             this,
             new EditCommittedEventArgs(stateChangeBase));
     }

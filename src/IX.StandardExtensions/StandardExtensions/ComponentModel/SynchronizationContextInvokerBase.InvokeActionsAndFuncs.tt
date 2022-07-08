@@ -73,7 +73,7 @@ for (int i = 1; i <= 8; i++)
     {
         var outerState = new Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>(action, new Tuple<<#= paramTypes #>>(<#= paramNames #>));
 
-        this.Invoke(state =>
+        Invoke(state =>
         {
             var unpackedState = (Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>)state;
             Tuple<<#= paramTypes #>> unpackedParameters = unpackedState.Item2;
@@ -107,7 +107,7 @@ for (int i = 1; i <= 8; i++)
     {
         var outerState = new Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>(action, new Tuple<<#= paramTypes #>>(<#= paramNames #>));
 
-        this.InvokePost(state =>
+        InvokePost(state =>
         {
             var unpackedState = (Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>)state;
             Tuple<<#= paramTypes #>> unpackedParameters = unpackedState.Item2;
@@ -141,7 +141,7 @@ for (int i = 1; i <= 8; i++)
     {
         var outerState = new Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>(action, new Tuple<<#= paramTypes #>>(<#= paramNames #>));
 
-        this.InvokeSend(state =>
+        InvokeSend(state =>
         {
             var unpackedState = (Tuple<Action<<#= paramTypes #>>, Tuple<<#= paramTypes #>>>)state;
             Tuple<<#= paramTypes #>> unpackedParameters = unpackedState.Item2;

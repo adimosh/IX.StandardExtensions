@@ -125,7 +125,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected ReadOnlySynchronizationLocker ReadLock()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         return new ReadOnlySynchronizationLocker(
             locker,
@@ -138,7 +138,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     /// <param name="action">An action that is called.</param>
     protected void ReadLock(Action action)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
         Action localAction = Requires.NotNull(action);
 
         using (new ReadOnlySynchronizationLocker(
@@ -157,7 +157,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected T ReadLock<T>(Func<T> action)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
         Func<T> localAction = Requires.NotNull(action);
 
         using (new ReadOnlySynchronizationLocker(
@@ -174,7 +174,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected WriteOnlySynchronizationLocker WriteLock()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         return new WriteOnlySynchronizationLocker(
             locker,
@@ -187,7 +187,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     /// <param name="action">An action that is called.</param>
     protected void WriteLock(Action action)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
         Action localAction = Requires.NotNull(action);
 
         using (new WriteOnlySynchronizationLocker(
@@ -206,7 +206,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     /// <returns>The generated item.</returns>
     protected T WriteLock<T>(Func<T> action)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
         Func<T> localAction = Requires.NotNull(action);
 
         using (new WriteOnlySynchronizationLocker(
@@ -223,7 +223,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     /// <returns>A disposable object representing the lock.</returns>
     protected ReadWriteSynchronizationLocker ReadWriteLock()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         return new ReadWriteSynchronizationLocker(
             locker,

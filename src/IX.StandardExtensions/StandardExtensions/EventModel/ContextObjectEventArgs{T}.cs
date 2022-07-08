@@ -20,10 +20,7 @@ public class ContextObjectEventArgs<T> : EventArgs
     ///     Initializes a new instance of the <see cref="ContextObjectEventArgs{T}" /> class.
     /// </summary>
     /// <param name="contextObject">The context object.</param>
-    public ContextObjectEventArgs(T contextObject)
-    {
-        Context = contextObject;
-    }
+    public ContextObjectEventArgs(T contextObject) => Context = contextObject;
 
 #endregion
 

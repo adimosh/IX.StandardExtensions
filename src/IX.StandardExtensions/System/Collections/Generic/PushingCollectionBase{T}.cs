@@ -88,7 +88,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     {
         get
         {
-            this.RequiresNotDisposed();
+            ThrowIfCurrentObjectDisposed();
 
             using (ReadLock())
             {
@@ -127,7 +127,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
         get => limit;
         set
         {
-            this.RequiresNotDisposed();
+            ThrowIfCurrentObjectDisposed();
 
             if (value < 0)
             {
@@ -181,7 +181,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
         Array array,
         int index)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -209,7 +209,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     /// </summary>
     public void Clear()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (WriteLock())
         {
@@ -224,7 +224,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     /// <returns><see langword="true" /> if the item was found, <see langword="false" /> otherwise.</returns>
     public bool Contains(T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -255,7 +255,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     /// <returns>An array containing all items in the stack.</returns>
     public T[] ToArray()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -286,7 +286,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     /// <param name="item">The item to append.</param>
     protected void Append(T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         if (Limit == 0)
         {
@@ -311,7 +311,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     protected void Append(T[] items)
     {
         // Validate input
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
         Requires.NotNull(
             items,
             nameof(items));
@@ -349,7 +349,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
         int count)
     {
         // Validate input
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
         Requires.NotNull(
             items,
             nameof(items));

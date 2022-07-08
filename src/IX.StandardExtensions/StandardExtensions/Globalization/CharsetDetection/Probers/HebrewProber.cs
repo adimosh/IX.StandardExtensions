@@ -178,10 +178,7 @@ internal class HebrewProber : CharsetProber
     protected byte prev, beforePrev;
 
 #pragma warning disable CS8618
-    public HebrewProber()
-    {
-        Reset();
-    }
+    public HebrewProber() => Reset();
 #pragma warning restore CS8618
 
     public void SetModelProbers(

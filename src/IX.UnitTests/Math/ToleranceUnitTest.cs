@@ -24,10 +24,7 @@ namespace IX.UnitTests.Math
         ///     Initializes a new instance of the <see cref="ToleranceUnitTest" /> class.
         /// </summary>
         /// <param name="fixture">The fixture.</param>
-        public ToleranceUnitTest(CachedExpressionProviderFixture fixture)
-        {
-            this.fixture = fixture;
-        }
+        public ToleranceUnitTest(CachedExpressionProviderFixture fixture) => this.fixture = fixture;
 
         /// <summary>
         ///     Provides the data for theory.

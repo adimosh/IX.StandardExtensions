@@ -35,10 +35,7 @@ public abstract partial class DisposableBase : IDisposable
     /// <summary>
     ///     Finalizes an instance of the <see cref="DisposableBase" /> class.
     /// </summary>
-    ~DisposableBase()
-    {
-        Dispose(false);
-    }
+    ~DisposableBase() => Dispose(false);
 
 #endregion
 
@@ -106,7 +103,7 @@ public abstract partial class DisposableBase : IDisposable
     /// </exception>
     protected void InvokeIfNotDisposed(Action action)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         Requires.NotNull(action)();
     }

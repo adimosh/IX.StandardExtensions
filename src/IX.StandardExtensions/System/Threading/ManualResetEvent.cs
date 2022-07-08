@@ -64,13 +64,11 @@ public class ManualResetEvent : DisposableBase,
         "IDisposableAnalyzers.Correctness",
         "IDISP003:Dispose previous before re-assigning.",
         Justification = "This is the constructor, there's nothing to dispose.")]
-    public ManualResetEvent(GlobalThreading.ManualResetEvent manualResetEvent)
-    {
+    public ManualResetEvent(GlobalThreading.ManualResetEvent manualResetEvent) =>
         Requires.NotNull(
             out sre,
             manualResetEvent,
             nameof(manualResetEvent));
-    }
 
 #endregion
 

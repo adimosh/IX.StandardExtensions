@@ -346,7 +346,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     /// <exception cref="InvalidOperationException">There are no more valid items in the folder.</exception>
     protected T LoadTopmostItem()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (WriteLock())
         {
@@ -423,8 +423,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     {
         Requires.NotNull(
             actionToInvoke);
-
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using ReadWriteSynchronizationLocker locker = ReadWriteLock();
 
@@ -527,12 +526,10 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         async ValueTask InvokeActionLocal(
             TState stateInternal,
-            T obj)
-        {
+            T obj) =>
             await actionToInvoke(
                 stateInternal,
                 obj);
-        }
     }
 
     /// <summary>
@@ -792,12 +789,10 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         async ValueTask<bool> InvokePredicateLocal(
             TState stateInternal,
-            T obj)
-        {
-            return await predicate(
+            T obj) =>
+            await predicate(
                 stateInternal,
                 obj);
-        }
     }
 
     /// <summary>
@@ -973,12 +968,10 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         async ValueTask InvokeActionLocal(
             TState stateInternal,
-            IEnumerable<T> obj)
-        {
+            IEnumerable<T> obj) =>
             await actionToInvoke(
                 stateInternal,
                 obj);
-        }
     }
 
     /// <summary>
@@ -1154,21 +1147,17 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         async ValueTask<bool> InvokePredicateLocal(
             TState stateInternal,
-            T obj)
-        {
-            return await predicate(
+            T obj) =>
+            await predicate(
                 stateInternal,
                 obj);
-        }
 
         async ValueTask InvokeActionLocal(
             TState stateInternal,
-            IEnumerable<T> obj)
-        {
+            IEnumerable<T> obj) =>
             await actionToInvoke(
                 stateInternal,
                 obj);
-        }
     }
 
     /// <summary>
@@ -1197,7 +1186,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         Requires.NotNull(predicate);
         Requires.NotNull(actionToInvoke);
 
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using ReadWriteSynchronizationLocker locker = ReadWriteLock();
 
@@ -1333,7 +1322,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     /// </returns>
     protected bool TryPeekTopmostItem(out T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -1439,7 +1428,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         Justification = "This is unavoidable, considering how the method works.")]
     protected string SaveNewItem(T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (WriteLock())
         {
@@ -1478,7 +1467,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     /// </summary>
     protected void ClearData()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (WriteLock())
         {

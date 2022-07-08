@@ -31,10 +31,7 @@ public sealed class CollectionDebugView<T>
     /// <param name="collection">The collection.</param>
     /// <exception cref="ArgumentNullException">collection is null.</exception>
     [UsedImplicitly]
-    public CollectionDebugView(ObservableCollectionBase<T> collection)
-    {
-        Requires.NotNull(out this.collection, collection);
-    }
+    public CollectionDebugView(ObservableCollectionBase<T> collection) => Requires.NotNull(out this.collection, collection);
 
 #endregion
 

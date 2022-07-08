@@ -34,40 +34,31 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableQueue{T}" /> class.
     /// </summary>
-    public ConcurrentObservableQueue()
-    {
-        locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
+    public ConcurrentObservableQueue() => locker = EnvironmentSettings.GenerateDefaultLocker();
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableQueue{T}" /> class.
     /// </summary>
     /// <param name="collection">A collection of items to copy from.</param>
     public ConcurrentObservableQueue(IEnumerable<T> collection)
-        : base(collection)
-    {
+        : base(collection) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableQueue{T}" /> class.
     /// </summary>
     /// <param name="capacity">The initial capacity of the queue.</param>
     public ConcurrentObservableQueue(int capacity)
-        : base(capacity)
-    {
+        : base(capacity) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableQueue{T}" /> class.
     /// </summary>
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
     public ConcurrentObservableQueue(SynchronizationContext context)
-        : base(context)
-    {
+        : base(context) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableQueue{T}" /> class.
@@ -79,10 +70,8 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
         IEnumerable<T> collection)
         : base(
             context,
-            collection)
-    {
+            collection) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableQueue{T}" /> class.
@@ -94,20 +83,16 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
         int capacity)
         : base(
             context,
-            capacity)
-    {
+            capacity) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableQueue{T}" /> class.
     /// </summary>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableQueue(bool suppressUndoable)
-        : base(suppressUndoable)
-    {
+        : base(suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableQueue{T}" /> class.
@@ -119,10 +104,8 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
         bool suppressUndoable)
         : base(
             collection,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableQueue{T}" /> class.
@@ -134,10 +117,8 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
         bool suppressUndoable)
         : base(
             capacity,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableQueue{T}" /> class.
@@ -149,10 +130,8 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
         bool suppressUndoable)
         : base(
             context,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableQueue{T}" /> class.
@@ -167,10 +146,8 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
         : base(
             context,
             collection,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableQueue{T}" /> class.
@@ -185,10 +162,8 @@ public class ConcurrentObservableQueue<T> : ObservableQueue<T>
         : base(
             context,
             capacity,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
 #endregion
 

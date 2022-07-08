@@ -24,10 +24,7 @@ public sealed class BoolNode : ConstantNodeBase, ISpecialRequestNode
     /// Initializes a new instance of the <see cref="BoolNode"/> class.
     /// </summary>
     /// <param name="value">The node's boolean value.</param>
-    public BoolNode(bool value)
-    {
-        Value = value;
-    }
+    public BoolNode(bool value) => Value = value;
 
 #pragma warning disable SA1623 // Property summary documentation should match accessors - It does, and does not indicate "whether" something at all
     /// <summary>

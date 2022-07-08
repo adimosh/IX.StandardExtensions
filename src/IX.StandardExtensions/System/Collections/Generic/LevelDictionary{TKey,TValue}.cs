@@ -427,14 +427,12 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
             "Performance",
             "HAA0602:Delegate on struct instance caused a boxing allocation",
             Justification = "Not a problem.")]
-        internal KeyLevelEnumerable(LevelDictionary<TKey, TValue> instance)
-        {
+        internal KeyLevelEnumerable(LevelDictionary<TKey, TValue> instance) =>
             values = (
                 from p in instance.keyLevels.OrderBy(p => p.Key)
-                    .SelectMany(p => p.Value)
+                                  .SelectMany(p => p.Value)
                 join q in instance.internalDictionary.AsEnumerable() on p equals q.Key
                 select q.Value).ToArray();
-        }
 
         /// <summary>
         ///     Gets an enumerator for this level dictionary.

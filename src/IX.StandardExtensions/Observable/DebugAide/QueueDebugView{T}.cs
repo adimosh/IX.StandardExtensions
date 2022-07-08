@@ -31,10 +31,7 @@ public sealed class QueueDebugView<T>
     /// <param name="queue">The queue.</param>
     /// <exception cref="ArgumentNullException">queue is null.</exception>
     [UsedImplicitly]
-    public QueueDebugView(ObservableQueue<T> queue)
-    {
-        Requires.NotNull(out this.queue, queue);
-    }
+    public QueueDebugView(ObservableQueue<T> queue) => Requires.NotNull(out this.queue, queue);
 
 #endregion
 

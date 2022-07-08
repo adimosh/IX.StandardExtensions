@@ -35,10 +35,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
     ///     Initializes a new instance of the <see cref="SynchronizationContextInvokerBase" /> class.
     /// </summary>
     /// <param name="synchronizationContext">The specific synchronization context to use.</param>
-    protected SynchronizationContextInvokerBase(SynchronizationContext? synchronizationContext)
-    {
-        this.synchronizationContext = synchronizationContext;
-    }
+    protected SynchronizationContextInvokerBase(SynchronizationContext? synchronizationContext) => this.synchronizationContext = synchronizationContext;
 
 #endregion
 
@@ -244,7 +241,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
     /// </summary>
     /// <param name="ex">The ex.</param>
     protected void InvokeExceptionOccurredOnSeparateThread(Exception ex) =>
-        this.ExceptionOccurredOnSeparateThread?.Invoke(
+        ExceptionOccurredOnSeparateThread?.Invoke(
             this,
             new ExceptionOccurredEventArgs(ex));
 

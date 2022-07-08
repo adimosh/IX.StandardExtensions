@@ -35,24 +35,20 @@ public class BusyScope : SynchronizationContextInvokerBase
     /// </summary>
     /// <param name="description">The scope description.</param>
     /// <exception cref="ArgumentNullException"><paramref name="description" /> is <see langword="null" />.</exception>
-    public BusyScope(string description)
-    {
+    public BusyScope(string description) =>
         Requires.NotNull<string>(
             out initialDescription,
             description);
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="BusyScope" /> class.
     /// </summary>
     /// <param name="initialBusyCount">The initial busy count.</param>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="initialBusyCount" /> is an integer value less than 0.</exception>
-    public BusyScope(int initialBusyCount)
-    {
+    public BusyScope(int initialBusyCount) =>
         Requires.NonNegative(
             out busyCount,
             in initialBusyCount);
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="BusyScope" /> class.
@@ -117,7 +113,7 @@ public class BusyScope : SynchronizationContextInvokerBase
             ref this.description,
             description);
 
-        if (this.BusyScopeChanged != null)
+        if (BusyScopeChanged != null)
         {
             Invoke(
                 (
@@ -126,7 +122,7 @@ public class BusyScope : SynchronizationContextInvokerBase
                     sender,
                     EventArgs.Empty),
                 this,
-                this.BusyScopeChanged);
+                BusyScopeChanged);
         }
     }
 
@@ -143,7 +139,7 @@ public class BusyScope : SynchronizationContextInvokerBase
 
         Interlocked.Decrement(ref busyCount);
 
-        if (this.BusyScopeChanged != null)
+        if (BusyScopeChanged != null)
         {
             Invoke(
                 (
@@ -152,7 +148,7 @@ public class BusyScope : SynchronizationContextInvokerBase
                     sender,
                     EventArgs.Empty),
                 this,
-                this.BusyScopeChanged);
+                BusyScopeChanged);
         }
     }
 

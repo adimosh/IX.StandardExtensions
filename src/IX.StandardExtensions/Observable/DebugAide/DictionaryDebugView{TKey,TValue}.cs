@@ -29,12 +29,10 @@ public sealed class DictionaryDebugView<TKey, TValue>
     /// <param name="dictionary">The dictionary.</param>
     /// <exception cref="ArgumentNullException">dictionary is null.</exception>
     [UsedImplicitly]
-    public DictionaryDebugView(ObservableDictionary<TKey, TValue> dictionary)
-    {
+    public DictionaryDebugView(ObservableDictionary<TKey, TValue> dictionary) =>
         Requires.NotNull(
             out dict,
             dictionary);
-    }
 
 #endregion
 

@@ -159,7 +159,7 @@ public class ObjectPoolQueue<T> : INotifyThreadException
                     }
                     catch (Exception ex)
                     {
-                        this.ExceptionOccurredOnSeparateThread?.Invoke(
+                        ExceptionOccurredOnSeparateThread?.Invoke(
                             this,
                             new ExceptionOccurredEventArgs(ex));
                     }

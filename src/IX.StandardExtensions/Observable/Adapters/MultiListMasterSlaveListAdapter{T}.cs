@@ -24,10 +24,7 @@ internal class MultiListMasterSlaveListAdapter<T> : ModernListAdapter<T, IEnumer
 
 #region Constructors and destructors
 
-    internal MultiListMasterSlaveListAdapter()
-    {
-        slaves = new List<IEnumerable<T>>();
-    }
+    internal MultiListMasterSlaveListAdapter() => slaves = new List<IEnumerable<T>>();
 
 #endregion
 

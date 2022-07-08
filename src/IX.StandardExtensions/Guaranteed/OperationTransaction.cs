@@ -22,10 +22,7 @@ public abstract class OperationTransaction : DisposableBase
     /// <summary>
     /// Initializes a new instance of the <see cref="OperationTransaction"/> class.
     /// </summary>
-    protected OperationTransaction()
-    {
-        revertSteps = new List<Tuple<Action<object>, object>>();
-    }
+    protected OperationTransaction() => revertSteps = new List<Tuple<Action<object>, object>>();
 
     /// <summary>
     /// Gets a value indicating whether this <see cref="OperationTransaction"/> is successful.

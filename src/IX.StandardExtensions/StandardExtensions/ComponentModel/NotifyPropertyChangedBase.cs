@@ -58,7 +58,7 @@ public abstract class NotifyPropertyChangedBase : SynchronizationContextInvokerB
             return;
         }
 
-        if (this.PropertyChanged != null)
+        if (PropertyChanged != null)
         {
             Invoke(
                 (
@@ -82,7 +82,7 @@ public abstract class NotifyPropertyChangedBase : SynchronizationContextInvokerB
             return;
         }
 
-        if (this.PropertyChanged != null)
+        if (PropertyChanged != null)
         {
             InvokePost(
                 (
@@ -106,7 +106,7 @@ public abstract class NotifyPropertyChangedBase : SynchronizationContextInvokerB
             return;
         }
 
-        if (this.PropertyChanged != null)
+        if (PropertyChanged != null)
         {
             InvokeSend(
                 (

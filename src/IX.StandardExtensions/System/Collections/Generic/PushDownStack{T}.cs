@@ -119,7 +119,7 @@ public class PushDownStack<T> : PushingCollectionBase<T>,
     /// </returns>
     public bool TryPeek(out T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         if (Limit == 0)
         {
@@ -155,7 +155,7 @@ public class PushDownStack<T> : PushingCollectionBase<T>,
     /// </returns>
     public bool TryPop(out T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         if (Limit == 0)
         {

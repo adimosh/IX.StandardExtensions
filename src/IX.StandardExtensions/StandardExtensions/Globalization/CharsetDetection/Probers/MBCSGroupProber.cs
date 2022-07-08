@@ -1,7 +1,3 @@
-#pragma warning disable SA1633 // File should have header - This is an imported file,
-
-// original header with license shall remain the same
-
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *

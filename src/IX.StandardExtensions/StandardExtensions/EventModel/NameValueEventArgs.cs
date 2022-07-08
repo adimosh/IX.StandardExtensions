@@ -19,10 +19,7 @@ public class NameValueEventArgs : EventArgs
     ///     Initializes a new instance of the <see cref="NameValueEventArgs" /> class.
     /// </summary>
     /// <param name="nameValue">The name value.</param>
-    public NameValueEventArgs(string nameValue)
-    {
-        Name = nameValue;
-    }
+    public NameValueEventArgs(string nameValue) => Name = nameValue;
 
 #endregion
 

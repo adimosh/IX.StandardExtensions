@@ -20,15 +20,9 @@ internal class ListListAdapter<T> : ModernListAdapter<T, List<T>.Enumerator>
 
 #region Constructors and destructors
 
-    public ListListAdapter()
-    {
-        list = new List<T>();
-    }
+    public ListListAdapter() => list = new List<T>();
 
-    public ListListAdapter(IEnumerable<T> source)
-    {
-        list = new List<T>(source);
-    }
+    public ListListAdapter(IEnumerable<T> source) => list = new List<T>(source);
 
 #endregion
 

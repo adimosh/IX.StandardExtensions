@@ -20,10 +20,7 @@ public class GenerateChangeNotifyingPropertyAttribute : Attribute
     ///     Initializes a new instance of the <see cref="GenerateChangeNotifyingPropertyAttribute" /> class.
     /// </summary>
     /// <param name="name">The name of the property.</param>
-    public GenerateChangeNotifyingPropertyAttribute(string name)
-    {
-        Name = name;
-    }
+    public GenerateChangeNotifyingPropertyAttribute(string name) => Name = name;
 
 #endregion
 

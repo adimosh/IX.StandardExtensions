@@ -30,10 +30,8 @@ public class ObservableReadOnlyCompositeList<T> : ObservableReadOnlyCollectionBa
     ///     Initializes a new instance of the <see cref="ObservableReadOnlyCompositeList{T}" /> class.
     /// </summary>
     public ObservableReadOnlyCompositeList()
-        : base(new MultiListListAdapter<T>())
-    {
+        : base(new MultiListListAdapter<T>()) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ObservableReadOnlyCompositeList{T}" /> class.
@@ -42,10 +40,8 @@ public class ObservableReadOnlyCompositeList<T> : ObservableReadOnlyCollectionBa
     public ObservableReadOnlyCompositeList(SynchronizationContext context)
         : base(
             new MultiListListAdapter<T>(),
-            context)
-    {
+            context) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
 #endregion
 

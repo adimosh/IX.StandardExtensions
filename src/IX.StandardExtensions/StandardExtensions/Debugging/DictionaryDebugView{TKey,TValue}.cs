@@ -35,13 +35,11 @@ public sealed class DictionaryDebugView<TKey, TValue>
     ///     <paramref name="dictionary" />
     ///     is <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
     /// </exception>
-    public DictionaryDebugView(IDictionary<TKey, TValue> dictionary)
-    {
+    public DictionaryDebugView(IDictionary<TKey, TValue> dictionary) =>
         Requires.NotNull(
             out dict,
             dictionary,
             nameof(dictionary));
-    }
 
 #endregion
 

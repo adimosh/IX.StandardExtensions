@@ -24,10 +24,7 @@ namespace IX.UnitTests.Math
         ///     Initializes a new instance of the <see cref="OneDataSetComputedExpressionUnitTest" /> class.
         /// </summary>
         /// <param name="fixture">The fixture.</param>
-        public OneDataSetComputedExpressionUnitTest(CachedExpressionProviderFixture fixture)
-        {
-            this.fixture = fixture;
-        }
+        public OneDataSetComputedExpressionUnitTest(CachedExpressionProviderFixture fixture) => this.fixture = fixture;
 
         /// <summary>
         ///     Provides the data for theory.

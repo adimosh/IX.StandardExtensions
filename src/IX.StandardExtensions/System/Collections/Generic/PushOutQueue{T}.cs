@@ -117,7 +117,7 @@ public class PushOutQueue<T> : PushingCollectionBase<T>,
     /// </returns>
     public bool TryDequeue(out T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         if (Limit == 0)
         {

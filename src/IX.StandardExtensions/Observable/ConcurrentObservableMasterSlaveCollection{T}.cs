@@ -31,30 +31,23 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableMasterSlaveCollection{T}" /> class.
     /// </summary>
-    public ConcurrentObservableMasterSlaveCollection()
-    {
-        locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
+    public ConcurrentObservableMasterSlaveCollection() => locker = EnvironmentSettings.GenerateDefaultLocker();
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableMasterSlaveCollection{T}" /> class.
     /// </summary>
     /// <param name="context">The synchronization context to use, if any.</param>
     public ConcurrentObservableMasterSlaveCollection(SynchronizationContext context)
-        : base(context)
-    {
+        : base(context) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableMasterSlaveCollection{T}" /> class.
     /// </summary>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableMasterSlaveCollection(bool suppressUndoable)
-        : base(suppressUndoable)
-    {
+        : base(suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableMasterSlaveCollection{T}" /> class.
@@ -66,10 +59,8 @@ public class ConcurrentObservableMasterSlaveCollection<T> : ObservableMasterSlav
         bool suppressUndoable)
         : base(
             context,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
 #endregion
 

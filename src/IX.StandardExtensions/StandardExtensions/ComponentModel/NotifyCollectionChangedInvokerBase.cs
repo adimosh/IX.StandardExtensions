@@ -58,7 +58,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         Justification = "This is how the invoker works.")]
     public void RefreshViewers()
     {
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             Invoke(CollectionResetInvocationMethod);
         }
@@ -78,7 +78,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         Justification = "This is how the invoker works.")]
     public void RefreshViewersAsynchronously()
     {
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokePost(CollectionResetInvocationMethod);
         }
@@ -98,7 +98,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         Justification = "This is how the invoker works.")]
     public void RefreshViewersSynchronously()
     {
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokeSend(CollectionResetInvocationMethod);
         }
@@ -108,13 +108,12 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     ///     Triggers the <see cref="CollectionChanged" /> event as a collection reset event.
     /// </summary>
     [SuppressMessage(
-        "Performance",
-        "HAA0603:Delegate allocation from a method group",
-        Justification = "This is how the invoker works.")]
-    [SuppressMessage(
-        "Design",
-        "CA1030:Use events where appropriate",
-        Justification = "This is used to raise the event.")]
+         "Performance",
+         "HAA0603:Delegate allocation from a method group",
+         Justification = "This is how the invoker works."),SuppressMessage(
+         "Design",
+         "CA1030:Use events where appropriate",
+         Justification = "This is used to raise the event.")]
     protected void RaiseCollectionReset()
     {
         if (SuppressNotificationsContext.AmbientSuppressionActive.Value)
@@ -122,7 +121,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             Invoke(CollectionResetInvocationMethod);
         }
@@ -142,7 +141,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokePost(CollectionResetInvocationMethod);
         }
@@ -162,7 +161,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokeSend(CollectionResetInvocationMethod);
         }
@@ -175,13 +174,12 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     /// <param name="index">The index at which the item was added.</param>
     /// <param name="item">The item that was added.</param>
     [SuppressMessage(
-        "Performance",
-        "HAA0603:Delegate allocation from a method group",
-        Justification = "This is how the invoker works.")]
-    [SuppressMessage(
-        "Design",
-        "CA1030:Use events where appropriate",
-        Justification = "This is used to raise the event.")]
+         "Performance",
+         "HAA0603:Delegate allocation from a method group",
+         Justification = "This is how the invoker works."),SuppressMessage(
+         "Design",
+         "CA1030:Use events where appropriate",
+         Justification = "This is used to raise the event.")]
     protected void RaiseCollectionAdd<T>(
         int index,
         T item)
@@ -191,7 +189,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             Invoke(
                 CollectionAddItemInvocationMethod,
@@ -219,7 +217,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokePost(
                 CollectionAddItemInvocationMethod,
@@ -247,7 +245,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokeSend(
                 CollectionAddItemInvocationMethod,
@@ -263,13 +261,12 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     /// <param name="index">The index at which the items were added.</param>
     /// <param name="items">The items that were added.</param>
     [SuppressMessage(
-        "Performance",
-        "HAA0603:Delegate allocation from a method group",
-        Justification = "This is how the invoker works.")]
-    [SuppressMessage(
-        "Design",
-        "CA1030:Use events where appropriate",
-        Justification = "This is used to raise the event.")]
+         "Performance",
+         "HAA0603:Delegate allocation from a method group",
+         Justification = "This is how the invoker works."),SuppressMessage(
+         "Design",
+         "CA1030:Use events where appropriate",
+         Justification = "This is used to raise the event.")]
     protected void RaiseCollectionAdd<T>(
         int index,
         IEnumerable<T> items)
@@ -279,7 +276,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             Invoke(
                 CollectionAddItemsInvocationMethod,
@@ -308,7 +305,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokePost(
                 CollectionAddItemsInvocationMethod,
@@ -337,7 +334,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokeSend(
                 CollectionAddItemsInvocationMethod,
@@ -353,13 +350,12 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     /// <param name="index">The index at which the item was removed.</param>
     /// <param name="item">The item that was added.</param>
     [SuppressMessage(
-        "Performance",
-        "HAA0603:Delegate allocation from a method group",
-        Justification = "This is how the invoker works.")]
-    [SuppressMessage(
-        "Design",
-        "CA1030:Use events where appropriate",
-        Justification = "This is used to raise the event.")]
+         "Performance",
+         "HAA0603:Delegate allocation from a method group",
+         Justification = "This is how the invoker works."),SuppressMessage(
+         "Design",
+         "CA1030:Use events where appropriate",
+         Justification = "This is used to raise the event.")]
     protected void RaiseCollectionRemove<T>(
         int index,
         T item)
@@ -369,7 +365,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             Invoke(
                 CollectionRemoveItemInvocationMethod,
@@ -397,7 +393,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokePost(
                 CollectionRemoveItemInvocationMethod,
@@ -425,7 +421,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokeSend(
                 CollectionRemoveItemInvocationMethod,
@@ -441,13 +437,12 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     /// <param name="index">The index at which the items were removed.</param>
     /// <param name="items">The items that were removed.</param>
     [SuppressMessage(
-        "Performance",
-        "HAA0603:Delegate allocation from a method group",
-        Justification = "This is how the invoker works.")]
-    [SuppressMessage(
-        "Design",
-        "CA1030:Use events where appropriate",
-        Justification = "This is used to raise the event.")]
+         "Performance",
+         "HAA0603:Delegate allocation from a method group",
+         Justification = "This is how the invoker works."),SuppressMessage(
+         "Design",
+         "CA1030:Use events where appropriate",
+         Justification = "This is used to raise the event.")]
     protected void RaiseCollectionRemove<T>(
         int index,
         IEnumerable<T> items)
@@ -457,7 +452,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             Invoke(
                 CollectionRemoveItemsInvocationMethod,
@@ -486,7 +481,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokePost(
                 CollectionRemoveItemsInvocationMethod,
@@ -515,7 +510,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokeSend(
                 CollectionRemoveItemsInvocationMethod,
@@ -532,13 +527,12 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     /// <param name="newIndex">The index at which the item was moved.</param>
     /// <param name="item">The item that was added.</param>
     [SuppressMessage(
-        "Performance",
-        "HAA0603:Delegate allocation from a method group",
-        Justification = "This is how the invoker works.")]
-    [SuppressMessage(
-        "Design",
-        "CA1030:Use events where appropriate",
-        Justification = "This is used to raise the event.")]
+         "Performance",
+         "HAA0603:Delegate allocation from a method group",
+         Justification = "This is how the invoker works."),SuppressMessage(
+         "Design",
+         "CA1030:Use events where appropriate",
+         Justification = "This is used to raise the event.")]
     protected void RaiseCollectionMove<T>(
         int oldIndex,
         int newIndex,
@@ -549,7 +543,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             Invoke(
                 CollectionMoveItemInvocationMethod,
@@ -580,7 +574,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokePost(
                 CollectionMoveItemInvocationMethod,
@@ -611,7 +605,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokeSend(
                 CollectionMoveItemInvocationMethod,
@@ -629,13 +623,12 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     /// <param name="newIndex">The index at which the items were moved.</param>
     /// <param name="items">The items that were added.</param>
     [SuppressMessage(
-        "Performance",
-        "HAA0603:Delegate allocation from a method group",
-        Justification = "This is how the invoker works.")]
-    [SuppressMessage(
-        "Design",
-        "CA1030:Use events where appropriate",
-        Justification = "This is used to raise the event.")]
+         "Performance",
+         "HAA0603:Delegate allocation from a method group",
+         Justification = "This is how the invoker works."),SuppressMessage(
+         "Design",
+         "CA1030:Use events where appropriate",
+         Justification = "This is used to raise the event.")]
     protected void RaiseCollectionMove<T>(
         int oldIndex,
         int newIndex,
@@ -646,7 +639,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             Invoke(
                 CollectionMoveItemsInvocationMethod,
@@ -677,7 +670,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokePost(
                 CollectionMoveItemsInvocationMethod,
@@ -708,7 +701,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokeSend(
                 CollectionMoveItemsInvocationMethod,
@@ -726,13 +719,12 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     /// <param name="oldItem">The original item.</param>
     /// <param name="newItem">The new item.</param>
     [SuppressMessage(
-        "Performance",
-        "HAA0603:Delegate allocation from a method group",
-        Justification = "This is how the invoker works.")]
-    [SuppressMessage(
-        "Design",
-        "CA1030:Use events where appropriate",
-        Justification = "This is used to raise the event.")]
+         "Performance",
+         "HAA0603:Delegate allocation from a method group",
+         Justification = "This is how the invoker works."),SuppressMessage(
+         "Design",
+         "CA1030:Use events where appropriate",
+         Justification = "This is used to raise the event.")]
     protected void RaiseCollectionReplace<T>(
         int index,
         T oldItem,
@@ -743,7 +735,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             Invoke(
                 CollectionReplaceItemInvocationMethod,
@@ -775,7 +767,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokePost(
                 CollectionReplaceItemInvocationMethod,
@@ -806,7 +798,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokeSend(
                 CollectionReplaceItemInvocationMethod,
@@ -824,13 +816,12 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     /// <param name="oldItems">The original items.</param>
     /// <param name="newItems">The new items.</param>
     [SuppressMessage(
-        "Performance",
-        "HAA0603:Delegate allocation from a method group",
-        Justification = "This is how the invoker works.")]
-    [SuppressMessage(
-        "Design",
-        "CA1030:Use events where appropriate",
-        Justification = "This is used to raise the event.")]
+         "Performance",
+         "HAA0603:Delegate allocation from a method group",
+         Justification = "This is how the invoker works."),SuppressMessage(
+         "Design",
+         "CA1030:Use events where appropriate",
+         Justification = "This is used to raise the event.")]
     protected void RaiseCollectionReplace<T>(
         int index,
         IEnumerable<T> oldItems,
@@ -841,7 +832,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             Invoke(
                 CollectionReplaceItemsInvocationMethod,
@@ -873,7 +864,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokePost(
                 CollectionReplaceItemsInvocationMethod,
@@ -905,7 +896,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
             return;
         }
 
-        if (this.CollectionChanged != null)
+        if (CollectionChanged != null)
         {
             InvokeSend(
                 CollectionReplaceItemsInvocationMethod,
@@ -916,25 +907,24 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     }
 
     private void CollectionResetInvocationMethod() =>
-        this.CollectionChanged?.Invoke(
+        CollectionChanged?.Invoke(
             this,
             new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
     [SuppressMessage(
-        "Design",
-        "CA1031:Do not catch general exception types",
-        Justification = "We have to catch Exception here, as that is the point of the invoker.")]
-    [SuppressMessage(
-        "Performance",
-        "HAA0601:Value type to reference type conversion causing boxing allocation",
-        Justification = "We're sending it through an event, unavoidable.")]
+         "Design",
+         "CA1031:Do not catch general exception types",
+         Justification = "We have to catch Exception here, as that is the point of the invoker."),SuppressMessage(
+         "Performance",
+         "HAA0601:Value type to reference type conversion causing boxing allocation",
+         Justification = "We're sending it through an event, unavoidable.")]
     private void CollectionAddItemInvocationMethod<T>(
         int internalIndex,
         T internalItem)
     {
         try
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(
                     NotifyCollectionChangedAction.Add,
@@ -943,7 +933,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         }
         catch (Exception) when (EnvironmentSettings.ResetOnCollectionChangeNotificationException)
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
@@ -959,7 +949,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     {
         try
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(
                     NotifyCollectionChangedAction.Add,
@@ -968,27 +958,26 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         }
         catch (Exception) when (EnvironmentSettings.ResetOnCollectionChangeNotificationException)
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
     }
 
     [SuppressMessage(
-        "Design",
-        "CA1031:Do not catch general exception types",
-        Justification = "We have to catch Exception here, as that is the point of the invoker.")]
-    [SuppressMessage(
-        "Performance",
-        "HAA0601:Value type to reference type conversion causing boxing allocation",
-        Justification = "We're sending it through an event, unavoidable.")]
+         "Design",
+         "CA1031:Do not catch general exception types",
+         Justification = "We have to catch Exception here, as that is the point of the invoker."),SuppressMessage(
+         "Performance",
+         "HAA0601:Value type to reference type conversion causing boxing allocation",
+         Justification = "We're sending it through an event, unavoidable.")]
     private void CollectionRemoveItemInvocationMethod<T>(
         int internalIndex,
         T internalItem)
     {
         try
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(
                     NotifyCollectionChangedAction.Remove,
@@ -997,7 +986,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         }
         catch (Exception) when (EnvironmentSettings.ResetOnCollectionChangeNotificationException)
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
@@ -1013,7 +1002,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     {
         try
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(
                     NotifyCollectionChangedAction.Remove,
@@ -1022,20 +1011,19 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         }
         catch (Exception) when (EnvironmentSettings.ResetOnCollectionChangeNotificationException)
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
     }
 
     [SuppressMessage(
-        "Design",
-        "CA1031:Do not catch general exception types",
-        Justification = "We have to catch Exception here, as that is the point of the invoker.")]
-    [SuppressMessage(
-        "Performance",
-        "HAA0601:Value type to reference type conversion causing boxing allocation",
-        Justification = "We're sending it through an event, unavoidable.")]
+         "Design",
+         "CA1031:Do not catch general exception types",
+         Justification = "We have to catch Exception here, as that is the point of the invoker."),SuppressMessage(
+         "Performance",
+         "HAA0601:Value type to reference type conversion causing boxing allocation",
+         Justification = "We're sending it through an event, unavoidable.")]
     private void CollectionMoveItemInvocationMethod<T>(
         int internalOldIndex,
         int internalNewIndex,
@@ -1043,7 +1031,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     {
         try
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(
                     NotifyCollectionChangedAction.Move,
@@ -1053,7 +1041,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         }
         catch (Exception) when (EnvironmentSettings.ResetOnCollectionChangeNotificationException)
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
@@ -1070,7 +1058,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     {
         try
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(
                     NotifyCollectionChangedAction.Move,
@@ -1080,20 +1068,19 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         }
         catch (Exception) when (EnvironmentSettings.ResetOnCollectionChangeNotificationException)
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
     }
 
     [SuppressMessage(
-        "Design",
-        "CA1031:Do not catch general exception types",
-        Justification = "We have to catch Exception here, as that is the point of the invoker.")]
-    [SuppressMessage(
-        "Performance",
-        "HAA0601:Value type to reference type conversion causing boxing allocation",
-        Justification = "We're sending it through an event, unavoidable.")]
+         "Design",
+         "CA1031:Do not catch general exception types",
+         Justification = "We have to catch Exception here, as that is the point of the invoker."),SuppressMessage(
+         "Performance",
+         "HAA0601:Value type to reference type conversion causing boxing allocation",
+         Justification = "We're sending it through an event, unavoidable.")]
     private void CollectionReplaceItemInvocationMethod<T>(
         int internalIndex,
         T internalOldItem,
@@ -1101,7 +1088,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     {
         try
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(
                     NotifyCollectionChangedAction.Replace,
@@ -1111,7 +1098,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         }
         catch (Exception) when (EnvironmentSettings.ResetOnCollectionChangeNotificationException)
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
@@ -1128,7 +1115,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     {
         try
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(
                     NotifyCollectionChangedAction.Replace,
@@ -1138,7 +1125,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         }
         catch (Exception) when (EnvironmentSettings.ResetOnCollectionChangeNotificationException)
         {
-            this.CollectionChanged?.Invoke(
+            CollectionChanged?.Invoke(
                 this,
                 new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }

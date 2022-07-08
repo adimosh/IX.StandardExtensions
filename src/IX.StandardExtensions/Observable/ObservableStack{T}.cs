@@ -185,7 +185,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     /// <returns>The topmost element in the stack, if any.</returns>
     public T Peek()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -199,7 +199,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     /// <returns>The topmost element in the stack, if any.</returns>
     public T Pop()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         T item;
         int index;
@@ -226,7 +226,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     /// <param name="item">The item to push.</param>
     public void Push(T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         int index;
 
@@ -293,7 +293,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     /// <returns>An array containing all items in the stack.</returns>
     public T[] ToArray()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -307,7 +307,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     /// </summary>
     public void TrimExcess()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (WriteLock())
         {
@@ -325,7 +325,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     /// </returns>
     public bool TryPeek(out T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -354,7 +354,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     /// </returns>
     public bool TryPop(out T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         int index;
 

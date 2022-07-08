@@ -164,12 +164,10 @@ public static partial class IEnumerableExtensions
             }
         }
 
-        static void PerformParallelAction((int Index, T Item, Action<int, T> Action) state)
-        {
+        static void PerformParallelAction((int Index, T Item, Action<int, T> Action) state) =>
             state.Action(
                 state.Index,
                 state.Item);
-        }
     }
 
     /// <summary>

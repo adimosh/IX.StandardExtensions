@@ -21,10 +21,7 @@ public class ExceptionOccurredEventArgs : EventArgs
     ///     Initializes a new instance of the <see cref="ExceptionOccurredEventArgs" /> class.
     /// </summary>
     /// <param name="exception">The exception that has occurred.</param>
-    public ExceptionOccurredEventArgs(Exception exception)
-    {
-        Exception = exception;
-    }
+    public ExceptionOccurredEventArgs(Exception exception) => Exception = exception;
 
 #endregion
 

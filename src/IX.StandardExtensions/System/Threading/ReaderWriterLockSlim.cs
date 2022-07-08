@@ -56,10 +56,7 @@ public class ReaderWriterLockSlim : DisposableBase,
     ///     Initializes a new instance of the <see cref="ReaderWriterLockSlim" /> class.
     /// </summary>
     /// <param name="locker">The existing locker.</param>
-    public ReaderWriterLockSlim(GlobalThreading.ReaderWriterLockSlim locker)
-    {
-        this.locker = locker;
-    }
+    public ReaderWriterLockSlim(GlobalThreading.ReaderWriterLockSlim locker) => this.locker = locker;
 
 #endregion
 

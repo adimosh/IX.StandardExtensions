@@ -35,30 +35,23 @@ public class ConcurrentObservableList<T> : ObservableList<T>
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableList{T}" /> class.
     /// </summary>
-    public ConcurrentObservableList()
-    {
-        locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
+    public ConcurrentObservableList() => locker = EnvironmentSettings.GenerateDefaultLocker();
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableList{T}" /> class.
     /// </summary>
     /// <param name="source">The source.</param>
     public ConcurrentObservableList(IEnumerable<T> source)
-        : base(source)
-    {
+        : base(source) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableList{T}" /> class.
     /// </summary>
     /// <param name="context">The synchronization context to use, if any.</param>
     public ConcurrentObservableList(SynchronizationContext context)
-        : base(context)
-    {
+        : base(context) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableList{T}" /> class.
@@ -70,20 +63,16 @@ public class ConcurrentObservableList<T> : ObservableList<T>
         SynchronizationContext context)
         : base(
             source,
-            context)
-    {
+            context) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableList{T}" /> class.
     /// </summary>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableList(bool suppressUndoable)
-        : base(suppressUndoable)
-    {
+        : base(suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableList{T}" /> class.
@@ -95,10 +84,8 @@ public class ConcurrentObservableList<T> : ObservableList<T>
         bool suppressUndoable)
         : base(
             source,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableList{T}" /> class.
@@ -110,10 +97,8 @@ public class ConcurrentObservableList<T> : ObservableList<T>
         bool suppressUndoable)
         : base(
             context,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableList{T}" /> class.
@@ -128,10 +113,8 @@ public class ConcurrentObservableList<T> : ObservableList<T>
         : base(
             source,
             context,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
 #endregion
 

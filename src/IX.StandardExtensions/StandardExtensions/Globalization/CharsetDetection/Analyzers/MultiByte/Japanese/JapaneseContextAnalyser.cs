@@ -7128,10 +7128,7 @@ internal abstract class JapaneseContextAnalyser
     // been made
     private bool done;
 
-    public JapaneseContextAnalyser()
-    {
-        Reset();
-    }
+    public JapaneseContextAnalyser() => Reset();
 
     public float GetConfidence()
     {

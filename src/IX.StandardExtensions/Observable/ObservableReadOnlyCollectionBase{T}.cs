@@ -175,7 +175,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
         Justification = "It's for the atomic enumerator.")]
     public virtual IEnumerator<T> GetEnumerator()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         if (SynchronizationLock == null)
         {
@@ -199,7 +199,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
         Array array,
         int index)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         T[] tempArray;
 
@@ -244,7 +244,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     /// </remarks>
     public bool Contains(T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -268,7 +268,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
         T[] array,
         int arrayIndex)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -287,7 +287,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     /// <remarks>On concurrent collections, this method is read-synchronized.</remarks>
     public T[] CopyToArray(int fromIndex)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -324,7 +324,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     /// <remarks>On concurrent collections, this method is read-synchronized.</remarks>
     public T[] CopyToArray()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {

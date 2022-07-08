@@ -23,10 +23,7 @@ public class CharsetDetectorDataUnitTests
 {
     private readonly ITestOutputHelper outputHelper;
 
-    public CharsetDetectorDataUnitTests(ITestOutputHelper outputHelper)
-    {
-        Requires.NotNull(out this.outputHelper, outputHelper);
-    }
+    public CharsetDetectorDataUnitTests(ITestOutputHelper outputHelper) => Requires.NotNull(out this.outputHelper, outputHelper);
 
     public static IEnumerable<object[]> AllTestFiles()
     {

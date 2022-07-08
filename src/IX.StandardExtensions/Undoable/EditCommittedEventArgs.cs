@@ -19,10 +19,7 @@ public class EditCommittedEventArgs : EventArgs
     ///     Initializes a new instance of the <see cref="EditCommittedEventArgs" /> class.
     /// </summary>
     /// <param name="stateChanges">The state changes that have been committed.</param>
-    public EditCommittedEventArgs(StateChangeBase stateChanges)
-    {
-        StateChanges = stateChanges;
-    }
+    public EditCommittedEventArgs(StateChangeBase stateChanges) => StateChanges = stateChanges;
 
 #endregion
 

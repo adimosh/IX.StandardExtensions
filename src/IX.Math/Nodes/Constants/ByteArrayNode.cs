@@ -26,10 +26,7 @@ public class ByteArrayNode : ConstantNodeBase, ISpecialRequestNode
     ///     Initializes a new instance of the <see cref="ByteArrayNode" /> class.
     /// </summary>
     /// <param name="value">The value of the constant.</param>
-    public ByteArrayNode(byte[] value)
-    {
-        Value = Requires.NotNull(value);
-    }
+    public ByteArrayNode(byte[] value) => Value = Requires.NotNull(value);
 
     /// <summary>
     ///     Gets the display value.

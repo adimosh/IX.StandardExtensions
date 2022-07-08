@@ -128,7 +128,7 @@ public abstract class CollectionAdapter<T> : ICollectionAdapter<T>
     ///     Triggers the reset.
     /// </summary>
     protected void TriggerReset() =>
-        this.MustReset?.Invoke(
+        MustReset?.Invoke(
             this,
             EventArgs.Empty);
 

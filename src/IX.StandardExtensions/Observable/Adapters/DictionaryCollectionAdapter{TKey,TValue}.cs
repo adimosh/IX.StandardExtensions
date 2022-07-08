@@ -32,15 +32,9 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapt
 
 #region Constructors and destructors
 
-    public DictionaryCollectionAdapter()
-    {
-        dictionary = new Dictionary<TKey, TValue>();
-    }
+    public DictionaryCollectionAdapter() => dictionary = new Dictionary<TKey, TValue>();
 
-    internal DictionaryCollectionAdapter(IDictionary<TKey, TValue> dictionary)
-    {
-        this.dictionary = new Dictionary<TKey, TValue>(dictionary);
-    }
+    internal DictionaryCollectionAdapter(IDictionary<TKey, TValue> dictionary) => this.dictionary = new Dictionary<TKey, TValue>(dictionary);
 
 #endregion
 

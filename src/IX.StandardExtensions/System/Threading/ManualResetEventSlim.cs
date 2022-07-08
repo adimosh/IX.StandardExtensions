@@ -63,12 +63,10 @@ public class ManualResetEventSlim : DisposableBase,
     ///     <paramref name="manualResetEvent" />
     ///     is <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
     /// </exception>
-    public ManualResetEventSlim(GlobalThreading.ManualResetEventSlim manualResetEvent)
-    {
+    public ManualResetEventSlim(GlobalThreading.ManualResetEventSlim manualResetEvent) =>
         Requires.NotNull(
             out internalResetEvent,
             manualResetEvent);
-    }
 
 #endregion
 

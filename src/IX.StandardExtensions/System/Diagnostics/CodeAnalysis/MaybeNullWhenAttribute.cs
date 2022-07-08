@@ -22,12 +22,9 @@ public sealed class MaybeNullWhenAttribute : Attribute
     /// <param name="returnValue">
     ///     The return value condition. If the method returns this value, the associated parameter may be null.
     /// </param>
-    public MaybeNullWhenAttribute(bool returnValue)
-    {
-        ReturnValue = returnValue;
-    }
+    public MaybeNullWhenAttribute(bool returnValue) => ReturnValue = returnValue;
 
-    #endregion
+#endregion
 
     #region Properties and indexers
 

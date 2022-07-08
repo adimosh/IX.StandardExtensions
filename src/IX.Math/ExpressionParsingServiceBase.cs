@@ -308,11 +308,9 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
         static bool ConstantPassThroughExtractorPredicate(
             Type cpteKey,
             string innerExpression,
-            ExpressionParsingServiceBase innerThis)
-        {
-            return innerThis.constantPassThroughExtractors[cpteKey]
-                .Evaluate(innerExpression);
-        }
+            ExpressionParsingServiceBase innerThis) =>
+            innerThis.constantPassThroughExtractors[cpteKey]
+                     .Evaluate(innerExpression);
 
         ComputedExpression result;
         using (var workingSet = new WorkingExpressionSet(

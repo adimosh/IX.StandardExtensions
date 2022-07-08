@@ -68,10 +68,7 @@ internal abstract class CharDistributionAnalyser
     protected float typicalDistributionRatio;
 
 #pragma warning disable CS8618
-    public CharDistributionAnalyser()
-    {
-        Reset();
-    }
+    public CharDistributionAnalyser() => Reset();
 #pragma warning restore CS8618
 
     /// <summary>

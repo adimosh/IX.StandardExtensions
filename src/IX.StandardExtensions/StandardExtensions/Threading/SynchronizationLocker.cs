@@ -20,10 +20,7 @@ public abstract class SynchronizationLocker : IDisposable
     ///     Initializes a new instance of the <see cref="SynchronizationLocker" /> class.
     /// </summary>
     /// <param name="locker">The locker.</param>
-    internal SynchronizationLocker(IReaderWriterLock? locker)
-    {
-        Locker = locker;
-    }
+    internal SynchronizationLocker(IReaderWriterLock? locker) => Locker = locker;
 
 #endregion
 

@@ -28,10 +28,7 @@ public class WorkUnitTests
     /// Initializes a new instance of the <see cref="WorkUnitTests"/> class.
     /// </summary>
     /// <param name="output">The test output.</param>
-    public WorkUnitTests(ITestOutputHelper output)
-    {
-        Requires.NotNull(out this.output, output, nameof(output));
-    }
+    public WorkUnitTests(ITestOutputHelper output) => Requires.NotNull(out this.output, output, nameof(output));
 
     /// <summary>
     /// Test basic Fire.AndForget mechanism.

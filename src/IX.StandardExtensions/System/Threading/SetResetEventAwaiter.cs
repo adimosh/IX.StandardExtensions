@@ -24,13 +24,11 @@ public class SetResetEventAwaiter : IAwaiter
 
 #region Constructors and destructors
 
-    internal SetResetEventAwaiter(ISetResetEvent mre)
-    {
+    internal SetResetEventAwaiter(ISetResetEvent mre) =>
         Requires.NotNull(
             out this.mre,
             mre,
             nameof(mre));
-    }
 
 #endregion
 

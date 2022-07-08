@@ -95,7 +95,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     public void SetMasterList<TList>(TList list)
         where TList : class, IList<T>, INotifyCollectionChanged
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (WriteLock())
         {
@@ -115,7 +115,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     public void SetSlaveList<TList>(TList list)
         where TList : class, IEnumerable<T>, INotifyCollectionChanged
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (WriteLock())
         {
@@ -135,7 +135,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     public void RemoveSlaveList<TList>(TList list)
         where TList : class, IEnumerable<T>, INotifyCollectionChanged
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (WriteLock())
         {
@@ -204,7 +204,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     /// <param name="index">The index at which to remove an item from.</param>
     public override void RemoveAt(int index)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         T item;
 
@@ -241,7 +241,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     /// <remarks>On concurrent collections, this method is write-synchronized.</remarks>
     protected override T[] ClearInternal()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         T[] originalArray;
 

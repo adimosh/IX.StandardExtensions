@@ -34,11 +34,9 @@ public static class AssemblyExtensions
         return Requires.NotNull(assembly)
             .DefinedTypes.Where(Filter);
 
-        static bool Filter(TypeInfo p)
-        {
-            return typeof(T).GetTypeInfo()
-                .IsAssignableFrom(p);
-        }
+        static bool Filter(TypeInfo p) =>
+            typeof(T).GetTypeInfo()
+                     .IsAssignableFrom(p);
     }
 
     /// <summary>
@@ -56,10 +54,7 @@ public static class AssemblyExtensions
         return Requires.NotNull(assemblies)
             .SelectMany(GetAssignableTypes);
 
-        static IEnumerable<TypeInfo> GetAssignableTypes(Assembly p)
-        {
-            return p.GetTypesAssignableFrom<T>();
-        }
+        static IEnumerable<TypeInfo> GetAssignableTypes(Assembly p) => p.GetTypesAssignableFrom<T>();
     }
 
 #endregion

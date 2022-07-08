@@ -64,13 +64,11 @@ public class AutoResetEvent : DisposableBase,
         "IDisposableAnalyzers.Correctness",
         "IDISP003:Dispose previous before re-assigning.",
         Justification = "This is a constructor, the analyzer is thrown off.")]
-    public AutoResetEvent(GlobalThreading.AutoResetEvent autoResetEvent)
-    {
+    public AutoResetEvent(GlobalThreading.AutoResetEvent autoResetEvent) =>
         Requires.NotNull(
             out sre,
             autoResetEvent,
             nameof(autoResetEvent));
-    }
 
 #endregion
 

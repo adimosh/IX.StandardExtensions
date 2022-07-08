@@ -33,10 +33,7 @@ public class SmartDisposableWeakReference<T>
     ///     Initializes a new instance of the <see cref="SmartDisposableWeakReference{T}" /> class.
     /// </summary>
     /// <param name="obj">The object.</param>
-    public SmartDisposableWeakReference(T obj)
-    {
-        reference = new WeakReference<T>(obj);
-    }
+    public SmartDisposableWeakReference(T obj) => reference = new WeakReference<T>(obj);
 
 #endregion
 

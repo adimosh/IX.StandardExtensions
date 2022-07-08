@@ -67,7 +67,7 @@ for (int i = 1; i <= 8; i++)
     {
         Requires.NotNull(action);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         action.Invoke(
             <#= paramNames #>);
@@ -105,7 +105,7 @@ for (int i = 1; i <= 8; i++)
     {
         Requires.NotNull(func);
 
-        this.ThrowIfCurrentObjectDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         return func.Invoke(
             <#= paramNames #>);

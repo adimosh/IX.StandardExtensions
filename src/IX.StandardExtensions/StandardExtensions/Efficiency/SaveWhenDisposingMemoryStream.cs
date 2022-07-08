@@ -29,12 +29,10 @@ public class SaveWhenDisposingMemoryStream : MemoryStream
     ///     Occurs when the <paramref name="saveFile" /> is
     ///     <see langword="null" /> (<see langword="Nothing" /> in Visual Basic).
     /// </exception>
-    public SaveWhenDisposingMemoryStream(Action<byte[]> saveFile)
-    {
+    public SaveWhenDisposingMemoryStream(Action<byte[]> saveFile) =>
         Requires.NotNull(
             out this.saveFile,
             saveFile);
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="SaveWhenDisposingMemoryStream" /> class.
@@ -48,12 +46,10 @@ public class SaveWhenDisposingMemoryStream : MemoryStream
     public SaveWhenDisposingMemoryStream(
         byte[] buffer,
         Action<byte[]> saveFile)
-        : base(buffer)
-    {
+        : base(buffer) =>
         Requires.NotNull(
             out this.saveFile,
             saveFile);
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="SaveWhenDisposingMemoryStream" /> class.
@@ -67,12 +63,10 @@ public class SaveWhenDisposingMemoryStream : MemoryStream
     public SaveWhenDisposingMemoryStream(
         int capacity,
         Action<byte[]> saveFile)
-        : base(capacity)
-    {
+        : base(capacity) =>
         Requires.NotNull(
             out this.saveFile,
             saveFile);
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="SaveWhenDisposingMemoryStream" /> class.
@@ -93,12 +87,10 @@ public class SaveWhenDisposingMemoryStream : MemoryStream
         Action<byte[]> saveFile)
         : base(
             buffer,
-            writable)
-    {
+            writable) =>
         Requires.NotNull(
             out this.saveFile,
             saveFile);
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="SaveWhenDisposingMemoryStream" /> class.
@@ -119,12 +111,10 @@ public class SaveWhenDisposingMemoryStream : MemoryStream
         : base(
             buffer,
             index,
-            count)
-    {
+            count) =>
         Requires.NotNull(
             out this.saveFile,
             saveFile);
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="SaveWhenDisposingMemoryStream" /> class.
@@ -151,12 +141,10 @@ public class SaveWhenDisposingMemoryStream : MemoryStream
             buffer,
             index,
             count,
-            writable)
-    {
+            writable) =>
         Requires.NotNull(
             out this.saveFile,
             saveFile);
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="SaveWhenDisposingMemoryStream" /> class.
@@ -189,12 +177,10 @@ public class SaveWhenDisposingMemoryStream : MemoryStream
             index,
             count,
             writable,
-            publiclyVisible)
-    {
+            publiclyVisible) =>
         Requires.NotNull(
             out this.saveFile,
             saveFile);
-    }
 
 #endregion
 

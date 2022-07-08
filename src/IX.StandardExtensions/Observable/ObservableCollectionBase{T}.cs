@@ -115,8 +115,8 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// </remarks>
     event EventHandler<EditCommittedEventArgs> IEditCommittableItem.EditCommitted
     {
-        add => this.EditCommittedInternal += value;
-        remove => this.EditCommittedInternal -= value;
+        add => EditCommittedInternal += value;
+        remove => EditCommittedInternal -= value;
     }
 
 #endregion
@@ -139,7 +139,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                 return false;
             }
 
-            this.RequiresNotDisposed();
+            ThrowIfCurrentObjectDisposed();
 
             return ParentUndoContext?.CanRedo ??
                    ReadLock(
@@ -164,7 +164,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                 return false;
             }
 
-            this.RequiresNotDisposed();
+            ThrowIfCurrentObjectDisposed();
 
             return ParentUndoContext?.CanUndo ??
                    ReadLock(
@@ -282,7 +282,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -355,7 +355,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int oldIndex;
@@ -447,7 +447,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             return;
         }
 
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         if (ParentUndoContext != null)
         {
@@ -510,7 +510,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         }
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // Current object captured in an undo/redo context
         if (!IsCapturedIntoUndoContext)
@@ -581,7 +581,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// </summary>
     public void ReleaseFromUndoContext()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (WriteLock())
         {
@@ -613,7 +613,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             return;
         }
 
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         if (ParentUndoContext != null)
         {
@@ -676,7 +676,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         }
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // Current object captured in an undo/redo context
         if (!IsCapturedIntoUndoContext)
@@ -774,7 +774,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         IUndoableItem parent,
         bool captureSubItems)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         if (parent == null)
         {
@@ -809,7 +809,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
 
         var transaction = new UndoableUnitBlockTransaction<T>(this);
 
-        Interlocked.Exchange(
+        _ = Interlocked.Exchange(
             ref currentUndoBlockTransaction,
             transaction);
 
@@ -1077,7 +1077,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
 
         if (IsCapturedIntoUndoContext)
         {
-            this.EditCommittedInternal?.Invoke(
+            EditCommittedInternal?.Invoke(
                 this,
                 new EditCommittedEventArgs(undoRedoLevel));
 
@@ -1229,7 +1229,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         T[] tempArray;

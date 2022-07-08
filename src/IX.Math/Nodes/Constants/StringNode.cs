@@ -20,10 +20,7 @@ public sealed class StringNode : ConstantNodeBase
     /// Initializes a new instance of the <see cref="StringNode"/> class.
     /// </summary>
     /// <param name="value">The value.</param>
-    public StringNode(string value)
-    {
-        Value = value;
-    }
+    public StringNode(string value) => Value = value;
 
     /// <summary>
     /// Gets the value.

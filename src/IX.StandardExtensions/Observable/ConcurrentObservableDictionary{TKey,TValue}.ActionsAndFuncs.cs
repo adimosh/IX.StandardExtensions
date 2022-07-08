@@ -28,7 +28,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -97,7 +97,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -166,7 +166,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int oldIndex;
@@ -237,7 +237,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -308,7 +308,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -379,7 +379,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int oldIndex;
@@ -452,7 +452,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -525,7 +525,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -598,7 +598,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int oldIndex;
@@ -673,7 +673,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -748,7 +748,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -823,7 +823,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int oldIndex;
@@ -900,7 +900,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -977,7 +977,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -1054,7 +1054,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int oldIndex;
@@ -1133,7 +1133,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -1212,7 +1212,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -1291,7 +1291,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int oldIndex;
@@ -1372,7 +1372,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -1453,7 +1453,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -1534,7 +1534,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int oldIndex;
@@ -1617,7 +1617,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -1700,7 +1700,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int newIndex;
@@ -1783,7 +1783,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         int oldIndex;

@@ -41,40 +41,31 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableStack{T}" /> class.
     /// </summary>
-    public ConcurrentObservableStack()
-    {
-        locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
+    public ConcurrentObservableStack() => locker = EnvironmentSettings.GenerateDefaultLocker();
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableStack{T}" /> class.
     /// </summary>
     /// <param name="capacity">The initial capacity of the stack.</param>
     public ConcurrentObservableStack(int capacity)
-        : base(capacity)
-    {
+        : base(capacity) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableStack{T}" /> class.
     /// </summary>
     /// <param name="collection">A collection of items to copy into the stack.</param>
     public ConcurrentObservableStack(IEnumerable<T> collection)
-        : base(collection)
-    {
+        : base(collection) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableStack{T}" /> class.
     /// </summary>
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
     public ConcurrentObservableStack(SynchronizationContext context)
-        : base(context)
-    {
+        : base(context) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableStack{T}" /> class.
@@ -86,10 +77,8 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
         int capacity)
         : base(
             context,
-            capacity)
-    {
+            capacity) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableStack{T}" /> class.
@@ -101,20 +90,16 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
         IEnumerable<T> collection)
         : base(
             context,
-            collection)
-    {
+            collection) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableStack{T}" /> class.
     /// </summary>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableStack(bool suppressUndoable)
-        : base(suppressUndoable)
-    {
+        : base(suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableStack{T}" /> class.
@@ -126,10 +111,8 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
         bool suppressUndoable)
         : base(
             capacity,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableStack{T}" /> class.
@@ -141,10 +124,8 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
         bool suppressUndoable)
         : base(
             collection,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableStack{T}" /> class.
@@ -156,10 +137,8 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
         bool suppressUndoable)
         : base(
             context,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableStack{T}" /> class.
@@ -174,10 +153,8 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
         : base(
             context,
             capacity,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableStack{T}" /> class.
@@ -192,10 +169,8 @@ public class ConcurrentObservableStack<T> : ObservableStack<T>
         : base(
             context,
             collection,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
 #endregion
 

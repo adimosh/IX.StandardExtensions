@@ -32,19 +32,13 @@ public class RestRemoteClient : DisposableBase
     /// Initializes a new instance of the <see cref="RestRemoteClient"/> class.
     /// </summary>
     /// <param name="baseUrl">The base URL for his client.</param>
-    public RestRemoteClient(string baseUrl)
-    {
-        client = new RestClient(Requires.NotNullOrWhiteSpace(baseUrl));
-    }
+    public RestRemoteClient(string baseUrl) => client = new RestClient(Requires.NotNullOrWhiteSpace(baseUrl));
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RestRemoteClient"/> class.
     /// </summary>
     /// <param name="options">The client options.</param>
-    public RestRemoteClient(RestClientOptions options)
-    {
-        client = new RestClient(Requires.NotNull(options));
-    }
+    public RestRemoteClient(RestClientOptions options) => client = new RestClient(Requires.NotNull(options));
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RestRemoteClient"/> class.
@@ -53,13 +47,11 @@ public class RestRemoteClient : DisposableBase
     /// <param name="authenticator">The authenticator to use when making requests.</param>
     public RestRemoteClient(
         string baseUrl,
-        IAuthenticator authenticator)
-    {
+        IAuthenticator authenticator) =>
         client = new RestClient(Requires.NotNullOrWhiteSpace(baseUrl))
         {
             Authenticator = Requires.NotNull(authenticator)
         };
-    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RestRemoteClient"/> class.
@@ -68,13 +60,11 @@ public class RestRemoteClient : DisposableBase
     /// <param name="authenticator">The authenticator to use when making requests.</param>
     public RestRemoteClient(
         RestClientOptions options,
-        IAuthenticator authenticator)
-    {
+        IAuthenticator authenticator) =>
         client = new RestClient(Requires.NotNull(options))
         {
             Authenticator = Requires.NotNull(authenticator)
         };
-    }
 
     /// <summary>
     /// Executes a forwarded request from an envelope.

@@ -454,12 +454,10 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
         async ValueTask<bool> InvokePredicateLocal(
             TState stateInternal,
-            T obj)
-        {
-            return await predicate(
+            T obj) =>
+            await predicate(
                 stateInternal,
                 obj);
-        }
     }
 
     /// <summary>
@@ -586,12 +584,10 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
         async ValueTask InvokeActionLocal(
             TState stateInternal,
-            IEnumerable<T> obj)
-        {
+            IEnumerable<T> obj) =>
             await actionToInvoke(
                 stateInternal,
                 obj);
-        }
     }
 
     /// <summary>
@@ -719,21 +715,17 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
         async ValueTask<bool> InvokePredicateLocal(
             TState stateInternal,
-            T obj)
-        {
-            return await predicate(
+            T obj) =>
+            await predicate(
                 stateInternal,
                 obj);
-        }
 
         async ValueTask InvokeActionLocal(
             TState stateInternal,
-            IEnumerable<T> obj)
-        {
+            IEnumerable<T> obj) =>
             await actionToInvoke(
                 stateInternal,
                 obj);
-        }
     }
 
     /// <summary>
@@ -964,12 +956,10 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
 
         async ValueTask InvokeActionLocal(
             TState stateInternal,
-            T obj)
-        {
+            T obj) =>
             await actionToInvoke(
                 stateInternal,
                 obj);
-        }
     }
 
     /// <summary>

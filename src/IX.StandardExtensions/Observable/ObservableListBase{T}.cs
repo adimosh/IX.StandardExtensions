@@ -124,7 +124,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             // PRECONDITIONS
 
             // Current object not disposed
-            this.RequiresNotDisposed();
+            ThrowIfCurrentObjectDisposed();
 
             // ACTION
             using (ReadLock())
@@ -138,7 +138,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             // PRECONDITIONS
 
             // Current object not disposed
-            this.RequiresNotDisposed();
+            ThrowIfCurrentObjectDisposed();
 
             // ACTION
             T oldValue;
@@ -237,7 +237,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     /// <returns>The index of the item, or <c>-1</c> if not found.</returns>
     public virtual int IndexOf(T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -260,7 +260,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
 
@@ -308,7 +308,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         T item;
@@ -445,7 +445,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         // PRECONDITIONS
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         T[] itemsList = items.ToArray();
 
@@ -509,7 +509,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         Requires.ValidIndex(in startIndex);
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         T[] itemsList;
@@ -597,7 +597,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         }
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         T[] itemsList;
@@ -681,7 +681,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             items);
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         // ACTION
         // Inside a write lock
@@ -778,7 +778,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         Requires.NotNull(items);
 
         // Current object not disposed
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         T[] itemsList = items.ToArray();
 

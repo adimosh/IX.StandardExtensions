@@ -63,10 +63,7 @@ public class SuppressNotificationsContext : DisposableBase
 #region Constructors and destructors
 
     /// <summary>Initializes a new instance of the <see cref="SuppressNotificationsContext" /> class.</summary>
-    public SuppressNotificationsContext()
-    {
-        AmbientSuppressionActive.Value = true;
-    }
+    public SuppressNotificationsContext() => AmbientSuppressionActive.Value = true;
 
 #endregion
 

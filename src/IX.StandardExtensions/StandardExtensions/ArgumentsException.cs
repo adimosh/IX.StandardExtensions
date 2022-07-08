@@ -31,10 +31,8 @@ public class ArgumentsException : Exception
                 Resources.AnInvalidSetOfArgumentsWasSpecifiedArgumentNames,
                 string.Join(
                     ", ",
-                    Requires.NotNull(argumentNames))))
-    {
+                    Requires.NotNull(argumentNames)))) =>
         ArgumentNames = argumentNames;
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ArgumentsException" /> class.
@@ -51,10 +49,8 @@ public class ArgumentsException : Exception
                 string.Join(
                     ", ",
                     Requires.NotNull(argumentNames))),
-            innerException)
-    {
+            innerException) =>
         ArgumentNames = argumentNames;
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ArgumentsException" /> class.
@@ -73,10 +69,8 @@ public class ArgumentsException : Exception
                 string.Join(
                     ", ",
                     Requires.NotNull(argumentNames))),
-            innerException)
-    {
+            innerException) =>
         ArgumentNames = argumentNames;
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ArgumentsException" /> class.
@@ -92,10 +86,8 @@ public class ArgumentsException : Exception
                 message,
                 string.Join(
                     ", ",
-                    Requires.NotNull(argumentNames))))
-    {
+                    Requires.NotNull(argumentNames)))) =>
         ArgumentNames = argumentNames;
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ArgumentsException" /> class.
@@ -113,14 +105,12 @@ public class ArgumentsException : Exception
         StreamingContext context)
         : base(
             info,
-            context)
-    {
+            context) =>
         ArgumentNames = Requires.ArgumentOfType<string[]>(
             info.GetValue(
                 nameof(ArgumentNames),
                 typeof(string[])),
             nameof(info));
-    }
 
 #endregion
 

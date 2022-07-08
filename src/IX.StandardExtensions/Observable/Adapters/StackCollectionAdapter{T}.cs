@@ -32,10 +32,7 @@ internal class StackCollectionAdapter<T> : ModernCollectionAdapter<T, System.Col
     ///     Initializes a new instance of the <see cref="StackCollectionAdapter{T}" /> class.
     /// </summary>
     /// <param name="stack">The stack.</param>
-    internal StackCollectionAdapter(IEnumerable<T> stack)
-    {
-        this.stack = new System.Collections.Generic.Stack<T>(stack);
-    }
+    internal StackCollectionAdapter(IEnumerable<T> stack) => this.stack = new System.Collections.Generic.Stack<T>(stack);
 
 #endregion
 

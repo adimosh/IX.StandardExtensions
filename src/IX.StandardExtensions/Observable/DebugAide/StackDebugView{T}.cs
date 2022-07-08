@@ -31,10 +31,7 @@ public sealed class StackDebugView<T>
     /// <param name="stack">The stack.</param>
     /// <exception cref="ArgumentNullException">stack is null.</exception>
     [UsedImplicitly]
-    public StackDebugView(ObservableStack<T> stack)
-    {
-        Requires.NotNull(out this.stack, stack);
-    }
+    public StackDebugView(ObservableStack<T> stack) => Requires.NotNull(out this.stack, stack);
 
 #endregion
 

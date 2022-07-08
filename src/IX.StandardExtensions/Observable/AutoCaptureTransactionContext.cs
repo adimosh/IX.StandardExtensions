@@ -28,10 +28,7 @@ internal class AutoCaptureTransactionContext : OperationTransaction
     /// <summary>
     ///     Initializes a new instance of the <see cref="AutoCaptureTransactionContext" /> class.
     /// </summary>
-    public AutoCaptureTransactionContext()
-    {
-        Success();
-    }
+    public AutoCaptureTransactionContext() => Success();
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="AutoCaptureTransactionContext" /> class.

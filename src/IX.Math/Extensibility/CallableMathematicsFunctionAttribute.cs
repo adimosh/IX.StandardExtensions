@@ -18,10 +18,7 @@ public class CallableMathematicsFunctionAttribute : Attribute
     ///     Initializes a new instance of the <see cref="CallableMathematicsFunctionAttribute" /> class.
     /// </summary>
     /// <param name="names">The names.</param>
-    public CallableMathematicsFunctionAttribute(params string[] names)
-    {
-        Names = names;
-    }
+    public CallableMathematicsFunctionAttribute(params string[] names) => Names = names;
 
     /// <summary>
     ///     Gets or sets the names.

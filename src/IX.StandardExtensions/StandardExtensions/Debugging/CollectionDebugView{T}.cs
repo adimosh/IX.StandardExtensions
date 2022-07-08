@@ -34,12 +34,10 @@ public sealed class CollectionDebugView<T>
     ///     <paramref name="collection" />
     ///     is <see langword="null" /> (<see langword="Nothing" /> in Visual Studio).
     /// </exception>
-    public CollectionDebugView(ICollection<T> collection)
-    {
+    public CollectionDebugView(ICollection<T> collection) =>
         Requires.NotNull(
             out this.collection,
             collection);
-    }
 
 #endregion
 

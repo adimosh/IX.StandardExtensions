@@ -182,7 +182,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     /// <returns>The de-queued item.</returns>
     public T Dequeue()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         T item;
 
@@ -211,7 +211,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     /// </returns>
     public bool TryDequeue(out T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadWriteSynchronizationLocker locker = ReadWriteLock())
         {
@@ -245,7 +245,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     /// <param name="item">The item to queue.</param>
     public void Enqueue(T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         int newIndex;
 
@@ -313,7 +313,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     /// <returns>The topmost item in the queue.</returns>
     public T Peek()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -328,7 +328,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     /// <returns><see langword="true" /> if an item is found, <see langword="false" /> otherwise, or if the queue is empty.</returns>
     public bool TryPeek(out T item)
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -352,7 +352,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     /// <returns>An array of items that are contained in the queue.</returns>
     public T[] ToArray()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (ReadLock())
         {
@@ -366,7 +366,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     /// </summary>
     public void TrimExcess()
     {
-        this.RequiresNotDisposed();
+        ThrowIfCurrentObjectDisposed();
 
         using (WriteLock())
         {

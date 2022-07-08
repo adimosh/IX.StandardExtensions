@@ -27,10 +27,7 @@ public class WorkOnThreadPoolUnitTests
     /// Initializes a new instance of the <see cref="WorkOnThreadPoolUnitTests"/> class.
     /// </summary>
     /// <param name="output">The test output.</param>
-    public WorkOnThreadPoolUnitTests(ITestOutputHelper output)
-    {
-        Requires.NotNull(out this.output, output, nameof(output));
-    }
+    public WorkOnThreadPoolUnitTests(ITestOutputHelper output) => Requires.NotNull(out this.output, output, nameof(output));
 
     /// <summary>
     ///     Tests running on the thread pool and, because of a lack of a synchronization context, not returning to the same
@@ -44,10 +41,7 @@ public class WorkOnThreadPoolUnitTests
         var currentThreadId = Thread.CurrentThread.ManagedThreadId;
         var separateThreadId = currentThreadId;
 
-        void LocalMethod()
-        {
-            separateThreadId = Thread.CurrentThread.ManagedThreadId;
-        }
+        void LocalMethod() => separateThreadId = Thread.CurrentThread.ManagedThreadId;
 
         // ACT
         await Work.OnThreadPoolAsync(LocalMethod);

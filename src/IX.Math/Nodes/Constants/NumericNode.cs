@@ -35,19 +35,13 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     /// Initializes a new instance of the <see cref="NumericNode"/> class.
     /// </summary>
     /// <param name="value">The integer value.</param>
-    public NumericNode(long value)
-    {
-        Initialize(value);
-    }
+    public NumericNode(long value) => Initialize(value);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NumericNode"/> class.
     /// </summary>
     /// <param name="value">The floating-point value.</param>
-    public NumericNode(double value)
-    {
-        Initialize(value);
-    }
+    public NumericNode(double value) => Initialize(value);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NumericNode"/> class.

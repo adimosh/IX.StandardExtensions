@@ -40,30 +40,23 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
     /// </summary>
-    public ConcurrentObservableDictionary()
-    {
-        locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
+    public ConcurrentObservableDictionary() => locker = EnvironmentSettings.GenerateDefaultLocker();
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
     /// </summary>
     /// <param name="capacity">The initial capacity of the dictionary.</param>
     public ConcurrentObservableDictionary(int capacity)
-        : base(capacity)
-    {
+        : base(capacity) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
     /// </summary>
     /// <param name="equalityComparer">A comparer object to use for equality comparison.</param>
     public ConcurrentObservableDictionary(IEqualityComparer<TKey> equalityComparer)
-        : base(equalityComparer)
-    {
+        : base(equalityComparer) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -75,20 +68,16 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         IEqualityComparer<TKey> equalityComparer)
         : base(
             capacity,
-            equalityComparer)
-    {
+            equalityComparer) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
     /// </summary>
     /// <param name="dictionary">A dictionary of items to copy from.</param>
     public ConcurrentObservableDictionary(IDictionary<TKey, TValue> dictionary)
-        : base(dictionary)
-    {
+        : base(dictionary) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -100,20 +89,16 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         IEqualityComparer<TKey> comparer)
         : base(
             dictionary,
-            comparer)
-    {
+            comparer) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
     /// </summary>
     /// <param name="context">The synchronization context top use when posting observable messages.</param>
     public ConcurrentObservableDictionary(SynchronizationContext context)
-        : base(context)
-    {
+        : base(context) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -125,10 +110,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         int capacity)
         : base(
             context,
-            capacity)
-    {
+            capacity) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -140,10 +123,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         IEqualityComparer<TKey> equalityComparer)
         : base(
             context,
-            equalityComparer)
-    {
+            equalityComparer) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -158,10 +139,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         : base(
             context,
             capacity,
-            equalityComparer)
-    {
+            equalityComparer) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -173,10 +152,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         IDictionary<TKey, TValue> dictionary)
         : base(
             context,
-            dictionary)
-    {
+            dictionary) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -191,20 +168,16 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         : base(
             context,
             dictionary,
-            comparer)
-    {
+            comparer) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
     /// </summary>
     /// <param name="suppressUndoable">If set to <see langword="true" />, suppresses undoable capabilities of this collection.</param>
     public ConcurrentObservableDictionary(bool suppressUndoable)
-        : base(suppressUndoable)
-    {
+        : base(suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -216,10 +189,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         bool suppressUndoable)
         : base(
             capacity,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -231,10 +202,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         bool suppressUndoable)
         : base(
             equalityComparer,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -249,10 +218,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         : base(
             capacity,
             equalityComparer,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -264,10 +231,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         bool suppressUndoable)
         : base(
             dictionary,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -282,10 +247,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         : base(
             dictionary,
             comparer,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -297,10 +260,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         bool suppressUndoable)
         : base(
             context,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -315,10 +276,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         : base(
             context,
             capacity,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -333,10 +292,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         : base(
             context,
             equalityComparer,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -354,10 +311,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             context,
             capacity,
             equalityComparer,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -372,10 +327,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         : base(
             context,
             dictionary,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentObservableDictionary{TKey, TValue}" /> class.
@@ -393,10 +346,8 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
             context,
             dictionary,
             comparer,
-            suppressUndoable)
-    {
+            suppressUndoable) =>
         locker = EnvironmentSettings.GenerateDefaultLocker();
-    }
 
 #endregion
 
