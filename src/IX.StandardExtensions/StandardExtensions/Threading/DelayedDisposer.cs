@@ -93,11 +93,17 @@ public static class DelayedDisposer
             return;
         }
 
+        T[] items = objectsToDispose.Where(p => p is not null)
+                                    .ToArray()!;
+
+        if (items.Length == 0)
+        {
+            return;
+        }
+
         lock (DisposablesGeneration1)
         {
-            DisposablesGeneration1.AddRange(
-                objectsToDispose.Where(p => p is not null)
-                    .Select(p => p!));
+            DisposablesGeneration1.AddRange(items);
         }
 
         EnsureProcessingThreadStarted();
@@ -145,19 +151,12 @@ public static class DelayedDisposer
 
     private static async Task DisposableThread()
     {
-        await Task.Yield();
-
-        lock (Locker)
-        {
-            currentlyRunning = true;
-        }
-
         try
         {
-            while (DisposablesGeneration1.Count != 0)
+            while (true)
             {
                 await Task.Delay(
-                    StandardExtensions.EnvironmentSettings.DelayedDisposal.DefaultDisposalDelayInMilliseconds);
+                    StandardExtensions.EnvironmentSettings.DelayedDisposal.DefaultDisposalDelayInMilliseconds).ConfigureAwait(false);
 
                 IDisposable[] disposablesGen2;
                 lock (DisposablesGeneration1)
@@ -166,11 +165,16 @@ public static class DelayedDisposer
                     DisposablesGeneration1.Clear();
                 }
 
+                if (disposablesGen2.Length == 0)
+                {
+                    return;
+                }
+
                 _ = Work.OnThreadPoolAsync(
                     async disposablesGen2L1 =>
                     {
                         await Task.Delay(
-                            StandardExtensions.EnvironmentSettings.DelayedDisposal.DefaultDisposalDelayInMilliseconds);
+                            StandardExtensions.EnvironmentSettings.DelayedDisposal.DefaultDisposalDelayInMilliseconds).ConfigureAwait(false);
 
                         foreach (IDisposable disposable in disposablesGen2L1)
                         {
@@ -213,8 +217,10 @@ public static class DelayedDisposer
                 return;
             }
 
-            _ = Work.OnThreadPoolAsync(DisposableThread);
+            currentlyRunning = true;
         }
+
+        _ = Work.OnThreadPoolAsync(DisposableThread);
     }
 
 #endregion

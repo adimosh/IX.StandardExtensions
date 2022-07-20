@@ -27,6 +27,7 @@ public class DelayedDisposerUnitTests
             out this.output,
             output);
 
+        EnvironmentSettings.DelayedDisposal.DefaultDisposalDelayInMilliseconds = 300;
         DelayedDisposer.EnsureInitialized();
     }
 
@@ -39,8 +40,7 @@ public class DelayedDisposerUnitTests
     {
         // ARRANGE
         output.WriteLine("Starting timed test...");
-        var dt = new DisposeTester();
-        EnvironmentSettings.DelayedDisposal.DefaultDisposalDelayInMilliseconds = 300;
+        var dt = new DisposeTester(output);
 
         // ACT
         output.WriteLine("Adding to safe disposer...");
@@ -66,8 +66,7 @@ public class DelayedDisposerUnitTests
     public async Task Test2()
     {
         // ARRANGE
-        var dt = new DisposeTester();
-        EnvironmentSettings.DelayedDisposal.DefaultDisposalDelayInMilliseconds = 300;
+        var dt = new DisposeTester(output);
 
         // ACT
         DelayedDisposer.SafelyDispose((IDisposable)dt);
@@ -90,11 +89,10 @@ public class DelayedDisposerUnitTests
         // ARRANGE
         var dt = new List<DisposeTester>
         {
-            new(),
-            new(),
-            new()
+            new(output),
+            new(output),
+            new(output)
         };
-        EnvironmentSettings.DelayedDisposal.DefaultDisposalDelayInMilliseconds = 300;
 
         // ACT
         DelayedDisposer.SafelyDispose(dt);
@@ -117,11 +115,10 @@ public class DelayedDisposerUnitTests
         // ARRANGE
         var dt = new List<IDisposable>
         {
-            new DisposeTester(),
-            new DisposeTester(),
-            new DisposeTester()
+            new DisposeTester(output),
+            new DisposeTester(output),
+            new DisposeTester(output)
         };
-        EnvironmentSettings.DelayedDisposal.DefaultDisposalDelayInMilliseconds = 300;
 
         // ACT
         DelayedDisposer.SafelyDispose(dt);
@@ -146,10 +143,9 @@ public class DelayedDisposerUnitTests
     public async Task Test5()
     {
         // ARRANGE
-        var dt = new DisposeTester();
-        var dt2 = new DisposeTester();
+        var dt = new DisposeTester(output);
+        var dt2 = new DisposeTester(output);
         var dtt = dt;
-        EnvironmentSettings.DelayedDisposal.DefaultDisposalDelayInMilliseconds = 300;
 
         // ACT
         DelayedDisposer.AtomicExchange(ref dt, dt2);
@@ -167,14 +163,38 @@ public class DelayedDisposerUnitTests
         Assert.Equal(dt2, dt);
     }
 
+    [Fact(DisplayName = "DelayedDisposer single null")]
+    public void Test6() => DelayedDisposer.SafelyDispose((IDisposable?)null);
+
+    [Fact(DisplayName = "DelayedDisposer single null enumerable")]
+    public void Test7() => DelayedDisposer.SafelyDispose((IEnumerable<IDisposable?>?)null);
+
+    [Fact(DisplayName = "DelayedDisposer null enumerable")]
+    public void Test8() =>
+        DelayedDisposer.SafelyDispose(
+            new IDisposable?[]
+            {
+                null,
+                null,
+                null
+            });
+
     private sealed class DisposeTester : IDisposable
     {
-        private readonly TaskCompletionSource<bool> tcs = new();
+        private readonly TaskCompletionSource<bool> tcs;
+        private readonly ITestOutputHelper output;
         private bool disposed;
+
+        public DisposeTester(ITestOutputHelper output)
+        {
+            tcs = new();
+            this.output = output;
+        }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
+            output.WriteLine("Dispose was called.");
             disposed = true;
             tcs.SetResult(true);
         }
@@ -182,12 +202,24 @@ public class DelayedDisposerUnitTests
         /// <summary>
         /// Checks whether this instance has been correctly disposed.
         /// </summary>
-        public void Check() => Assert.True(disposed, "The instance has not been disposed.");
+        public void Check()
+        {
+            output.WriteLine("Check was called.");
+            Assert.True(
+                disposed,
+                "The instance has not been disposed.");
+        }
 
         /// <summary>
         /// Checks whether this instance has NOT been disposed.
         /// </summary>
-        public void CheckNegative() => Assert.False(disposed, "The instance has been disposed.");
+        public void CheckNegative()
+        {
+            output.WriteLine("CheckNegative was called.");
+            Assert.False(
+                disposed,
+                "The instance has been disposed.");
+        }
 
         public Task WaitForDisposal() => tcs.Task;
     }
