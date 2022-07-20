@@ -65,7 +65,7 @@ public abstract class OperationNodeBase : CachedExpressionNodeBase, ISpecialRequ
     /// <para>If the node can be simplified, <see cref="CachedExpressionNodeBase.GenerateExpression()" /> is called on the new node and returned in lieu of this expression.</para>
     /// <para>If this node cannot be simplified, or its simplification method returns reflexively, <see cref="GenerateExpressionInternal(Tolerance)" /> is called.</para>
     /// </remarks>
-    public sealed override Expression GenerateCachedExpression(Tolerance tolerance)
+    public sealed override Expression GenerateCachedExpression(Tolerance? tolerance)
     {
         NodeBase simplifiedExpression = Simplify();
 
@@ -98,7 +98,7 @@ public abstract class OperationNodeBase : CachedExpressionNodeBase, ISpecialRequ
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The generated <see cref="Expression" /> to be cached.</returns>
-    public sealed override Expression GenerateCachedStringExpression(Tolerance tolerance)
+    public sealed override Expression GenerateCachedStringExpression(Tolerance? tolerance)
     {
         var expression = GenerateExpression(tolerance);
 
