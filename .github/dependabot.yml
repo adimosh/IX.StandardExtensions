@@ -7,4 +7,4 @@ updates:
     time: "10:10"
     timezone: Europe/Bucharest
   open-pull-requests-limit: 25
-  target-branch: "master"
+  target-branch: "main"
