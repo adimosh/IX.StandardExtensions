@@ -13,12 +13,12 @@ public class CountryCodes
     /// <summary>
     /// A list of country records, by their ISO-3166-1 alpha-2 codes.
     /// </summary>
-    public static ConcurrentDictionary<string, CountryCode> CountriesByAlpha2 =
-        new()
+    public static readonly Lazy<IReadOnlyDictionary<string, CountryCode>> CountriesByAlpha2 =
+        new(() => new ConcurrentDictionary<string, CountryCode>
         {
             ["AD"] = new(
                 "AD",
-                "",
+                "AND",
                 "Andorra",
                 1974,
                 ".ad"),
@@ -1407,7 +1407,7 @@ public class CountryCodes
                 "UMI",
                 "United States Minor Outlying Islands",
                 1986,
-                ".us"),
+                string.Empty),
             ["US"] = new(
                 "US",
                 "USA",
@@ -1510,21 +1510,47 @@ public class CountryCodes
                 "Zimbabwe",
                 1980,
                 ".zw")
+        });
 
-        };
+    /// <summary>
+    /// A list of country records, by their ISO-3166-1 alpha-3 codes.
+    /// </summary>
+    public static readonly Lazy<IReadOnlyDictionary<string, CountryCode>> CountriesByAlpha3 = new(
+        () => new ConcurrentDictionary<string, CountryCode>(
+            CountriesByAlpha2.Value.ToDictionary(
+                p => p.Value.Alpha3Code,
+                p => p.Value)));
 
-/// <summary>
-/// A country code detailed entry.
-/// </summary>
-/// <param name="Alpha2Code">The ISO 1366-1 alpha-2 code for the country.</param>
-/// <param name="Alpha3Code">The ISO 1366-1 alpha-3 code for the country.</param>
-/// <param name="Name">The name of the country or territory.</param>
-/// <param name="YearOfAssignment">The year in which the code was assigned.</param>
-/// <param name="TopLevelDomain">The top-level domain for the country or territory.</param>
-public record CountryCode(
-    string Alpha2Code,
-    string Alpha3Code,
-    string Name,
-    int YearOfAssignment,
-    string TopLevelDomain);
+    /// <summary>
+    /// A list of country records, by their international (English) names.
+    /// </summary>
+    public static readonly Lazy<IReadOnlyDictionary<string, CountryCode>> CountriesByInternationalName = new(
+        () => new ConcurrentDictionary<string, CountryCode>(
+            CountriesByAlpha2.Value.ToDictionary(
+                p => p.Value.Name,
+                p => p.Value)));
+
+    /// <summary>
+    /// A list of country records, by their top level domains.
+    /// </summary>
+    public static readonly Lazy<IReadOnlyDictionary<string, CountryCode>> CountriesByTopLevelDomain = new(
+        () => new ConcurrentDictionary<string, CountryCode>(
+            CountriesByAlpha2.Value.Where(p => !string.IsNullOrWhiteSpace(p.Value.TopLevelDomain)).ToDictionary(
+                p => p.Value.TopLevelDomain,
+                p => p.Value)));
+
+    /// <summary>
+    /// A country code detailed entry.
+    /// </summary>
+    /// <param name="Alpha2Code">The ISO 1366-1 alpha-2 code for the country.</param>
+    /// <param name="Alpha3Code">The ISO 1366-1 alpha-3 code for the country.</param>
+    /// <param name="Name">The name of the country or territory.</param>
+    /// <param name="YearOfAssignment">The year in which the code was assigned.</param>
+    /// <param name="TopLevelDomain">The top-level domain for the country or territory.</param>
+    public record CountryCode(
+        string Alpha2Code,
+        string Alpha3Code,
+        string Name,
+        int YearOfAssignment,
+        string TopLevelDomain);
 }
