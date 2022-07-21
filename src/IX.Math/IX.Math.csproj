@@ -25,7 +25,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.7.23</VersionPrefix>
+    <VersionPrefix>0.7.24</VersionPrefix>
     <VersionSuffix>alpha1</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>

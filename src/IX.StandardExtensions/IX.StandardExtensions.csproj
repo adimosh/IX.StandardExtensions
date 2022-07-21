@@ -19,12 +19,12 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Removed .NET Framework &lt; 4.6.2
-- </PackageReleaseNotes>
+    <PackageReleaseNotes>- Various updates in code
+- ISO-1366 country codes</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.7.23</VersionPrefix>
+    <VersionPrefix>0.7.24</VersionPrefix>
     <VersionSuffix>alpha1</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
