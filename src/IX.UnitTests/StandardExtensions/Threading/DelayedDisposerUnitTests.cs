@@ -14,6 +14,8 @@ using EnvironmentSettings = IX.StandardExtensions.EnvironmentSettings;
 
 namespace IX.UnitTests.StandardExtensions.Threading;
 
+#nullable enable
+
 /// <summary>
 /// Unit tests for <see cref="DelayedDisposer"/>.
 /// </summary>
@@ -35,7 +37,7 @@ public class DelayedDisposerUnitTests
     /// Tests DelayedDisposer one instance.
     /// </summary>
     /// <returns>The task representing this test.</returns>
-    [Fact(DisplayName = "DelayedDisposer one instance.", Timeout = 3000)]
+    [Fact(DisplayName = "DelayedDisposer one instance.")]
     public async Task Test1()
     {
         // ARRANGE
