@@ -23,7 +23,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             localAction(param1);
         }
@@ -42,7 +42,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             return localAction(param1);
         }
@@ -59,7 +59,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             localAction(param1);
         }
@@ -78,7 +78,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             return localAction(param1);
         }
@@ -97,7 +97,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             localAction(param1, param2);
         }
@@ -118,7 +118,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             return localAction(param1, param2);
         }
@@ -137,7 +137,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             localAction(param1, param2);
         }
@@ -158,7 +158,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             return localAction(param1, param2);
         }
@@ -179,7 +179,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             localAction(param1, param2, param3);
         }
@@ -202,7 +202,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             return localAction(param1, param2, param3);
         }
@@ -223,7 +223,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             localAction(param1, param2, param3);
         }
@@ -246,7 +246,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             return localAction(param1, param2, param3);
         }
@@ -269,7 +269,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             localAction(param1, param2, param3, param4);
         }
@@ -294,7 +294,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             return localAction(param1, param2, param3, param4);
         }
@@ -317,7 +317,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             localAction(param1, param2, param3, param4);
         }
@@ -342,7 +342,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             return localAction(param1, param2, param3, param4);
         }
@@ -367,7 +367,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             localAction(param1, param2, param3, param4, param5);
         }
@@ -394,7 +394,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             return localAction(param1, param2, param3, param4, param5);
         }
@@ -419,7 +419,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             localAction(param1, param2, param3, param4, param5);
         }
@@ -446,7 +446,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             return localAction(param1, param2, param3, param4, param5);
         }
@@ -473,7 +473,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             localAction(param1, param2, param3, param4, param5, param6);
         }
@@ -502,7 +502,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             return localAction(param1, param2, param3, param4, param5, param6);
         }
@@ -529,7 +529,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             localAction(param1, param2, param3, param4, param5, param6);
         }
@@ -558,7 +558,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             return localAction(param1, param2, param3, param4, param5, param6);
         }
@@ -587,7 +587,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             localAction(param1, param2, param3, param4, param5, param6, param7);
         }
@@ -618,7 +618,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             return localAction(param1, param2, param3, param4, param5, param6, param7);
         }
@@ -647,7 +647,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             localAction(param1, param2, param3, param4, param5, param6, param7);
         }
@@ -678,7 +678,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             return localAction(param1, param2, param3, param4, param5, param6, param7);
         }
@@ -709,7 +709,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             localAction(param1, param2, param3, param4, param5, param6, param7, param8);
         }
@@ -742,7 +742,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             return localAction(param1, param2, param3, param4, param5, param6, param7, param8);
         }
@@ -773,7 +773,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             localAction(param1, param2, param3, param4, param5, param6, param7, param8);
         }
@@ -806,7 +806,7 @@ public abstract partial class ReaderWriterSynchronizedBase
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             return localAction(param1, param2, param3, param4, param5, param6, param7, param8);
         }

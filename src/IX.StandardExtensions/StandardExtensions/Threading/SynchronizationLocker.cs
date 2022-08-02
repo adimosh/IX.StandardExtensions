@@ -12,6 +12,7 @@ namespace IX.StandardExtensions.Threading;
 /// </summary>
 /// <seealso cref="IDisposable" />
 [PublicAPI]
+[Obsolete("This class has been deemed obsolete in favor of the value-type lockers.")]
 public abstract class SynchronizationLocker : IDisposable
 {
 #region Constructors and destructors

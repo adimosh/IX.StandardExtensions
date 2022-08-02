@@ -62,7 +62,7 @@ for (int i = 1; i <= 8; i++)
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             localAction(<#= paramNames #>);
         }
@@ -95,7 +95,7 @@ for (int i = 1; i <= 8; i++)
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerRead(_locker))
         {
             return localAction(<#= paramNames #>);
         }
@@ -126,7 +126,7 @@ for (int i = 1; i <= 8; i++)
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             localAction(<#= paramNames #>);
         }
@@ -159,7 +159,7 @@ for (int i = 1; i <= 8; i++)
         ThrowIfCurrentObjectDisposed();
         var localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(locker))
+        using (new ValueSynchronizationLockerWrite(_locker))
         {
             return localAction(<#= paramNames #>);
         }

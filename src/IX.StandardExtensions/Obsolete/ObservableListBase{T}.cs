@@ -8,6 +8,8 @@ using IX.Observable.Adapters;
 // ReSharper disable once CheckNamespace
 namespace IX.Observable;
 
+// TODO: Remove in 0.8.0
+
 #pragma warning disable SA1601 // Partial elements should be documented
 public abstract partial class ObservableListBase<T>
 {

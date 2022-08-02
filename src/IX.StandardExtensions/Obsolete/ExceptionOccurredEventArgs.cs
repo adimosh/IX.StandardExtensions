@@ -7,6 +7,8 @@ using JetBrains.Annotations;
 
 namespace IX.Observable;
 
+// TODO: Remove in 0.8.0
+
 /// <summary>
 ///     Event arguments for an exception that occurs during notification.
 /// </summary>

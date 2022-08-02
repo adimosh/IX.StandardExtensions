@@ -7,6 +7,8 @@ using System.Diagnostics.CodeAnalysis;
 // ReSharper disable once CheckNamespace
 namespace IX.DataGeneration;
 
+// TODO: Remove in 0.8.0
+
 [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1601:Partial elements should be documented", Justification = "No.")]
 public partial class PredictableDataStore<T>
 {

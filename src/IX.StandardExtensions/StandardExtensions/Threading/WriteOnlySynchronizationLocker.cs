@@ -12,6 +12,7 @@ namespace IX.StandardExtensions.Threading;
 /// </summary>
 /// <seealso cref="IX.StandardExtensions.Threading.SynchronizationLocker" />
 [PublicAPI]
+[Obsolete("This class has been deemed obsolete in favor of the value-type lockers.")]
 public class WriteOnlySynchronizationLocker : SynchronizationLocker
 {
 #region Constructors and destructors

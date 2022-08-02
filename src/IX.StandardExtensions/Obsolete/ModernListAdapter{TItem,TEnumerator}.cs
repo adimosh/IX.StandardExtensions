@@ -7,6 +7,8 @@ using System.Diagnostics.CodeAnalysis;
 // ReSharper disable once CheckNamespace
 namespace IX.Observable.Adapters;
 
+// TODO: Remove in 0.8.0
+
 #pragma warning disable CS0618
 [ExcludeFromCodeCoverage]
 internal abstract partial class ModernListAdapter<TItem, TEnumerator>

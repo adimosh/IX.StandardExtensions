@@ -2,11 +2,15 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
+
 using IX.StandardExtensions.ComponentModel;
 using IX.StandardExtensions.Contracts;
 using IX.System.Threading;
+
 using JetBrains.Annotations;
+
 using ReaderWriterLockSlim = IX.System.Threading.ReaderWriterLockSlim;
 
 namespace IX.StandardExtensions.Threading;
@@ -21,12 +25,12 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
 {
 #region Internal state
 
-    private readonly bool lockInherited;
+    private readonly bool _lockInherited;
 
-    private IReaderWriterLock locker;
+    private IReaderWriterLock _locker;
 
     [DataMember]
-    private TimeSpan lockerTimeout;
+    private TimeSpan _lockerTimeout;
 
 #endregion
 
@@ -37,8 +41,8 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     /// </summary>
     protected ReaderWriterSynchronizedBase()
     {
-        locker = new ReaderWriterLockSlim();
-        lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
+        _locker = new ReaderWriterLockSlim();
+        _lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
     }
 
     /// <summary>
@@ -52,10 +56,10 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     protected ReaderWriterSynchronizedBase(IReaderWriterLock? locker)
     {
         Requires.NotNull(
-            out this.locker,
+            out _locker,
             locker);
-        lockInherited = true;
-        lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
+        _lockInherited = true;
+        _lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
     }
 
     /// <summary>
@@ -64,8 +68,8 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     /// <param name="timeout">The lock timeout duration.</param>
     protected ReaderWriterSynchronizedBase(TimeSpan timeout)
     {
-        locker = new ReaderWriterLockSlim();
-        lockerTimeout = timeout;
+        _locker = new ReaderWriterLockSlim();
+        _lockerTimeout = timeout;
     }
 
     /// <summary>
@@ -82,10 +86,10 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         TimeSpan timeout)
     {
         Requires.NotNull(
-            out this.locker,
+            out _locker,
             locker);
-        lockInherited = true;
-        lockerTimeout = timeout;
+        _lockInherited = true;
+        _lockerTimeout = timeout;
     }
 
 #endregion
@@ -99,7 +103,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     [OnDeserializing]
     internal void OnDeserializingMethod(StreamingContext context) =>
         Interlocked.Exchange(
-            ref locker,
+            ref _locker,
             new ReaderWriterLockSlim());
 
 #region Disposable
@@ -109,10 +113,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     /// </summary>
     protected override void DisposeManagedContext()
     {
-        if (!lockInherited)
-        {
-            locker.Dispose();
-        }
+        if (!_lockInherited) _locker.Dispose();
 
         base.DisposeManagedContext();
     }
@@ -120,16 +121,33 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
 #endregion
 
     /// <summary>
+    ///     Attempts to acquire a read lock in the configured time span.
+    /// </summary>
+    /// <returns>A context-specific disposable object representing the lock.</returns>
+    protected ValueSynchronizationLockerRead AcquireReadLock()
+    {
+        ThrowIfCurrentObjectDisposed();
+
+        return new ValueSynchronizationLockerRead(
+            _locker,
+            _lockerTimeout);
+    }
+
+    // TODO: Remove in 0.8.0
+
+    /// <summary>
     ///     Produces a reader lock in concurrent collections.
     /// </summary>
     /// <returns>A disposable object representing the lock.</returns>
+    [Obsolete("This method has been marked obsolete, please use AcquireReadLock in its place.")]
+    [ExcludeFromCodeCoverage]
     protected ReadOnlySynchronizationLocker ReadLock()
     {
         ThrowIfCurrentObjectDisposed();
 
         return new ReadOnlySynchronizationLocker(
-            locker,
-            lockerTimeout);
+            _locker,
+            _lockerTimeout);
     }
 
     /// <summary>
@@ -141,12 +159,10 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         ThrowIfCurrentObjectDisposed();
         Action localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(
-                   locker,
-                   lockerTimeout))
-        {
+        using (new ValueSynchronizationLockerRead(
+                   _locker,
+                   _lockerTimeout))
             localAction();
-        }
     }
 
     /// <summary>
@@ -160,25 +176,40 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         ThrowIfCurrentObjectDisposed();
         Func<T> localAction = Requires.NotNull(action);
 
-        using (new ReadOnlySynchronizationLocker(
-                   locker,
-                   lockerTimeout))
-        {
+        using (new ValueSynchronizationLockerRead(
+                   _locker,
+                   _lockerTimeout))
             return localAction();
-        }
     }
+
+    /// <summary>
+    ///     Attempts to acquire a write lock in the configured time span.
+    /// </summary>
+    /// <returns>A context-specific disposable object representing the lock.</returns>
+    protected ValueSynchronizationLockerWrite AcquireWriteLock()
+    {
+        ThrowIfCurrentObjectDisposed();
+
+        return new ValueSynchronizationLockerWrite(
+            _locker,
+            _lockerTimeout);
+    }
+
+    // TODO: Remove in 0.8.0
 
     /// <summary>
     ///     Produces a writer lock in concurrent collections.
     /// </summary>
     /// <returns>A disposable object representing the lock.</returns>
+    [Obsolete("This method has been marked obsolete, please use AcquireWriteLock in its place.")]
+    [ExcludeFromCodeCoverage]
     protected WriteOnlySynchronizationLocker WriteLock()
     {
         ThrowIfCurrentObjectDisposed();
 
         return new WriteOnlySynchronizationLocker(
-            locker,
-            lockerTimeout);
+            _locker,
+            _lockerTimeout);
     }
 
     /// <summary>
@@ -190,12 +221,10 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         ThrowIfCurrentObjectDisposed();
         Action localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(
-                   locker,
-                   lockerTimeout))
-        {
+        using (new ValueSynchronizationLockerWrite(
+                   _locker,
+                   _lockerTimeout))
             localAction();
-        }
     }
 
     /// <summary>
@@ -209,25 +238,40 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         ThrowIfCurrentObjectDisposed();
         Func<T> localAction = Requires.NotNull(action);
 
-        using (new WriteOnlySynchronizationLocker(
-                   locker,
-                   lockerTimeout))
-        {
+        using (new ValueSynchronizationLockerWrite(
+                   _locker,
+                   _lockerTimeout))
             return localAction();
-        }
     }
+
+    /// <summary>
+    ///     Attempts to acquire a write lock in the configured time span.
+    /// </summary>
+    /// <returns>A context-specific disposable object representing the lock.</returns>
+    protected ValueSynchronizationLockerReadWrite AcquireReadWriteLock()
+    {
+        ThrowIfCurrentObjectDisposed();
+
+        return new ValueSynchronizationLockerReadWrite(
+            _locker,
+            _lockerTimeout);
+    }
+
+    // TODO: Remove in 0.8.0
 
     /// <summary>
     ///     Produces an upgradeable reader lock in concurrent collections.
     /// </summary>
     /// <returns>A disposable object representing the lock.</returns>
+    [Obsolete("This method has been marked obsolete, please use AcquireReadWriteLock in its place.")]
+    [ExcludeFromCodeCoverage]
     protected ReadWriteSynchronizationLocker ReadWriteLock()
     {
         ThrowIfCurrentObjectDisposed();
 
         return new ReadWriteSynchronizationLocker(
-            locker,
-            lockerTimeout);
+            _locker,
+            _lockerTimeout);
     }
 
 #endregion

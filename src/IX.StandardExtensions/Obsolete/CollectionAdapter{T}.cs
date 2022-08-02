@@ -8,6 +8,8 @@ using System.Diagnostics.CodeAnalysis;
 // ReSharper disable once CheckNamespace
 namespace IX.Observable.Adapters;
 
+// TODO: Remove in 0.8.0
+
 /// <summary>
 ///     An adapter class for various collection types.
 /// </summary>
