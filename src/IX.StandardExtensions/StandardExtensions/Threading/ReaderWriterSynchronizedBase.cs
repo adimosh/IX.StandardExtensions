@@ -2,7 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 using IX.StandardExtensions.ComponentModel;
@@ -133,23 +132,6 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
             _lockerTimeout);
     }
 
-    // TODO: Remove in 0.8.0
-
-    /// <summary>
-    ///     Produces a reader lock in concurrent collections.
-    /// </summary>
-    /// <returns>A disposable object representing the lock.</returns>
-    [Obsolete("This method has been marked obsolete, please use AcquireReadLock in its place.")]
-    [ExcludeFromCodeCoverage]
-    protected ReadOnlySynchronizationLocker ReadLock()
-    {
-        ThrowIfCurrentObjectDisposed();
-
-        return new ReadOnlySynchronizationLocker(
-            _locker,
-            _lockerTimeout);
-    }
-
     /// <summary>
     ///     Invokes using a reader lock.
     /// </summary>
@@ -195,23 +177,6 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
             _lockerTimeout);
     }
 
-    // TODO: Remove in 0.8.0
-
-    /// <summary>
-    ///     Produces a writer lock in concurrent collections.
-    /// </summary>
-    /// <returns>A disposable object representing the lock.</returns>
-    [Obsolete("This method has been marked obsolete, please use AcquireWriteLock in its place.")]
-    [ExcludeFromCodeCoverage]
-    protected WriteOnlySynchronizationLocker WriteLock()
-    {
-        ThrowIfCurrentObjectDisposed();
-
-        return new WriteOnlySynchronizationLocker(
-            _locker,
-            _lockerTimeout);
-    }
-
     /// <summary>
     ///     Invokes using a writer lock.
     /// </summary>
@@ -253,23 +218,6 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
         ThrowIfCurrentObjectDisposed();
 
         return new ValueSynchronizationLockerReadWrite(
-            _locker,
-            _lockerTimeout);
-    }
-
-    // TODO: Remove in 0.8.0
-
-    /// <summary>
-    ///     Produces an upgradeable reader lock in concurrent collections.
-    /// </summary>
-    /// <returns>A disposable object representing the lock.</returns>
-    [Obsolete("This method has been marked obsolete, please use AcquireReadWriteLock in its place.")]
-    [ExcludeFromCodeCoverage]
-    protected ReadWriteSynchronizationLocker ReadWriteLock()
-    {
-        ThrowIfCurrentObjectDisposed();
-
-        return new ReadWriteSynchronizationLocker(
             _locker,
             _lockerTimeout);
     }
