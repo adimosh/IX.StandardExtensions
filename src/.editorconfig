@@ -191,8 +191,8 @@ csharp_style_throw_expression = true:suggestion
 # Prefer conditional delegate call
 csharp_style_conditional_delegate_call = true:suggestion
 
-# Prefer braces always
-csharp_prefer_braces = true:warning
+# Prefer braces when multiline
+csharp_prefer_braces = when_multiline:warning
 
 # Space preferences
 csharp_space_after_cast = false:silent
