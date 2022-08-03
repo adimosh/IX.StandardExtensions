@@ -2,9 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using IX.StandardExtensions.Contracts;
-using IX.StandardExtensions.Threading;
-
 namespace IX.Observable;
 
 #pragma warning disable SA1601 // Partial elements should be documented
@@ -35,7 +32,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -44,7 +41,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -104,7 +101,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -114,7 +111,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -173,11 +170,11 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -244,7 +241,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -253,7 +250,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -315,7 +312,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -325,7 +322,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -386,11 +383,11 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -459,7 +456,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -468,7 +465,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -532,7 +529,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -542,7 +539,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -605,11 +602,11 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -680,7 +677,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -689,7 +686,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -755,7 +752,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -765,7 +762,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -830,11 +827,11 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -907,7 +904,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -916,7 +913,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -984,7 +981,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -994,7 +991,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -1061,11 +1058,11 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -1140,7 +1137,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -1149,7 +1146,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -1219,7 +1216,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -1229,7 +1226,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -1298,11 +1295,11 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -1379,7 +1376,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -1388,7 +1385,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -1460,7 +1457,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -1470,7 +1467,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -1541,11 +1538,11 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -1624,7 +1621,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -1633,7 +1630,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -1707,7 +1704,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
@@ -1717,7 +1714,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
             }
             else
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {
@@ -1790,11 +1787,11 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(key, out value))
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(key, out value))
                 {

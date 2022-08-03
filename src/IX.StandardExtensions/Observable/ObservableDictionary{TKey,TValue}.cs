@@ -10,7 +10,6 @@ using IX.Observable.DebugAide;
 using IX.Observable.StateChanges;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
-using IX.StandardExtensions.Threading;
 using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
 
@@ -361,7 +360,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         {
             this.RequiresNotDisposed();
 
-            using (ReadLock())
+            using (AcquireReadLock())
             {
                 return InternalContainer.Keys;
             }
@@ -377,7 +376,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         {
             this.RequiresNotDisposed();
 
-            using (ReadLock())
+            using (AcquireReadLock())
             {
                 return InternalContainer.Values;
             }
@@ -412,7 +411,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         {
             this.RequiresNotDisposed();
 
-            using (ReadLock())
+            using (AcquireReadLock())
             {
                 return InternalContainer[key];
             }
@@ -429,7 +428,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             IDictionary<TKey, TValue> dictionary = InternalContainer;
 
             // Within a write lock
-            using (WriteLock())
+            using (AcquireWriteLock())
             {
                 if (dictionary.TryGetValue(
                         key,
@@ -488,7 +487,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         // ACTION
 
         // Under write lock
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             // Add the item
             var newIndex = InternalContainer.Add(
@@ -517,7 +516,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
     {
         this.RequiresNotDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             return InternalContainer.ContainsKey(key);
         }
@@ -540,7 +539,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
         IDictionaryCollectionAdapter<TKey, TValue> container = InternalContainer;
 
         // Within a read/write lock
-        using (ReadWriteSynchronizationLocker locker = ReadWriteLock())
+        using (var locker = AcquireReadWriteLock())
         {
             // Find out if there's anything to remove
             if (!container.TryGetValue(
@@ -551,7 +550,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             }
 
             // Upgrade the locker to a write lock
-            locker.Upgrade();
+            _ = locker.Upgrade();
 
             // Do the actual removal
             result = container.Remove(key);
@@ -588,7 +587,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
     {
         this.RequiresNotDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             return InternalContainer.TryGetValue(
                 key,

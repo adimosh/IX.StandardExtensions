@@ -58,7 +58,7 @@ public abstract partial class ObservableBase : NotifyCollectionChangedInvokerBas
     ///     Produces a reader lock in concurrent collections.
     /// </summary>
     /// <returns>A disposable object representing the lock.</returns>
-    protected ReadOnlySynchronizationLocker ReadLock() => new(SynchronizationLock);
+    protected ValueSynchronizationLockerRead AcquireReadLock() => new(SynchronizationLock);
 
     /// <summary>
     ///     Invokes using a reader lock.
@@ -66,7 +66,7 @@ public abstract partial class ObservableBase : NotifyCollectionChangedInvokerBas
     /// <param name="action">An action that is called.</param>
     protected void ReadLock(Action action)
     {
-        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
+        using (new ValueSynchronizationLockerRead(SynchronizationLock))
         {
             action();
         }
@@ -80,7 +80,7 @@ public abstract partial class ObservableBase : NotifyCollectionChangedInvokerBas
     /// <returns>A disposable object representing the lock.</returns>
     protected T ReadLock<T>(Func<T> action)
     {
-        using (new ReadOnlySynchronizationLocker(SynchronizationLock))
+        using (new ValueSynchronizationLockerRead(SynchronizationLock))
         {
             return action();
         }
@@ -90,7 +90,7 @@ public abstract partial class ObservableBase : NotifyCollectionChangedInvokerBas
     ///     Produces a writer lock in concurrent collections.
     /// </summary>
     /// <returns>A disposable object representing the lock.</returns>
-    protected WriteOnlySynchronizationLocker WriteLock() => new(SynchronizationLock);
+    protected ValueSynchronizationLockerWrite AcquireWriteLock() => new(SynchronizationLock);
 
     /// <summary>
     ///     Invokes using a writer lock.
@@ -98,7 +98,7 @@ public abstract partial class ObservableBase : NotifyCollectionChangedInvokerBas
     /// <param name="action">An action that is called.</param>
     protected void WriteLock(Action action)
     {
-        using (new WriteOnlySynchronizationLocker(SynchronizationLock))
+        using (new ValueSynchronizationLockerWrite(SynchronizationLock))
         {
             action();
         }
@@ -108,7 +108,7 @@ public abstract partial class ObservableBase : NotifyCollectionChangedInvokerBas
     ///     Produces an upgradeable reader lock in concurrent collections.
     /// </summary>
     /// <returns>A disposable object representing the lock.</returns>
-    protected ReadWriteSynchronizationLocker ReadWriteLock() => new(SynchronizationLock);
+    protected ValueSynchronizationLockerReadWrite AcquireReadWriteLock() => new(SynchronizationLock);
 
 #endregion
 }

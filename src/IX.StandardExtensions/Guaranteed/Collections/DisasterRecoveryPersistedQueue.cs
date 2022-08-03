@@ -126,7 +126,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     {
         get
         {
-            using (ReadLock())
+            using (AcquireReadLock())
             {
                 if (isInDisasterMode != 0)
                 {
@@ -197,7 +197,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Requires.NonNegative(
             index);
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             if (isInDisasterMode == 0)
             {
@@ -234,14 +234,14 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         Justification = "Atomic enumerator expects a delegate instance.")]
     public IEnumerator<T> GetEnumerator()
     {
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             if (isInDisasterMode == 0)
             {
                 // Not in disaster mode - we can spawn an atomic enumerator
                 return AtomicEnumerator<T>.FromCollection(
                     queue!,
-                    ReadLock);
+                    AcquireReadLock);
             }
 
             // Disaster mode - enumeration disabled
@@ -274,7 +274,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         _ = Requires.NotNull(
             actionToInvoke);
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (isInDisasterMode != 0)
             {
@@ -358,7 +358,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         _ = Requires.NotNull(
             actionToInvoke);
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (isInDisasterMode != 0)
             {
@@ -488,7 +488,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         _ = Requires.NotNull(
             actionToInvoke);
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (isInDisasterMode != 0)
             {
@@ -618,7 +618,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         _ = Requires.NotNull(
             actionToInvoke);
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (isInDisasterMode != 0)
             {
@@ -756,7 +756,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         _ = Requires.NotNull(
             actionToInvoke);
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (isInDisasterMode != 0)
             {
@@ -834,7 +834,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         _ = Requires.NotNull(
             actionToInvoke);
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (isInDisasterMode != 0)
             {
@@ -889,7 +889,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         _ = Requires.NotNull(
             actionToInvoke);
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (isInDisasterMode != 0)
             {
@@ -981,7 +981,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         _ = Requires.NotNull(
             actionToInvoke);
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (isInDisasterMode != 0)
             {
@@ -1024,7 +1024,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </summary>
     public void Clear()
     {
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (isInDisasterMode == 0)
             {
@@ -1052,7 +1052,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </exception>
     public bool Contains(T item)
     {
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             if (isInDisasterMode == 0)
             {
@@ -1073,7 +1073,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </returns>
     public T Dequeue()
     {
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             return isInDisasterMode == 0 ? queue!.Dequeue() : persistedQueue!.Dequeue();
         }
@@ -1085,7 +1085,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// <param name="item">The item to enqueue.</param>
     public void Enqueue(T item)
     {
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (isInDisasterMode == 0)
             {
@@ -1106,7 +1106,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// <param name="items">The item range to push.</param>
     public void EnqueueRange(T[] items)
     {
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (isInDisasterMode == 0)
             {
@@ -1132,7 +1132,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         int startIndex,
         int count)
     {
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (isInDisasterMode == 0)
             {
@@ -1161,7 +1161,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </returns>
     public T Peek()
     {
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             return isInDisasterMode == 0 ? queue!.Peek() : persistedQueue!.Peek();
         }
@@ -1179,7 +1179,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </exception>
     public T[] ToArray()
     {
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             if (isInDisasterMode == 0)
             {
@@ -1197,7 +1197,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </summary>
     public void TrimExcess()
     {
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (isInDisasterMode == 0)
             {
@@ -1219,7 +1219,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </returns>
     public bool TryDequeue(out T item)
     {
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             return isInDisasterMode == 0
                 ? queue!.TryDequeue(out item!)
@@ -1236,7 +1236,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
     /// </returns>
     public bool TryPeek(out T item)
     {
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             return isInDisasterMode == 0
                 ? queue!.TryPeek(out item!)
@@ -1275,7 +1275,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             return;
         }
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             PersistedQueue<T> transferQueue;
             try
@@ -1337,7 +1337,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             return;
         }
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             var transferQueue = new System.Collections.Generic.Queue<T>();
 

@@ -184,7 +184,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
 
         return AtomicEnumerator<T>.FromCollection(
             InternalContainer,
-            ReadLock);
+            AcquireReadLock);
     }
 
     /// <summary>
@@ -203,7 +203,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
 
         T[] tempArray;
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             tempArray = new T[InternalContainer.Count - index];
             InternalContainer.CopyTo(
@@ -246,7 +246,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             return InternalContainer.Contains(item);
         }
@@ -270,7 +270,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             InternalContainer.CopyTo(
                 array,
@@ -289,7 +289,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             var containerCount = InternalContainer.Count;
 
@@ -326,7 +326,7 @@ public abstract class ObservableReadOnlyCollectionBase<T> : ObservableBase,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             var containerCount = InternalContainer.Count;
 

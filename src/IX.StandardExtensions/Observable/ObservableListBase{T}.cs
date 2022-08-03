@@ -10,7 +10,6 @@ using IX.Observable.StateChanges;
 using IX.StandardExtensions;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
-using IX.StandardExtensions.Threading;
 using IX.Undoable;
 using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
@@ -127,7 +126,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             ThrowIfCurrentObjectDisposed();
 
             // ACTION
-            using (ReadLock())
+            using (AcquireReadLock())
             {
                 return InternalListContainer[index];
             }
@@ -144,7 +143,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             T oldValue;
 
             // Inside a read/write lock
-            using (ReadWriteSynchronizationLocker lockContext = ReadWriteLock())
+            using (var lockContext = AcquireReadWriteLock())
             {
                 // Verify if we are within bounds in a read lock
                 if (index >= InternalListContainer.Count)
@@ -153,33 +152,31 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
                 }
 
                 // Upgrade to a write lock
-                lockContext.Upgrade();
+                _ = lockContext.Upgrade();
 
                 // Get the old value
                 oldValue = InternalListContainer[index];
 
                 // Two undo/redo transactions
-                using (OperationTransaction tc1 = CheckItemAutoCapture(value))
+                using OperationTransaction tc1 = CheckItemAutoCapture(value);
+                using (OperationTransaction tc2 = CheckItemAutoRelease(oldValue))
                 {
-                    using (OperationTransaction tc2 = CheckItemAutoRelease(oldValue))
-                    {
-                        // Replace with new value
-                        InternalListContainer[index] = value;
+                    // Replace with new value
+                    InternalListContainer[index] = value;
 
-                        // Push the undo level
-                        PushUndoLevel(
-                            new ChangeAtStateChange<T>(
-                                index,
-                                value,
-                                oldValue));
+                    // Push the undo level
+                    PushUndoLevel(
+                        new ChangeAtStateChange<T>(
+                            index,
+                            value,
+                            oldValue));
 
-                        // Mark the second transaction as successful
-                        tc2.Success();
-                    }
-
-                    // Mark the first transaction as successful
-                    tc1.Success();
+                    // Mark the second transaction as successful
+                    tc2.Success();
                 }
+
+                // Mark the first transaction as successful
+                tc1.Success();
             }
 
             // NOTIFICATION
@@ -239,7 +236,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             return InternalListContainer.IndexOf(item);
         }
@@ -265,7 +262,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         // ACTION
 
         // Inside a write lock
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             // Inside an undo/redo transaction
             using OperationTransaction tc = CheckItemAutoCapture(item);
@@ -314,7 +311,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         T item;
 
         // Inside a read/write lock
-        using (ReadWriteSynchronizationLocker lockContext = ReadWriteLock())
+        using (var lockContext = AcquireReadWriteLock())
         {
             // Check to see if we are in range
             if (index >= InternalListContainer.Count)
@@ -323,7 +320,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
             }
 
             // Upgrade the lock to a write lock
-            lockContext.Upgrade();
+            _ = lockContext.Upgrade();
 
             item = InternalListContainer[index];
 
@@ -378,30 +375,14 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
     /// <returns>
     ///     true if <paramref name="value" /> is found in the <see cref="ObservableListBase{T}" />; otherwise, false.
     /// </returns>
-    bool IList.Contains(object? value)
-    {
-        if (value is T v)
-        {
-            return Contains(v);
-        }
-
-        return false;
-    }
+    bool IList.Contains(object? value) => value is T v && Contains(v);
 
     /// <summary>
     ///     Determines the index of a specific item, if any.
     /// </summary>
     /// <param name="value">The item value.</param>
     /// <returns>The index of the item, or <c>-1</c> if not found.</returns>
-    int IList.IndexOf(object? value)
-    {
-        if (value is T v)
-        {
-            return IndexOf(v);
-        }
-
-        return -1;
-    }
+    int IList.IndexOf(object? value) => value is T v ? IndexOf(v) : -1;
 
     /// <summary>
     ///     Inserts an item at the specified index.
@@ -453,7 +434,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         int newIndex;
 
         // Inside a write lock
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             // Use an undo/redo transaction
             using OperationTransaction tc = CheckItemAutoCapture(itemsList);
@@ -515,7 +496,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         T[] itemsList;
 
         // Inside a write lock
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (startIndex >= InternalListContainer.Count)
             {
@@ -603,7 +584,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
         T[] itemsList;
 
         // Inside a write lock
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (startIndex >= InternalListContainer.Count)
             {
@@ -685,7 +666,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
 
         // ACTION
         // Inside a write lock
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (items.Any(
                     (
@@ -784,7 +765,7 @@ public abstract partial class ObservableListBase<T> : ObservableCollectionBase<T
 
         // ACTION
         // Inside a write lock
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (index > InternalListContainer.Count)
             {

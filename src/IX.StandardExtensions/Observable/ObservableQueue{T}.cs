@@ -8,7 +8,6 @@ using IX.Observable.Adapters;
 using IX.Observable.DebugAide;
 using IX.Observable.StateChanges;
 using IX.StandardExtensions.Contracts;
-using IX.StandardExtensions.Threading;
 using IX.System.Collections.Generic;
 using IX.Undoable.StateChanges;
 using JetBrains.Annotations;
@@ -186,7 +185,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
 
         T item;
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             item = ((QueueCollectionAdapter<T>)InternalContainer).Dequeue();
             PushUndoLevel(new DequeueStateChange<T>(item));
@@ -213,7 +212,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadWriteSynchronizationLocker locker = ReadWriteLock())
+        using (var locker = AcquireReadWriteLock())
         {
             var adapter = (QueueCollectionAdapter<T>)InternalContainer;
 
@@ -249,7 +248,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
 
         int newIndex;
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             var internalContainer = (QueueCollectionAdapter<T>)InternalContainer;
             internalContainer.Enqueue(item);
@@ -315,7 +314,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             return ((QueueCollectionAdapter<T>)InternalContainer).Peek();
         }
@@ -330,7 +329,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             var ip = (QueueCollectionAdapter<T>)InternalContainer;
             if (ip.Count == 0)
@@ -354,7 +353,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             return ((QueueCollectionAdapter<T>)InternalContainer).ToArray();
         }
@@ -368,7 +367,7 @@ public class ObservableQueue<T> : ObservableCollectionBase<T>,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             ((QueueCollectionAdapter<T>)InternalContainer).TrimExcess();
         }

@@ -187,7 +187,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             return ((StackCollectionAdapter<T>)InternalContainer).Peek();
         }
@@ -204,7 +204,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
         T item;
         int index;
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             var container = (StackCollectionAdapter<T>)InternalContainer;
             item = container.Pop();
@@ -230,7 +230,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
 
         int index;
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             var container = (StackCollectionAdapter<T>)InternalContainer;
             container.Push(item);
@@ -295,7 +295,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             return ((StackCollectionAdapter<T>)InternalContainer).ToArray();
         }
@@ -309,7 +309,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             ((StackCollectionAdapter<T>)InternalContainer).TrimExcess();
         }
@@ -327,7 +327,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             var container = (StackCollectionAdapter<T>)InternalContainer;
 
@@ -358,7 +358,7 @@ public class ObservableStack<T> : ObservableCollectionBase<T>,
 
         int index;
 
-        using (ReadWriteSynchronizationLocker @lock = ReadWriteLock())
+        using (var @lock = AcquireReadWriteLock())
         {
             var container = (StackCollectionAdapter<T>)InternalContainer;
 

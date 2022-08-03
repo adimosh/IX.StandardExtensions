@@ -11,7 +11,6 @@ using IX.StandardExtensions.Threading;
 using JetBrains.Annotations;
 using Constants = IX.Abstractions.Collections.Constants;
 
-// ReSharper disable once CheckNamespace
 namespace IX.System.Collections.Generic;
 
 /// <summary>
@@ -90,7 +89,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
         {
             ThrowIfCurrentObjectDisposed();
 
-            using (ReadLock())
+            using (AcquireReadLock())
             {
                 return internalContainer.Count;
             }
@@ -134,7 +133,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
                 throw new LimitArgumentNegativeException();
             }
 
-            using (WriteLock())
+            using (AcquireWriteLock())
             {
                 limit = value;
 
@@ -183,7 +182,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             ((ICollection)internalContainer).CopyTo(
                 array,
@@ -211,7 +210,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             internalContainer.Clear();
         }
@@ -226,7 +225,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             return internalContainer.Contains(item);
         }
@@ -247,7 +246,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     public IEnumerator<T> GetEnumerator() =>
         AtomicEnumerator<T>.FromCollection(
             internalContainer,
-            ReadLock);
+            AcquireReadLock);
 
     /// <summary>
     ///     Copies all elements of the stack to a new array.
@@ -257,7 +256,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             return internalContainer.ToArray();
         }
@@ -293,7 +292,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
             return;
         }
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (InternalContainer.Count == Limit)
             {
@@ -323,7 +322,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
         }
 
         // Lock on write
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             foreach (T item in items)
             {
@@ -372,7 +371,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
             count);
 
         // Lock on write
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             // Add all items
             List<T> innerInternalContainer = InternalContainer;

@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Runtime.Serialization;
 using IX.Observable.DebugAide;
 using IX.StandardExtensions.Contracts;
-using IX.StandardExtensions.Threading;
 using IX.System.Threading;
 using JetBrains.Annotations;
 
@@ -389,7 +388,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(
                     key,
@@ -399,7 +398,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
                 return value;
             }
 
-            rwl.Upgrade();
+            _ = rwl.Upgrade();
 
             if (InternalContainer.TryGetValue(
                     key,
@@ -467,7 +466,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(
                     key,
@@ -479,7 +478,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
                 return value;
             }
 
-            rwl.Upgrade();
+            _ = rwl.Upgrade();
 
             if (InternalContainer.TryGetValue(
                     key,
@@ -547,13 +546,13 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         TValue? value;
 
         // Under read/write lock
-        using (ReadWriteSynchronizationLocker rwl = ReadWriteLock())
+        using (var rwl = AcquireReadWriteLock())
         {
             if (InternalContainer.TryGetValue(
                     key,
                     out value))
             {
-                rwl.Upgrade();
+                _ = rwl.Upgrade();
 
                 if (InternalContainer.TryGetValue(
                         key,

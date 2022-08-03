@@ -130,7 +130,7 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
     {
         get
         {
-            using (ReadLock())
+            using (AcquireReadLock())
             {
                 return items.Length;
             }
@@ -144,7 +144,7 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
     {
         get
         {
-            using (ReadLock())
+            using (AcquireReadLock())
             {
                 return items[index];
             }
@@ -167,14 +167,14 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
         while (true)
         {
             T item;
-            using (ReadWriteSynchronizationLocker lck = ReadWriteLock())
+            using (var lck = AcquireReadWriteLock())
             {
                 if (storeIndex >= items.Length)
                 {
                     break;
                 }
 
-                lck.Upgrade();
+                _ = lck.Upgrade();
 
                 item = items[storeIndex];
                 storeIndex++;
@@ -205,7 +205,7 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
     {
         T item;
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             item = items[storeIndex];
             storeIndex++;
@@ -219,7 +219,7 @@ public partial class PredictableDataStore<T> : ReaderWriterSynchronizedBase,
     /// </summary>
     public void Reset()
     {
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             storeIndex = 0;
         }

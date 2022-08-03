@@ -98,7 +98,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
     {
         ThrowIfCurrentObjectDisposed();
 
-        using SynchronizationLocker innerLock = EnsureInitialization();
+        using var innerLock = EnsureInitialization();
 
         // Capacity is sum of all, times 3; the "3" number was chosen as a good-enough average of how many overloads are defined, on average
         var bldr = new List<string>(
@@ -194,7 +194,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
 
         ThrowIfCurrentObjectDisposed();
 
-        using ReadWriteSynchronizationLocker innerLocker = ReadWriteLock();
+        using var innerLocker = AcquireReadWriteLock();
 
         if (isInitialized)
         {
@@ -287,7 +287,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
 
         ThrowIfCurrentObjectDisposed();
 
-        using SynchronizationLocker innerLock = EnsureInitialization();
+        using var innerLock = EnsureInitialization();
 
         // Check expression through pass-through extractors
         if (constantPassThroughExtractors.KeysByLevel.SelectMany(p => p.Value)
@@ -357,9 +357,9 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
         "IDisposableAnalyzers.Correctness",
         "IDISP017:Prefer using.",
         Justification = "This ")]
-    private SynchronizationLocker EnsureInitialization()
+    private IDisposable EnsureInitialization()
     {
-        ReadOnlySynchronizationLocker innerLock = ReadLock();
+        var innerLock = AcquireReadLock();
 
         if (isInitialized)
         {
@@ -368,7 +368,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
 
         innerLock.Dispose();
 
-        ReadWriteSynchronizationLocker innerWriteLock = ReadWriteLock();
+        var innerWriteLock = AcquireReadWriteLock();
 
         if (isInitialized)
         {
@@ -397,7 +397,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
             innerWriteLock.Dispose();
         }
 
-        return ReadLock();
+        return AcquireReadLock();
     }
 
     [DiagCA.SuppressMessage(

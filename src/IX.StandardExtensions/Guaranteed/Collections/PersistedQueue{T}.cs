@@ -123,7 +123,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
         {
             ThrowIfCurrentObjectDisposed();
 
-            using (ReadLock())
+            using (AcquireReadLock())
             {
                 return GetPossibleDataFiles()
                     .Length;

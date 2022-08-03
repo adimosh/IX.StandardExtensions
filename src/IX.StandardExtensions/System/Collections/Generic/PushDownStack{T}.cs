@@ -119,7 +119,7 @@ public class PushDownStack<T> : PushingCollectionBase<T>,
             return false;
         }
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             var index = InternalContainer.Count - 1;
 
@@ -155,7 +155,7 @@ public class PushDownStack<T> : PushingCollectionBase<T>,
             return false;
         }
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             var index = InternalContainer.Count - 1;
 

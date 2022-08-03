@@ -8,8 +8,6 @@ using System.Diagnostics;
 using IX.Observable.Adapters;
 using IX.Observable.DebugAide;
 using IX.Observable.StateChanges;
-using IX.StandardExtensions.Contracts;
-using IX.StandardExtensions.Threading;
 using JetBrains.Annotations;
 
 namespace IX.Observable;
@@ -97,7 +95,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             ((MultiListMasterSlaveListAdapter<T>)InternalListContainer).SetMaster(list);
         }
@@ -117,7 +115,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             ((MultiListMasterSlaveListAdapter<T>)InternalListContainer).SetSlave(list);
         }
@@ -137,7 +135,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             ((MultiListMasterSlaveListAdapter<T>)InternalListContainer).RemoveSlave(list);
         }
@@ -208,7 +206,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
 
         T item;
 
-        using (ReadWriteSynchronizationLocker lockContext = ReadWriteLock())
+        using (var lockContext = AcquireReadWriteLock())
         {
             if (index >= InternalListContainer.Count)
             {
@@ -245,7 +243,7 @@ public class ObservableMasterSlaveCollection<T> : ObservableListBase<T>
 
         T[] originalArray;
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             var container = (MultiListMasterSlaveListAdapter<T>)InternalListContainer;
 

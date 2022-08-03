@@ -5,7 +5,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using IX.Abstractions.Collections;
-using IX.StandardExtensions.Contracts;
 using JetBrains.Annotations;
 
 // ReSharper disable once CheckNamespace
@@ -118,7 +117,7 @@ public class PushOutQueue<T> : PushingCollectionBase<T>,
             return false;
         }
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             if (InternalContainer.Count == 0)
             {
@@ -153,7 +152,7 @@ public class PushOutQueue<T> : PushingCollectionBase<T>,
             return false;
         }
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
             if (InternalContainer.Count == 0)
             {

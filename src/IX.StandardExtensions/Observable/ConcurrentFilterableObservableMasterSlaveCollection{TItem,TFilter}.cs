@@ -128,19 +128,11 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
     /// <value>
     ///     The item count.
     /// </value>
-    public override int Count
-    {
-        get
-        {
-            if (IsFilter())
-            {
-                return CheckAndCache()
-                    .Count;
-            }
-
-            return base.Count;
-        }
-    }
+    public override int Count =>
+        IsFilter()
+            ? CheckAndCache()
+                .Count
+            : base.Count;
 
     /// <summary>
     ///     Gets the filtering predicate.
@@ -185,16 +177,11 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "We have to allocate an atomic enumerator.")]
-    public override IEnumerator<TItem> GetEnumerator()
-    {
-        if (IsFilter())
-        {
-            return CheckAndCache()
-                .GetEnumerator();
-        }
-
-        return base.GetEnumerator();
-    }
+    public override IEnumerator<TItem> GetEnumerator() =>
+        IsFilter()
+            ? CheckAndCache()
+                .GetEnumerator()
+            : base.GetEnumerator();
 
 #region Disposable
 
@@ -317,14 +304,14 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
         Justification = "We have to allocate an atomic enumerator.")]
     private IList<TItem> CheckAndCache()
     {
-        using var locker = new ReadWriteSynchronizationLocker(cacheLocker);
+        using var locker = new ValueSynchronizationLockerReadWrite(cacheLocker);
 
         if (cachedFilteredElements != null)
         {
             return cachedFilteredElements;
         }
 
-        locker.Upgrade();
+        _ = locker.Upgrade();
 
         cachedFilteredElements = new List<TItem>(InternalListContainer.Count);
 
@@ -341,7 +328,7 @@ public class ConcurrentFilterableObservableMasterSlaveCollection<TItem, TFilter>
 
     private void ClearCachedContents()
     {
-        using var synchronizationLocker = new WriteOnlySynchronizationLocker(cacheLocker);
+        using var synchronizationLocker = new ValueSynchronizationLockerWrite(cacheLocker);
 
         if (cachedFilteredElements == null)
         {

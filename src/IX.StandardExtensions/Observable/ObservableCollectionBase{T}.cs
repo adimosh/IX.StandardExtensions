@@ -288,7 +288,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         int newIndex;
 
         // Under write lock
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             // Using an undo/redo transaction lock
             using OperationTransaction tc = CheckItemAutoCapture(item);
@@ -361,7 +361,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         int oldIndex;
 
         // Under write lock
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             // Inside an undo/redo transaction
             using OperationTransaction tc = CheckItemAutoRelease(item);
@@ -465,14 +465,14 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         Action<object?>? toInvoke;
         object? state;
         bool internalResult;
-        using (ReadWriteSynchronizationLocker locker = ReadWriteLock())
+        using (var locker = AcquireReadWriteLock())
         {
             if (!undoContext.IsValueCreated || !undoContext.Value.RedoStackHasData)
             {
                 return;
             }
 
-            locker.Upgrade();
+            _ = locker.Upgrade();
 
             UndoableInnerContext uc = undoContext.Value;
 
@@ -535,7 +535,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                     object? state;
                     bool internalResult;
                     Action<object?>? act;
-                    using (WriteLock())
+                    using (AcquireWriteLock())
                     {
                         internalResult = RedoInternally(
                             stateChangeBase,
@@ -558,7 +558,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                 object? state;
                 bool internalResult;
 
-                using (WriteLock())
+                using (AcquireWriteLock())
                 {
                     internalResult = RedoInternally(
                         stateChangeBase,
@@ -583,7 +583,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             SetAutomaticallyCaptureSubItems(
                 false,
@@ -631,14 +631,14 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         Action<object?>? toInvoke;
         object? state;
         bool internalResult;
-        using (ReadWriteSynchronizationLocker locker = ReadWriteLock())
+        using (var locker = AcquireReadWriteLock())
         {
             if (!undoContext.IsValueCreated || !undoContext.Value.UndoStackHasData)
             {
                 return;
             }
 
-            locker.Upgrade();
+            _ = locker.Upgrade();
 
             UndoableInnerContext uc = undoContext.Value;
 
@@ -701,7 +701,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                     Action<object?>? act;
                     object? state;
                     bool internalResult;
-                    using (WriteLock())
+                    using (AcquireWriteLock())
                     {
                         internalResult = UndoInternally(
                             stateChangeBase,
@@ -724,7 +724,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                 object? state;
                 bool internalResult;
 
-                using (WriteLock())
+                using (AcquireWriteLock())
                 {
                     internalResult = UndoInternally(
                         stateChangeBase,
@@ -781,7 +781,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             throw new ArgumentNullException(nameof(parent));
         }
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             SetAutomaticallyCaptureSubItems(
                 captureSubItems,
@@ -1235,7 +1235,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         T[] tempArray;
 
         // Under write lock
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             // Save existing items
             tempArray = new T[InternalContainer.Count];
@@ -1299,7 +1299,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             return;
         }
 
-        ReadWriteSynchronizationLocker? locker = lockAcquired ? null : ReadWriteLock();
+        ValueSynchronizationLockerReadWrite? locker = lockAcquired ? null : AcquireReadWriteLock();
 
         if (value)
         {
@@ -1311,7 +1311,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                     return;
                 }
 
-                locker?.Upgrade();
+                _ = locker?.Upgrade();
 
                 foreach (T item in InternalContainer)
                 {
@@ -1339,7 +1339,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                     return;
                 }
 
-                locker?.Upgrade();
+                _ = locker?.Upgrade();
 
                 foreach (IUndoableItem item in InternalContainer.Cast<IUndoableItem>())
                 {

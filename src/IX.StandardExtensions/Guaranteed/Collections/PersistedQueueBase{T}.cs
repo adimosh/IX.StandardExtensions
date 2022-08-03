@@ -5,11 +5,13 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
+
 using IX.StandardExtensions;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using IX.System.Collections.Generic;
 using IX.System.IO;
+
 using JetBrains.Annotations;
 
 namespace IX.Guaranteed.Collections;
@@ -28,7 +30,7 @@ namespace IX.Guaranteed.Collections;
 public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     IQueue<T>
 {
-#region Internal state
+    #region Internal state
 
     private readonly IDirectory directoryShim;
     private readonly IFile fileShim;
@@ -41,9 +43,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
     private readonly DataContractSerializer serializer;
 
-#endregion
+    #endregion
 
-#region Constructors and destructors
+    #region Constructors and destructors
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="PersistedQueueBase{T}" /> class.
@@ -132,9 +134,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         }
     }
 
-#endregion
+    #endregion
 
-#region Properties and indexers
+    #region Properties and indexers
 
     /// <summary>
     ///     Gets the number of elements contained in the <see cref="PersistedQueueBase{T}" />.
@@ -198,11 +200,11 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     /// <value>The serializer.</value>
     protected DataContractSerializer Serializer => serializer;
 
-#endregion
+    #endregion
 
-#region Methods
+    #region Methods
 
-#region Interface implementations
+    #region Interface implementations
 
     /// <summary>
     ///     Copies the elements of the <see cref="PersistedQueueBase{T}" /> to an <see cref="Array" />, starting at a
@@ -337,7 +339,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         Justification = "We can't yet avoid this.")]
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-#endregion
+    #endregion
 
     /// <summary>
     ///     Loads the topmost item from the folder, ensuring its deletion afterwards.
@@ -348,9 +350,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
-            string[] files = GetPossibleDataFiles();
+            var files = GetPossibleDataFiles();
             var i = 0;
             string possibleFilePath;
             T obj;
@@ -425,9 +427,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             actionToInvoke);
         ThrowIfCurrentObjectDisposed();
 
-        using ReadWriteSynchronizationLocker locker = ReadWriteLock();
+        using var locker = AcquireReadWriteLock();
 
-        string[] files = GetPossibleDataFiles();
+        var files = GetPossibleDataFiles();
         var i = 0;
 
         T obj;
@@ -478,7 +480,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             return false;
         }
 
-        locker.Upgrade();
+        _ = locker.Upgrade();
 
         try
         {
@@ -550,9 +552,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         this.RequiresNotDisposed();
 
-        using ReadWriteSynchronizationLocker locker = ReadWriteLock();
+        using var locker = AcquireReadWriteLock();
 
-        string[] files = GetPossibleDataFiles();
+        var files = GetPossibleDataFiles();
         var i = 0;
 
         T obj;
@@ -571,11 +573,11 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
             try
             {
-                #if FRAMEWORK_ADVANCED
+#if FRAMEWORK_ADVANCED
                 await using Stream stream = FileShim.OpenRead(possibleFilePath);
-                #else
+#else
                 using Stream stream = FileShim.OpenRead(possibleFilePath);
-                #endif
+#endif
 
                 obj = (T)(Serializer.ReadObject(stream) ?? throw new SerializationException());
 
@@ -610,7 +612,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             return false;
         }
 
-        locker.Upgrade();
+        _ = locker.Upgrade();
 
         try
         {
@@ -662,9 +664,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         this.RequiresNotDisposed();
 
-        using ReadWriteSynchronizationLocker locker = ReadWriteLock();
+        using var locker = AcquireReadWriteLock();
 
-        string[] files = GetPossibleDataFiles();
+        var files = GetPossibleDataFiles();
         var i = 0;
 
         var accumulatedObjects = new List<T>();
@@ -728,7 +730,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             return 0;
         }
 
-        locker.Upgrade();
+        _ = locker.Upgrade();
 
         foreach (var possibleFilePath in accumulatedPaths)
         {
@@ -823,9 +825,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         this.RequiresNotDisposed();
 
-        using ReadWriteSynchronizationLocker locker = ReadWriteLock();
+        using var locker = AcquireReadWriteLock();
 
-        string[] files = GetPossibleDataFiles();
+        var files = GetPossibleDataFiles();
         var i = 0;
 
         var accumulatedObjects = new List<T>();
@@ -844,11 +846,11 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             {
                 T obj;
 
-                #if FRAMEWORK_ADVANCED
+#if FRAMEWORK_ADVANCED
                 await using (Stream stream = FileShim.OpenRead(possibleFilePath))
-                #else
+#else
                 using (Stream stream = FileShim.OpenRead(possibleFilePath))
-                #endif
+#endif
                 {
                     obj = (T)(Serializer.ReadObject(stream) ?? throw new SerializationException());
                 }
@@ -903,7 +905,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             return 0;
         }
 
-        locker.Upgrade();
+        _ = locker.Upgrade();
 
         foreach (var possibleFilePath in accumulatedPaths)
         {
@@ -1002,9 +1004,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         this.RequiresNotDisposed();
 
-        using ReadWriteSynchronizationLocker locker = ReadWriteLock();
+        using var locker = AcquireReadWriteLock();
 
-        string[] files = GetPossibleDataFiles();
+        var files = GetPossibleDataFiles();
         var i = 0;
 
         var accumulatedObjects = new List<T>();
@@ -1023,11 +1025,11 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             {
                 T obj;
 
-                #if FRAMEWORK_ADVANCED
+#if FRAMEWORK_ADVANCED
                 await using (Stream stream = FileShim.OpenRead(possibleFilePath))
-                #else
+#else
                 using (Stream stream = FileShim.OpenRead(possibleFilePath))
-                #endif
+#endif
                 {
                     obj = (T)(Serializer.ReadObject(stream) ?? throw new SerializationException());
                 }
@@ -1082,7 +1084,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             return 0;
         }
 
-        locker.Upgrade();
+        _ = locker.Upgrade();
 
         foreach (var possibleFilePath in accumulatedPaths)
         {
@@ -1188,9 +1190,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
 
         ThrowIfCurrentObjectDisposed();
 
-        using ReadWriteSynchronizationLocker locker = ReadWriteLock();
+        using var locker = AcquireReadWriteLock();
 
-        string[] files = GetPossibleDataFiles();
+        var files = GetPossibleDataFiles();
         var i = 0;
 
         var accumulatedObjects = new List<T>();
@@ -1209,11 +1211,11 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             {
                 T obj;
 
-                #if FRAMEWORK_ADVANCED
+#if FRAMEWORK_ADVANCED
                 await using (Stream stream = FileShim.OpenRead(possibleFilePath))
-                #else
+#else
                 using (Stream stream = FileShim.OpenRead(possibleFilePath))
-                #endif
+#endif
                 {
                     obj = (T)(Serializer.ReadObject(stream) ?? throw new SerializationException());
                 }
@@ -1269,7 +1271,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
             return 0;
         }
 
-        locker.Upgrade();
+        _ = locker.Upgrade();
 
         foreach (var possibleFilePath in accumulatedPaths)
         {
@@ -1303,15 +1305,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     /// </summary>
     /// <returns>An item, if one exists and can be loaded, or an exception otherwise.</returns>
     /// <exception cref="InvalidOperationException">There are no more valid items in the folder.</exception>
-    protected T PeekTopmostItem()
-    {
-        if (!TryPeekTopmostItem(out T item))
-        {
-            throw new InvalidOperationException();
-        }
-
-        return item;
-    }
+    protected T PeekTopmostItem() => !TryPeekTopmostItem(out T item) ? throw new InvalidOperationException() : item;
 
     /// <summary>
     ///     Peeks at the topmost item in the folder.
@@ -1324,9 +1318,9 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (ReadLock())
+        using (AcquireReadLock())
         {
-            string[] files = GetPossibleDataFiles();
+            var files = GetPossibleDataFiles();
             var i = 0;
 
             while (true)
@@ -1430,7 +1424,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             var i = 1;
             string filePath;
@@ -1469,7 +1463,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
     {
         ThrowIfCurrentObjectDisposed();
 
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             foreach (var possibleFilePath in DirectoryShim.EnumerateFiles(
                              DataFolderPath,
@@ -1589,5 +1583,5 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         }
     }
 
-#endregion
+    #endregion
 }
