@@ -2,6 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 using IX.StandardExtensions.ComponentModel;
@@ -29,7 +30,11 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     private IReaderWriterLock _locker;
 
     [DataMember]
-    private TimeSpan _lockerTimeout;
+    [SuppressMessage(
+        "ReSharper",
+        "InconsistentNaming",
+        Justification = "This needs to remain like this for backwards compatibility.")]
+    private TimeSpan lockerTimeout;
 
 #endregion
 
@@ -41,7 +46,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     protected ReaderWriterSynchronizedBase()
     {
         _locker = new ReaderWriterLockSlim();
-        _lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
+        lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
     }
 
     /// <summary>
@@ -58,7 +63,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
             out _locker,
             locker);
         _lockInherited = true;
-        _lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
+        lockerTimeout = EnvironmentSettings.LockAcquisitionTimeout;
     }
 
     /// <summary>
@@ -68,7 +73,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     protected ReaderWriterSynchronizedBase(TimeSpan timeout)
     {
         _locker = new ReaderWriterLockSlim();
-        _lockerTimeout = timeout;
+        lockerTimeout = timeout;
     }
 
     /// <summary>
@@ -88,7 +93,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
             out _locker,
             locker);
         _lockInherited = true;
-        _lockerTimeout = timeout;
+        lockerTimeout = timeout;
     }
 
 #endregion
@@ -129,7 +134,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
 
         return new ValueSynchronizationLockerRead(
             _locker,
-            _lockerTimeout);
+            lockerTimeout);
     }
 
     /// <summary>
@@ -143,7 +148,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
 
         using (new ValueSynchronizationLockerRead(
                    _locker,
-                   _lockerTimeout))
+                   lockerTimeout))
             localAction();
     }
 
@@ -160,7 +165,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
 
         using (new ValueSynchronizationLockerRead(
                    _locker,
-                   _lockerTimeout))
+                   lockerTimeout))
             return localAction();
     }
 
@@ -174,7 +179,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
 
         return new ValueSynchronizationLockerWrite(
             _locker,
-            _lockerTimeout);
+            lockerTimeout);
     }
 
     /// <summary>
@@ -188,7 +193,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
 
         using (new ValueSynchronizationLockerWrite(
                    _locker,
-                   _lockerTimeout))
+                   lockerTimeout))
             localAction();
     }
 
@@ -205,7 +210,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
 
         using (new ValueSynchronizationLockerWrite(
                    _locker,
-                   _lockerTimeout))
+                   lockerTimeout))
             return localAction();
     }
 
@@ -219,7 +224,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
 
         return new ValueSynchronizationLockerReadWrite(
             _locker,
-            _lockerTimeout);
+            lockerTimeout);
     }
 
 #endregion

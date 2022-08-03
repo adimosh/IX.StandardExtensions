@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 
 // ReSharper disable once CheckNamespace
 namespace IX.StandardExtensions.Threading;
@@ -23,7 +23,7 @@ public partial class ReaderWriterSynchronizedBase
 
         return new ReadOnlySynchronizationLocker(
             _locker,
-            _lockerTimeout);
+            lockerTimeout);
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public partial class ReaderWriterSynchronizedBase
 
         return new WriteOnlySynchronizationLocker(
             _locker,
-            _lockerTimeout);
+            lockerTimeout);
     }
 
     /// <summary>
@@ -53,6 +53,6 @@ public partial class ReaderWriterSynchronizedBase
 
         return new ReadWriteSynchronizationLocker(
             _locker,
-            _lockerTimeout);
+            lockerTimeout);
     }
 }

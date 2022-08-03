@@ -19,8 +19,10 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Various updates in code
-- ISO-1366 country codes</PackageReleaseNotes>
+    <PackageReleaseNotes>- PushOutQueue is now subscribable for pushed-out elements
+- A generic, thread-safe collection for weak references
+- A generic broker for the observable pattern
+- Value-type synchronization lockers</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

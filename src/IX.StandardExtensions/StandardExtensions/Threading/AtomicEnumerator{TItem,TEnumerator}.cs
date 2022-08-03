@@ -15,15 +15,15 @@ namespace IX.StandardExtensions.Threading;
 /// <typeparam name="TEnumerator">The type of the enumerator from which this atomic enumerator is derived.</typeparam>
 /// <seealso cref="AtomicEnumerator{TItem}" />
 [PublicAPI]
-internal sealed class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TItem>
+internal sealed partial class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TItem>
     where TEnumerator : IEnumerator<TItem>
 {
 #region Internal state
 
-    private readonly Func<ReadOnlySynchronizationLocker> readLock;
-    private TItem current;
-    private TEnumerator existingEnumerator;
-    private bool movedNext;
+    private readonly Func<ValueSynchronizationLockerRead>? _readLock;
+    private TItem _current;
+    private TEnumerator _existingEnumerator;
+    private bool _movedNext;
 
 #endregion
 
@@ -44,17 +44,17 @@ internal sealed class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TI
     /// </exception>
     public AtomicEnumerator(
         TEnumerator existingEnumerator,
-        Func<ReadOnlySynchronizationLocker> readLock)
+        Func<ValueSynchronizationLockerRead> readLock)
     {
         _ = Requires.NotNull(existingEnumerator);
 
-        this.existingEnumerator = existingEnumerator;
-        current = default!; /* We forgive this possible null reference, as it should not be possible to
+        this._existingEnumerator = existingEnumerator;
+        _current = default!; /* We forgive this possible null reference, as it should not be possible to
                                       * access it before reading something from the enumerator
                                       */
 
         Requires.NotNull(
-            out this.readLock,
+            out this._readLock,
             readLock);
     }
 
@@ -72,14 +72,14 @@ internal sealed class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TI
     {
         get
         {
-            if (!movedNext)
+            if (!_movedNext)
             {
                 throw new InvalidOperationException(Resources.MoveNextNotInvoked);
             }
 
             ThrowIfCurrentObjectDisposed();
 
-            return current;
+            return _current;
         }
     }
 
@@ -98,21 +98,20 @@ internal sealed class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TI
     {
         ThrowIfCurrentObjectDisposed();
 
-        bool result;
-        using (readLock())
+        if (_readLock == null)
         {
-            ref TEnumerator localEnumerator = ref existingEnumerator;
-            result = localEnumerator.MoveNext();
+            if (_readLockObsolete == null) throw new InvalidOperationException();
 
-            movedNext = true;
-
-            if (result)
+            using (_readLockObsolete())
             {
-                current = localEnumerator.Current;
+                return DoMoveNext();
             }
         }
 
-        return result;
+        using (_readLock())
+        {
+            return DoMoveNext();
+        }
     }
 
     /// <summary>
@@ -121,12 +120,27 @@ internal sealed class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TI
     public override void Reset()
     {
         // DO NOT CHANGE the order of these operations!
-        movedNext = false;
+        _movedNext = false;
 
         ThrowIfCurrentObjectDisposed();
 
-        existingEnumerator.Reset();
-        current = default!;
+        _existingEnumerator.Reset();
+        _current = default!;
+    }
+
+    private bool DoMoveNext()
+    {
+        ref TEnumerator localEnumerator = ref _existingEnumerator;
+        var result = localEnumerator.MoveNext();
+
+        _movedNext = true;
+
+        if (result)
+        {
+            _current = localEnumerator.Current;
+        }
+
+        return result;
     }
 
 #region Disposable
@@ -142,7 +156,7 @@ internal sealed class AtomicEnumerator<TItem, TEnumerator> : AtomicEnumerator<TI
     {
         base.DisposeManagedContext();
 
-        existingEnumerator.Dispose();
+        _existingEnumerator.Dispose();
     }
 
 #endregion

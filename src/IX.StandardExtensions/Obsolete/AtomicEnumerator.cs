@@ -1,39 +1,16 @@
-// <copyright file="AtomicEnumerator.cs" company="Adrian Mos">
-// Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
-// </copyright>
-
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
-using IX.StandardExtensions.ComponentModel;
+
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Efficiency;
-using JetBrains.Annotations;
 
+// ReSharper disable once CheckNamespace
 namespace IX.StandardExtensions.Threading;
 
-/// <summary>
-///     An atomic enumerator that can enumerate items one at a time, atomically.
-/// </summary>
-/// <seealso cref="DisposableBase" />
-[PublicAPI]
-public abstract partial class AtomicEnumerator : DisposableBase
+public partial class AtomicEnumerator
 {
-#region Internal state
-
-    protected private static readonly ConcurrentDictionary<Type, Delegate> ConstructionDelegates = new();
-
-#endregion
-
-#region Constructors and destructors
-
-    protected private AtomicEnumerator() { }
-
-#endregion
-
-#region Methods
-
-#region Static methods
+    protected private static readonly ConcurrentDictionary<Type, Delegate> OldConstructionDelegates = new();
 
     /// <summary>
     ///     Creates an atomic enumerator from a collection.
@@ -57,16 +34,18 @@ public abstract partial class AtomicEnumerator : DisposableBase
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Not an issue, since we're returning a class-based atomic enumerator anyway.")]
+    [Obsolete("To remove in next breaking changes iteration")]
+    [ExcludeFromCodeCoverage]
     public static AtomicEnumerator<TItem> FromCollection<TItem, TCollection>(
         TCollection collection,
-        Func<ValueSynchronizationLockerRead> readLock)
+        Func<ReadOnlySynchronizationLocker> readLock)
         where TCollection : class, IEnumerable<TItem>
     {
         // Validate arguments
         _ = Requires.NotNull(collection);
         _ = Requires.NotNull(readLock);
 
-        Delegate initializer = ConstructionDelegates.GetOrAdd(
+        Delegate initializer = OldConstructionDelegates.GetOrAdd(
             typeof(TCollection),
             (
                 collectionType,
@@ -86,23 +65,23 @@ public abstract partial class AtomicEnumerator : DisposableBase
 
                 // Prepare parameter expressions
                 ParameterExpression parameter1 = Expression.Parameter(collectionType);
-                ParameterExpression parameter2 = Expression.Parameter(typeof(Func<ValueSynchronizationLockerRead>));
+                ParameterExpression parameter2 = Expression.Parameter(typeof(Func<ReadOnlySynchronizationLocker>));
 
                 // Prepare expression
                 return Expression.Lambda(
-                        Expression.New(
-                            atomicEnumeratorConstructorInfo,
-                            Expression.Call(
-                                parameter1,
-                                getEnumeratorMethodInfo),
-                            parameter2),
-                        parameter1,
-                        parameter2)
-                    .Compile();
+                                     Expression.New(
+                                         atomicEnumeratorConstructorInfo,
+                                         Expression.Call(
+                                             parameter1,
+                                             getEnumeratorMethodInfo),
+                                         parameter2),
+                                     parameter1,
+                                     parameter2)
+                                 .Compile();
             },
             collection);
 
-        if (initializer is Func<TCollection, Func<ValueSynchronizationLockerRead>, AtomicEnumerator<TItem>>
+        if (initializer is Func<TCollection, Func<ReadOnlySynchronizationLocker>, AtomicEnumerator<TItem>>
             typedInitializer)
         {
             return typedInitializer(
@@ -114,22 +93,4 @@ public abstract partial class AtomicEnumerator : DisposableBase
             collection,
             readLock)!;
     }
-
-#endregion
-
-    /// <summary>
-    ///     Advances the enumerator to the next element of the collection.
-    /// </summary>
-    /// <returns>
-    ///     <see langword="true" /> if the enumerator was successfully advanced to the next element;
-    ///     <see langword="false" /> if the enumerator has passed the end of the collection.
-    /// </returns>
-    public abstract bool MoveNext();
-
-    /// <summary>
-    ///     Sets the enumerator to its initial position, which is before the first element in the collection.
-    /// </summary>
-    public abstract void Reset();
-
-#endregion
 }

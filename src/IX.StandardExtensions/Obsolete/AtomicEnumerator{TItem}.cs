@@ -1,63 +1,14 @@
-// <copyright file="AtomicEnumerator{TItem}.cs" company="Adrian Mos">
-// Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
-// </copyright>
-
-using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
-using IX.StandardExtensions.Contracts;
-using JetBrains.Annotations;
-using DiagCA = System.Diagnostics.CodeAnalysis;
 
+using IX.StandardExtensions.Contracts;
+
+// ReSharper disable once CheckNamespace
 namespace IX.StandardExtensions.Threading;
 
-/// <summary>
-///     An atomic enumerator that can enumerate items one at a time, atomically.
-/// </summary>
-/// <typeparam name="TItem">The type of the items to enumerate.</typeparam>
-/// <seealso cref="IEnumerator{T}" />
-/// <seealso cref="AtomicEnumerator" />
-[PublicAPI]
-public abstract partial class AtomicEnumerator<TItem> : AtomicEnumerator,
-    IEnumerator<TItem>
+public partial class AtomicEnumerator<TItem>
 {
-#region Constructors and destructors
-
-#region Constructors
-
-    /// <summary>
-    ///     Prevents a default instance of the <see cref="AtomicEnumerator{TItem}" /> class from being created.
-    /// </summary>
-    protected private AtomicEnumerator() { }
-
-#endregion
-
-#endregion
-
-#region Properties and indexers
-
-    /// <summary>
-    ///     Gets the element in the collection at the current position of the enumerator.
-    /// </summary>
-    /// <value>The current element.</value>
-    public abstract TItem Current { get; }
-
-    /// <summary>
-    ///     Gets the element in the collection at the current position of the enumerator.
-    /// </summary>
-    /// <value>The current element.</value>
-    [DiagCA.SuppressMessage(
-        "Performance",
-        "HAA0601:Value type to reference type conversion causing boxing allocation",
-        Justification = "Unavoidable with a generic enumerator.")]
-    object? IEnumerator.Current => Current;
-
-#endregion
-
-#region Methods
-
-#region Static methods
-
     /// <summary>
     ///     Creates an atomic enumerator from a collection.
     /// </summary>
@@ -71,28 +22,30 @@ public abstract partial class AtomicEnumerator<TItem> : AtomicEnumerator,
     ///     <paramref name="readLock" />
     ///     is <c>null</c> (<c>Nothing</c> in Visual Basic).
     /// </exception>
-    [DiagCA.SuppressMessage(
+    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
         "Performance",
         "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
         Justification = "We need this instance allocated.")]
-    [DiagCA.SuppressMessage(
+    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
         "Design",
         "CA1000:Do not declare static members on generic types",
         Justification = "This is, honestly, a stupid rule.")]
-    [DiagCA.SuppressMessage(
+    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Not an issue, since we're returning a class-based atomic enumerator anyway.")]
+    [Obsolete("This method will be removed in the next breaking changes release.")]
+    [ExcludeFromCodeCoverage]
     public static AtomicEnumerator<TItem> FromCollection<TCollection>(
         TCollection collection,
-        Func<ValueSynchronizationLockerRead> readLock)
+        Func<ReadOnlySynchronizationLocker> readLock)
         where TCollection : class, IEnumerable<TItem>
     {
         // Validate arguments
         _ = Requires.NotNull(collection);
         _ = Requires.NotNull(readLock);
 
-        Delegate initializer = ConstructionDelegates.GetOrAdd(
+        Delegate initializer = OldConstructionDelegates.GetOrAdd(
             collection.GetType(),
             static (collectionType) =>
             {
@@ -108,26 +61,26 @@ public abstract partial class AtomicEnumerator<TItem> : AtomicEnumerator,
                 ConstructorInfo atomicEnumeratorConstructorInfo = atomicEnumeratorType.GetConstructors()
                     .Single(
                         p => p.GetParameters()[1]
-                              .ParameterType == typeof(Func<ValueSynchronizationLockerRead>));
+                              .ParameterType == typeof(Func<ReadOnlySynchronizationLocker>));
 
                 // Prepare parameter expressions
                 ParameterExpression parameter1 = Expression.Parameter(collectionType);
-                ParameterExpression parameter2 = Expression.Parameter(typeof(Func<ValueSynchronizationLockerRead>));
+                ParameterExpression parameter2 = Expression.Parameter(typeof(Func<ReadOnlySynchronizationLocker>));
 
                 // Prepare expression
                 return Expression.Lambda(
-                        Expression.New(
-                            atomicEnumeratorConstructorInfo,
-                            Expression.Call(
-                                parameter1,
-                                getEnumeratorMethodInfo),
-                            parameter2),
-                        parameter1,
-                        parameter2)
-                    .Compile();
+                                     Expression.New(
+                                         atomicEnumeratorConstructorInfo,
+                                         Expression.Call(
+                                             parameter1,
+                                             getEnumeratorMethodInfo),
+                                         parameter2),
+                                     parameter1,
+                                     parameter2)
+                                 .Compile();
             });
 
-        if (initializer is Func<TCollection, Func<ValueSynchronizationLockerRead>, AtomicEnumerator<TItem>>
+        if (initializer is Func<TCollection, Func<ReadOnlySynchronizationLocker>, AtomicEnumerator<TItem>>
             typedInitializer)
         {
             return typedInitializer(
@@ -153,13 +106,15 @@ public abstract partial class AtomicEnumerator<TItem> : AtomicEnumerator,
     ///     <paramref name="readLock" />
     ///     is <c>null</c> (<c>Nothing</c> in Visual Basic).
     /// </exception>
-    [DiagCA.SuppressMessage(
+    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
         "Design",
         "CA1000:Do not declare static members on generic types",
         Justification = "This is, honestly, a stupid rule.")]
+    [Obsolete("This method will be removed in the next breaking changes release.")]
+    [ExcludeFromCodeCoverage]
     public static AtomicEnumerator<TItem> FromEnumerator<TEnumerator>(
         TEnumerator enumerator,
-        Func<ValueSynchronizationLockerRead> readLock)
+        Func<ReadOnlySynchronizationLocker> readLock)
         where TEnumerator : IEnumerator<TItem>
     {
         _ = Requires.NotNull(enumerator);
@@ -169,8 +124,4 @@ public abstract partial class AtomicEnumerator<TItem> : AtomicEnumerator,
             enumerator,
             readLock);
     }
-
-#endregion
-
-#endregion
 }

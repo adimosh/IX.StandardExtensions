@@ -36,7 +36,7 @@ public class AtomicEnumeratorUnitTests
 
         using var ae = AtomicEnumerator<int>.FromEnumerator(
             enumerator,
-            () => new ReadOnlySynchronizationLocker(null));
+            () => new ValueSynchronizationLockerRead());
 
         // ACT
         while (ae.MoveNext())
@@ -81,7 +81,7 @@ public class AtomicEnumeratorUnitTests
         // ACT
         using var ae = AtomicEnumerator<int>.FromCollection(
             q,
-            () => new ReadOnlySynchronizationLocker(null));
+            () => new ValueSynchronizationLockerRead());
 
         while (ae.MoveNext())
         {
@@ -127,7 +127,7 @@ public class AtomicEnumeratorUnitTests
         // ACT
         using var ae = AtomicEnumerator<int>.FromEnumerator(
             enumerator,
-            () => new ReadOnlySynchronizationLocker(null));
+            () => new ValueSynchronizationLockerRead());
 
         while (ae.MoveNext())
         {
