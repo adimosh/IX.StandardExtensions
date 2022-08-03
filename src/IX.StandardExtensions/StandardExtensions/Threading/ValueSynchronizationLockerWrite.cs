@@ -45,7 +45,7 @@ public readonly struct ValueSynchronizationLockerWrite : IDisposable
     {
         _locker = locker;
 
-        _gotLock = locker?.TryEnterReadLock(timeout) ?? false;
+        _gotLock = locker?.TryEnterWriteLock(timeout) ?? false;
     }
 
     /// <summary>
