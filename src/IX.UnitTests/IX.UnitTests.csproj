@@ -20,12 +20,15 @@
     <Compile Remove="SourceGeneration\**" />
     <Compile Remove="StandardExtensions\Globalization\DataSource\**" />
     <Compile Remove="StandardExtensions\Globalization\Data\**" />
+    <Compile Remove="TestResults\**" />
     <EmbeddedResource Remove="SourceGeneration\**" />
     <EmbeddedResource Remove="StandardExtensions\Globalization\DataSource\**" />
     <EmbeddedResource Remove="StandardExtensions\Globalization\Data\**" />
+    <EmbeddedResource Remove="TestResults\**" />
     <None Remove="SourceGeneration\**" />
     <None Remove="StandardExtensions\Globalization\DataSource\**" />
     <None Remove="StandardExtensions\Globalization\Data\**" />
+    <None Remove="TestResults\**" />
   </ItemGroup>
 
   <ItemGroup>
