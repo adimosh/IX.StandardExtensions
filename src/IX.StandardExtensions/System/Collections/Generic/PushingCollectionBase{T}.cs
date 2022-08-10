@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using IX.Abstractions.Collections;
 using IX.StandardExtensions.Contracts;
+using IX.StandardExtensions.Efficiency;
 using IX.StandardExtensions.Threading;
 using JetBrains.Annotations;
 using Constants = IX.Abstractions.Collections.Constants;
@@ -37,6 +38,11 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
 #region Internal state
 
     /// <summary>
+    /// An observable that offers information on pushed items.
+    /// </summary>
+    private readonly PushOutObservableBroker _pushedItems;
+
+    /// <summary>
     ///     The internal container.
     /// </summary>
     [DataMember(Name = "Items")]
@@ -45,7 +51,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     /// <summary>
     ///     The limit.
     /// </summary>
-    private int limit;
+    private int _limit;
 
 #endregion
 
@@ -68,9 +74,10 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
             throw new LimitArgumentNegativeException(nameof(limit));
         }
 
-        this.limit = limit;
+        this._limit = limit;
 
         internalContainer = new List<T>();
+        _pushedItems = new PushOutObservableBroker();
     }
 
 #endregion
@@ -123,7 +130,7 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
     [DataMember]
     public int Limit
     {
-        get => limit;
+        get => _limit;
         set
         {
             ThrowIfCurrentObjectDisposed();
@@ -133,24 +140,50 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
                 throw new LimitArgumentNegativeException();
             }
 
+            bool removed = false;
+            List<T>? removedItems = null;
+
             using (AcquireWriteLock())
             {
-                limit = value;
+                _limit = value;
 
                 if (value != 0)
                 {
                     while (internalContainer.Count > value)
                     {
+                        removedItems ??= new();
+                        removedItems.Add(internalContainer[0]);
                         internalContainer.RemoveAt(0);
+                        removed = true;
                     }
                 }
                 else
                 {
+                    removedItems = new(internalContainer);
                     internalContainer.Clear();
+                    removed = true;
+                }
+            }
+
+            if (removed)
+            {
+                foreach (var removedItem in removedItems!)
+                {
+                    _pushedItems.TriggerOnNext(removedItem);
                 }
             }
         }
     }
+
+    /// <summary>
+    /// An observable that offers information on pushed items.
+    /// </summary>
+    public IObservable<T> PushedItems => _pushedItems;
+
+    /// <summary>
+    ///
+    /// </summary>
+    protected PushOutObservableBroker PushedOutBroker => _pushedItems;
 
     /// <summary>
     ///     Gets the internal container.
@@ -292,14 +325,24 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
             return;
         }
 
+        bool removed = false;
+        T removedItem = default!;
+
         using (AcquireWriteLock())
         {
-            if (InternalContainer.Count == Limit)
+            if (internalContainer.Count == Limit)
             {
-                InternalContainer.RemoveAt(0);
+                removedItem = internalContainer[0];
+                internalContainer.RemoveAt(0);
+                removed = true;
             }
 
-            InternalContainer.Add(item);
+            internalContainer.Add(item);
+        }
+
+        if (removed)
+        {
+            _pushedItems.TriggerOnNext(removedItem);
         }
     }
 
@@ -321,17 +364,31 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
             return;
         }
 
+        bool removed = false;
+        List<T>? removedItems = null;
+
         // Lock on write
         using (AcquireWriteLock())
         {
             foreach (T item in items)
             {
-                InternalContainer.Add(item);
+                internalContainer.Add(item);
 
-                if (InternalContainer.Count == Limit + 1)
+                if (internalContainer.Count == Limit + 1)
                 {
-                    InternalContainer.RemoveAt(0);
+                    removedItems ??= new();
+                    removedItems.Add(internalContainer[0]);
+                    internalContainer.RemoveAt(0);
+                    removed = true;
                 }
+            }
+        }
+
+        if (removed)
+        {
+            foreach (var removedItem in removedItems!)
+            {
+                _pushedItems.TriggerOnNext(removedItem);
             }
         }
     }
@@ -370,6 +427,9 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
             startIndex,
             count);
 
+        bool removed = false;
+        List<T>? removedItems = null;
+
         // Lock on write
         using (AcquireWriteLock())
         {
@@ -381,11 +441,34 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
 
                 if (innerInternalContainer.Count == innerLimit + 1)
                 {
+                    removedItems ??= new();
+                    removedItems.Add(innerInternalContainer[0]);
                     innerInternalContainer.RemoveAt(0);
+                    removed = true;
                 }
+            }
+        }
+
+        if (removed)
+        {
+            foreach (var removedItem in removedItems!)
+            {
+                _pushedItems.TriggerOnNext(removedItem);
             }
         }
     }
 
 #endregion
+
+    /// <summary>
+    /// An observable broker specifically built for the pushing collection base.
+    /// </summary>
+    protected class PushOutObservableBroker : ObservableBroker<T>
+    {
+        /// <summary>
+        /// Triggers the observers with a new item.
+        /// </summary>
+        /// <param name="nextValue">The recently pushed-out value.</param>
+        protected internal void TriggerOnNext(T nextValue) => SendNext(nextValue);
+    }
 }
