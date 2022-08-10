@@ -55,7 +55,7 @@ public class ObservableReadOnlyCompositeList<T> : ObservableReadOnlyCollectionBa
     public void SetList<TList>(TList list)
         where TList : class, IEnumerable<T>, INotifyCollectionChanged
     {
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             ((MultiListListAdapter<T>)InternalContainer).SetList(list);
         }
@@ -73,7 +73,7 @@ public class ObservableReadOnlyCompositeList<T> : ObservableReadOnlyCollectionBa
     public void RemoveList<TList>(TList list)
         where TList : class, IEnumerable<T>, INotifyCollectionChanged
     {
-        using (WriteLock())
+        using (AcquireWriteLock())
         {
             ((MultiListListAdapter<T>)InternalContainer).RemoveList(list);
         }
