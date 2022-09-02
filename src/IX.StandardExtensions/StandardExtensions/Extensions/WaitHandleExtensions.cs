@@ -45,8 +45,14 @@ public static class WaitHandleExtensions
                 true);
 
             tokenRegistration = cancellationToken.Register(
-                state => state.TrySetCanceled(),
-                tcs);
+                state =>
+                {
+                    if (state.CompletionSource.TrySetCanceled())
+                    {
+                        state.RegisteredHandle?.Unregister(null);
+                    }
+                },
+                (CompletionSource: tcs, RegisteredHandle: registeredHandle));
 
             return await tcs.Task;
         }
