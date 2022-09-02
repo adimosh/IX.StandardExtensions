@@ -3,7 +3,6 @@
 // </copyright>
 
 #if !FRAMEWORK_ADVANCED
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace IX.StandardExtensions.Extensions
