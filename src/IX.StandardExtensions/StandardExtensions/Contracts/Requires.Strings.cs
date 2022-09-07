@@ -70,6 +70,7 @@ public static partial class Requires
     [ContractAnnotation("argument:null => halt")]
     [AssertionMethod]
     public static void NotNull<T>(
+        [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
         out T field,
         [NoEnumeration] [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
         T? argument,
@@ -139,6 +140,7 @@ public static partial class Requires
     [ContractAnnotation("argument:null => halt")]
     [AssertionMethod]
     public static void NotNullOrEmpty(
+        [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
         out string field,
         [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
         string? argument,
@@ -204,6 +206,7 @@ public static partial class Requires
     [ContractAnnotation("argument:null => halt")]
     [AssertionMethod]
     public static void NotNullOrWhiteSpace(
+        [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
         out string field,
         [AssertionCondition(AssertionConditionType.IS_NOT_NULL)]
         string? argument,

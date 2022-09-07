@@ -251,7 +251,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
         Justification = "We specifically do not want to do that.")]
     private void SendOrPost(object? innerState)
     {
-        (Action<object> action, object state) = Requires.ArgumentOfType<Tuple<Action<object>, object>>(innerState);
+        (Action<object> action, var state) = Requires.ArgumentOfType<Tuple<Action<object>, object>>(innerState);
 
         try
         {

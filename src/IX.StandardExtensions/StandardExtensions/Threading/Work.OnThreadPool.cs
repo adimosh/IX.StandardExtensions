@@ -21,7 +21,7 @@ namespace IX.StandardExtensions.Threading;
     "Performance",
     "HAA0601:Value type to reference type conversion causing boxing allocation",
     Justification = "This is unavoidable because of thread switching.")]
-public static class Work
+public static partial class Work
 {
 #region Methods
 
