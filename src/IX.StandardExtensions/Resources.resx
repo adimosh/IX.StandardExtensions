@@ -273,4 +273,7 @@
   <data name="ErrorIdCorrespondsToNoItem" xml:space="preserve">
     <value>The identifier corresponds to no item.</value>
   </data>
+  <data name="ThereIsNoCurrentSynchronizationContextToAttemptCapturing" xml:space="preserve">
+    <value>There is no current synchronization context to attempt capturing.</value>
+  </data>
 </root>

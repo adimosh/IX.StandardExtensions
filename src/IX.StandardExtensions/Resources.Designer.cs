@@ -520,6 +520,15 @@ namespace IX {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no current synchronization context to attempt capturing..
+        /// </summary>
+        internal static string ThereIsNoCurrentSynchronizationContextToAttemptCapturing {
+            get {
+                return ResourceManager.GetString("ThereIsNoCurrentSynchronizationContextToAttemptCapturing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Undo and Redo operations are not supported while an explicit transaction block is open..
         /// </summary>
         internal static string UndoAndRedoOperationsAreNotSupportedWhileAnExplicitTransactionBlockIsOpen {

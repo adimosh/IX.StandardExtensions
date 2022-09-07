@@ -44,6 +44,14 @@ public static class GetAwaiterExtensions
         (dateTimeOffset - DateTimeOffset.UtcNow).GetAwaiter();
 
     /// <summary>
+    /// Gets an awaiter for the synchronization context.
+    /// </summary>
+    /// <param name="context">The context.</param>
+    /// <returns>A <see cref="SynchronizationContextAwaiter"/> that can be awaited on.</returns>
+    public static SynchronizationContextAwaiter GetAwaiter(this SynchronizationContext context) =>
+        new(context);
+
+    /// <summary>
     ///     Gets a delay awaiter that supports a cancellation token.
     /// </summary>
     /// <param name="timeSpan">The time span.</param>
