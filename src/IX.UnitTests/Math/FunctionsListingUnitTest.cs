@@ -5,25 +5,24 @@
 using IX.Math;
 using Xunit;
 
-namespace IX.UnitTests.Math
+namespace IX.UnitTests.Math;
+
+/// <summary>
+///     Tests for function listings.
+/// </summary>
+public class FunctionsListingUnitTest
 {
     /// <summary>
-    ///     Tests for function listings.
+    ///     Test functionality that gets the available functions test.
     /// </summary>
-    public class FunctionsListingUnitTest
+    [Fact(DisplayName = "Test getting available functions and parameters.")]
+    public void GetAvailableFunctionsTest()
     {
-        /// <summary>
-        ///     Test functionality that gets the available functions test.
-        /// </summary>
-        [Fact(DisplayName = "Test getting available functions and parameters.")]
-        public void GetAvailableFunctionsTest()
+        using (var service = new ExpressionParsingService())
         {
-            using (var service = new ExpressionParsingService())
-            {
-                string[] functions = service.GetRegisteredFunctions();
+            string[] functions = service.GetRegisteredFunctions();
 
-                Assert.True(functions.Length > 0);
-            }
+            Assert.True(functions.Length > 0);
         }
     }
 }

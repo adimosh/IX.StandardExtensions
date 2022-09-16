@@ -5,18 +5,17 @@
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace IX.UnitTests.Math
+namespace IX.UnitTests.Math;
+
+/// <summary>
+///     Test data for IX.Math tests.
+/// </summary>
+[UsedImplicitly]
+public static partial class TestData
 {
     /// <summary>
-    ///     Test data for IX.Math tests.
+    ///     Provides templated text data.
     /// </summary>
-    [UsedImplicitly]
-    public static partial class TestData
-    {
-        /// <summary>
-        ///     Provides templated text data.
-        /// </summary>
-        /// <returns>Test data.</returns>
-        public static object[][] GenerateDataObjects() => BasicOperatorsWithRandomNumbers().Union(SpecialCases()).ToArray();
-    }
+    /// <returns>Test data.</returns>
+    public static object[][] GenerateDataObjects() => BasicOperatorsWithRandomNumbers().Union(SpecialCases()).ToArray();
 }
