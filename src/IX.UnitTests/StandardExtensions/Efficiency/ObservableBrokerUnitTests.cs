@@ -1,11 +1,7 @@
-using System;
-
 using IX.DataGeneration;
 using IX.StandardExtensions.Efficiency;
 
 using Xunit;
-
-#nullable enable
 
 namespace IX.UnitTests.StandardExtensions.Efficiency;
 
@@ -112,7 +108,7 @@ public class ObservableBrokerUnitTests
     {
         // ARRANGE
         TestObservableBroker broker = new(
-            new ObservableBroker<int>.Settings
+            new()
             {
                 KeepObserverReferencesAfterSendingFinished = true
             });
@@ -155,7 +151,7 @@ public class ObservableBrokerUnitTests
     public void Test5()
     {
         // ARRANGE
-        TestObservableBroker broker = new(new ObservableBroker<int>.Settings { DontSendCompletedWhenDisposing = true});
+        TestObservableBroker broker = new(new() { DontSendCompletedWhenDisposing = true});
 
         IntContainer k = new() { Value = 0 };
         BoolContainer b = new() { Value = false };
@@ -194,7 +190,7 @@ public class ObservableBrokerUnitTests
         // ACT
         _ = broker.Subscribe(observer);
 
-        broker.SendError(new Exception(value));
+        broker.SendError(new(value));
 
         // ASSERT
         Assert.Equal(value, ec.Value?.Message);

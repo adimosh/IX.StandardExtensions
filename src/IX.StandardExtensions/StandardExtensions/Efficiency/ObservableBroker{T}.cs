@@ -36,7 +36,7 @@ public abstract class ObservableBroker<T> : DisposableBase,
     /// <param name="settings">The settings to use for this broker.</param>
     protected ObservableBroker(Settings settings)
     {
-        _observers = new WeakReferenceCollection<IObserver<T>>();
+        _observers = new();
         _settings = settings;
     }
 

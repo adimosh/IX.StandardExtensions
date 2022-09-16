@@ -497,7 +497,7 @@ public class ObservableDictionary<TKey, TValue> : ObservableCollectionBase<KeyVa
             // Push the undo level
             PushUndoLevel(
                 new AddStateChange<KeyValuePair<TKey, TValue>>(
-                    new KeyValuePair<TKey, TValue>(
+                    new(
                         key,
                         value),
                     newIndex));

@@ -96,7 +96,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
         AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
 
         // Initialize queues
-        queue = new System.Collections.Generic.Queue<T>();
+        queue = new();
 
         using var existingQueue = new PersistedQueue<T>(
             persistenceFolderPath,
@@ -1280,7 +1280,7 @@ public class DisasterRecoveryPersistedQueue<T> : ReaderWriterSynchronizedBase,
             PersistedQueue<T> transferQueue;
             try
             {
-                transferQueue = new PersistedQueue<T>(
+                transferQueue = new(
                     persistenceFolderPath,
                     Timeout.InfiniteTimeSpan,
                     fileShim,

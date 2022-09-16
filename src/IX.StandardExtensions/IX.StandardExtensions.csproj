@@ -11,8 +11,7 @@
 
   <PropertyGroup>
     <FailObsoleteTargetFrameworks>true</FailObsoleteTargetFrameworks>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <!-- Package metadata -->

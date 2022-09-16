@@ -28,7 +28,7 @@ namespace IX.UnitTests.Math
         public TestBattery(CachedExpressionProviderFixture fixture)
         {
             this.fixture = fixture;
-            comparer = new ReturnValueEqualityComparer();
+            comparer = new();
         }
 
         private static object GenerateFuncOutOfParameterValue(object tempParameter) => tempParameter switch

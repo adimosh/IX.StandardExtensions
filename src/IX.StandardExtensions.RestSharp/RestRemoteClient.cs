@@ -32,13 +32,13 @@ public class RestRemoteClient : DisposableBase
     /// Initializes a new instance of the <see cref="RestRemoteClient"/> class.
     /// </summary>
     /// <param name="baseUrl">The base URL for his client.</param>
-    public RestRemoteClient(string baseUrl) => client = new RestClient(Requires.NotNullOrWhiteSpace(baseUrl));
+    public RestRemoteClient(string baseUrl) => client = new(Requires.NotNullOrWhiteSpace(baseUrl));
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RestRemoteClient"/> class.
     /// </summary>
     /// <param name="options">The client options.</param>
-    public RestRemoteClient(RestClientOptions options) => client = new RestClient(Requires.NotNull(options));
+    public RestRemoteClient(RestClientOptions options) => client = new(Requires.NotNull(options));
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RestRemoteClient"/> class.
@@ -48,7 +48,7 @@ public class RestRemoteClient : DisposableBase
     public RestRemoteClient(
         string baseUrl,
         IAuthenticator authenticator) =>
-        client = new RestClient(Requires.NotNullOrWhiteSpace(baseUrl))
+        client = new(Requires.NotNullOrWhiteSpace(baseUrl))
         {
             Authenticator = Requires.NotNull(authenticator)
         };
@@ -61,7 +61,7 @@ public class RestRemoteClient : DisposableBase
     public RestRemoteClient(
         RestClientOptions options,
         IAuthenticator authenticator) =>
-        client = new RestClient(Requires.NotNull(options))
+        client = new(Requires.NotNull(options))
         {
             Authenticator = Requires.NotNull(authenticator)
         };

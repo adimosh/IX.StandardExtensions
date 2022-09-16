@@ -448,7 +448,7 @@ public static partial class DataGenerator
             randomString[i] = localFromCharacters[position];
         }
 
-        return new string(randomString);
+        return new(randomString);
     }
 
     /// <summary>

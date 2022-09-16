@@ -80,7 +80,8 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     /// Gets a value indicating whether or not the expression has undefined parameters.
     /// </summary>
     /// <value><see langword="true"/> if the expression has undefined parameters, <see langword="false"/> otherwise.</value>
-    public bool HasUndefinedParameters => parametersRegistry?.Dump().Any(p => p.ReturnType == SupportedValueType.Unknown) ?? false;
+    public bool HasUndefinedParameters =>
+        parametersRegistry?.Dump().Any(p => p.ReturnType == SupportedValueType.Unknown) ?? false;
 
     /// <summary>
     /// Gets the names of the parameters this expression requires, if any. This property is obsolete and should not be used anymore.
@@ -97,9 +98,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     /// </summary>
     /// <returns>An array of required parameter names.</returns>
     public string[] GetParameterNames() =>
-        parametersRegistry?.Dump()
-            .Select(p => p.Name)
-            .ToArray() ?? Array.Empty<string>();
+        parametersRegistry?.Dump().Select(p => p.Name).ToArray() ?? Array.Empty<string>();
 
     /// <summary>
     /// Computes the expression and returns a result.
@@ -119,9 +118,17 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     /// <returns>
     /// The computed result, or, if the expression is not recognized correctly, the expression as a <see cref="string" />.
     /// </returns>
-    [SuppressMessage("Performance", "HAA0302:Display class allocation to capture closure", Justification = "Unavoidable for now.")]
-    [SuppressMessage("Performance", "HAA0301:Closure Allocation Source", Justification = "Unavoidable for now.")]
-    public object Compute(Tolerance? tolerance, params object[] arguments)
+    [SuppressMessage(
+        "Performance",
+        "HAA0302:Display class allocation to capture closure",
+        Justification = "Unavoidable for now.")]
+    [SuppressMessage(
+        "Performance",
+        "HAA0301:Closure Allocation Source",
+        Justification = "Unavoidable for now.")]
+    public object Compute(
+        Tolerance? tolerance,
+        params object[] arguments)
     {
         this.RequiresNotDisposed();
 
@@ -131,7 +138,9 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
             return initialExpression;
         }
 
-        var convertedArguments = FormatArgumentsAccordingToParameters(arguments, parametersRegistry?.Dump() ?? Array.Empty<ParameterContext>());
+        var convertedArguments = FormatArgumentsAccordingToParameters(
+            arguments,
+            parametersRegistry?.Dump() ?? Array.Empty<ParameterContext>());
 
         object[]? FormatArgumentsAccordingToParameters(
             object[] parameterValues,
@@ -274,21 +283,29 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                         switch (paraContext.ReturnType)
                         {
                             case SupportedValueType.Boolean:
-                                paramValue = CreateValue(paraContext, convertedParam != 0);
+                                paramValue = CreateValue(
+                                    paraContext,
+                                    convertedParam != 0);
                                 break;
 
                             case SupportedValueType.ByteArray:
-                                paramValue = CreateValue(paraContext, BitConverter.GetBytes(convertedParam));
+                                paramValue = CreateValue(
+                                    paraContext,
+                                    BitConverter.GetBytes(convertedParam));
                                 break;
 
                             case SupportedValueType.Numeric:
                                 switch (paraContext.IsFloat)
                                 {
                                     case true:
-                                        paramValue = CreateValue(paraContext, Convert.ToDouble(convertedParam));
+                                        paramValue = CreateValue(
+                                            paraContext,
+                                            Convert.ToDouble(convertedParam));
                                         break;
                                     case false:
-                                        paramValue = CreateValue(paraContext, convertedParam);
+                                        paramValue = CreateValue(
+                                            paraContext,
+                                            convertedParam);
                                         break;
                                     default:
                                         paraContext.DetermineInteger();
@@ -300,7 +317,9 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                             case SupportedValueType.String:
                                 paramValue = CreateValue(
                                     paraContext,
-                                    StringFormatter.FormatIntoString(convertedParam, stringFormatters));
+                                    StringFormatter.FormatIntoString(
+                                        convertedParam,
+                                        stringFormatters));
 
                                 break;
 
@@ -316,21 +335,29 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                         {
                             case SupportedValueType.Boolean:
                                 // ReSharper disable once CompareOfFloatsByEqualityOperator - no better idea for now
-                                paramValue = CreateValue(paraContext, convertedParam != 0D);
+                                paramValue = CreateValue(
+                                    paraContext,
+                                    convertedParam != 0D);
                                 break;
 
                             case SupportedValueType.ByteArray:
-                                paramValue = CreateValue(paraContext, BitConverter.GetBytes(convertedParam));
+                                paramValue = CreateValue(
+                                    paraContext,
+                                    BitConverter.GetBytes(convertedParam));
                                 break;
 
                             case SupportedValueType.Numeric:
                                 switch (paraContext.IsFloat)
                                 {
                                     case true:
-                                        paramValue = CreateValue(paraContext, convertedParam);
+                                        paramValue = CreateValue(
+                                            paraContext,
+                                            convertedParam);
                                         break;
                                     case false:
-                                        paramValue = CreateValue(paraContext, Convert.ToInt64(convertedParam));
+                                        paramValue = CreateValue(
+                                            paraContext,
+                                            Convert.ToInt64(convertedParam));
                                         break;
                                     default:
                                         paraContext.DetermineFloat();
@@ -342,7 +369,9 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                             case SupportedValueType.String:
                                 paramValue = CreateValue(
                                     paraContext,
-                                    StringFormatter.FormatIntoString(convertedParam, stringFormatters));
+                                    StringFormatter.FormatIntoString(
+                                        convertedParam,
+                                        stringFormatters));
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -356,11 +385,15 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                         switch (paraContext.ReturnType)
                         {
                             case SupportedValueType.Boolean:
-                                paramValue = CreateValue(paraContext, convertedParam);
+                                paramValue = CreateValue(
+                                    paraContext,
+                                    convertedParam);
                                 break;
 
                             case SupportedValueType.ByteArray:
-                                paramValue = CreateValue(paraContext, BitConverter.GetBytes(convertedParam));
+                                paramValue = CreateValue(
+                                    paraContext,
+                                    BitConverter.GetBytes(convertedParam));
                                 break;
 
                             case SupportedValueType.Numeric:
@@ -369,7 +402,9 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                             case SupportedValueType.String:
                                 paramValue = CreateValue(
                                     paraContext,
-                                    StringFormatter.FormatIntoString(convertedParam, stringFormatters));
+                                    StringFormatter.FormatIntoString(
+                                        convertedParam,
+                                        stringFormatters));
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -383,52 +418,66 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                         switch (paraContext.ReturnType)
                         {
                             case SupportedValueType.Boolean:
-                                paramValue = CreateValue(paraContext, bool.Parse(convertedParam));
+                                paramValue = CreateValue(
+                                    paraContext,
+                                    bool.Parse(convertedParam));
                                 break;
 
                             case SupportedValueType.ByteArray:
+                            {
+                                if (ParsingFormatter.ParseByteArray(
+                                        convertedParam,
+                                        out var byteArrayResult))
                                 {
-                                    if (ParsingFormatter.ParseByteArray(convertedParam, out var byteArrayResult))
-                                    {
-                                        paramValue = CreateValue(paraContext, byteArrayResult);
-                                    }
-                                    else
-                                    {
-                                        // Cannot parse byte array.
-                                        return null;
-                                    }
+                                    paramValue = CreateValue(
+                                        paraContext,
+                                        byteArrayResult);
                                 }
+                                else
+                                {
+                                    // Cannot parse byte array.
+                                    return null;
+                                }
+                            }
 
                                 break;
 
                             case SupportedValueType.Numeric:
+                            {
+                                if (ParsingFormatter.ParseNumeric(
+                                        convertedParam,
+                                        out var numericResult))
                                 {
-                                    if (ParsingFormatter.ParseNumeric(convertedParam, out var numericResult))
+                                    switch (numericResult)
                                     {
-                                        switch (numericResult)
-                                        {
-                                            case long integerResult:
-                                                paramValue = CreateValue(paraContext, integerResult);
-                                                break;
-                                            case double floatResult:
-                                                paramValue = CreateValue(paraContext, floatResult);
-                                                break;
-                                            default:
-                                                // Numeric type unknown.
-                                                return null;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        // Cannot parse numeric type.
-                                        return null;
+                                        case long integerResult:
+                                            paramValue = CreateValue(
+                                                paraContext,
+                                                integerResult);
+                                            break;
+                                        case double floatResult:
+                                            paramValue = CreateValue(
+                                                paraContext,
+                                                floatResult);
+                                            break;
+                                        default:
+                                            // Numeric type unknown.
+                                            return null;
                                     }
                                 }
+                                else
+                                {
+                                    // Cannot parse numeric type.
+                                    return null;
+                                }
+                            }
 
                                 break;
 
                             case SupportedValueType.String:
-                                paramValue = CreateValue(paraContext, convertedParam);
+                                paramValue = CreateValue(
+                                    paraContext,
+                                    convertedParam);
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -442,21 +491,35 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                         switch (paraContext.ReturnType)
                         {
                             case SupportedValueType.Boolean:
-                                paramValue = CreateValue(paraContext, BitConverter.ToBoolean(convertedParam, 0));
+                                paramValue = CreateValue(
+                                    paraContext,
+                                    BitConverter.ToBoolean(
+                                        convertedParam,
+                                        0));
                                 break;
 
                             case SupportedValueType.ByteArray:
-                                paramValue = CreateValue(paraContext, convertedParam);
+                                paramValue = CreateValue(
+                                    paraContext,
+                                    convertedParam);
                                 break;
 
                             case SupportedValueType.Numeric:
                                 switch (paraContext.IsFloat)
                                 {
                                     case true:
-                                        paramValue = CreateValue(paraContext, BitConverter.ToDouble(convertedParam, 0));
+                                        paramValue = CreateValue(
+                                            paraContext,
+                                            BitConverter.ToDouble(
+                                                convertedParam,
+                                                0));
                                         break;
                                     case false:
-                                        paramValue = CreateValue(paraContext, BitConverter.ToInt64(convertedParam, 0));
+                                        paramValue = CreateValue(
+                                            paraContext,
+                                            BitConverter.ToInt64(
+                                                convertedParam,
+                                                0));
                                         break;
                                     default:
                                         paraContext.DetermineFloat();
@@ -468,7 +531,9 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                             case SupportedValueType.String:
                                 paramValue = CreateValue(
                                     paraContext,
-                                    StringFormatter.FormatIntoString(convertedParam, stringFormatters));
+                                    StringFormatter.FormatIntoString(
+                                        convertedParam,
+                                        stringFormatters));
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -484,21 +549,29 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                         switch (paraContext.ReturnType)
                         {
                             case SupportedValueType.Boolean:
-                                paramValue = CreateValueFromFunc(paraContext, () => convertedParam() == 0);
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    () => convertedParam() == 0);
                                 break;
 
                             case SupportedValueType.ByteArray:
-                                paramValue = CreateValueFromFunc(paraContext, () => BitConverter.GetBytes(convertedParam()));
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    () => BitConverter.GetBytes(convertedParam()));
                                 break;
 
                             case SupportedValueType.Numeric:
                                 switch (paraContext.IsFloat)
                                 {
                                     case true:
-                                        paramValue = CreateValueFromFunc(paraContext, () => Convert.ToDouble(convertedParam()));
+                                        paramValue = CreateValueFromFunc(
+                                            paraContext,
+                                            () => Convert.ToDouble(convertedParam()));
                                         break;
                                     case false:
-                                        paramValue = CreateValueFromFunc(paraContext, convertedParam);
+                                        paramValue = CreateValueFromFunc(
+                                            paraContext,
+                                            convertedParam);
                                         break;
                                     default:
                                         paraContext.DetermineInteger();
@@ -508,7 +581,11 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                                 break;
 
                             case SupportedValueType.String:
-                                paramValue = CreateValueFromFunc(paraContext, () => StringFormatter.FormatIntoString(convertedParam(), stringFormatters));
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    () => StringFormatter.FormatIntoString(
+                                        convertedParam(),
+                                        stringFormatters));
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -525,21 +602,29 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                         {
                             case SupportedValueType.Boolean:
                                 // ReSharper disable once CompareOfFloatsByEqualityOperator - no better idea for now
-                                paramValue = CreateValueFromFunc(paraContext, () => convertedParam() == 0D);
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    () => convertedParam() == 0D);
                                 break;
 
                             case SupportedValueType.ByteArray:
-                                paramValue = CreateValueFromFunc(paraContext, () => BitConverter.GetBytes(convertedParam()));
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    () => BitConverter.GetBytes(convertedParam()));
                                 break;
 
                             case SupportedValueType.Numeric:
                                 switch (paraContext.IsFloat)
                                 {
                                     case true:
-                                        paramValue = CreateValueFromFunc(paraContext, convertedParam);
+                                        paramValue = CreateValueFromFunc(
+                                            paraContext,
+                                            convertedParam);
                                         break;
                                     case false:
-                                        paramValue = CreateValueFromFunc(paraContext, () => Convert.ToInt64(convertedParam()));
+                                        paramValue = CreateValueFromFunc(
+                                            paraContext,
+                                            () => Convert.ToInt64(convertedParam()));
                                         break;
                                     default:
                                         paraContext.DetermineFloat();
@@ -549,7 +634,11 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                                 break;
 
                             case SupportedValueType.String:
-                                paramValue = CreateValueFromFunc(paraContext, () => StringFormatter.FormatIntoString(convertedParam(), stringFormatters));
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    () => StringFormatter.FormatIntoString(
+                                        convertedParam(),
+                                        stringFormatters));
 
                                 break;
 
@@ -566,18 +655,26 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                         switch (paraContext.ReturnType)
                         {
                             case SupportedValueType.Boolean:
-                                paramValue = CreateValueFromFunc(paraContext, convertedParam);
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    convertedParam);
                                 break;
 
                             case SupportedValueType.ByteArray:
-                                paramValue = CreateValueFromFunc(paraContext, () => BitConverter.GetBytes(convertedParam()));
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    () => BitConverter.GetBytes(convertedParam()));
                                 break;
 
                             case SupportedValueType.Numeric:
                                 return null;
 
                             case SupportedValueType.String:
-                                paramValue = CreateValueFromFunc(paraContext, () => StringFormatter.FormatIntoString(convertedParam(), stringFormatters));
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    () => StringFormatter.FormatIntoString(
+                                        convertedParam(),
+                                        stringFormatters));
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -593,29 +690,45 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                         switch (paraContext.ReturnType)
                         {
                             case SupportedValueType.Boolean:
-                                paramValue = CreateValueFromFunc(paraContext, () => bool.Parse(convertedParam()));
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    () => bool.Parse(convertedParam()));
                                 break;
 
                             case SupportedValueType.ByteArray:
-                                paramValue = CreateValueFromFunc(paraContext, () => ParsingFormatter.ParseByteArray(convertedParam(), out var baResult) ? baResult : null);
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    () => ParsingFormatter.ParseByteArray(
+                                        convertedParam(),
+                                        out var baResult)
+                                        ? baResult
+                                        : Array.Empty<byte>());
                                 break;
 
                             case SupportedValueType.Numeric:
                                 switch (paraContext.IsFloat)
                                 {
                                     case true:
-                                        paramValue = CreateValueFromFunc(paraContext, () => ParsingFormatter.ParseNumeric(
-                                            convertedParam(),
-                                            out var numericResult)
-                                            ? Convert.ToDouble(numericResult, CultureInfo.CurrentCulture)
-                                            : throw new ArgumentInvalidTypeException(paraContext.Name));
+                                        paramValue = CreateValueFromFunc(
+                                            paraContext,
+                                            () => ParsingFormatter.ParseNumeric(
+                                                convertedParam(),
+                                                out var numericResult)
+                                                ? Convert.ToDouble(
+                                                    numericResult,
+                                                    CultureInfo.CurrentCulture)
+                                                : throw new ArgumentInvalidTypeException(paraContext.Name));
                                         break;
                                     case false:
-                                        paramValue = CreateValueFromFunc(paraContext, () => ParsingFormatter.ParseNumeric(
-                                            convertedParam(),
-                                            out var numericResult)
-                                            ? Convert.ToInt64(numericResult, CultureInfo.CurrentCulture)
-                                            : throw new ArgumentInvalidTypeException(paraContext.Name));
+                                        paramValue = CreateValueFromFunc(
+                                            paraContext,
+                                            () => ParsingFormatter.ParseNumeric(
+                                                convertedParam(),
+                                                out var numericResult)
+                                                ? Convert.ToInt64(
+                                                    numericResult,
+                                                    CultureInfo.CurrentCulture)
+                                                : throw new ArgumentInvalidTypeException(paraContext.Name));
                                         break;
                                     default:
                                         paraContext.DetermineFloat();
@@ -625,7 +738,9 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                                 break;
 
                             case SupportedValueType.String:
-                                paramValue = CreateValueFromFunc(paraContext, convertedParam);
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    convertedParam);
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -641,21 +756,35 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                         switch (paraContext.ReturnType)
                         {
                             case SupportedValueType.Boolean:
-                                paramValue = CreateValueFromFunc(paraContext, () => BitConverter.ToBoolean(convertedParam(), 0));
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    () => BitConverter.ToBoolean(
+                                        convertedParam(),
+                                        0));
                                 break;
 
                             case SupportedValueType.ByteArray:
-                                paramValue = CreateValueFromFunc(paraContext, convertedParam);
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    convertedParam);
                                 break;
 
                             case SupportedValueType.Numeric:
                                 switch (paraContext.IsFloat)
                                 {
                                     case true:
-                                        paramValue = CreateValueFromFunc(paraContext, () => BitConverter.ToDouble(convertedParam(), 0));
+                                        paramValue = CreateValueFromFunc(
+                                            paraContext,
+                                            () => BitConverter.ToDouble(
+                                                convertedParam(),
+                                                0));
                                         break;
                                     case false:
-                                        paramValue = CreateValueFromFunc(paraContext, () => BitConverter.ToInt64(convertedParam(), 0));
+                                        paramValue = CreateValueFromFunc(
+                                            paraContext,
+                                            () => BitConverter.ToInt64(
+                                                convertedParam(),
+                                                0));
                                         break;
                                     default:
                                         paraContext.DetermineFloat();
@@ -665,7 +794,11 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
                                 break;
 
                             case SupportedValueType.String:
-                                paramValue = CreateValueFromFunc(paraContext, () => StringFormatter.FormatIntoString(convertedParam(), stringFormatters));
+                                paramValue = CreateValueFromFunc(
+                                    paraContext,
+                                    () => StringFormatter.FormatIntoString(
+                                        convertedParam(),
+                                        stringFormatters));
                                 break;
 
                             case SupportedValueType.Unknown:
@@ -682,18 +815,17 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
 
 #pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation - This is unavoidable now
 #pragma warning disable HAA0303 // Considering moving this out of the generic method - Not really possible
-                object CreateValue<T>(ParameterContext parameterContext, T value) => parameterContext.FuncParameter ? new Func<T>(() => value) : (object)value;
+                object CreateValue<T>(
+                    ParameterContext parameterContext,
+                    T value)
+                    where T : notnull => parameterContext.FuncParameter ? new Func<T>(() => value) : value;
 
                 object CreateValueFromFunc<T>(
                     ParameterContext parameterContext,
-                    Func<T> value) => parameterContext.FuncParameter ? (object)value : value();
+                    Func<T> value)
+                    where T : notnull => parameterContext.FuncParameter ? value : value();
 #pragma warning restore HAA0303 // Considering moving this out of the generic method
 #pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
-
-                if (paramValue == null)
-                {
-                    return null;
-                }
 
                 finalValues[i] = paramValue;
 
@@ -722,9 +854,10 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
             try
             {
                 del = Expression.Lambda(
-                        tolerance == null ? body.GenerateExpression() : body.GenerateExpression(tolerance),
-                        parametersRegistry?.Dump().Select(p => p.ParameterExpression) ?? Array.Empty<ParameterExpression>())
-                    .Compile();
+                                    tolerance == null ? body.GenerateExpression() : body.GenerateExpression(tolerance),
+                                    parametersRegistry?.Dump().Select(p => p.ParameterExpression) ??
+                                    Array.Empty<ParameterExpression>())
+                                .Compile();
             }
             catch
             {
@@ -741,7 +874,7 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
 
         try
         {
-            return del.DynamicInvoke(convertedArguments);
+            return del.DynamicInvoke(convertedArguments) ?? initialExpression;
         }
         catch (OutOfMemoryException)
         {
@@ -776,7 +909,9 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     /// <returns>
     /// The computed result, or, if the expression is not recognized correctly, the expression as a <see cref="string" />.
     /// </returns>
-    public object Compute(Tolerance? tolerance, IDataFinder dataFinder)
+    public object Compute(
+        Tolerance? tolerance,
+        IDataFinder dataFinder)
     {
         this.RequiresNotDisposed();
 
@@ -793,15 +928,21 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
 
         foreach (ParameterContext p in parametersRegistry?.Dump() ?? Array.Empty<ParameterContext>())
         {
-            if (!dataFinder.TryGetData(p.Name, out var data))
+            if (!dataFinder.TryGetData(
+                    p.Name,
+                    out var data))
             {
-                data = null;
+                return initialExpression;
             }
 
             pars.Add(data);
         }
 
-        return pars.Any(p => p == null) ? initialExpression : Compute(tolerance, pars.ToArray());
+        return pars.Any(p => p == null)
+            ? initialExpression
+            : Compute(
+                tolerance,
+                pars.ToArray());
     }
 
     /// <summary>
@@ -811,9 +952,16 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     public ComputedExpression DeepClone()
     {
         var registry = new StandardParameterRegistry(stringFormatters);
-        var context = new NodeCloningContext { ParameterRegistry = registry, SpecialRequestFunction = specialObjectRequestFunc };
+        var context = new NodeCloningContext
+            { ParameterRegistry = registry, SpecialRequestFunction = specialObjectRequestFunc };
 
-        return new ComputedExpression(initialExpression, body?.DeepClone(context), RecognizedCorrectly, registry, stringFormatters, specialObjectRequestFunc);
+        return new(
+            initialExpression,
+            body?.DeepClone(context),
+            RecognizedCorrectly,
+            registry,
+            stringFormatters,
+            specialObjectRequestFunc);
     }
 
     /// <summary>
@@ -823,6 +971,8 @@ public sealed class ComputedExpression : DisposableBase, IDeepCloneable<Computed
     {
         base.DisposeGeneralContext();
 
-        _ = Interlocked.Exchange(ref body, null);
+        _ = Interlocked.Exchange(
+            ref body,
+            null);
     }
 }

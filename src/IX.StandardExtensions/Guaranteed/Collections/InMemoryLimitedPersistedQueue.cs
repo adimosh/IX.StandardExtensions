@@ -66,11 +66,11 @@ public class InMemoryLimitedPersistedQueue<T> : PersistedQueueBase<T>
             fileShim,
             directoryShim,
             pathShim,
-            new DataContractSerializer(typeof(T)),
+            new(typeof(T)),
             EnvironmentSettings.PersistedCollectionsLockTimeout)
     {
         // Internal state
-        internalQueue = new System.Collections.Generic.Queue<string>();
+        internalQueue = new();
 
         // Initialize objects
         foreach (Tuple<T, string> item in LoadValidItemObjectHandles())

@@ -51,8 +51,8 @@ internal class EUCKRProber : CharsetProber
 
     public EUCKRProber()
     {
-        codingSM = new CodingStateMachine(new EUCKRSMModel());
-        distributionAnalyser = new EUCKRDistributionAnalyser();
+        codingSM = new(new EUCKRSMModel());
+        distributionAnalyser = new();
         Reset();
     }
 

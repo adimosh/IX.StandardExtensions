@@ -92,12 +92,12 @@ internal class CP949SMModel : StateMachineModel
     private readonly static int[] CP949CharLenTable = { 0, 1, 2, 0, 1, 1, 2, 2, 0, 2 };
 
     public CP949SMModel() : base(
-        new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+        new(BitPackage.INDEX_SHIFT_4BITS,
             BitPackage.SHIFT_MASK_4BITS,
             BitPackage.BIT_SHIFT_4BITS,
             BitPackage.UNIT_MASK_4BITS, CP949_cls),
         10,
-        new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+        new(BitPackage.INDEX_SHIFT_4BITS,
             BitPackage.SHIFT_MASK_4BITS,
             BitPackage.BIT_SHIFT_4BITS,
             BitPackage.UNIT_MASK_4BITS, CP949_st),

@@ -48,7 +48,7 @@ public class AutoResetEvent : DisposableBase,
     /// <param name="initialState">The initial signal state.</param>
     public AutoResetEvent(bool initialState)
     {
-        sre = new GlobalThreading.AutoResetEvent(initialState);
+        sre = new(initialState);
         eventLocal = true;
     }
 

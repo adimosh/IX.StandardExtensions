@@ -2,10 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using Xunit;
@@ -13,8 +9,6 @@ using Xunit.Abstractions;
 using EnvironmentSettings = IX.StandardExtensions.EnvironmentSettings;
 
 namespace IX.UnitTests.StandardExtensions.Threading;
-
-#nullable enable
 
 /// <summary>
 /// Unit tests for <see cref="DelayedDisposer"/>.

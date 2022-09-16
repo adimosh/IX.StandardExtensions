@@ -52,12 +52,12 @@ internal class UCS2BE_SMModel : StateMachineModel
     private readonly static int[] UCS2BECharLenTable = { 2, 2, 2, 0, 2, 2 };
 
     public UCS2BE_SMModel() : base(
-        new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+        new(BitPackage.INDEX_SHIFT_4BITS,
             BitPackage.SHIFT_MASK_4BITS,
             BitPackage.BIT_SHIFT_4BITS,
             BitPackage.UNIT_MASK_4BITS, UCS2BE_cls),
         6,
-        new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+        new(BitPackage.INDEX_SHIFT_4BITS,
             BitPackage.SHIFT_MASK_4BITS,
             BitPackage.BIT_SHIFT_4BITS,
             BitPackage.UNIT_MASK_4BITS, UCS2BE_st),

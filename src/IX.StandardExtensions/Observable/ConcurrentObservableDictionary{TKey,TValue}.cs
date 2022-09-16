@@ -429,7 +429,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         {
             // If index was added at a specific index
             RaiseCollectionChangedAdd(
-                new KeyValuePair<TKey, TValue>(
+                new(
                     key,
                     value),
                 newIndex);
@@ -511,7 +511,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         {
             // If index was added at a specific index
             RaiseCollectionChangedAdd(
-                new KeyValuePair<TKey, TValue>(
+                new(
                     key,
                     value),
                 newIndex);
@@ -589,7 +589,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue> : ObservableDi
         {
             // If index was added at a specific index
             RaiseCollectionChangedRemove(
-                new KeyValuePair<TKey, TValue>(
+                new(
                     key,
                     value),
                 oldIndex);

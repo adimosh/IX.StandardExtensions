@@ -56,7 +56,7 @@ public static class EnvironmentSettings
 #region Static methods
 
     internal static Lazy<ReaderWriterLockSlim> GenerateDefaultLocker() =>
-        new(() => new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion));
+        new(() => new(LockRecursionPolicy.NoRecursion));
 
 #endregion
 

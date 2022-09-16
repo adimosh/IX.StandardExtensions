@@ -68,7 +68,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -139,7 +139,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -205,7 +205,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new(key, value), oldIndex);
         }
 
         // Property changed
@@ -277,7 +277,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -350,7 +350,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -418,7 +418,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new(key, value), oldIndex);
         }
 
         // Property changed
@@ -492,7 +492,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -567,7 +567,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -637,7 +637,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new(key, value), oldIndex);
         }
 
         // Property changed
@@ -713,7 +713,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -790,7 +790,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -862,7 +862,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new(key, value), oldIndex);
         }
 
         // Property changed
@@ -940,7 +940,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -1019,7 +1019,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -1093,7 +1093,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new(key, value), oldIndex);
         }
 
         // Property changed
@@ -1173,7 +1173,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -1254,7 +1254,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -1330,7 +1330,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new(key, value), oldIndex);
         }
 
         // Property changed
@@ -1412,7 +1412,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -1495,7 +1495,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -1573,7 +1573,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new(key, value), oldIndex);
         }
 
         // Property changed
@@ -1657,7 +1657,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -1742,7 +1742,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedAdd(new KeyValuePair<TKey, TValue>(key, value), newIndex);
+            RaiseCollectionChangedAdd(new(key, value), newIndex);
         }
 
         // Property changed
@@ -1822,7 +1822,7 @@ public partial class ConcurrentObservableDictionary<TKey, TValue>
         else
         {
             // If index was added at a specific index
-            RaiseCollectionChangedRemove(new KeyValuePair<TKey, TValue>(key, value), oldIndex);
+            RaiseCollectionChangedRemove(new(key, value), oldIndex);
         }
 
         // Property changed

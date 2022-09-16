@@ -2,7 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-#if !NET5_0_OR_GREATER
+#if !NET6_0_OR_GREATER
 using JetBrains.Annotations;
 
 // ReSharper disable once CheckNamespace

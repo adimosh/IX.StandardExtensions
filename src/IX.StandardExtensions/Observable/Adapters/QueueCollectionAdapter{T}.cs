@@ -32,7 +32,7 @@ internal class QueueCollectionAdapter<T> : ModernCollectionAdapter<T, Queue<T>.E
     ///     Initializes a new instance of the <see cref="QueueCollectionAdapter{T}" /> class.
     /// </summary>
     /// <param name="queue">The queue.</param>
-    internal QueueCollectionAdapter(IEnumerable<T> queue) => this.queue = new System.Collections.Generic.Queue<T>(queue);
+    internal QueueCollectionAdapter(IEnumerable<T> queue) => this.queue = new(queue);
 
 #endregion
 

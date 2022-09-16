@@ -52,7 +52,7 @@ internal class UTF8Prober : CharsetProber
     public UTF8Prober()
     {
         numOfMBChar = 0;
-        codingSM = new CodingStateMachine(new UTF8_SMModel());
+        codingSM = new(new UTF8_SMModel());
         Reset();
     }
 

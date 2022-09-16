@@ -39,8 +39,8 @@ namespace IX.UnitTests.Math
                 }
             }
 
-            using (var service = new ExpressionParsingService(new MathDefinition
-            {
+            using (var service = new ExpressionParsingService(new()
+                   {
                 Parentheses = ("(", ")"),
                 SpecialSymbolIndicators = ("[", "]"),
                 StringIndicator = "\"",

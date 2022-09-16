@@ -52,8 +52,8 @@ internal class EUCTWProber : CharsetProber
 
     public EUCTWProber()
     {
-        codingSM = new CodingStateMachine(new EUCTWSMModel());
-        distributionAnalyser = new EUCTWDistributionAnalyser();
+        codingSM = new(new EUCTWSMModel());
+        distributionAnalyser = new();
         Reset();
     }
 

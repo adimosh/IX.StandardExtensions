@@ -105,7 +105,7 @@ public static class StringExtensions
             }
         }
 
-        return new string(array);
+        return new(array);
     }
 
 #endregion

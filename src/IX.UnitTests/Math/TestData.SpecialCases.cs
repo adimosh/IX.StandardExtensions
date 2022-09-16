@@ -16,8 +16,8 @@ namespace IX.UnitTests.Math
         ///     Provides templated random text data for basic operators and parantheses.
         /// </summary>
         /// <returns>Test data.</returns>
-        private static List<object[]> SpecialCases() => new List<object[]>
-            {
+        private static List<object[]> SpecialCases() => new()
+        {
                 new object[]
                 {
                     "0=0",

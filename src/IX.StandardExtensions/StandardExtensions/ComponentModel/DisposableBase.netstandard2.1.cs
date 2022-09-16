@@ -58,7 +58,7 @@ public abstract partial class DisposableBase : IAsyncDisposable
     {
         DisposeManagedContext();
 
-        return new ValueTask(Task.CompletedTask);
+        return new(Task.CompletedTask);
     }
 
     /// <summary>
@@ -71,7 +71,7 @@ public abstract partial class DisposableBase : IAsyncDisposable
     {
         DisposeGeneralContext();
 
-        return new ValueTask(Task.CompletedTask);
+        return new(Task.CompletedTask);
     }
 
     /// <summary>

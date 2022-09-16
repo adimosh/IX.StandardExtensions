@@ -41,7 +41,7 @@ public class ManualResetEventSlim : DisposableBase,
     /// </summary>
     public ManualResetEventSlim()
     {
-        internalResetEvent = new GlobalThreading.ManualResetEventSlim();
+        internalResetEvent = new();
         eventLocal = true;
     }
 
@@ -51,7 +51,7 @@ public class ManualResetEventSlim : DisposableBase,
     /// <param name="initialState">The initial signal state.</param>
     public ManualResetEventSlim(bool initialState)
     {
-        internalResetEvent = new GlobalThreading.ManualResetEventSlim(initialState);
+        internalResetEvent = new(initialState);
         eventLocal = true;
     }
 

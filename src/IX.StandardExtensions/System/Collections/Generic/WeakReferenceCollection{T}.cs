@@ -34,7 +34,7 @@ where T : class
     /// <param name="longWeakReferenceByDefault"><c>true</c> to use long weak references, <c>false</c> to use short ones.</param>
     public WeakReferenceCollection(bool longWeakReferenceByDefault)
     {
-        _references = new List<WeakReference<T>>();
+        _references = new();
         _longWeakReferenceByDefault = longWeakReferenceByDefault;
     }
 

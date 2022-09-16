@@ -21,7 +21,7 @@ public partial class ReaderWriterSynchronizedBase
     {
         ThrowIfCurrentObjectDisposed();
 
-        return new ReadOnlySynchronizationLocker(
+        return new(
             _locker,
             lockerTimeout);
     }
@@ -36,7 +36,7 @@ public partial class ReaderWriterSynchronizedBase
     {
         ThrowIfCurrentObjectDisposed();
 
-        return new WriteOnlySynchronizationLocker(
+        return new(
             _locker,
             lockerTimeout);
     }
@@ -51,7 +51,7 @@ public partial class ReaderWriterSynchronizedBase
     {
         ThrowIfCurrentObjectDisposed();
 
-        return new ReadWriteSynchronizationLocker(
+        return new(
             _locker,
             lockerTimeout);
     }

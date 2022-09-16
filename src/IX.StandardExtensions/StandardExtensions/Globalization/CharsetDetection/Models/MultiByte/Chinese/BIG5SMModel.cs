@@ -48,12 +48,12 @@ internal class BIG5SMModel : StateMachineModel
     private readonly static int[] BIG5CharLenTable = {0, 1, 1, 2, 0};
 
     public BIG5SMModel() : base(
-        new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+        new(BitPackage.INDEX_SHIFT_4BITS,
             BitPackage.SHIFT_MASK_4BITS,
             BitPackage.BIT_SHIFT_4BITS,
             BitPackage.UNIT_MASK_4BITS, BIG5_cls),
         5,
-        new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+        new(BitPackage.INDEX_SHIFT_4BITS,
             BitPackage.SHIFT_MASK_4BITS,
             BitPackage.BIT_SHIFT_4BITS,
             BitPackage.UNIT_MASK_4BITS, BIG5_st),

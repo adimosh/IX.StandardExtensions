@@ -15,7 +15,7 @@ internal class StandardParameterRegistry : IParameterRegistry
 
     public StandardParameterRegistry(List<IStringFormatter> stringFormatters)
     {
-        parameterContexts = new ConcurrentDictionary<string, ParameterContext>();
+        parameterContexts = new();
         this.stringFormatters = stringFormatters;
     }
 
@@ -28,7 +28,7 @@ internal class StandardParameterRegistry : IParameterRegistry
             throw new ArgumentNullException(nameof(name));
         }
 
-        return parameterContexts.GetOrAdd(name, (nameL1, formattersL1) => new ParameterContext(nameL1, formattersL1), stringFormatters);
+        return parameterContexts.GetOrAdd(name, (nameL1, formattersL1) => new(nameL1, formattersL1), stringFormatters);
     }
 
     public ParameterContext CloneFrom(ParameterContext previousContext)

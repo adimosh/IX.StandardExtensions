@@ -47,10 +47,10 @@ internal class WorkingExpressionSet : DisposableBase
         CancellationToken cancellationToken)
     {
         ParameterRegistry = new StandardParameterRegistry(stringFormatters);
-        ConstantsTable = new Dictionary<string, ConstantNodeBase>();
-        ReverseConstantsTable = new Dictionary<string, string>();
-        SymbolTable = new Dictionary<string, ExpressionSymbol>();
-        ReverseSymbolTable = new Dictionary<string, string>();
+        ConstantsTable = new();
+        ReverseConstantsTable = new();
+        SymbolTable = new();
+        ReverseSymbolTable = new();
         StringFormatters = stringFormatters;
 
         CancellationToken = cancellationToken;
@@ -86,7 +86,7 @@ internal class WorkingExpressionSet : DisposableBase
         Extractors = extractors;
         Interpreters = interpreters;
 
-        FunctionRegex = new Regex(
+        FunctionRegex = new(
             $@"(?'functionName'.*?){Regex.Escape(mathDefinition.Parentheses.Left)}(?'expression'.*?){Regex.Escape(mathDefinition.Parentheses.Right)}");
     }
 
@@ -474,7 +474,7 @@ internal class WorkingExpressionSet : DisposableBase
 
         // Binary operators
         BinaryOperators =
-            new LevelDictionary<string, Func<MathDefinition, NodeBase, NodeBase, BinaryOperatorNodeBase>>
+            new()
             {
                 // First tier - Comparison and equation operators
                 {
@@ -634,7 +634,7 @@ internal class WorkingExpressionSet : DisposableBase
             };
 
         // Unary operators
-        UnaryOperators = new LevelDictionary<string, Func<MathDefinition, NodeBase, UnaryOperatorNodeBase>>
+        UnaryOperators = new()
         {
             // First tier - Negation and inversion
             {

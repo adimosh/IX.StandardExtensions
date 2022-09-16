@@ -110,7 +110,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
         _ = directoryShim.RequiresExists(persistenceFolderPath);
 
         // Internal state
-        poisonedUnremovableFiles = new List<string>();
+        poisonedUnremovableFiles = new();
 
         // Persistence folder paths
         var dataFolderPath = pathShim.Combine(
@@ -1401,7 +1401,7 @@ public abstract class PersistedQueueBase<T> : ReaderWriterSynchronizedBase,
                 continue;
             }
 
-            yield return new Tuple<T, string>(
+            yield return new(
                 obj,
                 possibleFilePath);
         }

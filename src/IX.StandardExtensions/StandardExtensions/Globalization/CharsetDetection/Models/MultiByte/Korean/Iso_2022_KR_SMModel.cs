@@ -48,12 +48,12 @@ internal class Iso_2022_KR_SMModel : StateMachineModel
     private readonly static int[] ISO2022KRCharLenTable = {0, 0, 0, 0, 0, 0};
 
     public Iso_2022_KR_SMModel() : base(
-        new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+        new(BitPackage.INDEX_SHIFT_4BITS,
             BitPackage.SHIFT_MASK_4BITS,
             BitPackage.BIT_SHIFT_4BITS,
             BitPackage.UNIT_MASK_4BITS, ISO2022KR_cls),
         6,
-        new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+        new(BitPackage.INDEX_SHIFT_4BITS,
             BitPackage.SHIFT_MASK_4BITS,
             BitPackage.BIT_SHIFT_4BITS,
             BitPackage.UNIT_MASK_4BITS, ISO2022KR_st),

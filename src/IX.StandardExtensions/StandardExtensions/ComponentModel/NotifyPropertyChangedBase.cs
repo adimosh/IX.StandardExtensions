@@ -65,7 +65,7 @@ public abstract class NotifyPropertyChangedBase : SynchronizationContextInvokerB
                     invoker,
                     propertyName) => invoker.PropertyChanged?.Invoke(
                     invoker,
-                    new PropertyChangedEventArgs(propertyName)),
+                    new(propertyName)),
                 this,
                 changedPropertyName);
         }
@@ -89,7 +89,7 @@ public abstract class NotifyPropertyChangedBase : SynchronizationContextInvokerB
                     invoker,
                     propertyName) => invoker.PropertyChanged?.Invoke(
                     invoker,
-                    new PropertyChangedEventArgs(propertyName)),
+                    new(propertyName)),
                 this,
                 changedPropertyName);
         }
@@ -113,7 +113,7 @@ public abstract class NotifyPropertyChangedBase : SynchronizationContextInvokerB
                     invoker,
                     propertyName) => invoker.PropertyChanged?.Invoke(
                     invoker,
-                    new PropertyChangedEventArgs(propertyName)),
+                    new(propertyName)),
                 this,
                 changedPropertyName);
         }

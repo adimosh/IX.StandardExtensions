@@ -45,7 +45,7 @@ public static class BitwiseExtensions
             return result;
         }
 
-        result = new BitArray(data);
+        result = new(data);
 
         for (var i = 0; i < result.Length - howManyBits; i++)
         {
@@ -117,7 +117,7 @@ public static class BitwiseExtensions
             return result;
         }
 
-        result = new BitArray(data);
+        result = new(data);
 
         for (var i = result.Length - 1; i >= howManyBits; i--)
         {
@@ -172,7 +172,7 @@ public static class BitwiseExtensions
 
         if (howManyBits == 0)
         {
-            return new BitArray(data);
+            return new(data);
         }
 
         return howManyBits >= data.Length ? new BitArray(data.Length) : null;

@@ -28,7 +28,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<byte>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<sbyte>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -58,7 +58,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<short>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<ushort>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -88,7 +88,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<char>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -103,7 +103,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<int>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<uint>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -133,7 +133,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<long>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -148,7 +148,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<ulong>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -163,7 +163,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<float>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -178,7 +178,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<double>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -193,7 +193,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<decimal>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -208,7 +208,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<DateTime>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -223,7 +223,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<bool>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -238,7 +238,7 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<TimeSpan>(localList);
+        return new(localList);
     }
 
     /// <summary>
@@ -253,6 +253,6 @@ public static partial class IListCloneExtensions
     {
         var localList = Requires.NotNull(list);
 
-        return new List<string>(localList);
+        return new(localList);
     }
 }

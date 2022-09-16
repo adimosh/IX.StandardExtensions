@@ -25,7 +25,7 @@ public class RequiresUnitTests
         Justification = "This is the purpose of the test.")]
     public void Test1()
     {
-        string x = null;
+        string? x = null;
         try
         {
             _ = Requires.NotNull(x, nameof(x));
@@ -102,8 +102,6 @@ public class RequiresUnitTests
             Assert.True(false, "An exception was thrown even if one was not expected.");
         }
     }
-
-#nullable enable
 
     /// <summary>
     /// Requires.NotNull on null nullable class.

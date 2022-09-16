@@ -117,7 +117,7 @@ internal sealed class StringExtractor : Extensibility.IConstantsExtractor
                 stringIndicatorString,
                 body.ToString());
 
-            sb ??= new StringBuilder(originalExpression.Length);
+            sb ??= new(originalExpression.Length);
 
             #if NETSTANDARD21_OR_GREATER
             sb.Append(header);

@@ -29,8 +29,8 @@ public class InvalidatingLazy<T>
     /// </summary>
     public InvalidatingLazy()
     {
-        internalLazy = new Lazy<T>();
-        lazyCreator = () => new Lazy<T>();
+        internalLazy = new();
+        lazyCreator = () => new();
     }
 
     /// <summary>
@@ -47,8 +47,8 @@ public class InvalidatingLazy<T>
         Justification = "Unavoidable.")]
     public InvalidatingLazy(Func<T> valueFactory)
     {
-        internalLazy = new Lazy<T>(valueFactory);
-        lazyCreator = () => new Lazy<T>(valueFactory);
+        internalLazy = new(valueFactory);
+        lazyCreator = () => new(valueFactory);
     }
 
     /// <summary>
@@ -68,8 +68,8 @@ public class InvalidatingLazy<T>
         Justification = "Unavoidable.")]
     public InvalidatingLazy(bool isThreadSafe)
     {
-        internalLazy = new Lazy<T>(isThreadSafe);
-        lazyCreator = () => new Lazy<T>(isThreadSafe);
+        internalLazy = new(isThreadSafe);
+        lazyCreator = () => new(isThreadSafe);
     }
 
     /// <summary>
@@ -86,8 +86,8 @@ public class InvalidatingLazy<T>
         Justification = "Unavoidable.")]
     public InvalidatingLazy(LazyThreadSafetyMode mode)
     {
-        internalLazy = new Lazy<T>(mode);
-        lazyCreator = () => new Lazy<T>(mode);
+        internalLazy = new(mode);
+        lazyCreator = () => new(mode);
     }
 
     /// <summary>
@@ -110,10 +110,10 @@ public class InvalidatingLazy<T>
         Func<T> valueFactory,
         bool isThreadSafe)
     {
-        internalLazy = new Lazy<T>(
+        internalLazy = new(
             valueFactory,
             isThreadSafe);
-        lazyCreator = () => new Lazy<T>(
+        lazyCreator = () => new(
             valueFactory,
             isThreadSafe);
     }
@@ -135,10 +135,10 @@ public class InvalidatingLazy<T>
         Func<T> valueFactory,
         LazyThreadSafetyMode mode)
     {
-        internalLazy = new Lazy<T>(
+        internalLazy = new(
             valueFactory,
             mode);
-        lazyCreator = () => new Lazy<T>(
+        lazyCreator = () => new(
             valueFactory,
             mode);
     }

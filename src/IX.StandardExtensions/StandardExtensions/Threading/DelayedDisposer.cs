@@ -19,7 +19,7 @@ public static class DelayedDisposer
     private static readonly List<IDisposable> DisposablesGeneration1 = new();
     private static readonly object Locker = new();
 
-    private static bool currentlyRunning;
+    private static bool _currentlyRunning;
 
 #endregion
 
@@ -199,7 +199,7 @@ public static class DelayedDisposer
         {
             lock (Locker)
             {
-                currentlyRunning = false;
+                _currentlyRunning = false;
             }
         }
     }
@@ -212,12 +212,12 @@ public static class DelayedDisposer
     {
         lock (Locker)
         {
-            if (currentlyRunning)
+            if (_currentlyRunning)
             {
                 return;
             }
 
-            currentlyRunning = true;
+            _currentlyRunning = true;
         }
 
         _ = Work.OnThreadPoolAsync(DisposableThread);

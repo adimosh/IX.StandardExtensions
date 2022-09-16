@@ -102,18 +102,18 @@ public static class ConversionExtensions
     public static ResponseForwardingEnvelope ToEnvelope(this RestResponse response) =>
         response switch
         {
-            { ResponseStatus: not ResponseStatus.Completed } => new ResponseForwardingEnvelope(false),
-            { ContentLength: > 0, ContentType: ContentType.Json } => new ResponseForwardingEnvelope(
+            { ResponseStatus: not ResponseStatus.Completed } => new(false),
+            { ContentLength: > 0, ContentType: ContentType.Json } => new(
                 response.ResponseStatus == ResponseStatus.Completed,
                 response.StatusCode,
                 response.Content,
                 AdditionalHeaders: response.Headers.ToEnvelopes()),
-            { ContentLength: > 0 } => new ResponseForwardingEnvelope(
+            { ContentLength: > 0 } => new(
                 response.ResponseStatus == ResponseStatus.Completed,
                 response.StatusCode,
                 RawContent: response.RawBytes,
                 AdditionalHeaders: response.Headers.ToEnvelopes()),
-            _ => new ResponseForwardingEnvelope(
+            _ => new(
                 response.ResponseStatus == ResponseStatus.Completed,
                 response.StatusCode,
                 AdditionalHeaders: response.Headers.ToEnvelopes())

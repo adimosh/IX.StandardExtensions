@@ -76,8 +76,8 @@ public abstract class PushingCollectionBase<T> : ReaderWriterSynchronizedBase,
 
         this._limit = limit;
 
-        internalContainer = new List<T>();
-        _pushedItems = new PushOutObservableBroker();
+        internalContainer = new();
+        _pushedItems = new();
     }
 
 #endregion

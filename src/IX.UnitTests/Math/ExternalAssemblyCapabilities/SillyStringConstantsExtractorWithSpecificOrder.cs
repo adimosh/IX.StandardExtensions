@@ -19,7 +19,7 @@ namespace IX.UnitTests.Math.ExternalAssemblyCapabilities
     [UsedImplicitly]
     public class SillyStringConstantsExtractorWithSpecificOrder : IConstantsExtractor
     {
-        private readonly Regex exponentialNotationRegex = new Regex(@"silly");
+        private readonly Regex exponentialNotationRegex = new(@"silly");
 
         /// <summary>
         /// Extracts all constants, replacing them from the original expression.

@@ -40,7 +40,7 @@ public class ExpressionSymbol
     ///     Gets or sets the name of the expression symbol.
     /// </summary>
     /// <value>The name.</value>
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     internal static ExpressionSymbol GenerateSymbol(
         string name,

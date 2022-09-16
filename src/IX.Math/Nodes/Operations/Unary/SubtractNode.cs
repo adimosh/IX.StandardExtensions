@@ -51,7 +51,7 @@ internal sealed class SubtractNode : UnaryOperatorNodeBase
         Operand switch
         {
             NumericNode numericNode => NumericNode.Subtract(
-                new NumericNode(0),
+                new(0),
                 numericNode),
             _ => this
         };

@@ -243,7 +243,7 @@ public abstract partial class SynchronizationContextInvokerBase : DisposableBase
     protected void InvokeExceptionOccurredOnSeparateThread(Exception ex) =>
         ExceptionOccurredOnSeparateThread?.Invoke(
             this,
-            new ExceptionOccurredEventArgs(ex));
+            new(ex));
 
     [SuppressMessage(
         "Design",

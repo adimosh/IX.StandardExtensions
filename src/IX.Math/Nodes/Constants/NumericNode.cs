@@ -112,20 +112,20 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     {
         if (left.IsFloat && right.IsFloat)
         {
-            return new NumericNode(left.floatValue + right.floatValue);
+            return new(left.floatValue + right.floatValue);
         }
 
         if (left.IsFloat && !right.IsFloat)
         {
-            return new NumericNode(left.floatValue + Convert.ToDouble(right.integerValue));
+            return new(left.floatValue + Convert.ToDouble(right.integerValue));
         }
 
         if (!left.IsFloat && right.IsFloat)
         {
-            return new NumericNode(Convert.ToDouble(left.integerValue) + right.floatValue);
+            return new(Convert.ToDouble(left.integerValue) + right.floatValue);
         }
 
-        return new NumericNode(left.integerValue + right.integerValue);
+        return new(left.integerValue + right.integerValue);
     }
 
     /// <summary>
@@ -138,20 +138,20 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     {
         if (left.IsFloat && right.IsFloat)
         {
-            return new NumericNode(left.floatValue - right.floatValue);
+            return new(left.floatValue - right.floatValue);
         }
 
         if (left.IsFloat && !right.IsFloat)
         {
-            return new NumericNode(left.floatValue - Convert.ToDouble(right.integerValue));
+            return new(left.floatValue - Convert.ToDouble(right.integerValue));
         }
 
         if (!left.IsFloat && right.IsFloat)
         {
-            return new NumericNode(Convert.ToDouble(left.integerValue) - right.floatValue);
+            return new(Convert.ToDouble(left.integerValue) - right.floatValue);
         }
 
-        return new NumericNode(left.integerValue - right.integerValue);
+        return new(left.integerValue - right.integerValue);
     }
 
     /// <summary>
@@ -164,20 +164,20 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     {
         if (left.IsFloat && right.IsFloat)
         {
-            return new NumericNode(left.floatValue * right.floatValue);
+            return new(left.floatValue * right.floatValue);
         }
 
         if (left.IsFloat && !right.IsFloat)
         {
-            return new NumericNode(left.floatValue * Convert.ToDouble(right.integerValue));
+            return new(left.floatValue * Convert.ToDouble(right.integerValue));
         }
 
         if (!left.IsFloat && right.IsFloat)
         {
-            return new NumericNode(Convert.ToDouble(left.integerValue) * right.floatValue);
+            return new(Convert.ToDouble(left.integerValue) * right.floatValue);
         }
 
-        return new NumericNode(left.integerValue * right.integerValue);
+        return new(left.integerValue * right.integerValue);
     }
 
     /// <summary>
@@ -200,7 +200,7 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
 
         double result = divided / divisor;
 
-        return new NumericNode(tryInteger ? NumericTypeHelper.DistillIntegerIfPossible(result) : result);
+        return new(tryInteger ? NumericTypeHelper.DistillIntegerIfPossible(result) : result);
     }
 
     /// <summary>
@@ -225,7 +225,7 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
             @base,
             pow);
 
-        return new NumericNode(tryInteger ? NumericTypeHelper.DistillIntegerIfPossible(result) : result);
+        return new(tryInteger ? NumericTypeHelper.DistillIntegerIfPossible(result) : result);
     }
 
     /// <summary>
@@ -239,7 +239,7 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
         var by = right.ExtractInt();
         var data = left.ExtractInteger();
 
-        return new NumericNode(data << by);
+        return new(data << by);
     }
 
     /// <summary>
@@ -253,7 +253,7 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
         var by = right.ExtractInt();
         var data = left.ExtractInteger();
 
-        return new NumericNode(data >> by);
+        return new(data >> by);
     }
 
     /// <summary>

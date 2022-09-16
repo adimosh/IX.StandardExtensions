@@ -32,11 +32,11 @@ public class AtomicEnumeratorUnitTests
 
         using List<int>.Enumerator enumerator = q.GetEnumerator();
 
-        List<int> newList1 = new List<int>(5), newList2 = new List<int>(5);
+        List<int> newList1 = new(5), newList2 = new(5);
 
         using var ae = AtomicEnumerator<int>.FromEnumerator(
             enumerator,
-            () => new ValueSynchronizationLockerRead());
+            () => new());
 
         // ACT
         while (ae.MoveNext())
@@ -76,12 +76,12 @@ public class AtomicEnumeratorUnitTests
             5
         };
 
-        List<int> newList1 = new List<int>(5), newList2 = new List<int>(5);
+        List<int> newList1 = new(5), newList2 = new(5);
 
         // ACT
         using var ae = AtomicEnumerator<int>.FromCollection(
             q,
-            () => new ValueSynchronizationLockerRead());
+            () => new());
 
         while (ae.MoveNext())
         {
@@ -122,12 +122,12 @@ public class AtomicEnumeratorUnitTests
 
         using List<int>.Enumerator enumerator = q.GetEnumerator();
 
-        List<int> newList1 = new List<int>(5), newList2 = new List<int>(5);
+        List<int> newList1 = new(5), newList2 = new(5);
 
         // ACT
         using var ae = AtomicEnumerator<int>.FromEnumerator(
             enumerator,
-            () => new ValueSynchronizationLockerRead());
+            () => new());
 
         while (ae.MoveNext())
         {

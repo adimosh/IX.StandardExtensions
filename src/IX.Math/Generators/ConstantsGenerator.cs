@@ -278,7 +278,7 @@ public static class ConstantsGenerator
         string originalExpression)
     {
         var index = int.Parse(
-            keys.Where(p => p.InvariantCultureStartsWith("Const") && p.Length > 5).LastOrDefault()?.Substring(5) ?? "0", CultureInfo.CurrentCulture);
+            keys.Where(p => p.InvariantCultureStartsWith("Const") && p.Length > 5).LastOrDefault()?[5..] ?? "0", CultureInfo.CurrentCulture);
 
         do
         {

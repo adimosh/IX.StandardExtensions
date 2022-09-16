@@ -59,9 +59,9 @@ internal class SJISProber : CharsetProber
 
     public SJISProber()
     {
-        codingSM = new CodingStateMachine(new SJIS_SMModel());
-        distributionAnalyser = new SJISDistributionAnalyser();
-        contextAnalyser = new SJISContextAnalyser();
+        codingSM = new(new SJIS_SMModel());
+        distributionAnalyser = new();
+        contextAnalyser = new();
         Reset();
     }
 

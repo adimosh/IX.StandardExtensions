@@ -52,9 +52,9 @@ internal class EUCJPProber : CharsetProber
 
     public EUCJPProber()
     {
-        codingSM = new CodingStateMachine(new EUCJPSMModel());
-        distributionAnalyser = new EUCJPDistributionAnalyser();
-        contextAnalyser = new EUCJPContextAnalyser();
+        codingSM = new(new EUCJPSMModel());
+        distributionAnalyser = new();
+        contextAnalyser = new();
         Reset();
     }
 

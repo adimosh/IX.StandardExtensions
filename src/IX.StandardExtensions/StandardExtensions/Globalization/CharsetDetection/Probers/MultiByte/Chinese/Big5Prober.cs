@@ -53,8 +53,8 @@ internal class Big5Prober : CharsetProber
 
     public Big5Prober()
     {
-        codingSM = new CodingStateMachine(new BIG5SMModel());
-        distributionAnalyser = new BIG5DistributionAnalyser();
+        codingSM = new(new BIG5SMModel());
+        distributionAnalyser = new();
         Reset();
     }
 

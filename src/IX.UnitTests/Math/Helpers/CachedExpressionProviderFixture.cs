@@ -23,8 +23,8 @@ namespace IX.UnitTests.Math.Helpers
         [UsedImplicitly]
         public CachedExpressionProviderFixture()
         {
-            CachedService = new CachedExpressionParsingService();
-            Service = new ExpressionParsingService();
+            CachedService = new();
+            Service = new();
         }
 
         /// <summary>

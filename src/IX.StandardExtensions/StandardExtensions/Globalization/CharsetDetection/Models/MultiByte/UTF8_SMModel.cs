@@ -110,12 +110,12 @@ internal class UTF8_SMModel : StateMachineModel
         {0, 1, 0, 0, 0, 0, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6 };
 
     public UTF8_SMModel() : base(
-        new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+        new(BitPackage.INDEX_SHIFT_4BITS,
             BitPackage.SHIFT_MASK_4BITS,
             BitPackage.BIT_SHIFT_4BITS,
             BitPackage.UNIT_MASK_4BITS, UTF8_cls),
         16,
-        new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+        new(BitPackage.INDEX_SHIFT_4BITS,
             BitPackage.SHIFT_MASK_4BITS,
             BitPackage.BIT_SHIFT_4BITS,
             BitPackage.UNIT_MASK_4BITS, UTF8_st),

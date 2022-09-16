@@ -49,7 +49,7 @@ public class ObjectPoolQueue<T> : INotifyThreadException
         int objectLimit = 1000,
         CancellationToken cancellationToken = default)
     {
-        objects = new Queue<T>();
+        objects = new();
         this.cancellationToken = cancellationToken;
         ObjectLimit = objectLimit;
         this.queueAction = queueAction;
@@ -161,7 +161,7 @@ public class ObjectPoolQueue<T> : INotifyThreadException
                     {
                         ExceptionOccurredOnSeparateThread?.Invoke(
                             this,
-                            new ExceptionOccurredEventArgs(ex));
+                            new(ex));
                     }
                 }
             }

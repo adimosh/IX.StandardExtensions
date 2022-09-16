@@ -48,7 +48,7 @@ public class ManualResetEvent : DisposableBase,
     /// <param name="initialState">The initial signal state.</param>
     public ManualResetEvent(bool initialState)
     {
-        sre = new GlobalThreading.ManualResetEvent(initialState);
+        sre = new(initialState);
         eventLocal = true;
     }
 

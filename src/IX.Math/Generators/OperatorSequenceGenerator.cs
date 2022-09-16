@@ -28,7 +28,7 @@ internal static class OperatorSequenceGenerator
                 if (index != -1)
                 {
                     indexes.Add(
-                        new Tuple<int, int, string>(
+                        new(
                             level.Key,
                             index,
                             op));

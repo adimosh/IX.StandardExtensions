@@ -54,8 +54,8 @@ internal class GB18030Prober : CharsetProber
     public GB18030Prober()
     {
         lastChar = new byte[2];
-        codingSM = new CodingStateMachine(new GB18030_SMModel());
-        analyser = new GB18030DistributionAnalyser();
+        codingSM = new(new GB18030_SMModel());
+        analyser = new();
         Reset();
     }
 

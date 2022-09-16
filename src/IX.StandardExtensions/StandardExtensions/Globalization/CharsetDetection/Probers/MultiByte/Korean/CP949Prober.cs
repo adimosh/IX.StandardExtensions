@@ -51,10 +51,10 @@ internal class CP949Prober : CharsetProber
 
     public CP949Prober()
     {
-        codingSM = new CodingStateMachine(new CP949SMModel());
+        codingSM = new(new CP949SMModel());
         // NOTE: CP949 is a superset of EUC-KR, so the distribution should be
         //       not different.
-        distributionAnalyser = new EUCKRDistributionAnalyser();
+        distributionAnalyser = new();
         Reset();
     }
 

@@ -54,10 +54,10 @@ internal class EscCharsetProber : CharsetProber
     public EscCharsetProber()
     {
         codingSM = new CodingStateMachine[CHARSETS_NUM];
-        codingSM[0] = new CodingStateMachine(new HZ_GB_2312_SMModel());
-        codingSM[1] = new CodingStateMachine(new Iso_2022_CN_SMModel());
-        codingSM[2] = new CodingStateMachine(new Iso_2022_JP_SMModel());
-        codingSM[3] = new CodingStateMachine(new Iso_2022_KR_SMModel());
+        codingSM[0] = new(new HZ_GB_2312_SMModel());
+        codingSM[1] = new(new Iso_2022_CN_SMModel());
+        codingSM[2] = new(new Iso_2022_JP_SMModel());
+        codingSM[3] = new(new Iso_2022_KR_SMModel());
         Reset();
     }
 

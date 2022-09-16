@@ -29,7 +29,7 @@ public sealed class CachedExpressionParsingService : ExpressionParsingServiceBas
     /// </summary>
     public CachedExpressionParsingService()
         : base(MathDefinition.Default) =>
-        cachedComputedExpressions = new ConcurrentDictionary<string, ComputedExpression>();
+        cachedComputedExpressions = new();
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="CachedExpressionParsingService" /> class.
@@ -37,7 +37,7 @@ public sealed class CachedExpressionParsingService : ExpressionParsingServiceBas
     /// <param name="definition">The math definition to use.</param>
     public CachedExpressionParsingService(MathDefinition definition)
         : base(definition) =>
-        cachedComputedExpressions = new ConcurrentDictionary<string, ComputedExpression>();
+        cachedComputedExpressions = new();
 
     /// <summary>
     ///     Interprets the mathematical expression and returns a container that can be invoked for solving using specific

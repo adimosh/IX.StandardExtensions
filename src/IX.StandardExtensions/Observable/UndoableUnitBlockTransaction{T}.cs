@@ -28,7 +28,7 @@ internal class UndoableUnitBlockTransaction<T> : OperationTransaction
             state => { ((ObservableCollectionBase<T>)state).FailExplicitUndoBlockTransaction(); },
             collectionBase);
 
-        StateChanges = new CompositeStateChange(new List<StateChangeBase>());
+        StateChanges = new(new());
     }
 
 #endregion

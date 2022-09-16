@@ -62,8 +62,8 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         SynchronizationContext? synchronizationContext = null)
         : base(synchronizationContext)
     {
-        entityErrors = new Lazy<ConcurrentDictionary<string, List<string>>>();
-        validatorLock = new object();
+        entityErrors = new();
+        validatorLock = new();
         this.busyScope = busyScope;
     }
 
@@ -161,7 +161,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
             var validationResults = new List<ValidationResult>();
             if (Validator.TryValidateObject(
                     this,
-                    new ValidationContext(
+                    new(
                         this,
                         null),
                     validationResults,
@@ -266,7 +266,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
                 invoker,
                 internalPropertyName) => invoker.ErrorsChanged?.Invoke(
                 invoker,
-                new DataErrorsChangedEventArgs(internalPropertyName)),
+                new(internalPropertyName)),
             this,
             propertyName);
 

@@ -45,7 +45,7 @@ public class MulticastDictionary<TKey, TValue> : DisposableBase
         TValue value) =>
         _ = innerDictionary.AddOrUpdate(
             key,
-            _ => new List<TValue>
+            _ => new()
             {
                 value
             },

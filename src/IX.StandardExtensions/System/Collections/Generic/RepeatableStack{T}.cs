@@ -37,7 +37,7 @@ public class RepeatableStack<T> : IStack<T>
     public RepeatableStack()
     {
         internalStack = new Stack<T>();
-        internalRepeatingStack = new List<T>();
+        internalRepeatingStack = new();
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class RepeatableStack<T> : IStack<T>
             out internalStack,
             originalStack,
             nameof(originalStack));
-        internalRepeatingStack = new List<T>();
+        internalRepeatingStack = new();
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ public class RepeatableStack<T> : IStack<T>
             originalData,
             nameof(originalData));
         internalStack = new Stack<T>(originalData);
-        internalRepeatingStack = new List<T>();
+        internalRepeatingStack = new();
     }
 
 #endregion

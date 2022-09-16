@@ -909,7 +909,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
     private void CollectionResetInvocationMethod() =>
         CollectionChanged?.Invoke(
             this,
-            new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            new(NotifyCollectionChangedAction.Reset));
 
     [SuppressMessage(
          "Design",
@@ -926,7 +926,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(
+                new(
                     NotifyCollectionChangedAction.Add,
                     internalItem,
                     internalIndex));
@@ -935,7 +935,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                new(NotifyCollectionChangedAction.Reset));
         }
     }
 
@@ -951,7 +951,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(
+                new(
                     NotifyCollectionChangedAction.Add,
                     internalItems.ToList(),
                     internalIndex));
@@ -960,7 +960,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                new(NotifyCollectionChangedAction.Reset));
         }
     }
 
@@ -979,7 +979,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(
+                new(
                     NotifyCollectionChangedAction.Remove,
                     internalItem,
                     internalIndex));
@@ -988,7 +988,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                new(NotifyCollectionChangedAction.Reset));
         }
     }
 
@@ -1004,7 +1004,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(
+                new(
                     NotifyCollectionChangedAction.Remove,
                     internalItems.ToList(),
                     internalIndex));
@@ -1013,7 +1013,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                new(NotifyCollectionChangedAction.Reset));
         }
     }
 
@@ -1033,7 +1033,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(
+                new(
                     NotifyCollectionChangedAction.Move,
                     internalItem,
                     internalNewIndex,
@@ -1043,7 +1043,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                new(NotifyCollectionChangedAction.Reset));
         }
     }
 
@@ -1060,7 +1060,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(
+                new(
                     NotifyCollectionChangedAction.Move,
                     internalItems.ToList(),
                     internalNewIndex,
@@ -1070,7 +1070,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                new(NotifyCollectionChangedAction.Reset));
         }
     }
 
@@ -1090,7 +1090,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(
+                new(
                     NotifyCollectionChangedAction.Replace,
                     internalNewItem,
                     internalOldItem,
@@ -1100,7 +1100,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                new(NotifyCollectionChangedAction.Reset));
         }
     }
 
@@ -1117,7 +1117,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(
+                new(
                     NotifyCollectionChangedAction.Replace,
                     internalNewItems.ToList(),
                     internalOldItems.ToList(),
@@ -1127,7 +1127,7 @@ public class NotifyCollectionChangedInvokerBase : NotifyPropertyChangedBase,
         {
             CollectionChanged?.Invoke(
                 this,
-                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                new(NotifyCollectionChangedAction.Reset));
         }
     }
 

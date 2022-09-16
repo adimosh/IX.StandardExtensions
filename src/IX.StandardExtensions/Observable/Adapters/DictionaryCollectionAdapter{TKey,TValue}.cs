@@ -32,9 +32,9 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapt
 
 #region Constructors and destructors
 
-    public DictionaryCollectionAdapter() => dictionary = new Dictionary<TKey, TValue>();
+    public DictionaryCollectionAdapter() => dictionary = new();
 
-    internal DictionaryCollectionAdapter(IDictionary<TKey, TValue> dictionary) => this.dictionary = new Dictionary<TKey, TValue>(dictionary);
+    internal DictionaryCollectionAdapter(IDictionary<TKey, TValue> dictionary) => this.dictionary = new(dictionary);
 
 #endregion
 
@@ -63,7 +63,7 @@ internal class DictionaryCollectionAdapter<TKey, TValue> : ModernCollectionAdapt
     public override void Clear()
     {
         Dictionary<TKey, TValue> tempDictionary = dictionary;
-        dictionary = new Dictionary<TKey, TValue>();
+        dictionary = new();
 
         _ = Work.OnThreadPoolAsync(
             oldDictionary => oldDictionary.Clear(),

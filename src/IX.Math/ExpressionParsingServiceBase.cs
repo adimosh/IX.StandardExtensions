@@ -67,17 +67,17 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
             nameof(definition));
 
         // Initialized internal state
-        constantExtractors = new LevelDictionary<Type, IConstantsExtractor>();
-        constantInterpreters = new LevelDictionary<Type, IConstantInterpreter>();
-        constantPassThroughExtractors = new LevelDictionary<Type, IConstantPassThroughExtractor>();
-        stringFormatters = new List<IStringFormatter>();
+        constantExtractors = new();
+        constantInterpreters = new();
+        constantPassThroughExtractors = new();
+        stringFormatters = new();
 
-        nonaryFunctions = new Dictionary<string, Type>();
-        unaryFunctions = new Dictionary<string, Type>();
-        binaryFunctions = new Dictionary<string, Type>();
-        ternaryFunctions = new Dictionary<string, Type>();
+        nonaryFunctions = new();
+        unaryFunctions = new();
+        binaryFunctions = new();
+        ternaryFunctions = new();
 
-        assembliesToRegister = new List<Assembly>
+        assembliesToRegister = new()
         {
             typeof(ExpressionParsingService).GetTypeInfo()
                 .Assembly
@@ -296,7 +296,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
                 expression,
                 this))
         {
-            return new ComputedExpression(
+            return new(
                 expression,
                 new StringNode(expression),
                 true,
@@ -328,7 +328,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
             (NodeBase? node, IParameterRegistry? parameterRegistry) = ExpressionGenerator.CreateBody(workingSet);
 
             result = !workingSet.Success
-                ? new ComputedExpression(
+                ? new(
                     expression,
                     null,
                     false,
@@ -356,7 +356,7 @@ public abstract class ExpressionParsingServiceBase : ReaderWriterSynchronizedBas
     [DiagCA.SuppressMessage(
         "IDisposableAnalyzers.Correctness",
         "IDISP017:Prefer using.",
-        Justification = "This ")]
+        Justification = "This is required.")]
     private IDisposable EnsureInitialization()
     {
         var innerLock = AcquireReadLock();

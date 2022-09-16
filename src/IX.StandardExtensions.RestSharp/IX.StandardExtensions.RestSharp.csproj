@@ -7,7 +7,6 @@
 
   <PropertyGroup>
     <FailObsoleteTargetFrameworks>true</FailObsoleteTargetFrameworks>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <!-- Package metadata -->
@@ -18,7 +17,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.7.24</VersionPrefix>
+    <VersionPrefix>0.7.25</VersionPrefix>
     <VersionSuffix>alpha1</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>

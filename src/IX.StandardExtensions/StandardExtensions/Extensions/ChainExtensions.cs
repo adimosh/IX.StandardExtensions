@@ -204,17 +204,17 @@ public static class ChainExtensions
     {
         if (cancellationToken.IsCancellationRequested)
         {
-            return new ValueTask<TInput>(Task.FromCanceled<TInput>(cancellationToken));
+            return new(Task.FromCanceled<TInput>(cancellationToken));
         }
 
         var vt = Requires.NotNull(chainDelegate)(Requires.NotNull(input));
 
         if (vt.IsCompletedSuccessfully)
         {
-            return new ValueTask<TInput>(input);
+            return new(input);
         }
 
-        return new ValueTask<TInput>(
+        return new(
             vt.AsTask()
                 .ContinueWith(
                     (
@@ -241,7 +241,7 @@ public static class ChainExtensions
     {
         if (cancellationToken.IsCancellationRequested)
         {
-            return new ValueTask<TOutput>(Task.FromCanceled<TOutput>(cancellationToken));
+            return new(Task.FromCanceled<TOutput>(cancellationToken));
         }
 
         return Requires.NotNull(chainDelegate)(Requires.NotNull(input));
@@ -265,7 +265,7 @@ public static class ChainExtensions
     {
         if (cancellationToken.IsCancellationRequested)
         {
-            return new ValueTask<TInput>(Task.FromCanceled<TInput>(cancellationToken));
+            return new(Task.FromCanceled<TInput>(cancellationToken));
         }
 
         var vt = Requires.NotNull(input);
@@ -278,7 +278,7 @@ public static class ChainExtensions
                 return vt;
             }
 
-            return new ValueTask<TInput>(
+            return new(
                 innerVt.AsTask()
                     .ContinueWith(
                         (
@@ -288,7 +288,7 @@ public static class ChainExtensions
                         TaskContinuationOptions.OnlyOnRanToCompletion));
         }
 
-        return new ValueTask<TInput>(
+        return new(
             vt.AsTask()
                 .ContinueWith(
                     (
@@ -337,7 +337,7 @@ public static class ChainExtensions
     {
         if (cancellationToken.IsCancellationRequested)
         {
-            return new ValueTask<TOutput>(Task.FromCanceled<TOutput>(cancellationToken));
+            return new(Task.FromCanceled<TOutput>(cancellationToken));
         }
 
         var vt = Requires.NotNull(input);
@@ -347,7 +347,7 @@ public static class ChainExtensions
             return Requires.NotNull(chainDelegate)(vt.Result);
         }
 
-        return new ValueTask<TOutput>(
+        return new(
             vt.AsTask()
                 .ContinueWith(
                     (

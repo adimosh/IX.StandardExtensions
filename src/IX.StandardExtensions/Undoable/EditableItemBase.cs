@@ -48,8 +48,8 @@ public abstract class EditableItemBase : ViewModelBase,
             in limit,
             nameof(limit));
 
-        undoContext = new Lazy<UndoableInnerContext>(InnerContextFactory);
-        stateChanges = new List<StateChangeBase>();
+        undoContext = new(InnerContextFactory);
+        stateChanges = new();
     }
 
 #endregion
@@ -608,7 +608,7 @@ public abstract class EditableItemBase : ViewModelBase,
 
         EditCommitted?.Invoke(
             this,
-            new EditCommittedEventArgs(stateChangeBase));
+            new(stateChangeBase));
     }
 
     private UndoableInnerContext InnerContextFactory() =>

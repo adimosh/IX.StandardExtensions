@@ -2263,7 +2263,7 @@ public static partial class Requires
     [ContractAnnotation("argument:null => halt")]
     [AssertionMethod]
     public static T ArgumentOfType<T>(
-        [NoEnumeration, AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object? argument,
+        [NoEnumeration][AssertionCondition(AssertionConditionType.IS_NOT_NULL)] object? argument,
         [CallerArgumentExpression("argument")]
         string argumentName = "argument")
     {

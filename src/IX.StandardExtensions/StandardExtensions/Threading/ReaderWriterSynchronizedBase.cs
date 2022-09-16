@@ -132,7 +132,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     {
         ThrowIfCurrentObjectDisposed();
 
-        return new ValueSynchronizationLockerRead(
+        return new(
             _locker,
             lockerTimeout);
     }
@@ -177,7 +177,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     {
         ThrowIfCurrentObjectDisposed();
 
-        return new ValueSynchronizationLockerWrite(
+        return new(
             _locker,
             lockerTimeout);
     }
@@ -222,7 +222,7 @@ public abstract partial class ReaderWriterSynchronizedBase : DisposableBase
     {
         ThrowIfCurrentObjectDisposed();
 
-        return new ValueSynchronizationLockerReadWrite(
+        return new(
             _locker,
             lockerTimeout);
     }

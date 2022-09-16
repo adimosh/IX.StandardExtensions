@@ -49,12 +49,12 @@ internal class EUCTWSMModel : StateMachineModel
     private readonly static int[] EUCTWCharLenTable = { 0, 0, 1, 2, 2, 2, 3 };
 
     public EUCTWSMModel() : base(
-        new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+        new(BitPackage.INDEX_SHIFT_4BITS,
             BitPackage.SHIFT_MASK_4BITS,
             BitPackage.BIT_SHIFT_4BITS,
             BitPackage.UNIT_MASK_4BITS, EUCTW_cls),
         7,
-        new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+        new(BitPackage.INDEX_SHIFT_4BITS,
             BitPackage.SHIFT_MASK_4BITS,
             BitPackage.BIT_SHIFT_4BITS,
             BitPackage.UNIT_MASK_4BITS, EUCTW_st),

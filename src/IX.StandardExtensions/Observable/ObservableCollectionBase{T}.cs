@@ -74,7 +74,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         bool suppressUndoable)
         : base(internalContainer)
     {
-        undoContext = new Lazy<UndoableInnerContext>(InnerContextFactory);
+        undoContext = new(InnerContextFactory);
         this.suppressUndoable = EnvironmentSettings.DisableUndoable || suppressUndoable;
         historyLevels = EnvironmentSettings.DefaultUndoRedoLevels;
     }
@@ -93,7 +93,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             internalContainer,
             context)
     {
-        undoContext = new Lazy<UndoableInnerContext>(InnerContextFactory);
+        undoContext = new(InnerContextFactory);
         this.suppressUndoable = EnvironmentSettings.DisableUndoable || suppressUndoable;
         historyLevels = EnvironmentSettings.DefaultUndoRedoLevels;
     }
@@ -1079,7 +1079,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         {
             EditCommittedInternal?.Invoke(
                 this,
-                new EditCommittedEventArgs(undoRedoLevel));
+                new(undoRedoLevel));
 
             undoContext.Value.ClearRedoStack();
 

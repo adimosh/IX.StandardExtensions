@@ -44,8 +44,8 @@ public class ObjectPool<T>
             out this.objectFactory,
             objectFactory);
 
-        locker = new object();
-        availableObjects = new Queue<T>();
+        locker = new();
+        availableObjects = new();
     }
 
     /// <summary>
@@ -69,8 +69,8 @@ public class ObjectPool<T>
             out this.objectFactory,
             objectFactory);
 
-        locker = new object();
-        availableObjects = new Queue<T>();
+        locker = new();
+        availableObjects = new();
 
         for (int i = 0; i < initialNumberOfObjects; i++)
         {
@@ -120,7 +120,7 @@ public class ObjectPool<T>
             @object = availableObjects.Count > 0 ? availableObjects.Dequeue() : objectFactory();
         }
 
-        return new PooledObject<T>(
+        return new(
             this,
             @object);
     }

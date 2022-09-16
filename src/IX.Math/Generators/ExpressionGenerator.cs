@@ -23,10 +23,6 @@ internal static class ExpressionGenerator
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Not avoidable for now.")]
-    [DiagCA.SuppressMessage(
-        "CodeSmell",
-        "ERP022:Unobserved exception in generic exception handler",
-        Justification = "We want this to happen.")]
     internal static ComputationBody CreateBody(WorkingExpressionSet workingSet)
     {
         if (workingSet.CancellationToken.IsCancellationRequested)
@@ -70,6 +66,14 @@ internal static class ExpressionGenerator
             return ComputationBody.Empty;
         }
 
+        var expressionToBreak = workingSet.SymbolTable[string.Empty].Expression;
+
+        if (expressionToBreak is null)
+        {
+            // Fast exit condition: our initial expression had a processing problem
+            return ComputationBody.Empty;
+        }
+
         // Break expression based on function calls
         FunctionsExtractor.ReplaceFunctions(
             workingSet.Definition.Parentheses.Left,
@@ -81,7 +85,7 @@ internal static class ExpressionGenerator
             workingSet.ReverseSymbolTable,
             workingSet.Interpreters,
             workingSet.ParameterRegistry,
-            workingSet.SymbolTable[string.Empty].Expression,
+            expressionToBreak,
             workingSet.AllSymbols);
 
         if (workingSet.CancellationToken.IsCancellationRequested)
@@ -112,6 +116,12 @@ internal static class ExpressionGenerator
         foreach (var p in workingSet.SymbolTable.Where(p => !p.Value.IsFunctionCall)
                      .Select(p => p.Value.Expression))
         {
+            if (p is null)
+            {
+                // Fast exit condition: we have a symbol that is null
+                return ComputationBody.Empty;
+            }
+
             TablePopulationGenerator.PopulateTables(
                 p,
                 workingSet.ConstantsTable,
@@ -151,8 +161,9 @@ internal static class ExpressionGenerator
             body = null;
         }
 
-        if (body == null || workingSet.CancellationToken.IsCancellationRequested)
+        if (body == null)
         {
+            // Fast exit condition: we have a symbol that is null
             return ComputationBody.Empty;
         }
 
@@ -163,7 +174,7 @@ internal static class ExpressionGenerator
 
         workingSet.Success = true;
 
-        return new ComputationBody(
+        return new(
             body,
             workingSet.ParameterRegistry);
     }
@@ -191,7 +202,7 @@ internal static class ExpressionGenerator
         // Expression might be an already-defined constant
         if (workingSet.ConstantsTable.TryGetValue(
                 expression,
-                out ConstantNodeBase c1))
+                out var c1))
         {
             return c1;
         }
@@ -202,7 +213,7 @@ internal static class ExpressionGenerator
         {
             if (workingSet.ConstantsTable.TryGetValue(
                     c2,
-                    out ConstantNodeBase c3))
+                    out var c3))
             {
                 return c3;
             }
@@ -219,7 +230,7 @@ internal static class ExpressionGenerator
         // Check whether the expression already exists in the symbols table
         if (workingSet.SymbolTable.TryGetValue(
                 expression,
-                out ExpressionSymbol e1))
+                out var e1))
         {
             return GenerateExpression(
                 e1.Expression,
@@ -232,7 +243,7 @@ internal static class ExpressionGenerator
         {
             if (workingSet.SymbolTable.TryGetValue(
                     e2,
-                    out ExpressionSymbol e3))
+                    out var e3))
             {
                 if (e3.Expression != expression)
                 {
@@ -291,9 +302,7 @@ internal static class ExpressionGenerator
                 }
 
                 // We have a normal, regular binary
-                var eee = s.Substring(
-                    0,
-                    position);
+                var eee = s[..position];
                 if (string.IsNullOrWhiteSpace(eee))
                 {
                     // Empty space before operator. Normally, this should never be hit.
@@ -309,7 +318,7 @@ internal static class ExpressionGenerator
                     return null;
                 }
 
-                eee = s.Substring(position + op.Length);
+                eee = s[(position + op.Length)..];
                 if (string.IsNullOrWhiteSpace(eee))
                 {
                     // Empty space after operator. Normally, this should never be hit.
@@ -372,7 +381,7 @@ internal static class ExpressionGenerator
                     return null;
                 }
 
-                var eee = s.Substring(op.Length);
+                var eee = s[op.Length..];
                 if (string.IsNullOrWhiteSpace(eee))
                 {
                     // We might have a valid unary operator but attached to nothing - the expression cannot be evaluated any further on this branch
@@ -426,97 +435,56 @@ internal static class ExpressionGenerator
                     var functionName = match.Groups["functionName"].Value;
                     var expressionValue = match.Groups["expression"].Value;
 
-                    string?[] parameterExpressions;
+                    var parameterExpressions = string.IsNullOrWhiteSpace(expressionValue)
+                        ? Array.Empty<string>()
+                        : match.Groups["expression"].Value
+                               .Split(
+                                   new[] { innerWorkingSet.Definition.ParameterSeparator },
+                                   StringSplitOptions.None).Select(p => string.IsNullOrWhiteSpace(p) ? null : p)
+                               .ToArray();
 
-                    if (string.IsNullOrWhiteSpace(expressionValue))
+                    NodeBase? returnValue = parameterExpressions.Length switch
                     {
-                        parameterExpressions = Array.Empty<string>();
-                    }
-                    else
-                    {
-                        parameterExpressions = match.Groups["expression"].Value
-                            .Split(
-                                new[] { innerWorkingSet.Definition.ParameterSeparator },
-                                StringSplitOptions.None).Select(p => string.IsNullOrWhiteSpace(p) ? null : p)
-                            .ToArray();
-                    }
-
-                    NodeBase? returnValue;
-                    switch (parameterExpressions.Length)
-                    {
-                        case 0:
-                            returnValue = innerWorkingSet.NonaryFunctions.TryGetValue(
-                                functionName,
-                                out Type t) ? ((NonaryFunctionNodeBase)Activator.CreateInstance(t)).Simplify() : null;
-                            break;
-
-                        case 1:
-                            if (innerWorkingSet.UnaryFunctions.TryGetValue(
-                                    functionName,
-                                    out Type t1))
-                            {
-                                returnValue = ((UnaryFunctionNodeBase)Activator.CreateInstance(
-                                    t1,
-                                    GenerateExpression(
-                                        parameterExpressions[0],
-                                        innerWorkingSet))).Simplify();
-                            }
-                            else
-                            {
-                                returnValue = null;
-                            }
-
-                            break;
-
-                        case 2:
-                            if (innerWorkingSet.BinaryFunctions.TryGetValue(
-                                    functionName,
-                                    out Type t2))
-                            {
-                                returnValue = ((BinaryFunctionNodeBase)Activator.CreateInstance(
-                                    t2,
-                                    GenerateExpression(
-                                        parameterExpressions[0],
-                                        innerWorkingSet),
-                                    GenerateExpression(
-                                        parameterExpressions[1],
-                                        innerWorkingSet))).Simplify();
-                            }
-                            else
-                            {
-                                returnValue = null;
-                            }
-
-                            break;
-
-                        case 3:
-                            if (innerWorkingSet.TernaryFunctions.TryGetValue(
-                                    functionName,
-                                    out Type t3))
-                            {
-                                returnValue = ((TernaryFunctionNodeBase)Activator.CreateInstance(
-                                    t3,
-                                    GenerateExpression(
-                                        parameterExpressions[0],
-                                        innerWorkingSet),
-                                    GenerateExpression(
-                                        parameterExpressions[1],
-                                        innerWorkingSet),
-                                    GenerateExpression(
-                                        parameterExpressions[2],
-                                        innerWorkingSet))).Simplify();
-                            }
-                            else
-                            {
-                                returnValue = null;
-                            }
-
-                            break;
-
-                        default:
-                            returnValue = null;
-                            break;
-                    }
+                        0 => innerWorkingSet.NonaryFunctions.TryGetValue(
+                            functionName,
+                            out Type? t)
+                            ? (Activator.CreateInstance(t) as NonaryFunctionNodeBase)?.Simplify()
+                            : null,
+                        1 => innerWorkingSet.UnaryFunctions.TryGetValue(
+                            functionName,
+                            out Type? t1)
+                            ? (Activator.CreateInstance(
+                                t1,
+                                GenerateExpression(
+                                    parameterExpressions[0],
+                                    innerWorkingSet)) as UnaryFunctionNodeBase)?.Simplify()
+                            : null,
+                        2 => innerWorkingSet.BinaryFunctions.TryGetValue(
+                            functionName,
+                            out Type? t2)
+                            ? (Activator.CreateInstance(
+                                t2,
+                                GenerateExpression(
+                                    parameterExpressions[0],
+                                    innerWorkingSet), GenerateExpression(
+                                    parameterExpressions[1],
+                                    innerWorkingSet)) as BinaryFunctionNodeBase)?.Simplify()
+                            : null,
+                        3 => innerWorkingSet.TernaryFunctions.TryGetValue(
+                            functionName,
+                            out Type? t3)
+                            ? (Activator.CreateInstance(
+                                t3,
+                                GenerateExpression(
+                                    parameterExpressions[0],
+                                    innerWorkingSet), GenerateExpression(
+                                    parameterExpressions[1],
+                                    innerWorkingSet), GenerateExpression(
+                                    parameterExpressions[2],
+                                    innerWorkingSet)) as TernaryFunctionNodeBase)?.Simplify()
+                            : null,
+                        _ => null
+                    };
 
                     if (returnValue is ISpecialRequestNode srn)
                     {

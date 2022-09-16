@@ -38,7 +38,7 @@ public class ReaderWriterLockSlim : DisposableBase,
     /// </summary>
     public ReaderWriterLockSlim()
     {
-        locker = new GlobalThreading.ReaderWriterLockSlim();
+        locker = new();
         lockerLocal = true;
     }
 
@@ -48,7 +48,7 @@ public class ReaderWriterLockSlim : DisposableBase,
     /// <param name="lockRecursionPolicy">The lock recursion policy.</param>
     public ReaderWriterLockSlim(LockRecursionPolicy lockRecursionPolicy)
     {
-        locker = new GlobalThreading.ReaderWriterLockSlim(lockRecursionPolicy);
+        locker = new(lockRecursionPolicy);
         lockerLocal = true;
     }
 

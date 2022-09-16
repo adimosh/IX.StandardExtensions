@@ -476,7 +476,7 @@ public static partial class Requires
         "StyleCop.CSharp.OrderingRules",
         "SA1201:Elements should appear in the correct order",
         Justification = "Better code readability this way.")]
-    private static readonly Lazy<ConcurrentDictionary<string, Regex>> Regexes = new(() => new ConcurrentDictionary<string, Regex>());
+    private static readonly Lazy<ConcurrentDictionary<string, Regex>> Regexes = new(() => new());
 
     /// <summary>
     /// Called when a contract requires that a string matches a specific pattern.
@@ -512,7 +512,7 @@ public static partial class Requires
 
         var patternRegex = Regexes.Value.GetOrAdd(
             pattern,
-            p => new Regex(p));
+            p => new(p));
 
         if (!patternRegex.IsMatch(argument))
         {
@@ -559,7 +559,7 @@ public static partial class Requires
 
         var patternRegex = Regexes.Value.GetOrAdd(
             pattern,
-            p => new Regex(p));
+            p => new(p));
 
         if (!patternRegex.IsMatch(argument))
         {

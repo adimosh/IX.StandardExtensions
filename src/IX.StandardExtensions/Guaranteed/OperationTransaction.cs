@@ -22,7 +22,7 @@ public abstract class OperationTransaction : DisposableBase
     /// <summary>
     /// Initializes a new instance of the <see cref="OperationTransaction"/> class.
     /// </summary>
-    protected OperationTransaction() => revertSteps = new List<Tuple<Action<object>, object>>();
+    protected OperationTransaction() => revertSteps = new();
 
     /// <summary>
     /// Gets a value indicating whether this <see cref="OperationTransaction"/> is successful.
@@ -42,7 +42,7 @@ public abstract class OperationTransaction : DisposableBase
     /// <param name="state">The state object to pass to the revert action.</param>
     protected void AddRevertStep(Action<object> action, object state)
         => revertSteps.Add(
-            new Tuple<Action<object>, object>(
+            new(
                 action,
                 state));
 

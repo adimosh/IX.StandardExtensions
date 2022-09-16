@@ -37,9 +37,9 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
     /// </summary>
     public LevelDictionary()
     {
-        internalDictionary = new Dictionary<TKey, TValue>();
-        keyLevels = new Dictionary<int, List<TKey>>();
-        levelKeys = new Dictionary<TKey, int>();
+        internalDictionary = new();
+        keyLevels = new();
+        levelKeys = new();
     }
 
 #endregion
@@ -345,7 +345,7 @@ public class LevelDictionary<TKey, TValue> : DisposableBase,
         {
             keyLevels.Add(
                 level,
-                new List<TKey>
+                new()
                 {
                     key
                 });

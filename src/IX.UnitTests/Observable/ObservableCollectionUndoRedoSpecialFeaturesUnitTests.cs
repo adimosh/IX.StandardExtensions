@@ -839,7 +839,7 @@ public class ObservableCollectionUndoRedoSpecialFeaturesUnitTests
         // ARRANGE
         using (var capturingList = new ObservableList<CapturedItem>
                {
-                   new CapturedItem(),
+                   new(),
                })
         {
             // Capture into a parent context
@@ -897,7 +897,7 @@ public class ObservableCollectionUndoRedoSpecialFeaturesUnitTests
         // ARRANGE
         using (var capturingList = new ObservableList<CapturedItem>
                {
-                   new CapturedItem(),
+                   new(),
                })
         {
             Assert.Null(capturingList[0].ParentUndoContext);

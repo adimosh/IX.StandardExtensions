@@ -2,10 +2,14 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Collections.Generic;
+
 using IX.DataGeneration;
 using IX.System.Collections.Generic;
+
+using IXCollections = IX.System.Collections.Generic;
+
 using Xunit;
-using GlobalCollectionsGeneric = System.Collections.Generic;
 
 namespace IX.UnitTests.Abstractions.Collections;
 
@@ -21,7 +25,7 @@ public class RepeatableCollectionsUnitTests
     public void Test1()
     {
         // ARRANGE
-        var q = new RepeatableQueue<int>();
+        var q = new IXCollections.RepeatableQueue<int>();
         int int1 = DataGenerator.RandomInteger();
         int int2 = DataGenerator.RandomInteger();
         int int3 = DataGenerator.RandomInteger();
@@ -69,7 +73,7 @@ public class RepeatableCollectionsUnitTests
     public void Test2()
     {
         // ARRANGE
-        var seq = new GlobalCollectionsGeneric.List<int>();
+        var seq = new List<int>();
         int int1 = DataGenerator.RandomInteger();
         int int2 = DataGenerator.RandomInteger();
         int int3 = DataGenerator.RandomInteger();
@@ -82,7 +86,7 @@ public class RepeatableCollectionsUnitTests
         seq.Add(int4);
         seq.Add(int5);
         seq.Add(int6);
-        var q = new RepeatableQueue<int>(seq);
+        var q = new IXCollections.RepeatableQueue<int>(seq);
 
         // ACT
         int rd1 = q.Dequeue();
@@ -118,7 +122,7 @@ public class RepeatableCollectionsUnitTests
     public void Test3()
     {
         // ARRANGE
-        var seq = new Queue<int>();
+        var seq = new IXCollections.Queue<int>();
         int int1 = DataGenerator.RandomInteger();
         int int2 = DataGenerator.RandomInteger();
         int int3 = DataGenerator.RandomInteger();
@@ -131,7 +135,7 @@ public class RepeatableCollectionsUnitTests
         seq.Enqueue(int4);
         seq.Enqueue(int5);
         seq.Enqueue(int6);
-        var q = new RepeatableQueue<int>(seq);
+        var q = new IXCollections.RepeatableQueue<int>(seq);
 
         // ACT
         int rd1 = q.Dequeue();
@@ -172,7 +176,7 @@ public class RepeatableCollectionsUnitTests
     public void Test4()
     {
         // ARRANGE
-        var q = new RepeatableStack<int>();
+        var q = new IXCollections.RepeatableStack<int>();
         int int1 = DataGenerator.RandomInteger();
         int int2 = DataGenerator.RandomInteger();
         int int3 = DataGenerator.RandomInteger();
@@ -220,7 +224,7 @@ public class RepeatableCollectionsUnitTests
     public void Test5()
     {
         // ARRANGE
-        var seq = new GlobalCollectionsGeneric.List<int>();
+        var seq = new List<int>();
         int int1 = DataGenerator.RandomInteger();
         int int2 = DataGenerator.RandomInteger();
         int int3 = DataGenerator.RandomInteger();
@@ -233,7 +237,7 @@ public class RepeatableCollectionsUnitTests
         seq.Add(int4);
         seq.Add(int5);
         seq.Add(int6);
-        var q = new RepeatableStack<int>(seq);
+        var q = new IXCollections.RepeatableStack<int>(seq);
 
         // ACT
         int rd1 = q.Pop();
@@ -269,7 +273,7 @@ public class RepeatableCollectionsUnitTests
     public void Test6()
     {
         // ARRANGE
-        var seq = new Stack<int>();
+        var seq = new IXCollections.Stack<int>();
         int int1 = DataGenerator.RandomInteger();
         int int2 = DataGenerator.RandomInteger();
         int int3 = DataGenerator.RandomInteger();
@@ -282,7 +286,7 @@ public class RepeatableCollectionsUnitTests
         seq.Push(int4);
         seq.Push(int5);
         seq.Push(int6);
-        var q = new RepeatableStack<int>(seq);
+        var q = new IXCollections.RepeatableStack<int>(seq);
 
         // ACT
         int rd1 = q.Pop();

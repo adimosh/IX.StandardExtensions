@@ -98,7 +98,7 @@ public class PersistedQueue<T> : PersistedQueueBase<T>,
             fileShim,
             directoryShim,
             pathShim,
-            new DataContractSerializer(typeof(T)),
+            new(typeof(T)),
             timeout)
     {
     }

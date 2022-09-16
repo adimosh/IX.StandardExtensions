@@ -213,8 +213,8 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
                 }
 
                 // Do proper stack initialization
-                undoStack = new Lazy<PushDownStack<StateChangeBase>>(GenerateStack);
-                redoStack = new Lazy<PushDownStack<StateChangeBase>>(GenerateStack);
+                undoStack = new(GenerateStack);
+                redoStack = new(GenerateStack);
             }
         }
     }
@@ -226,7 +226,7 @@ public class UndoableInnerContext : NotifyPropertyChangedBase
             throw new InvalidOperationException(Resources.NoHistoryLevelsException);
         }
 
-        return new PushDownStack<StateChangeBase>(historyLevels);
+        return new(historyLevels);
     }
 
 #endregion

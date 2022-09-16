@@ -18,7 +18,7 @@ internal class MultiListListAdapter<T> : ModernListAdapter<T, IEnumerator<T>>
 
 #region Constructors and destructors
 
-    internal MultiListListAdapter() => lists = new List<IEnumerable<T>>();
+    internal MultiListListAdapter() => lists = new();
 
 #endregion
 
