@@ -48,7 +48,7 @@ public class ObservableCollectionUndoRedoSpecialFeaturesUnitTests
     ///     Generates the test data.
     /// </summary>
     /// <returns>The test data.</returns>
-    public static object[][] GenerateSupressedUndoContextData() => new[]
+    public static object[][] GenerateSuppressedUndoContextData() => new[]
     {
         new object[]
         {
@@ -117,7 +117,7 @@ public class ObservableCollectionUndoRedoSpecialFeaturesUnitTests
     /// </summary>
     /// <param name="list">The list.</param>
     [Theory(DisplayName = "ObservableList with suppressed context, undo/redo does nothing")]
-    [MemberData(nameof(GenerateSupressedUndoContextData))]
+    [MemberData(nameof(GenerateSuppressedUndoContextData))]
     public void UnitTest2(ObservableList<int> list)
     {
         // ARRANGE
@@ -155,7 +155,7 @@ public class ObservableCollectionUndoRedoSpecialFeaturesUnitTests
     /// </summary>
     /// <param name="list">The list.</param>
     [Theory(DisplayName = "ObservableList with suppressed then activated context, undo/redo does nothing")]
-    [MemberData(nameof(GenerateSupressedUndoContextData))]
+    [MemberData(nameof(GenerateSuppressedUndoContextData))]
     public void UnitTest3(ObservableList<int> list)
     {
         // ARRANGE
@@ -196,7 +196,7 @@ public class ObservableCollectionUndoRedoSpecialFeaturesUnitTests
     [Theory(
         DisplayName =
             "ObservableList with suppressed context, undo/redo does nothing, then activated and also does nothing")]
-    [MemberData(nameof(GenerateSupressedUndoContextData))]
+    [MemberData(nameof(GenerateSuppressedUndoContextData))]
     public void UnitTest4(ObservableList<int> list)
     {
         // ARRANGE
@@ -253,7 +253,7 @@ public class ObservableCollectionUndoRedoSpecialFeaturesUnitTests
     [Theory(
         DisplayName =
             "ObservableList with suppressed context and acted on, undo/redo does nothing, then activated and also does nothing")]
-    [MemberData(nameof(GenerateSupressedUndoContextData))]
+    [MemberData(nameof(GenerateSuppressedUndoContextData))]
     public void UnitTest5(ObservableList<int> list)
     {
         // ARRANGE
@@ -306,13 +306,13 @@ public class ObservableCollectionUndoRedoSpecialFeaturesUnitTests
 
     /// <summary>
     ///     When a list has its undo context suppressed, then activated, it should not be able to undo or redo in either part
-    ///     of the test if there is action before starting, but should do something if htere is action after starting.
+    ///     of the test if there is action before starting, but should do something if there is action after starting.
     /// </summary>
     /// <param name="list">The list.</param>
     [Theory(
         DisplayName =
             "ObservableList with suppressed context and acted on, undo/redo does nothing, then activated and acted on, does only undo the last act")]
-    [MemberData(nameof(GenerateSupressedUndoContextData))]
+    [MemberData(nameof(GenerateSuppressedUndoContextData))]
     public void UnitTest6(ObservableList<int> list)
     {
         // ARRANGE
@@ -456,7 +456,7 @@ public class ObservableCollectionUndoRedoSpecialFeaturesUnitTests
     /// </summary>
     /// <param name="list">The list.</param>
     [Theory(DisplayName = "ObservableList (captured) with suppressed context, undo/redo does nothing")]
-    [MemberData(nameof(GenerateSupressedUndoContextData))]
+    [MemberData(nameof(GenerateSuppressedUndoContextData))]
     public void UnitTest12(ObservableList<int> list)
     {
         // ARRANGE
@@ -505,7 +505,7 @@ public class ObservableCollectionUndoRedoSpecialFeaturesUnitTests
     /// <param name="list">The list.</param>
     [Theory(
         DisplayName = "ObservableList (captured) with suppressed then activated context, undo/redo does nothing")]
-    [MemberData(nameof(GenerateSupressedUndoContextData))]
+    [MemberData(nameof(GenerateSuppressedUndoContextData))]
     public void UnitTest13(ObservableList<int> list)
     {
         // ARRANGE
@@ -556,7 +556,7 @@ public class ObservableCollectionUndoRedoSpecialFeaturesUnitTests
     [Theory(
         DisplayName =
             "ObservableList (captured) with suppressed context, undo/redo does nothing, then activated and also does nothing")]
-    [MemberData(nameof(GenerateSupressedUndoContextData))]
+    [MemberData(nameof(GenerateSuppressedUndoContextData))]
     public void UnitTest14(ObservableList<int> list)
     {
         // ARRANGE
@@ -623,7 +623,7 @@ public class ObservableCollectionUndoRedoSpecialFeaturesUnitTests
     [Theory(
         DisplayName =
             "ObservableList (captured) with suppressed context and acted on, undo/redo does nothing, then activated and also does nothing")]
-    [MemberData(nameof(GenerateSupressedUndoContextData))]
+    [MemberData(nameof(GenerateSuppressedUndoContextData))]
     public void UnitTest15(ObservableList<int> list)
     {
         // ARRANGE
@@ -686,14 +686,14 @@ public class ObservableCollectionUndoRedoSpecialFeaturesUnitTests
 
     /// <summary>
     ///     When a list (captured) has its undo context suppressed, then activated, it should not be able to undo or redo in
-    ///     either part of the test if there is action before starting, but should do something if htere is action after
+    ///     either part of the test if there is action before starting, but should do something if there is action after
     ///     starting.
     /// </summary>
     /// <param name="list">The list.</param>
     [Theory(
         DisplayName =
             "ObservableList (captured) with suppressed context and acted on, undo/redo does nothing, then activated and acted on, does only undo the last act")]
-    [MemberData(nameof(GenerateSupressedUndoContextData))]
+    [MemberData(nameof(GenerateSuppressedUndoContextData))]
     public void UnitTest16(ObservableList<int> list)
     {
         // ARRANGE
