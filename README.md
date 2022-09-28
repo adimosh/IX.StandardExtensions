@@ -22,6 +22,11 @@ clones. I had to make my own.
 
 This is, in a nutshell, how I came up with this library.
 
+## Documentation
+
+Documentation is available [at this address](https://adrianmos.eu/Pages/Projects/ixstandardextensions/docs.md)
+(and is currently under construction :construction: ).
+
 ## Requirements
 
 Requirements for IX.StandardExtensions are the same across IX projects.
