@@ -33,13 +33,6 @@ Requirements for IX.StandardExtensions are the same across IX projects.
 [This page](https://adrianmos.eu/Pages/Projects/FrameworkVersionsSupport.md) lists estimative .NET
 version support information across various frameworks and OSes.
 
-## Releases
-
-- NuGet: [![IX.StandardExtensions NuGet](https://img.shields.io/nuget/dt/IX.StandardExtensions.svg)](https://www.nuget.org/packages/IX.StandardExtensions/)
-- Latest stable: [![IX.StandardExtensions NuGet](https://img.shields.io/nuget/v/IX.StandardExtensions.svg)](https://www.nuget.org/packages/IX.StandardExtensions/)
-- Latest with pre-release: [![IX.StandardExtensions NuGet pre-release](https://img.shields.io/nuget/vpre/IX.StandardExtensions.svg)](https://www.nuget.org/packages/IX.StandardExtensions/)
-
-
 ## Highlights
 
 - Extension methods for arrays that aim to implement the same behavior as IEnumerable
@@ -69,7 +62,7 @@ beforehand and tries their best to abide by them.
 
 ### Licenses and structure
 
-This project uses the MIT license. [![MIT license](https://img.shields.io/github/license/adimosh/ix.standardextensions)](LICENSE)
+This project uses the MIT license.
 
 Additionally, the character set detection engine featured at _IX.StandardExtensions.Globalization_
 takes bits and pieces from various other projects, and is licensed as such. You can find the additional
@@ -86,61 +79,3 @@ Changes from that project are:
 I have made an effort to keep the original files (headers and license notice included) intact as
 much as possible, however, adaptations will have occurred. I do not take any credit for that part
 of the code, all of it goes to Julian and the respective contributors and original developers.
-
-## Usage (to be moved to documentation soon)
-
-The library exposes a lot of methods in an attempt to standardize the approach to code, so we'll just take a few examples.
-
-### ForEach on an IEnumerable.
-
-Given we have:
-
-```csharp
-IEnumerable<someClass> someCollection;
-```
-
-We would call a method for each item of the collection like this:
-
-```csharp
-foreach (var item in someCollection)
-{
-    someMethod(item);
-}
-```
-
-With the extension method, we could call it like this:
-
-```csharp
-someCollection.ForEach(someMethod);
-```
-
-The same would hold true for an array.
-
-Although, to be fair, if you're going to have a benchmark of:
-
-```csharp
-i++;
-```
-
-...then the foreach cycle will be faster, since you will not have an extra method invocation.
-
-As an extra bonus, you can run them using task parallel library (.NET Standard 1.1 and above only).
-
-```csharp
-someCollection.ParallelForEach(someMethod);
-```
-
-### Sequence Equals
-
-The next example comes from the need to compare data. Comparison on arrays or enumerables (or between an array or an IEnumerable) has always been slightly burdensome. We have a helper for that:
-
-```csharp
-if (someCollection.SequenceEquals(someOtherCollection))
-{
-    // Do something
-}
-```
-
-### Atomic enumerator
-
-The _AtomicEnumerator_ class is an enumerator based on another enumerator, which synchronizes data fetching (e.g. the _Next_ and _Reset_ methods), and which will fail just like a regular enumerator if the collection is changed.

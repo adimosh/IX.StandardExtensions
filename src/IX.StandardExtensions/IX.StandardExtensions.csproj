@@ -18,7 +18,9 @@
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Synchronization context GetAwaiter</PackageReleaseNotes>
+    <PackageReleaseNotes>- Synchronization context GetAwaiter
+- Updated documentation and added package readme</PackageReleaseNotes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -79,6 +81,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
     <None Remove="StandardExtensions\Contracts\ValidationResources\tlds-alpha-by-domain.txt" />
   </ItemGroup>
 
