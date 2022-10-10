@@ -16,8 +16,6 @@ namespace IX.StandardExtensions.ComponentModel;
 public abstract class NotifyPropertyChangedBase : SynchronizationContextInvokerBase,
     INotifyPropertyChanged
 {
-#region Constructors and destructors
-
     /// <summary>
     ///     Initializes a new instance of the <see cref="NotifyPropertyChangedBase" /> class.
     /// </summary>
@@ -30,18 +28,10 @@ public abstract class NotifyPropertyChangedBase : SynchronizationContextInvokerB
     protected NotifyPropertyChangedBase(SynchronizationContext? synchronizationContext)
         : base(synchronizationContext) { }
 
-#endregion
-
-#region Events
-
     /// <summary>
     ///     Triggered whenever a property has changed its value and its display should be refreshed.
     /// </summary>
     public event PropertyChangedEventHandler? PropertyChanged;
-
-#endregion
-
-#region Methods
 
     /// <summary>
     ///     Triggers the <see cref="PropertyChanged" /> event.
@@ -118,6 +108,4 @@ public abstract class NotifyPropertyChangedBase : SynchronizationContextInvokerB
                 changedPropertyName);
         }
     }
-
-#endregion
 }

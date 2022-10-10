@@ -7,9 +7,12 @@ using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 using IX.StandardExtensions.Threading;
+
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.ComponentModel;
@@ -20,20 +23,13 @@ namespace IX.StandardExtensions.ComponentModel;
 /// <seealso cref="NotifyPropertyChangedBase" />
 /// <seealso cref="IDisposable" />
 [PublicAPI]
-public abstract class ViewModelBase : NotifyPropertyChangedBase,
-    INotifyDataErrorInfo
+public abstract class ViewModelBase : NotifyPropertyChangedBase, INotifyDataErrorInfo
 {
-#region Internal state
+    private readonly BusyScope? _busyScope;
+    private readonly Lazy<ConcurrentDictionary<string, List<string>>> _entityErrors;
+    private readonly object _validatorLock;
 
-    private readonly BusyScope? busyScope;
-    private readonly Lazy<ConcurrentDictionary<string, List<string>>> entityErrors;
-    private readonly object validatorLock;
-
-    private int isBusy;
-
-#endregion
-
-#region Constructors and destructors
+    private int _isBusy;
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ViewModelBase" /> class.
@@ -62,30 +58,10 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         SynchronizationContext? synchronizationContext = null)
         : base(synchronizationContext)
     {
-        entityErrors = new();
-        validatorLock = new();
-        this.busyScope = busyScope;
+        _entityErrors = new();
+        _validatorLock = new();
+        _busyScope = busyScope;
     }
-
-#endregion
-
-#region Events
-
-    /// <summary>
-    ///     Occurs when the validation errors have changed for a property or for the entire entity.
-    /// </summary>
-    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
-
-#endregion
-
-#region Properties and indexers
-
-    /// <summary>
-    ///     Gets a value indicating whether the entity has validation errors.
-    /// </summary>
-    /// <value><see langword="true" /> if this instance has errors; otherwise, <see langword="false" />.</value>
-    public bool HasErrors =>
-        entityErrors.IsValueCreated && entityErrors.Value.Values.Any(p => p.Count > 0);
 
     /// <summary>
     ///     Gets or sets a value indicating whether this view-model is busy.
@@ -95,25 +71,31 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
     /// </value>
     public bool IsBusy
     {
-        get => isBusy != 0;
+        get => _isBusy != 0;
         set
         {
             var intValue = value ? 1 : 0;
+
             if (Interlocked.Exchange(
-                    ref isBusy,
-                    intValue) !=
-                intValue)
+                    ref _isBusy,
+                    intValue) != intValue)
             {
                 RaisePropertyChanged(nameof(IsBusy));
             }
         }
     }
 
-#endregion
+    /// <summary>
+    ///     Occurs when the validation errors have changed for a property or for the entire entity.
+    /// </summary>
+    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
-#region Methods
-
-#region Interface implementations
+    /// <summary>
+    ///     Gets a value indicating whether the entity has validation errors.
+    /// </summary>
+    /// <value><see langword="true" /> if this instance has errors; otherwise, <see langword="false" />.</value>
+    public bool HasErrors =>
+        _entityErrors.IsValueCreated && _entityErrors.Value.Values.Any(p => p.Count > 0);
 
     /// <summary>
     ///     Gets the validation errors for a specified property or for the entire view model.
@@ -124,13 +106,11 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
     /// </param>
     /// <returns>The validation errors for the property or entity.</returns>
     public IEnumerable GetErrors(string? propertyName) =>
-        entityErrors.Value.TryGetValue(
+        _entityErrors.Value.TryGetValue(
             Requires.NotNull(propertyName),
             out List<string>? propertyErrors)
             ? propertyErrors.ToArray()
             : Array.Empty<string>();
-
-#endregion
 
     /// <summary>
     ///     Validates this object.
@@ -153,37 +133,37 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         Justification = "We're trying to avoid closures.")]
     public void Validate()
     {
-        lock (validatorLock)
+        lock (_validatorLock)
         {
             var initialHasErrors = HasErrors;
 
             // We validate the object
             var validationResults = new List<ValidationResult>();
+
             if (Validator.TryValidateObject(
                     this,
                     new(
                         this,
-                        null),
-                    validationResults,
+                        null), validationResults,
                     true))
             {
-                if (entityErrors.IsValueCreated)
+                if (_entityErrors.IsValueCreated)
                 {
-                    entityErrors.Value.Clear();
+                    _entityErrors.Value.Clear();
                 }
             }
             else
             {
                 // Remove those properties which pass validation
-                if (!entityErrors.IsValueCreated)
+                if (!_entityErrors.IsValueCreated)
                 {
-                    foreach (var (key, _) in entityErrors.Value.ToArray())
+                    foreach (var (key, _) in _entityErrors.Value.ToArray())
                     {
                         if (AllDifferent(
                                 validationResults,
                                 key))
                         {
-                            _ = entityErrors.Value.TryRemove(
+                            _ = _entityErrors.Value.TryRemove(
                                 key,
                                 out _);
                             RaiseErrorsChanged(key);
@@ -210,13 +190,14 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
                 }
 
                 // Those properties that currently don't pass validation should have their validation results saved as messages.
-                foreach (IGrouping<string, ValidationResult> property in
-                         from r in validationResults from m in r.MemberNames group r by m into g select g)
+                foreach (IGrouping<string, ValidationResult> property in from r in validationResults
+                                                                         from m in r.MemberNames
+                                                                         group r by m into g
+                                                                         select g)
                 {
-                    string[] messages = property.Select(r => r.ErrorMessage ?? string.Empty)
-                        .ToArray();
+                    var messages = property.Select(r => r.ErrorMessage ?? string.Empty).ToArray();
 
-                    List<string> errorList = entityErrors.Value.GetOrAdd(
+                    List<string> errorList = _entityErrors.Value.GetOrAdd(
                         property.Key,
                         new List<string>(messages.Length));
                     errorList.Clear();
@@ -230,6 +211,262 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
             {
                 RaisePropertyChanged(nameof(HasErrors));
             }
+        }
+    }
+
+    /// <summary>
+    ///     Sets the backing field for the property.
+    /// </summary>
+    /// <typeparam name="T">The type of the backing field and value.</typeparam>
+    /// <param name="backingField">The backing field.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="nameOfProperty">The name of property.</param>
+    public void SetPropertyBackingField<T>(
+        ref T backingField,
+        T value,
+        [CallerMemberName] string nameOfProperty = "")
+        where T : class
+    {
+        T? previousValue = Interlocked.Exchange(
+            ref backingField,
+            value);
+
+        if (previousValue != value)
+        {
+            RaisePropertyChanged(nameOfProperty);
+        }
+    }
+
+    /// <summary>
+    ///     Sets the backing field for the property.
+    /// </summary>
+    /// <param name="backingField">The backing field.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="nameOfProperty">The name of property.</param>
+    public void SetPropertyBackingField(
+        ref int backingField,
+        in int value,
+        [CallerMemberName] string nameOfProperty = "")
+    {
+        var previousValue = Interlocked.Exchange(
+            ref backingField,
+            value);
+
+        if (previousValue != value)
+        {
+            RaisePropertyChanged(nameOfProperty);
+        }
+    }
+
+    /// <summary>
+    ///     Sets the backing field for the property.
+    /// </summary>
+    /// <param name="backingField">The backing field.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="nameOfProperty">The name of property.</param>
+    public void SetPropertyBackingField(
+        ref long backingField,
+        in long value,
+        [CallerMemberName] string nameOfProperty = "")
+    {
+        var previousValue = Interlocked.Exchange(
+            ref backingField,
+            value);
+
+        if (previousValue != value)
+        {
+            RaisePropertyChanged(nameOfProperty);
+        }
+    }
+
+    /// <summary>
+    ///     Sets the backing field for the property.
+    /// </summary>
+    /// <param name="backingField">The backing field.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="nameOfProperty">The name of property.</param>
+    public void SetPropertyBackingField(
+        ref float backingField,
+        in float value,
+        [CallerMemberName] string nameOfProperty = "")
+    {
+        var previousValue = Interlocked.Exchange(
+            ref backingField,
+            value);
+
+        if (previousValue != value)
+        {
+            RaisePropertyChanged(nameOfProperty);
+        }
+    }
+
+    /// <summary>
+    ///     Sets the backing field for the property.
+    /// </summary>
+    /// <param name="backingField">The backing field.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="nameOfProperty">The name of property.</param>
+    public void SetPropertyBackingField(
+        ref double backingField,
+        in double value,
+        [CallerMemberName] string nameOfProperty = "")
+    {
+        var previousValue = Interlocked.Exchange(
+            ref backingField,
+            value);
+
+        if (previousValue != value)
+        {
+            RaisePropertyChanged(nameOfProperty);
+        }
+    }
+
+    /// <summary>
+    ///     Sets the backing field for the property.
+    /// </summary>
+    /// <param name="backingField">The backing field.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="nameOfProperty">The name of property.</param>
+    public void SetPropertyBackingField(
+        ref IntPtr backingField,
+        in IntPtr value,
+        string nameOfProperty)
+    {
+        IntPtr previousValue = Interlocked.Exchange(
+            ref backingField,
+            value);
+
+        if (previousValue != value)
+        {
+            RaisePropertyChanged(nameOfProperty);
+        }
+    }
+
+    /// <summary>
+    ///     Sets the backing field for the property, with validation.
+    /// </summary>
+    /// <typeparam name="T">The type of the backing field and value.</typeparam>
+    /// <param name="backingField">The backing field.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="nameOfProperty">The name of property.</param>
+    public void SetPropertyBackingFieldWithValidation<T>(
+        ref T backingField,
+        T value,
+        [CallerMemberName] string nameOfProperty = "")
+        where T : class
+    {
+        T? previousValue = Interlocked.Exchange(
+            ref backingField,
+            value);
+
+        if (previousValue != value)
+        {
+            RaisePropertyChangedWithValidation(nameOfProperty);
+        }
+    }
+
+    /// <summary>
+    ///     Sets the backing field for the property, with validation.
+    /// </summary>
+    /// <param name="backingField">The backing field.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="nameOfProperty">The name of property.</param>
+    public void RaisePropertyChangedWithValidation(
+        ref int backingField,
+        in int value,
+        [CallerMemberName] string nameOfProperty = "")
+    {
+        var previousValue = Interlocked.Exchange(
+            ref backingField,
+            value);
+
+        if (previousValue != value)
+        {
+            RaisePropertyChangedWithValidation(nameOfProperty);
+        }
+    }
+
+    /// <summary>
+    ///     Sets the backing field for the property, with validation.
+    /// </summary>
+    /// <param name="backingField">The backing field.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="nameOfProperty">The name of property.</param>
+    public void SetPropertyBackingFieldWithValidation(
+        ref long backingField,
+        in long value,
+        [CallerMemberName] string nameOfProperty = "")
+    {
+        var previousValue = Interlocked.Exchange(
+            ref backingField,
+            value);
+
+        if (previousValue != value)
+        {
+            RaisePropertyChangedWithValidation(nameOfProperty);
+        }
+    }
+
+    /// <summary>
+    ///     Sets the backing field for the property, with validation.
+    /// </summary>
+    /// <param name="backingField">The backing field.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="nameOfProperty">The name of property.</param>
+    public void RaisePropertyChangedWithValidation(
+        ref float backingField,
+        in float value,
+        [CallerMemberName] string nameOfProperty = "")
+    {
+        var previousValue = Interlocked.Exchange(
+            ref backingField,
+            value);
+
+        if (previousValue != value)
+        {
+            RaisePropertyChangedWithValidation(nameOfProperty);
+        }
+    }
+
+    /// <summary>
+    ///     Sets the backing field for the property, with validation.
+    /// </summary>
+    /// <param name="backingField">The backing field.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="nameOfProperty">The name of property.</param>
+    public void RaisePropertyChangedWithValidation(
+        ref double backingField,
+        in double value,
+        [CallerMemberName] string nameOfProperty = "")
+    {
+        var previousValue = Interlocked.Exchange(
+            ref backingField,
+            value);
+
+        if (previousValue != value)
+        {
+            RaisePropertyChangedWithValidation(nameOfProperty);
+        }
+    }
+
+    /// <summary>
+    ///     Sets the backing field for the property, with validation.
+    /// </summary>
+    /// <param name="backingField">The backing field.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="nameOfProperty">The name of property.</param>
+    public void RaisePropertyChangedWithValidation(
+        ref IntPtr backingField,
+        in IntPtr value,
+        string nameOfProperty)
+    {
+        IntPtr previousValue = Interlocked.Exchange(
+            ref backingField,
+            value);
+
+        if (previousValue != value)
+        {
+            RaisePropertyChangedWithValidation(nameOfProperty);
         }
     }
 
@@ -266,8 +503,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
                 invoker,
                 internalPropertyName) => invoker.ErrorsChanged?.Invoke(
                 invoker,
-                new(internalPropertyName)),
-            this,
+                new(internalPropertyName)), this,
             propertyName);
 
     /// <summary>
@@ -282,7 +518,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        busyScope?.IncrementBusyScope(description);
+        _busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -290,7 +526,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            busyScope?.DecrementBusyScope();
+            _busyScope?.DecrementBusyScope();
         }
     }
 
@@ -309,7 +545,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        busyScope?.IncrementBusyScope(description);
+        _busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -319,7 +555,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            busyScope?.DecrementBusyScope();
+            _busyScope?.DecrementBusyScope();
         }
     }
 
@@ -335,7 +571,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        busyScope?.IncrementBusyScope(description);
+        _busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -343,7 +579,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            busyScope?.DecrementBusyScope();
+            _busyScope?.DecrementBusyScope();
         }
     }
 
@@ -362,7 +598,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        busyScope?.IncrementBusyScope(description);
+        _busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -372,7 +608,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            busyScope?.DecrementBusyScope();
+            _busyScope?.DecrementBusyScope();
         }
     }
 
@@ -388,7 +624,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        busyScope?.IncrementBusyScope(description);
+        _busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -396,7 +632,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            busyScope?.DecrementBusyScope();
+            _busyScope?.DecrementBusyScope();
         }
     }
 
@@ -415,7 +651,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        busyScope?.IncrementBusyScope(description);
+        _busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -425,7 +661,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            busyScope?.DecrementBusyScope();
+            _busyScope?.DecrementBusyScope();
         }
     }
 
@@ -441,7 +677,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        busyScope?.IncrementBusyScope(description);
+        _busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -449,7 +685,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            busyScope?.DecrementBusyScope();
+            _busyScope?.DecrementBusyScope();
         }
     }
 
@@ -468,7 +704,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         string? description = null,
         CancellationToken cancellationToken = default)
     {
-        busyScope?.IncrementBusyScope(description);
+        _busyScope?.IncrementBusyScope(description);
 
         try
         {
@@ -478,9 +714,7 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase,
         }
         finally
         {
-            busyScope?.DecrementBusyScope();
+            _busyScope?.DecrementBusyScope();
         }
     }
-
-#endregion
 }
