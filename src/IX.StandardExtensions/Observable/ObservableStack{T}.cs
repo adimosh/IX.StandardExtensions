@@ -7,7 +7,6 @@ using IX.Observable.Adapters;
 using IX.Observable.DebugAide;
 using IX.Observable.StateChanges;
 using IX.StandardExtensions.Contracts;
-using IX.StandardExtensions.Threading;
 using IX.System.Collections.Generic;
 using IX.Undoable.StateChanges;
 using JetBrains.Annotations;

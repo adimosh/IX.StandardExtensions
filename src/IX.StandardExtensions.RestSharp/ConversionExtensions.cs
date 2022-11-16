@@ -2,9 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using IX.Remote.Envelopes;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;

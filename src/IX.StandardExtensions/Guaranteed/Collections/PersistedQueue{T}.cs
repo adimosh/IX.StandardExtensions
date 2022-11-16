@@ -3,7 +3,7 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
+
 using IX.StandardExtensions;
 using IX.System.IO;
 using JetBrains.Annotations;

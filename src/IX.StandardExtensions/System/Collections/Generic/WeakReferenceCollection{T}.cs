@@ -2,7 +2,6 @@ using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 
 using IX.StandardExtensions.Contracts;
-using IX.StandardExtensions.Extensions;
 using IX.StandardExtensions.Threading;
 
 using JetBrains.Annotations;
