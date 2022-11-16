@@ -10,7 +10,9 @@
     <VersionSuffix>alpha1</VersionSuffix>
 
     <PackageReleaseNotes>- Synchronization context GetAwaiter
-- Updated documentation and added package readme</PackageReleaseNotes>
+- Updated documentation and added package readme
+- Added specific target for .NET 7.0
+- ViewModelBase now has a SetPropertyBackingField method (optionally with validation)</PackageReleaseNotes>
 
   </PropertyGroup>
 

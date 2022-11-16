@@ -37,7 +37,8 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase, INotifyDataErro
     protected ViewModelBase()
         : this(
             null,
-            null) { }
+            null)
+    { }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ViewModelBase" /> class.
@@ -46,7 +47,8 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase, INotifyDataErro
     protected ViewModelBase(SynchronizationContext? synchronizationContext)
         : this(
             null,
-            synchronizationContext) { }
+            synchronizationContext)
+    { }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ViewModelBase" /> class.
@@ -285,6 +287,10 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase, INotifyDataErro
     /// <param name="backingField">The backing field.</param>
     /// <param name="value">The value.</param>
     /// <param name="nameOfProperty">The name of property.</param>
+    [SuppressMessage(
+        "ReSharper",
+        "CompareOfFloatsByEqualityOperator",
+        Justification = "We're not interested in precision here.")]
     public void SetPropertyBackingField(
         ref float backingField,
         in float value,
@@ -306,6 +312,10 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase, INotifyDataErro
     /// <param name="backingField">The backing field.</param>
     /// <param name="value">The value.</param>
     /// <param name="nameOfProperty">The name of property.</param>
+    [SuppressMessage(
+        "ReSharper",
+        "CompareOfFloatsByEqualityOperator",
+        Justification = "We're not interested in precision here.")]
     public void SetPropertyBackingField(
         ref double backingField,
         in double value,
@@ -413,6 +423,10 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase, INotifyDataErro
     /// <param name="backingField">The backing field.</param>
     /// <param name="value">The value.</param>
     /// <param name="nameOfProperty">The name of property.</param>
+    [SuppressMessage(
+        "ReSharper",
+        "CompareOfFloatsByEqualityOperator",
+        Justification = "We're not interested in precision here.")]
     public void RaisePropertyChangedWithValidation(
         ref float backingField,
         in float value,
@@ -434,6 +448,10 @@ public abstract class ViewModelBase : NotifyPropertyChangedBase, INotifyDataErro
     /// <param name="backingField">The backing field.</param>
     /// <param name="value">The value.</param>
     /// <param name="nameOfProperty">The name of property.</param>
+    [SuppressMessage(
+        "ReSharper",
+        "CompareOfFloatsByEqualityOperator",
+        Justification = "We're not interested in precision here.")]
     public void RaisePropertyChangedWithValidation(
         ref double backingField,
         in double value,
