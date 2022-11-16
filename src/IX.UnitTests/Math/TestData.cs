@@ -2,7 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System.Linq;
 using JetBrains.Annotations;
 
 namespace IX.UnitTests.Math;
@@ -17,5 +16,5 @@ public static partial class TestData
     ///     Provides templated text data.
     /// </summary>
     /// <returns>Test data.</returns>
-    public static object[][] GenerateDataObjects() => BasicOperatorsWithRandomNumbers().Union(SpecialCases()).ToArray();
+    public static object?[][] GenerateDataObjects() => BasicOperatorsWithRandomNumbers().Union(SpecialCases()).ToArray();
 }
