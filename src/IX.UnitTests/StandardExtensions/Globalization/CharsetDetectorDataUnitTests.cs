@@ -2,14 +2,10 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System.Collections.Generic;
-using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 using IX.StandardExtensions.Globalization;

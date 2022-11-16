@@ -2,9 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using IX.DataGeneration;
 using IX.Math;
 using IX.UnitTests.Math.Helpers;
@@ -30,10 +27,10 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
     ///     Provides the data for theory.
     /// </summary>
     /// <returns>Theory data.</returns>
-    public static object[][] ProvideDataForTheory() => new[]
+    public static object?[][] ProvideDataForTheory() => new[]
     {
         // Equation
-        new object[]
+        new object?[]
         {
             "x=y",
             new Dictionary<string, object>
@@ -44,14 +41,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ToleranceRangeLowerBound = 0.2, ToleranceRangeUpperBound = 0.2 },
         },
-        new object[]
+        new object?[]
         {
             "1.7=1.9",
             null,
             true,
             new Tolerance { ToleranceRangeLowerBound = 0.2, ToleranceRangeUpperBound = 0.2 },
         },
-        new object[]
+        new object?[]
         {
             "x=y",
             new Dictionary<string, object>
@@ -62,14 +59,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ToleranceRangeLowerBound = 0.1, ToleranceRangeUpperBound = 0.1 },
         },
-        new object[]
+        new object?[]
         {
             "1.7=1.9",
             null,
             false,
             new Tolerance { ToleranceRangeLowerBound = 0.1, ToleranceRangeUpperBound = 0.1 },
         },
-        new object[]
+        new object?[]
         {
             "x=y",
             new Dictionary<string, object>
@@ -80,14 +77,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ToleranceRangeLowerBound = 0.2 },
         },
-        new object[]
+        new object?[]
         {
             "1.7=1.9",
             null,
             true,
             new Tolerance { ToleranceRangeLowerBound = 0.2 },
         },
-        new object[]
+        new object?[]
         {
             "x=y",
             new Dictionary<string, object>
@@ -98,14 +95,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ToleranceRangeUpperBound = 0.2 },
         },
-        new object[]
+        new object?[]
         {
             "1.7=1.9",
             null,
             false,
             new Tolerance { ToleranceRangeUpperBound = 0.2 },
         },
-        new object[]
+        new object?[]
         {
             "x=y",
             new Dictionary<string, object>
@@ -116,14 +113,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { IntegerToleranceRangeLowerBound = 1, IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "1.7=1.9",
             null,
             true,
             new Tolerance { IntegerToleranceRangeLowerBound = 1, IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "x=y",
             new Dictionary<string, object>
@@ -134,14 +131,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { IntegerToleranceRangeLowerBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "1.7=1.9",
             null,
             true,
             new Tolerance { IntegerToleranceRangeLowerBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "x=y",
             new Dictionary<string, object>
@@ -152,14 +149,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "1.7=1.9",
             null,
             false,
             new Tolerance { IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "x=y",
             new Dictionary<string, object>
@@ -170,14 +167,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { IntegerToleranceRangeLowerBound = 1, IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "0.7=1.9",
             null,
             false,
             new Tolerance { IntegerToleranceRangeLowerBound = 1, IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "x=y",
             new Dictionary<string, object>
@@ -188,14 +185,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { IntegerToleranceRangeLowerBound = 1, IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "1.7=2.9",
             null,
             false,
             new Tolerance { IntegerToleranceRangeLowerBound = 1, IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "x=y",
             new Dictionary<string, object>
@@ -206,14 +203,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ProportionalTolerance = 0.1 },
         },
-        new object[]
+        new object?[]
         {
             "1=1.5",
             null,
             false,
             new Tolerance { ProportionalTolerance = 0.1 },
         },
-        new object[]
+        new object?[]
         {
             "x=y",
             new Dictionary<string, object>
@@ -224,14 +221,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ProportionalTolerance = 0.5 },
         },
-        new object[]
+        new object?[]
         {
             "1=1.5",
             null,
             true,
             new Tolerance { ProportionalTolerance = 0.5 },
         },
-        new object[]
+        new object?[]
         {
             "x=y",
             new Dictionary<string, object>
@@ -242,14 +239,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ProportionalTolerance = 1.1 },
         },
-        new object[]
+        new object?[]
         {
             "1=1.5",
             null,
             false,
             new Tolerance { ProportionalTolerance = 1.1 },
         },
-        new object[]
+        new object?[]
         {
             "x=y",
             new Dictionary<string, object>
@@ -260,7 +257,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ProportionalTolerance = 2 },
         },
-        new object[]
+        new object?[]
         {
             "1=1.5",
             null,
@@ -269,7 +266,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
         },
 
         // Negative equation
-        new object[]
+        new object?[]
         {
             "x!=y",
             new Dictionary<string, object>
@@ -280,14 +277,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ToleranceRangeLowerBound = 0.2, ToleranceRangeUpperBound = 0.2 },
         },
-        new object[]
+        new object?[]
         {
             "1.7!=1.9",
             null,
             false,
             new Tolerance { ToleranceRangeLowerBound = 0.2, ToleranceRangeUpperBound = 0.2 },
         },
-        new object[]
+        new object?[]
         {
             "x!=y",
             new Dictionary<string, object>
@@ -298,14 +295,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ToleranceRangeLowerBound = 0.1, ToleranceRangeUpperBound = 0.1 },
         },
-        new object[]
+        new object?[]
         {
             "1.7!=1.9",
             null,
             true,
             new Tolerance { ToleranceRangeLowerBound = 0.1, ToleranceRangeUpperBound = 0.1 },
         },
-        new object[]
+        new object?[]
         {
             "x!=y",
             new Dictionary<string, object>
@@ -316,14 +313,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ToleranceRangeLowerBound = 0.2 },
         },
-        new object[]
+        new object?[]
         {
             "1.7!=1.9",
             null,
             false,
             new Tolerance { ToleranceRangeLowerBound = 0.2 },
         },
-        new object[]
+        new object?[]
         {
             "x!=y",
             new Dictionary<string, object>
@@ -334,14 +331,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ToleranceRangeUpperBound = 0.2 },
         },
-        new object[]
+        new object?[]
         {
             "1.7!=1.9",
             null,
             true,
             new Tolerance { ToleranceRangeUpperBound = 0.2 },
         },
-        new object[]
+        new object?[]
         {
             "x!=y",
             new Dictionary<string, object>
@@ -352,14 +349,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { IntegerToleranceRangeLowerBound = 1, IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "1.7!=1.9",
             null,
             false,
             new Tolerance { IntegerToleranceRangeLowerBound = 1, IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "x!=y",
             new Dictionary<string, object>
@@ -370,14 +367,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { IntegerToleranceRangeLowerBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "1.7!=1.9",
             null,
             false,
             new Tolerance { IntegerToleranceRangeLowerBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "x!=y",
             new Dictionary<string, object>
@@ -388,14 +385,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "1.7!=1.9",
             null,
             true,
             new Tolerance { IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "x!=y",
             new Dictionary<string, object>
@@ -406,14 +403,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { IntegerToleranceRangeLowerBound = 1, IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "0.7!=1.9",
             null,
             true,
             new Tolerance { IntegerToleranceRangeLowerBound = 1, IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "x!=y",
             new Dictionary<string, object>
@@ -424,14 +421,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { IntegerToleranceRangeLowerBound = 1, IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "1.7!=2.9",
             null,
             true,
             new Tolerance { IntegerToleranceRangeLowerBound = 1, IntegerToleranceRangeUpperBound = 1 },
         },
-        new object[]
+        new object?[]
         {
             "x!=y",
             new Dictionary<string, object>
@@ -442,14 +439,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ProportionalTolerance = 0.1 },
         },
-        new object[]
+        new object?[]
         {
             "1!=1.5",
             null,
             true,
             new Tolerance { ProportionalTolerance = 0.1 },
         },
-        new object[]
+        new object?[]
         {
             "x!=y",
             new Dictionary<string, object>
@@ -460,14 +457,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ProportionalTolerance = 0.5 },
         },
-        new object[]
+        new object?[]
         {
             "1!=1.5",
             null,
             false,
             new Tolerance { ProportionalTolerance = 0.5 },
         },
-        new object[]
+        new object?[]
         {
             "x!=y",
             new Dictionary<string, object>
@@ -478,14 +475,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ProportionalTolerance = 1.1 },
         },
-        new object[]
+        new object?[]
         {
             "1!=1.5",
             null,
             true,
             new Tolerance { ProportionalTolerance = 1.1 },
         },
-        new object[]
+        new object?[]
         {
             "x!=y",
             new Dictionary<string, object>
@@ -496,7 +493,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ProportionalTolerance = 2 },
         },
-        new object[]
+        new object?[]
         {
             "1!=1.5",
             null,
@@ -505,7 +502,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
         },
 
         // Greater than
-        new object[]
+        new object?[]
         {
             "x>y",
             new Dictionary<string, object>
@@ -516,14 +513,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { IntegerToleranceRangeLowerBound = 1L },
         },
-        new object[]
+        new object?[]
         {
             "1>1.5",
             null,
             true,
             new Tolerance { IntegerToleranceRangeLowerBound = 1L },
         },
-        new object[]
+        new object?[]
         {
             "x>y",
             new Dictionary<string, object>
@@ -534,14 +531,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ToleranceRangeLowerBound = 1D },
         },
-        new object[]
+        new object?[]
         {
             "1>1.5",
             null,
             true,
             new Tolerance { ToleranceRangeLowerBound = 1D },
         },
-        new object[]
+        new object?[]
         {
             "x>y",
             new Dictionary<string, object>
@@ -552,14 +549,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ToleranceRangeLowerBound = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "1>1.5",
             null,
             false,
             new Tolerance { ToleranceRangeLowerBound = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "x>y",
             new Dictionary<string, object>
@@ -570,14 +567,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ProportionalTolerance = 0.2D },
         },
-        new object[]
+        new object?[]
         {
             "1>1.5",
             null,
             false,
             new Tolerance { ProportionalTolerance = 0.2D },
         },
-        new object[]
+        new object?[]
         {
             "x>y",
             new Dictionary<string, object>
@@ -588,14 +585,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ProportionalTolerance = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "1>1.5",
             null,
             true,
             new Tolerance { ProportionalTolerance = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "x>y",
             new Dictionary<string, object>
@@ -606,14 +603,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ProportionalTolerance = 1.1D },
         },
-        new object[]
+        new object?[]
         {
             "1>1.5",
             null,
             false,
             new Tolerance { ProportionalTolerance = 1.1D },
         },
-        new object[]
+        new object?[]
         {
             "x>y",
             new Dictionary<string, object>
@@ -624,7 +621,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ProportionalTolerance = 2D },
         },
-        new object[]
+        new object?[]
         {
             "1>1.5",
             null,
@@ -633,7 +630,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
         },
 
         // Greater than or equal
-        new object[]
+        new object?[]
         {
             "x>=y",
             new Dictionary<string, object>
@@ -644,14 +641,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { IntegerToleranceRangeLowerBound = 1L },
         },
-        new object[]
+        new object?[]
         {
             "1>=1.5",
             null,
             true,
             new Tolerance { IntegerToleranceRangeLowerBound = 1L },
         },
-        new object[]
+        new object?[]
         {
             "x>=y",
             new Dictionary<string, object>
@@ -662,14 +659,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ToleranceRangeLowerBound = 1D },
         },
-        new object[]
+        new object?[]
         {
             "1>=1.5",
             null,
             true,
             new Tolerance { ToleranceRangeLowerBound = 1D },
         },
-        new object[]
+        new object?[]
         {
             "x>=y",
             new Dictionary<string, object>
@@ -680,14 +677,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ToleranceRangeLowerBound = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "1>=1.5",
             null,
             true,
             new Tolerance { ToleranceRangeLowerBound = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "x>=y",
             new Dictionary<string, object>
@@ -698,14 +695,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ProportionalTolerance = 0.2D },
         },
-        new object[]
+        new object?[]
         {
             "1>=1.5",
             null,
             false,
             new Tolerance { ProportionalTolerance = 0.2D },
         },
-        new object[]
+        new object?[]
         {
             "x>=y",
             new Dictionary<string, object>
@@ -716,14 +713,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ProportionalTolerance = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "1>=1.5",
             null,
             true,
             new Tolerance { ProportionalTolerance = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "x>=y",
             new Dictionary<string, object>
@@ -734,14 +731,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ProportionalTolerance = 1.1D },
         },
-        new object[]
+        new object?[]
         {
             "1>=1.5",
             null,
             false,
             new Tolerance { ProportionalTolerance = 1.1D },
         },
-        new object[]
+        new object?[]
         {
             "x>=y",
             new Dictionary<string, object>
@@ -752,7 +749,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ProportionalTolerance = 2D },
         },
-        new object[]
+        new object?[]
         {
             "1>=1.5",
             null,
@@ -761,7 +758,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
         },
 
         // Less than
-        new object[]
+        new object?[]
         {
             "y<x",
             new Dictionary<string, object>
@@ -772,14 +769,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { IntegerToleranceRangeUpperBound = 1L },
         },
-        new object[]
+        new object?[]
         {
             "1.5<1",
             null,
             true,
             new Tolerance { IntegerToleranceRangeUpperBound = 1L },
         },
-        new object[]
+        new object?[]
         {
             "y<x",
             new Dictionary<string, object>
@@ -790,14 +787,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ToleranceRangeUpperBound = 1D },
         },
-        new object[]
+        new object?[]
         {
             "1.5<1",
             null,
             true,
             new Tolerance { ToleranceRangeUpperBound = 1D },
         },
-        new object[]
+        new object?[]
         {
             "y<x",
             new Dictionary<string, object>
@@ -808,14 +805,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ToleranceRangeUpperBound = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "1.5<1",
             null,
             false,
             new Tolerance { ToleranceRangeUpperBound = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "y<x",
             new Dictionary<string, object>
@@ -826,14 +823,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ProportionalTolerance = 0.2D },
         },
-        new object[]
+        new object?[]
         {
             "1.5<1",
             null,
             false,
             new Tolerance { ProportionalTolerance = 0.2D },
         },
-        new object[]
+        new object?[]
         {
             "y<x",
             new Dictionary<string, object>
@@ -844,14 +841,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ProportionalTolerance = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "1.5<1",
             null,
             false,
             new Tolerance { ProportionalTolerance = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "y<x",
             new Dictionary<string, object>
@@ -862,14 +859,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ProportionalTolerance = 1.1D },
         },
-        new object[]
+        new object?[]
         {
             "1.5<1",
             null,
             false,
             new Tolerance { ProportionalTolerance = 1.1D },
         },
-        new object[]
+        new object?[]
         {
             "y<x",
             new Dictionary<string, object>
@@ -880,7 +877,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ProportionalTolerance = 2D },
         },
-        new object[]
+        new object?[]
         {
             "1.5<1",
             null,
@@ -889,7 +886,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
         },
 
         // Less than or equal
-        new object[]
+        new object?[]
         {
             "y<=x",
             new Dictionary<string, object>
@@ -900,14 +897,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { IntegerToleranceRangeUpperBound = 1L },
         },
-        new object[]
+        new object?[]
         {
             "1.5<=1",
             null,
             true,
             new Tolerance { IntegerToleranceRangeUpperBound = 1L },
         },
-        new object[]
+        new object?[]
         {
             "y<=x",
             new Dictionary<string, object>
@@ -918,14 +915,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ToleranceRangeUpperBound = 1D },
         },
-        new object[]
+        new object?[]
         {
             "1.5<=1",
             null,
             true,
             new Tolerance { ToleranceRangeUpperBound = 1D },
         },
-        new object[]
+        new object?[]
         {
             "y<=x",
             new Dictionary<string, object>
@@ -936,14 +933,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ToleranceRangeUpperBound = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "1.5<=1",
             null,
             true,
             new Tolerance { ToleranceRangeUpperBound = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "y<=x",
             new Dictionary<string, object>
@@ -954,14 +951,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ProportionalTolerance = 0.2D },
         },
-        new object[]
+        new object?[]
         {
             "1.5<=1",
             null,
             false,
             new Tolerance { ProportionalTolerance = 0.2D },
         },
-        new object[]
+        new object?[]
         {
             "y<=x",
             new Dictionary<string, object>
@@ -972,14 +969,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ProportionalTolerance = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "1.5<=1",
             null,
             true,
             new Tolerance { ProportionalTolerance = 0.5D },
         },
-        new object[]
+        new object?[]
         {
             "y<=x",
             new Dictionary<string, object>
@@ -990,14 +987,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             false,
             new Tolerance { ProportionalTolerance = 1.1D },
         },
-        new object[]
+        new object?[]
         {
             "1.5<=1",
             null,
             false,
             new Tolerance { ProportionalTolerance = 1.1D },
         },
-        new object[]
+        new object?[]
         {
             "y<=x",
             new Dictionary<string, object>
@@ -1008,7 +1005,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
             true,
             new Tolerance { ProportionalTolerance = 2D },
         },
-        new object[]
+        new object?[]
         {
             "1.5<=1",
             null,
@@ -1029,14 +1026,14 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(ProvideDataForTheory))]
     public void ComputedExpressionWithParameters(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult,
         Tolerance tolerance)
     {
         using var service = new ExpressionParsingService();
         using ComputedExpression del = service.Interpret(expression);
 
-        object result = del.Compute(tolerance, parameters?.Values.ToArray() ?? new object[0]);
+        object result = del.Compute(tolerance, parameters?.Values.ToArray() ?? Array.Empty<object>());
 
         Assert.Equal(
             expectedResult,
@@ -1055,7 +1052,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(ProvideDataForTheory))]
     public void ComputedExpressionWithFinder(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult,
         Tolerance tolerance)
     {
@@ -1099,7 +1096,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(ProvideDataForTheory))]
     public void CachedComputedExpressionWithParameters(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult,
         Tolerance tolerance)
     {
@@ -1128,7 +1125,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(ProvideDataForTheory))]
     public void CachedComputedExpressionWithFinder(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult,
         Tolerance tolerance)
     {
@@ -1173,7 +1170,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(ProvideDataForTheory))]
     public void ComputedExpressionWithFunctionFinder(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult,
         Tolerance tolerance)
     {
@@ -1217,7 +1214,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(ProvideDataForTheory))]
     public void CachedComputedExpressionWithFunctionFinder(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult,
         Tolerance tolerance)
     {
@@ -1261,7 +1258,7 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(ProvideDataForTheory))]
     public void CachedComputedExpressionWithFunctionFinderRepeated(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult,
         Tolerance tolerance)
     {
@@ -1296,38 +1293,22 @@ public class ToleranceUnitTest : IClassFixture<CachedExpressionProviderFixture>
     }
 #pragma warning restore IDISP001 // Dispose created.
 
-    private object GenerateFuncOutOfParameterValue(object tempParameter)
-    {
-        switch (tempParameter)
+    private object GenerateFuncOutOfParameterValue(object tempParameter) =>
+        tempParameter switch
         {
-            case byte convertedValue:
-                return new Func<byte>(() => convertedValue);
-            case sbyte convertedValue:
-                return new Func<sbyte>(() => convertedValue);
-            case short convertedValue:
-                return new Func<short>(() => convertedValue);
-            case ushort convertedValue:
-                return new Func<ushort>(() => convertedValue);
-            case int convertedValue:
-                return new Func<int>(() => convertedValue);
-            case uint convertedValue:
-                return new Func<uint>(() => convertedValue);
-            case long convertedValue:
-                return new Func<long>(() => convertedValue);
-            case ulong convertedValue:
-                return new Func<ulong>(() => convertedValue);
-            case float convertedValue:
-                return new Func<float>(() => convertedValue);
-            case double convertedValue:
-                return new Func<double>(() => convertedValue);
-            case byte[] convertedValue:
-                return new Func<byte[]>(() => convertedValue);
-            case string convertedValue:
-                return new Func<string>(() => convertedValue);
-            case bool convertedValue:
-                return new Func<bool>(() => convertedValue);
-            default:
-                throw new InvalidOperationException();
-        }
-    }
+            byte convertedValue => new Func<byte>(() => convertedValue),
+            sbyte convertedValue => new Func<sbyte>(() => convertedValue),
+            short convertedValue => new Func<short>(() => convertedValue),
+            ushort convertedValue => new Func<ushort>(() => convertedValue),
+            int convertedValue => new Func<int>(() => convertedValue),
+            uint convertedValue => new Func<uint>(() => convertedValue),
+            long convertedValue => new Func<long>(() => convertedValue),
+            ulong convertedValue => new Func<ulong>(() => convertedValue),
+            float convertedValue => new Func<float>(() => convertedValue),
+            double convertedValue => new Func<double>(() => convertedValue),
+            byte[] convertedValue => new Func<byte[]>(() => convertedValue),
+            string convertedValue => new Func<string>(() => convertedValue),
+            bool convertedValue => new Func<bool>(() => convertedValue),
+            _ => throw new InvalidOperationException()
+        };
 }

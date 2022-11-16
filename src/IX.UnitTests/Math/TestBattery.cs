@@ -74,7 +74,7 @@ public class TestBattery : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(TestData.GenerateDataObjects), MemberType = typeof(TestData))]
     public void ComputedExpressionWithParameters(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
         try
@@ -116,7 +116,7 @@ public class TestBattery : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(TestData.GenerateDataObjects), MemberType = typeof(TestData))]
     public void ComputedExpressionWithFinder(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
         try
@@ -170,7 +170,7 @@ public class TestBattery : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(TestData.GenerateDataObjects), MemberType = typeof(TestData))]
     public void CachedComputedExpressionWithParameters(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
         try
@@ -199,7 +199,7 @@ public class TestBattery : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(TestData.GenerateDataObjects), MemberType = typeof(TestData))]
     public void CachedComputedExpressionWithFinder(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
         try
@@ -243,7 +243,7 @@ public class TestBattery : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(TestData.GenerateDataObjects), MemberType = typeof(TestData))]
     public void ComputedExpressionWithFunctionFinder(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
         try
@@ -294,7 +294,7 @@ public class TestBattery : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(TestData.GenerateDataObjects), MemberType = typeof(TestData))]
     public void CachedComputedExpressionWithFunctionFinder(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
         try
@@ -339,7 +339,7 @@ public class TestBattery : IClassFixture<CachedExpressionProviderFixture>
     [MemberData(nameof(TestData.GenerateDataObjects), MemberType = typeof(TestData))]
     public void CachedComputedExpressionWithFunctionFinderRepeated(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
         try

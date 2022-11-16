@@ -2,8 +2,6 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System.Net.Http;
-using System.Threading.Tasks;
 using IX.Remote.Envelopes;
 using IX.StandardExtensions.RestSharp;
 using Xunit;

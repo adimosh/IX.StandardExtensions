@@ -2,9 +2,7 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
-using System;
 using System.Diagnostics;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using IX.Observable;

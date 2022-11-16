@@ -1,5 +1,3 @@
-using System;
-
 using IX.System.Collections.Generic;
 
 using Xunit;
