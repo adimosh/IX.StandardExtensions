@@ -3,7 +3,7 @@
 
   <!-- Build configuration -->
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-    <TargetFrameworks>net462;net47;net472;netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
+    <TargetFrameworks>net462;net47;net472;netstandard2.0;netstandard2.1;net6.0;net7.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
     <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
@@ -17,28 +17,12 @@
   <PropertyGroup>
     <Title>IX Mathematics</Title>
     <Description>A library for transforming text expressions containing mathematical operations into executable delegates.</Description>
-    <PackageReleaseNotes>- Included in IX.StandardExtensions solution in preparation for a bigger picture
-- Project and package dependencies
-- Version dependencies updated</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.7.25</VersionPrefix>
-    <VersionSuffix>alpha1</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>../../opt/snk/ix.framework.strongname.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-
-  <!-- Branding -->
-  <PropertyGroup>
-    <Authors>Adrian Mos</Authors>
-    <Company />
-    <Product>IX Framework</Product>
-    <Copyright>Adrian Mos, 2016</Copyright>
-    <PackageProjectUrl>https://github.com/adimosh/IX.Framework/</PackageProjectUrl>
-    <NeutralLanguage>en</NeutralLanguage>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <!-- References -->

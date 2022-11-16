@@ -3,7 +3,7 @@
 
   <!-- Build configuration -->
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-    <TargetFrameworks>net462;net47;netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
+    <TargetFrameworks>net462;net47;netstandard2.0;netstandard2.1;net6.0;net7.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
     <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0</TargetFrameworks>
@@ -11,36 +11,20 @@
 
   <PropertyGroup>
     <FailObsoleteTargetFrameworks>true</FailObsoleteTargetFrameworks>
-    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <!-- Package metadata -->
   <PropertyGroup>
     <Title>IX Standard Extensions</Title>
     <Description>A library containing several extensions that aim to standardize and extend the .NET Framework functionality.</Description>
-    <PackageReleaseNotes>- Synchronization context GetAwaiter
-- Updated documentation and added package readme</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.7.25</VersionPrefix>
-    <VersionSuffix>alpha1</VersionSuffix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>../../opt/snk/ix.framework.strongname.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>IX</RootNamespace>
-  </PropertyGroup>
-
-  <!-- Branding -->
-  <PropertyGroup>
-    <Authors>Adrian Mos</Authors>
-    <Company />
-    <Product>IX Framework</Product>
-    <Copyright>Adrian Mos, 2016</Copyright>
-    <PackageProjectUrl>https://github.com/adimosh/IX.StandardExtensions/</PackageProjectUrl>
-    <NeutralLanguage>en</NeutralLanguage>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <!-- References -->
@@ -72,7 +56,7 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="[5.0.0,6)" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFrameworkIsFramework)'!='true' and '$(TargetFramework)'!='net6.0'">
+  <ItemGroup Condition="'$(TargetFrameworkIsFramework)'!='true' and '$(TargetFramework)'!='net6.0' and '$(TargetFramework)'!='net7.0'">
     <PackageReference Include="System.Text.Encoding.CodePages" Version="[5.0.0,6)" />
   </ItemGroup>
 
