@@ -6,7 +6,7 @@
   <!-- Package metadata -->
   <PropertyGroup>
 
-    <VersionPrefix>0.7.25</VersionPrefix>
+    <VersionPrefix>0.7.26</VersionPrefix>
     <VersionSuffix>alpha1</VersionSuffix>
 
     <PackageReleaseNotes>- Synchronization context GetAwaiter
