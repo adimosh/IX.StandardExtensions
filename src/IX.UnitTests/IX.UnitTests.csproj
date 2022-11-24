@@ -71,7 +71,7 @@
 
   <!-- Security mitigation for package Microsoft.NET.Test.Sdk@17.2.0 - re-check when necessary -->
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
   <!-- Security mitigation for package xunit@2.4.1 - re-check when necessary -->
