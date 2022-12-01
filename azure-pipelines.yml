@@ -30,9 +30,9 @@ stages:
       inputs:
        version: 3.x
     - task: UseDotNet@2
-      displayName: "Install .NET 6"
+      displayName: "Install .NET 7"
       inputs:
-       version: 6.x
+       version: 7.x
     - task: DotNetCoreCLI@2
       displayName: "Restore NuGet packages"
       inputs:
