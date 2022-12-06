@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <!-- Vulnerability fix in dependency - by Snyk -->
-  <ItemGroup Condition="'$(TargetFramework)'!='net6.0' and '$(TargetFramework)'!='net7.0'">
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="System.Text.Json" Version="[6.0.5,7)" />
   </ItemGroup>
 
