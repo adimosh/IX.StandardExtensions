@@ -4,6 +4,7 @@
 
 using IX.DataGeneration;
 using IX.Math;
+using IX.StandardExtensions.Extensions;
 using IX.UnitTests.Math.Helpers;
 using Moq;
 using Xunit;
@@ -27,153 +28,153 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
     ///     Provides the data for theory.
     /// </summary>
     /// <returns>Theory data.</returns>
-    public static object[][] ProvideDataForTheory() => new[]
+    public static object?[][] ProvideDataForTheory() => new[]
     {
-        new object[]
+        new object?[]
         {
             "3+6",
             null,
             9L,
         },
-        new object[]
+        new object?[]
         {
             "8-9",
             null,
             -1L,
         },
-        new object[]
+        new object?[]
         {
             "0=0",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "\"some string\"=\"some string\"",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "true=true",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "0=1",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "\"some string\"=\"spppng\"",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "false=true",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "0!=0",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "\"some string\"!=\"skskskg\"",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "false!=true",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "6-2",
             null,
             4L,
         },
-        new object[]
+        new object?[]
         {
             "3*6",
             null,
             18L,
         },
-        new object[]
+        new object?[]
         {
             "3/6",
             null,
             0.5,
         },
-        new object[]
+        new object?[]
         {
             "6/3",
             null,
             2L,
         },
-        new object[]
+        new object?[]
         {
             "6^3",
             null,
             216L,
         },
-        new object[]
+        new object?[]
         {
             @"""3""+6",
             null,
             "36",
         },
-        new object[]
+        new object?[]
         {
             @"""3""+""6""",
             null,
             "36",
         },
-        new object[]
+        new object?[]
         {
             @"""3+6""",
             null,
             "3+6",
         },
-        new object[]
+        new object?[]
         {
             "3+6-2*4",
             null,
             1L,
         },
-        new object[]
+        new object?[]
         {
             "3+(6-2)*2",
             null,
             11L,
         },
-        new object[]
+        new object?[]
         {
             "3+(6-2*2)",
             null,
             5L,
         },
-        new object[]
+        new object?[]
         {
             "1<<2",
             null,
             4L,
         },
-        new object[]
+        new object?[]
         {
             "3-6+1<<2",
             null,
             1L,
         },
-        new object[]
+        new object?[]
         {
             "x&y",
             new Dictionary<string, object>
@@ -183,7 +184,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             1L,
         },
-        new object[]
+        new object?[]
         {
             "x|y",
             new Dictionary<string, object>
@@ -193,7 +194,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             53L,
         },
-        new object[]
+        new object?[]
         {
             "x#y",
             new Dictionary<string, object>
@@ -203,7 +204,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             52L,
         },
-        new object[]
+        new object?[]
         {
             "x&y",
             new Dictionary<string, object>
@@ -213,7 +214,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "x&y",
             new Dictionary<string, object>
@@ -223,7 +224,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "x|y",
             new Dictionary<string, object>
@@ -233,7 +234,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "x|(1>2)",
             new Dictionary<string, object>
@@ -242,7 +243,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "x|y",
             new Dictionary<string, object>
@@ -252,7 +253,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "x#y",
             new Dictionary<string, object>
@@ -262,7 +263,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "x#y",
             new Dictionary<string, object>
@@ -272,7 +273,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "x<<y",
             new Dictionary<string, object>
@@ -282,7 +283,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             12L,
         },
-        new object[]
+        new object?[]
         {
             "x>>y",
             new Dictionary<string, object>
@@ -292,49 +293,49 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             1L,
         },
-        new object[]
+        new object?[]
         {
             "0x1123>>8",
             null,
             17L,
         },
-        new object[]
+        new object?[]
         {
             "2<<2+1<<2",
             null,
             12L,
         },
-        new object[]
+        new object?[]
         {
             "1<<1<<2",
             null,
             8L,
         },
-        new object[]
+        new object?[]
         {
             "1<<2>>2",
             null,
             1L,
         },
-        new object[]
+        new object?[]
         {
             "((2+3)*2-1)*2",
             null,
             18L,
         },
-        new object[]
+        new object?[]
         {
             "  3         +        6      ",
             null,
             9L,
         },
-        new object[]
+        new object?[]
         {
             "3=6",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "((2+3)*2-1)*2 - x",
             new Dictionary<string, object>
@@ -343,7 +344,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             6L,
         },
-        new object[]
+        new object?[]
         {
             "x^2",
             new Dictionary<string, object>
@@ -352,7 +353,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             4.0,
         },
-        new object[]
+        new object?[]
         {
             "x^3",
             new Dictionary<string, object>
@@ -361,7 +362,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             27.0,
         },
-        new object[]
+        new object?[]
         {
             "x",
             new Dictionary<string, object>
@@ -370,7 +371,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             12L,
         },
-        new object[]
+        new object?[]
         {
             "2*x-7*y",
             new Dictionary<string, object>
@@ -380,7 +381,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             10L
         },
-        new object[]
+        new object?[]
         {
             "x-y",
             new Dictionary<string, object>
@@ -390,7 +391,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             10L,
         },
-        new object[]
+        new object?[]
         {
             "textparam = 12",
             new Dictionary<string, object>
@@ -399,55 +400,55 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "7+14+79<3+(7*12)",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "-1.00<-1",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "1<<1",
             null,
             2L,
         },
-        new object[]
+        new object?[]
         {
             "7/2",
             null,
             3.5,
         },
-        new object[]
+        new object?[]
         {
             "1<<1 + 2 << 1",
             null,
             6L,
         },
-        new object[]
+        new object?[]
         {
             "((1+1)-(1-1))+((1-1)-(1+1))",
             null,
             0L,
         },
-        new object[]
+        new object?[]
         {
             "((6-3)*(3+3))-1",
             null,
             17L,
         },
-        new object[]
+        new object?[]
         {
             "2+sqrt(4)+2",
             null,
             6D,
         },
-        new object[]
+        new object?[]
         {
             "2.0*x-7*y",
             new Dictionary<string, object>
@@ -457,7 +458,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             11.0D,
         },
-        new object[]
+        new object?[]
         {
             "!x",
             new Dictionary<string, object>
@@ -466,7 +467,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             -32769L,
         },
-        new object[]
+        new object?[]
         {
             "strlen(x)",
             new Dictionary<string, object>
@@ -475,151 +476,151 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             7L,
         },
-        new object[]
+        new object?[]
         {
             "21*3-17",
             null,
             46L,
         },
-        new object[]
+        new object?[]
         {
             "(1+1)*2-3",
             null,
             1L,
         },
-        new object[]
+        new object?[]
         {
             "sqrt(4)",
             null,
             2D,
         },
-        new object[]
+        new object?[]
         {
             "sqrt(4.0)",
             null,
             2D,
         },
-        new object[]
+        new object?[]
         {
             "sqrt(0.49)",
             null,
             0.7,
         },
-        new object[]
+        new object?[]
         {
             "!4+4",
             null,
             -1L,
         },
-        new object[]
+        new object?[]
         {
             "212",
             null,
             212L,
         },
-        new object[]
+        new object?[]
         {
             "String is wonderful",
             null,
             "String is wonderful",
         },
-        new object[]
+        new object?[]
         {
             "212=String again",
             null,
             "212=String again",
         },
-        new object[]
+        new object?[]
         {
             "0x10+26",
             null,
             42L,
         },
-        new object[]
+        new object?[]
         {
             "e",
             null,
             global::System.Math.E,
         },
-        new object[]
+        new object?[]
         {
             "[pi]",
             null,
             global::System.Math.PI,
         },
-        new object[]
+        new object?[]
         {
             "e*[pi]",
             null,
             global::System.Math.E * global::System.Math.PI,
         },
-        new object[]
+        new object?[]
         {
             "min(2,17)",
             null,
             2L,
         },
-        new object[]
+        new object?[]
         {
             "max(2,17)+1",
             null,
             18L,
         },
-        new object[]
+        new object?[]
         {
             "(max(2,17)+1)/2",
             null,
             9L,
         },
-        new object[]
+        new object?[]
         {
             "max(2,17)+max(3,1)",
             null,
             20L,
         },
-        new object[]
+        new object?[]
         {
             "(sqrt(16)+1)*4-max(20,13)+(27*5-27*4 - sqrt(49))",
             null,
             20D,
         },
-        new object[]
+        new object?[]
         {
             "strlen(\"This that those\")",
             null,
             15L,
         },
-        new object[]
+        new object?[]
         {
             "5+strlen(\"This that those\")-10",
             null,
             10L,
         },
-        new object[]
+        new object?[]
         {
             "min(max(10,5),max(25,10))",
             null,
             10L,
         },
-        new object[]
+        new object?[]
         {
             "min(max(10,5)+40,3*max(25,10))",
             null,
             50L,
         },
-        new object[]
+        new object?[]
         {
             "min(max(5+strlen(\"This that those\")-10,5)+40,3*max(25,10))",
             null,
             50L,
         },
-        new object[]
+        new object?[]
         {
             "1--2",
             null,
             3L,
         },
-        new object[]
+        new object?[]
         {
             "x+y",
             new Dictionary<string, object>
@@ -629,13 +630,13 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             -1L,
         },
-        new object[]
+        new object?[]
         {
             "1*-2",
             null,
             -2L,
         },
-        new object[]
+        new object?[]
         {
             "(x=0) & (y=1)",
             new Dictionary<string, object>
@@ -645,7 +646,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "(x=0) | (y=1)",
             new Dictionary<string, object>
@@ -655,7 +656,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "(x=0) & (y=1)",
             new Dictionary<string, object>
@@ -665,7 +666,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "(x>0) & (y<1)",
             new Dictionary<string, object>
@@ -675,7 +676,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "abs(x)",
             new Dictionary<string, object>
@@ -684,7 +685,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             1L,
         },
-        new object[]
+        new object?[]
         {
             "abs(x)",
             new Dictionary<string, object>
@@ -693,13 +694,13 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             1D,
         },
-        new object[]
+        new object?[]
         {
             "abs(0x1)",
             null,
             1L,
         },
-        new object[]
+        new object?[]
         {
             "sqrt(x)",
             new Dictionary<string, object>
@@ -708,7 +709,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             global::System.Math.Sqrt(2),
         },
-        new object[]
+        new object?[]
         {
             "sqrt(x)",
             new Dictionary<string, object>
@@ -717,7 +718,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             3D,
         },
-        new object[]
+        new object?[]
         {
             "ceil(x)",
             new Dictionary<string, object>
@@ -726,7 +727,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             3D,
         },
-        new object[]
+        new object?[]
         {
             "floor(x)",
             new Dictionary<string, object>
@@ -735,7 +736,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             4D,
         },
-        new object[]
+        new object?[]
         {
             "round(x)",
             new Dictionary<string, object>
@@ -744,7 +745,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             4D,
         },
-        new object[]
+        new object?[]
         {
             "round(x)",
             new Dictionary<string, object>
@@ -753,7 +754,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             2D,
         },
-        new object[]
+        new object?[]
         {
             "(2*max(x,500)-y)/pow(x,2)",
             new Dictionary<string, object>
@@ -763,7 +764,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             0.014377030729045,
         },
-        new object[]
+        new object?[]
         {
             "min(max(x,y),10)",
             new Dictionary<string, object>
@@ -773,7 +774,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             5D,
         },
-        new object[]
+        new object?[]
         {
             "min(max(x,y),max(y,500)*2-min(995,pow(x,200)))",
             new Dictionary<string, object>
@@ -783,7 +784,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             5D,
         },
-        new object[]
+        new object?[]
         {
             "max(max(x,y),max(y,500)*2-995)",
             new Dictionary<string, object>
@@ -793,7 +794,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             5.5,
         },
-        new object[]
+        new object?[]
         {
             "substr(x,y)",
             new Dictionary<string, object>
@@ -803,7 +804,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             "bbb",
         },
-        new object[]
+        new object?[]
         {
             "substr(x,y,z)",
             new Dictionary<string, object>
@@ -814,7 +815,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             "bb",
         },
-        new object[]
+        new object?[]
         {
             "strlen(substr(x,y,z))",
             new Dictionary<string, object>
@@ -825,13 +826,13 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             2L,
         },
-        new object[]
+        new object?[]
         {
             "abs((1-17)+3) + abs(14-(1*4))",
             null,
             23L,
         },
-        new object[]
+        new object?[]
         {
             "substr(x,y,z)+substr(q,y,z)",
             new Dictionary<string, object>
@@ -843,25 +844,25 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             "bbcd",
         },
-        new object[]
+        new object?[]
         {
             "\"aaa\" + \"bbb\"",
             null,
             "aaabbb",
         },
-        new object[]
+        new object?[]
         {
             "\"aaa\" + substr(\"bbbbbb\", 1, 1)",
             null,
             "aaab",
         },
-        new object[]
+        new object?[]
         {
             "\"aaa\" > \"bbb\"",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "\"aaa\" > x",
             new Dictionary<string, object>
@@ -870,13 +871,13 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "\"aaa\" < \"bbb\"",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "\"aaa\" < x",
             new Dictionary<string, object>
@@ -885,13 +886,13 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "\"aaa\" >= \"bbb\"",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "\"aaa\" >= x",
             new Dictionary<string, object>
@@ -900,13 +901,13 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "\"aaa\" <= \"bbb\"",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "\"aaa\" <= x",
             new Dictionary<string, object>
@@ -915,19 +916,19 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "\"aaa\" <= \"aaa\"",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "\"aaa\" >= \"aaa\"",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "tempVariable1=2",
             new Dictionary<string, object>
@@ -936,13 +937,13 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "6/2*3",
             null,
             9L,
         },
-        new object[]
+        new object?[]
         {
             "x=\" \"",
             new Dictionary<string, object>
@@ -951,7 +952,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "x=\"\"",
             new Dictionary<string, object>
@@ -960,67 +961,67 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110101=0b1001010111010110110010000000010010101110101",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110101>0b1010111010110110010000000010010101110101",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110100<0b1001010111010110110010000000010010101110101",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110101>=0b1010111010110110010000000010010101110101",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110100<=0b1001010111010110110010000000010010101110101",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110101<0b1010111010110110010000000010010101110101",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110100>0b1001010111010110110010000000010010101110101",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110101<=0b1010111010110110010000000010010101110101",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110100>=0b1001010111010110110010000000010010101110101",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110011111000010010101110101=0b1001010111010110110010000000011111101110101",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "x=0b1001010111010110110010000000010010101110101",
             new Dictionary<string, object>
@@ -1029,19 +1030,19 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110101!=0b1001010111010110110010000000010010101110101",
             null,
             false,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110011111000010010101110101!=0b1001010111010110110010000000011111101110101",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "x!=0b1001010111010110110010000000010010101110101",
             new Dictionary<string, object>
@@ -1050,7 +1051,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110101>x",
             new Dictionary<string, object>
@@ -1059,7 +1060,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110100<x",
             new Dictionary<string, object>
@@ -1068,7 +1069,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110101>=x",
             new Dictionary<string, object>
@@ -1077,7 +1078,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110100<=x",
             new Dictionary<string, object>
@@ -1086,7 +1087,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110101<x",
             new Dictionary<string, object>
@@ -1095,7 +1096,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110100>x",
             new Dictionary<string, object>
@@ -1104,7 +1105,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110101<=x",
             new Dictionary<string, object>
@@ -1113,7 +1114,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "0b1001010111010110110010000000010010101110100>=x",
             new Dictionary<string, object>
@@ -1122,7 +1123,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "x>0b1010111010110110010000000010010101110101",
             new Dictionary<string, object>
@@ -1131,7 +1132,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "x<0b1001010111010110110010000000010010101110101",
             new Dictionary<string, object>
@@ -1140,7 +1141,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "x>=0b1010111010110110010000000010010101110101",
             new Dictionary<string, object>
@@ -1149,7 +1150,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "x<=0b1001010111010110110010000000010010101110101",
             new Dictionary<string, object>
@@ -1158,7 +1159,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "x<0b1010111010110110010000000010010101110101",
             new Dictionary<string, object>
@@ -1167,7 +1168,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "x>0b1001010111010110110010000000010010101110101",
             new Dictionary<string, object>
@@ -1176,7 +1177,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "x<=0b1010111010110110010000000010010101110101",
             new Dictionary<string, object>
@@ -1185,7 +1186,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "x>=0b1001010111010110110010000000010010101110101",
             new Dictionary<string, object>
@@ -1194,7 +1195,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "x>=y",
             new Dictionary<string, object>
@@ -1204,7 +1205,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "x<=y",
             new Dictionary<string, object>
@@ -1214,7 +1215,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "x>y",
             new Dictionary<string, object>
@@ -1224,7 +1225,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "x<y",
             new Dictionary<string, object>
@@ -1234,7 +1235,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false,
         },
-        new object[]
+        new object?[]
         {
             "x>y",
             new Dictionary<string, object>
@@ -1244,7 +1245,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "x>y",
             new Dictionary<string, object>
@@ -1254,13 +1255,13 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "0b11111111_11111111_00000000>0b00000000_11111111_11111111",
             null,
             true,
         },
-        new object[]
+        new object?[]
         {
             "x*(x+1)*(x+2)",
             new Dictionary<string, object>
@@ -1269,7 +1270,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             210L,
         },
-        new object[]
+        new object?[]
         {
             "tempVar1+tempVar1",
             new Dictionary<string, object>
@@ -1278,7 +1279,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             10L,
         },
-        new object[]
+        new object?[]
         {
             "tempVar1+tempVar2",
             new Dictionary<string, object>
@@ -1288,7 +1289,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             10D,
         },
-        new object[]
+        new object?[]
         {
             "tempVar1",
             new Dictionary<string, object>
@@ -1297,7 +1298,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             5D,
         },
-        new object[]
+        new object?[]
         {
             "tempVar1",
             new Dictionary<string, object>
@@ -1306,7 +1307,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             "aaa",
         },
-        new object[]
+        new object?[]
         {
             "tempVar1",
             new Dictionary<string, object>
@@ -1315,7 +1316,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             5L,
         },
-        new object[]
+        new object?[]
         {
             "tempVar1",
             new Dictionary<string, object>
@@ -1324,7 +1325,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true,
         },
-        new object[]
+        new object?[]
         {
             "tempVar1",
             new Dictionary<string, object>
@@ -1333,49 +1334,49 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             BitConverter.GetBytes(0b1001010111010110110010000000010010101110101),
         },
-        new object[]
+        new object?[]
         {
             "2.12+6.274E+1",
             null,
             64.86D,
         },
-        new object[]
+        new object?[]
         {
             "2.12+6.274E1",
             null,
             64.86D,
         },
-        new object[]
+        new object?[]
         {
             "2.12+627.4E-2",
             null,
             8.394D,
         },
-        new object[]
+        new object?[]
         {
             "2.12+6.274e+1",
             null,
             64.86D,
         },
-        new object[]
+        new object?[]
         {
             "2.12+6.274e1",
             null,
             64.86D,
         },
-        new object[]
+        new object?[]
         {
             "2.12+627.4e-2",
             null,
             8.394D,
         },
-        new object[]
+        new object?[]
         {
             "trim(\"   a   \")",
             null,
             "a",
         },
-        new object[]
+        new object?[]
         {
             "trim(x)",
             new Dictionary<string, object>
@@ -1384,13 +1385,13 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             "a",
         },
-        new object[]
+        new object?[]
         {
             "trim(\"abcde\", \"ade\")",
             null,
             "bc",
         },
-        new object[]
+        new object?[]
         {
             "trim(x, y)",
             new Dictionary<string, object>
@@ -1400,13 +1401,13 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             "bc",
         },
-        new object[]
+        new object?[]
         {
             "trimbody(\"abcde\", \"c\")",
             null,
             "abde",
         },
-        new object[]
+        new object?[]
         {
             "trimbody(x, y)",
             new Dictionary<string, object>
@@ -1416,13 +1417,13 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             "ade",
         },
-        new object[]
+        new object?[]
         {
             "replace(\"abcde\", \"c\", \"x\")",
             null,
             "abxde",
         },
-        new object[]
+        new object?[]
         {
             "replace(x, y, z)",
             new Dictionary<string, object>
@@ -1433,7 +1434,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             "aqde",
         },
-        new object[]
+        new object?[]
         {
             "round(x, 2)=2.12",
             new Dictionary<string, object>
@@ -1442,7 +1443,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             true
         },
-        new object[]
+        new object?[]
         {
             "round(x, 3)=2.121",
             new Dictionary<string, object>
@@ -1451,7 +1452,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             },
             false
         },
-        new object[]
+        new object?[]
         {
             "0b10010101+0b11010110",
             null,
@@ -1461,7 +1462,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
                 0b11010110
             }
         },
-        new object[]
+        new object?[]
         {
             "0b10010101+x",
             new Dictionary<string, object>
@@ -1508,20 +1509,18 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
     [MemberData(nameof(ProvideDataForTheory))]
     public void ComputedExpressionWithParameters(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
-        using (var service = new ExpressionParsingService())
-        {
-            using (ComputedExpression del = service.Interpret(expression))
-            {
-                object result = del.Compute(parameters?.Values.ToArray() ?? new object[0]);
+        using var service = new ExpressionParsingService();
 
-                Assert.Equal(
-                    expectedResult,
-                    result);
-            }
-        }
+        using ComputedExpression del = service.Interpret(expression);
+
+        object result = del.Compute(parameters?.Values.ToArray() ?? Array.Empty<object>());
+
+        Assert.Equal(
+            expectedResult,
+            result);
     }
 
     /// <summary>
@@ -1537,35 +1536,33 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
     [MemberData(nameof(ProvideDataForTheory))]
     public void ComputedExpressionWithFinder(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
-        using (var service = new ExpressionParsingService())
+        using var service = new ExpressionParsingService();
+
+        var finder = new Mock<IDataFinder>(MockBehavior.Loose);
+
+        using ComputedExpression del = service.Interpret(expression);
+
+        if (parameters != null)
         {
-            var finder = new Mock<IDataFinder>(MockBehavior.Loose);
-
-            using (ComputedExpression del = service.Interpret(expression))
+            foreach (KeyValuePair<string, object> parameter in parameters)
             {
-                if (parameters != null)
-                {
-                    foreach (KeyValuePair<string, object> parameter in parameters)
-                    {
-                        var key = parameter.Key;
-                        object value = parameter.Value;
-                        _ = finder.Setup(
-                            p => p.TryGetData(
-                                key,
-                                out value)).Returns(true);
-                    }
-                }
-
-                object result = del.Compute(finder.Object);
-
-                Assert.Equal(
-                    expectedResult,
-                    result);
+                var key = parameter.Key;
+                object value = parameter.Value;
+                _ = finder.Setup(
+                    p => p.TryGetData(
+                        key,
+                        out value)).Returns(true);
             }
         }
+
+        object result = del.Compute(finder.Object);
+
+        Assert.Equal(
+            expectedResult,
+            result);
     }
 
 #pragma warning disable IDISP001 // Dispose created. - We specifically do not want these to be disposed
@@ -1583,7 +1580,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
     [MemberData(nameof(ProvideDataForTheory))]
     public void CachedComputedExpressionWithParameters(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
         ComputedExpression del = fixture.CachedService.Interpret(expression);
@@ -1592,7 +1589,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
             throw new InvalidOperationException("No computed expression was generated!");
         }
 
-        object result = del.Compute(parameters?.Values.ToArray() ?? new object[0]);
+        object result = del.Compute(parameters?.Values.ToArray() ?? Array.Empty<object>());
 
         Assert.Equal(
             expectedResult,
@@ -1612,7 +1609,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
     [MemberData(nameof(ProvideDataForTheory))]
     public void CachedComputedExpressionWithFinder(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
         var finder = new Mock<IDataFinder>(MockBehavior.Loose);
@@ -1657,35 +1654,32 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
     [MemberData(nameof(ProvideDataForTheory))]
     public void ComputedExpressionWithFunctionFinder(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
-        using (var service = new ExpressionParsingService())
+        using var service = new ExpressionParsingService();
+
+        var finder = new Mock<IDataFinder>(MockBehavior.Loose);
+
+        using ComputedExpression del = service.Interpret(expression);
+
+        if (parameters != null)
         {
-            var finder = new Mock<IDataFinder>(MockBehavior.Loose);
-
-            using (ComputedExpression del = service.Interpret(expression))
+            foreach (var (key, val) in parameters)
             {
-                if (parameters != null)
-                {
-                    foreach (KeyValuePair<string, object> parameter in parameters)
-                    {
-                        var key = parameter.Key;
-                        object value = GenerateFuncOutOfParameterValue(parameter.Value);
-                        _ = finder.Setup(
-                            p => p.TryGetData(
-                                key,
-                                out value)).Returns(true);
-                    }
-                }
-
-                object result = del.Compute(finder.Object);
-
-                Assert.Equal(
-                    expectedResult,
-                    result);
+                object value = GenerateFuncOutOfParameterValue(val);
+                _ = finder.Setup(
+                    p => p.TryGetData(
+                        key,
+                        out value)).Returns(true);
             }
         }
+
+        object result = del.Compute(finder.Object);
+
+        Assert.Equal(
+            expectedResult,
+            result);
     }
 
 #pragma warning disable IDISP001 // Dispose created. - We specifically do not want these to be disposed
@@ -1703,7 +1697,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
     [MemberData(nameof(ProvideDataForTheory))]
     public void CachedComputedExpressionWithFunctionFinder(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
         var finder = new Mock<IDataFinder>(MockBehavior.Loose);
@@ -1716,10 +1710,9 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
 
         if (parameters != null)
         {
-            foreach (KeyValuePair<string, object> parameter in parameters)
+            foreach (var (key, val) in parameters)
             {
-                var key = parameter.Key;
-                object value = GenerateFuncOutOfParameterValue(parameter.Value);
+                object value = GenerateFuncOutOfParameterValue(val);
                 _ = finder.Setup(
                     p => p.TryGetData(
                         key,
@@ -1747,7 +1740,7 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
     [MemberData(nameof(ProvideDataForTheory))]
     public void CachedComputedExpressionWithFunctionFinderRepeated(
         string expression,
-        Dictionary<string, object> parameters,
+        Dictionary<string, object>? parameters,
         object expectedResult)
     {
         var indexLimit = DataGenerator.RandomInteger(
@@ -1761,10 +1754,9 @@ public class ComputedExpressionUnitTests : IClassFixture<CachedExpressionProvide
 
             if (parameters != null)
             {
-                foreach (KeyValuePair<string, object> parameter in parameters)
+                foreach (var (key, val) in parameters)
                 {
-                    var key = parameter.Key;
-                    object value = GenerateFuncOutOfParameterValue(parameter.Value);
+                    object value = GenerateFuncOutOfParameterValue(val);
                     _ = finder.Setup(
                         p => p.TryGetData(
                             key,

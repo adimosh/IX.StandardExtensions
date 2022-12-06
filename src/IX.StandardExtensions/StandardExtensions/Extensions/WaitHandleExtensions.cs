@@ -60,7 +60,7 @@ public static class WaitHandleExtensions
         {
             registeredHandle?.Unregister(null);
 
-            #if NETSTANDARD21_OR_GREATER
+            #if FRAMEWORK_ADVANCED
             await tokenRegistration.DisposeAsync();
             #else
             tokenRegistration.Dispose();

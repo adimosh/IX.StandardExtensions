@@ -42,6 +42,7 @@
   <ItemGroup>
     <ProjectReference Include="..\IX.Math\IX.Math.csproj" />
     <ProjectReference Include="..\IX.StandardExtensions\IX.StandardExtensions.csproj" />
+    <ProjectReference Include="..\IX.StandardExtensions.RestSharp\IX.StandardExtensions.RestSharp.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFrameworkIsFramework)'=='true'">

@@ -60,11 +60,9 @@ internal sealed class StringExtractor : Extensibility.IConstantsExtractor
                 break;
             }
 
-            var header = process.Slice(
-                0,
-                openingPosition);
+            var header = process[..openingPosition];
 
-            var rest = process.Slice(openingPosition + stringIndicatorLength);
+            var rest = process[(openingPosition + stringIndicatorLength)..];
 
             int closingPosition;
             ReadOnlySpan<char> body;
@@ -73,29 +71,21 @@ internal sealed class StringExtractor : Extensibility.IConstantsExtractor
             {
                 closingPosition = rest.IndexOf(stringIndicator, StringComparison.CurrentCulture);
 
-                if (closingPosition != -1)
+                if (closingPosition == -1) continue;
+
+                body = rest[..closingPosition];
+
+                int occurrences = 0;
+
+                while (body.EndsWith(escapeCharacter))
                 {
-                    body = rest.Slice(
-                        0,
-                        closingPosition);
-
-                    int occurrences = 0;
-
-                    while (body.EndsWith(escapeCharacter))
-                    {
-                        occurrences++;
-                        body = body.Slice(
-                            0,
-                            body.Length - escapeCharacterLength);
-                    }
-
-                    rest = rest.Slice(closingPosition + stringIndicatorLength);
-
-                    if (occurrences % 2 == 0)
-                    {
-                        break;
-                    }
+                    occurrences++;
+                    body = body[..^escapeCharacterLength];
                 }
+
+                rest = rest[(closingPosition + stringIndicatorLength)..];
+
+                if (occurrences % 2 == 0) break;
             }
             while (closingPosition != -1);
 
@@ -119,7 +109,7 @@ internal sealed class StringExtractor : Extensibility.IConstantsExtractor
 
             sb ??= new(originalExpression.Length);
 
-            #if NETSTANDARD21_OR_GREATER
+            #if FRAMEWORK_ADVANCED
             sb.Append(header);
             #else
             sb.Append(header.ToString());
@@ -135,7 +125,7 @@ internal sealed class StringExtractor : Extensibility.IConstantsExtractor
             return originalExpression;
         }
 
-        #if NETSTANDARD21_OR_GREATER
+        #if FRAMEWORK_ADVANCED
         sb.Append(process);
         #else
         sb.Append(process.ToString());

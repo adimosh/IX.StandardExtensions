@@ -5,7 +5,7 @@
 // This file has been adapted from https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Index.cs,
 // retrieved on 2022.09.08
 
-#if !NETSTANDARD21_OR_GREATER
+#if !FRAMEWORK_ADVANCED
 using IX.StandardExtensions.Contracts;
 
 using JetBrains.Annotations;

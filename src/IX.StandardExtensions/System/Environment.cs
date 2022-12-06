@@ -30,7 +30,7 @@ public sealed class Environment : IEnvironment
     /// </summary>
     public bool IsSingleProcessor => GlobalSystem.Environment.ProcessorCount == 1;
 
-    #if NET50_OR_GREATER
+    #if NET60_OR_GREATER
     /// <summary>
     ///     Gets the unique identifier for the current process.
     /// </summary>
@@ -150,7 +150,7 @@ public sealed class Environment : IEnvironment
     /// </value>
     public int TickCount => GlobalSystem.Environment.TickCount;
 
-    #if NET50_OR_GREATER
+    #if NET60_OR_GREATER
     /// <summary>Gets the number of milliseconds elapsed since the system started.</summary>
     /// <value>
     ///     A 64-bit signed integer containing the amount of time in milliseconds that has passed since the last time the

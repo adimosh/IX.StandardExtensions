@@ -5,7 +5,7 @@
 // This file has been adapted from https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Range.cs,
 // retrieved on 2022.09.08
 
-#if !NETSTANDARD21_OR_GREATER
+#if !FRAMEWORK_ADVANCED
 using JetBrains.Annotations;
 
 using System.Diagnostics.CodeAnalysis;
