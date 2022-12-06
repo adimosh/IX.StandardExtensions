@@ -2,10 +2,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-    <TargetFrameworks>net462;net47;net471;net472;net48;netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net462;net47;net471;net472;net48;net6.0;net7.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
-    <TargetFrameworks>netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -44,10 +44,6 @@
     <ProjectReference Include="..\IX.StandardExtensions\IX.StandardExtensions.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'!='net46'">
-    <ProjectReference Include="..\IX.StandardExtensions.RestSharp\IX.StandardExtensions.RestSharp.csproj" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFrameworkIsFramework)'=='true'">
     <Reference Include="System.IO.Compression" />
   </ItemGroup>
@@ -57,27 +53,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Moq" Version="4.18.2" />
-  </ItemGroup>
-
-  <!-- Security mitigation for package Microsoft.NET.Test.Sdk@17.2.0 - re-check when necessary -->
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
-
-  <!-- Security mitigation for package xunit@2.4.1 - re-check when necessary -->
-  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <PackageReference Include="Moq" Version="4.18.3" />
   </ItemGroup>
 
   <ItemGroup>
