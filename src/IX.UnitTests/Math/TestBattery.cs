@@ -90,7 +90,7 @@ public class TestBattery : IClassFixture<CachedExpressionProviderFixture>
                             q => expression.IndexOf(
                                 q.Key,
                                 StringComparison.Ordinal)).Select(p => p.Value).ToArray() ??
-                        new object[0]);
+                        Array.Empty<object>());
                 }
             }
 

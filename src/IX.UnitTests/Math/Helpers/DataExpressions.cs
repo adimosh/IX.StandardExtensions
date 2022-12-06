@@ -15,27 +15,27 @@ public static class DataExpressions
     /// Gets the objects that relate to the fixture pattern.
     /// </summary>
     /// <returns>The data objects.</returns>
-    public static object[][] GetFixturePatternObjects() =>
+    public static object?[][] GetFixturePatternObjects() =>
         new[]
         {
-            new object[]
+            new object?[]
             {
-                new Func<CachedExpressionProviderFixture, IExpressionParsingService>((fix) => fix.CachedService),
+                new Func<CachedExpressionProviderFixture, IExpressionParsingService>(fix => fix.CachedService),
                 null,
             },
-            new object[]
+            new object?[]
             {
-                new Func<CachedExpressionProviderFixture, IExpressionParsingService>((fix) => fix.Service),
+                new Func<CachedExpressionProviderFixture, IExpressionParsingService>(fix => fix.Service),
                 null,
             },
-            new object[]
+            new object?[]
             {
-                new Func<CachedExpressionProviderFixture, IExpressionParsingService>((_) => new ExpressionParsingService()),
+                new Func<CachedExpressionProviderFixture, IExpressionParsingService>(_ => new ExpressionParsingService()),
                 new Action<IExpressionParsingService>(eps => eps.Dispose()),
             },
-            new object[]
+            new object?[]
             {
-                new Func<CachedExpressionProviderFixture, IExpressionParsingService>((_) => new CachedExpressionParsingService()),
+                new Func<CachedExpressionProviderFixture, IExpressionParsingService>(_ => new CachedExpressionParsingService()),
                 new Action<IExpressionParsingService>(eps => eps.Dispose()),
             },
         };

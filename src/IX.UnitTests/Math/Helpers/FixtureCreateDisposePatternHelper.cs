@@ -13,7 +13,7 @@ namespace IX.UnitTests.Math.Helpers;
 /// <seealso cref="IDisposable" />
 internal class FixtureCreateDisposePatternHelper : IDisposable
 {
-    private readonly Action<IExpressionParsingService> dispose;
+    private readonly Action<IExpressionParsingService>? _dispose;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FixtureCreateDisposePatternHelper"/> class.
@@ -24,14 +24,14 @@ internal class FixtureCreateDisposePatternHelper : IDisposable
     public FixtureCreateDisposePatternHelper(
         CachedExpressionProviderFixture fixture,
         Func<CachedExpressionProviderFixture, IExpressionParsingService> create,
-        Action<IExpressionParsingService> dispose)
+        Action<IExpressionParsingService>? dispose)
     {
         _ = Requires.NotNull(fixture, nameof(fixture));
         _ = Requires.NotNull(create, nameof(create));
 
-        Service = create(fixture);
+        Service = create.Invoke(fixture);
 
-        this.dispose = dispose;
+        _dispose = dispose;
     }
 
     /// <summary>
@@ -45,11 +45,5 @@ internal class FixtureCreateDisposePatternHelper : IDisposable
     /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
     /// </summary>
-    public void Dispose()
-    {
-        if (Service != null)
-        {
-            dispose?.Invoke(Service);
-        }
-    }
+    public void Dispose() => _dispose?.Invoke(Service);
 }

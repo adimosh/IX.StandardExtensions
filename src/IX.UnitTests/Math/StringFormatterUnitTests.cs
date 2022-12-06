@@ -20,7 +20,7 @@ namespace IX.UnitTests.Math;
     Justification = "It is disposed if needed, the analyzer can't tell.")]
 public class StringFormatterUnitTests : IClassFixture<CachedExpressionProviderFixture>
 {
-    private readonly CachedExpressionProviderFixture fixture;
+    private readonly CachedExpressionProviderFixture _fixture;
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="StringFormatterUnitTests" /> class.
@@ -28,15 +28,16 @@ public class StringFormatterUnitTests : IClassFixture<CachedExpressionProviderFi
     /// <param name="fixture">The fixture.</param>
     public StringFormatterUnitTests(CachedExpressionProviderFixture fixture)
     {
-        this.fixture = fixture;
+        _fixture = fixture;
 
-        fixture.AtFirstRun(
-            () =>
-            {
-                var sf = new SillyStringFormatter();
-                fixture.CachedService.RegisterTypeFormatter(sf);
-                fixture.Service.RegisterTypeFormatter(sf);
-            });
+        void Action()
+        {
+            var sf = new SillyStringFormatter();
+            _fixture.CachedService.RegisterTypeFormatter(sf);
+            _fixture.Service.RegisterTypeFormatter(sf);
+        }
+
+        fixture.AtFirstRun(Action);
     }
 
     /// <summary>
@@ -48,10 +49,10 @@ public class StringFormatterUnitTests : IClassFixture<CachedExpressionProviderFi
     [MemberData(nameof(DataExpressions.GetFixturePatternObjects), MemberType = typeof(DataExpressions))]
     public void Test1(
         Func<CachedExpressionProviderFixture, IExpressionParsingService> create,
-        Action<IExpressionParsingService> dispose)
+        Action<IExpressionParsingService>? dispose)
     {
         // Arrange
-        using var eps = new FixtureCreateDisposePatternHelper(fixture, create, dispose);
+        using var eps = new FixtureCreateDisposePatternHelper(_fixture, create, dispose);
 
         if (dispose != null)
         {
@@ -81,10 +82,10 @@ public class StringFormatterUnitTests : IClassFixture<CachedExpressionProviderFi
     [MemberData(nameof(DataExpressions.GetFixturePatternObjects), MemberType = typeof(DataExpressions))]
     public void Test2(
         Func<CachedExpressionProviderFixture, IExpressionParsingService> create,
-        Action<IExpressionParsingService> dispose)
+        Action<IExpressionParsingService>? dispose)
     {
         // Arrange
-        using var eps = new FixtureCreateDisposePatternHelper(fixture, create, dispose);
+        using var eps = new FixtureCreateDisposePatternHelper(_fixture, create, dispose);
 
         if (dispose != null)
         {
@@ -112,10 +113,10 @@ public class StringFormatterUnitTests : IClassFixture<CachedExpressionProviderFi
     [MemberData(nameof(DataExpressions.GetFixturePatternObjects), MemberType = typeof(DataExpressions))]
     public void Test3(
         Func<CachedExpressionProviderFixture, IExpressionParsingService> create,
-        Action<IExpressionParsingService> dispose)
+        Action<IExpressionParsingService>? dispose)
     {
         // Arrange
-        using var eps = new FixtureCreateDisposePatternHelper(fixture, create, dispose);
+        using var eps = new FixtureCreateDisposePatternHelper(_fixture, create, dispose);
 
         if (dispose != null)
         {
@@ -144,10 +145,10 @@ public class StringFormatterUnitTests : IClassFixture<CachedExpressionProviderFi
     [MemberData(nameof(DataExpressions.GetFixturePatternObjects), MemberType = typeof(DataExpressions))]
     public void Test4(
         Func<CachedExpressionProviderFixture, IExpressionParsingService> create,
-        Action<IExpressionParsingService> dispose)
+        Action<IExpressionParsingService>? dispose)
     {
         // Arrange
-        using var eps = new FixtureCreateDisposePatternHelper(fixture, create, dispose);
+        using var eps = new FixtureCreateDisposePatternHelper(_fixture, create, dispose);
 
         if (dispose != null)
         {
@@ -179,7 +180,7 @@ public class StringFormatterUnitTests : IClassFixture<CachedExpressionProviderFi
         Action<IExpressionParsingService> dispose)
     {
         // Arrange
-        using var eps = new FixtureCreateDisposePatternHelper(fixture, create, dispose);
+        using var eps = new FixtureCreateDisposePatternHelper(_fixture, create, dispose);
 
         if (dispose != null)
         {
@@ -210,7 +211,7 @@ public class StringFormatterUnitTests : IClassFixture<CachedExpressionProviderFi
         Action<IExpressionParsingService> dispose)
     {
         // Arrange
-        using var eps = new FixtureCreateDisposePatternHelper(fixture, create, dispose);
+        using var eps = new FixtureCreateDisposePatternHelper(_fixture, create, dispose);
 
         if (dispose != null)
         {
