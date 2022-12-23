@@ -13,29 +13,29 @@ namespace IX.UnitTests.Observable;
 /// <seealso cref="EditableItemBase" />
 public class CapturedItem : EditableItemBase
 {
-    private string testProperty;
+    private string? _testProperty;
 
     /// <summary>
     ///     Gets or sets the test property.
     /// </summary>
     /// <value>The test property.</value>
-    public string TestProperty
+    public string? TestProperty
     {
-        get => testProperty;
+        get => _testProperty;
 
         set
         {
-            if (testProperty == value)
+            if (_testProperty == value)
             {
                 return;
             }
 
             AdvertisePropertyChange(
                 nameof(TestProperty),
-                testProperty,
+                _testProperty,
                 value);
 
-            testProperty = value;
+            _testProperty = value;
 
             RaisePropertyChanged(nameof(TestProperty));
         }
@@ -52,15 +52,15 @@ public class CapturedItem : EditableItemBase
     /// </exception>
     protected override void DoChanges(StateChangeBase stateChange)
     {
-        if (stateChange is PropertyStateChange<string> psts)
+        if (stateChange is PropertyStateChange<string> propertyStateChange)
         {
-            if (psts.PropertyName != nameof(TestProperty))
+            if (propertyStateChange.PropertyName != nameof(TestProperty))
             {
                 throw new InvalidOperationException(
                     "Undo/Redo advertised a state change that is not for the only property, some state is leaking.");
             }
 
-            testProperty = psts.NewValue;
+            _testProperty = propertyStateChange.NewValue;
 
             RaisePropertyChanged(nameof(TestProperty));
         }
@@ -82,15 +82,15 @@ public class CapturedItem : EditableItemBase
     /// </exception>
     protected override void RevertChanges(StateChangeBase stateChange)
     {
-        if (stateChange is PropertyStateChange<string> psts)
+        if (stateChange is PropertyStateChange<string> propertyStateChange)
         {
-            if (psts.PropertyName != nameof(TestProperty))
+            if (propertyStateChange.PropertyName != nameof(TestProperty))
             {
                 throw new InvalidOperationException(
                     "Undo/Redo advertised a state change that is not for the only property, some state is leaking.");
             }
 
-            testProperty = psts.OldValue;
+            _testProperty = propertyStateChange.OldValue;
 
             RaisePropertyChanged(nameof(TestProperty));
         }
