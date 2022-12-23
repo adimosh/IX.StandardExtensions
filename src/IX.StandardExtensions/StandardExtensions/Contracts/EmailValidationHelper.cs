@@ -5,6 +5,7 @@
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+
 using IX.StandardExtensions.Extensions;
 using IX.StandardExtensions.Globalization;
 
@@ -16,11 +17,9 @@ internal static class EmailValidationHelper
     private static readonly Lazy<string[]> IanaTlds = new(
         () =>
         {
-            using StreamReader sr = new StreamReader(
-                Assembly.GetExecutingAssembly()
-                    .GetManifestResourceStream(
-                        "IX.StandardExtensions.Contracts.ValidationResources.tlds-alpha-by-domain.txt")!,
-                Encoding.ASCII,
+            using var sr = new StreamReader(
+                Assembly.GetExecutingAssembly().GetManifestResourceStream(
+                    "IX.StandardExtensions.Contracts.ValidationResources.tlds-alpha-by-domain.txt")!, Encoding.ASCII,
                 false,
                 1000,
                 true);
@@ -29,8 +28,7 @@ internal static class EmailValidationHelper
 
             while (!sr.EndOfStream)
             {
-                var line = sr.ReadLine()?
-                    .Trim() ?? string.Empty;
+                var line = sr.ReadLine()?.Trim() ?? string.Empty;
 
                 if (string.IsNullOrWhiteSpace(line))
                 {
@@ -49,18 +47,26 @@ internal static class EmailValidationHelper
         });
 
     // First validation
-    private static Lazy<Regex> emailBasicFormatRegex = new(() => new(@"^(?<address>.+)@(?<domain>.+)$"));
+    private static readonly Lazy<Regex> emailBasicFormatRegex = new(() => new(@"^(?<address>.+)@(?<domain>.+)$"));
 
     // Domain part validation
-    private static Lazy<Regex> domainRegex = new(() => new(@"^(?!-)(?:[\w--[_]]+\.)*(?<tld>[\w--[_]]+)(?<!-)$"));
-    private static Lazy<Regex> ipv4Regex = new(() => new(@"^\[(?<part1>[\d]{1,3})\.(?<part2>[\d]{1,3})\.(?<part3>[\d]{1,3})\.(?<part4>[\d]{1,3})\]$"));
-    private static Lazy<Regex> ipv6Regex = new(() => new(@"^\[IPv6(?::[a-fA-F0-9]{4}){8}\]$"));
+    private static readonly Lazy<Regex> domainRegex =
+        new(() => new(@"^(?!-)(?:[\w--[_]]+\.)*(?<tld>[\w--[_]]+)(?<!-)$"));
+
+    private static readonly Lazy<Regex> ipv4Regex = new(
+        () => new(@"^\[(?<part1>[\d]{1,3})\.(?<part2>[\d]{1,3})\.(?<part3>[\d]{1,3})\.(?<part4>[\d]{1,3})\]$"));
+
+    private static readonly Lazy<Regex> ipv6Regex = new(() => new(@"^\[IPv6(?::[a-fA-F0-9]{4}){8}\]$"));
 
     // Address part validation
-    private static Lazy<Regex> standardAddressRegex = new(() => new(@"^(?!\.)(?:[\w!#$%&'*+\-/=?^`{|}~]|(?<!\.)\.){1,64}(?<!\.)$"));
-    private static Lazy<Regex> quotedAddressRegex = new(() => new(@"^""(?:[^""]|(?<=\\)""){1,62}""$"));
+    private static readonly Lazy<Regex> standardAddressRegex =
+        new(() => new(@"^(?!\.)(?:[\w!#$%&'*+\-/=?^`{|}~]|(?<!\.)\.){1,64}(?<!\.)$"));
 
-    internal static bool IsAddressValid(string address, bool validateStrict = false)
+    private static readonly Lazy<Regex> quotedAddressRegex = new(() => new(@"^""(?:[^""]|(?<=\\)""){1,62}""$"));
+
+    internal static bool IsAddressValid(
+        string address,
+        bool validateStrict = false)
     {
         if (string.IsNullOrWhiteSpace(address))
         {
@@ -78,8 +84,7 @@ internal static class EmailValidationHelper
 
 #region Validate address
 
-        var addressPart = firstMatch.Groups["address"]
-            .Value;
+        var addressPart = firstMatch.Groups["address"].Value;
 
         if (!standardAddressRegex.Value.IsMatch(addressPart))
         {
@@ -97,8 +102,7 @@ internal static class EmailValidationHelper
 
 #region Validate domain
 
-        var domainPart = firstMatch.Groups["domain"]
-            .Value;
+        var domainPart = firstMatch.Groups["domain"].Value;
 
         Match domainMatch = domainRegex.Value.Match(domainPart);
 
@@ -107,8 +111,7 @@ internal static class EmailValidationHelper
             // We have a domain match, if it is a strict match let's also check IANA TLDs
             if (validateStrict)
             {
-                var tld = domainMatch.Groups["tld"]
-                    .Value;
+                var tld = domainMatch.Groups["tld"].Value;
 
                 if (tld.Length == domainPart.Length)
                 {
@@ -116,7 +119,10 @@ internal static class EmailValidationHelper
                     return false;
                 }
 
-                if (!IanaTlds.Value.Any((p, innerTld) => p.OrdinalEqualsInsensitive(innerTld), tld))
+                if (!IanaTlds.Value.Any(
+                        (
+                            p,
+                            innerTld) => p.OrdinalEqualsInsensitive(innerTld), tld))
                 {
                     // Validation 6: Strict IANA TLD validation of last domain
                     return false;
@@ -132,7 +138,7 @@ internal static class EmailValidationHelper
             }
 
             // Not a domain match, let's see if it is an IPv4 match
-            var ipv4RegexMatch = ipv4Regex.Value.Match(domainPart);
+            Match ipv4RegexMatch = ipv4Regex.Value.Match(domainPart);
 
             if (ipv4RegexMatch.Success)
             {

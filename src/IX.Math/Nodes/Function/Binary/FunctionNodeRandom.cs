@@ -3,10 +3,13 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Extensibility;
 using IX.Math.Generators;
 using IX.StandardExtensions.Contracts;
+
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes.Function.Binary;
@@ -16,12 +19,14 @@ namespace IX.Math.Nodes.Function.Binary;
 /// </summary>
 /// <seealso cref="NumericBinaryFunctionNodeBase" />
 [DebuggerDisplay($"random({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}})")]
-[CallableMathematicsFunction("rand", "random")]
+[CallableMathematicsFunction(
+    "rand",
+    "random")]
 [UsedImplicitly]
 internal sealed class FunctionNodeRandom : NumericBinaryFunctionNodeBase
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="FunctionNodeRandom"/> class.
+    ///     Initializes a new instance of the <see cref="FunctionNodeRandom" /> class.
     /// </summary>
     /// <param name="firstParameter">The first parameter.</param>
     /// <param name="secondParameter">The second parameter.</param>
@@ -30,12 +35,10 @@ internal sealed class FunctionNodeRandom : NumericBinaryFunctionNodeBase
         NodeBase secondParameter)
         : base(
             Requires.NotNull(firstParameter).Simplify(),
-            Requires.NotNull(secondParameter).Simplify())
-    {
-    }
+            Requires.NotNull(secondParameter).Simplify()) { }
 
     /// <summary>
-    /// Generates a random value.
+    ///     Generates a random value.
     /// </summary>
     /// <param name="min">The minimum.</param>
     /// <param name="max">The maximum.</param>
@@ -48,38 +51,44 @@ internal sealed class FunctionNodeRandom : NumericBinaryFunctionNodeBase
         max);
 
     /// <summary>
-    /// Simplifies this node, if possible, reflexively returns otherwise.
+    ///     Simplifies this node, if possible, reflexively returns otherwise.
     /// </summary>
     /// <returns>
-    /// A simplified node, or this instance.
+    ///     A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() => this;
 
     /// <summary>
-    /// Creates a deep clone of the source object.
+    ///     Creates a deep clone of the source object.
     /// </summary>
     /// <param name="context">The deep cloning context.</param>
     /// <returns>
-    /// A deep clone.
+    ///     A deep clone.
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) => new FunctionNodeRandom(
         FirstParameter.DeepClone(context),
         SecondParameter.DeepClone(context));
 
     /// <summary>
-    /// Generates the expression that will be compiled into code.
+    ///     Generates the expression that will be compiled into code.
     /// </summary>
     /// <returns>
-    /// The expression.
+    ///     The expression.
     /// </returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal() =>
         GenerateStaticBinaryFunctionCall<FunctionNodeRandom>(nameof(GenerateRandom));
 
     /// <summary>
-    /// Generates the expression with tolerance that will be compiled into code.
+    ///     Generates the expression with tolerance that will be compiled into code.
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
-        GenerateStaticBinaryFunctionCall<FunctionNodeRandom>(nameof(GenerateRandom), tolerance);
+        GenerateStaticBinaryFunctionCall<FunctionNodeRandom>(
+            nameof(GenerateRandom),
+            tolerance);
 }

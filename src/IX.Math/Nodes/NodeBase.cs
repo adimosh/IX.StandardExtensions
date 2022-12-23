@@ -2,8 +2,11 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.StandardExtensions;
+
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes;
@@ -16,11 +19,9 @@ namespace IX.Math.Nodes;
 public abstract class NodeBase : IContextAwareDeepCloneable<NodeCloningContext, NodeBase>
 {
     /// <summary>
-    /// Prevents a default instance of the <see cref="NodeBase"/> class from being created.
+    ///     Prevents a default instance of the <see cref="NodeBase" /> class from being created.
     /// </summary>
-    protected private NodeBase()
-    {
-    }
+    protected private NodeBase() { }
 
     /// <summary>
     ///     Gets a value indicating whether or not this node is actually a constant.
@@ -53,6 +54,8 @@ public abstract class NodeBase : IContextAwareDeepCloneable<NodeCloningContext, 
     ///     Generates the expression that will be compiled into code.
     /// </summary>
     /// <returns>The generated <see cref="Expression" />.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     public abstract Expression GenerateExpression();
 
     /// <summary>
@@ -62,12 +65,16 @@ public abstract class NodeBase : IContextAwareDeepCloneable<NodeCloningContext, 
     /// <returns>
     ///     The generated <see cref="Expression" />.
     /// </returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     public virtual Expression GenerateExpression(Tolerance? tolerance) => GenerateExpression();
 
     /// <summary>
     ///     Generates the expression that will be compiled into code as a string expression.
     /// </summary>
     /// <returns>The generated <see cref="Expression" /> that gives the values as a string.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     public abstract Expression GenerateStringExpression();
 
     /// <summary>
@@ -75,6 +82,8 @@ public abstract class NodeBase : IContextAwareDeepCloneable<NodeCloningContext, 
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The generated <see cref="Expression" /> that gives the values as a string.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     public virtual Expression GenerateStringExpression(Tolerance? tolerance) => GenerateStringExpression();
 
     /// <summary>

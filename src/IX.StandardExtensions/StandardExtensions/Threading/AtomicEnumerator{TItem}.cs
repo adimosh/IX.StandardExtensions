@@ -3,11 +3,13 @@
 // </copyright>
 
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
+
 using IX.StandardExtensions.Contracts;
+
 using JetBrains.Annotations;
-using DiagCA = System.Diagnostics.CodeAnalysis;
 
 namespace IX.StandardExtensions.Threading;
 
@@ -18,23 +20,12 @@ namespace IX.StandardExtensions.Threading;
 /// <seealso cref="IEnumerator{T}" />
 /// <seealso cref="AtomicEnumerator" />
 [PublicAPI]
-public abstract partial class AtomicEnumerator<TItem> : AtomicEnumerator,
-    IEnumerator<TItem>
+public abstract partial class AtomicEnumerator<TItem> : AtomicEnumerator, IEnumerator<TItem>
 {
-#region Constructors and destructors
-
-#region Constructors
-
     /// <summary>
     ///     Prevents a default instance of the <see cref="AtomicEnumerator{TItem}" /> class from being created.
     /// </summary>
     protected private AtomicEnumerator() { }
-
-#endregion
-
-#endregion
-
-#region Properties and indexers
 
     /// <summary>
     ///     Gets the element in the collection at the current position of the enumerator.
@@ -46,17 +37,11 @@ public abstract partial class AtomicEnumerator<TItem> : AtomicEnumerator,
     ///     Gets the element in the collection at the current position of the enumerator.
     /// </summary>
     /// <value>The current element.</value>
-    [DiagCA.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "Unavoidable with a generic enumerator.")]
     object? IEnumerator.Current => Current;
-
-#endregion
-
-#region Methods
-
-#region Static methods
 
     /// <summary>
     ///     Creates an atomic enumerator from a collection.
@@ -71,18 +56,20 @@ public abstract partial class AtomicEnumerator<TItem> : AtomicEnumerator,
     ///     <paramref name="readLock" />
     ///     is <c>null</c> (<c>Nothing</c> in Visual Basic).
     /// </exception>
-    [DiagCA.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
         Justification = "We need this instance allocated.")]
-    [DiagCA.SuppressMessage(
+    [SuppressMessage(
         "Design",
         "CA1000:Do not declare static members on generic types",
         Justification = "This is, honestly, a stupid rule.")]
-    [DiagCA.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Not an issue, since we're returning a class-based atomic enumerator anyway.")]
+    [RequiresUnreferencedCode(
+        "The atomic enumerator dynamically generates and invokes code in the AtomicEnumerator<TItem,TEnumerator> class.")]
     public static AtomicEnumerator<TItem> FromCollection<TCollection>(
         TCollection collection,
         Func<ValueSynchronizationLockerRead> readLock)
@@ -94,21 +81,20 @@ public abstract partial class AtomicEnumerator<TItem> : AtomicEnumerator,
 
         Delegate initializer = ConstructionDelegates.GetOrAdd(
             collection.GetType(),
-            static (collectionType) =>
+            static collectionType =>
             {
                 // Get used types
                 MethodInfo getEnumeratorMethodInfo = collectionType.GetMethod(
-                    "GetEnumerator",
-                    BindingFlags.Public | BindingFlags.Instance)!;
+                        "GetEnumerator",
+                        BindingFlags.Public | BindingFlags.Instance)
+                    !;
 
                 Type enumeratorType = getEnumeratorMethodInfo.ReturnType;
                 Type atomicEnumeratorType = typeof(AtomicEnumerator<,>).MakeGenericType(
                     typeof(TItem),
                     enumeratorType);
-                ConstructorInfo atomicEnumeratorConstructorInfo = atomicEnumeratorType.GetConstructors()
-                    .Single(
-                        p => p.GetParameters()[1]
-                              .ParameterType == typeof(Func<ValueSynchronizationLockerRead>));
+                ConstructorInfo atomicEnumeratorConstructorInfo = atomicEnumeratorType.GetConstructors().Single(
+                    p => p.GetParameters()[1].ParameterType == typeof(Func<ValueSynchronizationLockerRead>));
 
                 // Prepare parameter expressions
                 ParameterExpression parameter1 = Expression.Parameter(collectionType);
@@ -116,15 +102,13 @@ public abstract partial class AtomicEnumerator<TItem> : AtomicEnumerator,
 
                 // Prepare expression
                 return Expression.Lambda(
-                        Expression.New(
-                            atomicEnumeratorConstructorInfo,
-                            Expression.Call(
-                                parameter1,
-                                getEnumeratorMethodInfo),
-                            parameter2),
-                        parameter1,
-                        parameter2)
-                    .Compile();
+                    Expression.New(
+                        atomicEnumeratorConstructorInfo,
+                        Expression.Call(
+                            parameter1,
+                            getEnumeratorMethodInfo), parameter2),
+                    parameter1,
+                    parameter2).Compile();
             });
 
         if (initializer is Func<TCollection, Func<ValueSynchronizationLockerRead>, AtomicEnumerator<TItem>>
@@ -153,7 +137,7 @@ public abstract partial class AtomicEnumerator<TItem> : AtomicEnumerator,
     ///     <paramref name="readLock" />
     ///     is <c>null</c> (<c>Nothing</c> in Visual Basic).
     /// </exception>
-    [DiagCA.SuppressMessage(
+    [SuppressMessage(
         "Design",
         "CA1000:Do not declare static members on generic types",
         Justification = "This is, honestly, a stupid rule.")]
@@ -169,8 +153,4 @@ public abstract partial class AtomicEnumerator<TItem> : AtomicEnumerator,
             enumerator,
             readLock);
     }
-
-#endregion
-
-#endregion
 }

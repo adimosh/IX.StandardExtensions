@@ -15,10 +15,6 @@ namespace IX.StandardExtensions.Extensions;
 [PublicAPI]
 public static class AssemblyExtensions
 {
-#region Methods
-
-#region Static methods
-
     /// <summary>
     ///     Gets the types assignable from a specified type from an assembly.
     /// </summary>
@@ -29,6 +25,7 @@ public static class AssemblyExtensions
         "Performance",
         "HAA0603:Delegate allocation from a method group",
         Justification = "Unfortunately, this is not avoidable.")]
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     public static IEnumerable<TypeInfo> GetTypesAssignableFrom<T>(this Assembly assembly)
     {
         return Requires.NotNull(assembly)
@@ -49,6 +46,7 @@ public static class AssemblyExtensions
         "Performance",
         "HAA0603:Delegate allocation from a method group",
         Justification = "Unfortunately, this is not avoidable.")]
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     public static IEnumerable<TypeInfo> GetTypesAssignableFrom<T>(this IEnumerable<Assembly> assemblies)
     {
         return Requires.NotNull(assemblies)
@@ -56,8 +54,4 @@ public static class AssemblyExtensions
 
         static IEnumerable<TypeInfo> GetAssignableTypes(Assembly p) => p.GetTypesAssignableFrom<T>();
     }
-
-#endregion
-
-#endregion
 }

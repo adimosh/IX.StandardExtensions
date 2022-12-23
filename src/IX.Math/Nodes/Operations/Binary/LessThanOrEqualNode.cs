@@ -3,14 +3,15 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+
 using IX.Math.Nodes.Constants;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
 using IX.StandardExtensions.Globalization;
-using SuppressMessage = System.Diagnostics.CodeAnalysis.SuppressMessageAttribute;
 
 namespace IX.Math.Nodes.Operations.Binary;
 
@@ -31,9 +32,7 @@ internal sealed class LessThanOrEqualNode : ComparisonOperationNodeBase
         NodeBase right)
         : base(
             Requires.NotNull(left).Simplify(),
-            Requires.NotNull(right).Simplify())
-    {
-    }
+            Requires.NotNull(right).Simplify()) { }
 
     /// <summary>
     ///     Simplifies this node, if possible, reflexively returns otherwise.
@@ -73,9 +72,12 @@ internal sealed class LessThanOrEqualNode : ComparisonOperationNodeBase
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "We want this to happen.")]
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal()
     {
-        var (leftExpression, rightExpression) = GetExpressionsOfSameTypeFromOperands();
+        (Expression leftExpression, Expression rightExpression) = GetExpressionsOfSameTypeFromOperands();
+
         if (leftExpression.Type == typeof(string))
         {
             MethodInfo mi = typeof(string).GetMethodWithExactParameters(
@@ -89,40 +91,39 @@ internal sealed class LessThanOrEqualNode : ComparisonOperationNodeBase
                     mi,
                     Left.GenerateStringExpression(),
                     Right.GenerateStringExpression(),
-                    Expression.Constant(false, typeof(bool)),
-                    Expression.Property(null, typeof(CultureInfo), nameof(CultureInfo.CurrentCulture))),
+                    Expression.Constant(
+                        false,
+                        typeof(bool)), Expression.Property(
+                        null,
+                        typeof(CultureInfo),
+                        nameof(CultureInfo.CurrentCulture))),
                 Expression.Constant(
                     0,
                     typeof(int)));
         }
 
-        if (Left.ReturnType == SupportedValueType.Boolean ||
-            Right.ReturnType == SupportedValueType.Boolean)
+        if (Left.ReturnType == SupportedValueType.Boolean || Right.ReturnType == SupportedValueType.Boolean)
         {
             return Expression.Condition(
                 Expression.Equal(
                     leftExpression,
                     Expression.Constant(
                         true,
-                        typeof(bool))),
-                rightExpression,
+                        typeof(bool))), rightExpression,
                 Expression.Constant(
                     true,
                     typeof(bool)));
         }
 
-        if (Left.ReturnType == SupportedValueType.ByteArray ||
-            Right.ReturnType == SupportedValueType.ByteArray)
+        if (Left.ReturnType == SupportedValueType.ByteArray || Right.ReturnType == SupportedValueType.ByteArray)
         {
             return Expression.LessThanOrEqual(
                 Expression.Call(
                     typeof(ArrayExtensions).GetMethodWithExactParameters(
                         nameof(ArrayExtensions.SequenceCompareWithMsb),
                         typeof(byte[]),
-                        typeof(byte[]))!,
-                    leftExpression,
-                    rightExpression),
-                Expression.Constant(
+                        typeof(byte[]))!, leftExpression,
+                    rightExpression), Expression.Constant(
                     0,
                     typeof(int)));
         }
@@ -141,10 +142,12 @@ internal sealed class LessThanOrEqualNode : ComparisonOperationNodeBase
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "We want this to happen.")]
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
-        var (leftExpression, rightExpression) =
-            GetExpressionsOfSameTypeFromOperands(tolerance);
+        (Expression leftExpression, Expression rightExpression) = GetExpressionsOfSameTypeFromOperands(tolerance);
+
         if (leftExpression.Type == typeof(string))
         {
             MethodInfo mi = typeof(string).GetMethodWithExactParameters(
@@ -155,47 +158,40 @@ internal sealed class LessThanOrEqualNode : ComparisonOperationNodeBase
                 Expression.Call(
                     mi,
                     Left.GenerateStringExpression(),
-                    Right.GenerateStringExpression()),
-                Expression.Constant(
+                    Right.GenerateStringExpression()), Expression.Constant(
                     0,
                     typeof(int)));
         }
 
-        if (Left.ReturnType == SupportedValueType.Boolean ||
-            Right.ReturnType == SupportedValueType.Boolean)
+        if (Left.ReturnType == SupportedValueType.Boolean || Right.ReturnType == SupportedValueType.Boolean)
         {
             return Expression.Condition(
                 Expression.Equal(
                     leftExpression,
                     Expression.Constant(
                         true,
-                        typeof(bool))),
-                rightExpression,
+                        typeof(bool))), rightExpression,
                 Expression.Constant(
                     true,
                     typeof(bool)));
         }
 
-        if (Left.ReturnType == SupportedValueType.ByteArray ||
-            Right.ReturnType == SupportedValueType.ByteArray)
+        if (Left.ReturnType == SupportedValueType.ByteArray || Right.ReturnType == SupportedValueType.ByteArray)
         {
             return Expression.LessThanOrEqual(
                 Expression.Call(
                     typeof(ArrayExtensions).GetMethodWithExactParameters(
                         nameof(ArrayExtensions.SequenceCompareWithMsb),
                         typeof(byte[]),
-                        typeof(byte[]))!,
-                    leftExpression,
-                    rightExpression),
-                Expression.Constant(
+                        typeof(byte[]))!, leftExpression,
+                    rightExpression), Expression.Constant(
                     0,
                     typeof(int)));
         }
 
-        if (Left.ReturnType == SupportedValueType.Numeric &&
-            Right.ReturnType == SupportedValueType.Numeric)
+        if (Left.ReturnType == SupportedValueType.Numeric && Right.ReturnType == SupportedValueType.Numeric)
         {
-            var possibleTolerantExpression = PossibleToleranceExpression(
+            Expression? possibleTolerantExpression = PossibleToleranceExpression(
                 leftExpression,
                 rightExpression,
                 tolerance);
@@ -212,8 +208,16 @@ internal sealed class LessThanOrEqualNode : ComparisonOperationNodeBase
             rightExpression);
     }
 
-    [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation", Justification = "We want it this way.")]
-    private Expression? PossibleToleranceExpression(Expression leftExpression, Expression rightExpression, Tolerance? tolerance)
+    [SuppressMessage(
+        "Performance",
+        "HAA0601:Value type to reference type conversion causing boxing allocation",
+        Justification = "We want it this way.")]
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
+    private Expression? PossibleToleranceExpression(
+        Expression leftExpression,
+        Expression rightExpression,
+        Tolerance? tolerance)
     {
         if (tolerance?.IntegerToleranceRangeUpperBound != null)
         {

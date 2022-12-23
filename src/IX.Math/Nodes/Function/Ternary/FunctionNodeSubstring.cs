@@ -3,13 +3,16 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
+
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes.Function.Ternary;
@@ -18,7 +21,8 @@ namespace IX.Math.Nodes.Function.Ternary;
 ///     A node representing the substring function.
 /// </summary>
 /// <seealso cref="TernaryFunctionNodeBase" />
-[DebuggerDisplay($"substring({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}}, {{{nameof(ThirdParameter)}}})")]
+[DebuggerDisplay(
+    $"substring({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}}, {{{nameof(ThirdParameter)}}})")]
 [CallableMathematicsFunction(
     "substr",
     "substring")]
@@ -38,9 +42,7 @@ internal sealed class FunctionNodeSubstring : TernaryFunctionNodeBase
         : base(
             Requires.NotNull(stringParameter).Simplify(),
             Requires.NotNull(numericParameter).Simplify(),
-            Requires.NotNull(secondNumericParameter).Simplify())
-    {
-    }
+            Requires.NotNull(secondNumericParameter).Simplify()) { }
 
     /// <summary>
     ///     Gets the return type of this node.
@@ -71,8 +73,7 @@ internal sealed class FunctionNodeSubstring : TernaryFunctionNodeBase
     /// </returns>
     public override NodeBase Simplify()
     {
-        if (FirstParameter is StringNode stringParam &&
-            SecondParameter is NumericNode numericParam &&
+        if (FirstParameter is StringNode stringParam && SecondParameter is NumericNode numericParam &&
             ThirdParameter is NumericNode secondNumericParam)
         {
             return new StringNode(
@@ -124,8 +125,7 @@ internal sealed class FunctionNodeSubstring : TernaryFunctionNodeBase
         second.DetermineStrongly(SupportedValueType.Numeric);
         third.DetermineStrongly(SupportedValueType.Numeric);
 
-        if (first.ReturnType != SupportedValueType.String ||
-            second.ReturnType != SupportedValueType.Numeric ||
+        if (first.ReturnType != SupportedValueType.String || second.ReturnType != SupportedValueType.Numeric ||
             third.ReturnType != SupportedValueType.Numeric)
         {
             throw new ExpressionNotValidLogicallyException();
@@ -148,6 +148,7 @@ internal sealed class FunctionNodeSubstring : TernaryFunctionNodeBase
     /// <returns>
     ///     The expression.
     /// </returns>
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal() => GenerateExpressionInternal(null);
 
     /// <summary>
@@ -155,6 +156,7 @@ internal sealed class FunctionNodeSubstring : TernaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         Type firstParameterType = typeof(string);
@@ -177,6 +179,7 @@ internal sealed class FunctionNodeSubstring : TernaryFunctionNodeBase
         }
 
         Expression e1, e2, e3;
+
         if (tolerance == null)
         {
             e1 = FirstParameter.GenerateExpression();

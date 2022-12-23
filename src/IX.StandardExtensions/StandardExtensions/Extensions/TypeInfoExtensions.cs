@@ -4,7 +4,9 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+
 using IX.StandardExtensions.Contracts;
+
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Extensions;
@@ -15,10 +17,6 @@ namespace IX.StandardExtensions.Extensions;
 [PublicAPI]
 public static class TypeInfoExtensions
 {
-#region Methods
-
-#region Static methods
-
     /// <summary>
     ///     Gets the attribute data by type without version binding.
     /// </summary>
@@ -35,13 +33,16 @@ public static class TypeInfoExtensions
         "Performance",
         "HAA0303:Lambda or anonymous method in a generic method allocates a delegate instance",
         Justification = "Expected.")]
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     public static bool GetAttributeDataByTypeWithoutVersionBinding<TAttribute, TReturn>(
         this TypeInfo typeInfo,
         out TReturn? value)
     {
-        CustomAttributeData? attributeData = Requires.NotNull(typeInfo)
-            .CustomAttributes.FirstOrDefault(
-                attribute => attribute.AttributeType.FullName == typeof(TAttribute).FullName);
+        CustomAttributeData? attributeData = Requires.NotNull(typeInfo).CustomAttributes
+                                                     .FirstOrDefault(
+                                                         attribute =>
+                                                             attribute.AttributeType.FullName ==
+                                                             typeof(TAttribute).FullName);
 
         if (attributeData == null)
         {
@@ -51,8 +52,7 @@ public static class TypeInfoExtensions
         }
 
         using (IEnumerator<CustomAttributeTypedArgument> arguments = attributeData.ConstructorArguments
-                   .Where(p => p.ArgumentType == typeof(TReturn))
-                   .GetEnumerator())
+                   .Where(p => p.ArgumentType == typeof(TReturn)).GetEnumerator())
         {
             if (arguments.MoveNext())
             {
@@ -99,15 +99,14 @@ public static class TypeInfoExtensions
     ///     <paramref name="typeInfo" /> is <see langword="null" /> (
     ///     <see langword="Nothing" /> in Visual Basic).
     /// </exception>
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     public static MethodInfo? GetMethodWithExactParameters(
         this TypeInfo typeInfo,
         string name,
         params Type[] parameters) =>
-        Requires.NotNull(typeInfo)
-            .AsType()
-            .GetMethodWithExactParameters(
-                name,
-                parameters);
+        Requires.NotNull(typeInfo).AsType().GetMethodWithExactParameters(
+            name,
+            parameters);
 
     /// <summary>
     ///     Gets a method with exact parameters, if one exists.
@@ -123,44 +122,34 @@ public static class TypeInfoExtensions
     ///     <paramref name="typeInfo" /> is <see langword="null" /> (
     ///     <see langword="Nothing" /> in Visual Basic).
     /// </exception>
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     public static MethodInfo? GetMethodWithExactParameters(
         this TypeInfo typeInfo,
         string name,
         params TypeInfo[] parameters) =>
-        Requires.NotNull(typeInfo)
-            .AsType()
-            .GetMethodWithExactParameters(
-                name,
-                parameters.Select(p => p.AsType())
-                    .ToArray());
+        Requires.NotNull(typeInfo).AsType().GetMethodWithExactParameters(
+            name,
+            parameters.Select(p => p.AsType()).ToArray());
 
     /// <summary>
     ///     Determines whether a type has a public parameter-less constructor.
     /// </summary>
     /// <param name="info">The type information.</param>
     /// <returns><see langword="true" /> if there is a parameter-less constructor; otherwise, <see langword="false" />.</returns>
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     public static bool HasPublicParameterlessConstructor(this TypeInfo info) =>
-        !Requires.NotNull(info)
-            .IsInterface &&
-        !info.IsAbstract &&
-        !info.IsGenericTypeDefinition &&
+        !Requires.NotNull(info).IsInterface && info is { IsAbstract: false, IsGenericTypeDefinition: false } &&
         info.DeclaredConstructors.Any(
-            p => !p.IsStatic &&
-                 p.IsPublic &&
-                 !p.IsGenericMethodDefinition &&
-                 p.GetParameters()
-                     .Length ==
-                 0);
+            p => !p.IsStatic && p is { IsPublic: true, IsGenericMethodDefinition: false } && p.GetParameters().Length == 0);
 
     /// <summary>
     ///     Instantiates an object of the specified type.
     /// </summary>
     /// <param name="info">The type information.</param>
     /// <returns>An instance of the object to instantiate.</returns>
+    [RequiresUnreferencedCode("This method uses Activator.CreateInstance")]
     public static object Instantiate(this TypeInfo info) =>
-        Activator.CreateInstance(
-            Requires.NotNull(info)
-                .AsType()) ??
+        Activator.CreateInstance(Requires.NotNull(info).AsType()) ??
         throw new InvalidOperationException("Could not instantiate the object.");
 
     /// <summary>
@@ -169,16 +158,12 @@ public static class TypeInfoExtensions
     /// <param name="info">The type information.</param>
     /// <param name="parameters">The parameters to pass through to the constructor.</param>
     /// <returns>An instance of the object to instantiate.</returns>
+    [RequiresUnreferencedCode("This method uses Activator.CreateInstance")]
     public static object Instantiate(
         this TypeInfo info,
         params object[] parameters) =>
         Activator.CreateInstance(
-            Requires.NotNull(info)
-                .AsType(),
+            Requires.NotNull(info).AsType(),
             parameters) ??
         throw new InvalidOperationException("Could not instantiate the object.");
-
-#endregion
-
-#endregion
 }

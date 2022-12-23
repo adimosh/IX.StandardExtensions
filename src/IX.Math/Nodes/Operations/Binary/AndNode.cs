@@ -3,7 +3,9 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Nodes.Constants;
 using IX.StandardExtensions.Contracts;
 
@@ -26,9 +28,7 @@ internal sealed class AndNode : LogicalOperationNodeBase
         NodeBase right)
         : base(
             Requires.NotNull(left).Simplify(),
-            Requires.NotNull(right).Simplify())
-    {
-    }
+            Requires.NotNull(right).Simplify()) { }
 
     /// <summary>
     ///     Simplifies this node, if possible, reflexively returns otherwise.
@@ -61,6 +61,8 @@ internal sealed class AndNode : LogicalOperationNodeBase
     /// <returns>
     ///     The expression.
     /// </returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal() =>
         Expression.And(
             Left.GenerateExpression(),
@@ -71,6 +73,8 @@ internal sealed class AndNode : LogicalOperationNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         Expression.And(
             Left.GenerateExpression(tolerance),

@@ -2,8 +2,10 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
+
 using IX.StandardExtensions.Extensions;
 
 namespace IX.Math.Nodes.Operations.Binary;
@@ -24,9 +26,7 @@ internal abstract class ComparisonOperationNodeBase : BinaryOperatorNodeBase
         NodeBase right)
         : base(
             left,
-            right)
-    {
-    }
+            right) { }
 
     /// <summary>
     ///     Gets the return type of this node.
@@ -117,10 +117,12 @@ internal abstract class ComparisonOperationNodeBase : BinaryOperatorNodeBase
     /// <param name="rightExpression">The right expression.</param>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>A compilable expression.</returns>
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "We want it this way.")]
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected Expression? GenerateNumericalToleranceEquateExpression(
         Expression leftExpression,
         Expression rightExpression,

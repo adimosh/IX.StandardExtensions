@@ -3,48 +3,51 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Extensibility;
 using IX.Math.Formatters;
 using IX.Math.TypeHelpers;
+
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes.Constants;
 
 /// <summary>
-/// A numeric node. This class cannot be inherited.
+///     A numeric node. This class cannot be inherited.
 /// </summary>
 /// <seealso cref="ConstantNodeBase" />
 [DebuggerDisplay($"{{{nameof(Value)}}}")]
 [PublicAPI]
 public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
 {
-    private Func<Type, object>? specialObjectRequestFunction;
-
     /// <summary>
-    /// The integer value.
-    /// </summary>
-    private long integerValue;
-
-    /// <summary>
-    /// The float value.
+    ///     The float value.
     /// </summary>
     private double floatValue;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="NumericNode"/> class.
+    ///     The integer value.
+    /// </summary>
+    private long integerValue;
+
+    private Func<Type, object>? specialObjectRequestFunction;
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="NumericNode" /> class.
     /// </summary>
     /// <param name="value">The integer value.</param>
     public NumericNode(long value) => Initialize(value);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="NumericNode"/> class.
+    ///     Initializes a new instance of the <see cref="NumericNode" /> class.
     /// </summary>
     /// <param name="value">The floating-point value.</param>
     public NumericNode(double value) => Initialize(value);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="NumericNode"/> class.
+    ///     Initializes a new instance of the <see cref="NumericNode" /> class.
     /// </summary>
     /// <param name="value">The undefined value.</param>
     /// <exception cref="ArgumentException">The value is not in an expected format.</exception>
@@ -59,33 +62,33 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
                 Initialize(l);
                 break;
             default:
-                throw new ArgumentException(Resources.NumericTypeInvalid, nameof(value));
+                throw new ArgumentException(
+                    Resources.NumericTypeInvalid,
+                    nameof(value));
         }
     }
 
-    private NumericNode()
-    {
-    }
+    private NumericNode() { }
 
     /// <summary>
-    /// Gets the return type of this node.
+    ///     Gets the return type of this node.
     /// </summary>
-    /// <value>Always <see cref="SupportedValueType.Numeric"/>.</value>
+    /// <value>Always <see cref="SupportedValueType.Numeric" />.</value>
     public override SupportedValueType ReturnType => SupportedValueType.Numeric;
 
     /// <summary>
-    /// Gets a value indicating whether this instance is a floating point number.
+    ///     Gets a value indicating whether this instance is a floating point number.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if this instance is float; otherwise, <c>false</c>.
+    ///     <c>true</c> if this instance is float; otherwise, <c>false</c>.
     /// </value>
     public bool IsFloat { get; private set; }
 
     /// <summary>
-    /// Gets the value of this constant numeric node.
+    ///     Gets the value of this constant numeric node.
     /// </summary>
     /// <value>The value.</value>
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "This is desired.")]
@@ -103,12 +106,21 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     }
 
     /// <summary>
-    /// Does an addition between two numeric nodes.
+    ///     Sets the request special object function.
+    /// </summary>
+    /// <param name="func">The function to set.</param>
+    void ISpecialRequestNode.SetRequestSpecialObjectFunction(Func<Type, object> func) =>
+        specialObjectRequestFunction = func;
+
+    /// <summary>
+    ///     Does an addition between two numeric nodes.
     /// </summary>
     /// <param name="left">The left operand.</param>
     /// <param name="right">The right operand.</param>
     /// <returns>The resulting node.</returns>
-    public static NumericNode Add(NumericNode left, NumericNode right)
+    public static NumericNode Add(
+        NumericNode left,
+        NumericNode right)
     {
         if (left.IsFloat && right.IsFloat)
         {
@@ -129,12 +141,14 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     }
 
     /// <summary>
-    /// Does a subtraction between two numeric nodes.
+    ///     Does a subtraction between two numeric nodes.
     /// </summary>
     /// <param name="left">The left operand.</param>
     /// <param name="right">The right operand.</param>
     /// <returns>The resulting node.</returns>
-    public static NumericNode Subtract(NumericNode left, NumericNode right)
+    public static NumericNode Subtract(
+        NumericNode left,
+        NumericNode right)
     {
         if (left.IsFloat && right.IsFloat)
         {
@@ -155,12 +169,14 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     }
 
     /// <summary>
-    /// Does a multiplication between two numeric nodes.
+    ///     Does a multiplication between two numeric nodes.
     /// </summary>
     /// <param name="left">The left operand.</param>
     /// <param name="right">The right operand.</param>
     /// <returns>The resulting node.</returns>
-    public static NumericNode Multiply(NumericNode left, NumericNode right)
+    public static NumericNode Multiply(
+        NumericNode left,
+        NumericNode right)
     {
         if (left.IsFloat && right.IsFloat)
         {
@@ -181,12 +197,12 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     }
 
     /// <summary>
-    /// Does a division between two numeric nodes.
+    ///     Does a division between two numeric nodes.
     /// </summary>
     /// <param name="left">The left operand.</param>
     /// <param name="right">The right operand.</param>
     /// <returns>The resulting node.</returns>
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "This is of little consequence at this point.")]
@@ -198,18 +214,18 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
             left.Value,
             right.Value);
 
-        double result = divided / divisor;
+        var result = divided / divisor;
 
         return new(tryInteger ? NumericTypeHelper.DistillIntegerIfPossible(result) : result);
     }
 
     /// <summary>
-    /// Raises the left node's value to the power specified by the right node's value.
+    ///     Raises the left node's value to the power specified by the right node's value.
     /// </summary>
     /// <param name="left">The left operand.</param>
     /// <param name="right">The right operand.</param>
     /// <returns>The resulting node.</returns>
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "This is of little consequence at this point.")]
@@ -221,7 +237,7 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
             left.Value,
             right.Value);
 
-        double result = global::System.Math.Pow(
+        var result = global::System.Math.Pow(
             @base,
             pow);
 
@@ -229,12 +245,14 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     }
 
     /// <summary>
-    /// Does a left shift between two numeric nodes.
+    ///     Does a left shift between two numeric nodes.
     /// </summary>
     /// <param name="left">The left operand.</param>
     /// <param name="right">The right operand.</param>
     /// <returns>The resulting node.</returns>
-    public static NumericNode LeftShift(NumericNode left, NumericNode right)
+    public static NumericNode LeftShift(
+        NumericNode left,
+        NumericNode right)
     {
         var by = right.ExtractInt();
         var data = left.ExtractInteger();
@@ -243,12 +261,14 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     }
 
     /// <summary>
-    /// Does a right shift between two numeric nodes.
+    ///     Does a right shift between two numeric nodes.
     /// </summary>
     /// <param name="left">The left operand.</param>
     /// <param name="right">The right operand.</param>
     /// <returns>The resulting node.</returns>
-    public static NumericNode RightShift(NumericNode left, NumericNode right)
+    public static NumericNode RightShift(
+        NumericNode left,
+        NumericNode right)
     {
         var by = right.ExtractInt();
         var data = left.ExtractInteger();
@@ -257,42 +277,56 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     }
 
     /// <summary>
-    /// Generates the expression that will be compiled into code.
+    ///     Generates the expression that will be compiled into code.
     /// </summary>
     /// <returns>The expression.</returns>
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "This is desired.")]
-    public override Expression GenerateCachedExpression() => IsFloat ?
-        Expression.Constant(floatValue, typeof(double)) :
-        Expression.Constant(integerValue, typeof(long));
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
+    public override Expression GenerateCachedExpression() => IsFloat
+        ? Expression.Constant(
+            floatValue,
+            typeof(double))
+        : Expression.Constant(
+            integerValue,
+            typeof(long));
 
     /// <summary>
-    /// Generates a floating-point expression.
+    ///     Generates a floating-point expression.
     /// </summary>
     /// <returns>The expression.</returns>
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "This is desired.")]
-
-    public Expression GenerateFloatExpression() => IsFloat ? GenerateExpression() : Expression.Constant(Convert.ToDouble(floatValue), typeof(double));
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
+    public Expression GenerateFloatExpression() =>
+        IsFloat
+            ? GenerateExpression()
+            : Expression.Constant(
+                Convert.ToDouble(floatValue),
+                typeof(double));
 
     /// <summary>
-    /// Generates an integer expression.
+    ///     Generates an integer expression.
     /// </summary>
     /// <returns>The expression.</returns>
     /// <exception cref="InvalidCastException">The node is floating-point and cannot be transformed.</exception>
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "This is desired.")]
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "ReSharper",
         "CompareOfFloatsByEqualityOperator",
-        Justification = "If we're reaching the precision loss boundary, it means we're rounding to an integer anyway, so it's acceptable.")]
-
+        Justification =
+            "If we're reaching the precision loss boundary, it means we're rounding to an integer anyway, so it's acceptable.")]
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     public Expression GenerateLongExpression()
     {
         if (!IsFloat)
@@ -305,18 +339,21 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
             throw new InvalidCastException();
         }
 
-        return Expression.Constant(Convert.ToInt64(floatValue), typeof(long));
+        return Expression.Constant(
+            Convert.ToInt64(floatValue),
+            typeof(long));
     }
 
     /// <summary>
-    /// Extracts an integer.
+    ///     Extracts an integer.
     /// </summary>
     /// <returns>An integer value.</returns>
     /// <exception cref="InvalidCastException">The current value is floating-point and cannot be transformed.</exception>
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "ReSharper",
         "CompareOfFloatsByEqualityOperator",
-        Justification = "If we're reaching the precision loss boundary, it means we're rounding to an integer anyway, so it's acceptable.")]
+        Justification =
+            "If we're reaching the precision loss boundary, it means we're rounding to an integer anyway, so it's acceptable.")]
     public long ExtractInteger()
     {
         if (!IsFloat)
@@ -333,7 +370,7 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     }
 
     /// <summary>
-    /// Extracts a floating-point value.
+    ///     Extracts a floating-point value.
     /// </summary>
     /// <returns>A floating-point value.</returns>
     public double ExtractFloat()
@@ -347,14 +384,15 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     }
 
     /// <summary>
-    /// Extracts a 32-bit integer value.
+    ///     Extracts a 32-bit integer value.
     /// </summary>
     /// <returns>A 32-bit integer value.</returns>
     /// <exception cref="InvalidCastException">The value is either floating-point or larger than 32-bit.</exception>
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "ReSharper",
         "CompareOfFloatsByEqualityOperator",
-        Justification = "If we're reaching the precision loss boundary, it means we're rounding to an integer anyway, so it's acceptable.")]
+        Justification =
+            "If we're reaching the precision loss boundary, it means we're rounding to an integer anyway, so it's acceptable.")]
     public int ExtractInt()
     {
         if (!IsFloat)
@@ -371,25 +409,28 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     }
 
     /// <summary>
-    /// Distills the value into a usable constant.
+    ///     Distills the value into a usable constant.
     /// </summary>
     /// <returns>A usable constant.</returns>
     public override object DistillValue() => Value;
 
     /// <summary>
-    /// Generates the expression that will be compiled into code as a string expression.
+    ///     Generates the expression that will be compiled into code as a string expression.
     /// </summary>
     /// <returns>The string expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     public override Expression GenerateCachedStringExpression()
     {
         var stringFormatters = specialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) as List<IStringFormatter>;
         return Expression.Constant(
-            StringFormatter.FormatIntoString(Value, stringFormatters),
-            typeof(string));
+            StringFormatter.FormatIntoString(
+                Value,
+                stringFormatters), typeof(string));
     }
 
     /// <summary>
-    /// Creates a deep clone of the source object.
+    ///     Creates a deep clone of the source object.
     /// </summary>
     /// <param name="context">The deep cloning context.</param>
     /// <returns>A deep clone.</returns>
@@ -397,17 +438,11 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     {
         integerValue = integerValue,
         floatValue = floatValue,
-        IsFloat = IsFloat,
+        IsFloat = IsFloat
     };
 
     /// <summary>
-    /// Sets the request special object function.
-    /// </summary>
-    /// <param name="func">The function to set.</param>
-    void ISpecialRequestNode.SetRequestSpecialObjectFunction(Func<Type, object> func) => specialObjectRequestFunction = func;
-
-    /// <summary>
-    /// Initializes the specified value.
+    ///     Initializes the specified value.
     /// </summary>
     /// <param name="value">The value.</param>
     private void Initialize(long value)
@@ -417,7 +452,7 @@ public sealed class NumericNode : ConstantNodeBase, ISpecialRequestNode
     }
 
     /// <summary>
-    /// Initializes the specified value.
+    ///     Initializes the specified value.
     /// </summary>
     /// <param name="value">The value.</param>
     private void Initialize(double value)

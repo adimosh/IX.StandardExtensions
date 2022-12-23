@@ -16,10 +16,6 @@ namespace IX.StandardExtensions.Extensions;
     Justification = "These are extensions for IEnumerable, so we must allow this.")]
 public static partial class IEnumerableExtensions
 {
-#region Methods
-
-#region Static methods
-
     /// <summary>
     ///     Equates two enumerable collections sequentially.
     /// </summary>
@@ -140,6 +136,7 @@ public static partial class IEnumerableExtensions
         "ReSharper",
         "TooManyArguments",
         Justification = "They are required for the intended operation.")]
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     public static IEnumerable<bool> EquateSequentially<T>(
         this IEnumerable<T>? left,
         IEnumerable<T>? right,
@@ -243,8 +240,4 @@ public static partial class IEnumerableExtensions
             return true;
         }
     }
-
-#endregion
-
-#endregion
 }

@@ -3,9 +3,11 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+
 using IX.Math.Extensibility;
 using IX.Math.Formatters;
 using IX.Math.Nodes.Constants;
@@ -31,9 +33,7 @@ internal sealed class AddNode : BinaryOperatorNodeBase
         NodeBase right)
         : base(
             Requires.NotNull(left).Simplify(),
-            Requires.NotNull(right).Simplify())
-    {
-    }
+            Requires.NotNull(right).Simplify()) { }
 
     /// <summary>
     ///     Gets the return type of this node.
@@ -45,8 +45,7 @@ internal sealed class AddNode : BinaryOperatorNodeBase
     {
         get
         {
-            if (Left.ReturnType == SupportedValueType.String ||
-                Right.ReturnType == SupportedValueType.String)
+            if (Left.ReturnType == SupportedValueType.String || Right.ReturnType == SupportedValueType.String)
             {
                 return SupportedValueType.String;
             }
@@ -59,7 +58,7 @@ internal sealed class AddNode : BinaryOperatorNodeBase
                 SupportedValueType.Numeric => Right.ReturnType == SupportedValueType.Numeric
                     ? SupportedValueType.Numeric
                     : SupportedValueType.Unknown,
-                _ => SupportedValueType.Unknown,
+                _ => SupportedValueType.Unknown
             };
         }
     }
@@ -279,9 +278,8 @@ internal sealed class AddNode : BinaryOperatorNodeBase
         switch (left.ReturnType)
         {
             case SupportedValueType.Numeric:
-                if (right.ReturnType != SupportedValueType.Numeric &&
-                    right.ReturnType != SupportedValueType.String &&
-                    right.ReturnType != SupportedValueType.Unknown)
+                if (right.ReturnType is not SupportedValueType.Numeric and not SupportedValueType.String
+                    and not SupportedValueType.Unknown)
                 {
                     throw new ExpressionNotValidLogicallyException();
                 }
@@ -297,9 +295,8 @@ internal sealed class AddNode : BinaryOperatorNodeBase
                 break;
 
             case SupportedValueType.ByteArray:
-                if (right.ReturnType != SupportedValueType.ByteArray &&
-                    right.ReturnType != SupportedValueType.String &&
-                    right.ReturnType != SupportedValueType.Unknown)
+                if (right.ReturnType is not SupportedValueType.ByteArray and not SupportedValueType.String
+                    and not SupportedValueType.Unknown)
                 {
                     throw new ExpressionNotValidLogicallyException();
                 }
@@ -314,9 +311,8 @@ internal sealed class AddNode : BinaryOperatorNodeBase
         switch (right.ReturnType)
         {
             case SupportedValueType.Numeric:
-                if (left.ReturnType != SupportedValueType.Numeric &&
-                    left.ReturnType != SupportedValueType.String &&
-                    left.ReturnType != SupportedValueType.Unknown)
+                if (left.ReturnType is not SupportedValueType.Numeric and not SupportedValueType.String
+                    and not SupportedValueType.Unknown)
                 {
                     throw new ExpressionNotValidLogicallyException();
                 }
@@ -332,9 +328,8 @@ internal sealed class AddNode : BinaryOperatorNodeBase
                 break;
 
             case SupportedValueType.ByteArray:
-                if (left.ReturnType != SupportedValueType.ByteArray &&
-                    left.ReturnType != SupportedValueType.String &&
-                    left.ReturnType != SupportedValueType.Unknown)
+                if (left.ReturnType is not SupportedValueType.ByteArray and not SupportedValueType.String
+                    and not SupportedValueType.Unknown)
                 {
                     throw new ExpressionNotValidLogicallyException();
                 }
@@ -353,9 +348,11 @@ internal sealed class AddNode : BinaryOperatorNodeBase
     /// <returns>
     ///     The expression.
     /// </returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal()
     {
-        var (leftExpression, rightExpression) = GetExpressionsOfSameTypeFromOperands();
+        (Expression leftExpression, Expression rightExpression) = GetExpressionsOfSameTypeFromOperands();
 
         switch (ReturnType)
         {
@@ -389,10 +386,11 @@ internal sealed class AddNode : BinaryOperatorNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
-        var (leftExpression, rightExpression) =
-            GetExpressionsOfSameTypeFromOperands(tolerance);
+        (Expression leftExpression, Expression rightExpression) = GetExpressionsOfSameTypeFromOperands(tolerance);
 
         switch (ReturnType)
         {

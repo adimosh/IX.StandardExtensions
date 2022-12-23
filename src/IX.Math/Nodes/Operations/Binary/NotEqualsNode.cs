@@ -5,6 +5,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Nodes.Constants;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
@@ -28,9 +29,7 @@ internal sealed class NotEqualsNode : ComparisonOperationNodeBase
         NodeBase right)
         : base(
             Requires.NotNull(left).Simplify(),
-            Requires.NotNull(right).Simplify())
-    {
-    }
+            Requires.NotNull(right).Simplify()) { }
 
     /// <summary>
     ///     Simplifies this node, if possible, reflexively returns otherwise.
@@ -70,22 +69,21 @@ internal sealed class NotEqualsNode : ComparisonOperationNodeBase
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "We actually want this")]
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal()
     {
-        var (leftExpression, rightExpression) = GetExpressionsOfSameTypeFromOperands();
+        (Expression leftExpression, Expression rightExpression) = GetExpressionsOfSameTypeFromOperands();
 
-        if (Left.ReturnType == SupportedValueType.ByteArray ||
-            Right.ReturnType == SupportedValueType.ByteArray)
+        if (Left.ReturnType == SupportedValueType.ByteArray || Right.ReturnType == SupportedValueType.ByteArray)
         {
             return Expression.Equal(
                 Expression.Call(
                     typeof(ArrayExtensions).GetMethodWithExactParameters(
                         nameof(ArrayExtensions.SequenceEqualsWithMsb),
                         typeof(byte[]),
-                        typeof(byte[]))!,
-                    leftExpression,
-                    rightExpression),
-                Expression.Constant(
+                        typeof(byte[]))!, leftExpression,
+                    rightExpression), Expression.Constant(
                     false,
                     typeof(bool)));
         }
@@ -104,31 +102,28 @@ internal sealed class NotEqualsNode : ComparisonOperationNodeBase
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "We actually want this")]
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
-        var (leftExpression, rightExpression) =
-            GetExpressionsOfSameTypeFromOperands(tolerance);
+        (Expression leftExpression, Expression rightExpression) = GetExpressionsOfSameTypeFromOperands(tolerance);
 
-        if (Left.ReturnType == SupportedValueType.ByteArray ||
-            Right.ReturnType == SupportedValueType.ByteArray)
+        if (Left.ReturnType == SupportedValueType.ByteArray || Right.ReturnType == SupportedValueType.ByteArray)
         {
             return Expression.Equal(
                 Expression.Call(
                     typeof(ArrayExtensions).GetMethodWithExactParameters(
                         nameof(ArrayExtensions.SequenceEqualsWithMsb),
                         typeof(byte[]),
-                        typeof(byte[]))!,
-                    leftExpression,
-                    rightExpression),
-                Expression.Constant(
+                        typeof(byte[]))!, leftExpression,
+                    rightExpression), Expression.Constant(
                     false,
                     typeof(bool)));
         }
 
-        if (Left.ReturnType == SupportedValueType.Numeric &&
-            Right.ReturnType == SupportedValueType.Numeric)
+        if (Left.ReturnType == SupportedValueType.Numeric && Right.ReturnType == SupportedValueType.Numeric)
         {
-            var possibleTolerantExpression = GenerateNumericalToleranceEquateExpression(
+            Expression? possibleTolerantExpression = GenerateNumericalToleranceEquateExpression(
                 leftExpression,
                 rightExpression,
                 tolerance);
@@ -136,7 +131,11 @@ internal sealed class NotEqualsNode : ComparisonOperationNodeBase
             if (possibleTolerantExpression != null)
             {
                 // Valid tolerance expression
-                return Expression.NotEqual(possibleTolerantExpression, Expression.Constant(true, typeof(bool)));
+                return Expression.NotEqual(
+                    possibleTolerantExpression,
+                    Expression.Constant(
+                        true,
+                        typeof(bool)));
             }
         }
 

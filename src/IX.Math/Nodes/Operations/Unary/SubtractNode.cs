@@ -5,6 +5,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Nodes.Constants;
 using IX.StandardExtensions.Contracts;
 
@@ -99,12 +100,13 @@ internal sealed class SubtractNode : UnaryOperatorNodeBase
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "We want this to happen.")]
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal() =>
         Expression.Subtract(
             Expression.Constant(
                 0L,
-                typeof(long)),
-            Operand.GenerateExpression());
+                typeof(long)), Operand.GenerateExpression());
 
     /// <summary>
     ///     Generates the expression with tolerance that will be compiled into code.
@@ -115,10 +117,11 @@ internal sealed class SubtractNode : UnaryOperatorNodeBase
         "Performance",
         "HAA0601:Value type to reference type conversion causing boxing allocation",
         Justification = "We want this to happen.")]
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         Expression.Subtract(
             Expression.Constant(
                 0L,
-                typeof(long)),
-            Operand.GenerateExpression(tolerance));
+                typeof(long)), Operand.GenerateExpression(tolerance));
 }

@@ -3,26 +3,25 @@
 // </copyright>
 
 using IX.Math.Nodes.Constants;
+
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes;
 
 /// <summary>
-/// A base class for a function node.
+///     A base class for a function node.
 /// </summary>
 /// <seealso cref="OperationNodeBase" />
 [PublicAPI]
 public abstract class FunctionNodeBase : OperationNodeBase
 {
     /// <summary>
-    /// Prevents a default instance of the <see cref="FunctionNodeBase"/> class from being created.
+    ///     Prevents a default instance of the <see cref="FunctionNodeBase" /> class from being created.
     /// </summary>
-    protected private FunctionNodeBase()
-    {
-    }
+    protected private FunctionNodeBase() { }
 
     /// <summary>
-    /// Gets the concrete type of a parameter.
+    ///     Gets the concrete type of a parameter.
     /// </summary>
     /// <param name="parameter">The parameter.</param>
     /// <returns>The parameter type.</returns>
@@ -53,5 +52,6 @@ public abstract class FunctionNodeBase : OperationNodeBase
     /// </summary>
     /// <param name="context">The deep cloning context.</param>
     /// <returns>A deep clone.</returns>
-    protected override OperationNodeBase DeepCloneNode(NodeCloningContext context) => (OperationNodeBase)DeepClone(context);
+    protected override OperationNodeBase DeepCloneNode(NodeCloningContext context) =>
+        (OperationNodeBase)DeepClone(context);
 }

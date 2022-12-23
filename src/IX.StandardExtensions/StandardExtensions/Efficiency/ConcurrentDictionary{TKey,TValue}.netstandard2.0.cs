@@ -22,7 +22,7 @@ public partial class ConcurrentDictionary<TKey, TValue>
 
         private static TValue AddInternal<TState>(TKey key)
         {
-            var innerState = (TState)threadStaticMethods!;
+            var innerState = (TState)_threadStaticMethods!;
             var innerAdd = (Func<TKey, TState, TValue>)threadStaticAddFactory!;
 
             return innerAdd(
@@ -53,9 +53,9 @@ public partial class ConcurrentDictionary<TKey, TValue>
             Func<TKey, TValue, TState, TValue> updateValueFactory,
             TState state)
         {
-            threadStaticMethods = state;
+            _threadStaticMethods = state;
             threadStaticAddFactory = addValueFactory;
-            threadStaticUpdateFactory = updateValueFactory;
+            _threadStaticUpdateFactory = updateValueFactory;
 
             try
             {
@@ -66,9 +66,9 @@ public partial class ConcurrentDictionary<TKey, TValue>
             }
             finally
             {
-                threadStaticMethods = null;
+                _threadStaticMethods = null;
                 threadStaticAddFactory = null;
-                threadStaticUpdateFactory = null;
+                _threadStaticUpdateFactory = null;
             }
         }
 
@@ -89,7 +89,7 @@ public partial class ConcurrentDictionary<TKey, TValue>
             Func<TKey, TState, TValue> valueFactory,
             TState state)
         {
-            threadStaticMethods = state;
+            _threadStaticMethods = state;
             threadStaticAddFactory = valueFactory;
 
             try
@@ -100,9 +100,9 @@ public partial class ConcurrentDictionary<TKey, TValue>
             }
             finally
             {
-                threadStaticMethods = null;
+                _threadStaticMethods = null;
                 threadStaticAddFactory = null;
-                threadStaticUpdateFactory = null;
+                _threadStaticUpdateFactory = null;
             }
         }
     #endif

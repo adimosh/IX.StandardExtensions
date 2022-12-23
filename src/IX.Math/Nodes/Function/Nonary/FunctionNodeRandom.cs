@@ -3,9 +3,12 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Extensibility;
 using IX.Math.Generators;
+
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes.Function.Nonary;
@@ -15,7 +18,9 @@ namespace IX.Math.Nodes.Function.Nonary;
 /// </summary>
 /// <seealso cref="NonaryFunctionNodeBase" />
 [DebuggerDisplay("random()")]
-[CallableMathematicsFunction("rand", "random")]
+[CallableMathematicsFunction(
+    "rand",
+    "random")]
 [UsedImplicitly]
 internal sealed class FunctionNodeRandom : NonaryFunctionNodeBase
 {
@@ -82,6 +87,8 @@ internal sealed class FunctionNodeRandom : NonaryFunctionNodeBase
     /// <returns>
     ///     The expression.
     /// </returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal() =>
         GenerateStaticNonaryFunctionCall<FunctionNodeRandom>(nameof(GenerateRandom));
 }

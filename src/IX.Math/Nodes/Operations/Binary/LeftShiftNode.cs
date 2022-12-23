@@ -3,7 +3,9 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Nodes.Constants;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
@@ -22,9 +24,7 @@ internal sealed class LeftShiftNode : ByteShiftOperationNodeBase
         NodeBase right)
         : base(
             Requires.NotNull(left).Simplify(),
-            Requires.NotNull(right).Simplify())
-    {
-    }
+            Requires.NotNull(right).Simplify()) { }
 
     /// <summary>
     ///     Simplifies this node, if possible, reflexively returns otherwise.
@@ -58,6 +58,8 @@ internal sealed class LeftShiftNode : ByteShiftOperationNodeBase
     /// <returns>
     ///     The expression.
     /// </returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal()
     {
         Expression rightExpression = Expression.Convert(
@@ -73,8 +75,7 @@ internal sealed class LeftShiftNode : ByteShiftOperationNodeBase
                 typeof(BitwiseExtensions).GetMethodWithExactParameters(
                     nameof(BitwiseExtensions.LeftShift),
                     typeof(byte[]),
-                    typeof(int))!,
-                Left.GenerateExpression(),
+                    typeof(int))!, Left.GenerateExpression(),
                 rightExpression),
             _ => throw new ExpressionNotValidLogicallyException()
         };
@@ -85,6 +86,8 @@ internal sealed class LeftShiftNode : ByteShiftOperationNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         Expression rightExpression = Expression.Convert(

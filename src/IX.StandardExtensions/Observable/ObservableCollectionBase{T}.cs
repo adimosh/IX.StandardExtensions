@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+
 using IX.Guaranteed;
 using IX.Observable.Adapters;
 using IX.Observable.StateChanges;
@@ -13,6 +14,7 @@ using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Threading;
 using IX.Undoable;
 using IX.Undoable.StateChanges;
+
 using JetBrains.Annotations;
 
 namespace IX.Observable;
@@ -25,22 +27,14 @@ namespace IX.Observable;
 /// <seealso cref="INotifyCollectionChanged" />
 /// <seealso cref="IEnumerable{T}" />
 [PublicAPI]
-public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollectionBase<T>,
-    ICollection<T>,
-    IUndoableItem,
-    IEditCommittableItem
+public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollectionBase<T>, ICollection<T>, IUndoableItem,
+                                                    IEditCommittableItem
 {
-#region Internal state
-
     private readonly Lazy<UndoableInnerContext> undoContext;
     private bool automaticallyCaptureSubItems;
     private UndoableUnitBlockTransaction<T>? currentUndoBlockTransaction;
     private int historyLevels;
     private bool suppressUndoable;
-
-#endregion
-
-#region Constructors and destructors
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ObservableCollectionBase{T}" /> class.
@@ -98,86 +92,6 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         historyLevels = EnvironmentSettings.DefaultUndoRedoLevels;
     }
 
-#endregion
-
-#region Events
-
-    /// <summary>
-    ///     Occurs when an edit is committed to the collection, whichever that may be.
-    /// </summary>
-    protected event EventHandler<EditCommittedEventArgs>? EditCommittedInternal;
-
-    /// <summary>
-    ///     Occurs when an edit on this item is committed.
-    /// </summary>
-    /// <remarks>
-    ///     <para>Warning! This event is invoked within the write lock on concurrent collections.</para>
-    /// </remarks>
-    event EventHandler<EditCommittedEventArgs> IEditCommittableItem.EditCommitted
-    {
-        add => EditCommittedInternal += value;
-        remove => EditCommittedInternal -= value;
-    }
-
-#endregion
-
-#region Properties and indexers
-
-    /// <summary>
-    ///     Gets a value indicating whether or not the implementer can perform a redo.
-    /// </summary>
-    /// <value>
-    ///     <see langword="true" /> if the call to the <see cref="M:IX.Undoable.IUndoableItem.Redo" /> method would result
-    ///     in a state change, <see langword="false" /> otherwise.
-    /// </value>
-    public bool CanRedo
-    {
-        get
-        {
-            if (suppressUndoable || EnvironmentSettings.DisableUndoable || historyLevels == 0)
-            {
-                return false;
-            }
-
-            ThrowIfCurrentObjectDisposed();
-
-            return ParentUndoContext?.CanRedo ??
-                   ReadLock(
-                       thisL1 => thisL1.undoContext.IsValueCreated && thisL1.undoContext.Value.RedoStackHasData,
-                       this);
-        }
-    }
-
-    /// <summary>
-    ///     Gets a value indicating whether or not the implementer can perform an undo.
-    /// </summary>
-    /// <value>
-    ///     <see langword="true" /> if the call to the <see cref="M:IX.Undoable.IUndoableItem.Undo" /> method would result
-    ///     in a state change, <see langword="false" /> otherwise.
-    /// </value>
-    public bool CanUndo
-    {
-        get
-        {
-            if (suppressUndoable || EnvironmentSettings.DisableUndoable || historyLevels == 0)
-            {
-                return false;
-            }
-
-            ThrowIfCurrentObjectDisposed();
-
-            return ParentUndoContext?.CanUndo ??
-                   ReadLock(
-                       thisL1 => thisL1.undoContext.IsValueCreated && thisL1.undoContext.Value.UndoStackHasData,
-                       this);
-        }
-    }
-
-    /// <summary>
-    ///     Gets a value indicating whether this instance is caught into an undo context.
-    /// </summary>
-    public bool IsCapturedIntoUndoContext => ParentUndoContext != null;
-
     /// <summary>
     ///     Gets a value indicating whether items are key/value pairs.
     /// </summary>
@@ -189,7 +103,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     /// </summary>
     /// <value><see langword="true" /> if items are undoable; otherwise, <see langword="false" />.</value>
     public bool ItemsAreUndoable { get; } = typeof(IUndoableItem).GetTypeInfo()
-        .IsAssignableFrom(typeof(T).GetTypeInfo());
+                                                                 .IsAssignableFrom(typeof(T).GetTypeInfo());
 
     /// <summary>
     ///     Gets or sets a value indicating whether to automatically capture sub items in the current undo/redo context.
@@ -211,64 +125,6 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                 value,
                 false);
     }
-
-    /// <summary>
-    ///     Gets or sets the number of levels to keep undo or redo information.
-    /// </summary>
-    /// <value>The history levels.</value>
-    /// <remarks>
-    ///     <para>
-    ///         If this value is set, for example, to 7, then the implementing object should allow the
-    ///         <see cref="M:IX.Undoable.IUndoableItem.Undo" /> method
-    ///         to be called 7 times to change the state of the object. Upon calling it an 8th time, there should be no change
-    ///         in the
-    ///         state of the object.
-    ///     </para>
-    ///     <para>
-    ///         Any call beyond the limit imposed here should not fail, but it should also not change the state of the
-    ///         object.
-    ///     </para>
-    ///     <para>
-    ///         This member is not serialized, as it interferes with the undo/redo context, which cannot itself be
-    ///         serialized.
-    ///     </para>
-    /// </remarks>
-    public int HistoryLevels
-    {
-        get => historyLevels;
-        set
-        {
-            if (value == historyLevels)
-            {
-                return;
-            }
-
-            undoContext.Value.HistoryLevels = value;
-
-            // We'll let the internal undo context to curate our history levels
-            historyLevels = undoContext.Value.HistoryLevels;
-        }
-    }
-
-    /// <summary>
-    ///     Gets the parent undo context, if any.
-    /// </summary>
-    /// <value>The parent undo context.</value>
-    /// <remarks>
-    ///     <para>This member is not serialized, as it represents the undo/redo context, which cannot itself be serialized.</para>
-    ///     <para>
-    ///         The concept of the undo/redo context is incompatible with serialization. Any collection that is serialized will
-    ///         be free of any original context
-    ///         when deserialized.
-    ///     </para>
-    /// </remarks>
-    public IUndoableItem? ParentUndoContext { get; private set; }
-
-#endregion
-
-#region Methods
-
-#region Interface implementations
 
     /// <summary>
     ///     Adds an item to the <see cref="ObservableCollectionBase{T}" />.
@@ -417,6 +273,123 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     }
 
     /// <summary>
+    ///     Occurs when an edit on this item is committed.
+    /// </summary>
+    /// <remarks>
+    ///     <para>Warning! This event is invoked within the write lock on concurrent collections.</para>
+    /// </remarks>
+    event EventHandler<EditCommittedEventArgs> IEditCommittableItem.EditCommitted
+    {
+        add => EditCommittedInternal += value;
+        remove => EditCommittedInternal -= value;
+    }
+
+    /// <summary>
+    ///     Gets a value indicating whether or not the implementer can perform a redo.
+    /// </summary>
+    /// <value>
+    ///     <see langword="true" /> if the call to the <see cref="M:IX.Undoable.IUndoableItem.Redo" /> method would result
+    ///     in a state change, <see langword="false" /> otherwise.
+    /// </value>
+    public bool CanRedo
+    {
+        get
+        {
+            if (suppressUndoable || EnvironmentSettings.DisableUndoable || historyLevels == 0)
+            {
+                return false;
+            }
+
+            ThrowIfCurrentObjectDisposed();
+
+            return ParentUndoContext?.CanRedo ?? ReadLock(
+                thisL1 => thisL1.undoContext.IsValueCreated && thisL1.undoContext.Value.RedoStackHasData,
+                this);
+        }
+    }
+
+    /// <summary>
+    ///     Gets a value indicating whether or not the implementer can perform an undo.
+    /// </summary>
+    /// <value>
+    ///     <see langword="true" /> if the call to the <see cref="M:IX.Undoable.IUndoableItem.Undo" /> method would result
+    ///     in a state change, <see langword="false" /> otherwise.
+    /// </value>
+    public bool CanUndo
+    {
+        get
+        {
+            if (suppressUndoable || EnvironmentSettings.DisableUndoable || historyLevels == 0)
+            {
+                return false;
+            }
+
+            ThrowIfCurrentObjectDisposed();
+
+            return ParentUndoContext?.CanUndo ?? ReadLock(
+                thisL1 => thisL1.undoContext.IsValueCreated && thisL1.undoContext.Value.UndoStackHasData,
+                this);
+        }
+    }
+
+    /// <summary>
+    ///     Gets a value indicating whether this instance is caught into an undo context.
+    /// </summary>
+    public bool IsCapturedIntoUndoContext => ParentUndoContext != null;
+
+    /// <summary>
+    ///     Gets or sets the number of levels to keep undo or redo information.
+    /// </summary>
+    /// <value>The history levels.</value>
+    /// <remarks>
+    ///     <para>
+    ///         If this value is set, for example, to 7, then the implementing object should allow the
+    ///         <see cref="M:IX.Undoable.IUndoableItem.Undo" /> method
+    ///         to be called 7 times to change the state of the object. Upon calling it an 8th time, there should be no change
+    ///         in the
+    ///         state of the object.
+    ///     </para>
+    ///     <para>
+    ///         Any call beyond the limit imposed here should not fail, but it should also not change the state of the
+    ///         object.
+    ///     </para>
+    ///     <para>
+    ///         This member is not serialized, as it interferes with the undo/redo context, which cannot itself be
+    ///         serialized.
+    ///     </para>
+    /// </remarks>
+    public int HistoryLevels
+    {
+        get => historyLevels;
+        set
+        {
+            if (value == historyLevels)
+            {
+                return;
+            }
+
+            undoContext.Value.HistoryLevels = value;
+
+            // We'll let the internal undo context to curate our history levels
+            historyLevels = undoContext.Value.HistoryLevels;
+        }
+    }
+
+    /// <summary>
+    ///     Gets the parent undo context, if any.
+    /// </summary>
+    /// <value>The parent undo context.</value>
+    /// <remarks>
+    ///     <para>This member is not serialized, as it represents the undo/redo context, which cannot itself be serialized.</para>
+    ///     <para>
+    ///         The concept of the undo/redo context is incompatible with serialization. Any collection that is serialized will
+    ///         be free of any original context
+    ///         when deserialized.
+    ///     </para>
+    /// </remarks>
+    public IUndoableItem? ParentUndoContext { get; private set; }
+
+    /// <summary>
     ///     Allows the implementer to be captured by a containing undo-/redo-capable object so that undo and redo operations
     ///     can be coordinated across a larger scope.
     /// </summary>
@@ -465,7 +438,8 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         Action<object?>? toInvoke;
         object? state;
         bool internalResult;
-        using (var locker = AcquireReadWriteLock())
+
+        using (ValueSynchronizationLockerReadWrite locker = AcquireReadWriteLock())
         {
             if (!undoContext.IsValueCreated || !undoContext.Value.RedoStackHasData)
             {
@@ -481,6 +455,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                 level,
                 out toInvoke,
                 out state);
+
             if (internalResult)
             {
                 uc.PushUndo(level);
@@ -535,6 +510,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                     object? state;
                     bool internalResult;
                     Action<object?>? act;
+
                     using (AcquireWriteLock())
                     {
                         internalResult = RedoInternally(
@@ -631,7 +607,8 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         Action<object?>? toInvoke;
         object? state;
         bool internalResult;
-        using (var locker = AcquireReadWriteLock())
+
+        using (ValueSynchronizationLockerReadWrite locker = AcquireReadWriteLock())
         {
             if (!undoContext.IsValueCreated || !undoContext.Value.UndoStackHasData)
             {
@@ -647,6 +624,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                 level,
                 out toInvoke,
                 out state);
+
             if (internalResult)
             {
                 uc.PushRedo(level);
@@ -701,6 +679,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                     Action<object?>? act;
                     object? state;
                     bool internalResult;
+
                     using (AcquireWriteLock())
                     {
                         internalResult = UndoInternally(
@@ -742,7 +721,10 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
         }
     }
 
-#endregion
+    /// <summary>
+    ///     Occurs when an edit is committed to the collection, whichever that may be.
+    /// </summary>
+    protected event EventHandler<EditCommittedEventArgs>? EditCommittedInternal;
 
     /// <summary>
     ///     Starts the undoable operations on this object.
@@ -891,6 +873,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             case CompositeStateChange compositeStateChange:
             {
                 var count = compositeStateChange.StateChanges.Count;
+
                 if (count == 0)
                 {
                     toInvokeOutsideLock = null;
@@ -903,6 +886,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                 var states = new object[count];
                 var counter = 0;
                 var result = true;
+
                 foreach (StateChangeBase sc in ((IEnumerable<StateChangeBase>)compositeStateChange.StateChanges)
                          .Reverse())
                 {
@@ -940,7 +924,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                         return;
                     }
 
-                    var (actions, objects, observableCollectionBase) =
+                    (Action<object?>?[]? actions, var objects, ObservableCollectionBase<T>? observableCollectionBase) =
                         (Tuple<Action<object?>?[], object?[], ObservableCollectionBase<T>>)innerState;
 
                     observableCollectionBase.InterpretBlockStateChangesOutsideLock(
@@ -982,6 +966,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             case CompositeStateChange bsc:
             {
                 var count = bsc.StateChanges.Count;
+
                 if (count == 0)
                 {
                     toInvokeOutsideLock = null;
@@ -994,6 +979,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                 var states = new object[count];
                 var counter = 0;
                 var result = true;
+
                 foreach (StateChangeBase sc in bsc.StateChanges)
                 {
                     try
@@ -1030,7 +1016,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
                         return;
                     }
 
-                    var (actions, objects, observableCollectionBase) =
+                    (Action<object?>[]? actions, var objects, ObservableCollectionBase<T>? observableCollectionBase) =
                         (Tuple<Action<object?>[], object[], ObservableCollectionBase<T>>)innerState;
 
                     observableCollectionBase.InterpretBlockStateChangesOutsideLock(
@@ -1059,8 +1045,7 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
     {
         for (var i = 0; i < actions.Length; i++)
         {
-            actions[i]
-                ?.Invoke(states[i]);
+            actions[i]?.Invoke(states[i]);
         }
     }
 
@@ -1352,6 +1337,4 @@ public abstract class ObservableCollectionBase<T> : ObservableReadOnlyCollection
             }
         }
     }
-
-#endregion
 }

@@ -3,13 +3,16 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
+
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes.Function.Ternary;
@@ -38,9 +41,7 @@ internal sealed class FunctionNodeReplace : TernaryFunctionNodeBase
         : base(
             Requires.NotNull(stringParameter).Simplify(),
             Requires.NotNull(numericParameter).Simplify(),
-            Requires.NotNull(secondNumericParameter).Simplify())
-    {
-    }
+            Requires.NotNull(secondNumericParameter).Simplify()) { }
 
     /// <summary>
     ///     Gets the return type of this node.
@@ -70,8 +71,7 @@ internal sealed class FunctionNodeReplace : TernaryFunctionNodeBase
     ///     A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() =>
-        FirstParameter is StringNode stringParam &&
-        SecondParameter is StringNode numericParam &&
+        FirstParameter is StringNode stringParam && SecondParameter is StringNode numericParam &&
         ThirdParameter is StringNode secondNumericParam
             ? new StringNode(
                 stringParam.Value.Replace(
@@ -119,8 +119,7 @@ internal sealed class FunctionNodeReplace : TernaryFunctionNodeBase
         second.DetermineStrongly(SupportedValueType.String);
         third.DetermineStrongly(SupportedValueType.String);
 
-        if (first.ReturnType != SupportedValueType.String ||
-            second.ReturnType != SupportedValueType.String ||
+        if (first.ReturnType != SupportedValueType.String || second.ReturnType != SupportedValueType.String ||
             third.ReturnType != SupportedValueType.String)
         {
             throw new ExpressionNotValidLogicallyException();
@@ -133,6 +132,8 @@ internal sealed class FunctionNodeReplace : TernaryFunctionNodeBase
     /// <returns>
     ///     The expression.
     /// </returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal() => GenerateExpressionInternal(null);
 
     /// <summary>
@@ -140,6 +141,8 @@ internal sealed class FunctionNodeReplace : TernaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         MethodInfo mi = typeof(string).GetMethodWithExactParameters(
@@ -157,6 +160,7 @@ internal sealed class FunctionNodeReplace : TernaryFunctionNodeBase
         }
 
         Expression e1, e2, e3;
+
         if (tolerance == null)
         {
             e1 = FirstParameter.GenerateStringExpression();

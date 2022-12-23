@@ -3,10 +3,13 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Extensibility;
 using IX.Math.Generators;
 using IX.StandardExtensions.Contracts;
+
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes.Function.Binary;
@@ -83,6 +86,8 @@ internal sealed class FunctionNodeRandomInt : NumericBinaryFunctionNodeBase
     /// <returns>
     ///     The expression.
     /// </returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal() =>
         GenerateStaticBinaryFunctionCall<FunctionNodeRandomInt>(nameof(GenerateRandom));
 
@@ -91,6 +96,8 @@ internal sealed class FunctionNodeRandomInt : NumericBinaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         GenerateStaticBinaryFunctionCall<FunctionNodeRandomInt>(
             nameof(GenerateRandom),

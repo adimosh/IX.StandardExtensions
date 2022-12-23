@@ -416,6 +416,7 @@ internal static class ExpressionGenerator
 
         return null;
 
+        [DiagCA.RequiresUnreferencedCode("This method uses Activator.CreateInstance.")]
         static NodeBase? GenerateFunctionCallExpression(
             string possibleFunctionCallExpression,
             WorkingExpressionSet innerWorkingSet)

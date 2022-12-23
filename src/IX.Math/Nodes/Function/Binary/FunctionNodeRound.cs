@@ -3,11 +3,15 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
 using IX.StandardExtensions.Contracts;
+
 using JetBrains.Annotations;
+
 using GlobalSystem = System;
 
 namespace IX.Math.Nodes.Function.Binary;
@@ -26,9 +30,7 @@ internal sealed class FunctionNodeRound : NumericBinaryFunctionNodeBase
         NodeBase intNode)
         : base(
             Requires.NotNull(floatNode).Simplify(),
-            Requires.NotNull(intNode).Simplify())
-    {
-    }
+            Requires.NotNull(intNode).Simplify()) { }
 
     /// <summary>
     ///     Creates a deep clone of the source object.
@@ -60,16 +62,20 @@ internal sealed class FunctionNodeRound : NumericBinaryFunctionNodeBase
     ///     Generates the expression that will be compiled into code.
     /// </summary>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal() =>
         GenerateStaticBinaryFunctionCall<double, int>(
             typeof(GlobalSystem.Math),
             nameof(GlobalSystem.Math.Round));
 
     /// <summary>
-    /// Generates the expression with tolerance that will be compiled into code.
+    ///     Generates the expression with tolerance that will be compiled into code.
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         GenerateStaticBinaryFunctionCall<double, int>(
             typeof(GlobalSystem.Math),

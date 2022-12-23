@@ -4,6 +4,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Extensibility;
 using IX.StandardExtensions.Contracts;
 
@@ -108,12 +109,13 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
     ///     Gets the expressions of same type from operands.
     /// </summary>
     /// <returns>The left and right operand expressions.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected (Expression Left, Expression Right) GetExpressionsOfSameTypeFromOperands()
     {
         if (Left.ReturnType == SupportedValueType.String || Right.ReturnType == SupportedValueType.String)
         {
-            return (Left.GenerateStringExpression(),
-                Right.GenerateStringExpression());
+            return (Left.GenerateStringExpression(), Right.GenerateStringExpression());
         }
 
         Expression le = Left.GenerateExpression();
@@ -121,18 +123,16 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
 
         if (le.Type == typeof(double) && re.Type == typeof(long))
         {
-            return (Left: le,
-                Right: Expression.Convert(
-                    re,
-                    typeof(double)));
+            return (Left: le, Right: Expression.Convert(
+                re,
+                typeof(double)));
         }
 
         if (le.Type == typeof(long) && re.Type == typeof(double))
         {
             return (Left: Expression.Convert(
-                    le,
-                    typeof(double)),
-                Right: re);
+                le,
+                typeof(double)), Right: re);
         }
 
         return (Left: le, Right: re);
@@ -143,12 +143,13 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The left and right operand expressions.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected (Expression Left, Expression Right) GetExpressionsOfSameTypeFromOperands(Tolerance? tolerance)
     {
         if (Left.ReturnType == SupportedValueType.String || Right.ReturnType == SupportedValueType.String)
         {
-            return (Left.GenerateStringExpression(tolerance),
-                Right.GenerateStringExpression(tolerance));
+            return (Left.GenerateStringExpression(tolerance), Right.GenerateStringExpression(tolerance));
         }
 
         Expression le = Left.GenerateExpression(tolerance);
@@ -156,18 +157,16 @@ internal abstract class BinaryOperatorNodeBase : OperationNodeBase
 
         if (le.Type == typeof(double) && re.Type == typeof(long))
         {
-            return (Left: le,
-                Right: Expression.Convert(
-                    re,
-                    typeof(double)));
+            return (Left: le, Right: Expression.Convert(
+                re,
+                typeof(double)));
         }
 
         if (le.Type == typeof(long) && re.Type == typeof(double))
         {
             return (Left: Expression.Convert(
-                    le,
-                    typeof(double)),
-                Right: re);
+                le,
+                typeof(double)), Right: re);
         }
 
         return (Left: le, Right: re);

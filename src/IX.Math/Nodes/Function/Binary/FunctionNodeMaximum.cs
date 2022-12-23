@@ -3,12 +3,16 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
 using IX.Math.TypeHelpers;
 using IX.StandardExtensions.Contracts;
+
 using JetBrains.Annotations;
+
 using GlobalSystem = System;
 
 namespace IX.Math.Nodes.Function.Binary;
@@ -34,9 +38,7 @@ internal sealed class FunctionNodeMaximum : NumericBinaryFunctionNodeBase
         NodeBase secondParameter)
         : base(
             Requires.NotNull(firstParameter).Simplify(),
-            Requires.NotNull(secondParameter).Simplify())
-    {
-    }
+            Requires.NotNull(secondParameter).Simplify()) { }
 
     /// <summary>
     ///     Creates a deep clone of the source object.
@@ -90,6 +92,8 @@ internal sealed class FunctionNodeMaximum : NumericBinaryFunctionNodeBase
     /// <returns>
     ///     The expression.
     /// </returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal() =>
         GenerateStaticBinaryFunctionCall(
             typeof(GlobalSystem.Math),
@@ -100,6 +104,8 @@ internal sealed class FunctionNodeMaximum : NumericBinaryFunctionNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         GenerateStaticBinaryFunctionCall(
             typeof(GlobalSystem.Math),

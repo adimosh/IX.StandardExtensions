@@ -3,13 +3,16 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
+
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes.Function.Binary;
@@ -19,12 +22,14 @@ namespace IX.Math.Nodes.Function.Binary;
 /// </summary>
 /// <seealso cref="BinaryFunctionNodeBase" />
 [DebuggerDisplay($"substring({{{nameof(FirstParameter)}}}, {{{nameof(SecondParameter)}}})")]
-[CallableMathematicsFunction("substr", "substring")]
+[CallableMathematicsFunction(
+    "substr",
+    "substring")]
 [UsedImplicitly]
 internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="FunctionNodeSubstring"/> class.
+    ///     Initializes a new instance of the <see cref="FunctionNodeSubstring" /> class.
     /// </summary>
     /// <param name="stringParameter">The string parameter.</param>
     /// <param name="numericParameter">The numeric parameter.</param>
@@ -33,34 +38,32 @@ internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
         NodeBase numericParameter)
         : base(
             Requires.NotNull(stringParameter).Simplify(),
-            Requires.NotNull(numericParameter).Simplify())
-    {
-    }
+            Requires.NotNull(numericParameter).Simplify()) { }
 
     /// <summary>
-    /// Gets the return type of this node.
+    ///     Gets the return type of this node.
     /// </summary>
     /// <value>
-    /// The node return type.
+    ///     The node return type.
     /// </value>
     public override SupportedValueType ReturnType => SupportedValueType.String;
 
     /// <summary>
-    /// Creates a deep clone of the source object.
+    ///     Creates a deep clone of the source object.
     /// </summary>
     /// <param name="context">The deep cloning context.</param>
     /// <returns>
-    /// A deep clone.
+    ///     A deep clone.
     /// </returns>
     public override NodeBase DeepClone(NodeCloningContext context) => new FunctionNodeSubstring(
         FirstParameter.DeepClone(context),
         SecondParameter.DeepClone(context));
 
     /// <summary>
-    /// Simplifies this node, if possible, reflexively returns otherwise.
+    ///     Simplifies this node, if possible, reflexively returns otherwise.
     /// </summary>
     /// <returns>
-    /// A simplified node, or this instance.
+    ///     A simplified node, or this instance.
     /// </returns>
     public override NodeBase Simplify() =>
         FirstParameter is StringNode stringParam && SecondParameter is NumericNode numericParam
@@ -119,19 +122,22 @@ internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
     }
 
     /// <summary>
-    /// Generates the expression that will be compiled into code.
+    ///     Generates the expression that will be compiled into code.
     /// </summary>
     /// <returns>
-    /// The expression.
+    ///     The expression.
     /// </returns>
-    protected override Expression GenerateExpressionInternal()
-        => GenerateExpressionInternal(null);
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
+    protected override Expression GenerateExpressionInternal() => GenerateExpressionInternal(null);
 
     /// <summary>
-    /// Generates the expression with tolerance that will be compiled into code.
+    ///     Generates the expression with tolerance that will be compiled into code.
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         Type firstParameterType = typeof(string);
@@ -152,6 +158,7 @@ internal sealed class FunctionNodeSubstring : BinaryFunctionNodeBase
         }
 
         Expression e1, e2;
+
         if (tolerance == null)
         {
             e1 = FirstParameter.GenerateExpression();

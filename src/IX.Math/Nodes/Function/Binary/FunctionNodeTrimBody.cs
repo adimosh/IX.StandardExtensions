@@ -3,13 +3,16 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+
 using IX.Math.Extensibility;
 using IX.Math.Nodes.Constants;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
+
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes.Function.Binary;
@@ -28,9 +31,7 @@ internal sealed class FunctionNodeTrimBody : BinaryFunctionNodeBase
         NodeBase numericParameter)
         : base(
             Requires.NotNull(stringParameter).Simplify(),
-            Requires.NotNull(numericParameter).Simplify())
-    {
-    }
+            Requires.NotNull(numericParameter).Simplify()) { }
 
     /// <summary>
     ///     Gets the return type of this node.
@@ -112,19 +113,22 @@ internal sealed class FunctionNodeTrimBody : BinaryFunctionNodeBase
     }
 
     /// <summary>
-    /// Generates the expression that will be compiled into code.
+    ///     Generates the expression that will be compiled into code.
     /// </summary>
     /// <returns>
-    /// The expression.
+    ///     The expression.
     /// </returns>
-    protected override Expression GenerateExpressionInternal()
-        => GenerateExpressionInternal(null);
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
+    protected override Expression GenerateExpressionInternal() => GenerateExpressionInternal(null);
 
     /// <summary>
-    /// Generates the expression with tolerance that will be compiled into code.
+    ///     Generates the expression with tolerance that will be compiled into code.
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         MethodInfo mi = typeof(string).GetMethodWithExactParameters(
@@ -142,6 +146,7 @@ internal sealed class FunctionNodeTrimBody : BinaryFunctionNodeBase
         }
 
         Expression e1, e2;
+
         if (tolerance == null)
         {
             e1 = FirstParameter.GenerateExpression();

@@ -20,9 +20,7 @@ internal abstract class LogicalOperationNodeBase : BinaryOperatorNodeBase
         NodeBase right)
         : base(
             left,
-            right)
-    {
-    }
+            right) { }
 
     /// <summary>
     ///     Gets the return type of this node.

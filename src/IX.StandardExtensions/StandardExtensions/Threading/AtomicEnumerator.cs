@@ -5,9 +5,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
+
 using IX.StandardExtensions.ComponentModel;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Efficiency;
+
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Threading;
@@ -19,21 +21,9 @@ namespace IX.StandardExtensions.Threading;
 [PublicAPI]
 public abstract partial class AtomicEnumerator : DisposableBase
 {
-#region Internal state
-
     protected private static readonly ConcurrentDictionary<Type, Delegate> ConstructionDelegates = new();
 
-#endregion
-
-#region Constructors and destructors
-
     protected private AtomicEnumerator() { }
-
-#endregion
-
-#region Methods
-
-#region Static methods
 
     /// <summary>
     ///     Creates an atomic enumerator from a collection.
@@ -57,9 +47,12 @@ public abstract partial class AtomicEnumerator : DisposableBase
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Not an issue, since we're returning a class-based atomic enumerator anyway.")]
+    [RequiresUnreferencedCode(
+        "The atomic enumerator dynamically generates and invokes code in the AtomicEnumerator<TItem> class.")]
     public static AtomicEnumerator<TItem> FromCollection<TItem, TCollection>(
         TCollection collection,
-        Func<ValueSynchronizationLockerRead> readLock)
+        Func<ValueSynchronizationLockerRead>
+            readLock)
         where TCollection : class, IEnumerable<TItem>
     {
         // Validate arguments
@@ -74,8 +67,9 @@ public abstract partial class AtomicEnumerator : DisposableBase
             {
                 // Get used types
                 MethodInfo getEnumeratorMethodInfo = collectionType.GetMethod(
-                    nameof(IEnumerable<TItem>.GetEnumerator),
-                    BindingFlags.Public | BindingFlags.Instance)!;
+                        nameof(IEnumerable<TItem>.GetEnumerator),
+                        BindingFlags.Public | BindingFlags.Instance)
+                    !;
 
                 // ReSharper disable once PossibleNullReferenceException - We know this cannot be null, as we're interrogating the GetEnumerator method if an IEnumerable - there must be at least one
                 Type enumeratorType = getEnumeratorMethodInfo.ReturnType;
@@ -90,17 +84,14 @@ public abstract partial class AtomicEnumerator : DisposableBase
 
                 // Prepare expression
                 return Expression.Lambda(
-                        Expression.New(
-                            atomicEnumeratorConstructorInfo,
-                            Expression.Call(
-                                parameter1,
-                                getEnumeratorMethodInfo),
-                            parameter2),
-                        parameter1,
-                        parameter2)
-                    .Compile();
-            },
-            collection);
+                    Expression.New(
+                        atomicEnumeratorConstructorInfo,
+                        Expression.Call(
+                            parameter1,
+                            getEnumeratorMethodInfo), parameter2),
+                    parameter1,
+                    parameter2).Compile();
+            }, collection);
 
         if (initializer is Func<TCollection, Func<ValueSynchronizationLockerRead>, AtomicEnumerator<TItem>>
             typedInitializer)
@@ -115,8 +106,6 @@ public abstract partial class AtomicEnumerator : DisposableBase
             readLock)!;
     }
 
-#endregion
-
     /// <summary>
     ///     Advances the enumerator to the next element of the collection.
     /// </summary>
@@ -130,6 +119,4 @@ public abstract partial class AtomicEnumerator : DisposableBase
     ///     Sets the enumerator to its initial position, which is before the first element in the collection.
     /// </summary>
     public abstract void Reset();
-
-#endregion
 }

@@ -2,7 +2,9 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+
 using IX.Math.Extensibility;
 using IX.Math.Nodes;
 using IX.StandardExtensions.Extensions;
@@ -11,31 +13,46 @@ namespace IX.Math.Generators;
 
 internal static class FunctionsDictionaryGenerator
 {
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     internal static void GenerateInternalNonaryFunctionsDictionary(
         this IEnumerable<Assembly> assemblies,
         Dictionary<string, Type> typeDictionary) =>
-        GenerateTypeAssignableFrom<NonaryFunctionNodeBase>(assemblies, typeDictionary);
+        GenerateTypeAssignableFrom<NonaryFunctionNodeBase>(
+            assemblies,
+            typeDictionary);
 
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     internal static void GenerateInternalUnaryFunctionsDictionary(
         this IEnumerable<Assembly> assemblies,
         Dictionary<string, Type> typeDictionary) =>
-        GenerateTypeAssignableFrom<UnaryFunctionNodeBase>(assemblies, typeDictionary);
+        GenerateTypeAssignableFrom<UnaryFunctionNodeBase>(
+            assemblies,
+            typeDictionary);
 
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     internal static void GenerateInternalBinaryFunctionsDictionary(
         this IEnumerable<Assembly> assemblies,
         Dictionary<string, Type> typeDictionary) =>
-        GenerateTypeAssignableFrom<BinaryFunctionNodeBase>(assemblies, typeDictionary);
+        GenerateTypeAssignableFrom<BinaryFunctionNodeBase>(
+            assemblies,
+            typeDictionary);
 
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     internal static void GenerateInternalTernaryFunctionsDictionary(
         this IEnumerable<Assembly> assemblies,
         Dictionary<string, Type> typeDictionary) =>
-        GenerateTypeAssignableFrom<TernaryFunctionNodeBase>(assemblies, typeDictionary);
+        GenerateTypeAssignableFrom<TernaryFunctionNodeBase>(
+            assemblies,
+            typeDictionary);
 
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "HAA0603:Delegate allocation from a method group",
         Justification = "This is how LINQ works")]
-    private static void GenerateTypeAssignableFrom<T>(IEnumerable<Assembly> assemblies, Dictionary<string, Type> typeDictionary)
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
+    private static void GenerateTypeAssignableFrom<T>(
+        IEnumerable<Assembly> assemblies,
+        Dictionary<string, Type> typeDictionary)
         where T : FunctionNodeBase
     {
         // TODO: Do this in parallel
@@ -48,6 +65,7 @@ internal static class FunctionsDictionaryGenerator
             Dictionary<string, Type> td)
         {
             CallableMathematicsFunctionAttribute attr;
+
             try
             {
                 attr = p.GetCustomAttribute<CallableMathematicsFunctionAttribute>();

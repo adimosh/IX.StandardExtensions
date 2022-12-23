@@ -3,7 +3,9 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Nodes.Constants;
 using IX.StandardExtensions.Contracts;
 
@@ -26,9 +28,7 @@ internal sealed class PowerNode : SimpleMathematicalOperationNodeBase
         NodeBase right)
         : base(
             Requires.NotNull(left).Simplify(),
-            Requires.NotNull(right).Simplify())
-    {
-    }
+            Requires.NotNull(right).Simplify()) { }
 
     /// <summary>
     ///     Simplifies this node, if possible, reflexively returns otherwise.
@@ -64,6 +64,8 @@ internal sealed class PowerNode : SimpleMathematicalOperationNodeBase
     /// <returns>
     ///     The expression.
     /// </returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal() =>
         Expression.Call(
             typeof(global::System.Math),
@@ -71,8 +73,7 @@ internal sealed class PowerNode : SimpleMathematicalOperationNodeBase
             null,
             Expression.Convert(
                 Left.GenerateExpression(),
-                typeof(double)),
-            Expression.Convert(
+                typeof(double)), Expression.Convert(
                 Right.GenerateExpression(),
                 typeof(double)));
 
@@ -81,6 +82,8 @@ internal sealed class PowerNode : SimpleMathematicalOperationNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         Expression.Call(
             typeof(global::System.Math),
@@ -88,8 +91,7 @@ internal sealed class PowerNode : SimpleMathematicalOperationNodeBase
             null,
             Expression.Convert(
                 Left.GenerateExpression(tolerance),
-                typeof(double)),
-            Expression.Convert(
+                typeof(double)), Expression.Convert(
                 Right.GenerateExpression(tolerance),
                 typeof(double)));
 }

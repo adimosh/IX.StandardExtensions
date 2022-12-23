@@ -6,8 +6,11 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.InteropServices;
+
 using IX.StandardExtensions.Debugging;
+
 using JetBrains.Annotations;
+
 using ConcurrentCollections = System.Collections.Concurrent;
 
 namespace IX.StandardExtensions.Efficiency;
@@ -19,33 +22,26 @@ namespace IX.StandardExtensions.Efficiency;
 /// <typeparam name="TValue">The type of the value.</typeparam>
 /// <seealso cref="ConcurrentCollections.ConcurrentDictionary{TKey, TValue}" />
 [ComVisible(false)]
-[DebuggerDisplay("Count = {" + nameof(Count) + "}")]
+[DebuggerDisplay($"Count = {nameof(Count)}")]
 [DebuggerTypeProxy(typeof(DictionaryDebugView<,>))]
 [DefaultMember("Item")]
 [PublicAPI]
-public partial class ConcurrentDictionary<TKey, TValue> :
-    ConcurrentCollections.ConcurrentDictionary<TKey, TValue>
+public partial class ConcurrentDictionary<TKey, TValue> : ConcurrentCollections.ConcurrentDictionary<TKey, TValue>
     where TKey : notnull
 {
-#region Internal state
+    [ThreadStatic]
+    [SuppressMessage(
+        "ReSharper",
+        "StaticMemberInGenericType",
+        Justification = "This field is used exclusively under lock, so this is safe.")]
+    private static object? _threadStaticMethods;
 
     [ThreadStatic]
     [SuppressMessage(
         "ReSharper",
         "StaticMemberInGenericType",
         Justification = "This field is used exclusively under lock, so this is safe.")]
-    private static object? threadStaticMethods;
-
-    [ThreadStatic]
-    [SuppressMessage(
-        "ReSharper",
-        "StaticMemberInGenericType",
-        Justification = "This field is used exclusively under lock, so this is safe.")]
-    private static object? threadStaticUpdateFactory;
-
-#endregion
-
-#region Constructors and destructors
+    private static object? _threadStaticUpdateFactory;
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ConcurrentDictionary{TKey, TValue}" /> class.
@@ -144,26 +140,18 @@ public partial class ConcurrentDictionary<TKey, TValue> :
             capacity,
             comparer) { }
 
-#endregion
-
-#region Methods
-
-#region Static methods
-
     private static TValue UpdateInternal<TState>(
         TKey key,
         TValue oldValue)
     {
-        var innerState = (TState)threadStaticMethods!;
-        var innerUpdate = (Func<TKey, TValue, TState, TValue>)threadStaticUpdateFactory!;
+        var innerState = (TState)_threadStaticMethods!;
+        var innerUpdate = (Func<TKey, TValue, TState, TValue>)_threadStaticUpdateFactory!;
 
         return innerUpdate(
             key,
             oldValue,
             innerState);
     }
-
-#endregion
 
     /// <summary>
     ///     Adds a key/value pair to the <see cref="ConcurrentDictionary{TKey,TValue}" /> if the key does not already exist, or
@@ -188,8 +176,8 @@ public partial class ConcurrentDictionary<TKey, TValue> :
         Func<TKey, TValue, TState, TValue> updateValueFactory,
         TState state)
     {
-        threadStaticMethods = state;
-        threadStaticUpdateFactory = updateValueFactory;
+        _threadStaticMethods = state;
+        _threadStaticUpdateFactory = updateValueFactory;
 
         try
         {
@@ -200,11 +188,11 @@ public partial class ConcurrentDictionary<TKey, TValue> :
         }
         finally
         {
-            threadStaticMethods = null;
-            #if !FRAMEWORK_ADVANCED && !FRAMEWORK_GT_471
+            _threadStaticMethods = null;
+#if !FRAMEWORK_ADVANCED && !FRAMEWORK_GT_471
             threadStaticAddFactory = null;
-            #endif
-            threadStaticUpdateFactory = null;
+#endif
+            _threadStaticUpdateFactory = null;
         }
     }
 
@@ -219,6 +207,4 @@ public partial class ConcurrentDictionary<TKey, TValue> :
 
         return arr;
     }
-
-#endregion
 }

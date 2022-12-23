@@ -4,7 +4,9 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+
 using IX.StandardExtensions.Contracts;
+
 using JetBrains.Annotations;
 
 namespace IX.StandardExtensions.Extensions;
@@ -15,10 +17,6 @@ namespace IX.StandardExtensions.Extensions;
 [PublicAPI]
 public static class TypeExtensions
 {
-#region Methods
-
-#region Static methods
-
     /// <summary>
     ///     Gets the attribute data by type without version binding.
     /// </summary>
@@ -27,11 +25,11 @@ public static class TypeExtensions
     /// <param name="typeInfo">The type information.</param>
     /// <param name="value">The value.</param>
     /// <returns>System.Boolean.</returns>
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     public static bool GetAttributeDataByTypeWithoutVersionBinding<TAttribute, TReturn>(
         this Type typeInfo,
         out TReturn? value) =>
-        typeInfo.GetTypeInfo()
-            .GetAttributeDataByTypeWithoutVersionBinding<TAttribute, TReturn>(out value);
+        typeInfo.GetTypeInfo().GetAttributeDataByTypeWithoutVersionBinding<TAttribute, TReturn>(out value);
 
     /// <summary>
     ///     Gets a method with exact parameters, if one exists.
@@ -51,14 +49,15 @@ public static class TypeExtensions
         "Performance",
         "HAA0401:Possible allocation of reference type enumerator",
         Justification = "Unavoidable.")]
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     public static MethodInfo? GetMethodWithExactParameters(
         this Type typeInfo,
         string name,
         params Type[] parameters)
     {
         MethodInfo? mi = null;
-        foreach (MethodInfo p in Requires.NotNull(typeInfo)
-                     .GetRuntimeMethods())
+
+        foreach (MethodInfo p in Requires.NotNull(typeInfo).GetRuntimeMethods())
         {
             if (p.Name != name)
             {
@@ -66,6 +65,7 @@ public static class TypeExtensions
             }
 
             ParameterInfo[] ps = p.GetParameters();
+
             if ((parameters?.Length ?? 0) != ps.Length)
             {
                 continue;
@@ -99,29 +99,30 @@ public static class TypeExtensions
     ///     <paramref name="typeInfo" /> is <see langword="null" /> (
     ///     <see langword="Nothing" /> in Visual Basic).
     /// </exception>
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     public static MethodInfo? GetMethodWithExactParameters(
         this Type typeInfo,
         string name,
         params TypeInfo[] parameters) =>
         typeInfo.GetMethodWithExactParameters(
             name,
-            parameters.Select(p => p.AsType())
-                .ToArray());
+            parameters.Select(p => p.AsType()).ToArray());
 
     /// <summary>
     ///     Determines whether a type has a public parameter-less constructor.
     /// </summary>
     /// <param name="type">The type.</param>
     /// <returns><see langword="true" /> if there is a parameter-less constructor; otherwise, <see langword="false" />.</returns>
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information.")]
     public static bool HasPublicParameterlessConstructor(this Type type) =>
-        type.GetTypeInfo()
-            .HasPublicParameterlessConstructor();
+        type.GetTypeInfo().HasPublicParameterlessConstructor();
 
     /// <summary>
     ///     Instantiates an object of the specified type.
     /// </summary>
     /// <param name="type">The type.</param>
     /// <returns>An instance of the object to instantiate.</returns>
+    [RequiresUnreferencedCode("This method uses Activator.CreateInstance")]
     public static object? Instantiate(this Type type) => Activator.CreateInstance(type);
 
     /// <summary>
@@ -130,14 +131,11 @@ public static class TypeExtensions
     /// <param name="type">The type.</param>
     /// <param name="parameters">The parameters to pass through to the constructor.</param>
     /// <returns>An instance of the object to instantiate.</returns>
+    [RequiresUnreferencedCode("This method uses Activator.CreateInstance")]
     public static object? Instantiate(
         this Type type,
         params object[] parameters) =>
         Activator.CreateInstance(
             type,
             parameters);
-
-#endregion
-
-#endregion
 }

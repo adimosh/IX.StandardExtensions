@@ -2,16 +2,19 @@
 // Copyright (c) Adrian Mos with all rights reserved. Part of the IX Framework.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+
 using IX.StandardExtensions.Extensions;
+
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes;
 
 /// <summary>
-/// A base class for functions that take no parameters.
+///     A base class for functions that take no parameters.
 /// </summary>
 /// <seealso cref="FunctionNodeBase" />
 [PublicAPI]
@@ -26,41 +29,54 @@ public abstract class NonaryFunctionNodeBase : FunctionNodeBase
     public override bool IsTolerant => false;
 
     /// <summary>
-    /// Sets the special object request function for sub objects.
+    ///     Sets the special object request function for sub objects.
     /// </summary>
     /// <param name="func">The function.</param>
-    protected override void SetSpecialObjectRequestFunctionForSubObjects(Func<Type, object> func)
-    {
-    }
+    protected override void SetSpecialObjectRequestFunctionForSubObjects(Func<Type, object> func) { }
 
     /// <summary>
-    /// Generates a static function call for a function with no parameters.
+    ///     Generates a static function call for a function with no parameters.
     /// </summary>
     /// <typeparam name="T">The type to call the function on.</typeparam>
     /// <param name="functionName">Name of the function.</param>
     /// <returns>An expression representing the function call.</returns>
     /// <exception cref="ArgumentException">The function name is invalid.</exception>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected Expression GenerateStaticNonaryFunctionCall<T>(string functionName) =>
-        GenerateStaticNonaryFunctionCall(typeof(T), functionName);
+        GenerateStaticNonaryFunctionCall(
+            typeof(T),
+            functionName);
 
     /// <summary>
-    /// Generates a static function call for a function with no parameters.
+    ///     Generates a static function call for a function with no parameters.
     /// </summary>
     /// <param name="t">The type to call the function on.</param>
     /// <param name="functionName">Name of the function.</param>
     /// <returns>An expression representing the function call.</returns>
     /// <exception cref="ArgumentException">The function name is invalid.</exception>
-    protected Expression GenerateStaticNonaryFunctionCall(Type t, string functionName)
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
+    protected Expression GenerateStaticNonaryFunctionCall(
+        Type t,
+        string functionName)
     {
         if (string.IsNullOrWhiteSpace(functionName))
         {
-            throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.FunctionCouldNotBeFound, functionName), nameof(functionName));
+            throw new ArgumentException(
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    Resources.FunctionCouldNotBeFound,
+                    functionName), nameof(functionName));
         }
 
         MethodInfo mi = t.GetMethodWithExactParameters(
-                            functionName,
-                            Type.EmptyTypes)
-                        ?? throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.FunctionCouldNotBeFound, functionName), nameof(functionName));
+            functionName,
+            Type.EmptyTypes) ?? throw new ArgumentException(
+            string.Format(
+                CultureInfo.CurrentCulture,
+                Resources.FunctionCouldNotBeFound,
+                functionName), nameof(functionName));
 
         return Expression.Call(mi);
     }

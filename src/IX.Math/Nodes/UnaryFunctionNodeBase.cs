@@ -6,9 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+
 using IX.Math.Extensibility;
 using IX.StandardExtensions.Contracts;
 using IX.StandardExtensions.Extensions;
+
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes;
@@ -53,7 +55,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     public override bool IsTolerant => Parameter.IsTolerant;
 
     /// <summary>
-    /// Sets the special object request function for sub objects.
+    ///     Sets the special object request function for sub objects.
     /// </summary>
     /// <param name="func">The function.</param>
     protected override void SetSpecialObjectRequestFunctionForSubObjects(Func<Type, object> func)
@@ -78,6 +80,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     /// <param name="functionName">Name of the function.</param>
     /// <returns>An expression representing the static function call.</returns>
     /// <exception cref="ArgumentException"><paramref name="functionName" /> represents a function that cannot be found.</exception>
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected Expression GenerateStaticUnaryFunctionCall<T>(string functionName) =>
         GenerateStaticUnaryFunctionCall(
             typeof(T),
@@ -92,6 +95,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     /// <param name="tolerance">The tolerance for this expression. Can be <c>null</c> (<c>Nothing</c> in Visual Basic).</param>
     /// <returns>An expression representing the static function call.</returns>
     /// <exception cref="ArgumentException"><paramref name="functionName" /> represents a function that cannot be found.</exception>
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected Expression GenerateStaticUnaryFunctionCall<T>(
         string functionName,
         Tolerance? tolerance) =>
@@ -107,6 +111,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     /// <param name="functionName">Name of the function.</param>
     /// <returns>An expression representing the static function call.</returns>
     /// <exception cref="ArgumentException"><paramref name="functionName" /> represents a function that cannot be found.</exception>
+    [RequiresUnreferencedCode("This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected Expression GenerateStaticUnaryFunctionCall(
         Type t,
         string functionName) =>
@@ -125,6 +130,8 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
     ///     An expression representing the static function call.
     /// </returns>
     /// <exception cref="ArgumentException"><paramref name="functionName" /> represents a function that cannot be found.</exception>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected Expression GenerateStaticUnaryFunctionCall(
         Type t,
         string functionName,
@@ -136,8 +143,7 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
                 string.Format(
                     CultureInfo.CurrentCulture,
                     Resources.FunctionCouldNotBeFound,
-                    functionName),
-                nameof(functionName));
+                    functionName), nameof(functionName));
         }
 
         Type parameterType = ParameterTypeFromParameter(Parameter);
@@ -167,21 +173,17 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
                     parameterType = typeof(int);
 
                     mi = t.GetMethodWithExactParameters(
-                             functionName,
-                             parameterType) ??
-                         throw new ArgumentException(
-                             string.Format(
-                                 CultureInfo.CurrentCulture,
-                                 Resources.FunctionCouldNotBeFound,
-                                 functionName),
-                             nameof(functionName));
+                        functionName,
+                        parameterType) ?? throw new ArgumentException(
+                        string.Format(
+                            CultureInfo.CurrentCulture,
+                            Resources.FunctionCouldNotBeFound,
+                            functionName), nameof(functionName));
                 }
             }
         }
 
-        Expression e = tolerance == null
-            ? Parameter.GenerateExpression()
-            : Parameter.GenerateExpression(tolerance);
+        Expression e = tolerance == null ? Parameter.GenerateExpression() : Parameter.GenerateExpression(tolerance);
 
         if (e.Type != parameterType)
         {
@@ -225,17 +227,14 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
                 string.Format(
                     CultureInfo.CurrentCulture,
                     Resources.FunctionCouldNotBeFound,
-                    propertyName),
-                nameof(propertyName));
+                    propertyName), nameof(propertyName));
         }
 
-        PropertyInfo pi = typeof(T).GetRuntimeProperty(propertyName) ??
-                          throw new ArgumentException(
-                              string.Format(
-                                  CultureInfo.CurrentCulture,
-                                  Resources.FunctionCouldNotBeFound,
-                                  propertyName),
-                              nameof(propertyName));
+        PropertyInfo pi = typeof(T).GetRuntimeProperty(propertyName) ?? throw new ArgumentException(
+            string.Format(
+                CultureInfo.CurrentCulture,
+                Resources.FunctionCouldNotBeFound,
+                propertyName), nameof(propertyName));
 
         return Expression.Property(
             tolerance == null ? Parameter.GenerateExpression() : Parameter.GenerateExpression(tolerance),
@@ -272,19 +271,16 @@ public abstract class UnaryFunctionNodeBase : FunctionNodeBase
                 string.Format(
                     CultureInfo.CurrentCulture,
                     Resources.FunctionCouldNotBeFound,
-                    methodName),
-                nameof(methodName));
+                    methodName), nameof(methodName));
         }
 
         MethodInfo mi = typeof(T).GetRuntimeMethod(
-                            methodName,
-                            Array.Empty<Type>()) ??
-                        throw new ArgumentException(
-                            string.Format(
-                                CultureInfo.CurrentCulture,
-                                Resources.FunctionCouldNotBeFound,
-                                methodName),
-                            nameof(methodName));
+            methodName,
+            Array.Empty<Type>()) ?? throw new ArgumentException(
+            string.Format(
+                CultureInfo.CurrentCulture,
+                Resources.FunctionCouldNotBeFound,
+                methodName), nameof(methodName));
 
         return tolerance == null
             ? Expression.Call(

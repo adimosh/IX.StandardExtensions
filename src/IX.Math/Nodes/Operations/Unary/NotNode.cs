@@ -3,7 +3,9 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Nodes.Constants;
 using IX.StandardExtensions.Contracts;
 
@@ -49,7 +51,8 @@ internal sealed class NotNode : UnaryOperatorNodeBase
     /// <exception cref="ExpressionNotValidLogicallyException">The expression is not logically valid.</exception>
     private static void EnsureCompatibleOperand(NodeBase operand)
     {
-        if (operand.ReturnType is SupportedValueType.Numeric or SupportedValueType.Boolean or SupportedValueType.Unknown)
+        if (operand.ReturnType is SupportedValueType.Numeric or SupportedValueType.Boolean
+            or SupportedValueType.Unknown)
         {
             return;
         }
@@ -118,6 +121,8 @@ internal sealed class NotNode : UnaryOperatorNodeBase
     /// <returns>
     ///     The expression.
     /// </returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal() => Expression.Not(Operand.GenerateExpression());
 
     /// <summary>
@@ -125,6 +130,8 @@ internal sealed class NotNode : UnaryOperatorNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance) =>
         Expression.Not(Operand.GenerateExpression(tolerance));
 }

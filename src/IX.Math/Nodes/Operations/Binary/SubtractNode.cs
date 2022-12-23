@@ -3,7 +3,9 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Nodes.Constants;
 using IX.StandardExtensions.Contracts;
 
@@ -26,9 +28,7 @@ internal sealed class SubtractNode : SimpleMathematicalOperationNodeBase
         NodeBase right)
         : base(
             Requires.NotNull(left).Simplify(),
-            Requires.NotNull(right).Simplify())
-    {
-    }
+            Requires.NotNull(right).Simplify()) { }
 
     /// <summary>
     ///     Simplifies this node, if possible, reflexively returns otherwise.
@@ -64,10 +64,12 @@ internal sealed class SubtractNode : SimpleMathematicalOperationNodeBase
     /// <returns>
     ///     The expression.
     /// </returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal()
     {
-        var left = Left.GenerateExpression();
-        var right = Right.GenerateExpression();
+        Expression left = Left.GenerateExpression();
+        Expression right = Right.GenerateExpression();
 
         EnsureCompatibleNumericExpressions(
             ref left,
@@ -83,11 +85,13 @@ internal sealed class SubtractNode : SimpleMathematicalOperationNodeBase
     /// </summary>
     /// <param name="tolerance">The tolerance.</param>
     /// <returns>The expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     protected override Expression GenerateExpressionInternal(Tolerance? tolerance)
     {
         {
-            var left = Left.GenerateExpression(tolerance);
-            var right = Right.GenerateExpression(tolerance);
+            Expression left = Left.GenerateExpression(tolerance);
+            Expression right = Right.GenerateExpression(tolerance);
 
             EnsureCompatibleNumericExpressions(
                 ref left,

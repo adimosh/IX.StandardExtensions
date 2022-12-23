@@ -3,10 +3,13 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+
 using IX.Math.Extensibility;
 using IX.Math.Formatters;
 using IX.StandardExtensions.Contracts;
+
 using JetBrains.Annotations;
 
 namespace IX.Math.Nodes.Constants;
@@ -42,11 +45,18 @@ public class ByteArrayNode : ConstantNodeBase, ISpecialRequestNode
     /// <summary>
     ///     Gets the value of the node.
     /// </summary>
-    [global::System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Performance",
         "CA1819:Properties should not return arrays",
         Justification = "We specifically want this here, as this is a binary representation.")]
     public byte[] Value { get; }
+
+    /// <summary>
+    ///     Sets the request special object function.
+    /// </summary>
+    /// <param name="func">The function to set.</param>
+    void ISpecialRequestNode.SetRequestSpecialObjectFunction(Func<Type, object> func) =>
+        specialObjectRequestFunction = func;
 
     /// <summary>
     ///     Distills the value into a usable constant.
@@ -58,6 +68,8 @@ public class ByteArrayNode : ConstantNodeBase, ISpecialRequestNode
     ///     Generates the expression that will be compiled into code.
     /// </summary>
     /// <returns>A <see cref="ConstantExpression" /> with a boolean value.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     public override Expression GenerateCachedExpression() =>
         Expression.Constant(
             Value,
@@ -67,6 +79,8 @@ public class ByteArrayNode : ConstantNodeBase, ISpecialRequestNode
     ///     Generates the expression that will be compiled into code as a string expression.
     /// </summary>
     /// <returns>The string expression.</returns>
+    [RequiresUnreferencedCode(
+        "This method uses reflection to get in-depth type information and to build a compiled expression tree.")]
     public override Expression GenerateCachedStringExpression() => Expression.Constant(
         GetString(),
         typeof(string));
@@ -78,17 +92,12 @@ public class ByteArrayNode : ConstantNodeBase, ISpecialRequestNode
     /// <returns>A deep clone.</returns>
     public override NodeBase DeepClone(NodeCloningContext context) => new ByteArrayNode(Value);
 
-    /// <summary>
-    /// Sets the request special object function.
-    /// </summary>
-    /// <param name="func">The function to set.</param>
-    void ISpecialRequestNode.SetRequestSpecialObjectFunction(Func<Type, object> func) => specialObjectRequestFunction = func;
-
     private string GetString()
     {
         if (cachedDistilledStringValue == null)
         {
-            var stringFormatters = specialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) as List<IStringFormatter>;
+            var stringFormatters =
+                specialObjectRequestFunction?.Invoke(typeof(IStringFormatter)) as List<IStringFormatter>;
 
             cachedDistilledStringValue = StringFormatter.FormatIntoString(
                 Value,
